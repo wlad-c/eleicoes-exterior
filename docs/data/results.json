@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-04T22:25:40.531Z",
+    "updatedAt": "2026-10-04T23:20:40.181Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -100,13 +100,13 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-04T22:25:40.531Z",
-      "sectionsCounted": 883,
+      "fetchedAt": "2026-10-04T23:20:40.181Z",
+      "sectionsCounted": 980,
       "sectionsTotal": 1351,
-      "sectionsPct": 65.36,
-      "lula": 118128,
-      "bolsonaro": 89524,
-      "totalValid": 229450,
+      "sectionsPct": 72.54,
+      "lula": 126203,
+      "bolsonaro": 103741,
+      "totalValid": 253494,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6257/dados/zz/zz-c0001-e006257-u.json"
     }
   },
@@ -444,11 +444,24 @@
         "lulaPct": 31.44,
         "bolsonaroPct": 57.93
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 4489,
+        "bolsonaro": 12518,
+        "totalValid": 18338,
+        "lulaPct": 24.48,
+        "bolsonaroPct": 68.26
+      },
+      "swing": {
+        "lulaPp": -6.96,
+        "bolsonaroPp": 10.33,
+        "marginPp": -17.29
+      },
+      "notes": "TSE EA20 (86/122 seções; HOUSTON 1/23; WASHINGTON 17/31; HARTFORD 12/12; ATLANTA 22/22; ORLANDO 34/34)",
+      "status": "reported",
+      "coverage": {
+        "counted": 86,
+        "total": 122
+      }
     },
     {
       "id": "portugal",
@@ -495,11 +508,24 @@
         "lulaPct": 54.49,
         "bolsonaroPct": 31.62
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 1602,
+        "bolsonaro": 837,
+        "totalValid": 2773,
+        "lulaPct": 57.77,
+        "bolsonaroPct": 30.18
+      },
+      "swing": {
+        "lulaPp": 3.28,
+        "bolsonaroPp": -1.44,
+        "marginPp": 4.72
+      },
+      "notes": "TSE EA20 (8/47 seções; MONTREAL 2/15; OTTAWA 4/4; TORONTO 2/28)",
+      "status": "reported",
+      "coverage": {
+        "counted": 8,
+        "total": 47
+      }
     },
     {
       "id": "germany",
@@ -739,21 +765,21 @@
         "bolsonaroPct": 29.14
       },
       "y2026": {
-        "lula": 1549,
-        "bolsonaro": 817,
-        "totalValid": 2546,
-        "lulaPct": 60.84,
-        "bolsonaroPct": 32.09
+        "lula": 3738,
+        "bolsonaro": 1663,
+        "totalValid": 5788,
+        "lulaPct": 64.58,
+        "bolsonaroPct": 28.73
       },
       "swing": {
-        "lulaPp": -2.7,
-        "bolsonaroPp": 2.95,
-        "marginPp": -5.65
+        "lulaPp": 1.04,
+        "bolsonaroPp": -0.41,
+        "marginPp": 1.45
       },
-      "notes": "TSE EA20 (9/18 seções; BUENOS AIRES 6/15; CÓRDOBA 2/2; MENDOZA 1/1)",
+      "notes": "TSE EA20 (BUENOS AIRES 15/15; CÓRDOBA 2/2; MENDOZA 1/1)",
       "status": "reported",
       "coverage": {
-        "counted": 9,
+        "counted": 18,
         "total": 18
       }
     },
@@ -803,22 +829,22 @@
         "bolsonaroPct": 83.02
       },
       "y2026": {
-        "lula": 342,
-        "bolsonaro": 1577,
-        "totalValid": 2022,
-        "lulaPct": 16.91,
-        "bolsonaroPct": 77.99
+        "lula": 544,
+        "bolsonaro": 3816,
+        "totalValid": 4525,
+        "lulaPct": 12.02,
+        "bolsonaroPct": 84.33
       },
       "swing": {
-        "lulaPp": 4.51,
-        "bolsonaroPp": -5.03,
-        "marginPp": 9.54
+        "lulaPp": -0.38,
+        "bolsonaroPp": 1.31,
+        "marginPp": -1.69
       },
-      "notes": "TSE EA20 (ASSUNÇÃO 4/4; ENCARNACIÓN 1/1; PEDRO JUAN CABALLERO 1/1; SALTO DEL GUAIRÁ 2/2)",
+      "notes": "TSE EA20 (ASSUNÇÃO 4/4; CIUDAD DEL ESTE 7/7; ENCARNACIÓN 1/1; PEDRO JUAN CABALLERO 1/1; SALTO DEL GUAIRÁ 2/2)",
       "status": "reported",
       "coverage": {
-        "counted": 8,
-        "total": 8
+        "counted": 15,
+        "total": 15
       }
     },
     {
@@ -1205,11 +1231,24 @@
         "lulaPct": 34.64,
         "bolsonaroPct": 48.73
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 248,
+        "bolsonaro": 380,
+        "totalValid": 730,
+        "lulaPct": 33.97,
+        "bolsonaroPct": 52.05
+      },
+      "swing": {
+        "lulaPp": -0.67,
+        "bolsonaroPp": 3.32,
+        "marginPp": -3.99
+      },
+      "notes": "TSE EA20 (IQUITOS 1/1; LIMA 3/3)",
+      "status": "reported",
+      "coverage": {
+        "counted": 4,
+        "total": 4
+      }
     },
     {
       "id": "palestine",
@@ -1339,11 +1378,24 @@
         "lulaPct": 31.56,
         "bolsonaroPct": 51.47
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 236,
+        "bolsonaro": 336,
+        "totalValid": 658,
+        "lulaPct": 35.87,
+        "bolsonaroPct": 51.06
+      },
+      "swing": {
+        "lulaPp": 4.31,
+        "bolsonaroPp": -0.41,
+        "marginPp": 4.72
+      },
+      "notes": "TSE EA20 (PANAMA 2/2)",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "finland",
