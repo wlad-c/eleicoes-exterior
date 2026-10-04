@@ -83,8 +83,6 @@ export type SortKey =
 export type HeatColumn =
   | 'lula2026'
   | 'bolso2026'
-  | 'lulaPct2026'
-  | 'bolsoPct2026'
   | 'lula2022'
   | 'bolso2022'
   | 'marginSwing'
@@ -100,16 +98,14 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'margin2022':
       return 'lula2022'
     case 'lulaPct2026':
-      return 'lulaPct2026'
+    case 'votes2026':
+      return 'lula2026'
     case 'bolsonaroPct2026':
-      return 'bolsoPct2026'
+      return 'bolso2026'
     case 'lulaPct2022':
+    case 'votes2022':
       return 'lula2022'
     case 'bolsonaroPct2022':
       return 'bolso2022'
-    case 'votes2026':
-      return 'lula2026'
-    case 'votes2022':
-      return 'lula2022'
   }
 }

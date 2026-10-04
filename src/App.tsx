@@ -23,7 +23,7 @@ export default function App() {
   const [region, setRegion] = useState('all')
   const [showPending, setShowPending] = useState(false)
   const [metric, setMetric] = useState<MapMetric>('margin2026')
-  const [sortKey, setSortKey] = useState<SortKey>('votes2026')
+  const [sortKey, setSortKey] = useState<SortKey>('lulaPct2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
 

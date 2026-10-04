@@ -13,6 +13,15 @@ export function fmtPct(n: number | null | undefined, lang: Lang, digits = 1): st
   }).format(n)}%`
 }
 
+export function fmtShare(
+  pct: number | null | undefined,
+  votes: number | null | undefined,
+  lang: Lang,
+): string {
+  if (pct == null || votes == null) return '—'
+  return `${fmtPct(pct, lang)} (${fmtInt(votes, lang)})`
+}
+
 export function fmtPp(n: number | null | undefined, lang: Lang, digits = 1): string {
   if (n == null || Number.isNaN(n)) return '—'
   const sign = n > 0 ? '+' : ''

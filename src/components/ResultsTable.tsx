@@ -1,5 +1,5 @@
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
-import { countryName, fmtInt, fmtPct, fmtPp, metricValue } from '../lib/format'
+import { countryName, fmtPp, fmtShare, metricValue } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
 import {
   heatColumnForMetric,
@@ -47,7 +47,7 @@ export function ResultsTable({
 
   return (
     <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-      <table className="w-full min-w-[920px] border-collapse text-left text-sm">
+      <table className="w-full min-w-[720px] border-collapse text-left text-sm">
         <thead className="sticky top-0 z-20">
           <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
             <Th onClick={() => onSort('country')}>
@@ -59,31 +59,25 @@ export function ResultsTable({
               {arrow('region')}
             </Th>
             <Th
-              onClick={() => onSort('votes2026')}
+              onClick={() => onSort('lulaPct2026')}
               align="right"
               heated={heatCol === 'lula2026'}
             >
-              {t('lula', lang)} 2026{arrow('votes2026')}
-            </Th>
-            <Th align="right" heated={heatCol === 'bolso2026'}>
-              {t('fBolsonaro', lang)} 2026
-            </Th>
-            <Th
-              onClick={() => onSort('lulaPct2026')}
-              align="right"
-              heated={heatCol === 'lulaPct2026'}
-            >
-              Lula %{arrow('lulaPct2026')}
+              {t('lula', lang)} 2026{arrow('lulaPct2026')}
             </Th>
             <Th
               onClick={() => onSort('bolsonaroPct2026')}
               align="right"
-              heated={heatCol === 'bolsoPct2026'}
+              heated={heatCol === 'bolso2026'}
             >
-              F.B. %{arrow('bolsonaroPct2026')}
+              {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
             </Th>
-            <Th align="right" heated={heatCol === 'lula2022'}>
-              {t('lula', lang)} 2022
+            <Th
+              onClick={() => onSort('votes2022')}
+              align="right"
+              heated={heatCol === 'lula2022'}
+            >
+              {t('lula', lang)} 2022{arrow('votes2022')}
             </Th>
             <Th align="right" heated={heatCol === 'bolso2022'}>
               {t('jBolsonaro', lang)} 2022
@@ -96,7 +90,7 @@ export function ResultsTable({
               {t('marginSwing', lang)}
               {arrow('marginSwing')}
             </Th>
-            <th className="px-2 py-2 font-medium">{t('notes', lang)}</th>
+            <th className="sticky-th px-2 py-2.5 font-medium">{t('notes', lang)}</th>
           </tr>
         </thead>
         <tbody>
@@ -121,32 +115,16 @@ export function ResultsTable({
                   {regionLabel(c.region, lang)}
                 </td>
                 <HeatTd col="lula2026" heatCol={heatCol} heat={heat}>
-                  {fmtInt(c.y2026?.lula, lang)}
+                  {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang)}
                 </HeatTd>
                 <HeatTd col="bolso2026" heatCol={heatCol} heat={heat}>
-                  {fmtInt(c.y2026?.bolsonaro, lang)}
+                  {fmtShare(c.y2026?.bolsonaroPct, c.y2026?.bolsonaro, lang)}
                 </HeatTd>
-                <HeatTd col="lulaPct2026" heatCol={heatCol} heat={heat}>
-                  {fmtPct(c.y2026?.lulaPct, lang)}
+                <HeatTd col="lula2022" heatCol={heatCol} heat={heat} muted>
+                  {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang)}
                 </HeatTd>
-                <HeatTd col="bolsoPct2026" heatCol={heatCol} heat={heat}>
-                  {fmtPct(c.y2026?.bolsonaroPct, lang)}
-                </HeatTd>
-                <HeatTd
-                  col="lula2022"
-                  heatCol={heatCol}
-                  heat={heat}
-                  muted
-                >
-                  {fmtInt(c.y2022.lula, lang)}
-                </HeatTd>
-                <HeatTd
-                  col="bolso2022"
-                  heatCol={heatCol}
-                  heat={heat}
-                  muted
-                >
-                  {fmtInt(c.y2022.bolsonaro, lang)}
+                <HeatTd col="bolso2022" heatCol={heatCol} heat={heat} muted>
+                  {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
                 </HeatTd>
                 <HeatTd
                   col="marginSwing"
