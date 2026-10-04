@@ -101,7 +101,9 @@ export function ResultsTable({
 
   const totalCells = (
     <>
-      <td className="px-2 py-2.5 text-[var(--ink)]">{t('tableTotal', lang)}</td>
+      <td className="sticky-col px-2 py-2.5 text-[var(--ink)]">
+        {t('tableTotal', lang)}
+      </td>
       <td className="px-2 py-2.5 font-normal text-[var(--ink-muted)]">
         {totals.countries} {t('countries', lang)}
       </td>
@@ -156,6 +158,7 @@ export function ResultsTable({
             <Th
               onClick={() => onSort('country')}
               hint={t('hintCountry', lang)}
+              stickyCol
             >
               {t('country', lang)}
               {arrow('country')}
@@ -250,10 +253,10 @@ export function ResultsTable({
                 id={`row-${c.id}`}
                 onClick={() => onSelect(c.id)}
                 className={`cursor-pointer border-b border-[var(--line-soft)] transition-colors ${
-                  hi ? 'bg-[var(--chip)]' : 'hover:bg-[var(--chip-soft)]'
+                  hi ? 'row-hi bg-[var(--chip)]' : 'hover:bg-[var(--chip-soft)]'
                 }`}
               >
-                <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
+                <td className="sticky-col px-2 py-2.5 font-medium text-[var(--ink)]">
                   {countryName(c, lang)}
                   {c.notes?.startsWith('DISPUTED') ? (
                     <span
@@ -397,16 +400,18 @@ function Th({
   onClick,
   align = 'left',
   heated,
+  stickyCol,
 }: {
   children: React.ReactNode
   hint?: string
   onClick?: () => void
   align?: 'left' | 'right'
   heated?: boolean
+  stickyCol?: boolean
 }) {
   return (
     <th
-      className={`sticky-th px-2 py-2.5 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
+      className={`sticky-th px-2 py-2.5 font-medium ${stickyCol ? 'sticky-col' : ''} ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
       } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}

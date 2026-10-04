@@ -145,6 +145,39 @@ html.dark .sticky-table-chrome {
   background: var(--paper-deep);
 }
 
+/* Freeze country column while the table pans horizontally */
+.sticky-col {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--paper);
+  background-clip: padding-box;
+  box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
+}
+
+html.dark .sticky-col {
+  box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
+}
+
+.results-table thead .sticky-col {
+  z-index: 6;
+  background: var(--paper-deep);
+}
+
+.results-table tfoot .sticky-col {
+  z-index: 3;
+  background: var(--paper-deep);
+}
+
+.results-table tbody tr:hover .sticky-col {
+  background: var(--chip-soft);
+}
+
+.results-table tbody tr.row-hi .sticky-col {
+  background: var(--chip);
+}
+
 .table-x-scroll {
   width: 100%;
   max-width: 100%;
@@ -179,11 +212,25 @@ html.dark .sticky-table-chrome {
     padding-right: 0.5rem;
   }
 
-  /* Sticky thead can't bind to the page inside an x-scroller */
-  .sticky-th {
+  /* Vertical sticky thead can't bind to the page inside an x-scroller */
+  .sticky-th:not(.sticky-col) {
     position: static;
     top: auto;
     box-shadow: none;
+  }
+
+  /* Keep country header frozen on horizontal pan only */
+  .sticky-th.sticky-col {
+    position: -webkit-sticky;
+    position: sticky;
+    top: auto;
+    left: 0;
+    z-index: 4;
+    box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
+  }
+
+  html.dark .sticky-th.sticky-col {
+    box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
   }
 
   .th-hint {
