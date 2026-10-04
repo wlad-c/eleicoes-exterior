@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T15:14:09.218Z",
+    "updatedAt": "2026-10-04T18:11:26.755Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -30,8 +30,8 @@
         "name": "g1",
         "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml",
         "role": {
-          "en": "2026 overseas ballot-box (BU) roundups by country/city",
-          "pt": "Levantamento 2026 de boletins de urna no exterior por país/cidade"
+          "en": "2026 overseas ballot-box (BU) roundups by country/city (primary live source)",
+          "pt": "Levantamento 2026 de boletins de urna no exterior por país/cidade (fonte viva principal)"
         }
       },
       {
@@ -125,7 +125,7 @@
         "bolsonaroPp": -0.52,
         "marginPp": 2.28
       },
-      "notes": "Totals per BNews/Exame (34,318 valid); g1 lists 34,363 / Lula 5,222.",
+      "notes": "Totals per BNews/Exame (34,318 valid / Lula 5,234); g1 lists Lula 5,222 / ~34,363.",
       "status": "reported",
       "coverage": {
         "counted": 119,
@@ -157,7 +157,7 @@
         "bolsonaroPp": 1.77,
         "marginPp": -2.65
       },
-      "notes": "DISPUTED — g1/Exame list Lula 4,562 / Flávio 2,579 / 8,451 valid, but g1’s itemized candidates sum to 8,130 and conflict with g1’s earlier 26/29 partial (Lula 5,283). Shown for continuity; awaiting TSE totalization.",
+      "notes": "g1",
       "status": "reported",
       "coverage": null
     },
@@ -175,23 +175,20 @@
         "bolsonaroPct": 35.38
       },
       "y2026": {
-        "lula": 268,
-        "bolsonaro": 98,
-        "totalValid": 408,
-        "lulaPct": 65.69,
-        "bolsonaroPct": 24.02
+        "lula": 367,
+        "bolsonaro": 203,
+        "totalValid": 648,
+        "lulaPct": 56.64,
+        "bolsonaroPct": 31.33
       },
       "swing": {
-        "lulaPp": 17.15,
-        "bolsonaroPp": -11.36,
-        "marginPp": 28.51
+        "lulaPp": 8.1,
+        "bolsonaroPp": -4.05,
+        "marginPp": 12.15
       },
-      "notes": "",
+      "notes": "g1 China roundup (candidate sum 648 valid). Supersedes earlier Brasil de Fato 3-section 268/98.",
       "status": "reported",
-      "coverage": {
-        "counted": 3,
-        "total": 3
-      }
+      "coverage": null
     },
     {
       "id": "new-zealand",
@@ -218,7 +215,7 @@
         "bolsonaroPp": 3.54,
         "marginPp": -6.01
       },
-      "notes": "",
+      "notes": "g1",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -250,7 +247,7 @@
         "bolsonaroPp": 1.57,
         "marginPp": 6.36
       },
-      "notes": "",
+      "notes": "g1",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -314,7 +311,7 @@
         "bolsonaroPp": 7.73,
         "marginPp": -13.59
       },
-      "notes": "",
+      "notes": "g1",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -346,7 +343,7 @@
         "bolsonaroPp": 11.52,
         "marginPp": -14.93
       },
-      "notes": "Valid = 102 attendance − 3 blank (Exame/g1); not turnout.",
+      "notes": "g1/Exame candidate sum / valid.",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -378,7 +375,7 @@
         "bolsonaroPp": -9.18,
         "marginPp": 15.47
       },
-      "notes": "",
+      "notes": "g1",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -410,7 +407,7 @@
         "bolsonaroPp": -2.33,
         "marginPp": 12.52
       },
-      "notes": "",
+      "notes": "g1",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -487,10 +484,20 @@
         "lulaPct": 69.44,
         "bolsonaroPct": 18.54
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 5408,
+        "bolsonaro": 1320,
+        "totalValid": 7251,
+        "lulaPct": 74.58,
+        "bolsonaroPct": 18.2
+      },
+      "swing": {
+        "lulaPp": 5.14,
+        "bolsonaroPp": -0.34,
+        "marginPp": 5.48
+      },
+      "notes": "Partial g1 BU roundup (not full ZZ). Candidate list sums to 7,251 valid.",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -696,10 +703,20 @@
         "lulaPct": 56.18,
         "bolsonaroPct": 33.23
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 2538,
+        "bolsonaro": 1138,
+        "totalValid": 3901,
+        "lulaPct": 65.06,
+        "bolsonaroPct": 29.17
+      },
+      "swing": {
+        "lulaPp": 8.88,
+        "bolsonaroPp": -4.06,
+        "marginPp": 12.94
+      },
+      "notes": "g1 (candidate sum 3,901; stated 64.84% implies ~3,915).",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -848,10 +865,20 @@
         "lulaPct": 76.6,
         "bolsonaroPct": 12.03
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 1166,
+        "bolsonaro": 195,
+        "totalValid": 1464,
+        "lulaPct": 79.64,
+        "bolsonaroPct": 13.32
+      },
+      "swing": {
+        "lulaPp": 3.04,
+        "bolsonaroPp": 1.29,
+        "marginPp": 1.75
+      },
+      "notes": "g1 (candidate list sums to 1,464; stated 78.94% implies ~1,477).",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -879,7 +906,7 @@
         "bolsonaroPp": 0.04,
         "marginPp": 0.89
       },
-      "notes": "Abu Dhabi jurisdiction (5 BUs). Lula count per Exame (512); g1 lists 469 with an inconsistent total.",
+      "notes": "Abu Dhabi jurisdiction (5 BUs). Lula count per Exame (512); g1 still lists 469 with an inconsistent total.",
       "status": "reported",
       "coverage": {
         "counted": 5,
@@ -937,11 +964,49 @@
         "lulaPct": 84.81,
         "bolsonaroPct": 7.45
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 1078,
+        "bolsonaro": 46,
+        "totalValid": 1158,
+        "lulaPct": 93.09,
+        "bolsonaroPct": 3.97
+      },
+      "swing": {
+        "lulaPp": 8.28,
+        "bolsonaroPp": -3.48,
+        "marginPp": 11.76
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
+    },
+    {
+      "id": "syria",
+      "countryEn": "Syria",
+      "countryPt": "Síria",
+      "iso3": "SYR",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 0,
+        "bolsonaro": 0,
+        "totalValid": 0,
+        "lulaPct": 0.0,
+        "bolsonaroPct": 0.0
+      },
+      "y2026": {
+        "lula": 97,
+        "bolsonaro": 7,
+        "totalValid": 108,
+        "lulaPct": 89.81,
+        "bolsonaroPct": 6.48
+      },
+      "swing": null,
+      "notes": "First Damascus overseas section in 2026 (g1); no 2022 ZZ baseline — swing omitted.",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "israel",
@@ -968,7 +1033,7 @@
         "bolsonaroPp": 28.31,
         "marginPp": -54.61
       },
-      "notes": "5 BUs Tel Aviv (730 att, 14 blank, 12 null) — Exame",
+      "notes": "5 BUs Tel Aviv — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 5,
@@ -1026,10 +1091,20 @@
         "lulaPct": 62.4,
         "bolsonaroPct": 20.32
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 475,
+        "bolsonaro": 155,
+        "totalValid": 691,
+        "lulaPct": 68.74,
+        "bolsonaroPct": 22.43
+      },
+      "swing": {
+        "lulaPp": 6.34,
+        "bolsonaroPp": 2.11,
+        "marginPp": 4.23
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1045,10 +1120,20 @@
         "lulaPct": 80.89,
         "bolsonaroPct": 11.86
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 331,
+        "bolsonaro": 93,
+        "totalValid": 465,
+        "lulaPct": 71.18,
+        "bolsonaroPct": 20.0
+      },
+      "swing": {
+        "lulaPp": -9.71,
+        "bolsonaroPp": 8.14,
+        "marginPp": -17.85
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1146,7 +1231,7 @@
         "bolsonaroPp": -0.35,
         "marginPp": 2.5
       },
-      "notes": "2 BUs Athens (508 att, 8 blank, 6 null) — Exame",
+      "notes": "2 BUs Athens — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -1235,7 +1320,7 @@
         "bolsonaroPp": -4.87,
         "marginPp": 9.38
       },
-      "notes": "Doha (364 att, 4 blank, 3 null) — Exame",
+      "notes": "Doha — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1324,7 +1409,7 @@
         "bolsonaroPp": 4.02,
         "marginPp": -4.29
       },
-      "notes": "",
+      "notes": "g1/Metro1",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1368,14 +1453,14 @@
         "bolsonaro": 19,
         "totalValid": 190,
         "lulaPct": 74.74,
-        "bolsonaroPct": 10
+        "bolsonaroPct": 10.0
       },
       "swing": {
         "lulaPp": -4.83,
         "bolsonaroPp": 1.4,
         "marginPp": -6.23
       },
-      "notes": "Tallinn (197 att, 3 blank, 4 null) — Exame",
+      "notes": "Tallinn — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1395,10 +1480,20 @@
         "lulaPct": 59.48,
         "bolsonaroPct": 33.33
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 90,
+        "bolsonaro": 30,
+        "totalValid": 127,
+        "lulaPct": 70.87,
+        "bolsonaroPct": 23.62
+      },
+      "swing": {
+        "lulaPp": 11.39,
+        "bolsonaroPp": -9.71,
+        "marginPp": 21.1
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1490,10 +1585,20 @@
         "lulaPct": 65.79,
         "bolsonaroPct": 19.74
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 61,
+        "bolsonaro": 25,
+        "totalValid": 98,
+        "lulaPct": 62.24,
+        "bolsonaroPct": 25.51
+      },
+      "swing": {
+        "lulaPp": -3.55,
+        "bolsonaroPp": 5.77,
+        "marginPp": -9.32
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1540,7 +1645,7 @@
         "bolsonaroPp": -11.25,
         "marginPp": 23.13
       },
-      "notes": "Cairo (69 att, 2 blank, 3 null) — Exame",
+      "notes": "Cairo — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1579,10 +1684,20 @@
         "lulaPct": 36.36,
         "bolsonaroPct": 21.21
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 35,
+        "bolsonaro": 17,
+        "totalValid": 62,
+        "lulaPct": 56.45,
+        "bolsonaroPct": 27.42
+      },
+      "swing": {
+        "lulaPp": 20.09,
+        "bolsonaroPp": 6.21,
+        "marginPp": 13.88
+      },
+      "notes": "g1 (candidate sum 62; stated 60.34% implies ~58).",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1655,10 +1770,20 @@
         "lulaPct": 53.7,
         "bolsonaroPct": 22.22
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 31,
+        "bolsonaro": 22,
+        "totalValid": 61,
+        "lulaPct": 50.82,
+        "bolsonaroPct": 36.07
+      },
+      "swing": {
+        "lulaPp": -2.88,
+        "bolsonaroPp": 13.85,
+        "marginPp": -16.73
+      },
+      "notes": "g1 (candidate sum 61; stated 50% implies 62).",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1686,7 +1811,7 @@
         "bolsonaroPp": -7.14,
         "marginPp": 20.89
       },
-      "notes": "Riyadh (84 att, 0 blank, 0 null) — Exame",
+      "notes": "Riyadh — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1706,11 +1831,24 @@
         "lulaPct": 67.92,
         "bolsonaroPct": 26.42
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "Partial BU reported (1/2 sections); awaiting full tally",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 24,
+        "bolsonaro": 26,
+        "totalValid": 50,
+        "lulaPct": 48.0,
+        "bolsonaroPct": 52.0
+      },
+      "swing": {
+        "lulaPp": -19.92,
+        "bolsonaroPp": 25.58,
+        "marginPp": -45.5
+      },
+      "notes": "Partial — g1 1/2 sections; only Lula/Flávio published so far.",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 2
+      }
     },
     {
       "id": "morocco",
@@ -1756,7 +1894,7 @@
         "bolsonaroPp": -8.14,
         "marginPp": 15.64
       },
-      "notes": "Nairobi (47 att, 1 blank, 0 null) — Exame",
+      "notes": "Nairobi — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1846,10 +1984,20 @@
         "lulaPct": 54.35,
         "bolsonaroPct": 30.43
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 29,
+        "bolsonaro": 17,
+        "totalValid": 48,
+        "lulaPct": 60.42,
+        "bolsonaroPct": 35.42
+      },
+      "swing": {
+        "lulaPp": 6.07,
+        "bolsonaroPp": 4.99,
+        "marginPp": 1.08
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
@@ -1896,7 +2044,7 @@
         "bolsonaroPp": -46.35,
         "marginPp": 99.39
       },
-      "notes": "Kuwait City (77 att, 1 blank, 3 null) — Exame",
+      "notes": "Kuwait City — g1/Exame",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -2049,10 +2197,20 @@
         "lulaPct": 52,
         "bolsonaroPct": 28
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
+      "y2026": {
+        "lula": 24,
+        "bolsonaro": 20,
+        "totalValid": 57,
+        "lulaPct": 42.11,
+        "bolsonaroPct": 35.09
+      },
+      "swing": {
+        "lulaPp": -9.89,
+        "bolsonaroPp": 7.09,
+        "marginPp": -16.98
+      },
+      "notes": "g1",
+      "status": "reported",
       "coverage": null
     },
     {
