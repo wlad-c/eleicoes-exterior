@@ -5,6 +5,7 @@ import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import { regionLabel, t } from './lib/i18n'
 import { useTheme } from './lib/theme'
+import { useResultsData } from './lib/useResultsData'
 import type {
   CountryResult,
   Lang,
@@ -14,10 +15,11 @@ import type {
 } from './types'
 import { HEATMAP_METRICS } from './types'
 
-const data = raw as ResultsData
+const seed = raw as ResultsData
 
 export default function App() {
   const { theme, setTheme } = useTheme()
+  const data = useResultsData(seed)
   const [lang, setLang] = useState<Lang>('en')
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
@@ -51,13 +53,13 @@ export default function App() {
 
   const regions = useMemo(
     () => [...new Set(data.countries.map((c) => c.region))].sort(),
-    [],
+    [data.countries],
   )
 
-  const totals = useMemo(() => runningTotals(data.countries), [])
+  const totals = useMemo(() => runningTotals(data.countries), [data.countries])
   const reportedCountries = useMemo(
     () => data.countries.filter((c) => c.status === 'reported'),
-    [],
+    [data.countries],
   )
   const reportedAgg = useMemo(
     () => aggregateRows(reportedCountries),
@@ -80,7 +82,7 @@ export default function App() {
         c.iso3.toLowerCase().includes(q)
       )
     })
-  }, [query, region, statusFilter])
+  }, [data.countries, query, region, statusFilter])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -190,6 +192,10 @@ export default function App() {
           </div>
           <p className="text-xs text-[var(--ink-muted)]">
             {t('updated', lang)}: {updated}
+            <span className="mx-1.5 text-[var(--line)]" aria-hidden>
+              ·
+            </span>
+            {t('autoRefresh', lang)}
           </p>
         </div>
 

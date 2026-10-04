@@ -1,0 +1,2268 @@
+{
+  "meta": {
+    "title": {
+      "en": "Brazilian Overseas Vote — 1st Round",
+      "pt": "Voto no Exterior — 1º Turno"
+    },
+    "subtitle": {
+      "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
+      "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
+    },
+    "updatedAt": "2026-10-04T15:14:09.218Z",
+    "sources": [
+      {
+        "name": "TSE Dados Abertos — 2022 1st round",
+        "url": "https://dadosabertos.tse.jus.br/",
+        "role": {
+          "en": "Official 2022 overseas presidential results by country (ZZ)",
+          "pt": "Resultados oficiais de 2022 no exterior por país (ZZ)"
+        }
+      },
+      {
+        "name": "TSE Resultados 2026",
+        "url": "https://resultados.tse.jus.br/",
+        "role": {
+          "en": "Official national totalization portal (ZZ when published)",
+          "pt": "Portal oficial de totalização nacional (ZZ quando publicado)"
+        }
+      },
+      {
+        "name": "g1",
+        "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml",
+        "role": {
+          "en": "2026 overseas ballot-box (BU) roundups by country/city",
+          "pt": "Levantamento 2026 de boletins de urna no exterior por país/cidade"
+        }
+      },
+      {
+        "name": "Exame",
+        "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/",
+        "role": {
+          "en": "2026 overseas BU tallies (Japan, UAE, Thailand valid counts; Jordan, Israel, Greece, Qatar, Estonia, Saudi Arabia, Kuwait, Egypt, Kenya)",
+          "pt": "Apurações 2026 de BU no exterior (Japão, EAU, Tailândia; Jordânia, Israel, Grécia, Catar, Estônia, Arábia Saudita, Kuwait, Egito, Quênia)"
+        }
+      },
+      {
+        "name": "Poder360",
+        "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-exterior-resultados/",
+        "role": {
+          "en": "2026 overseas BU tallies by country",
+          "pt": "Apurações 2026 de BU no exterior por país"
+        }
+      },
+      {
+        "name": "Metro1",
+        "url": "https://www.metro1.com.br/noticias/eleicoes-2026/189284,apuracao-no-exterior-veja-os-primeiros-resultados-das-eleicoes",
+        "role": {
+          "en": "2026 overseas BU tallies (incl. Taiwan / Taipei)",
+          "pt": "Apurações 2026 de BU no exterior (incl. Taiwan / Taipei)"
+        }
+      },
+      {
+        "name": "Brasil de Fato",
+        "url": "https://www.brasildefato.com.br/2026/10/04/pela-primeira-vez-lula-ganha-em-todas-as-secoes-eleitorais-da-china-continental/",
+        "role": {
+          "en": "China mainland section-level BU coverage",
+          "pt": "Cobertura de BU por seção na China continental"
+        }
+      },
+      {
+        "name": "BNews",
+        "url": "https://www.bnews.com.br/noticias/politica/flavio-bolsonaro-vence-com-folga-no-japao-lula-melhora-desempenho-em-relacao-a-2022.html",
+        "role": {
+          "en": "Japan and Asia/Oceania BU roundups",
+          "pt": "Levantamentos de BU do Japão e Ásia/Oceania"
+        }
+      },
+      {
+        "name": "world-atlas / Natural Earth",
+        "url": "https://github.com/topojson/world-atlas",
+        "role": {
+          "en": "World map geometry (110m countries)",
+          "pt": "Geometria do mapa-múndi (países 110m)"
+        }
+      }
+    ],
+    "defaultMapMetric": "swingToLula",
+    "candidates": {
+      "lula": {
+        "en": "Lula",
+        "pt": "Lula"
+      },
+      "bolsonaro2022": {
+        "en": "J Bolsonaro",
+        "pt": "J Bolsonaro"
+      },
+      "bolsonaro2026": {
+        "en": "F Bolsonaro",
+        "pt": "F Bolsonaro"
+      }
+    }
+  },
+  "countries": [
+    {
+      "id": "japan",
+      "countryEn": "Japan",
+      "countryPt": "Japão",
+      "iso3": "JPN",
+      "region": "Asia",
+      "y2022": {
+        "lula": 4297,
+        "bolsonaro": 23007,
+        "totalValid": 31860,
+        "lulaPct": 13.49,
+        "bolsonaroPct": 72.21
+      },
+      "y2026": {
+        "lula": 5234,
+        "bolsonaro": 24601,
+        "totalValid": 34318,
+        "lulaPct": 15.25,
+        "bolsonaroPct": 71.69
+      },
+      "swing": {
+        "lulaPp": 1.76,
+        "bolsonaroPp": -0.52,
+        "marginPp": 2.28
+      },
+      "notes": "Totals per BNews/Exame (34,318 valid); g1 lists 34,363 / Lula 5,222.",
+      "status": "reported",
+      "coverage": {
+        "counted": 119,
+        "total": 119
+      }
+    },
+    {
+      "id": "australia",
+      "countryEn": "Australia",
+      "countryPt": "Austrália",
+      "iso3": "AUS",
+      "region": "Oceania",
+      "y2022": {
+        "lula": 3485,
+        "bolsonaro": 1826,
+        "totalValid": 6352,
+        "lulaPct": 54.86,
+        "bolsonaroPct": 28.75
+      },
+      "y2026": {
+        "lula": 4562,
+        "bolsonaro": 2579,
+        "totalValid": 8451,
+        "lulaPct": 53.98,
+        "bolsonaroPct": 30.52
+      },
+      "swing": {
+        "lulaPp": -0.88,
+        "bolsonaroPp": 1.77,
+        "marginPp": -2.65
+      },
+      "notes": "DISPUTED — g1/Exame list Lula 4,562 / Flávio 2,579 / 8,451 valid, but g1’s itemized candidates sum to 8,130 and conflict with g1’s earlier 26/29 partial (Lula 5,283). Shown for continuity; awaiting TSE totalization.",
+      "status": "reported",
+      "coverage": null
+    },
+    {
+      "id": "china-mainland",
+      "countryEn": "China (mainland)",
+      "countryPt": "China (continente)",
+      "iso3": "CHN",
+      "region": "Asia",
+      "y2022": {
+        "lula": 166,
+        "bolsonaro": 121,
+        "totalValid": 342,
+        "lulaPct": 48.54,
+        "bolsonaroPct": 35.38
+      },
+      "y2026": {
+        "lula": 268,
+        "bolsonaro": 98,
+        "totalValid": 408,
+        "lulaPct": 65.69,
+        "bolsonaroPct": 24.02
+      },
+      "swing": {
+        "lulaPp": 17.15,
+        "bolsonaroPp": -11.36,
+        "marginPp": 28.51
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
+    },
+    {
+      "id": "new-zealand",
+      "countryEn": "New Zealand",
+      "countryPt": "Nova Zelândia",
+      "iso3": "NZL",
+      "region": "Oceania",
+      "y2022": {
+        "lula": 329,
+        "bolsonaro": 71,
+        "totalValid": 451,
+        "lulaPct": 72.95,
+        "bolsonaroPct": 15.74
+      },
+      "y2026": {
+        "lula": 234,
+        "bolsonaro": 64,
+        "totalValid": 332,
+        "lulaPct": 70.48,
+        "bolsonaroPct": 19.28
+      },
+      "swing": {
+        "lulaPp": -2.47,
+        "bolsonaroPp": 3.54,
+        "marginPp": -6.01
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "singapore",
+      "countryEn": "Singapore",
+      "countryPt": "Singapura",
+      "iso3": "SGP",
+      "region": "Asia",
+      "y2022": {
+        "lula": 182,
+        "bolsonaro": 97,
+        "totalValid": 390,
+        "lulaPct": 46.67,
+        "bolsonaroPct": 24.87
+      },
+      "y2026": {
+        "lula": 190,
+        "bolsonaro": 92,
+        "totalValid": 348,
+        "lulaPct": 54.6,
+        "bolsonaroPct": 26.44
+      },
+      "swing": {
+        "lulaPp": 7.93,
+        "bolsonaroPp": 1.57,
+        "marginPp": 6.36
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "hong-kong",
+      "countryEn": "Hong Kong",
+      "countryPt": "Hong Kong",
+      "iso3": "HKG",
+      "region": "Asia",
+      "y2022": {
+        "lula": 55,
+        "bolsonaro": 86,
+        "totalValid": 178,
+        "lulaPct": 30.9,
+        "bolsonaroPct": 48.31
+      },
+      "y2026": {
+        "lula": 99,
+        "bolsonaro": 105,
+        "totalValid": 244,
+        "lulaPct": 40.57,
+        "bolsonaroPct": 43.03
+      },
+      "swing": {
+        "lulaPp": 9.67,
+        "bolsonaroPp": -5.28,
+        "marginPp": 14.95
+      },
+      "notes": "Valid total 244 per Exame; g1 implies 240.",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "south-korea",
+      "countryEn": "South Korea",
+      "countryPt": "Coreia do Sul",
+      "iso3": "KOR",
+      "region": "Asia",
+      "y2022": {
+        "lula": 130,
+        "bolsonaro": 53,
+        "totalValid": 207,
+        "lulaPct": 62.8,
+        "bolsonaroPct": 25.6
+      },
+      "y2026": {
+        "lula": 123,
+        "bolsonaro": 72,
+        "totalValid": 216,
+        "lulaPct": 56.94,
+        "bolsonaroPct": 33.33
+      },
+      "swing": {
+        "lulaPp": -5.86,
+        "bolsonaroPp": 7.73,
+        "marginPp": -13.59
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "thailand",
+      "countryEn": "Thailand",
+      "countryPt": "Tailândia",
+      "iso3": "THA",
+      "region": "Asia",
+      "y2022": {
+        "lula": 46,
+        "bolsonaro": 42,
+        "totalValid": 105,
+        "lulaPct": 43.81,
+        "bolsonaroPct": 40
+      },
+      "y2026": {
+        "lula": 40,
+        "bolsonaro": 51,
+        "totalValid": 99,
+        "lulaPct": 40.4,
+        "bolsonaroPct": 51.52
+      },
+      "swing": {
+        "lulaPp": -3.41,
+        "bolsonaroPp": 11.52,
+        "marginPp": -14.93
+      },
+      "notes": "Valid = 102 attendance − 3 blank (Exame/g1); not turnout.",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "malaysia",
+      "countryEn": "Malaysia",
+      "countryPt": "Malásia",
+      "iso3": "MYS",
+      "region": "Asia",
+      "y2022": {
+        "lula": 27,
+        "bolsonaro": 24,
+        "totalValid": 57,
+        "lulaPct": 47.37,
+        "bolsonaroPct": 42.11
+      },
+      "y2026": {
+        "lula": 44,
+        "bolsonaro": 27,
+        "totalValid": 82,
+        "lulaPct": 53.66,
+        "bolsonaroPct": 32.93
+      },
+      "swing": {
+        "lulaPp": 6.29,
+        "bolsonaroPp": -9.18,
+        "marginPp": 15.47
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "philippines",
+      "countryEn": "Philippines",
+      "countryPt": "Filipinas",
+      "iso3": "PHL",
+      "region": "Asia",
+      "y2022": {
+        "lula": 20,
+        "bolsonaro": 35,
+        "totalValid": 63,
+        "lulaPct": 31.75,
+        "bolsonaroPct": 55.56
+      },
+      "y2026": {
+        "lula": 26,
+        "bolsonaro": 33,
+        "totalValid": 62,
+        "lulaPct": 41.94,
+        "bolsonaroPct": 53.23
+      },
+      "swing": {
+        "lulaPp": 10.19,
+        "bolsonaroPp": -2.33,
+        "marginPp": 12.52
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "united-states",
+      "countryEn": "United States",
+      "countryPt": "Estados Unidos",
+      "iso3": "USA",
+      "region": "Americas",
+      "y2022": {
+        "lula": 20541,
+        "bolsonaro": 37848,
+        "totalValid": 65339,
+        "lulaPct": 31.44,
+        "bolsonaroPct": 57.93
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "portugal",
+      "countryEn": "Portugal",
+      "countryPt": "Portugal",
+      "iso3": "PRT",
+      "region": "Europe",
+      "y2022": {
+        "lula": 21839,
+        "bolsonaro": 11218,
+        "totalValid": 36165,
+        "lulaPct": 60.39,
+        "bolsonaroPct": 31.02
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "canada",
+      "countryEn": "Canada",
+      "countryPt": "Canadá",
+      "iso3": "CAN",
+      "region": "Americas",
+      "y2022": {
+        "lula": 11821,
+        "bolsonaro": 6859,
+        "totalValid": 21694,
+        "lulaPct": 54.49,
+        "bolsonaroPct": 31.62
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "germany",
+      "countryEn": "Germany",
+      "countryPt": "Alemanha",
+      "iso3": "DEU",
+      "region": "Europe",
+      "y2022": {
+        "lula": 11875,
+        "bolsonaro": 3170,
+        "totalValid": 17101,
+        "lulaPct": 69.44,
+        "bolsonaroPct": 18.54
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "united-kingdom",
+      "countryEn": "United Kingdom",
+      "countryPt": "Reino Unido",
+      "iso3": "GBR",
+      "region": "Europe",
+      "y2022": {
+        "lula": 8165,
+        "bolsonaro": 5170,
+        "totalValid": 14796,
+        "lulaPct": 55.18,
+        "bolsonaroPct": 34.94
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "italy",
+      "countryEn": "Italy",
+      "countryPt": "Itália",
+      "iso3": "ITA",
+      "region": "Europe",
+      "y2022": {
+        "lula": 5418,
+        "bolsonaro": 3884,
+        "totalValid": 10415,
+        "lulaPct": 52.02,
+        "bolsonaroPct": 37.29
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "switzerland",
+      "countryEn": "Switzerland",
+      "countryPt": "Suíça",
+      "iso3": "CHE",
+      "region": "Europe",
+      "y2022": {
+        "lula": 4664,
+        "bolsonaro": 4173,
+        "totalValid": 10183,
+        "lulaPct": 45.8,
+        "bolsonaroPct": 40.98
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "france",
+      "countryEn": "France",
+      "countryPt": "França",
+      "iso3": "FRA",
+      "region": "Europe",
+      "y2022": {
+        "lula": 7809,
+        "bolsonaro": 1384,
+        "totalValid": 10063,
+        "lulaPct": 77.6,
+        "bolsonaroPct": 13.75
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "spain",
+      "countryEn": "Spain",
+      "countryPt": "Espanha",
+      "iso3": "ESP",
+      "region": "Europe",
+      "y2022": {
+        "lula": 5912,
+        "bolsonaro": 2905,
+        "totalValid": 9810,
+        "lulaPct": 60.27,
+        "bolsonaroPct": 29.61
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "ireland",
+      "countryEn": "Ireland",
+      "countryPt": "Irlanda",
+      "iso3": "IRL",
+      "region": "Europe",
+      "y2022": {
+        "lula": 5951,
+        "bolsonaro": 1038,
+        "totalValid": 7594,
+        "lulaPct": 78.36,
+        "bolsonaroPct": 13.67
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "argentina",
+      "countryEn": "Argentina",
+      "countryPt": "Argentina",
+      "iso3": "ARG",
+      "region": "Americas",
+      "y2022": {
+        "lula": 4634,
+        "bolsonaro": 2125,
+        "totalValid": 7293,
+        "lulaPct": 63.54,
+        "bolsonaroPct": 29.14
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "netherlands",
+      "countryEn": "Netherlands",
+      "countryPt": "Países Baixos",
+      "iso3": "NLD",
+      "region": "Europe",
+      "y2022": {
+        "lula": 4094,
+        "bolsonaro": 961,
+        "totalValid": 5770,
+        "lulaPct": 70.95,
+        "bolsonaroPct": 16.66
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "paraguay",
+      "countryEn": "Paraguay",
+      "countryPt": "Paraguai",
+      "iso3": "PRY",
+      "region": "Americas",
+      "y2022": {
+        "lula": 634,
+        "bolsonaro": 4244,
+        "totalValid": 5112,
+        "lulaPct": 12.4,
+        "bolsonaroPct": 83.02
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "belgium",
+      "countryEn": "Belgium",
+      "countryPt": "Bélgica",
+      "iso3": "BEL",
+      "region": "Europe",
+      "y2022": {
+        "lula": 1984,
+        "bolsonaro": 1271,
+        "totalValid": 3646,
+        "lulaPct": 54.42,
+        "bolsonaroPct": 34.86
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "lebanon",
+      "countryEn": "Lebanon",
+      "countryPt": "Líbano",
+      "iso3": "LBN",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 1601,
+        "bolsonaro": 947,
+        "totalValid": 2850,
+        "lulaPct": 56.18,
+        "bolsonaroPct": 33.23
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "sweden",
+      "countryEn": "Sweden",
+      "countryPt": "Suécia",
+      "iso3": "SWE",
+      "region": "Europe",
+      "y2022": {
+        "lula": 1632,
+        "bolsonaro": 421,
+        "totalValid": 2433,
+        "lulaPct": 67.08,
+        "bolsonaroPct": 17.3
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "chile",
+      "countryEn": "Chile",
+      "countryPt": "Chile",
+      "iso3": "CHL",
+      "region": "Americas",
+      "y2022": {
+        "lula": 869,
+        "bolsonaro": 796,
+        "totalValid": 1937,
+        "lulaPct": 44.86,
+        "bolsonaroPct": 41.09
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "bolivia",
+      "countryEn": "Bolivia",
+      "countryPt": "Bolívia",
+      "iso3": "BOL",
+      "region": "Americas",
+      "y2022": {
+        "lula": 347,
+        "bolsonaro": 1277,
+        "totalValid": 1731,
+        "lulaPct": 20.05,
+        "bolsonaroPct": 73.77
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "uruguay",
+      "countryEn": "Uruguay",
+      "countryPt": "Uruguai",
+      "iso3": "URY",
+      "region": "Americas",
+      "y2022": {
+        "lula": 813,
+        "bolsonaro": 686,
+        "totalValid": 1725,
+        "lulaPct": 47.13,
+        "bolsonaroPct": 39.77
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "mexico",
+      "countryEn": "Mexico",
+      "countryPt": "México",
+      "iso3": "MEX",
+      "region": "Americas",
+      "y2022": {
+        "lula": 614,
+        "bolsonaro": 595,
+        "totalValid": 1389,
+        "lulaPct": 44.2,
+        "bolsonaroPct": 42.84
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "austria",
+      "countryEn": "Austria",
+      "countryPt": "Áustria",
+      "iso3": "AUT",
+      "region": "Europe",
+      "y2022": {
+        "lula": 864,
+        "bolsonaro": 313,
+        "totalValid": 1386,
+        "lulaPct": 62.34,
+        "bolsonaroPct": 22.58
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "french-guiana",
+      "countryEn": "French Guiana",
+      "countryPt": "Guiana Francesa",
+      "iso3": "GUF",
+      "region": "Americas",
+      "y2022": {
+        "lula": 584,
+        "bolsonaro": 666,
+        "totalValid": 1371,
+        "lulaPct": 42.6,
+        "bolsonaroPct": 48.58
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "denmark",
+      "countryEn": "Denmark",
+      "countryPt": "Dinamarca",
+      "iso3": "DNK",
+      "region": "Europe",
+      "y2022": {
+        "lula": 936,
+        "bolsonaro": 147,
+        "totalValid": 1222,
+        "lulaPct": 76.6,
+        "bolsonaroPct": 12.03
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "united-arab-emirates",
+      "countryEn": "United Arab Emirates",
+      "countryPt": "Emirados Árabes Unidos",
+      "iso3": "ARE",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 352,
+        "bolsonaro": 464,
+        "totalValid": 955,
+        "lulaPct": 36.86,
+        "bolsonaroPct": 48.59
+      },
+      "y2026": {
+        "lula": 512,
+        "bolsonaro": 659,
+        "totalValid": 1355,
+        "lulaPct": 37.79,
+        "bolsonaroPct": 48.63
+      },
+      "swing": {
+        "lulaPp": 0.93,
+        "bolsonaroPp": 0.04,
+        "marginPp": 0.89
+      },
+      "notes": "Abu Dhabi jurisdiction (5 BUs). Lula count per Exame (512); g1 lists 469 with an inconsistent total.",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
+    },
+    {
+      "id": "norway",
+      "countryEn": "Norway",
+      "countryPt": "Noruega",
+      "iso3": "NOR",
+      "region": "Europe",
+      "y2022": {
+        "lula": 549,
+        "bolsonaro": 161,
+        "totalValid": 830,
+        "lulaPct": 66.14,
+        "bolsonaroPct": 19.4
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "peru",
+      "countryEn": "Peru",
+      "countryPt": "Peru",
+      "iso3": "PER",
+      "region": "Americas",
+      "y2022": {
+        "lula": 273,
+        "bolsonaro": 384,
+        "totalValid": 788,
+        "lulaPct": 34.64,
+        "bolsonaroPct": 48.73
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "palestine",
+      "countryEn": "Palestine",
+      "countryPt": "Palestina",
+      "iso3": "PSE",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 592,
+        "bolsonaro": 52,
+        "totalValid": 698,
+        "lulaPct": 84.81,
+        "bolsonaroPct": 7.45
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "israel",
+      "countryEn": "Israel",
+      "countryPt": "Israel",
+      "iso3": "ISR",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 274,
+        "bolsonaro": 320,
+        "totalValid": 696,
+        "lulaPct": 39.37,
+        "bolsonaroPct": 45.98
+      },
+      "y2026": {
+        "lula": 92,
+        "bolsonaro": 523,
+        "totalValid": 704,
+        "lulaPct": 13.07,
+        "bolsonaroPct": 74.29
+      },
+      "swing": {
+        "lulaPp": -26.3,
+        "bolsonaroPp": 28.31,
+        "marginPp": -54.61
+      },
+      "notes": "5 BUs Tel Aviv (730 att, 14 blank, 12 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
+    },
+    {
+      "id": "colombia",
+      "countryEn": "Colombia",
+      "countryPt": "Colômbia",
+      "iso3": "COL",
+      "region": "Americas",
+      "y2022": {
+        "lula": 365,
+        "bolsonaro": 242,
+        "totalValid": 691,
+        "lulaPct": 52.82,
+        "bolsonaroPct": 35.02
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "panama",
+      "countryEn": "Panama",
+      "countryPt": "Panamá",
+      "iso3": "PAN",
+      "region": "Americas",
+      "y2022": {
+        "lula": 214,
+        "bolsonaro": 349,
+        "totalValid": 678,
+        "lulaPct": 31.56,
+        "bolsonaroPct": 51.47
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "finland",
+      "countryEn": "Finland",
+      "countryPt": "Finlândia",
+      "iso3": "FIN",
+      "region": "Europe",
+      "y2022": {
+        "lula": 390,
+        "bolsonaro": 127,
+        "totalValid": 625,
+        "lulaPct": 62.4,
+        "bolsonaroPct": 20.32
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "hungary",
+      "countryEn": "Hungary",
+      "countryPt": "Hungria",
+      "iso3": "HUN",
+      "region": "Europe",
+      "y2022": {
+        "lula": 491,
+        "bolsonaro": 72,
+        "totalValid": 607,
+        "lulaPct": 80.89,
+        "bolsonaroPct": 11.86
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "jordan",
+      "countryEn": "Jordan",
+      "countryPt": "Jordânia",
+      "iso3": "JOR",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 338,
+        "bolsonaro": 107,
+        "totalValid": 552,
+        "lulaPct": 61.23,
+        "bolsonaroPct": 19.38
+      },
+      "y2026": {
+        "lula": 675,
+        "bolsonaro": 59,
+        "totalValid": 787,
+        "lulaPct": 85.77,
+        "bolsonaroPct": 7.5
+      },
+      "swing": {
+        "lulaPp": 24.54,
+        "bolsonaroPp": -11.88,
+        "marginPp": 36.42
+      },
+      "notes": "2 BUs Amman (833 att, 19 blank, 27 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "suriname",
+      "countryEn": "Suriname",
+      "countryPt": "Suriname",
+      "iso3": "SUR",
+      "region": "Americas",
+      "y2022": {
+        "lula": 125,
+        "bolsonaro": 311,
+        "totalValid": 471,
+        "lulaPct": 26.54,
+        "bolsonaroPct": 66.03
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "south-africa",
+      "countryEn": "South Africa",
+      "countryPt": "África do Sul",
+      "iso3": "ZAF",
+      "region": "Africa",
+      "y2022": {
+        "lula": 155,
+        "bolsonaro": 242,
+        "totalValid": 458,
+        "lulaPct": 33.84,
+        "bolsonaroPct": 52.84
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "greece",
+      "countryEn": "Greece",
+      "countryPt": "Grécia",
+      "iso3": "GRC",
+      "region": "Europe",
+      "y2022": {
+        "lula": 164,
+        "bolsonaro": 205,
+        "totalValid": 437,
+        "lulaPct": 37.53,
+        "bolsonaroPct": 46.91
+      },
+      "y2026": {
+        "lula": 196,
+        "bolsonaro": 230,
+        "totalValid": 494,
+        "lulaPct": 39.68,
+        "bolsonaroPct": 46.56
+      },
+      "swing": {
+        "lulaPp": 2.15,
+        "bolsonaroPp": -0.35,
+        "marginPp": 2.5
+      },
+      "notes": "2 BUs Athens (508 att, 8 blank, 6 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "ecuador",
+      "countryEn": "Ecuador",
+      "countryPt": "Equador",
+      "iso3": "ECU",
+      "region": "Americas",
+      "y2022": {
+        "lula": 110,
+        "bolsonaro": 231,
+        "totalValid": 383,
+        "lulaPct": 28.72,
+        "bolsonaroPct": 60.31
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "czech-republic",
+      "countryEn": "Czech Republic",
+      "countryPt": "Tchéquia",
+      "iso3": "CZE",
+      "region": "Europe",
+      "y2022": {
+        "lula": 253,
+        "bolsonaro": 58,
+        "totalValid": 367,
+        "lulaPct": 68.94,
+        "bolsonaroPct": 15.8
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "costa-rica",
+      "countryEn": "Costa Rica",
+      "countryPt": "Costa Rica",
+      "iso3": "CRI",
+      "region": "Americas",
+      "y2022": {
+        "lula": 136,
+        "bolsonaro": 169,
+        "totalValid": 367,
+        "lulaPct": 37.06,
+        "bolsonaroPct": 46.05
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "qatar",
+      "countryEn": "Qatar",
+      "countryPt": "Catar",
+      "iso3": "QAT",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 132,
+        "bolsonaro": 192,
+        "totalValid": 360,
+        "lulaPct": 36.67,
+        "bolsonaroPct": 53.33
+      },
+      "y2026": {
+        "lula": 147,
+        "bolsonaro": 173,
+        "totalValid": 357,
+        "lulaPct": 41.18,
+        "bolsonaroPct": 48.46
+      },
+      "swing": {
+        "lulaPp": 4.51,
+        "bolsonaroPp": -4.87,
+        "marginPp": 9.38
+      },
+      "notes": "Doha (364 att, 4 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "poland",
+      "countryEn": "Poland",
+      "countryPt": "Polônia",
+      "iso3": "POL",
+      "region": "Europe",
+      "y2022": {
+        "lula": 213,
+        "bolsonaro": 55,
+        "totalValid": 311,
+        "lulaPct": 68.49,
+        "bolsonaroPct": 17.68
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "mozambique",
+      "countryEn": "Mozambique",
+      "countryPt": "Moçambique",
+      "iso3": "MOZ",
+      "region": "Africa",
+      "y2022": {
+        "lula": 117,
+        "bolsonaro": 150,
+        "totalValid": 291,
+        "lulaPct": 40.21,
+        "bolsonaroPct": 51.55
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "angola",
+      "countryEn": "Angola",
+      "countryPt": "Angola",
+      "iso3": "AGO",
+      "region": "Africa",
+      "y2022": {
+        "lula": 124,
+        "bolsonaro": 93,
+        "totalValid": 236,
+        "lulaPct": 52.54,
+        "bolsonaroPct": 39.41
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "taiwan",
+      "countryEn": "Taiwan",
+      "countryPt": "Taiwan",
+      "iso3": "TWN",
+      "region": "Asia",
+      "y2022": {
+        "lula": 79,
+        "bolsonaro": 100,
+        "totalValid": 223,
+        "lulaPct": 35.43,
+        "bolsonaroPct": 44.84
+      },
+      "y2026": {
+        "lula": 77,
+        "bolsonaro": 107,
+        "totalValid": 219,
+        "lulaPct": 35.16,
+        "bolsonaroPct": 48.86
+      },
+      "swing": {
+        "lulaPp": -0.27,
+        "bolsonaroPp": 4.02,
+        "marginPp": -4.29
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "dominican-republic",
+      "countryEn": "Dominican Republic",
+      "countryPt": "República Dominicana",
+      "iso3": "DOM",
+      "region": "Americas",
+      "y2022": {
+        "lula": 65,
+        "bolsonaro": 117,
+        "totalValid": 209,
+        "lulaPct": 31.1,
+        "bolsonaroPct": 55.98
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "estonia",
+      "countryEn": "Estonia",
+      "countryPt": "Estônia",
+      "iso3": "EST",
+      "region": "Europe",
+      "y2022": {
+        "lula": 148,
+        "bolsonaro": 16,
+        "totalValid": 186,
+        "lulaPct": 79.57,
+        "bolsonaroPct": 8.6
+      },
+      "y2026": {
+        "lula": 142,
+        "bolsonaro": 19,
+        "totalValid": 190,
+        "lulaPct": 74.74,
+        "bolsonaroPct": 10
+      },
+      "swing": {
+        "lulaPp": -4.83,
+        "bolsonaroPp": 1.4,
+        "marginPp": -6.23
+      },
+      "notes": "Tallinn (197 att, 3 blank, 4 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "turkey",
+      "countryEn": "Turkey",
+      "countryPt": "Turquia",
+      "iso3": "TUR",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 91,
+        "bolsonaro": 51,
+        "totalValid": 153,
+        "lulaPct": 59.48,
+        "bolsonaroPct": 33.33
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "guatemala",
+      "countryEn": "Guatemala",
+      "countryPt": "Guatemala",
+      "iso3": "GTM",
+      "region": "Americas",
+      "y2022": {
+        "lula": 32,
+        "bolsonaro": 90,
+        "totalValid": 147,
+        "lulaPct": 21.77,
+        "bolsonaroPct": 61.22
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "honduras",
+      "countryEn": "Honduras",
+      "countryPt": "Honduras",
+      "iso3": "HND",
+      "region": "Americas",
+      "y2022": {
+        "lula": 35,
+        "bolsonaro": 47,
+        "totalValid": 88,
+        "lulaPct": 39.77,
+        "bolsonaroPct": 53.41
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "russia",
+      "countryEn": "Russia",
+      "countryPt": "Rússia",
+      "iso3": "RUS",
+      "region": "Europe",
+      "y2022": {
+        "lula": 45,
+        "bolsonaro": 28,
+        "totalValid": 84,
+        "lulaPct": 53.57,
+        "bolsonaroPct": 33.33
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "nicaragua",
+      "countryEn": "Nicaragua",
+      "countryPt": "Nicarágua",
+      "iso3": "NIC",
+      "region": "Americas",
+      "y2022": {
+        "lula": 34,
+        "bolsonaro": 32,
+        "totalValid": 79,
+        "lulaPct": 43.04,
+        "bolsonaroPct": 40.51
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "slovenia",
+      "countryEn": "Slovenia",
+      "countryPt": "Eslovênia",
+      "iso3": "SVN",
+      "region": "Europe",
+      "y2022": {
+        "lula": 50,
+        "bolsonaro": 15,
+        "totalValid": 76,
+        "lulaPct": 65.79,
+        "bolsonaroPct": 19.74
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "el-salvador",
+      "countryEn": "El Salvador",
+      "countryPt": "El Salvador",
+      "iso3": "SLV",
+      "region": "Americas",
+      "y2022": {
+        "lula": 22,
+        "bolsonaro": 41,
+        "totalValid": 74,
+        "lulaPct": 29.73,
+        "bolsonaroPct": 55.41
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "egypt",
+      "countryEn": "Egypt",
+      "countryPt": "Egito",
+      "iso3": "EGY",
+      "region": "Africa",
+      "y2022": {
+        "lula": 42,
+        "bolsonaro": 21,
+        "totalValid": 70,
+        "lulaPct": 60,
+        "bolsonaroPct": 30
+      },
+      "y2026": {
+        "lula": 46,
+        "bolsonaro": 12,
+        "totalValid": 64,
+        "lulaPct": 71.88,
+        "bolsonaroPct": 18.75
+      },
+      "swing": {
+        "lulaPp": 11.88,
+        "bolsonaroPp": -11.25,
+        "marginPp": 23.13
+      },
+      "notes": "Cairo (69 att, 2 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "guyana",
+      "countryEn": "Guyana",
+      "countryPt": "Guiana",
+      "iso3": "GUY",
+      "region": "Americas",
+      "y2022": {
+        "lula": 7,
+        "bolsonaro": 55,
+        "totalValid": 70,
+        "lulaPct": 10,
+        "bolsonaroPct": 78.57
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "slovakia",
+      "countryEn": "Slovakia",
+      "countryPt": "Eslováquia",
+      "iso3": "SVK",
+      "region": "Europe",
+      "y2022": {
+        "lula": 24,
+        "bolsonaro": 14,
+        "totalValid": 66,
+        "lulaPct": 36.36,
+        "bolsonaroPct": 21.21
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "cape-verde",
+      "countryEn": "Cape Verde",
+      "countryPt": "Cabo Verde",
+      "iso3": "CPV",
+      "region": "Africa",
+      "y2022": {
+        "lula": 38,
+        "bolsonaro": 22,
+        "totalValid": 65,
+        "lulaPct": 58.46,
+        "bolsonaroPct": 33.85
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "timor-leste",
+      "countryEn": "Timor-Leste",
+      "countryPt": "Timor-Leste",
+      "iso3": "TLS",
+      "region": "Asia",
+      "y2022": {
+        "lula": 18,
+        "bolsonaro": 37,
+        "totalValid": 65,
+        "lulaPct": 27.69,
+        "bolsonaroPct": 56.92
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "senegal",
+      "countryEn": "Senegal",
+      "countryPt": "Senegal",
+      "iso3": "SEN",
+      "region": "Africa",
+      "y2022": {
+        "lula": 26,
+        "bolsonaro": 23,
+        "totalValid": 55,
+        "lulaPct": 47.27,
+        "bolsonaroPct": 41.82
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "romania",
+      "countryEn": "Romania",
+      "countryPt": "Romênia",
+      "iso3": "ROU",
+      "region": "Europe",
+      "y2022": {
+        "lula": 29,
+        "bolsonaro": 12,
+        "totalValid": 54,
+        "lulaPct": 53.7,
+        "bolsonaroPct": 22.22
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "saudi-arabia",
+      "countryEn": "Saudi Arabia",
+      "countryPt": "Arábia Saudita",
+      "iso3": "SAU",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 26,
+        "bolsonaro": 18,
+        "totalValid": 54,
+        "lulaPct": 48.15,
+        "bolsonaroPct": 33.33
+      },
+      "y2026": {
+        "lula": 52,
+        "bolsonaro": 22,
+        "totalValid": 84,
+        "lulaPct": 61.9,
+        "bolsonaroPct": 26.19
+      },
+      "swing": {
+        "lulaPp": 13.75,
+        "bolsonaroPp": -7.14,
+        "marginPp": 20.89
+      },
+      "notes": "Riyadh (84 att, 0 blank, 0 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "india",
+      "countryEn": "India",
+      "countryPt": "Índia",
+      "iso3": "IND",
+      "region": "Asia",
+      "y2022": {
+        "lula": 36,
+        "bolsonaro": 14,
+        "totalValid": 53,
+        "lulaPct": 67.92,
+        "bolsonaroPct": 26.42
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "Partial BU reported (1/2 sections); awaiting full tally",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "morocco",
+      "countryEn": "Morocco",
+      "countryPt": "Marrocos",
+      "iso3": "MAR",
+      "region": "Africa",
+      "y2022": {
+        "lula": 34,
+        "bolsonaro": 8,
+        "totalValid": 53,
+        "lulaPct": 64.15,
+        "bolsonaroPct": 15.09
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "kenya",
+      "countryEn": "Kenya",
+      "countryPt": "Quênia",
+      "iso3": "KEN",
+      "region": "Africa",
+      "y2022": {
+        "lula": 25,
+        "bolsonaro": 23,
+        "totalValid": 51,
+        "lulaPct": 49.02,
+        "bolsonaroPct": 45.1
+      },
+      "y2026": {
+        "lula": 26,
+        "bolsonaro": 17,
+        "totalValid": 46,
+        "lulaPct": 56.52,
+        "bolsonaroPct": 36.96
+      },
+      "swing": {
+        "lulaPp": 7.5,
+        "bolsonaroPp": -8.14,
+        "marginPp": 15.64
+      },
+      "notes": "Nairobi (47 att, 1 blank, 0 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "indonesia",
+      "countryEn": "Indonesia",
+      "countryPt": "Indonésia",
+      "iso3": "IDN",
+      "region": "Asia",
+      "y2022": {
+        "lula": 16,
+        "bolsonaro": 30,
+        "totalValid": 50,
+        "lulaPct": 32,
+        "bolsonaroPct": 60
+      },
+      "y2026": {
+        "lula": 8,
+        "bolsonaro": 19,
+        "totalValid": 31,
+        "lulaPct": 25.81,
+        "bolsonaroPct": 61.29
+      },
+      "swing": {
+        "lulaPp": -6.19,
+        "bolsonaroPp": 1.29,
+        "marginPp": -7.48
+      },
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "serbia",
+      "countryEn": "Serbia",
+      "countryPt": "Sérvia",
+      "iso3": "SRB",
+      "region": "Europe",
+      "y2022": {
+        "lula": 30,
+        "bolsonaro": 8,
+        "totalValid": 49,
+        "lulaPct": 61.22,
+        "bolsonaroPct": 16.33
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "ivory-coast",
+      "countryEn": "Ivory Coast",
+      "countryPt": "Costa do Marfim",
+      "iso3": "CIV",
+      "region": "Africa",
+      "y2022": {
+        "lula": 21,
+        "bolsonaro": 18,
+        "totalValid": 46,
+        "lulaPct": 45.65,
+        "bolsonaroPct": 39.13
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "croatia",
+      "countryEn": "Croatia",
+      "countryPt": "Croácia",
+      "iso3": "HRV",
+      "region": "Europe",
+      "y2022": {
+        "lula": 25,
+        "bolsonaro": 14,
+        "totalValid": 46,
+        "lulaPct": 54.35,
+        "bolsonaroPct": 30.43
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "guinea-bissau",
+      "countryEn": "Guinea-Bissau",
+      "countryPt": "Guiné-Bissau",
+      "iso3": "GNB",
+      "region": "Africa",
+      "y2022": {
+        "lula": 23,
+        "bolsonaro": 21,
+        "totalValid": 44,
+        "lulaPct": 52.27,
+        "bolsonaroPct": 47.73
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "kuwait",
+      "countryEn": "Kuwait",
+      "countryPt": "Kuwait",
+      "iso3": "KWT",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 9,
+        "bolsonaro": 27,
+        "totalValid": 43,
+        "lulaPct": 20.93,
+        "bolsonaroPct": 62.79
+      },
+      "y2026": {
+        "lula": 54,
+        "bolsonaro": 12,
+        "totalValid": 73,
+        "lulaPct": 73.97,
+        "bolsonaroPct": 16.44
+      },
+      "swing": {
+        "lulaPp": 53.04,
+        "bolsonaroPp": -46.35,
+        "marginPp": 99.39
+      },
+      "notes": "Kuwait City (77 att, 1 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "oman",
+      "countryEn": "Oman",
+      "countryPt": "Omã",
+      "iso3": "OMN",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 11,
+        "bolsonaro": 25,
+        "totalValid": 41,
+        "lulaPct": 26.83,
+        "bolsonaroPct": 60.98
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "namibia",
+      "countryEn": "Namibia",
+      "countryPt": "Namíbia",
+      "iso3": "NAM",
+      "region": "Africa",
+      "y2022": {
+        "lula": 4,
+        "bolsonaro": 33,
+        "totalValid": 39,
+        "lulaPct": 10.26,
+        "bolsonaroPct": 84.62
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "bahrain",
+      "countryEn": "Bahrain",
+      "countryPt": "Bahrein",
+      "iso3": "BHR",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 10,
+        "bolsonaro": 22,
+        "totalValid": 38,
+        "lulaPct": 26.32,
+        "bolsonaroPct": 57.89
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "trinidad-and-tobago",
+      "countryEn": "Trinidad and Tobago",
+      "countryPt": "Trinidad e Tobago",
+      "iso3": "TTO",
+      "region": "Americas",
+      "y2022": {
+        "lula": 17,
+        "bolsonaro": 16,
+        "totalValid": 34,
+        "lulaPct": 50,
+        "bolsonaroPct": 47.06
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "bulgaria",
+      "countryEn": "Bulgaria",
+      "countryPt": "Bulgária",
+      "iso3": "BGR",
+      "region": "Europe",
+      "y2022": {
+        "lula": 22,
+        "bolsonaro": 6,
+        "totalValid": 33,
+        "lulaPct": 66.67,
+        "bolsonaroPct": 18.18
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "cuba",
+      "countryEn": "Cuba",
+      "countryPt": "Cuba",
+      "iso3": "CUB",
+      "region": "Americas",
+      "y2022": {
+        "lula": 28,
+        "bolsonaro": 1,
+        "totalValid": 31,
+        "lulaPct": 90.32,
+        "bolsonaroPct": 3.23
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "nigeria",
+      "countryEn": "Nigeria",
+      "countryPt": "Nigéria",
+      "iso3": "NGA",
+      "region": "Africa",
+      "y2022": {
+        "lula": 16,
+        "bolsonaro": 7,
+        "totalValid": 28,
+        "lulaPct": 57.14,
+        "bolsonaroPct": 25
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "cyprus",
+      "countryEn": "Cyprus",
+      "countryPt": "Chipre",
+      "iso3": "CYP",
+      "region": "Europe",
+      "y2022": {
+        "lula": 13,
+        "bolsonaro": 7,
+        "totalValid": 25,
+        "lulaPct": 52,
+        "bolsonaroPct": 28
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "bahamas",
+      "countryEn": "Bahamas",
+      "countryPt": "Bahamas",
+      "iso3": "BHS",
+      "region": "Americas",
+      "y2022": {
+        "lula": 8,
+        "bolsonaro": 15,
+        "totalValid": 25,
+        "lulaPct": 32,
+        "bolsonaroPct": 60
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "ghana",
+      "countryEn": "Ghana",
+      "countryPt": "Gana",
+      "iso3": "GHA",
+      "region": "Africa",
+      "y2022": {
+        "lula": 12,
+        "bolsonaro": 9,
+        "totalValid": 22,
+        "lulaPct": 54.55,
+        "bolsonaroPct": 40.91
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "vietnam",
+      "countryEn": "Vietnam",
+      "countryPt": "Vietnã",
+      "iso3": "VNM",
+      "region": "Asia",
+      "y2022": {
+        "lula": 13,
+        "bolsonaro": 4,
+        "totalValid": 20,
+        "lulaPct": 65,
+        "bolsonaroPct": 20
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "iran",
+      "countryEn": "Iran",
+      "countryPt": "Irã",
+      "iso3": "IRN",
+      "region": "Middle East",
+      "y2022": {
+        "lula": 7,
+        "bolsonaro": 9,
+        "totalValid": 17,
+        "lulaPct": 41.18,
+        "bolsonaroPct": 52.94
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "dr-congo",
+      "countryEn": "DR Congo",
+      "countryPt": "RD Congo",
+      "iso3": "COD",
+      "region": "Africa",
+      "y2022": {
+        "lula": 2,
+        "bolsonaro": 14,
+        "totalValid": 17,
+        "lulaPct": 11.76,
+        "bolsonaroPct": 82.35
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "nepal",
+      "countryEn": "Nepal",
+      "countryPt": "Nepal",
+      "iso3": "NPL",
+      "region": "Asia",
+      "y2022": {
+        "lula": 1,
+        "bolsonaro": 14,
+        "totalValid": 15,
+        "lulaPct": 6.67,
+        "bolsonaroPct": 93.33
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "tunisia",
+      "countryEn": "Tunisia",
+      "countryPt": "Tunísia",
+      "iso3": "TUN",
+      "region": "Africa",
+      "y2022": {
+        "lula": 8,
+        "bolsonaro": 6,
+        "totalValid": 14,
+        "lulaPct": 57.14,
+        "bolsonaroPct": 42.86
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "zambia",
+      "countryEn": "Zambia",
+      "countryPt": "Zâmbia",
+      "iso3": "ZMB",
+      "region": "Africa",
+      "y2022": {
+        "lula": 11,
+        "bolsonaro": 2,
+        "totalValid": 14,
+        "lulaPct": 78.57,
+        "bolsonaroPct": 14.29
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "jamaica",
+      "countryEn": "Jamaica",
+      "countryPt": "Jamaica",
+      "iso3": "JAM",
+      "region": "Americas",
+      "y2022": {
+        "lula": 7,
+        "bolsonaro": 6,
+        "totalValid": 13,
+        "lulaPct": 53.85,
+        "bolsonaroPct": 46.15
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "tanzania",
+      "countryEn": "Tanzania",
+      "countryPt": "Tanzânia",
+      "iso3": "TZA",
+      "region": "Africa",
+      "y2022": {
+        "lula": 6,
+        "bolsonaro": 2,
+        "totalValid": 8,
+        "lulaPct": 75,
+        "bolsonaroPct": 25
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    },
+    {
+      "id": "haiti",
+      "countryEn": "Haiti",
+      "countryPt": "Haiti",
+      "iso3": "HTI",
+      "region": "Americas",
+      "y2022": {
+        "lula": 2,
+        "bolsonaro": 4,
+        "totalValid": 7,
+        "lulaPct": 28.57,
+        "bolsonaroPct": 57.14
+      },
+      "y2026": null,
+      "swing": null,
+      "notes": "",
+      "status": "pending",
+      "coverage": null
+    }
+  ]
+}

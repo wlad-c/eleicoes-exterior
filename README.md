@@ -13,7 +13,9 @@ App runs at [http://localhost:4837/eleicoes-exterior/](http://localhost:4837/ele
 
 ## Update results
 
-Edit [`src/data/results.json`](src/data/results.json), then rebuild. Pending countries keep 2022 figures and leave 2026 blank until a BU roundup is published.
+Edit [`src/data/results.json`](src/data/results.json), then rebuild (`npm run build:pages` for GitHub Pages). Pending countries keep 2022 figures and leave 2026 blank until a BU roundup is published.
+
+The live page also serves a stable copy at `data/results.json` and **re-fetches it every 30 minutes**, so open tabs pick up redeployed tallies without a full reload.
 
 ## Build / GitHub Pages
 
