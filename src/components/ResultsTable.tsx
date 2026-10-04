@@ -1,5 +1,12 @@
+import { useMemo } from 'react'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
-import { countryName, fmtCoverage, fmtPp, fmtShare, metricValue } from '../lib/format'
+import {
+  countryName,
+  fmtCoverage,
+  fmtPp,
+  fmtShare,
+  metricValue,
+} from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
 import {
   heatColumnForMetric,
@@ -22,6 +29,87 @@ type Props = {
   metric: MapMetric
 }
 
+type RowTotals = {
+  countries: number
+  lula2026: number | null
+  bolso2026: number | null
+  valid2026: number | null
+  lulaPct2026: number | null
+  bolsoPct2026: number | null
+  lula2022: number
+  bolso2022: number
+  valid2022: number
+  lulaPct2022: number
+  bolsoPct2022: number
+  lulaChange: number | null
+  bolsonaroChange: number | null
+  swingToLula: number | null
+  sectionsCounted: number | null
+  sectionsTotal: number | null
+}
+
+function sumRows(rows: CountryResult[]): RowTotals {
+  let lula2026 = 0
+  let bolso2026 = 0
+  let valid2026 = 0
+  let has2026 = false
+  let lula2022 = 0
+  let bolso2022 = 0
+  let valid2022 = 0
+  let sectionsCounted = 0
+  let sectionsTotal = 0
+  let hasSections = false
+
+  for (const c of rows) {
+    lula2022 += c.y2022.lula
+    bolso2022 += c.y2022.bolsonaro
+    valid2022 += c.y2022.totalValid
+    if (c.status === 'reported' && c.y2026) {
+      has2026 = true
+      lula2026 += c.y2026.lula
+      bolso2026 += c.y2026.bolsonaro
+      valid2026 += c.y2026.totalValid
+    }
+    if (c.coverage) {
+      hasSections = true
+      sectionsCounted += c.coverage.counted
+      sectionsTotal += c.coverage.total
+    }
+  }
+
+  const lulaPct2022 = valid2022 ? (lula2022 / valid2022) * 100 : 0
+  const bolsoPct2022 = valid2022 ? (bolso2022 / valid2022) * 100 : 0
+  const lulaPct2026 = has2026 && valid2026 ? (lula2026 / valid2026) * 100 : null
+  const bolsoPct2026 = has2026 && valid2026 ? (bolso2026 / valid2026) * 100 : null
+  const lulaChange =
+    lulaPct2026 != null ? lulaPct2026 - lulaPct2022 : null
+  const bolsonaroChange =
+    bolsoPct2026 != null ? bolsoPct2026 - bolsoPct2022 : null
+  const swingToLula =
+    lulaChange != null && bolsonaroChange != null
+      ? lulaChange - bolsonaroChange
+      : null
+
+  return {
+    countries: rows.length,
+    lula2026: has2026 ? lula2026 : null,
+    bolso2026: has2026 ? bolso2026 : null,
+    valid2026: has2026 ? valid2026 : null,
+    lulaPct2026,
+    bolsoPct2026,
+    lula2022,
+    bolso2022,
+    valid2022,
+    lulaPct2022,
+    bolsoPct2022,
+    lulaChange,
+    bolsonaroChange,
+    swingToLula,
+    sectionsCounted: hasSections ? sectionsCounted : null,
+    sectionsTotal: hasSections ? sectionsTotal : null,
+  }
+}
+
 export function ResultsTable({
   rows,
   allCountries,
@@ -33,6 +121,8 @@ export function ResultsTable({
   onSelect,
   metric,
 }: Props) {
+  const totals = useMemo(() => sumRows(rows), [rows])
+
   if (rows.length === 0) {
     return (
       <p className="py-10 text-center text-[var(--ink-muted)]">{t('noMatch', lang)}</p>
@@ -106,7 +196,9 @@ export function ResultsTable({
               {t('swingToLula', lang)}
               {arrow('swingToLula')}
             </Th>
-            <th className="sticky-th px-2 py-2.5 font-medium">{t('notes', lang)}</th>
+            <th className="sticky-th px-2 py-2.5 font-medium text-right">
+              {t('notes', lang)}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -163,6 +255,45 @@ export function ResultsTable({
             )
           })}
         </tbody>
+        <tfoot className="sticky bottom-0 z-20">
+          <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
+            <td className="sticky-tf px-2 py-2.5 text-[var(--ink)]">
+              {t('tableTotal', lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-[var(--ink-muted)] font-normal">
+              {totals.countries} {t('countries', lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+              {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+              {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
+              {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
+              {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+              {fmtPp(totals.lulaChange, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+              {fmtPp(totals.bolsonaroChange, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+              {fmtPp(totals.swingToLula, lang)}
+            </td>
+            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
+              {totals.sectionsCounted != null && totals.sectionsTotal != null
+                ? fmtCoverage({
+                    counted: totals.sectionsCounted,
+                    total: totals.sectionsTotal,
+                  })
+                : '—'}
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   )

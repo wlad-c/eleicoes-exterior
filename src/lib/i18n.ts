@@ -44,6 +44,7 @@ const dict = {
   country: { en: 'Country', pt: 'País' },
   region: { en: 'Region', pt: 'Região' },
   runningTotal: { en: 'Running total (reported)', pt: 'Total parcial (apurados)' },
+  tableTotal: { en: 'Total', pt: 'Total' },
   lula: { en: 'Lula', pt: 'Lula' },
   fBolsonaro: { en: 'F Bolsonaro', pt: 'F Bolsonaro' },
   jBolsonaro: { en: 'J Bolsonaro', pt: 'J Bolsonaro' },
