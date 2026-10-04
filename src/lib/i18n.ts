@@ -85,6 +85,27 @@ const dict = {
     pt: 'apuradas / total',
   },
   sources: { en: 'Sources', pt: 'Fontes' },
+  disclaimers: { en: 'Disclaimers', pt: 'Avisos' },
+  disclaimerUnofficial: {
+    en: 'This page is an unofficial compilation. It is not affiliated with the TSE, TRE-DF, any campaign, or newsroom. Official overseas results are those published by the Tribunal Superior Eleitoral.',
+    pt: 'Esta página é uma compilação não oficial. Não tem vínculo com o TSE, o TRE-DF, campanhas ou redações. Os resultados oficiais no exterior são os divulgados pelo Tribunal Superior Eleitoral.',
+  },
+  disclaimerBu: {
+    en: '2026 figures shown before full TSE totalization come from publicly posted ballot-box tallies (boletins de urna) and press roundups. Coverage can be partial (sections or jurisdictions missing), and numbers may be revised as more BUs appear.',
+    pt: 'Os números de 2026 exibidos antes da totalização completa do TSE vêm de boletins de urna afixados publicamente e de levantamentos da imprensa. A cobertura pode ser parcial (seções ou jurisdições faltando), e os valores podem mudar conforme novos BUs forem publicados.',
+  },
+  disclaimerCompare: {
+    en: 'Comparisons treat Flávio Bolsonaro (2026) against Jair Bolsonaro (2022) for continuity of the Bolsonaro ticket abroad. They are not the same candidate. Percentages use valid votes; swing to Lula is Lula change minus Bolsonaro change (percentage points).',
+    pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing para Lula é a variação de Lula menos a de Bolsonaro (pontos percentuais).',
+  },
+  disclaimerScope: {
+    en: 'Scope is overseas 1st-round presidential voting only. Aggregates and the map reflect only countries marked reported in this dataset, not the full ZZ electorate.',
+    pt: 'O recorte é só a votação presidencial do 1º turno no exterior. Totais e o mapa refletem apenas os países marcados como apurados neste conjunto de dados, não todo o eleitorado ZZ.',
+  },
+  howToEdit: {
+    en: 'Maintainers: edit src/data/results.json and rebuild to update figures.',
+    pt: 'Mantenedores: edite src/data/results.json e faça o build para atualizar os números.',
+  },
   updated: { en: 'Updated', pt: 'Atualizado' },
   legendLula: { en: 'toward Lula', pt: 'para Lula' },
   legendBolso: { en: 'toward Bolsonaro', pt: 'para Bolsonaro' },
@@ -92,10 +113,6 @@ const dict = {
   themeLight: { en: 'Light', pt: 'Claro' },
   themeDark: { en: 'Dark', pt: 'Escuro' },
   themeToggle: { en: 'Toggle color theme', pt: 'Alternar tema de cores' },
-  howToEdit: {
-    en: 'Edit src/data/results.json and rebuild to update figures.',
-    pt: 'Edite src/data/results.json e faça o build para atualizar os números.',
-  },
   scope: {
     en: 'Overseas 1st round only · F Bolsonaro compared to J Bolsonaro 2022',
     pt: 'Somente exterior 1º turno · F Bolsonaro comparado a J Bolsonaro 2022',

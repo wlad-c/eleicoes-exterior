@@ -310,24 +310,46 @@ export default function App() {
         />
       </section>
 
-      <footer className="mt-8 space-y-2 text-sm text-[var(--ink-muted)]">
-        <p>{t('howToEdit', lang)}</p>
-        <p>
-          {t('sources', lang)}:{' '}
-          {data.meta.sources.map((s, i) => (
-            <span key={s.url}>
-              {i > 0 ? ' · ' : ''}
-              <a
-                className="underline decoration-[var(--line)] underline-offset-2 hover:text-[var(--ink)]"
-                href={s.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {s.name}
-              </a>
-            </span>
-          ))}
+      <footer className="mt-10 space-y-6 border-t border-[var(--line)] pt-6 text-sm text-[var(--ink-muted)]">
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-[var(--ink)]">
+            {t('disclaimers', lang)}
+          </h2>
+          <ul className="mt-2 list-disc space-y-2 pl-5">
+            <li>{t('disclaimerUnofficial', lang)}</li>
+            <li>{t('disclaimerBu', lang)}</li>
+            <li>{t('disclaimerCompare', lang)}</li>
+            <li>{t('disclaimerScope', lang)}</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-[var(--ink)]">
+            {t('sources', lang)}
+          </h2>
+          <ul className="mt-2 space-y-2">
+            {data.meta.sources.map((s) => (
+              <li key={s.url} className="leading-snug">
+                <a
+                  className="font-medium text-[var(--ink)] underline decoration-[var(--line)] underline-offset-2 hover:decoration-[var(--accent)]"
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {s.name}
+                </a>
+                {s.role ? (
+                  <span className="text-xs"> — {s.role[lang]}</span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="text-xs">
+          {t('updated', lang)}: {updated}. {t('howToEdit', lang)}
         </p>
+
         {activeHighlight && (
           <p className="text-xs">
             → {countryName(data.countries.find((c) => c.id === activeHighlight)!, lang)}

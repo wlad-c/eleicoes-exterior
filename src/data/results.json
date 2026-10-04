@@ -11,20 +11,76 @@
     "updatedAt": "2026-10-04T14:28:37.337Z",
     "sources": [
       {
-        "name": "TSE open data 2022 1st round",
-        "url": "https://dadosabertos.tse.jus.br/"
+        "name": "TSE Dados Abertos — 2022 1st round",
+        "url": "https://dadosabertos.tse.jus.br/",
+        "role": {
+          "en": "Official 2022 overseas presidential results by country (ZZ)",
+          "pt": "Resultados oficiais de 2022 no exterior por país (ZZ)"
+        }
       },
       {
-        "name": "g1 overseas BU roundup 2026",
-        "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml"
+        "name": "TSE Resultados 2026",
+        "url": "https://resultados.tse.jus.br/",
+        "role": {
+          "en": "Official national totalization portal (ZZ when published)",
+          "pt": "Portal oficial de totalização nacional (ZZ quando publicado)"
+        }
       },
       {
-        "name": "Exame overseas BU roundup 2026",
-        "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/"
+        "name": "g1",
+        "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml",
+        "role": {
+          "en": "2026 overseas ballot-box (BU) roundups by country/city",
+          "pt": "Levantamento 2026 de boletins de urna no exterior por país/cidade"
+        }
       },
       {
-        "name": "Metro1 / Poder360 BU tallies 2026",
-        "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-exterior-resultados/"
+        "name": "Exame",
+        "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/",
+        "role": {
+          "en": "2026 overseas BU tallies (Japan full count, Indonesia, UAE, Asia/Oceania)",
+          "pt": "Apurações 2026 de BU no exterior (Japão completo, Indonésia, EAU, Ásia/Oceania)"
+        }
+      },
+      {
+        "name": "Poder360",
+        "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-exterior-resultados/",
+        "role": {
+          "en": "2026 overseas BU tallies by country",
+          "pt": "Apurações 2026 de BU no exterior por país"
+        }
+      },
+      {
+        "name": "Metro1",
+        "url": "https://www.metro1.com.br/noticias/eleicoes-2026/189284,apuracao-no-exterior-veja-os-primeiros-resultados-das-eleicoes",
+        "role": {
+          "en": "2026 overseas BU tallies (incl. Taiwan / Taipei)",
+          "pt": "Apurações 2026 de BU no exterior (incl. Taiwan / Taipei)"
+        }
+      },
+      {
+        "name": "Brasil de Fato",
+        "url": "https://www.brasildefato.com.br/2026/10/04/pela-primeira-vez-lula-ganha-em-todas-as-secoes-eleitorais-da-china-continental/",
+        "role": {
+          "en": "China mainland section-level BU coverage",
+          "pt": "Cobertura de BU por seção na China continental"
+        }
+      },
+      {
+        "name": "BNews",
+        "url": "https://www.bnews.com.br/noticias/politica/flavio-bolsonaro-vence-com-folga-no-japao-lula-melhora-desempenho-em-relacao-a-2022.html",
+        "role": {
+          "en": "Japan and Asia/Oceania BU roundups",
+          "pt": "Levantamentos de BU do Japão e Ásia/Oceania"
+        }
+      },
+      {
+        "name": "world-atlas / Natural Earth",
+        "url": "https://github.com/topojson/world-atlas",
+        "role": {
+          "en": "World map geometry (110m countries)",
+          "pt": "Geometria do mapa-múndi (países 110m)"
+        }
       }
     ],
     "defaultMapMetric": "swingToLula",

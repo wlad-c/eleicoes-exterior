@@ -43,7 +43,7 @@ export type ResultsData = {
     title: Localized
     subtitle: Localized
     updatedAt: string
-    sources: { name: string; url: string }[]
+    sources: { name: string; url: string; role?: Localized }[]
     defaultMapMetric: string
     candidates: {
       lula: Localized
