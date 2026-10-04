@@ -38,6 +38,18 @@ export type CountryResult = {
   status: CountryStatus
 }
 
+export type TseZzRollup = {
+  election: string
+  fetchedAt: string
+  sectionsCounted: number
+  sectionsTotal: number
+  sectionsPct: number
+  lula: number
+  bolsonaro: number
+  totalValid: number
+  url: string
+}
+
 export type ResultsData = {
   meta: {
     title: Localized
@@ -50,6 +62,8 @@ export type ResultsData = {
       bolsonaro2022: Localized
       bolsonaro2026: Localized
     }
+    /** Latest official TSE ZZ (overseas) presidential rollup from EA20 sync. */
+    tseZz?: TseZzRollup
   }
   countries: CountryResult[]
 }

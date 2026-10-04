@@ -5,10 +5,10 @@
       "pt": "Voto no Exterior — 1º Turno"
     },
     "subtitle": {
-      "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
-      "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
+      "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
+      "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-04T22:01:36.261Z",
+    "updatedAt": "2026-10-04T22:25:40.531Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -19,35 +19,35 @@
         }
       },
       {
-        "name": "TSE Resultados 2026",
+        "name": "TSE Resultados 2026 (EA20 ZZ)",
         "url": "https://resultados.tse.jus.br/",
         "role": {
-          "en": "Official national totalization portal (ZZ when published)",
-          "pt": "Portal oficial de totalização nacional (ZZ quando publicado)"
+          "en": "Official overseas presidential totalization by country (ZZ municipalities) — primary 2026 source",
+          "pt": "Totalização oficial no exterior por país (municípios ZZ) — fonte primária de 2026"
         }
       },
       {
         "name": "g1",
         "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml",
         "role": {
-          "en": "2026 overseas ballot-box (BU) roundups by country (primary source)",
-          "pt": "Levantamento 2026 de boletins de urna no exterior por país (fonte principal)"
+          "en": "2026 overseas BU roundups (secondary — used only where TSE has not yet published)",
+          "pt": "Levantamentos 2026 de BU no exterior (secundário — só onde o TSE ainda não publicou)"
         }
       },
       {
         "name": "Exame",
         "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/",
         "role": {
-          "en": "2026 overseas BU tallies (Japan, UAE, Thailand valid counts; Jordan, Israel, Greece, Qatar, Estonia, Saudi Arabia, Kuwait, Egypt, Kenya)",
-          "pt": "Apurações 2026 de BU no exterior (Japão, EAU, Tailândia; Jordânia, Israel, Grécia, Catar, Estônia, Arábia Saudita, Kuwait, Egito, Quênia)"
+          "en": "2026 overseas BU tallies (secondary to TSE)",
+          "pt": "Apurações 2026 de BU no exterior (secundário ao TSE)"
         }
       },
       {
         "name": "Poder360",
         "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-exterior-resultados/",
         "role": {
-          "en": "2026 overseas BU tallies by country",
-          "pt": "Apurações 2026 de BU no exterior por país"
+          "en": "2026 overseas BU tallies (secondary to TSE)",
+          "pt": "Apurações 2026 de BU no exterior (secundário ao TSE)"
         }
       },
       {
@@ -97,6 +97,17 @@
         "en": "F Bolsonaro",
         "pt": "F Bolsonaro"
       }
+    },
+    "tseZz": {
+      "election": "6257",
+      "fetchedAt": "2026-10-04T22:25:40.531Z",
+      "sectionsCounted": 883,
+      "sectionsTotal": 1351,
+      "sectionsPct": 65.36,
+      "lula": 118128,
+      "bolsonaro": 89524,
+      "totalValid": 229450,
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6257/dados/zz/zz-c0001-e006257-u.json"
     }
   },
   "countries": [
@@ -114,18 +125,18 @@
         "bolsonaroPct": 72.21
       },
       "y2026": {
-        "lula": 5222,
+        "lula": 5234,
         "bolsonaro": 24601,
-        "totalValid": 34263,
-        "lulaPct": 15.24,
-        "bolsonaroPct": 71.8
+        "totalValid": 34281,
+        "lulaPct": 15.27,
+        "bolsonaroPct": 71.76
       },
       "swing": {
-        "lulaPp": 1.75,
-        "bolsonaroPp": -0.41,
-        "marginPp": 2.16
+        "lulaPp": 1.78,
+        "bolsonaroPp": -0.45,
+        "marginPp": 2.23
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (HAMAMATSU 18/18; NAGÓIA 58/58; TÓQUIO 43/43)",
       "status": "reported",
       "coverage": {
         "counted": 119,
@@ -148,18 +159,21 @@
       "y2026": {
         "lula": 4562,
         "bolsonaro": 2579,
-        "totalValid": 8451,
-        "lulaPct": 53.98,
-        "bolsonaroPct": 30.52
+        "totalValid": 8129,
+        "lulaPct": 56.12,
+        "bolsonaroPct": 31.73
       },
       "swing": {
-        "lulaPp": -0.88,
-        "bolsonaroPp": 1.77,
-        "marginPp": -2.65
+        "lulaPp": 1.26,
+        "bolsonaroPp": 2.98,
+        "marginPp": -1.72
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (CAMBERRA 10/10; SYDNEY 19/19)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 29,
+        "total": 29
+      }
     },
     {
       "id": "china-mainland",
@@ -175,20 +189,23 @@
         "bolsonaroPct": 35.38
       },
       "y2026": {
-        "lula": 367,
-        "bolsonaro": 203,
-        "totalValid": 648,
-        "lulaPct": 56.64,
-        "bolsonaroPct": 31.33
+        "lula": 268,
+        "bolsonaro": 98,
+        "totalValid": 407,
+        "lulaPct": 65.85,
+        "bolsonaroPct": 24.08
       },
       "swing": {
-        "lulaPp": 8.1,
-        "bolsonaroPp": -4.05,
-        "marginPp": 12.15
+        "lulaPp": 17.31,
+        "bolsonaroPp": -11.3,
+        "marginPp": 28.61
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (PEQUIM 1/1; CANTÃO 1/1; XANGAI 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
     },
     {
       "id": "new-zealand",
@@ -215,11 +232,11 @@
         "bolsonaroPp": 3.54,
         "marginPp": -6.01
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (WELLINGTON 5/5)",
       "status": "reported",
       "coverage": {
-        "counted": 2,
-        "total": 2
+        "counted": 5,
+        "total": 5
       }
     },
     {
@@ -247,7 +264,7 @@
         "bolsonaroPp": 1.57,
         "marginPp": 6.36
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (SINGAPURA 2/2)",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -279,7 +296,7 @@
         "bolsonaroPp": -5.28,
         "marginPp": 14.95
       },
-      "notes": "Valid total 244 per Exame; g1 implies 240.",
+      "notes": "TSE EA20 (HONG KONG 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -311,7 +328,7 @@
         "bolsonaroPp": 7.73,
         "marginPp": -13.59
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (SEUL 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -343,7 +360,7 @@
         "bolsonaroPp": 11.52,
         "marginPp": -14.93
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BANGKOK 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -375,7 +392,7 @@
         "bolsonaroPp": -9.18,
         "marginPp": 15.47
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (KUALA LUMPUR 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -407,7 +424,7 @@
         "bolsonaroPp": -2.33,
         "marginPp": 12.52
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (MANILA 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -458,9 +475,12 @@
         "bolsonaroPp": 7.55,
         "marginPp": -15.49
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (LISBOA 103/103; PORTO 62/62; FARO 11/11)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 176,
+        "total": 176
+      }
     },
     {
       "id": "canada",
@@ -497,18 +517,21 @@
       "y2026": {
         "lula": 13525,
         "bolsonaro": 3532,
-        "totalValid": 18798,
-        "lulaPct": 71.95,
+        "totalValid": 18802,
+        "lulaPct": 71.93,
         "bolsonaroPct": 18.79
       },
       "swing": {
-        "lulaPp": 2.51,
+        "lulaPp": 2.49,
         "bolsonaroPp": 0.25,
-        "marginPp": 2.26
+        "marginPp": 2.24
       },
-      "notes": "g1 (fuller roundup)",
+      "notes": "TSE EA20 (BERLIM 20/20; FRANKFURT 21/21; MUNIQUE 21/21)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 62,
+        "total": 62
+      }
     },
     {
       "id": "united-kingdom",
@@ -535,9 +558,12 @@
         "bolsonaroPp": 0.48,
         "marginPp": 1.37
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (LONDRES 48/48; EDIMBURGO 6/6)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 54,
+        "total": 54
+      }
     },
     {
       "id": "italy",
@@ -552,11 +578,24 @@
         "lulaPct": 52.02,
         "bolsonaroPct": 37.29
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 6148,
+        "bolsonaro": 4386,
+        "totalValid": 11595,
+        "lulaPct": 53.02,
+        "bolsonaroPct": 37.83
+      },
+      "swing": {
+        "lulaPp": 1,
+        "bolsonaroPp": 0.54,
+        "marginPp": 0.46
+      },
+      "notes": "TSE EA20 (MILÃO 37/37; ROMA 22/22)",
+      "status": "reported",
+      "coverage": {
+        "counted": 59,
+        "total": 59
+      }
     },
     {
       "id": "switzerland",
@@ -583,9 +622,12 @@
         "bolsonaroPp": 0.71,
         "marginPp": 1.35
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (GENEBRA 15/15; ZURIQUE 19/19)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 34,
+        "total": 34
+      }
     },
     {
       "id": "france",
@@ -601,20 +643,23 @@
         "bolsonaroPct": 13.75
       },
       "y2026": {
-        "lula": 8974,
-        "bolsonaro": 1776,
-        "totalValid": 11448,
-        "lulaPct": 78.39,
-        "bolsonaroPct": 15.51
+        "lula": 8769,
+        "bolsonaro": 1758,
+        "totalValid": 11209,
+        "lulaPct": 78.23,
+        "bolsonaroPct": 15.68
       },
       "swing": {
-        "lulaPp": 0.79,
-        "bolsonaroPp": 1.76,
-        "marginPp": -0.97
+        "lulaPp": 0.63,
+        "bolsonaroPp": 1.93,
+        "marginPp": -1.3
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (PARIS 34/34; MARSELHA 4/4)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 38,
+        "total": 38
+      }
     },
     {
       "id": "spain",
@@ -630,20 +675,23 @@
         "bolsonaroPct": 29.61
       },
       "y2026": {
-        "lula": 7063,
-        "bolsonaro": 3297,
-        "totalValid": 11346,
-        "lulaPct": 62.25,
-        "bolsonaroPct": 29.06
+        "lula": 7263,
+        "bolsonaro": 3338,
+        "totalValid": 11597,
+        "lulaPct": 62.63,
+        "bolsonaroPct": 28.78
       },
       "swing": {
-        "lulaPp": 1.98,
-        "bolsonaroPp": -0.55,
-        "marginPp": 2.53
+        "lulaPp": 2.36,
+        "bolsonaroPp": -0.83,
+        "marginPp": 3.19
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BARCELONA 22/22; MADRI 30/30)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 52,
+        "total": 52
+      }
     },
     {
       "id": "ireland",
@@ -658,11 +706,24 @@
         "lulaPct": 78.36,
         "bolsonaroPct": 13.67
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 6025,
+        "bolsonaro": 1559,
+        "totalValid": 8299,
+        "lulaPct": 72.6,
+        "bolsonaroPct": 18.79
+      },
+      "swing": {
+        "lulaPp": -5.76,
+        "bolsonaroPp": 5.12,
+        "marginPp": -10.88
+      },
+      "notes": "TSE EA20 (DUBLIN 28/28)",
+      "status": "reported",
+      "coverage": {
+        "counted": 28,
+        "total": 28
+      }
     },
     {
       "id": "argentina",
@@ -677,11 +738,24 @@
         "lulaPct": 63.54,
         "bolsonaroPct": 29.14
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 1549,
+        "bolsonaro": 817,
+        "totalValid": 2546,
+        "lulaPct": 60.84,
+        "bolsonaroPct": 32.09
+      },
+      "swing": {
+        "lulaPp": -2.7,
+        "bolsonaroPp": 2.95,
+        "marginPp": -5.65
+      },
+      "notes": "TSE EA20 (9/18 seções; BUENOS AIRES 6/15; CÓRDOBA 2/2; MENDOZA 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 9,
+        "total": 18
+      }
     },
     {
       "id": "netherlands",
@@ -697,20 +771,23 @@
         "bolsonaroPct": 16.66
       },
       "y2026": {
-        "lula": 4387,
-        "bolsonaro": 983,
-        "totalValid": 5894,
-        "lulaPct": 74.43,
-        "bolsonaroPct": 16.68
+        "lula": 4624,
+        "bolsonaro": 1081,
+        "totalValid": 6274,
+        "lulaPct": 73.7,
+        "bolsonaroPct": 17.23
       },
       "swing": {
-        "lulaPp": 3.48,
-        "bolsonaroPp": 0.02,
-        "marginPp": 3.46
+        "lulaPp": 2.75,
+        "bolsonaroPp": 0.57,
+        "marginPp": 2.18
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (AMSTERDÃ 17/17)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 17,
+        "total": 17
+      }
     },
     {
       "id": "paraguay",
@@ -725,11 +802,24 @@
         "lulaPct": 12.4,
         "bolsonaroPct": 83.02
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 342,
+        "bolsonaro": 1577,
+        "totalValid": 2022,
+        "lulaPct": 16.91,
+        "bolsonaroPct": 77.99
+      },
+      "swing": {
+        "lulaPp": 4.51,
+        "bolsonaroPp": -5.03,
+        "marginPp": 9.54
+      },
+      "notes": "TSE EA20 (ASSUNÇÃO 4/4; ENCARNACIÓN 1/1; PEDRO JUAN CABALLERO 1/1; SALTO DEL GUAIRÁ 2/2)",
+      "status": "reported",
+      "coverage": {
+        "counted": 8,
+        "total": 8
+      }
     },
     {
       "id": "belgium",
@@ -744,11 +834,24 @@
         "lulaPct": 54.42,
         "bolsonaroPct": 34.86
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 2516,
+        "bolsonaro": 1959,
+        "totalValid": 4975,
+        "lulaPct": 50.57,
+        "bolsonaroPct": 39.38
+      },
+      "swing": {
+        "lulaPp": -3.85,
+        "bolsonaroPp": 4.52,
+        "marginPp": -8.37
+      },
+      "notes": "TSE EA20 (BRUXELAS 14/14)",
+      "status": "reported",
+      "coverage": {
+        "counted": 14,
+        "total": 14
+      }
     },
     {
       "id": "lebanon",
@@ -766,18 +869,21 @@
       "y2026": {
         "lula": 2538,
         "bolsonaro": 1138,
-        "totalValid": 3901,
-        "lulaPct": 65.06,
-        "bolsonaroPct": 29.17
+        "totalValid": 3883,
+        "lulaPct": 65.36,
+        "bolsonaroPct": 29.31
       },
       "swing": {
-        "lulaPp": 8.88,
-        "bolsonaroPp": -4.06,
-        "marginPp": 12.94
+        "lulaPp": 9.18,
+        "bolsonaroPp": -3.92,
+        "marginPp": 13.1
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BEIRUTE 13/13)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 13,
+        "total": 13
+      }
     },
     {
       "id": "sweden",
@@ -804,9 +910,12 @@
         "bolsonaroPp": 2.58,
         "marginPp": 0.03
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (ESTOCOLMO 7/7)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 7,
+        "total": 7
+      }
     },
     {
       "id": "chile",
@@ -821,11 +930,24 @@
         "lulaPct": 44.86,
         "bolsonaroPct": 41.09
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 928,
+        "bolsonaro": 809,
+        "totalValid": 1971,
+        "lulaPct": 47.08,
+        "bolsonaroPct": 41.05
+      },
+      "swing": {
+        "lulaPp": 2.22,
+        "bolsonaroPp": -0.04,
+        "marginPp": 2.26
+      },
+      "notes": "TSE EA20 (SANTIAGO 5/5)",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
     },
     {
       "id": "bolivia",
@@ -840,11 +962,24 @@
         "lulaPct": 20.05,
         "bolsonaroPct": 73.77
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 349,
+        "bolsonaro": 1387,
+        "totalValid": 1837,
+        "lulaPct": 19,
+        "bolsonaroPct": 75.5
+      },
+      "swing": {
+        "lulaPp": -1.05,
+        "bolsonaroPp": 1.73,
+        "marginPp": -2.78
+      },
+      "notes": "TSE EA20 (COCHABAMBA 1/1; LA PAZ 1/1; SANTA CRUZ DE LA SIERRA 5/5; COBIJA 1/1; PUERTO QUIJARRO 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 9,
+        "total": 9
+      }
     },
     {
       "id": "uruguay",
@@ -859,11 +994,24 @@
         "lulaPct": 47.13,
         "bolsonaroPct": 39.77
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 790,
+        "bolsonaro": 692,
+        "totalValid": 1630,
+        "lulaPct": 48.47,
+        "bolsonaroPct": 42.45
+      },
+      "swing": {
+        "lulaPp": 1.34,
+        "bolsonaroPp": 2.68,
+        "marginPp": -1.34
+      },
+      "notes": "TSE EA20 (ARTIGAS 1/1; CHUY 1/1; MONTEVIDÉU 4/4; RIVERA 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 7,
+        "total": 7
+      }
     },
     {
       "id": "mexico",
@@ -897,11 +1045,24 @@
         "lulaPct": 62.34,
         "bolsonaroPct": 22.58
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 979,
+        "bolsonaro": 311,
+        "totalValid": 1471,
+        "lulaPct": 66.55,
+        "bolsonaroPct": 21.14
+      },
+      "swing": {
+        "lulaPp": 4.21,
+        "bolsonaroPp": -1.44,
+        "marginPp": 5.65
+      },
+      "notes": "TSE EA20 (VIENA 5/5)",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
     },
     {
       "id": "french-guiana",
@@ -916,11 +1077,24 @@
         "lulaPct": 42.6,
         "bolsonaroPct": 48.58
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 484,
+        "bolsonaro": 518,
+        "totalValid": 1084,
+        "lulaPct": 44.65,
+        "bolsonaroPct": 47.79
+      },
+      "swing": {
+        "lulaPp": 2.05,
+        "bolsonaroPp": -0.79,
+        "marginPp": 2.84
+      },
+      "notes": "TSE EA20 (CAIENA 5/5; ST GEORGES DE LOYAPOCK 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 6,
+        "total": 6
+      }
     },
     {
       "id": "denmark",
@@ -938,18 +1112,21 @@
       "y2026": {
         "lula": 1166,
         "bolsonaro": 195,
-        "totalValid": 1464,
-        "lulaPct": 79.64,
-        "bolsonaroPct": 13.32
+        "totalValid": 1476,
+        "lulaPct": 79,
+        "bolsonaroPct": 13.21
       },
       "swing": {
-        "lulaPp": 3.04,
-        "bolsonaroPp": 1.29,
-        "marginPp": 1.75
+        "lulaPp": 2.4,
+        "bolsonaroPp": 1.18,
+        "marginPp": 1.22
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (COPENHAGUE 4/4)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 4,
+        "total": 4
+      }
     },
     {
       "id": "united-arab-emirates",
@@ -965,18 +1142,18 @@
         "bolsonaroPct": 48.59
       },
       "y2026": {
-        "lula": 469,
+        "lula": 512,
         "bolsonaro": 659,
-        "totalValid": 1347,
-        "lulaPct": 34.82,
-        "bolsonaroPct": 48.92
+        "totalValid": 1355,
+        "lulaPct": 37.79,
+        "bolsonaroPct": 48.63
       },
       "swing": {
-        "lulaPp": -2.04,
-        "bolsonaroPp": 0.33,
-        "marginPp": -2.37
+        "lulaPp": 0.93,
+        "bolsonaroPp": 0.04,
+        "marginPp": 0.89
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (ABU DHABI 5/5)",
       "status": "reported",
       "coverage": {
         "counted": 5,
@@ -1005,12 +1182,15 @@
       },
       "swing": {
         "lulaPp": 0.83,
-        "bolsonaroPp": 3.0,
+        "bolsonaroPp": 3,
         "marginPp": -2.17
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (OSLO 3/3)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
     },
     {
       "id": "peru",
@@ -1047,18 +1227,21 @@
       "y2026": {
         "lula": 1078,
         "bolsonaro": 46,
-        "totalValid": 1158,
-        "lulaPct": 93.09,
-        "bolsonaroPct": 3.97
+        "totalValid": 1157,
+        "lulaPct": 93.17,
+        "bolsonaroPct": 3.98
       },
       "swing": {
-        "lulaPp": 8.28,
-        "bolsonaroPp": -3.48,
-        "marginPp": 11.76
+        "lulaPp": 8.36,
+        "bolsonaroPp": -3.47,
+        "marginPp": 11.83
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (RAMALLAH 3/3)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
     },
     {
       "id": "syria",
@@ -1070,8 +1253,8 @@
         "lula": 0,
         "bolsonaro": 0,
         "totalValid": 0,
-        "lulaPct": 0.0,
-        "bolsonaroPct": 0.0
+        "lulaPct": 0,
+        "bolsonaroPct": 0
       },
       "y2026": {
         "lula": 97,
@@ -1080,8 +1263,12 @@
         "lulaPct": 89.81,
         "bolsonaroPct": 6.48
       },
-      "swing": null,
-      "notes": "First Damascus overseas section in 2026 (g1); no 2022 ZZ baseline — swing omitted.",
+      "swing": {
+        "lulaPp": 89.81,
+        "bolsonaroPp": 6.48,
+        "marginPp": 83.33
+      },
+      "notes": "TSE EA20 (DAMASCO 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1104,16 +1291,16 @@
       "y2026": {
         "lula": 92,
         "bolsonaro": 523,
-        "totalValid": 703,
-        "lulaPct": 13.09,
-        "bolsonaroPct": 74.4
+        "totalValid": 704,
+        "lulaPct": 13.07,
+        "bolsonaroPct": 74.29
       },
       "swing": {
-        "lulaPp": -26.28,
-        "bolsonaroPp": 28.42,
-        "marginPp": -54.7
+        "lulaPp": -26.3,
+        "bolsonaroPp": 28.31,
+        "marginPp": -54.61
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (TEL AVIV 5/5)",
       "status": "reported",
       "coverage": {
         "counted": 5,
@@ -1174,18 +1361,21 @@
       "y2026": {
         "lula": 475,
         "bolsonaro": 155,
-        "totalValid": 691,
-        "lulaPct": 68.74,
-        "bolsonaroPct": 22.43
+        "totalValid": 693,
+        "lulaPct": 68.54,
+        "bolsonaroPct": 22.37
       },
       "swing": {
-        "lulaPp": 6.34,
-        "bolsonaroPp": 2.11,
-        "marginPp": 4.23
+        "lulaPp": 6.14,
+        "bolsonaroPp": 2.05,
+        "marginPp": 4.09
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (HELSINQUE 2/2)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "hungary",
@@ -1203,18 +1393,21 @@
       "y2026": {
         "lula": 331,
         "bolsonaro": 93,
-        "totalValid": 465,
-        "lulaPct": 71.18,
-        "bolsonaroPct": 20.0
+        "totalValid": 464,
+        "lulaPct": 71.34,
+        "bolsonaroPct": 20.04
       },
       "swing": {
-        "lulaPp": -9.71,
-        "bolsonaroPp": 8.14,
-        "marginPp": -17.85
+        "lulaPp": -9.55,
+        "bolsonaroPp": 8.18,
+        "marginPp": -17.73
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BUDAPESTE 2/2)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "jordan",
@@ -1232,16 +1425,16 @@
       "y2026": {
         "lula": 675,
         "bolsonaro": 59,
-        "totalValid": 787,
-        "lulaPct": 85.77,
-        "bolsonaroPct": 7.5
+        "totalValid": 783,
+        "lulaPct": 86.21,
+        "bolsonaroPct": 7.54
       },
       "swing": {
-        "lulaPp": 24.54,
-        "bolsonaroPp": -11.88,
-        "marginPp": 36.42
+        "lulaPp": 24.98,
+        "bolsonaroPp": -11.84,
+        "marginPp": 36.82
       },
-      "notes": "2 BUs Amman (833 att, 19 blank, 27 null) — Exame",
+      "notes": "TSE EA20 (AMÃ 2/2)",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -1261,11 +1454,24 @@
         "lulaPct": 26.54,
         "bolsonaroPct": 66.03
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 121,
+        "bolsonaro": 366,
+        "totalValid": 540,
+        "lulaPct": 22.41,
+        "bolsonaroPct": 67.78
+      },
+      "swing": {
+        "lulaPp": -4.13,
+        "bolsonaroPp": 1.75,
+        "marginPp": -5.88
+      },
+      "notes": "TSE EA20 (PARAMARIBO 3/3)",
+      "status": "reported",
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
     },
     {
       "id": "south-africa",
@@ -1280,11 +1486,24 @@
         "lulaPct": 33.84,
         "bolsonaroPct": 52.84
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 152,
+        "bolsonaro": 230,
+        "totalValid": 419,
+        "lulaPct": 36.28,
+        "bolsonaroPct": 54.89
+      },
+      "swing": {
+        "lulaPp": 2.44,
+        "bolsonaroPp": 2.05,
+        "marginPp": 0.39
+      },
+      "notes": "TSE EA20 (CIDADE DO CABO 1/1; PRETÓRIA 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "greece",
@@ -1302,16 +1521,16 @@
       "y2026": {
         "lula": 196,
         "bolsonaro": 230,
-        "totalValid": 493,
-        "lulaPct": 39.76,
-        "bolsonaroPct": 46.65
+        "totalValid": 494,
+        "lulaPct": 39.68,
+        "bolsonaroPct": 46.56
       },
       "swing": {
-        "lulaPp": 2.23,
-        "bolsonaroPp": -0.26,
-        "marginPp": 2.49
+        "lulaPp": 2.15,
+        "bolsonaroPp": -0.35,
+        "marginPp": 2.5
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (ATENAS 2/2)",
       "status": "reported",
       "coverage": {
         "counted": 2,
@@ -1362,9 +1581,12 @@
         "bolsonaroPp": 1.83,
         "marginPp": -0.49
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (PRAGA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "costa-rica",
@@ -1410,7 +1632,7 @@
         "bolsonaroPp": -4.87,
         "marginPp": 9.38
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (DOHA 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1442,9 +1664,12 @@
         "bolsonaroPp": 5.37,
         "marginPp": -8.97
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (VARSÓVIA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "mozambique",
@@ -1471,9 +1696,12 @@
         "bolsonaroPp": 1.25,
         "marginPp": 0.13
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (MAPUTO 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "angola",
@@ -1500,9 +1728,12 @@
         "bolsonaroPp": -1.15,
         "marginPp": 4.29
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (LUANDA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "taiwan",
@@ -1520,16 +1751,16 @@
       "y2026": {
         "lula": 77,
         "bolsonaro": 107,
-        "totalValid": 219,
-        "lulaPct": 35.16,
-        "bolsonaroPct": 48.86
+        "totalValid": 218,
+        "lulaPct": 35.32,
+        "bolsonaroPct": 49.08
       },
       "swing": {
-        "lulaPp": -0.27,
-        "bolsonaroPp": 4.02,
-        "marginPp": -4.29
+        "lulaPp": -0.11,
+        "bolsonaroPp": 4.24,
+        "marginPp": -4.35
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (TAIPÉ 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1549,11 +1780,24 @@
         "lulaPct": 31.1,
         "bolsonaroPct": 55.98
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 65,
+        "bolsonaro": 106,
+        "totalValid": 188,
+        "lulaPct": 34.57,
+        "bolsonaroPct": 56.38
+      },
+      "swing": {
+        "lulaPp": 3.47,
+        "bolsonaroPp": 0.4,
+        "marginPp": 3.07
+      },
+      "notes": "TSE EA20 (SÃO DOMINGOS 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "estonia",
@@ -1573,14 +1817,14 @@
         "bolsonaro": 19,
         "totalValid": 190,
         "lulaPct": 74.74,
-        "bolsonaroPct": 10.0
+        "bolsonaroPct": 10
       },
       "swing": {
         "lulaPp": -4.83,
         "bolsonaroPp": 1.4,
         "marginPp": -6.23
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (TALIN 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1612,9 +1856,12 @@
         "bolsonaroPp": -9.71,
         "marginPp": 21.1
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (ISTAMBUL 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "guatemala",
@@ -1717,9 +1964,12 @@
         "bolsonaroPp": 5.77,
         "marginPp": -9.32
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (LIUBLIANA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "el-salvador",
@@ -1765,7 +2015,7 @@
         "bolsonaroPp": -11.25,
         "marginPp": 23.13
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (CAIRO 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1785,11 +2035,24 @@
         "lulaPct": 10,
         "bolsonaroPct": 78.57
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 7,
+        "bolsonaro": 43,
+        "totalValid": 53,
+        "lulaPct": 13.21,
+        "bolsonaroPct": 81.13
+      },
+      "swing": {
+        "lulaPp": 3.21,
+        "bolsonaroPp": 2.56,
+        "marginPp": 0.65
+      },
+      "notes": "TSE EA20 (GEORGETOWN 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "slovakia",
@@ -1816,9 +2079,12 @@
         "bolsonaroPp": 1.2,
         "marginPp": 22.78
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BRATISLAVA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "cape-verde",
@@ -1833,11 +2099,24 @@
         "lulaPct": 58.46,
         "bolsonaroPct": 33.85
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 39,
+        "bolsonaro": 20,
+        "totalValid": 70,
+        "lulaPct": 55.71,
+        "bolsonaroPct": 28.57
+      },
+      "swing": {
+        "lulaPp": -2.75,
+        "bolsonaroPp": -5.28,
+        "marginPp": 2.53
+      },
+      "notes": "TSE EA20 (PRAIA 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "timor-leste",
@@ -1871,11 +2150,24 @@
         "lulaPct": 47.27,
         "bolsonaroPct": 41.82
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 51,
+        "bolsonaro": 24,
+        "totalValid": 79,
+        "lulaPct": 64.56,
+        "bolsonaroPct": 30.38
+      },
+      "swing": {
+        "lulaPp": 17.29,
+        "bolsonaroPp": -11.44,
+        "marginPp": 28.73
+      },
+      "notes": "TSE EA20 (DACAR 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "romania",
@@ -1893,18 +2185,21 @@
       "y2026": {
         "lula": 31,
         "bolsonaro": 22,
-        "totalValid": 61,
-        "lulaPct": 50.82,
-        "bolsonaroPct": 36.07
+        "totalValid": 62,
+        "lulaPct": 50,
+        "bolsonaroPct": 35.48
       },
       "swing": {
-        "lulaPp": -2.88,
-        "bolsonaroPp": 13.85,
-        "marginPp": -16.73
+        "lulaPp": -3.7,
+        "bolsonaroPp": 13.26,
+        "marginPp": -16.96
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (BUCARESTE 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "saudi-arabia",
@@ -1922,16 +2217,16 @@
       "y2026": {
         "lula": 52,
         "bolsonaro": 22,
-        "totalValid": 84,
-        "lulaPct": 61.9,
-        "bolsonaroPct": 26.19
+        "totalValid": 83,
+        "lulaPct": 62.65,
+        "bolsonaroPct": 26.51
       },
       "swing": {
-        "lulaPp": 13.75,
-        "bolsonaroPp": -7.14,
-        "marginPp": 20.89
+        "lulaPp": 14.5,
+        "bolsonaroPp": -6.82,
+        "marginPp": 21.32
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (RIADE 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -1955,19 +2250,19 @@
         "lula": 24,
         "bolsonaro": 26,
         "totalValid": 50,
-        "lulaPct": 48.0,
-        "bolsonaroPct": 52.0
+        "lulaPct": 48,
+        "bolsonaroPct": 52
       },
       "swing": {
         "lulaPp": -19.92,
         "bolsonaroPp": 25.58,
         "marginPp": -45.5
       },
-      "notes": "Partial — g1 1/2 sections; only Lula/Flávio published.",
+      "notes": "TSE EA20 (NOVA DELHI 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -1983,11 +2278,24 @@
         "lulaPct": 64.15,
         "bolsonaroPct": 15.09
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 30,
+        "bolsonaro": 6,
+        "totalValid": 42,
+        "lulaPct": 71.43,
+        "bolsonaroPct": 14.29
+      },
+      "swing": {
+        "lulaPp": 7.28,
+        "bolsonaroPp": -0.8,
+        "marginPp": 8.08
+      },
+      "notes": "TSE EA20 (RABAT 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "kenya",
@@ -2014,7 +2322,7 @@
         "bolsonaroPp": -8.14,
         "marginPp": 15.64
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (NAIRÓBI 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -2046,7 +2354,7 @@
         "bolsonaroPp": 1.29,
         "marginPp": -7.48
       },
-      "notes": "",
+      "notes": "TSE EA20 (JACARTA 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -2078,9 +2386,12 @@
         "bolsonaroPp": 10.75,
         "marginPp": -9.47
       },
-      "notes": "g1 (Flávio listed as 70 with 27.08% — treated as 13 to match %).",
+      "notes": "TSE EA20 (BELGRADO 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "ivory-coast",
@@ -2126,9 +2437,12 @@
         "bolsonaroPp": 4.99,
         "marginPp": 1.08
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (ZAGREB 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "guinea-bissau",
@@ -2174,7 +2488,7 @@
         "bolsonaroPp": -46.35,
         "marginPp": 99.39
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (KUAITE 1/1)",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -2339,9 +2653,12 @@
         "bolsonaroPp": 7.09,
         "marginPp": -16.98
       },
-      "notes": "g1",
+      "notes": "TSE EA20 (NICOSIA 1/1)",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "bahamas",
