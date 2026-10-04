@@ -8,15 +8,23 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T14:00:00Z",
+    "updatedAt": "2026-10-04T14:28:37.337Z",
     "sources": [
       {
         "name": "TSE open data 2022 1st round",
         "url": "https://dadosabertos.tse.jus.br/"
       },
       {
-        "name": "g1 / Brasil de Fato / BNews BU roundups 2026",
+        "name": "g1 overseas BU roundup 2026",
         "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml"
+      },
+      {
+        "name": "Exame overseas BU roundup 2026",
+        "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/"
+      },
+      {
+        "name": "Metro1 / Poder360 BU tallies 2026",
+        "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-exterior-resultados/"
       }
     ],
     "defaultMapMetric": "swingToLula",
@@ -155,7 +163,7 @@
       "swing": {
         "lulaPp": -2.47,
         "bolsonaroPp": 3.53,
-        "marginPp": -6.0
+        "marginPp": -6
       },
       "notes": "",
       "status": "reported",
@@ -271,18 +279,18 @@
         "bolsonaro": 42,
         "totalValid": 105,
         "lulaPct": 43.81,
-        "bolsonaroPct": 40.0
+        "bolsonaroPct": 40
       },
       "y2026": {
         "lula": 40,
         "bolsonaro": 51,
         "totalValid": 102,
         "lulaPct": 39.22,
-        "bolsonaroPct": 50.0
+        "bolsonaroPct": 50
       },
       "swing": {
         "lulaPp": -4.59,
-        "bolsonaroPp": 10.0,
+        "bolsonaroPp": 10,
         "marginPp": -14.59
       },
       "notes": "",
@@ -308,14 +316,14 @@
       "y2026": {
         "lula": 44,
         "bolsonaro": 27,
-        "totalValid": 83,
-        "lulaPct": 53.01,
-        "bolsonaroPct": 32.53
+        "totalValid": 82,
+        "lulaPct": 53.66,
+        "bolsonaroPct": 32.93
       },
       "swing": {
-        "lulaPp": 5.64,
-        "bolsonaroPp": -9.58,
-        "marginPp": 15.22
+        "lulaPp": 6.29,
+        "bolsonaroPp": -9.18,
+        "marginPp": 15.47
       },
       "notes": "",
       "status": "reported",
@@ -806,11 +814,24 @@
         "lulaPct": 36.86,
         "bolsonaroPct": 48.59
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 469,
+        "bolsonaro": 659,
+        "totalValid": 1347,
+        "lulaPct": 34.82,
+        "bolsonaroPct": 48.92
+      },
+      "swing": {
+        "lulaPp": -2.04,
+        "bolsonaroPp": 0.33,
+        "marginPp": -2.37
+      },
+      "notes": "Abu Dhabi jurisdiction (5 BUs)",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
     },
     {
       "id": "norway",
@@ -1186,11 +1207,24 @@
         "lulaPct": 35.43,
         "bolsonaroPct": 44.84
       },
-      "y2026": null,
-      "swing": null,
+      "y2026": {
+        "lula": 77,
+        "bolsonaro": 107,
+        "totalValid": 219,
+        "lulaPct": 35.16,
+        "bolsonaroPct": 48.86
+      },
+      "swing": {
+        "lulaPp": -0.27,
+        "bolsonaroPp": 4.02,
+        "marginPp": -4.29
+      },
       "notes": "",
-      "status": "pending",
-      "coverage": null
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "dominican-republic",
@@ -1373,8 +1407,8 @@
         "lula": 42,
         "bolsonaro": 21,
         "totalValid": 70,
-        "lulaPct": 60.0,
-        "bolsonaroPct": 30.0
+        "lulaPct": 60,
+        "bolsonaroPct": 30
       },
       "y2026": null,
       "swing": null,
@@ -1392,7 +1426,7 @@
         "lula": 7,
         "bolsonaro": 55,
         "totalValid": 70,
-        "lulaPct": 10.0,
+        "lulaPct": 10,
         "bolsonaroPct": 78.57
       },
       "y2026": null,
@@ -1530,7 +1564,7 @@
       },
       "y2026": null,
       "swing": null,
-      "notes": "",
+      "notes": "Partial BU reported (1/2 sections); awaiting full tally",
       "status": "pending",
       "coverage": null
     },
@@ -1582,14 +1616,27 @@
         "lula": 16,
         "bolsonaro": 30,
         "totalValid": 50,
-        "lulaPct": 32.0,
-        "bolsonaroPct": 60.0
+        "lulaPct": 32,
+        "bolsonaroPct": 60
       },
-      "y2026": null,
-      "swing": null,
+      "y2026": {
+        "lula": 8,
+        "bolsonaro": 19,
+        "totalValid": 31,
+        "lulaPct": 25.81,
+        "bolsonaroPct": 61.29
+      },
+      "swing": {
+        "lulaPp": -6.19,
+        "bolsonaroPp": 1.29,
+        "marginPp": -7.48
+      },
       "notes": "",
-      "status": "pending",
-      "coverage": null
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "serbia",
@@ -1753,7 +1800,7 @@
         "lula": 17,
         "bolsonaro": 16,
         "totalValid": 34,
-        "lulaPct": 50.0,
+        "lulaPct": 50,
         "bolsonaroPct": 47.06
       },
       "y2026": null,
@@ -1811,7 +1858,7 @@
         "bolsonaro": 7,
         "totalValid": 28,
         "lulaPct": 57.14,
-        "bolsonaroPct": 25.0
+        "bolsonaroPct": 25
       },
       "y2026": null,
       "swing": null,
@@ -1829,8 +1876,8 @@
         "lula": 13,
         "bolsonaro": 7,
         "totalValid": 25,
-        "lulaPct": 52.0,
-        "bolsonaroPct": 28.0
+        "lulaPct": 52,
+        "bolsonaroPct": 28
       },
       "y2026": null,
       "swing": null,
@@ -1848,8 +1895,8 @@
         "lula": 8,
         "bolsonaro": 15,
         "totalValid": 25,
-        "lulaPct": 32.0,
-        "bolsonaroPct": 60.0
+        "lulaPct": 32,
+        "bolsonaroPct": 60
       },
       "y2026": null,
       "swing": null,
@@ -1886,8 +1933,8 @@
         "lula": 13,
         "bolsonaro": 4,
         "totalValid": 20,
-        "lulaPct": 65.0,
-        "bolsonaroPct": 20.0
+        "lulaPct": 65,
+        "bolsonaroPct": 20
       },
       "y2026": null,
       "swing": null,
@@ -2019,8 +2066,8 @@
         "lula": 6,
         "bolsonaro": 2,
         "totalValid": 8,
-        "lulaPct": 75.0,
-        "bolsonaroPct": 25.0
+        "lulaPct": 75,
+        "bolsonaroPct": 25
       },
       "y2026": null,
       "swing": null,
