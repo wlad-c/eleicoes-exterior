@@ -65,7 +65,7 @@ export function ResultsTable({
 
   return (
     <div>
-      <table className="results-table w-full min-w-[960px] text-left text-sm">
+      <table className="results-table w-full text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
               <Th

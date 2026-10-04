@@ -68,7 +68,8 @@ html,
 body,
 #root {
   margin: 0;
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden; /* outer document never scrolls — one omni scroller inside */
 }
 
 body {
@@ -87,7 +88,14 @@ body {
   max-width: none;
   text-align: left;
   border: none;
-  min-height: 100svh;
+}
+
+/* Single page scroller: sticky thead/tfoot bind to this, not a nested table pane */
+.app-shell {
+  height: 100%;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 button,
@@ -156,7 +164,7 @@ html.dark .sticky-table-chrome {
 
 .filter-row {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: clamp(0.35rem, 1.2vw, 0.75rem);
   width: 100%;
