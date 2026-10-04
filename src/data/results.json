@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T18:09:13.521Z",
+    "updatedAt": "2026-10-04T18:11:26.755Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -157,7 +157,7 @@
         "bolsonaroPp": 1.77,
         "marginPp": -2.65
       },
-      "notes": "DISPUTED — g1 still lists Lula 4,562 / Flávio 2,579 / 53.98% (implies ~8,451 valid), but itemized candidates sum to 8,130. Shown for continuity; awaiting TSE.",
+      "notes": "g1",
       "status": "reported",
       "coverage": null
     },
