@@ -22,7 +22,7 @@ npm run build:pages
 
 That overwrites 2026 country rows whenever the TSE has published sections for the mapped ZZ municipalities. Press/BU figures remain only for countries the TSE has not yet released. You can still edit [`src/data/results.json`](src/data/results.json) by hand if needed.
 
-The live page also serves a stable copy at `data/results.json`. Open tabs **fetch it on load**, again when the window regains focus, and on a **30-minute** timer, so redeployed tallies appear without a full reload.
+The live page also serves a stable copy at `data/results.json`. Open tabs **fetch it on load**, again when the window regains focus, and on a timer (**5 minutes** through `2026-10-05T03:50:00Z`, then **30 minutes**), so redeployed tallies appear without a full reload. Override locally with `?refreshMs=<ms>`.
 
 ## Build / GitHub Pages
 
