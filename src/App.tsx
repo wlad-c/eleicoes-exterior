@@ -49,7 +49,7 @@ export default function App() {
     'reported',
   )
   const [metric, setMetric] = useState<MapMetric>('leader2026')
-  const [sortKey, setSortKey] = useState<SortKey>('swingToLula')
+  const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const tableChromeRef = useRef<HTMLDivElement>(null)
