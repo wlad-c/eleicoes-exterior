@@ -162,8 +162,8 @@ export function ResultsTable({
 
   return (
     <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-      <table className="w-full min-w-[960px] border-collapse text-left text-sm">
-        <thead className="sticky top-0 z-20">
+      <table className="w-full min-w-[960px] text-left text-sm">
+        <thead>
           <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
             <Th
               onClick={() => onSort('country')}
@@ -300,7 +300,7 @@ export function ResultsTable({
             )
           })}
         </tbody>
-        <tfoot className="sticky bottom-0 z-20">
+        <tfoot>
           <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
             <td className="sticky-tf px-2 py-2.5 text-[var(--ink)]">
               {t('tableTotal', lang)}
