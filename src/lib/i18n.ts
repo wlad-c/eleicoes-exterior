@@ -45,6 +45,10 @@ const dict = {
   region: { en: 'Region', pt: 'Região' },
   runningTotal: { en: 'Running total (reported)', pt: 'Total parcial (apurados)' },
   tableTotal: { en: 'Total', pt: 'Total' },
+  swingHint: {
+    en: 'Same as the table Total row for countries with 2026 results',
+    pt: 'Igual à linha Total da tabela para países com resultado 2026',
+  },
   lula: { en: 'Lula', pt: 'Lula' },
   fBolsonaro: { en: 'F Bolsonaro', pt: 'F Bolsonaro' },
   jBolsonaro: { en: 'J Bolsonaro', pt: 'J Bolsonaro' },

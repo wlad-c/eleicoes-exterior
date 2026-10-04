@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
+  aggregateRows,
   bolsonaroVotesDelta,
   countryName,
   fmtCoverage,
@@ -32,109 +33,6 @@ type Props = {
   metric: MapMetric
 }
 
-type RowTotals = {
-  countries: number
-  lula2026: number | null
-  bolso2026: number | null
-  valid2026: number | null
-  lulaPct2026: number | null
-  bolsoPct2026: number | null
-  lula2022: number
-  bolso2022: number
-  valid2022: number
-  lulaPct2022: number
-  bolsoPct2022: number
-  lulaChange: number | null
-  bolsonaroChange: number | null
-  swingToLula: number | null
-  lulaVotesDelta: number | null
-  bolsonaroVotesDelta: number | null
-  sectionsCounted: number | null
-  sectionsTotal: number | null
-}
-
-function sumRows(rows: CountryResult[]): RowTotals {
-  let lula2026 = 0
-  let bolso2026 = 0
-  let valid2026 = 0
-  let has2026 = false
-  let lula2022 = 0
-  let bolso2022 = 0
-  let valid2022 = 0
-  // 2022 baseline limited to countries that also have 2026 results,
-  // so change/swing compare the same country set.
-  let lula2022Comparable = 0
-  let bolso2022Comparable = 0
-  let valid2022Comparable = 0
-  let sectionsCounted = 0
-  let sectionsTotal = 0
-  let hasSections = false
-
-  for (const c of rows) {
-    lula2022 += c.y2022.lula
-    bolso2022 += c.y2022.bolsonaro
-    valid2022 += c.y2022.totalValid
-    if (c.status === 'reported' && c.y2026) {
-      has2026 = true
-      lula2026 += c.y2026.lula
-      bolso2026 += c.y2026.bolsonaro
-      valid2026 += c.y2026.totalValid
-      lula2022Comparable += c.y2022.lula
-      bolso2022Comparable += c.y2022.bolsonaro
-      valid2022Comparable += c.y2022.totalValid
-    }
-    if (c.coverage) {
-      hasSections = true
-      sectionsCounted += c.coverage.counted
-      sectionsTotal += c.coverage.total
-    }
-  }
-
-  const lulaPct2022 = valid2022 ? (lula2022 / valid2022) * 100 : 0
-  const bolsoPct2022 = valid2022 ? (bolso2022 / valid2022) * 100 : 0
-  const lulaPct2026 = has2026 && valid2026 ? (lula2026 / valid2026) * 100 : null
-  const bolsoPct2026 = has2026 && valid2026 ? (bolso2026 / valid2026) * 100 : null
-  const lulaPct2022Comparable = valid2022Comparable
-    ? (lula2022Comparable / valid2022Comparable) * 100
-    : null
-  const bolsoPct2022Comparable = valid2022Comparable
-    ? (bolso2022Comparable / valid2022Comparable) * 100
-    : null
-  const lulaChange =
-    lulaPct2026 != null && lulaPct2022Comparable != null
-      ? lulaPct2026 - lulaPct2022Comparable
-      : null
-  const bolsonaroChange =
-    bolsoPct2026 != null && bolsoPct2022Comparable != null
-      ? bolsoPct2026 - bolsoPct2022Comparable
-      : null
-  const swingToLula =
-    lulaChange != null && bolsonaroChange != null
-      ? lulaChange - bolsonaroChange
-      : null
-
-  return {
-    countries: rows.length,
-    lula2026: has2026 ? lula2026 : null,
-    bolso2026: has2026 ? bolso2026 : null,
-    valid2026: has2026 ? valid2026 : null,
-    lulaPct2026,
-    bolsoPct2026,
-    lula2022,
-    bolso2022,
-    valid2022,
-    lulaPct2022,
-    bolsoPct2022,
-    lulaChange,
-    bolsonaroChange,
-    swingToLula,
-    lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
-    bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
-    sectionsCounted: hasSections ? sectionsCounted : null,
-    sectionsTotal: hasSections ? sectionsTotal : null,
-  }
-}
-
 export function ResultsTable({
   rows,
   allCountries,
@@ -146,7 +44,7 @@ export function ResultsTable({
   onSelect,
   metric,
 }: Props) {
-  const totals = useMemo(() => sumRows(rows), [rows])
+  const totals = useMemo(() => aggregateRows(rows), [rows])
 
   if (rows.length === 0) {
     return (

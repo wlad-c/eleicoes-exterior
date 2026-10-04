@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import raw from './data/results.json'
 import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
-import { countryName, fmtInt, fmtPct, runningTotals } from './lib/format'
+import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import { regionLabel, t } from './lib/i18n'
 import { useTheme } from './lib/theme'
 import type {
@@ -35,12 +35,17 @@ export default function App() {
   )
 
   const totals = useMemo(() => runningTotals(data.countries), [])
-  const reportedCount = data.countries.filter((c) => c.status === 'reported').length
-
-  const mapCountries = useMemo(
+  const reportedCountries = useMemo(
     () => data.countries.filter((c) => c.status === 'reported'),
     [],
   )
+  const reportedAgg = useMemo(
+    () => aggregateRows(reportedCountries),
+    [reportedCountries],
+  )
+  const reportedCount = reportedCountries.length
+
+  const mapCountries = reportedCountries
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -167,6 +172,25 @@ export default function App() {
             {t('updated', lang)}: {updated}
           </p>
         </div>
+
+        <div className="mb-4 rounded-lg border border-[var(--line)] bg-[var(--paper-deep)] px-4 py-3 sm:px-5 sm:py-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+            {t('swingToLula', lang)}
+          </p>
+          <p
+            className={`mt-1 brand text-3xl font-extrabold tabular-nums sm:text-4xl ${
+              (reportedAgg.swingToLula ?? 0) >= 0
+                ? 'text-[var(--lula)]'
+                : 'text-[var(--bolso)]'
+            }`}
+          >
+            {fmtPp(reportedAgg.swingToLula, lang)}
+          </p>
+          <p className="mt-1 text-xs text-[var(--ink-muted)]">
+            {t('hintSwingToLula', lang)} · {t('swingHint', lang)}
+          </p>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <TotalCard
             label={t('lula', lang)}
