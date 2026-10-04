@@ -148,7 +148,7 @@ html.dark .sticky-table-chrome {
 
 /* Extra scroll room so sticky Total can unstick and leave the viewport */
 .table-scroll-end {
-  height: 4.5rem;
+  height: 8rem;
   flex-shrink: 0;
 }
 
