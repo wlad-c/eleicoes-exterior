@@ -20,7 +20,7 @@ const seed = raw as ResultsData
 export default function App() {
   const { theme, setTheme } = useTheme()
   const data = useResultsData(seed)
-  const [lang, setLang] = useState<Lang>('en')
+  const [lang, setLang] = useState<Lang>('pt')
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
