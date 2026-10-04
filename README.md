@@ -19,9 +19,13 @@ Edit [`src/data/results.json`](src/data/results.json), then rebuild. Pending cou
 
 ```bash
 npm run build
+npm run build:pages
 ```
 
-Static output is in `dist/`. With `base: '/eleicoes-exterior/'`, deploy that folder to GitHub Pages for the `eleicoes-exterior` repository (Settings → Pages → Deploy from branch → `/docs` or GitHub Actions).
+Static site for Pages is committed under `docs/` (Settings → Pages → Deploy from branch `main` / `docs`). Live URL:
+
+https://wladimirchagas.github.io/eleicoes-exterior/
+
 
 ## Stack
 
