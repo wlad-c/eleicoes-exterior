@@ -65,8 +65,7 @@ export function ResultsTable({
 
   return (
     <div>
-      <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-        <table className="w-full min-w-[960px] text-left text-sm">
+      <table className="results-table w-full min-w-[960px] text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
               <Th
@@ -260,10 +259,7 @@ export function ResultsTable({
               </td>
             </tr>
           </tfoot>
-        </table>
-        {/* Spacer so sticky Total can unstick and scroll out of view */}
-        <div className="table-scroll-end" aria-hidden="true" />
-      </div>
+      </table>
       {mixed2022Vs2026 ? (
         <p className="mt-2 px-1 text-xs text-[var(--ink-muted)]">
           {t('totalFootnoteMixed', lang)}

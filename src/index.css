@@ -116,16 +116,18 @@ html.dark .sticky-table-chrome {
   background: color-mix(in srgb, var(--paper) 94%, transparent);
 }
 
+/* Page omni-scroll: column headers stick under the filter chrome */
 .sticky-th {
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: var(--sticky-table-head-top, 0px);
   z-index: 3;
   background: var(--paper-deep);
   box-shadow: 0 1px 0 var(--line);
 }
 
-.table-scroll tfoot {
+/* Page omni-scroll: Total sticks to the viewport bottom while the table is in view */
+.results-table tfoot {
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
@@ -141,15 +143,15 @@ html.dark .sticky-table-chrome {
   box-shadow: 0 -1px 0 var(--line), 0 -6px 12px -8px rgb(0 0 0 / 18%);
 }
 
-.table-scroll table {
+.results-table {
   border-collapse: separate;
   border-spacing: 0;
 }
 
-/* Extra scroll room so sticky Total can unstick and leave the viewport */
-.table-scroll-end {
-  height: 8rem;
-  flex-shrink: 0;
+/* Avoid filter/overflow containment so thead/tfoot stick to the page scroll */
+.panel-results {
+  overflow: visible;
+  backdrop-filter: none;
 }
 
 .filter-row {

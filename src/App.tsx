@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import raw from './data/results.json'
 import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
@@ -28,6 +28,26 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('swingToLula')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  const tableChromeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = tableChromeRef.current
+    if (!el) return
+    const syncHeadOffset = () => {
+      document.documentElement.style.setProperty(
+        '--sticky-table-head-top',
+        `${Math.ceil(el.getBoundingClientRect().height)}px`,
+      )
+    }
+    syncHeadOffset()
+    const ro = new ResizeObserver(syncHeadOffset)
+    ro.observe(el)
+    window.addEventListener('resize', syncHeadOffset)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', syncHeadOffset)
+    }
+  }, [])
 
   const regions = useMemo(
     () => [...new Set(data.countries.map((c) => c.region))].sort(),
@@ -231,8 +251,11 @@ export default function App() {
         />
       </section>
 
-      <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5">
+      <section className="panel panel-results mb-4 rounded-xl p-4 sm:p-5">
+        <div
+          ref={tableChromeRef}
+          className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5"
+        >
           <div className="filter-row">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               {t('search', lang)}
