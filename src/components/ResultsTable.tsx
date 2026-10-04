@@ -5,6 +5,7 @@ import {
   bolsonaroVotesDelta,
   countryName,
   fmtCoverage,
+  fmtInt,
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
@@ -105,6 +106,9 @@ export function ResultsTable({
         {totals.countries} {t('countries', lang)}
       </td>
       <td className="px-2 py-2.5 text-right tabular-nums">
+        {fmtInt(totals.valid2026, lang)}
+      </td>
+      <td className="px-2 py-2.5 text-right tabular-nums">
         {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
       </td>
       <td className="px-2 py-2.5 text-right tabular-nums">
@@ -162,6 +166,14 @@ export function ResultsTable({
             >
               {t('region', lang)}
               {arrow('region')}
+            </Th>
+            <Th
+              onClick={() => onSort('votes2026')}
+              align="right"
+              hint={t('hintVotes2026', lang)}
+            >
+              {t('votes2026', lang)}
+              {arrow('votes2026')}
             </Th>
             <Th
               onClick={() => onSort('lulaPct2026')}
@@ -254,6 +266,9 @@ export function ResultsTable({
                 </td>
                 <td className="px-2 py-2.5 text-[var(--ink-muted)]">
                   {regionLabel(c.region, lang)}
+                </td>
+                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink)]">
+                  {fmtInt(c.y2026?.totalValid, lang)}
                 </td>
                 <HeatTd col="lula2026" heatCol={heatCol} heat={heat}>
                   {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang)}

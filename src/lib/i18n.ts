@@ -76,6 +76,10 @@ const dict = {
   notes: { en: 'Sections', pt: 'Seções' },
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'world region', pt: 'região' },
+  hintVotes2026: {
+    en: 'total valid ballots',
+    pt: 'total de votos válidos',
+  },
   hintShare2026: {
     en: '% of valid (votes)',
     pt: '% dos válidos (votos)',
