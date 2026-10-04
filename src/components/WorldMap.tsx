@@ -68,7 +68,9 @@ export function WorldMap({
     const m = new Map<string, CountryResult>()
     for (const c of countries) {
       const nid = numericIdForIso3(c.iso3)
-      if (nid) m.set(String(Number(nid)), c)
+      if (nid == null || nid === '') continue
+      // world-atlas ids are often zero-padded strings ("036"); normalize
+      m.set(String(Number(nid)), c)
     }
     return m
   }, [countries])
@@ -95,8 +97,15 @@ export function WorldMap({
       >
         <rect width={width} height={height} fill="transparent" />
         {features.map((f, i) => {
-          const id = String(f.id ?? '')
-          const c = id ? byNumeric.get(id) : undefined
+          const rawId = f.id
+          const numericKey =
+            rawId != null && rawId !== ''
+              ? String(Number(rawId))
+              : ''
+          const c =
+            numericKey && numericKey !== 'NaN'
+              ? byNumeric.get(numericKey)
+              : undefined
           const d = path(f) ?? ''
           const value = c ? metricValue(c, metric) : null
           let fill = NO_DATA_FILL
@@ -106,7 +115,7 @@ export function WorldMap({
           const isHi = c && highlightId === c.id
           return (
             <path
-              key={id || `geo-${i}`}
+              key={numericKey || `geo-${i}`}
               d={d}
               fill={fill}
               stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--map-stroke)'}
