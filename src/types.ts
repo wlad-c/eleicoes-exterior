@@ -47,7 +47,7 @@ export type ResultsData = {
   countries: CountryResult[]
 }
 
-/** Heatmap / map coloring metrics. Default: marginSwing. */
+/** Heatmap / map coloring metrics. Default: margin2026. */
 export type MapMetric =
   | 'marginSwing'
   | 'lulaSwing'
@@ -62,17 +62,12 @@ export type MapMetric =
   | 'votes2022'
 
 export const HEATMAP_METRICS: MapMetric[] = [
-  'marginSwing',
-  'lulaSwing',
-  'bolsonaroSwing',
   'margin2026',
   'margin2022',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
-  'votes2026',
-  'votes2022',
 ]
 
 export type SortKey =
