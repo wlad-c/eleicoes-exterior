@@ -54,6 +54,32 @@ const dict = {
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
   pendingHint: { en: '2026 tally pending', pt: 'Apuração 2026 pendente' },
   notes: { en: 'Sections', pt: 'Seções' },
+  hintCountry: { en: 'name', pt: 'nome' },
+  hintRegion: { en: 'world region', pt: 'região' },
+  hintShare2026: {
+    en: '% of valid (votes)',
+    pt: '% dos válidos (votos)',
+  },
+  hintShare2022: {
+    en: '% of valid (votes)',
+    pt: '% dos válidos (votos)',
+  },
+  hintLulaChange: {
+    en: 'pp vs 2022 (Δ votes)',
+    pt: 'pp vs 2022 (Δ votos)',
+  },
+  hintBolsonaroChange: {
+    en: 'pp vs 2022 (Δ votes)',
+    pt: 'pp vs 2022 (Δ votos)',
+  },
+  hintSwingToLula: {
+    en: 'Lula Δ − Bolso Δ',
+    pt: 'Lula Δ − Bolso Δ',
+  },
+  hintSections: {
+    en: 'counted / total',
+    pt: 'apuradas / total',
+  },
   sources: { en: 'Sources', pt: 'Fontes' },
   updated: { en: 'Updated', pt: 'Atualizado' },
   legendLula: { en: 'toward Lula', pt: 'para Lula' },

@@ -1,10 +1,13 @@
 import { useMemo } from 'react'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
+  bolsonaroVotesDelta,
   countryName,
   fmtCoverage,
   fmtPp,
+  fmtPpWithVotes,
   fmtShare,
+  lulaVotesDelta,
   metricValue,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
@@ -44,6 +47,8 @@ type RowTotals = {
   lulaChange: number | null
   bolsonaroChange: number | null
   swingToLula: number | null
+  lulaVotesDelta: number | null
+  bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
   sectionsTotal: number | null
 }
@@ -123,6 +128,8 @@ function sumRows(rows: CountryResult[]): RowTotals {
     lulaChange,
     bolsonaroChange,
     swingToLula,
+    lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
+    bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,
     sectionsTotal: hasSections ? sectionsTotal : null,
   }
@@ -155,14 +162,20 @@ export function ResultsTable({
 
   return (
     <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-      <table className="w-full min-w-[860px] border-collapse text-left text-sm">
+      <table className="w-full min-w-[960px] border-collapse text-left text-sm">
         <thead className="sticky top-0 z-20">
           <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-            <Th onClick={() => onSort('country')}>
+            <Th
+              onClick={() => onSort('country')}
+              hint={t('hintCountry', lang)}
+            >
               {t('country', lang)}
               {arrow('country')}
             </Th>
-            <Th onClick={() => onSort('region')}>
+            <Th
+              onClick={() => onSort('region')}
+              hint={t('hintRegion', lang)}
+            >
               {t('region', lang)}
               {arrow('region')}
             </Th>
@@ -170,6 +183,7 @@ export function ResultsTable({
               onClick={() => onSort('lulaPct2026')}
               align="right"
               heated={heatCol === 'lula2026'}
+              hint={t('hintShare2026', lang)}
             >
               {t('lula', lang)} 2026{arrow('lulaPct2026')}
             </Th>
@@ -177,6 +191,7 @@ export function ResultsTable({
               onClick={() => onSort('bolsonaroPct2026')}
               align="right"
               heated={heatCol === 'bolso2026'}
+              hint={t('hintShare2026', lang)}
             >
               {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
             </Th>
@@ -184,16 +199,22 @@ export function ResultsTable({
               onClick={() => onSort('votes2022')}
               align="right"
               heated={heatCol === 'lula2022'}
+              hint={t('hintShare2022', lang)}
             >
               {t('lula', lang)} 2022{arrow('votes2022')}
             </Th>
-            <Th align="right" heated={heatCol === 'bolso2022'}>
+            <Th
+              align="right"
+              heated={heatCol === 'bolso2022'}
+              hint={t('hintShare2022', lang)}
+            >
               {t('jBolsonaro', lang)} 2022
             </Th>
             <Th
               onClick={() => onSort('lulaChange')}
               align="right"
               heated={heatCol === 'lulaChange'}
+              hint={t('hintLulaChange', lang)}
             >
               {t('lulaChange', lang)}
               {arrow('lulaChange')}
@@ -202,6 +223,7 @@ export function ResultsTable({
               onClick={() => onSort('bolsonaroChange')}
               align="right"
               heated={heatCol === 'bolsonaroChange'}
+              hint={t('hintBolsonaroChange', lang)}
             >
               {t('bolsonaroChange', lang)}
               {arrow('bolsonaroChange')}
@@ -210,13 +232,14 @@ export function ResultsTable({
               onClick={() => onSort('swingToLula')}
               align="right"
               heated={heatCol === 'swingToLula'}
+              hint={t('hintSwingToLula', lang)}
             >
               {t('swingToLula', lang)}
               {arrow('swingToLula')}
             </Th>
-            <th className="sticky-th px-2 py-2.5 font-medium text-right">
+            <Th align="right" hint={t('hintSections', lang)}>
               {t('notes', lang)}
-            </th>
+            </Th>
           </tr>
         </thead>
         <tbody>
@@ -253,10 +276,14 @@ export function ResultsTable({
                   {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
                 </HeatTd>
                 <HeatTd col="lulaChange" heatCol={heatCol} heat={heat} strong>
-                  {fmtPp(c.swing?.lulaPp, lang)}
+                  {fmtPpWithVotes(c.swing?.lulaPp, lulaVotesDelta(c), lang)}
                 </HeatTd>
                 <HeatTd col="bolsonaroChange" heatCol={heatCol} heat={heat} strong>
-                  {fmtPp(c.swing?.bolsonaroPp, lang)}
+                  {fmtPpWithVotes(
+                    c.swing?.bolsonaroPp,
+                    bolsonaroVotesDelta(c),
+                    lang,
+                  )}
                 </HeatTd>
                 <HeatTd col="swingToLula" heatCol={heatCol} heat={heat} strong>
                   {fmtPp(
@@ -294,10 +321,14 @@ export function ResultsTable({
               {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
             </td>
             <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtPp(totals.lulaChange, lang)}
+              {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang)}
             </td>
             <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtPp(totals.bolsonaroChange, lang)}
+              {fmtPpWithVotes(
+                totals.bolsonaroChange,
+                totals.bolsonaroVotesDelta,
+                lang,
+              )}
             </td>
             <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
               {fmtPp(totals.swingToLula, lang)}
@@ -347,11 +378,13 @@ function HeatTd({
 
 function Th({
   children,
+  hint,
   onClick,
   align = 'left',
   heated,
 }: {
   children: React.ReactNode
+  hint?: string
   onClick?: () => void
   align?: 'left' | 'right'
   heated?: boolean
@@ -363,7 +396,16 @@ function Th({
       } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
     >
-      {children}
+      <span className="block normal-case tracking-normal">
+        <span className="block text-[11px] font-semibold uppercase tracking-wide">
+          {children}
+        </span>
+        {hint ? (
+          <span className="mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
+            {hint}
+          </span>
+        ) : null}
+      </span>
     </th>
   )
 }

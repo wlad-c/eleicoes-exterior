@@ -38,6 +38,34 @@ export function fmtPp(n: number | null | undefined, lang: Lang, digits = 1): str
   }).format(n)} pp`
 }
 
+/** Signed vote delta, e.g. +1,000 or −250. */
+export function fmtSignedInt(n: number | null | undefined, lang: Lang): string {
+  if (n == null || Number.isNaN(n)) return '—'
+  const sign = n > 0 ? '+' : ''
+  return `${sign}${fmtInt(n, lang)}`
+}
+
+/** Change as "+2.4 pp (+1,077)". */
+export function fmtPpWithVotes(
+  pp: number | null | undefined,
+  votesDelta: number | null | undefined,
+  lang: Lang,
+): string {
+  if (pp == null) return '—'
+  if (votesDelta == null) return fmtPp(pp, lang)
+  return `${fmtPp(pp, lang)} (${fmtSignedInt(votesDelta, lang)})`
+}
+
+export function lulaVotesDelta(c: CountryResult): number | null {
+  if (c.status !== 'reported' || !c.y2026) return null
+  return c.y2026.lula - c.y2022.lula
+}
+
+export function bolsonaroVotesDelta(c: CountryResult): number | null {
+  if (c.status !== 'reported' || !c.y2026) return null
+  return c.y2026.bolsonaro - c.y2022.bolsonaro
+}
+
 export function countryName(c: CountryResult, lang: Lang): string {
   return lang === 'pt' ? c.countryPt : c.countryEn
 }
