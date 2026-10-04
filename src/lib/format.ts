@@ -42,20 +42,34 @@ export function countryName(c: CountryResult, lang: Lang): string {
   return lang === 'pt' ? c.countryPt : c.countryEn
 }
 
+/** Lula change = 2026% − 2022%. */
+export function lulaChange(c: CountryResult): number | null {
+  if (c.status !== 'reported' || !c.y2026) return null
+  return c.y2026.lulaPct - c.y2022.lulaPct
+}
+
+/** Bolsonaro change = 2026% − 2022%. */
+export function bolsonaroChange(c: CountryResult): number | null {
+  if (c.status !== 'reported' || !c.y2026) return null
+  return c.y2026.bolsonaroPct - c.y2022.bolsonaroPct
+}
+
+/** Swing to Lula = Lula change − Bolsonaro change. */
+export function swingToLula(c: CountryResult): number | null {
+  const l = lulaChange(c)
+  const b = bolsonaroChange(c)
+  if (l == null || b == null) return null
+  return l - b
+}
+
 export function metricValue(c: CountryResult, metric: MapMetric): number | null {
   switch (metric) {
-    case 'marginSwing':
-      return c.status === 'reported' && c.swing ? c.swing.marginPp : null
-    case 'lulaSwing':
-      return c.status === 'reported' && c.swing ? c.swing.lulaPp : null
-    case 'bolsonaroSwing':
-      return c.status === 'reported' && c.swing ? c.swing.bolsonaroPp : null
-    case 'margin2026':
-      return c.status === 'reported' && c.y2026
-        ? c.y2026.lulaPct - c.y2026.bolsonaroPct
-        : null
-    case 'margin2022':
-      return c.y2022.lulaPct - c.y2022.bolsonaroPct
+    case 'lulaChange':
+      return lulaChange(c)
+    case 'bolsonaroChange':
+      return bolsonaroChange(c)
+    case 'swingToLula':
+      return swingToLula(c)
     case 'lulaPct2026':
       return c.status === 'reported' && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
@@ -64,12 +78,6 @@ export function metricValue(c: CountryResult, metric: MapMetric): number | null 
       return c.y2022.lulaPct
     case 'bolsonaroPct2022':
       return c.y2022.bolsonaroPct
-    case 'votes2026':
-      return c.status === 'reported' && c.y2026 ? c.y2026.totalValid : null
-    case 'votes2022':
-      return c.y2022.totalValid
-    default:
-      return null
   }
 }
 
@@ -80,20 +88,15 @@ export function formatMetricValue(
 ): string {
   if (value == null) return '—'
   switch (metric) {
-    case 'marginSwing':
-    case 'lulaSwing':
-    case 'bolsonaroSwing':
+    case 'lulaChange':
+    case 'bolsonaroChange':
+    case 'swingToLula':
       return fmtPp(value, lang)
-    case 'margin2026':
-    case 'margin2022':
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
     case 'lulaPct2022':
     case 'bolsonaroPct2022':
       return fmtPct(value, lang)
-    case 'votes2026':
-    case 'votes2022':
-      return fmtInt(value, lang)
   }
 }
 

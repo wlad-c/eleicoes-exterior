@@ -47,7 +47,7 @@ export function ResultsTable({
 
   return (
     <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-      <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+      <table className="w-full min-w-[860px] border-collapse text-left text-sm">
         <thead className="sticky top-0 z-20">
           <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
             <Th onClick={() => onSort('country')}>
@@ -83,12 +83,28 @@ export function ResultsTable({
               {t('jBolsonaro', lang)} 2022
             </Th>
             <Th
-              onClick={() => onSort('lulaSwing')}
+              onClick={() => onSort('lulaChange')}
               align="right"
-              heated={heatCol === 'lulaSwing'}
+              heated={heatCol === 'lulaChange'}
             >
-              {t('lulaSwing', lang)}
-              {arrow('lulaSwing')}
+              {t('lulaChange', lang)}
+              {arrow('lulaChange')}
+            </Th>
+            <Th
+              onClick={() => onSort('bolsonaroChange')}
+              align="right"
+              heated={heatCol === 'bolsonaroChange'}
+            >
+              {t('bolsonaroChange', lang)}
+              {arrow('bolsonaroChange')}
+            </Th>
+            <Th
+              onClick={() => onSort('swingToLula')}
+              align="right"
+              heated={heatCol === 'swingToLula'}
+            >
+              {t('swingToLula', lang)}
+              {arrow('swingToLula')}
             </Th>
             <th className="sticky-th px-2 py-2.5 font-medium">{t('notes', lang)}</th>
           </tr>
@@ -126,13 +142,19 @@ export function ResultsTable({
                 <HeatTd col="bolso2022" heatCol={heatCol} heat={heat} muted>
                   {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
                 </HeatTd>
-                <HeatTd
-                  col="lulaSwing"
-                  heatCol={heatCol}
-                  heat={heat}
-                  strong
-                >
+                <HeatTd col="lulaChange" heatCol={heatCol} heat={heat} strong>
                   {fmtPp(c.swing?.lulaPp, lang)}
+                </HeatTd>
+                <HeatTd col="bolsonaroChange" heatCol={heatCol} heat={heat} strong>
+                  {fmtPp(c.swing?.bolsonaroPp, lang)}
+                </HeatTd>
+                <HeatTd col="swingToLula" heatCol={heatCol} heat={heat} strong>
+                  {fmtPp(
+                    c.swing != null
+                      ? c.swing.lulaPp - c.swing.bolsonaroPp
+                      : null,
+                    lang,
+                  )}
                 </HeatTd>
                 <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                   {fmtCoverage(c.coverage)}

@@ -198,10 +198,8 @@ function Legend({
     )
   }
 
-  const from =
-    mode === 'lula' ? '#F7F0F0' : mode === 'bolso' ? '#EEF3F9' : '#F0F2F1'
-  const to =
-    mode === 'lula' ? LULA_COLOR : mode === 'bolso' ? BOLSONARO_COLOR : '#37474F'
+  const from = mode === 'lula' ? '#F7F0F0' : '#EEF3F9'
+  const to = mode === 'lula' ? LULA_COLOR : BOLSONARO_COLOR
 
   return (
     <>

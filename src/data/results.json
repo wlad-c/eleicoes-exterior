@@ -19,7 +19,7 @@
         "url": "https://g1.globo.com/mundo/noticia/2026/10/04/resultados-eleicao-exterior-primeiro-turno-presidente-boletins-de-urna.ghtml"
       }
     ],
-    "defaultMapMetric": "margin2026",
+    "defaultMapMetric": "swingToLula",
     "candidates": {
       "lula": {
         "en": "Lula",

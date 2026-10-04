@@ -24,8 +24,8 @@ export default function App() {
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
     'reported',
   )
-  const [metric, setMetric] = useState<MapMetric>('margin2026')
-  const [sortKey, setSortKey] = useState<SortKey>('lulaPct2026')
+  const [metric, setMetric] = useState<MapMetric>('swingToLula')
+  const [sortKey, setSortKey] = useState<SortKey>('swingToLula')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
 
@@ -280,7 +280,9 @@ export default function App() {
                 <option value="votes2022">{t('votes2022', lang)}</option>
                 <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
                 <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
-                <option value="lulaSwing">{t('lulaSwing', lang)}</option>
+                <option value="lulaChange">{t('lulaChange', lang)}</option>
+                <option value="bolsonaroChange">{t('bolsonaroChange', lang)}</option>
+                <option value="swingToLula">{t('swingToLula', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
                 <option value="region">{t('region', lang)}</option>
               </select>
@@ -385,7 +387,13 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
       return c.y2026?.bolsonaroPct ?? Number.NaN
-    case 'lulaSwing':
+    case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
+    case 'bolsonaroChange':
+      return c.swing?.bolsonaroPp ?? Number.NaN
+    case 'swingToLula':
+      return c.swing != null
+        ? c.swing.lulaPp - c.swing.bolsonaroPp
+        : Number.NaN
   }
 }

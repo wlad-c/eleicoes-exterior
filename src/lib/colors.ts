@@ -17,17 +17,15 @@ export const SWING_NEUTRAL = '#E8EDE8'
 export const PENDING_FILL = 'var(--map-pending)'
 export const NO_DATA_FILL = 'var(--map-nodata)'
 
-type ScaleKind = 'divergingLB' | 'lulaSeq' | 'bolsoSeq' | 'intensity'
+type ScaleKind = 'divergingLB' | 'lulaSeq' | 'bolsoSeq'
 
 function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
-    case 'marginSwing':
-    case 'lulaSwing':
-    case 'margin2026':
-    case 'margin2022':
+    case 'lulaChange':
+    case 'swingToLula':
       return 'divergingLB'
-    case 'bolsonaroSwing':
-      // positive bolsonaro swing → blue (invert via caller)
+    case 'bolsonaroChange':
+      // positive Bolsonaro change → blue (inverted below)
       return 'divergingLB'
     case 'lulaPct2026':
     case 'lulaPct2022':
@@ -35,14 +33,11 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'bolsonaroPct2026':
     case 'bolsonaroPct2022':
       return 'bolsoSeq'
-    case 'votes2026':
-    case 'votes2022':
-      return 'intensity'
   }
 }
 
 function isInverted(metric: MapMetric): boolean {
-  return metric === 'bolsonaroSwing'
+  return metric === 'bolsonaroChange'
 }
 
 function lerpColor(a: string, b: string, t: number): string {
@@ -77,10 +72,9 @@ function divergingScale(absMax: number) {
     })
 }
 
-function sequentialScale(max: number, toward: 'lula' | 'bolso' | 'ink') {
-  const hi =
-    toward === 'lula' ? LULA_COLOR : toward === 'bolso' ? BOLSONARO_COLOR : '#37474F'
-  const lo = toward === 'lula' ? '#F7F0F0' : toward === 'bolso' ? '#EEF3F9' : '#F0F2F1'
+function sequentialScale(max: number, toward: 'lula' | 'bolso') {
+  const hi = toward === 'lula' ? LULA_COLOR : BOLSONARO_COLOR
+  const lo = toward === 'lula' ? '#F7F0F0' : '#EEF3F9'
   return scaleSequential<string>()
     .domain([0, Math.max(max, 1)])
     .interpolator((t) => lerpColor(lo, hi, t))
@@ -121,25 +115,8 @@ export function makeMetricColorizer(
     return (value) => (value == null ? PENDING_FILL : scale(value))
   }
 
-  if (kind === 'bolsoSeq') {
-    const scale = sequentialScale(Math.max(hi, 1), 'bolso')
-    return (value) => (value == null ? PENDING_FILL : scale(value))
-  }
-
-  // vote intensity
-  const scale = sequentialScale(Math.max(hi, 1), 'ink')
+  const scale = sequentialScale(Math.max(hi, 1), 'bolso')
   return (value) => (value == null ? PENDING_FILL : scale(value))
-}
-
-/** @deprecated prefer makeMetricColorizer for data-aware domains */
-export function colorForMetric(metric: MapMetric, value: number | null): string {
-  if (value == null) return PENDING_FILL
-  const kind = scaleKind(metric)
-  if (kind === 'lulaSeq') return sequentialScale(70, 'lula')(value)
-  if (kind === 'bolsoSeq') return sequentialScale(70, 'bolso')(value)
-  if (kind === 'intensity') return sequentialScale(35000, 'ink')(value)
-  const scale = divergingScale(20)
-  return scale(isInverted(metric) ? -value : value)
 }
 
 export function withAlpha(color: string, alpha: number): string {
@@ -153,12 +130,11 @@ export function withAlpha(color: string, alpha: number): string {
   return color
 }
 
-export type LegendMode = 'diverging' | 'lula' | 'bolso' | 'intensity'
+export type LegendMode = 'diverging' | 'lula' | 'bolso'
 
 export function legendModeForMetric(metric: MapMetric): LegendMode {
   const kind = scaleKind(metric)
   if (kind === 'divergingLB') return 'diverging'
   if (kind === 'lulaSeq') return 'lula'
-  if (kind === 'bolsoSeq') return 'bolso'
-  return 'intensity'
+  return 'bolso'
 }
