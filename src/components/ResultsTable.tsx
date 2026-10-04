@@ -56,6 +56,11 @@ function sumRows(rows: CountryResult[]): RowTotals {
   let lula2022 = 0
   let bolso2022 = 0
   let valid2022 = 0
+  // 2022 baseline limited to countries that also have 2026 results,
+  // so change/swing compare the same country set.
+  let lula2022Comparable = 0
+  let bolso2022Comparable = 0
+  let valid2022Comparable = 0
   let sectionsCounted = 0
   let sectionsTotal = 0
   let hasSections = false
@@ -69,6 +74,9 @@ function sumRows(rows: CountryResult[]): RowTotals {
       lula2026 += c.y2026.lula
       bolso2026 += c.y2026.bolsonaro
       valid2026 += c.y2026.totalValid
+      lula2022Comparable += c.y2022.lula
+      bolso2022Comparable += c.y2022.bolsonaro
+      valid2022Comparable += c.y2022.totalValid
     }
     if (c.coverage) {
       hasSections = true
@@ -81,10 +89,20 @@ function sumRows(rows: CountryResult[]): RowTotals {
   const bolsoPct2022 = valid2022 ? (bolso2022 / valid2022) * 100 : 0
   const lulaPct2026 = has2026 && valid2026 ? (lula2026 / valid2026) * 100 : null
   const bolsoPct2026 = has2026 && valid2026 ? (bolso2026 / valid2026) * 100 : null
+  const lulaPct2022Comparable = valid2022Comparable
+    ? (lula2022Comparable / valid2022Comparable) * 100
+    : null
+  const bolsoPct2022Comparable = valid2022Comparable
+    ? (bolso2022Comparable / valid2022Comparable) * 100
+    : null
   const lulaChange =
-    lulaPct2026 != null ? lulaPct2026 - lulaPct2022 : null
+    lulaPct2026 != null && lulaPct2022Comparable != null
+      ? lulaPct2026 - lulaPct2022Comparable
+      : null
   const bolsonaroChange =
-    bolsoPct2026 != null ? bolsoPct2026 - bolsoPct2022 : null
+    bolsoPct2026 != null && bolsoPct2022Comparable != null
+      ? bolsoPct2026 - bolsoPct2022Comparable
+      : null
   const swingToLula =
     lulaChange != null && bolsonaroChange != null
       ? lulaChange - bolsonaroChange
