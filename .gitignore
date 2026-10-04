@@ -13,6 +13,9 @@ dist-ssr
 *.local
 agent-tools
 
+# Generated from src/data/results.json by the Vite sync plugin
+public/data/results.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

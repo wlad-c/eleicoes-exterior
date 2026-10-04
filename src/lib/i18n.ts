@@ -111,10 +111,14 @@ const dict = {
     pt: 'O recorte é só a votação presidencial do 1º turno no exterior. Totais e o mapa refletem apenas os países marcados como apurados neste conjunto de dados, não todo o eleitorado ZZ.',
   },
   howToEdit: {
-    en: 'Maintainers: edit src/data/results.json and rebuild to update figures.',
-    pt: 'Mantenedores: edite src/data/results.json e faça o build para atualizar os números.',
+    en: 'Maintainers: edit src/data/results.json and rebuild to update figures. Open tabs re-fetch that data every 30 minutes.',
+    pt: 'Mantenedores: edite src/data/results.json e faça o build para atualizar os números. Abas abertas buscam esses dados a cada 30 minutos.',
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
+  autoRefresh: {
+    en: 'auto-refreshes every 30 min',
+    pt: 'atualiza automaticamente a cada 30 min',
+  },
   legendLula: { en: 'toward Lula', pt: 'para Lula' },
   legendBolso: { en: 'toward Bolsonaro', pt: 'para Bolsonaro' },
   legendPending: { en: 'pending', pt: 'pendente' },
