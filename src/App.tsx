@@ -252,10 +252,10 @@ export default function App() {
               {reportedCount} {t('reported', lang)}
             </p>
           </div>
-          <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+          <label className="block w-full min-w-0 text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)] sm:min-w-[220px] sm:w-auto">
             {t('mapMetric', lang)}
             <select
-              className="control mt-1 w-full"
+              className="control mt-1 w-full max-w-full"
               value={metric}
               onChange={(e) => setMetric(e.target.value as MapMetric)}
               aria-describedby="heatmap-hint"

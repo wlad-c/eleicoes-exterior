@@ -138,10 +138,16 @@ html.dark .sticky-table-chrome {
 .results-table {
   border-collapse: separate;
   border-spacing: 0;
+  width: 100%;
 }
 
 .results-table tfoot td {
   background: var(--paper-deep);
+}
+
+.table-x-scroll {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */
@@ -149,6 +155,44 @@ html.dark .sticky-table-chrome {
   overflow: visible;
   backdrop-filter: none;
   background: var(--paper);
+}
+
+@media (max-width: 900px) {
+  /* Wide table pans horizontally; page keeps the only vertical scroll */
+  .table-x-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .results-table {
+    min-width: 60rem;
+    width: max-content;
+    font-size: 0.8125rem;
+  }
+
+  .results-table th,
+  .results-table td {
+    white-space: nowrap;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Sticky thead can't bind to the page inside an x-scroller */
+  .sticky-th {
+    position: static;
+    top: auto;
+    box-shadow: none;
+  }
+
+  .th-hint {
+    display: none;
+  }
+
+  .map-wrap {
+    margin-inline: -0.25rem;
+  }
 }
 
 /* Fixed Total pin (not a nested scroll pane) */

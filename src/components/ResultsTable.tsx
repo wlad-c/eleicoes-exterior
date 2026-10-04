@@ -142,6 +142,7 @@ export function ResultsTable({
 
   return (
     <div>
+      <div className="table-x-scroll">
       <table
         ref={tableRef}
         className="results-table w-full text-left text-sm"
@@ -305,6 +306,7 @@ export function ResultsTable({
           </tr>
         </tfoot>
       </table>
+      </div>
 
       {/* Fixed Total pin — reliable on iOS, no nested scroll container */}
       <div
@@ -399,7 +401,7 @@ function Th({
           {children}
         </span>
         {hint ? (
-          <span className="mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
+          <span className="th-hint mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
             {hint}
           </span>
         ) : null}

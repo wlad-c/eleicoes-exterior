@@ -59,7 +59,7 @@ export function WorldMap({
     return () => ro.disconnect()
   }, [])
 
-  const height = Math.round(width * 0.48)
+  const height = Math.round(width * (width < 520 ? 0.58 : 0.48))
   const colorize = useMemo(
     () => makeMetricColorizer(metric, countries),
     [metric, countries],
