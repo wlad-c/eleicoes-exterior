@@ -64,197 +64,206 @@ export function ResultsTable({
   const heatCol = heatColumnForMetric(metric)
 
   return (
-    <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
-      <table className="w-full min-w-[960px] text-left text-sm">
-        <thead>
-          <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-            <Th
-              onClick={() => onSort('country')}
-              hint={t('hintCountry', lang)}
-            >
-              {t('country', lang)}
-              {arrow('country')}
-            </Th>
-            <Th
-              onClick={() => onSort('region')}
-              hint={t('hintRegion', lang)}
-            >
-              {t('region', lang)}
-              {arrow('region')}
-            </Th>
-            <Th
-              onClick={() => onSort('lulaPct2026')}
-              align="right"
-              heated={heatCol === 'lula2026'}
-              hint={t('hintShare2026', lang)}
-            >
-              {t('lula', lang)} 2026{arrow('lulaPct2026')}
-            </Th>
-            <Th
-              onClick={() => onSort('bolsonaroPct2026')}
-              align="right"
-              heated={heatCol === 'bolso2026'}
-              hint={t('hintShare2026', lang)}
-            >
-              {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-            </Th>
-            <Th
-              onClick={() => onSort('votes2022')}
-              align="right"
-              heated={heatCol === 'lula2022'}
-              hint={t('hintShare2022', lang)}
-            >
-              {t('lula', lang)} 2022{arrow('votes2022')}
-            </Th>
-            <Th
-              align="right"
-              heated={heatCol === 'bolso2022'}
-              hint={t('hintShare2022', lang)}
-            >
-              {t('jBolsonaro', lang)} 2022
-            </Th>
-            <Th
-              onClick={() => onSort('lulaChange')}
-              align="right"
-              heated={heatCol === 'lulaChange'}
-              hint={t('hintLulaChange', lang)}
-            >
-              {t('lulaChange', lang)}
-              {arrow('lulaChange')}
-            </Th>
-            <Th
-              onClick={() => onSort('bolsonaroChange')}
-              align="right"
-              heated={heatCol === 'bolsonaroChange'}
-              hint={t('hintBolsonaroChange', lang)}
-            >
-              {t('bolsonaroChange', lang)}
-              {arrow('bolsonaroChange')}
-            </Th>
-            <Th
-              onClick={() => onSort('swingToLula')}
-              align="right"
-              heated={heatCol === 'swingToLula'}
-              hint={t('hintSwingToLula', lang)}
-            >
-              {t('swingToLula', lang)}
-              {arrow('swingToLula')}
-            </Th>
-            <Th align="right" hint={t('hintSections', lang)}>
-              {t('notes', lang)}
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((c) => {
-            const hi = highlightId === c.id
-            const value = metricValue(c, metric)
-            const heat =
-              value != null ? withAlpha(colorize(value), 0.28) : undefined
-            return (
-              <tr
-                key={c.id}
-                id={`row-${c.id}`}
-                onClick={() => onSelect(c.id)}
-                className={`cursor-pointer border-b border-[var(--line-soft)] transition-colors ${
-                  hi ? 'bg-[var(--chip)]' : 'hover:bg-[var(--chip-soft)]'
-                }`}
+    <div>
+      <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
+        <table className="w-full min-w-[960px] text-left text-sm">
+          <thead>
+            <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
+              <Th
+                onClick={() => onSort('country')}
+                hint={t('hintCountry', lang)}
               >
-                <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
-                  {countryName(c, lang)}
-                  {c.notes?.startsWith('DISPUTED') ? (
-                    <span
-                      className="mt-0.5 block text-[10px] font-normal leading-snug text-[var(--ink-muted)]"
-                      title={c.notes}
-                    >
-                      {t('disputedShort', lang)}
-                    </span>
-                  ) : null}
-                </td>
-                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                  {regionLabel(c.region, lang)}
-                </td>
-                <HeatTd col="lula2026" heatCol={heatCol} heat={heat}>
-                  {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang)}
-                </HeatTd>
-                <HeatTd col="bolso2026" heatCol={heatCol} heat={heat}>
-                  {fmtShare(c.y2026?.bolsonaroPct, c.y2026?.bolsonaro, lang)}
-                </HeatTd>
-                <HeatTd col="lula2022" heatCol={heatCol} heat={heat} muted>
-                  {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang)}
-                </HeatTd>
-                <HeatTd col="bolso2022" heatCol={heatCol} heat={heat} muted>
-                  {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
-                </HeatTd>
-                <HeatTd col="lulaChange" heatCol={heatCol} heat={heat} strong>
-                  {fmtPpWithVotes(c.swing?.lulaPp, lulaVotesDelta(c), lang)}
-                </HeatTd>
-                <HeatTd col="bolsonaroChange" heatCol={heatCol} heat={heat} strong>
-                  {fmtPpWithVotes(
-                    c.swing?.bolsonaroPp,
-                    bolsonaroVotesDelta(c),
-                    lang,
-                  )}
-                </HeatTd>
-                <HeatTd col="swingToLula" heatCol={heatCol} heat={heat} strong>
-                  {fmtPp(
-                    c.swing != null
-                      ? c.swing.lulaPp - c.swing.bolsonaroPp
-                      : null,
-                    lang,
-                  )}
-                </HeatTd>
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtCoverage(c.coverage)}
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-        <tfoot>
-          <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
-            <td className="sticky-tf px-2 py-2.5 text-[var(--ink)]">
-              {t('tableTotal', lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-[var(--ink-muted)] font-normal">
-              {totals.countries} {t('countries', lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
-              {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
-              {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtPpWithVotes(
-                totals.bolsonaroChange,
-                totals.bolsonaroVotesDelta,
-                lang,
-              )}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
-              {fmtPp(totals.swingToLula, lang)}
-            </td>
-            <td className="sticky-tf px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)] font-medium">
-              {totals.sectionsCounted != null && totals.sectionsTotal != null
-                ? fmtCoverage({
-                    counted: totals.sectionsCounted,
-                    total: totals.sectionsTotal,
-                  })
-                : '—'}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+                {t('country', lang)}
+                {arrow('country')}
+              </Th>
+              <Th
+                onClick={() => onSort('region')}
+                hint={t('hintRegion', lang)}
+              >
+                {t('region', lang)}
+                {arrow('region')}
+              </Th>
+              <Th
+                onClick={() => onSort('lulaPct2026')}
+                align="right"
+                heated={heatCol === 'lula2026'}
+                hint={t('hintShare2026', lang)}
+              >
+                {t('lula', lang)} 2026{arrow('lulaPct2026')}
+              </Th>
+              <Th
+                onClick={() => onSort('bolsonaroPct2026')}
+                align="right"
+                heated={heatCol === 'bolso2026'}
+                hint={t('hintShare2026', lang)}
+              >
+                {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
+              </Th>
+              <Th
+                onClick={() => onSort('votes2022')}
+                align="right"
+                heated={heatCol === 'lula2022'}
+                hint={t('hintShare2022', lang)}
+              >
+                {t('lula', lang)} 2022{arrow('votes2022')}
+              </Th>
+              <Th
+                align="right"
+                heated={heatCol === 'bolso2022'}
+                hint={t('hintShare2022', lang)}
+              >
+                {t('jBolsonaro', lang)} 2022
+              </Th>
+              <Th
+                onClick={() => onSort('lulaChange')}
+                align="right"
+                heated={heatCol === 'lulaChange'}
+                hint={t('hintLulaChange', lang)}
+              >
+                {t('lulaChange', lang)}
+                {arrow('lulaChange')}
+              </Th>
+              <Th
+                onClick={() => onSort('bolsonaroChange')}
+                align="right"
+                heated={heatCol === 'bolsonaroChange'}
+                hint={t('hintBolsonaroChange', lang)}
+              >
+                {t('bolsonaroChange', lang)}
+                {arrow('bolsonaroChange')}
+              </Th>
+              <Th
+                onClick={() => onSort('swingToLula')}
+                align="right"
+                heated={heatCol === 'swingToLula'}
+                hint={t('hintSwingToLula', lang)}
+              >
+                {t('swingToLula', lang)}
+                {arrow('swingToLula')}
+              </Th>
+              <Th align="right" hint={t('hintSections', lang)}>
+                {t('notes', lang)}
+              </Th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((c) => {
+              const hi = highlightId === c.id
+              const value = metricValue(c, metric)
+              const heat =
+                value != null ? withAlpha(colorize(value), 0.28) : undefined
+              return (
+                <tr
+                  key={c.id}
+                  id={`row-${c.id}`}
+                  onClick={() => onSelect(c.id)}
+                  className={`cursor-pointer border-b border-[var(--line-soft)] transition-colors ${
+                    hi ? 'bg-[var(--chip)]' : 'hover:bg-[var(--chip-soft)]'
+                  }`}
+                >
+                  <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
+                    {countryName(c, lang)}
+                    {c.notes?.startsWith('DISPUTED') ? (
+                      <span
+                        className="mt-0.5 block text-[10px] font-normal leading-snug text-[var(--ink-muted)]"
+                        title={c.notes}
+                      >
+                        {t('disputedShort', lang)}
+                      </span>
+                    ) : null}
+                  </td>
+                  <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                    {regionLabel(c.region, lang)}
+                  </td>
+                  <HeatTd col="lula2026" heatCol={heatCol} heat={heat}>
+                    {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang)}
+                  </HeatTd>
+                  <HeatTd col="bolso2026" heatCol={heatCol} heat={heat}>
+                    {fmtShare(c.y2026?.bolsonaroPct, c.y2026?.bolsonaro, lang)}
+                  </HeatTd>
+                  <HeatTd col="lula2022" heatCol={heatCol} heat={heat} muted>
+                    {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang)}
+                  </HeatTd>
+                  <HeatTd col="bolso2022" heatCol={heatCol} heat={heat} muted>
+                    {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
+                  </HeatTd>
+                  <HeatTd col="lulaChange" heatCol={heatCol} heat={heat} strong>
+                    {fmtPpWithVotes(c.swing?.lulaPp, lulaVotesDelta(c), lang)}
+                  </HeatTd>
+                  <HeatTd
+                    col="bolsonaroChange"
+                    heatCol={heatCol}
+                    heat={heat}
+                    strong
+                  >
+                    {fmtPpWithVotes(
+                      c.swing?.bolsonaroPp,
+                      bolsonaroVotesDelta(c),
+                      lang,
+                    )}
+                  </HeatTd>
+                  <HeatTd col="swingToLula" heatCol={heatCol} heat={heat} strong>
+                    {fmtPp(
+                      c.swing != null
+                        ? c.swing.lulaPp - c.swing.bolsonaroPp
+                        : null,
+                      lang,
+                    )}
+                  </HeatTd>
+                  <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                    {fmtCoverage(c.coverage)}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+          <tfoot>
+            <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
+              <td className="sticky-tf px-2 py-2.5 text-[var(--ink)]">
+                {t('tableTotal', lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 font-normal text-[var(--ink-muted)]">
+                {totals.countries} {t('countries', lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]">
+                {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]">
+                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+                {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+                {fmtPpWithVotes(
+                  totals.bolsonaroChange,
+                  totals.bolsonaroVotesDelta,
+                  lang,
+                )}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.swingToLula, lang)}
+              </td>
+              <td className="sticky-tf px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]">
+                {totals.sectionsCounted != null && totals.sectionsTotal != null
+                  ? fmtCoverage({
+                      counted: totals.sectionsCounted,
+                      total: totals.sectionsTotal,
+                    })
+                  : '—'}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        {/* Spacer so sticky Total can unstick and scroll out of view */}
+        <div className="table-scroll-end" aria-hidden="true" />
+      </div>
       {mixed2022Vs2026 ? (
         <p className="mt-2 px-1 text-xs text-[var(--ink-muted)]">
           {t('totalFootnoteMixed', lang)}

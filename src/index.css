@@ -117,6 +117,7 @@ html.dark .sticky-table-chrome {
 }
 
 .sticky-th {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 3;
@@ -124,17 +125,31 @@ html.dark .sticky-table-chrome {
   box-shadow: 0 1px 0 var(--line);
 }
 
-.sticky-tf {
+.table-scroll tfoot {
+  position: -webkit-sticky;
   position: sticky;
   bottom: 0;
-  z-index: 3;
+  z-index: 4;
+}
+
+.sticky-tf {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
   background: var(--paper-deep);
-  box-shadow: 0 -1px 0 var(--line);
+  box-shadow: 0 -1px 0 var(--line), 0 -6px 12px -8px rgb(0 0 0 / 18%);
 }
 
 .table-scroll table {
   border-collapse: separate;
   border-spacing: 0;
+}
+
+/* Extra scroll room so sticky Total can unstick and leave the viewport */
+.table-scroll-end {
+  height: 4.5rem;
+  flex-shrink: 0;
 }
 
 .filter-row {
