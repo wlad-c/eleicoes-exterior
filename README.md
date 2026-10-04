@@ -24,7 +24,7 @@ npm run build:pages
 
 Static site for Pages is committed under `docs/` (Settings → Pages → Deploy from branch `main` / `docs`). Live URL:
 
-https://wladimirchagas.github.io/eleicoes-exterior/
+https://wlad-c.github.io/eleicoes-exterior/
 
 
 ## Stack
