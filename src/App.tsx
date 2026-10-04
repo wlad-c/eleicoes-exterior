@@ -173,25 +173,7 @@ export default function App() {
           </p>
         </div>
 
-        <div className="mb-4 rounded-lg border border-[var(--line)] bg-[var(--paper-deep)] px-4 py-3 sm:px-5 sm:py-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('swingToLula', lang)}
-          </p>
-          <p
-            className={`mt-1 brand text-3xl font-extrabold tabular-nums sm:text-4xl ${
-              (reportedAgg.swingToLula ?? 0) >= 0
-                ? 'text-[var(--lula)]'
-                : 'text-[var(--bolso)]'
-            }`}
-          >
-            {fmtPp(reportedAgg.swingToLula, lang)}
-          </p>
-          <p className="mt-1 text-xs text-[var(--ink-muted)]">
-            {t('hintSwingToLula', lang)} · {t('swingHint', lang)}
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <TotalCard
             label={t('lula', lang)}
             votes={totals.lula}
@@ -206,6 +188,7 @@ export default function App() {
             tone="bolso"
             lang={lang}
           />
+          <SwingCard swing={reportedAgg.swingToLula} lang={lang} />
         </div>
       </section>
 
@@ -381,6 +364,41 @@ function TotalCard({
         />
       </div>
       <p className="mt-1 text-xs tabular-nums text-[var(--ink-muted)]">{fmtPct(pct, lang)}</p>
+    </div>
+  )
+}
+
+function SwingCard({
+  swing,
+  lang,
+}: {
+  swing: number | null
+  lang: Lang
+}) {
+  const towardLula = (swing ?? 0) >= 0
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="font-semibold">{t('swingToLula', lang)}</span>
+        <span
+          className={`tabular-nums text-lg font-bold ${
+            towardLula ? 'text-[var(--lula)]' : 'text-[var(--bolso)]'
+          }`}
+        >
+          {fmtPp(swing, lang)}
+        </span>
+      </div>
+      <div className="mt-2 h-2 overflow-hidden rounded-sm bg-[var(--paper-deep)]">
+        <div
+          className={`bar-fill h-full ${towardLula ? 'bar-lula' : 'bar-bolso'}`}
+          style={{
+            width: `${Math.max(2, Math.min(100, Math.abs(swing ?? 0) * 8))}%`,
+          }}
+        />
+      </div>
+      <p className="mt-1 text-xs text-[var(--ink-muted)]">
+        {t('hintSwingToLula', lang)}
+      </p>
     </div>
   )
 }
