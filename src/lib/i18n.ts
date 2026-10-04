@@ -37,6 +37,9 @@ const dict = {
   legendLula: { en: 'toward Lula', pt: 'para Lula' },
   legendBolso: { en: 'toward Bolsonaro', pt: 'para Bolsonaro' },
   legendPending: { en: 'pending', pt: 'pendente' },
+  themeLight: { en: 'Light', pt: 'Claro' },
+  themeDark: { en: 'Dark', pt: 'Escuro' },
+  themeToggle: { en: 'Toggle color theme', pt: 'Alternar tema de cores' },
   howToEdit: {
     en: 'Edit src/data/results.json and rebuild to update figures.',
     pt: 'Edite src/data/results.json e faça o build para atualizar os números.',

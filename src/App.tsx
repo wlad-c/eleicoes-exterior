@@ -4,6 +4,7 @@ import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, runningTotals } from './lib/format'
 import { regionLabel, t } from './lib/i18n'
+import { useTheme } from './lib/theme'
 import type {
   CountryResult,
   Lang,
@@ -23,6 +24,7 @@ const METRICS: MapMetric[] = [
 ]
 
 export default function App() {
+  const { theme, setTheme } = useTheme()
   const [lang, setLang] = useState<Lang>('en')
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
@@ -93,18 +95,46 @@ export default function App() {
           <p className="brand text-3xl font-extrabold text-[var(--ink)] sm:text-4xl">
             {t('brand', lang)}
           </p>
-          <div className="flex gap-1">
-            {(['en', 'pt'] as Lang[]).map((l) => (
+          <div className="flex flex-wrap items-center gap-2">
+            <div
+              className="flex gap-1"
+              role="group"
+              aria-label={t('themeToggle', lang)}
+            >
               <button
-                key={l}
                 type="button"
-                className="lang-btn control px-3 py-1.5 text-sm font-semibold uppercase"
-                aria-pressed={lang === l}
-                onClick={() => setLang(l)}
+                className="theme-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-pressed={theme === 'light'}
+                aria-label={t('themeLight', lang)}
+                title={t('themeLight', lang)}
+                onClick={() => setTheme('light')}
               >
-                {l}
+                {t('themeLight', lang)}
               </button>
-            ))}
+              <button
+                type="button"
+                className="theme-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-pressed={theme === 'dark'}
+                aria-label={t('themeDark', lang)}
+                title={t('themeDark', lang)}
+                onClick={() => setTheme('dark')}
+              >
+                {t('themeDark', lang)}
+              </button>
+            </div>
+            <div className="flex gap-1">
+              {(['en', 'pt'] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  className="lang-btn control px-3 py-1.5 text-sm font-semibold uppercase"
+                  aria-pressed={lang === l}
+                  onClick={() => setLang(l)}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         <h1 className="max-w-3xl text-xl font-semibold leading-snug text-[var(--ink)] sm:text-2xl">
@@ -257,7 +287,12 @@ export default function App() {
           {data.meta.sources.map((s, i) => (
             <span key={s.url}>
               {i > 0 ? ' · ' : ''}
-              <a className="underline decoration-[var(--line)] underline-offset-2 hover:text-[var(--ink)]" href={s.url} target="_blank" rel="noreferrer">
+              <a
+                className="underline decoration-[var(--line)] underline-offset-2 hover:text-[var(--ink)]"
+                href={s.url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {s.name}
               </a>
             </span>

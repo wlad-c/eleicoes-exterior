@@ -89,7 +89,7 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
               key={id}
               d={d}
               fill={fill}
-              stroke={isHi ? '#0C1F1A' : '#F4F7F3'}
+              stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--map-stroke)'}
               strokeWidth={isHi ? 1.6 : 0.4}
               className={c ? 'cursor-pointer transition-[stroke-width] duration-200' : ''}
               onMouseEnter={(e) => {
@@ -134,10 +134,12 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
 
       {tip && (
         <div
-          className="pointer-events-none absolute z-20 max-w-[240px] rounded-md bg-[var(--ink)] px-3 py-2 text-left text-xs text-[var(--paper)] shadow-lg"
+          className="pointer-events-none absolute z-20 max-w-[240px] rounded-md px-3 py-2 text-left text-xs shadow-lg"
           style={{
             left: Math.min(tip.x + 12, width - 250),
             top: Math.max(8, tip.y - 8),
+            background: 'var(--tip-bg)',
+            color: 'var(--tip-fg)',
           }}
         >
           <div className="font-semibold">{countryName(tip.country, lang)}</div>

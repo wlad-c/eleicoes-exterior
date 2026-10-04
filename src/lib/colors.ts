@@ -46,5 +46,5 @@ export function colorForMetric(metric: MapMetric, value: number | null): string 
   return swingScale(value)
 }
 
-export const PENDING_FILL = '#C5CEC6'
-export const NO_DATA_FILL = '#DCE3DC'
+export const PENDING_FILL = 'var(--map-pending)'
+export const NO_DATA_FILL = 'var(--map-nodata)'

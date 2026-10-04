@@ -8,6 +8,20 @@
       name="description"
       content="Brazilian overseas presidential vote — 1st round 2026 vs 2022 swing"
     />
+    <script>
+      ;(function () {
+        try {
+          var k = 'eleicoes-exterior-theme'
+          var t = localStorage.getItem(k)
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark')
+        } catch (e) {}
+      })()
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -12,9 +12,50 @@
   --accent: #c9a227;
   --lula: #1b7a4e;
   --bolso: #1e4d8c;
+  --panel: color-mix(in srgb, white 72%, transparent);
+  --control-bg: #ffffff;
+  --map-pending: #c5cec6;
+  --map-nodata: #dce3dc;
+  --map-stroke: #f4f7f3;
+  --map-stroke-hi: #0c1f1a;
+  --tip-bg: #0c1f1a;
+  --tip-fg: #f3f6f1;
+  --bg-glow-1: rgba(27, 122, 78, 0.14);
+  --bg-glow-2: rgba(201, 162, 39, 0.16);
+  --bg-top: #eef3ec;
+  --bg-mid: #f3f6f1;
+  --bg-bot: #e8efe6;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Source Sans 3', sans-serif;
   color-scheme: light;
+}
+
+html.dark {
+  --ink: #e8f0ea;
+  --ink-muted: #9aada1;
+  --paper: #121a16;
+  --paper-deep: #1a2420;
+  --line: #2d3b34;
+  --line-soft: #243029;
+  --chip: #24382c;
+  --chip-soft: #1a2820;
+  --accent: #d4b44a;
+  --lula: #3d9e68;
+  --bolso: #5b84c4;
+  --panel: color-mix(in srgb, #18211c 88%, transparent);
+  --control-bg: #1a2420;
+  --map-pending: #3a4740;
+  --map-nodata: #2a3530;
+  --map-stroke: #18211c;
+  --map-stroke-hi: #e8f0ea;
+  --tip-bg: #e8f0ea;
+  --tip-fg: #121a16;
+  --bg-glow-1: rgba(61, 158, 104, 0.12);
+  --bg-glow-2: rgba(212, 180, 74, 0.1);
+  --bg-top: #0e1512;
+  --bg-mid: #121a16;
+  --bg-bot: #0c1310;
+  color-scheme: dark;
 }
 
 * {
@@ -32,10 +73,11 @@ body {
   font-family: var(--font-body);
   color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(27, 122, 78, 0.14), transparent 55%),
-    radial-gradient(900px 500px at 100% 0%, rgba(201, 162, 39, 0.16), transparent 50%),
-    linear-gradient(180deg, #eef3ec 0%, var(--paper) 40%, #e8efe6 100%);
+    radial-gradient(1200px 600px at 10% -10%, var(--bg-glow-1), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, var(--bg-glow-2), transparent 50%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 40%, var(--bg-bot) 100%);
   background-attachment: fixed;
+  transition: background 0.25s ease, color 0.2s ease;
 }
 
 #root {
@@ -58,14 +100,14 @@ select {
 }
 
 .panel {
-  background: color-mix(in srgb, white 72%, transparent);
+  background: var(--panel);
   border: 1px solid var(--line);
   backdrop-filter: blur(8px);
 }
 
 .control {
   border: 1px solid var(--line);
-  background: white;
+  background: var(--control-bg);
   color: var(--ink);
   border-radius: 0.4rem;
   padding: 0.45rem 0.65rem;
@@ -76,7 +118,8 @@ select {
   outline-offset: 1px;
 }
 
-.lang-btn[aria-pressed='true'] {
+.lang-btn[aria-pressed='true'],
+.theme-btn[aria-pressed='true'] {
   background: var(--ink);
   color: var(--paper);
   border-color: var(--ink);
@@ -128,5 +171,9 @@ select {
   .animate-rise-delay,
   .bar-fill {
     animation: none;
+  }
+
+  body {
+    transition: none;
   }
 }
