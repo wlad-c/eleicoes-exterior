@@ -45,6 +45,10 @@ const dict = {
   region: { en: 'Region', pt: 'Região' },
   runningTotal: { en: 'Running total (reported)', pt: 'Total parcial (apurados)' },
   tableTotal: { en: 'Total', pt: 'Total' },
+  totalFootnoteMixed: {
+    en: 'Note: 2022 share columns in Total sum every filtered country. 2026 shares and change/swing use only countries with 2026 results (comparable set).',
+    pt: 'Nota: as colunas de % 2022 no Total somam todos os países filtrados. As % 2026 e variação/swing usam só países com resultado 2026 (conjunto comparável).',
+  },
   swingHint: {
     en: 'Same as the table Total row for countries with 2026 results',
     pt: 'Igual à linha Total da tabela para países com resultado 2026',

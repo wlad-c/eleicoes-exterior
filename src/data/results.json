@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T14:28:37.337Z",
+    "updatedAt": "2026-10-04T14:59:23.446Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -38,8 +38,8 @@
         "name": "Exame",
         "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-veja-quem-venceu-no-japao-china-e-nova-zelandia/",
         "role": {
-          "en": "2026 overseas BU tallies (Japan full count, Indonesia, UAE, Asia/Oceania)",
-          "pt": "Apurações 2026 de BU no exterior (Japão completo, Indonésia, EAU, Ásia/Oceania)"
+          "en": "2026 overseas BU tallies (Japan, UAE, Thailand valid counts; Jordan, Israel, Greece, Qatar, Estonia, Saudi Arabia, Kuwait, Egypt, Kenya)",
+          "pt": "Apurações 2026 de BU no exterior (Japão, EAU, Tailândia; Jordânia, Israel, Grécia, Catar, Estônia, Arábia Saudita, Kuwait, Egito, Quênia)"
         }
       },
       {
@@ -122,10 +122,10 @@
       },
       "swing": {
         "lulaPp": 1.76,
-        "bolsonaroPp": -0.53,
-        "marginPp": 2.29
+        "bolsonaroPp": -0.52,
+        "marginPp": 2.28
       },
-      "notes": "",
+      "notes": "Totals per BNews/Exame (34,318 valid); g1 lists 34,363 / Lula 5,222.",
       "status": "reported",
       "coverage": {
         "counted": 119,
@@ -145,24 +145,11 @@
         "lulaPct": 54.86,
         "bolsonaroPct": 28.75
       },
-      "y2026": {
-        "lula": 4562,
-        "bolsonaro": 2579,
-        "totalValid": 8451,
-        "lulaPct": 53.98,
-        "bolsonaroPct": 30.52
-      },
-      "swing": {
-        "lulaPp": -0.88,
-        "bolsonaroPp": 1.77,
-        "marginPp": -2.65
-      },
-      "notes": "",
-      "status": "reported",
-      "coverage": {
-        "counted": 29,
-        "total": 29
-      }
+      "y2026": null,
+      "swing": null,
+      "notes": "2026 BU tallies conflict across sources (g1 partial 5,283/2,022 vs g1 final 4,562/2,579 with list not summing to total); awaiting TSE totalization.",
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "china-mainland",
@@ -218,8 +205,8 @@
       },
       "swing": {
         "lulaPp": -2.47,
-        "bolsonaroPp": 3.53,
-        "marginPp": -6
+        "bolsonaroPp": 3.54,
+        "marginPp": -6.01
       },
       "notes": "",
       "status": "reported",
@@ -250,8 +237,8 @@
       },
       "swing": {
         "lulaPp": 7.93,
-        "bolsonaroPp": 1.56,
-        "marginPp": 6.37
+        "bolsonaroPp": 1.57,
+        "marginPp": 6.36
       },
       "notes": "",
       "status": "reported",
@@ -283,9 +270,9 @@
       "swing": {
         "lulaPp": 9.67,
         "bolsonaroPp": -5.28,
-        "marginPp": 14.96
+        "marginPp": 14.95
       },
-      "notes": "",
+      "notes": "Valid total 244 per Exame; g1 implies 240.",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -340,16 +327,16 @@
       "y2026": {
         "lula": 40,
         "bolsonaro": 51,
-        "totalValid": 102,
-        "lulaPct": 39.22,
-        "bolsonaroPct": 50
+        "totalValid": 99,
+        "lulaPct": 40.4,
+        "bolsonaroPct": 51.52
       },
       "swing": {
-        "lulaPp": -4.59,
-        "bolsonaroPp": 10,
-        "marginPp": -14.59
+        "lulaPp": -3.41,
+        "bolsonaroPp": 11.52,
+        "marginPp": -14.93
       },
-      "notes": "",
+      "notes": "Valid = 102 attendance − 3 blank (Exame/g1); not turnout.",
       "status": "reported",
       "coverage": {
         "counted": 1,
@@ -871,18 +858,18 @@
         "bolsonaroPct": 48.59
       },
       "y2026": {
-        "lula": 469,
+        "lula": 512,
         "bolsonaro": 659,
-        "totalValid": 1347,
-        "lulaPct": 34.82,
-        "bolsonaroPct": 48.92
+        "totalValid": 1355,
+        "lulaPct": 37.79,
+        "bolsonaroPct": 48.63
       },
       "swing": {
-        "lulaPp": -2.04,
-        "bolsonaroPp": 0.33,
-        "marginPp": -2.37
+        "lulaPp": 0.93,
+        "bolsonaroPp": 0.04,
+        "marginPp": 0.89
       },
-      "notes": "Abu Dhabi jurisdiction (5 BUs)",
+      "notes": "Abu Dhabi jurisdiction (5 BUs). Lula count per Exame (512); g1 lists 469 with an inconsistent total.",
       "status": "reported",
       "coverage": {
         "counted": 5,
@@ -959,11 +946,24 @@
         "lulaPct": 39.37,
         "bolsonaroPct": 45.98
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 92,
+        "bolsonaro": 523,
+        "totalValid": 704,
+        "lulaPct": 13.07,
+        "bolsonaroPct": 74.29
+      },
+      "swing": {
+        "lulaPp": -26.3,
+        "bolsonaroPp": 28.31,
+        "marginPp": -54.61
+      },
+      "notes": "5 BUs Tel Aviv (730 att, 14 blank, 12 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 5,
+        "total": 5
+      }
     },
     {
       "id": "colombia",
@@ -1054,11 +1054,24 @@
         "lulaPct": 61.23,
         "bolsonaroPct": 19.38
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 675,
+        "bolsonaro": 59,
+        "totalValid": 787,
+        "lulaPct": 85.77,
+        "bolsonaroPct": 7.5
+      },
+      "swing": {
+        "lulaPp": 24.54,
+        "bolsonaroPp": -11.88,
+        "marginPp": 36.42
+      },
+      "notes": "2 BUs Amman (833 att, 19 blank, 27 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "suriname",
@@ -1111,11 +1124,24 @@
         "lulaPct": 37.53,
         "bolsonaroPct": 46.91
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 196,
+        "bolsonaro": 230,
+        "totalValid": 494,
+        "lulaPct": 39.68,
+        "bolsonaroPct": 46.56
+      },
+      "swing": {
+        "lulaPp": 2.15,
+        "bolsonaroPp": -0.35,
+        "marginPp": 2.5
+      },
+      "notes": "2 BUs Athens (508 att, 8 blank, 6 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "ecuador",
@@ -1187,11 +1213,24 @@
         "lulaPct": 36.67,
         "bolsonaroPct": 53.33
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 147,
+        "bolsonaro": 173,
+        "totalValid": 357,
+        "lulaPct": 41.18,
+        "bolsonaroPct": 48.46
+      },
+      "swing": {
+        "lulaPp": 4.51,
+        "bolsonaroPp": -4.87,
+        "marginPp": 9.38
+      },
+      "notes": "Doha (364 att, 4 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "poland",
@@ -1314,11 +1353,24 @@
         "lulaPct": 79.57,
         "bolsonaroPct": 8.6
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 142,
+        "bolsonaro": 19,
+        "totalValid": 190,
+        "lulaPct": 74.74,
+        "bolsonaroPct": 10
+      },
+      "swing": {
+        "lulaPp": -4.83,
+        "bolsonaroPp": 1.4,
+        "marginPp": -6.23
+      },
+      "notes": "Tallinn (197 att, 3 blank, 4 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "turkey",
@@ -1466,11 +1518,24 @@
         "lulaPct": 60,
         "bolsonaroPct": 30
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 46,
+        "bolsonaro": 12,
+        "totalValid": 64,
+        "lulaPct": 71.88,
+        "bolsonaroPct": 18.75
+      },
+      "swing": {
+        "lulaPp": 11.88,
+        "bolsonaroPp": -11.25,
+        "marginPp": 23.13
+      },
+      "notes": "Cairo (69 att, 2 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "guyana",
@@ -1599,11 +1664,24 @@
         "lulaPct": 48.15,
         "bolsonaroPct": 33.33
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 52,
+        "bolsonaro": 22,
+        "totalValid": 84,
+        "lulaPct": 61.9,
+        "bolsonaroPct": 26.19
+      },
+      "swing": {
+        "lulaPp": 13.75,
+        "bolsonaroPp": -7.14,
+        "marginPp": 20.89
+      },
+      "notes": "Riyadh (84 att, 0 blank, 0 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "india",
@@ -1656,11 +1734,24 @@
         "lulaPct": 49.02,
         "bolsonaroPct": 45.1
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 26,
+        "bolsonaro": 17,
+        "totalValid": 46,
+        "lulaPct": 56.52,
+        "bolsonaroPct": 36.96
+      },
+      "swing": {
+        "lulaPp": 7.5,
+        "bolsonaroPp": -8.14,
+        "marginPp": 15.64
+      },
+      "notes": "Nairobi (47 att, 1 blank, 0 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "indonesia",
@@ -1783,11 +1874,24 @@
         "lulaPct": 20.93,
         "bolsonaroPct": 62.79
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 54,
+        "bolsonaro": 12,
+        "totalValid": 73,
+        "lulaPct": 73.97,
+        "bolsonaroPct": 16.44
+      },
+      "swing": {
+        "lulaPp": 53.04,
+        "bolsonaroPp": -46.35,
+        "marginPp": 99.39
+      },
+      "notes": "Kuwait City (77 att, 1 blank, 3 null) — Exame",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "oman",

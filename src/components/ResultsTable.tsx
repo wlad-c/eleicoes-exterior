@@ -45,6 +45,11 @@ export function ResultsTable({
   metric,
 }: Props) {
   const totals = useMemo(() => aggregateRows(rows), [rows])
+  const mixed2022Vs2026 = useMemo(() => {
+    const has2026 = rows.some((c) => c.status === 'reported' && c.y2026)
+    const hasWithout2026 = rows.some((c) => !(c.status === 'reported' && c.y2026))
+    return has2026 && hasWithout2026
+  }, [rows])
 
   if (rows.length === 0) {
     return (
@@ -242,6 +247,11 @@ export function ResultsTable({
           </tr>
         </tfoot>
       </table>
+      {mixed2022Vs2026 ? (
+        <p className="mt-2 px-1 text-xs text-[var(--ink-muted)]">
+          {t('totalFootnoteMixed', lang)}
+        </p>
+      ) : null}
     </div>
   )
 }
