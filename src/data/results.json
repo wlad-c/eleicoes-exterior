@@ -61,8 +61,12 @@
         "bolsonaroPp": -0.53,
         "marginPp": 2.29
       },
-      "notes": "full (119/119)",
-      "status": "reported"
+      "notes": "",
+      "status": "reported",
+      "coverage": {
+        "counted": 119,
+        "total": 119
+      }
     },
     {
       "id": "australia",
@@ -89,8 +93,9 @@
         "bolsonaroPp": 1.77,
         "marginPp": -2.65
       },
-      "notes": "updated BU tally",
-      "status": "reported"
+      "notes": "",
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "china-mainland",
@@ -117,8 +122,9 @@
         "bolsonaroPp": -11.36,
         "marginPp": 28.51
       },
-      "notes": "excl. Hong Kong",
-      "status": "reported"
+      "notes": "",
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "new-zealand",
@@ -146,7 +152,8 @@
         "marginPp": -6.0
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "singapore",
@@ -174,7 +181,8 @@
         "marginPp": 6.37
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "hong-kong",
@@ -201,8 +209,9 @@
         "bolsonaroPp": -5.28,
         "marginPp": 14.96
       },
-      "notes": "full",
-      "status": "reported"
+      "notes": "",
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "south-korea",
@@ -230,7 +239,8 @@
         "marginPp": -13.59
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "thailand",
@@ -258,7 +268,8 @@
         "marginPp": -14.59
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "malaysia",
@@ -286,7 +297,8 @@
         "marginPp": 15.22
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "philippines",
@@ -314,7 +326,8 @@
         "marginPp": 12.52
       },
       "notes": "",
-      "status": "reported"
+      "status": "reported",
+      "coverage": null
     },
     {
       "id": "united-states",
@@ -332,7 +345,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "portugal",
@@ -350,7 +364,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "canada",
@@ -368,7 +383,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "germany",
@@ -386,7 +402,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "united-kingdom",
@@ -404,7 +421,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "italy",
@@ -422,7 +440,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "switzerland",
@@ -440,7 +459,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "france",
@@ -458,7 +478,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "spain",
@@ -476,7 +497,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "ireland",
@@ -494,7 +516,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "argentina",
@@ -512,7 +535,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "netherlands",
@@ -530,7 +554,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "paraguay",
@@ -548,7 +573,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "belgium",
@@ -566,7 +592,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "lebanon",
@@ -584,7 +611,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "sweden",
@@ -602,7 +630,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "chile",
@@ -620,7 +649,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "bolivia",
@@ -638,7 +668,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "uruguay",
@@ -656,7 +687,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "mexico",
@@ -674,7 +706,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "austria",
@@ -692,7 +725,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "french-guiana",
@@ -710,7 +744,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "denmark",
@@ -728,7 +763,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "united-arab-emirates",
@@ -746,7 +782,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "norway",
@@ -764,7 +801,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "peru",
@@ -782,7 +820,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "palestine",
@@ -800,7 +839,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "israel",
@@ -818,7 +858,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "colombia",
@@ -836,7 +877,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "panama",
@@ -854,7 +896,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "finland",
@@ -872,7 +915,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "hungary",
@@ -890,7 +934,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "jordan",
@@ -908,7 +953,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "suriname",
@@ -926,7 +972,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "south-africa",
@@ -944,7 +991,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "greece",
@@ -962,7 +1010,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "ecuador",
@@ -980,7 +1029,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "czech-republic",
@@ -998,7 +1048,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "costa-rica",
@@ -1016,7 +1067,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "qatar",
@@ -1034,7 +1086,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "poland",
@@ -1052,7 +1105,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "mozambique",
@@ -1070,7 +1124,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "angola",
@@ -1088,7 +1143,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "taiwan",
@@ -1106,7 +1162,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "dominican-republic",
@@ -1124,7 +1181,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "estonia",
@@ -1142,7 +1200,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "turkey",
@@ -1160,7 +1219,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "guatemala",
@@ -1178,7 +1238,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "honduras",
@@ -1196,7 +1257,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "russia",
@@ -1214,7 +1276,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "nicaragua",
@@ -1232,7 +1295,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "slovenia",
@@ -1250,7 +1314,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "el-salvador",
@@ -1268,7 +1333,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "egypt",
@@ -1286,7 +1352,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "guyana",
@@ -1304,7 +1371,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "slovakia",
@@ -1322,7 +1390,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "cape-verde",
@@ -1340,7 +1409,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "timor-leste",
@@ -1358,7 +1428,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "senegal",
@@ -1376,7 +1447,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "romania",
@@ -1394,7 +1466,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "saudi-arabia",
@@ -1412,7 +1485,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "india",
@@ -1430,7 +1504,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "morocco",
@@ -1448,7 +1523,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "kenya",
@@ -1466,7 +1542,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "indonesia",
@@ -1484,7 +1561,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "serbia",
@@ -1502,7 +1580,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "ivory-coast",
@@ -1520,7 +1599,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "croatia",
@@ -1538,7 +1618,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "guinea-bissau",
@@ -1556,7 +1637,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "kuwait",
@@ -1574,7 +1656,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "oman",
@@ -1592,7 +1675,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "namibia",
@@ -1610,7 +1694,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "bahrain",
@@ -1628,7 +1713,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "trinidad-and-tobago",
@@ -1646,7 +1732,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "bulgaria",
@@ -1664,7 +1751,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "cuba",
@@ -1682,7 +1770,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "nigeria",
@@ -1700,7 +1789,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "cyprus",
@@ -1718,7 +1808,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "bahamas",
@@ -1736,7 +1827,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "ghana",
@@ -1754,7 +1846,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "vietnam",
@@ -1772,7 +1865,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "iran",
@@ -1790,7 +1884,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "dr-congo",
@@ -1808,7 +1903,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "nepal",
@@ -1826,7 +1922,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "tunisia",
@@ -1844,7 +1941,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "zambia",
@@ -1862,7 +1960,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "jamaica",
@@ -1880,7 +1979,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "tanzania",
@@ -1898,7 +1998,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     },
     {
       "id": "haiti",
@@ -1916,7 +2017,8 @@
       "y2026": null,
       "swing": null,
       "notes": "",
-      "status": "pending"
+      "status": "pending",
+      "coverage": null
     }
   ]
 }

@@ -50,7 +50,7 @@ const dict = {
   map: { en: 'Swing map', pt: 'Mapa de oscilação' },
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
   pendingHint: { en: '2026 tally pending', pt: 'Apuração 2026 pendente' },
-  notes: { en: 'Notes', pt: 'Notas' },
+  notes: { en: 'BUs', pt: 'Urnas' },
   sources: { en: 'Sources', pt: 'Fontes' },
   updated: { en: 'Updated', pt: 'Atualizado' },
   legendLula: { en: 'toward Lula', pt: 'para Lula' },

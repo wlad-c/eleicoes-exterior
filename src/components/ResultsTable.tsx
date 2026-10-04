@@ -1,5 +1,5 @@
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
-import { countryName, fmtPp, fmtShare, metricValue } from '../lib/format'
+import { countryName, fmtCoverage, fmtPp, fmtShare, metricValue } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
 import {
   heatColumnForMetric,
@@ -134,8 +134,8 @@ export function ResultsTable({
                 >
                   {fmtPp(c.swing?.marginPp, lang)}
                 </HeatTd>
-                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                  {c.status === 'pending' ? t('pendingHint', lang) : c.notes || '—'}
+                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  {fmtCoverage(c.coverage)}
                 </td>
               </tr>
             )

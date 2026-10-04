@@ -18,6 +18,11 @@ export type Swing = {
 
 export type CountryStatus = 'reported' | 'pending'
 
+export type Coverage = {
+  counted: number
+  total: number
+}
+
 export type CountryResult = {
   id: string
   countryEn: string
@@ -27,6 +32,8 @@ export type CountryResult = {
   y2022: YearResult
   y2026: YearResult | null
   swing: Swing | null
+  /** Ballot-box coverage when published as full or partial (e.g. 119/119, 26/29). */
+  coverage: Coverage | null
   notes: string
   status: CountryStatus
 }

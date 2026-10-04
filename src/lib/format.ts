@@ -22,6 +22,13 @@ export function fmtShare(
   return `${fmtPct(pct, lang)} (${fmtInt(votes, lang)})`
 }
 
+export function fmtCoverage(
+  coverage: { counted: number; total: number } | null | undefined,
+): string {
+  if (!coverage || coverage.total <= 0) return '—'
+  return `${coverage.counted}/${coverage.total}`
+}
+
 export function fmtPp(n: number | null | undefined, lang: Lang, digits = 1): string {
   if (n == null || Number.isNaN(n)) return '—'
   const sign = n > 0 ? '+' : ''
