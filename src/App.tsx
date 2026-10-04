@@ -21,7 +21,9 @@ export default function App() {
   const [lang, setLang] = useState<Lang>('en')
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
-  const [showPending, setShowPending] = useState(false)
+  const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
+    'reported',
+  )
   const [metric, setMetric] = useState<MapMetric>('margin2026')
   const [sortKey, setSortKey] = useState<SortKey>('lulaPct2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
@@ -34,7 +36,6 @@ export default function App() {
 
   const totals = useMemo(() => runningTotals(data.countries), [])
   const reportedCount = data.countries.filter((c) => c.status === 'reported').length
-  const pendingCount = data.countries.length - reportedCount
 
   const mapCountries = useMemo(
     () => data.countries.filter((c) => c.status === 'reported'),
@@ -44,7 +45,8 @@ export default function App() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return data.countries.filter((c) => {
-      if (!showPending && c.status !== 'reported') return false
+      if (statusFilter === 'reported' && c.status !== 'reported') return false
+      if (statusFilter === 'pending' && c.status !== 'pending') return false
       if (region !== 'all' && c.region !== region) return false
       if (!q) return true
       return (
@@ -53,7 +55,7 @@ export default function App() {
         c.iso3.toLowerCase().includes(q)
       )
     })
-  }, [query, region, showPending])
+  }, [query, region, statusFilter])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -249,29 +251,19 @@ export default function App() {
                 ))}
               </select>
             </label>
-            <label
-              className="filter-field filter-pending flex cursor-pointer items-center gap-2 rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-2 py-1.5 text-sm text-[var(--ink)] sm:px-3 sm:py-2"
-              title={`${t('showPending', lang)}. ${t('showPendingHint', lang)}`}
-            >
-              <input
-                type="checkbox"
-                className="shrink-0 accent-[var(--lula)]"
-                checked={showPending}
-                onChange={(e) => setShowPending(e.target.checked)}
-              />
-              <span className="min-w-0 leading-tight">
-                <span className="block truncate font-semibold normal-case tracking-normal sm:hidden">
-                  {t('showPendingShort', lang)}
-                  {!showPending ? ` (${pendingCount})` : ''}
-                </span>
-                <span className="hidden font-semibold normal-case tracking-normal sm:block">
-                  {t('showPending', lang)}
-                </span>
-                <span className="filter-pending-hint mt-0.5 hidden text-xs font-normal normal-case tracking-normal text-[var(--ink-muted)] md:block">
-                  {t('showPendingHint', lang)}
-                  {showPending ? '' : ` · ${pendingCount} ${t('pendingHidden', lang)}`}
-                </span>
-              </span>
+            <label className="filter-field filter-pending text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              {t('status', lang)}
+              <select
+                className="control mt-1 w-full min-w-0"
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value as 'reported' | 'all' | 'pending')
+                }
+              >
+                <option value="reported">{t('statusReported', lang)}</option>
+                <option value="all">{t('statusAll', lang)}</option>
+                <option value="pending">{t('statusPending', lang)}</option>
+              </select>
             </label>
           </div>
 

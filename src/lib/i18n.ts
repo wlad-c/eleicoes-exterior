@@ -8,7 +8,7 @@ const dict = {
   search: { en: 'Search country…', pt: 'Buscar país…' },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
   status: { en: 'Status', pt: 'Status' },
-  statusAll: { en: 'All', pt: 'Todos' },
+  statusAll: { en: 'All countries', pt: 'Todos os países' },
   statusReported: { en: 'Reported only', pt: 'Só apurados' },
   statusPending: { en: 'Pending only', pt: 'Só pendentes' },
   mapMetric: { en: 'Heatmap metric', pt: 'Métrica do mapa de calor' },
