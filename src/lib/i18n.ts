@@ -111,8 +111,8 @@ const dict = {
     pt: 'Esta página é uma compilação não oficial. Não tem vínculo com o TSE, o TRE-DF, campanhas ou redações. Os resultados oficiais no exterior são os divulgados pelo Tribunal Superior Eleitoral.',
   },
   disclaimerBu: {
-    en: '2026 figures shown before full TSE totalization come from publicly posted ballot-box tallies (boletins de urna) and press roundups. Coverage can be partial (sections or jurisdictions missing), and numbers may be revised as more BUs appear.',
-    pt: 'Os números de 2026 exibidos antes da totalização completa do TSE vêm de boletins de urna afixados publicamente e de levantamentos da imprensa. A cobertura pode ser parcial (seções ou jurisdições faltando), e os valores podem mudar conforme novos BUs forem publicados.',
+    en: 'When the TSE has published overseas (ZZ) totals, those official figures are used. Where TSE data for a country is still missing, numbers may come from publicly posted ballot-box tallies (BUs) and press roundups and can change as more sections are totalized.',
+    pt: 'Quando o TSE publica totais do exterior (ZZ), esses números oficiais são usados. Onde ainda faltar dado do TSE para um país, os valores podem vir de boletins de urna (BU) e levantamentos da imprensa, e mudar conforme novas seções forem totalizadas.',
   },
   disclaimerCompare: {
     en: 'Comparisons treat Flávio Bolsonaro (2026) against Jair Bolsonaro (2022) for continuity of the Bolsonaro ticket abroad. They are not the same candidate. Percentages use valid votes; swing to Lula is Lula change minus Bolsonaro change (percentage points).',
@@ -123,8 +123,8 @@ const dict = {
     pt: 'O recorte é só a votação presidencial do 1º turno no exterior. Totais e o mapa refletem apenas os países marcados como apurados neste conjunto de dados, não todo o eleitorado ZZ.',
   },
   howToEdit: {
-    en: 'Maintainers: edit src/data/results.json and rebuild to update figures. Open tabs fetch that file on load, on focus, and every 30 minutes.',
-    pt: 'Mantenedores: edite src/data/results.json e faça o build para atualizar os números. Abas abertas buscam esse arquivo ao carregar, ao focar e a cada 30 minutos.',
+    en: 'Maintainers: run node scripts/sync-tse-zz.mjs to pull official TSE ZZ tallies into src/data/results.json, then rebuild. Open tabs fetch that file on load, on focus, and every 30 minutes.',
+    pt: 'Mantenedores: rode node scripts/sync-tse-zz.mjs para puxar os totais oficiais ZZ do TSE para src/data/results.json e faça o build. Abas abertas buscam esse arquivo ao carregar, ao focar e a cada 30 minutos.',
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
   autoRefresh: {

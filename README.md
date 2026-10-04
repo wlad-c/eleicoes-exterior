@@ -13,9 +13,16 @@ App runs at [http://localhost:4837/eleicoes-exterior/](http://localhost:4837/ele
 
 ## Update results
 
-Edit [`src/data/results.json`](src/data/results.json), then rebuild (`npm run build:pages` for GitHub Pages). Pending countries keep 2022 figures and leave 2026 blank until a BU roundup is published.
+**Prefer official TSE data.** Sync overseas (ZZ) presidential tallies from the TSE Resultados EA20 JSON:
 
-The live page also serves a stable copy at `data/results.json`. Open tabs **fetch it on load**, again when the window regains focus, and on a **30-minute** timer, so redeployed tallies appear without a full reload. This does **not** scrape press sources — maintainers still edit `results.json` and rebuild.
+```bash
+node scripts/sync-tse-zz.mjs
+npm run build:pages
+```
+
+That overwrites 2026 country rows whenever the TSE has published sections for the mapped ZZ municipalities. Press/BU figures remain only for countries the TSE has not yet released. You can still edit [`src/data/results.json`](src/data/results.json) by hand if needed.
+
+The live page also serves a stable copy at `data/results.json`. Open tabs **fetch it on load**, again when the window regains focus, and on a **30-minute** timer, so redeployed tallies appear without a full reload.
 
 ## Build / GitHub Pages
 
