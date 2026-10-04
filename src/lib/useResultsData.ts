@@ -8,6 +8,15 @@ function resultsEndpoint(): string {
   return `${import.meta.env.BASE_URL}data/results.json`
 }
 
+/** Default 30 minutes; override with `?refreshMs=<ms>` for local checks. */
+export function resolveRefreshMs(
+  search = typeof window !== 'undefined' ? window.location.search : '',
+): number {
+  const raw = new URLSearchParams(search).get('refreshMs')
+  if (raw && /^\d+$/.test(raw)) return Math.max(1_000, Number(raw))
+  return RESULTS_REFRESH_MS
+}
+
 /**
  * Seed from the bundled JSON for first paint, then poll the stable public
  * copy so open tabs pick up redeployed tallies without a full reload.
@@ -18,6 +27,7 @@ export function useResultsData(initial: ResultsData): ResultsData {
   useEffect(() => {
     let cancelled = false
     let lastPulledAt = Date.now()
+    const refreshMs = resolveRefreshMs()
 
     async function pull() {
       try {
@@ -38,11 +48,11 @@ export function useResultsData(initial: ResultsData): ResultsData {
 
     const id = window.setInterval(() => {
       void pull()
-    }, RESULTS_REFRESH_MS)
+    }, refreshMs)
 
     const onVisible = () => {
       if (document.visibilityState !== 'visible') return
-      if (Date.now() - lastPulledAt < RESULTS_REFRESH_MS) return
+      if (Date.now() - lastPulledAt < refreshMs) return
       void pull()
     }
     document.addEventListener('visibilitychange', onVisible)

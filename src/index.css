@@ -71,9 +71,16 @@ body,
   min-height: 100%;
 }
 
+html {
+  /* One document scroller only — never a nested table pane */
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--ink);
+  overflow: visible;
   background:
     radial-gradient(1200px 600px at 10% -10%, var(--bg-glow-1), transparent 55%),
     radial-gradient(900px 500px at 100% 0%, var(--bg-glow-2), transparent 50%),
@@ -87,6 +94,7 @@ body {
   max-width: none;
   text-align: left;
   border: none;
+  overflow: visible;
   min-height: 100svh;
 }
 
@@ -102,44 +110,87 @@ select {
 }
 
 .panel {
-  background: var(--panel);
+  background: var(--paper);
   border: 1px solid var(--line);
-  backdrop-filter: blur(8px);
 }
 
 .sticky-table-chrome {
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(10px);
+  /* Fully opaque — no bleed-through of scrolling rows */
+  background: var(--paper);
+  backdrop-filter: none;
 }
 
 html.dark .sticky-table-chrome {
-  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  background: var(--paper);
 }
 
+/* Page omni-scroll: column headers stick under the filter chrome */
 .sticky-th {
+  position: -webkit-sticky;
   position: sticky;
-  top: 0;
-  z-index: 3;
+  top: var(--sticky-table-head-top, 0px);
+  z-index: 5;
   background: var(--paper-deep);
+  background-clip: padding-box;
   box-shadow: 0 1px 0 var(--line);
 }
 
-.sticky-tf {
-  position: sticky;
-  bottom: 0;
-  z-index: 3;
-  background: var(--paper-deep);
-  box-shadow: 0 -1px 0 var(--line);
-}
-
-.table-scroll table {
+.results-table {
   border-collapse: separate;
   border-spacing: 0;
 }
 
+.results-table tfoot td {
+  background: var(--paper-deep);
+}
+
+/* No overflow/filter containment — sticky binds to the page scroll */
+.panel-results {
+  overflow: visible;
+  backdrop-filter: none;
+  background: var(--paper);
+}
+
+/* Fixed Total pin (not a nested scroll pane) */
+.total-pin {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(110%);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  background: var(--paper-deep);
+  border-top: 2px solid var(--line);
+  box-shadow: 0 -10px 18px -12px rgb(0 0 0 / 45%);
+}
+
+.total-pin--on {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.total-pin-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+  align-items: baseline;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .filter-row {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-end;
   gap: clamp(0.35rem, 1.2vw, 0.75rem);
   width: 100%;
