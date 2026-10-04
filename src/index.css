@@ -68,13 +68,19 @@ html,
 body,
 #root {
   margin: 0;
-  height: 100%;
-  overflow: hidden; /* outer document never scrolls — one omni scroller inside */
+  min-height: 100%;
+}
+
+html {
+  /* One document scroller only — never a nested table pane */
+  overflow-x: clip;
+  overflow-y: auto;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--ink);
+  overflow: visible;
   background:
     radial-gradient(1200px 600px at 10% -10%, var(--bg-glow-1), transparent 55%),
     radial-gradient(900px 500px at 100% 0%, var(--bg-glow-2), transparent 50%),
@@ -88,14 +94,8 @@ body {
   max-width: none;
   text-align: left;
   border: none;
-}
-
-/* Single page scroller: sticky thead/tfoot bind to this, not a nested table pane */
-.app-shell {
-  height: 100%;
-  overflow-x: clip;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow: visible;
+  min-height: 100svh;
 }
 
 button,
@@ -110,18 +110,18 @@ select {
 }
 
 .panel {
-  background: var(--panel);
+  background: var(--paper);
   border: 1px solid var(--line);
-  backdrop-filter: blur(8px);
 }
 
 .sticky-table-chrome {
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(10px);
+  /* Fully opaque — no bleed-through of scrolling rows */
+  background: var(--paper);
+  backdrop-filter: none;
 }
 
 html.dark .sticky-table-chrome {
-  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  background: var(--paper);
 }
 
 /* Page omni-scroll: column headers stick under the filter chrome */
@@ -129,26 +129,21 @@ html.dark .sticky-table-chrome {
   position: -webkit-sticky;
   position: sticky;
   top: var(--sticky-table-head-top, 0px);
-  z-index: 3;
+  z-index: 5;
   background: var(--paper-deep);
+  background-clip: padding-box;
   box-shadow: 0 1px 0 var(--line);
 }
 
 /* Page omni-scroll: Total sticks to the viewport bottom while the table is in view */
-.results-table tfoot {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  z-index: 4;
-}
-
 .sticky-tf {
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
-  z-index: 4;
+  z-index: 5;
   background: var(--paper-deep);
-  box-shadow: 0 -1px 0 var(--line), 0 -6px 12px -8px rgb(0 0 0 / 18%);
+  background-clip: padding-box;
+  box-shadow: 0 -1px 0 var(--line), 0 -8px 14px -10px rgb(0 0 0 / 35%);
 }
 
 .results-table {
@@ -156,10 +151,11 @@ html.dark .sticky-table-chrome {
   border-spacing: 0;
 }
 
-/* Avoid filter/overflow containment so thead/tfoot stick to the page scroll */
+/* No overflow/filter containment — sticky binds to the page scroll */
 .panel-results {
   overflow: visible;
   backdrop-filter: none;
+  background: var(--paper);
 }
 
 .filter-row {

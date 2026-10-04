@@ -122,7 +122,6 @@ export default function App() {
   )
 
   return (
-    <div className="app-shell">
     <div className="mx-auto max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6">
       <header className="animate-rise mb-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -386,7 +385,6 @@ export default function App() {
           </p>
         )}
       </footer>
-    </div>
     </div>
   )
 }
