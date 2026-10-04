@@ -23,6 +23,15 @@ const dict = {
   bolsonaroPct2022: { en: '2022 J Bolsonaro %', pt: 'J Bolsonaro % 2022' },
   votes2026: { en: '2026 valid votes', pt: 'Votos válidos 2026' },
   votes2022: { en: '2022 valid votes', pt: 'Votos válidos 2022' },
+  showPending: {
+    en: 'Show pending countries',
+    pt: 'Mostrar países pendentes',
+  },
+  showPendingHint: {
+    en: 'Hidden by default until 2026 results are published',
+    pt: 'Ocultos por padrão até a publicação dos resultados de 2026',
+  },
+  pendingHidden: { en: 'hidden', pt: 'ocultos' },
   heatmapHint: {
     en: 'Colors the map and the matching table column',
     pt: 'Colorize o mapa e a coluna correspondente na tabela',

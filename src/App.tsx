@@ -21,7 +21,7 @@ export default function App() {
   const [lang, setLang] = useState<Lang>('en')
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
-  const [status, setStatus] = useState<'all' | 'reported' | 'pending'>('all')
+  const [showPending, setShowPending] = useState(false)
   const [metric, setMetric] = useState<MapMetric>('marginSwing')
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
@@ -34,12 +34,21 @@ export default function App() {
 
   const totals = useMemo(() => runningTotals(data.countries), [])
   const reportedCount = data.countries.filter((c) => c.status === 'reported').length
+  const pendingCount = data.countries.length - reportedCount
+
+  const mapCountries = useMemo(
+    () =>
+      showPending
+        ? data.countries
+        : data.countries.filter((c) => c.status === 'reported'),
+    [showPending],
+  )
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return data.countries.filter((c) => {
+      if (!showPending && c.status !== 'reported') return false
       if (region !== 'all' && c.region !== region) return false
-      if (status !== 'all' && c.status !== status) return false
       if (!q) return true
       return (
         c.countryEn.toLowerCase().includes(q) ||
@@ -47,7 +56,7 @@ export default function App() {
         c.iso3.toLowerCase().includes(q)
       )
     })
-  }, [query, region, status])
+  }, [query, region, showPending])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -73,6 +82,13 @@ export default function App() {
       })
     }
   }
+
+  // Drop highlight if the selected country is hidden again
+  const highlightVisible =
+    !highlightId ||
+    mapCountries.some((c) => c.id === highlightId) ||
+    filtered.some((c) => c.id === highlightId)
+  const activeHighlight = highlightVisible ? highlightId : null
 
   const lulaShare = totals.valid ? (totals.lula / totals.valid) * 100 : 0
   const bolsoShare = totals.valid ? (totals.bolsonaro / totals.valid) * 100 : 0
@@ -175,40 +191,62 @@ export default function App() {
           <div>
             <h2 className="brand text-lg font-bold">{t('map', lang)}</h2>
             <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
-              {reportedCount} {t('reported', lang)} · {data.countries.length - reportedCount}{' '}
-              {t('pending', lang)}
+              {reportedCount} {t('reported', lang)}
+              {showPending
+                ? ` · ${pendingCount} ${t('pending', lang)}`
+                : ` · ${pendingCount} ${t('pending', lang)} ${t('pendingHidden', lang)}`}
             </p>
           </div>
-          <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('mapMetric', lang)}
-            <select
-              className="control mt-1 w-full"
-              value={metric}
-              onChange={(e) => setMetric(e.target.value as MapMetric)}
-              aria-describedby="heatmap-hint"
-            >
-              {HEATMAP_METRICS.map((m) => (
-                <option key={m} value={m}>
-                  {t(m, lang)}
-                </option>
-              ))}
-            </select>
-            <span id="heatmap-hint" className="mt-1 block normal-case tracking-normal font-normal">
-              {t('heatmapHint', lang)}
-            </span>
-          </label>
+          <div className="flex flex-wrap items-end gap-3">
+            <label className="flex cursor-pointer items-start gap-2 rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
+              <input
+                type="checkbox"
+                className="mt-1 accent-[var(--lula)]"
+                checked={showPending}
+                onChange={(e) => setShowPending(e.target.checked)}
+              />
+              <span>
+                <span className="font-semibold">{t('showPending', lang)}</span>
+                <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
+                  {t('showPendingHint', lang)}
+                </span>
+              </span>
+            </label>
+            <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              {t('mapMetric', lang)}
+              <select
+                className="control mt-1 w-full"
+                value={metric}
+                onChange={(e) => setMetric(e.target.value as MapMetric)}
+                aria-describedby="heatmap-hint"
+              >
+                {HEATMAP_METRICS.map((m) => (
+                  <option key={m} value={m}>
+                    {t(m, lang)}
+                  </option>
+                ))}
+              </select>
+              <span
+                id="heatmap-hint"
+                className="mt-1 block font-normal normal-case tracking-normal"
+              >
+                {t('heatmapHint', lang)}
+              </span>
+            </label>
+          </div>
         </div>
         <WorldMap
-          countries={data.countries}
+          countries={mapCountries}
           metric={metric}
           lang={lang}
-          highlightId={highlightId}
+          highlightId={activeHighlight}
           onSelect={onSelect}
+          showPending={showPending}
         />
       </section>
 
       <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-4 grid gap-3 sm:grid-cols-2">
           <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
             {t('search', lang)}
             <input
@@ -231,18 +269,6 @@ export default function App() {
                   {regionLabel(r, lang)}
                 </option>
               ))}
-            </select>
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('status', lang)}
-            <select
-              className="control mt-1 w-full"
-              value={status}
-              onChange={(e) => setStatus(e.target.value as typeof status)}
-            >
-              <option value="all">{t('statusAll', lang)}</option>
-              <option value="reported">{t('statusReported', lang)}</option>
-              <option value="pending">{t('statusPending', lang)}</option>
             </select>
           </label>
         </div>
@@ -274,7 +300,7 @@ export default function App() {
           sortKey={sortKey}
           sortDir={sortDir}
           onSort={onSort}
-          highlightId={highlightId}
+          highlightId={activeHighlight}
           onSelect={(id) => onSelect(id)}
           metric={metric}
         />
@@ -298,9 +324,9 @@ export default function App() {
             </span>
           ))}
         </p>
-        {highlightId && (
+        {activeHighlight && (
           <p className="text-xs">
-            → {countryName(data.countries.find((c) => c.id === highlightId)!, lang)}
+            → {countryName(data.countries.find((c) => c.id === activeHighlight)!, lang)}
           </p>
         )}
       </footer>
