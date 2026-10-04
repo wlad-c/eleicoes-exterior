@@ -37,11 +37,8 @@ export default function App() {
   const pendingCount = data.countries.length - reportedCount
 
   const mapCountries = useMemo(
-    () =>
-      showPending
-        ? data.countries
-        : data.countries.filter((c) => c.status === 'reported'),
-    [showPending],
+    () => data.countries.filter((c) => c.status === 'reported'),
+    [],
   )
 
   const filtered = useMemo(() => {
@@ -192,48 +189,29 @@ export default function App() {
             <h2 className="brand text-lg font-bold">{t('map', lang)}</h2>
             <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
               {reportedCount} {t('reported', lang)}
-              {showPending
-                ? ` · ${pendingCount} ${t('pending', lang)}`
-                : ` · ${pendingCount} ${t('pending', lang)} ${t('pendingHidden', lang)}`}
             </p>
           </div>
-          <div className="flex flex-wrap items-end gap-3">
-            <label className="flex cursor-pointer items-start gap-2 rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
-              <input
-                type="checkbox"
-                className="mt-1 accent-[var(--lula)]"
-                checked={showPending}
-                onChange={(e) => setShowPending(e.target.checked)}
-              />
-              <span>
-                <span className="font-semibold">{t('showPending', lang)}</span>
-                <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
-                  {t('showPendingHint', lang)}
-                </span>
-              </span>
-            </label>
-            <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              {t('mapMetric', lang)}
-              <select
-                className="control mt-1 w-full"
-                value={metric}
-                onChange={(e) => setMetric(e.target.value as MapMetric)}
-                aria-describedby="heatmap-hint"
-              >
-                {HEATMAP_METRICS.map((m) => (
-                  <option key={m} value={m}>
-                    {t(m, lang)}
-                  </option>
-                ))}
-              </select>
-              <span
-                id="heatmap-hint"
-                className="mt-1 block font-normal normal-case tracking-normal"
-              >
-                {t('heatmapHint', lang)}
-              </span>
-            </label>
-          </div>
+          <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+            {t('mapMetric', lang)}
+            <select
+              className="control mt-1 w-full"
+              value={metric}
+              onChange={(e) => setMetric(e.target.value as MapMetric)}
+              aria-describedby="heatmap-hint"
+            >
+              {HEATMAP_METRICS.map((m) => (
+                <option key={m} value={m}>
+                  {t(m, lang)}
+                </option>
+              ))}
+            </select>
+            <span
+              id="heatmap-hint"
+              className="mt-1 block font-normal normal-case tracking-normal"
+            >
+              {t('heatmapHint', lang)}
+            </span>
+          </label>
         </div>
         <WorldMap
           countries={mapCountries}
@@ -241,12 +219,11 @@ export default function App() {
           lang={lang}
           highlightId={activeHighlight}
           onSelect={onSelect}
-          showPending={showPending}
         />
       </section>
 
       <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="mb-4 grid gap-3 sm:grid-cols-2">
+        <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
             {t('search', lang)}
             <input
@@ -270,6 +247,21 @@ export default function App() {
                 </option>
               ))}
             </select>
+          </label>
+          <label className="flex cursor-pointer items-start gap-2 self-end rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
+            <input
+              type="checkbox"
+              className="mt-1 accent-[var(--lula)]"
+              checked={showPending}
+              onChange={(e) => setShowPending(e.target.checked)}
+            />
+            <span>
+              <span className="font-semibold">{t('showPending', lang)}</span>
+              <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
+                {t('showPendingHint', lang)}
+                {showPending ? '' : ` · ${pendingCount} ${t('pendingHidden', lang)}`}
+              </span>
+            </span>
           </label>
         </div>
 

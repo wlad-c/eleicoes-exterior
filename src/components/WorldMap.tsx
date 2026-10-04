@@ -28,7 +28,6 @@ type Props = {
   lang: Lang
   highlightId: string | null
   onSelect: (id: string | null) => void
-  showPending?: boolean
 }
 
 type Tip = {
@@ -43,7 +42,6 @@ export function WorldMap({
   lang,
   highlightId,
   onSelect,
-  showPending = false,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(960)
@@ -143,12 +141,7 @@ export function WorldMap({
       </svg>
 
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
-        <Legend
-          metric={metric}
-          mode={legendMode}
-          lang={lang}
-          showPending={showPending}
-        />
+        <Legend metric={metric} mode={legendMode} lang={lang} />
       </div>
 
       {tip && (
@@ -184,23 +177,11 @@ function Legend({
   metric,
   mode,
   lang,
-  showPending,
 }: {
   metric: MapMetric
   mode: ReturnType<typeof legendModeForMetric>
   lang: Lang
-  showPending: boolean
 }) {
-  const pendingSwatch = showPending ? (
-    <span className="inline-flex items-center gap-1.5">
-      <span
-        className="inline-block h-2.5 w-2.5 rounded-sm"
-        style={{ background: PENDING_FILL }}
-      />
-      {t('legendPending', lang)}
-    </span>
-  ) : null
-
   if (mode === 'diverging') {
     return (
       <>
@@ -214,7 +195,6 @@ function Legend({
         <span>{t('legendBolso', lang)}</span>
         <span aria-hidden>·</span>
         <span>{t('legendLula', lang)}</span>
-        {pendingSwatch}
       </>
     )
   }
@@ -234,7 +214,6 @@ function Legend({
       <span>{t('legendLow', lang)}</span>
       <span aria-hidden>·</span>
       <span>{t('legendHigh', lang)}</span>
-      {pendingSwatch}
     </>
   )
 }
