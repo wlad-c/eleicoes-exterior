@@ -83,12 +83,12 @@ export function ResultsTable({
               {t('jBolsonaro', lang)} 2022
             </Th>
             <Th
-              onClick={() => onSort('marginSwing')}
+              onClick={() => onSort('lulaSwing')}
               align="right"
-              heated={heatCol === 'marginSwing'}
+              heated={heatCol === 'lulaSwing'}
             >
-              {t('marginSwing', lang)}
-              {arrow('marginSwing')}
+              {t('lulaSwing', lang)}
+              {arrow('lulaSwing')}
             </Th>
             <th className="sticky-th px-2 py-2.5 font-medium">{t('notes', lang)}</th>
           </tr>
@@ -127,12 +127,12 @@ export function ResultsTable({
                   {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang)}
                 </HeatTd>
                 <HeatTd
-                  col="marginSwing"
+                  col="lulaSwing"
                   heatCol={heatCol}
                   heat={heat}
                   strong
                 >
-                  {fmtPp(c.swing?.marginPp, lang)}
+                  {fmtPp(c.swing?.lulaPp, lang)}
                 </HeatTd>
                 <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                   {fmtCoverage(c.coverage)}

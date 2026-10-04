@@ -288,7 +288,7 @@ export default function App() {
                 <option value="votes2022">{t('votes2022', lang)}</option>
                 <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
                 <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
-                <option value="marginSwing">{t('marginSwing', lang)}</option>
+                <option value="lulaSwing">{t('lulaSwing', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
                 <option value="region">{t('region', lang)}</option>
               </select>
@@ -393,7 +393,7 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
       return c.y2026?.bolsonaroPct ?? Number.NaN
-    case 'marginSwing':
-      return c.swing?.marginPp ?? Number.NaN
+    case 'lulaSwing':
+      return c.swing?.lulaPp ?? Number.NaN
   }
 }
