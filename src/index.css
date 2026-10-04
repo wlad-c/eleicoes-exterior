@@ -124,15 +124,28 @@ html.dark .sticky-table-chrome {
   background: var(--paper);
 }
 
-/* Page omni-scroll: column headers stick under the filter chrome */
-.sticky-th {
+/* Sticky header strip sticks under filter chrome (outside body x-scroller) */
+.table-head-sticky {
   position: -webkit-sticky;
   position: sticky;
   top: var(--sticky-table-head-top, 0px);
   z-index: 5;
   background: var(--paper-deep);
-  background-clip: padding-box;
   box-shadow: 0 1px 0 var(--line);
+}
+
+.table-x-scroll--head {
+  /* Keep a single visible scrollbar on the body pane */
+  scrollbar-width: none;
+}
+
+.table-x-scroll--head::-webkit-scrollbar {
+  display: none;
+}
+
+.sticky-th {
+  background: var(--paper-deep);
+  background-clip: padding-box;
 }
 
 .results-table {
@@ -143,6 +156,11 @@ html.dark .sticky-table-chrome {
 
 .results-table tfoot td {
   background: var(--paper-deep);
+}
+
+/* Invisible body thead — keeps column widths in sync with the sticky head */
+.results-table-width-head {
+  visibility: collapse;
 }
 
 /* Freeze country column while the table pans horizontally */
@@ -210,27 +228,6 @@ html.dark .sticky-col {
     white-space: nowrap;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-  }
-
-  /* Vertical sticky thead can't bind to the page inside an x-scroller */
-  .sticky-th:not(.sticky-col) {
-    position: static;
-    top: auto;
-    box-shadow: none;
-  }
-
-  /* Keep country header frozen on horizontal pan only */
-  .sticky-th.sticky-col {
-    position: -webkit-sticky;
-    position: sticky;
-    top: auto;
-    left: 0;
-    z-index: 4;
-    box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
-  }
-
-  html.dark .sticky-th.sticky-col {
-    box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
   }
 
   .th-hint {
