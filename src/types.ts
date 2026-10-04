@@ -32,7 +32,7 @@ export type CountryResult = {
   y2022: YearResult
   y2026: YearResult | null
   swing: Swing | null
-  /** Ballot-box coverage when published as full or partial (e.g. 119/119, 26/29). */
+  /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
   notes: string
   status: CountryStatus

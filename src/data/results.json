@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T12:00:00Z",
+    "updatedAt": "2026-10-04T14:00:00Z",
     "sources": [
       {
         "name": "TSE open data 2022 1st round",
@@ -95,7 +95,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 29,
+        "total": 29
+      }
     },
     {
       "id": "china-mainland",
@@ -124,7 +127,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 3,
+        "total": 3
+      }
     },
     {
       "id": "new-zealand",
@@ -153,7 +159,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "singapore",
@@ -182,7 +191,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 2,
+        "total": 2
+      }
     },
     {
       "id": "hong-kong",
@@ -211,7 +223,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "south-korea",
@@ -240,7 +255,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "thailand",
@@ -269,7 +287,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "malaysia",
@@ -298,7 +319,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "philippines",
@@ -327,7 +351,10 @@
       },
       "notes": "",
       "status": "reported",
-      "coverage": null
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "united-states",
