@@ -10,8 +10,9 @@
   --chip: #d7e8dc;
   --chip-soft: #eaf1e8;
   --accent: #c9a227;
-  --lula: #1b7a4e;
-  --bolso: #1e4d8c;
+  /* HARD RULE: Lula = red, Bolsonaro = blue */
+  --lula: #c62828;
+  --bolso: #1565c0;
   --panel: color-mix(in srgb, white 72%, transparent);
   --control-bg: #ffffff;
   --map-pending: #c5cec6;
@@ -20,8 +21,8 @@
   --map-stroke-hi: #0c1f1a;
   --tip-bg: #0c1f1a;
   --tip-fg: #f3f6f1;
-  --bg-glow-1: rgba(27, 122, 78, 0.14);
-  --bg-glow-2: rgba(201, 162, 39, 0.16);
+  --bg-glow-1: rgba(198, 40, 40, 0.1);
+  --bg-glow-2: rgba(21, 101, 192, 0.12);
   --bg-top: #eef3ec;
   --bg-mid: #f3f6f1;
   --bg-bot: #e8efe6;
@@ -40,8 +41,9 @@ html.dark {
   --chip: #24382c;
   --chip-soft: #1a2820;
   --accent: #d4b44a;
-  --lula: #3d9e68;
-  --bolso: #5b84c4;
+  /* HARD RULE: Lula = red, Bolsonaro = blue */
+  --lula: #ef5350;
+  --bolso: #64b5f6;
   --panel: color-mix(in srgb, #18211c 88%, transparent);
   --control-bg: #1a2420;
   --map-pending: #3a4740;
@@ -50,8 +52,8 @@ html.dark {
   --map-stroke-hi: #e8f0ea;
   --tip-bg: #e8f0ea;
   --tip-fg: #121a16;
-  --bg-glow-1: rgba(61, 158, 104, 0.12);
-  --bg-glow-2: rgba(212, 180, 74, 0.1);
+  --bg-glow-1: rgba(239, 83, 80, 0.1);
+  --bg-glow-2: rgba(100, 181, 246, 0.1);
   --bg-top: #0e1512;
   --bg-mid: #121a16;
   --bg-bot: #0c1310;

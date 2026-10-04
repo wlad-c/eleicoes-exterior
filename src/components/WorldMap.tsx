@@ -4,7 +4,7 @@ import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { FeatureCollection, Geometry } from 'geojson'
 import worldAtlas from 'world-atlas/countries-110m.json'
-import { colorForMetric, NO_DATA_FILL, PENDING_FILL } from '../lib/colors'
+import { colorForMetric, BOLSONARO_COLOR, LULA_COLOR, NO_DATA_FILL, PENDING_FILL } from '../lib/colors'
 import { countryName, fmtPp, fmtPct, metricValue } from '../lib/format'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
@@ -122,7 +122,7 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
 
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
         <span className="font-medium text-[var(--ink)]">{t('mapMetric', lang)}:</span>
-        <LegendSwatch from="#1E4D8C" to="#1B7A4E" />
+        <LegendSwatch from={BOLSONARO_COLOR} to={LULA_COLOR} />
         <span>{t('legendBolso', lang)}</span>
         <span aria-hidden>·</span>
         <span>{t('legendLula', lang)}</span>
