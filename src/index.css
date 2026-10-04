@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+:root {
+  --ink: #0c1f1a;
+  --ink-muted: #5a6b62;
+  --paper: #f3f6f1;
+  --paper-deep: #e6ece4;
+  --line: #c9d4c8;
+  --line-soft: #d9e2d7;
+  --chip: #d7e8dc;
+  --chip-soft: #eaf1e8;
+  --accent: #c9a227;
+  --lula: #1b7a4e;
+  --bolso: #1e4d8c;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(27, 122, 78, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(201, 162, 39, 0.16), transparent 50%),
+    linear-gradient(180deg, #eef3ec 0%, var(--paper) 40%, #e8efe6 100%);
+  background-attachment: fixed;
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  text-align: left;
+  border: none;
+  min-height: 100svh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.brand {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+.panel {
+  background: color-mix(in srgb, white 72%, transparent);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+
+.control {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  border-radius: 0.4rem;
+  padding: 0.45rem 0.65rem;
+}
+
+.control:focus {
+  outline: 2px solid color-mix(in srgb, var(--lula) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.lang-btn[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.bar-lula {
+  background: var(--lula);
+}
+
+.bar-bolso {
+  background: var(--bolso);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes barGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.55s ease-out both;
+}
+
+.animate-rise-delay {
+  animation: rise 0.65s ease-out 0.12s both;
+}
+
+.bar-fill {
+  transform-origin: left center;
+  animation: barGrow 0.8s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-rise-delay,
+  .bar-fill {
+    animation: none;
+  }
+}
