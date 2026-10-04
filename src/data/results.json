@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T14:59:23.446Z",
+    "updatedAt": "2026-10-04T15:14:09.218Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -145,10 +145,20 @@
         "lulaPct": 54.86,
         "bolsonaroPct": 28.75
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "2026 BU tallies conflict across sources (g1 partial 5,283/2,022 vs g1 final 4,562/2,579 with list not summing to total); awaiting TSE totalization.",
-      "status": "pending",
+      "y2026": {
+        "lula": 4562,
+        "bolsonaro": 2579,
+        "totalValid": 8451,
+        "lulaPct": 53.98,
+        "bolsonaroPct": 30.52
+      },
+      "swing": {
+        "lulaPp": -0.88,
+        "bolsonaroPp": 1.77,
+        "marginPp": -2.65
+      },
+      "notes": "DISPUTED — g1/Exame list Lula 4,562 / Flávio 2,579 / 8,451 valid, but g1’s itemized candidates sum to 8,130 and conflict with g1’s earlier 26/29 partial (Lula 5,283). Shown for continuity; awaiting TSE totalization.",
+      "status": "reported",
       "coverage": null
     },
     {

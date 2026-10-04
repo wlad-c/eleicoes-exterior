@@ -61,6 +61,10 @@ const dict = {
   map: { en: 'Swing map', pt: 'Mapa de oscilação' },
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
   pendingHint: { en: '2026 tally pending', pt: 'Apuração 2026 pendente' },
+  disputedShort: {
+    en: 'Disputed 2026 tally — see notes / awaiting TSE',
+    pt: 'Apuração 2026 contestada — ver notas / aguardando TSE',
+  },
   notes: { en: 'Sections', pt: 'Seções' },
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'world region', pt: 'região' },

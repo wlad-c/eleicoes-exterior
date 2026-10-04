@@ -162,6 +162,14 @@ export function ResultsTable({
               >
                 <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
                   {countryName(c, lang)}
+                  {c.notes?.startsWith('DISPUTED') ? (
+                    <span
+                      className="mt-0.5 block text-[10px] font-normal leading-snug text-[var(--ink-muted)]"
+                      title={c.notes}
+                    >
+                      {t('disputedShort', lang)}
+                    </span>
+                  ) : null}
                 </td>
                 <td className="px-2 py-2.5 text-[var(--ink-muted)]">
                   {regionLabel(c.region, lang)}

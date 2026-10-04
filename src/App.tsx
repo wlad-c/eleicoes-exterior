@@ -281,7 +281,13 @@ export default function App() {
               <select
                 className="control"
                 value={sortKey}
-                onChange={(e) => onSort(e.target.value as SortKey)}
+                onChange={(e) => {
+                  const key = e.target.value as SortKey
+                  setSortKey(key)
+                  setSortDir(
+                    key === 'country' || key === 'region' ? 'asc' : 'desc',
+                  )
+                }}
               >
                 <option value="votes2026">{t('votes2026', lang)}</option>
                 <option value="votes2022">{t('votes2022', lang)}</option>
@@ -428,12 +434,25 @@ function SwingCard({
 function compare(a: CountryResult, b: CountryResult, key: SortKey, lang: Lang): number {
   const av = sortValue(a, key, lang)
   const bv = sortValue(b, key, lang)
-  if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv)
+  if (typeof av === 'string' && typeof bv === 'string') {
+    const locale = lang === 'pt' ? 'pt' : 'en'
+    return av.localeCompare(bv, locale, { sensitivity: 'base' })
+  }
   const an = av as number
   const bn = bv as number
-  if (Number.isNaN(an) && Number.isNaN(bn)) return 0
+  if (Number.isNaN(an) && Number.isNaN(bn)) {
+    // Stable tie-break by country name when metric is missing
+    return countryName(a, lang).localeCompare(countryName(b, lang), lang === 'pt' ? 'pt' : 'en', {
+      sensitivity: 'base',
+    })
+  }
   if (Number.isNaN(an)) return 1
   if (Number.isNaN(bn)) return -1
+  if (an === bn) {
+    return countryName(a, lang).localeCompare(countryName(b, lang), lang === 'pt' ? 'pt' : 'en', {
+      sensitivity: 'base',
+    })
+  }
   return an - bn
 }
 
