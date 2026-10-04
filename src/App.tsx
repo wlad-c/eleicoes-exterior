@@ -48,7 +48,7 @@ export default function App() {
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
     'reported',
   )
-  const [metric, setMetric] = useState<MapMetric>('swingToLula')
+  const [metric, setMetric] = useState<MapMetric>('leader2026')
   const [sortKey, setSortKey] = useState<SortKey>('swingToLula')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)

@@ -13,6 +13,9 @@ export const BOLSONARO_COLOR = '#1565C0'
 export const LULA_COLOR_DARK = '#EF5350'
 export const BOLSONARO_COLOR_DARK = '#64B5F6'
 export const SWING_NEUTRAL = '#E8EDE8'
+/** Light end of the leader scale (just over 50%). */
+export const LULA_COLOR_LIGHT = '#F0B7B7'
+export const BOLSONARO_COLOR_LIGHT = '#B7D0F0'
 
 /** Darkest diverging heatmap shade is reached at ±this many pp (outliers clamp). */
 export const DIVERGING_PP_CAP = 10
@@ -20,10 +23,13 @@ export const DIVERGING_PP_CAP = 10
 export const PENDING_FILL = 'var(--map-pending)'
 export const NO_DATA_FILL = 'var(--map-nodata)'
 
-type ScaleKind = 'divergingLB' | 'lulaSeq' | 'bolsoSeq'
+type ScaleKind = 'divergingLB' | 'leader' | 'lulaSeq' | 'bolsoSeq'
 
 function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
+    case 'leader2026':
+    case 'leader2022':
+      return 'leader'
     case 'lulaChange':
     case 'swingToLula':
       return 'divergingLB'
@@ -75,6 +81,18 @@ function divergingScale() {
     })
 }
 
+/**
+ * Leader score: +winnerPct if Lula leads, −winnerPct if Bolsonaro leads, 0 on tie.
+ * Colour intensity maps 50%→100% from light to dark party colour.
+ */
+function leaderColor(value: number): string {
+  if (value === 0) return SWING_NEUTRAL
+  const pct = Math.abs(value)
+  const t = Math.max(0, Math.min(1, (pct - 50) / 50))
+  if (value > 0) return lerpColor(LULA_COLOR_LIGHT, LULA_COLOR, t)
+  return lerpColor(BOLSONARO_COLOR_LIGHT, BOLSONARO_COLOR, t)
+}
+
 function sequentialScale(max: number, toward: 'lula' | 'bolso') {
   const hi = toward === 'lula' ? LULA_COLOR : BOLSONARO_COLOR
   const lo = toward === 'lula' ? '#F7F0F0' : '#EEF3F9'
@@ -104,6 +122,10 @@ export function makeMetricColorizer(
   const kind = scaleKind(metric)
   const invert = isInverted(metric)
 
+  if (kind === 'leader') {
+    return (value) => (value == null ? PENDING_FILL : leaderColor(value))
+  }
+
   if (kind === 'divergingLB') {
     const scale = divergingScale()
     return (value) => {
@@ -132,10 +154,11 @@ export function withAlpha(color: string, alpha: number): string {
   return color
 }
 
-export type LegendMode = 'diverging' | 'lula' | 'bolso'
+export type LegendMode = 'diverging' | 'leader' | 'lula' | 'bolso'
 
 export function legendModeForMetric(metric: MapMetric): LegendMode {
   const kind = scaleKind(metric)
+  if (kind === 'leader') return 'leader'
   if (kind === 'divergingLB') return 'diverging'
   if (kind === 'lulaSeq') return 'lula'
   return 'bolso'

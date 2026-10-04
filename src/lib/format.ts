@@ -92,6 +92,19 @@ export function swingToLula(c: CountryResult): number | null {
 
 export function metricValue(c: CountryResult, metric: MapMetric): number | null {
   switch (metric) {
+    case 'leader2026': {
+      if (c.status !== 'reported' || !c.y2026) return null
+      const { lulaPct, bolsonaroPct } = c.y2026
+      if (lulaPct > bolsonaroPct) return lulaPct
+      if (bolsonaroPct > lulaPct) return -bolsonaroPct
+      return 0
+    }
+    case 'leader2022': {
+      const { lulaPct, bolsonaroPct } = c.y2022
+      if (lulaPct > bolsonaroPct) return lulaPct
+      if (bolsonaroPct > lulaPct) return -bolsonaroPct
+      return 0
+    }
     case 'lulaChange':
       return lulaChange(c)
     case 'bolsonaroChange':
@@ -116,6 +129,19 @@ export function formatMetricValue(
 ): string {
   if (value == null) return '—'
   switch (metric) {
+    case 'leader2026':
+    case 'leader2022': {
+      if (value === 0) return lang === 'pt' ? 'Empate' : 'Tie'
+      const who =
+        value > 0
+          ? lang === 'pt'
+            ? 'Lula'
+            : 'Lula'
+          : lang === 'pt'
+            ? 'Bolsonaro'
+            : 'Bolsonaro'
+      return `${who} ${fmtPct(Math.abs(value), lang)}`
+    }
     case 'lulaChange':
     case 'bolsonaroChange':
     case 'swingToLula':

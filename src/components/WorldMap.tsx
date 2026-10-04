@@ -6,7 +6,9 @@ import type { FeatureCollection, Geometry } from 'geojson'
 import worldAtlas from 'world-atlas/countries-110m.json'
 import {
   BOLSONARO_COLOR,
+  BOLSONARO_COLOR_LIGHT,
   LULA_COLOR,
+  LULA_COLOR_LIGHT,
   legendModeForMetric,
   makeMetricColorizer,
   NO_DATA_FILL,
@@ -167,10 +169,18 @@ export function WorldMap({
             {t(metric, lang)}:{' '}
             {formatMetricValue(metricValue(tip.country, metric), metric, lang)}
           </div>
-          {tip.country.status === 'reported' && tip.country.y2026 ? (
+          {tip.country.status === 'reported' && tip.country.y2026 && metric !== 'leader2022' ? (
             <div className="mt-0.5 opacity-80">
               {t('lula', lang)} {fmtPct(tip.country.y2026.lulaPct, lang)} ·{' '}
               {t('fBolsonaro', lang)} {fmtPct(tip.country.y2026.bolsonaroPct, lang)}
+            </div>
+          ) : metric === 'leader2022' ||
+            metric === 'lulaPct2022' ||
+            metric === 'bolsonaroPct2022' ? (
+            <div className="mt-0.5 opacity-80">
+              {t('lula', lang)} {fmtPct(tip.country.y2022.lulaPct, lang)} ·{' '}
+              {t('jBolsonaro', lang)}{' '}
+              {fmtPct(tip.country.y2022.bolsonaroPct, lang)}
             </div>
           ) : tip.country.status === 'pending' ? (
             <div className="mt-0.5 opacity-80">{t('pendingHint', lang)}</div>
@@ -190,6 +200,23 @@ function Legend({
   mode: ReturnType<typeof legendModeForMetric>
   lang: Lang
 }) {
+  if (mode === 'leader') {
+    return (
+      <>
+        <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+        <span
+          className="inline-block h-2.5 w-28 rounded-sm"
+          style={{
+            background: `linear-gradient(90deg, ${BOLSONARO_COLOR}, ${BOLSONARO_COLOR_LIGHT}, #E8EDE8, ${LULA_COLOR_LIGHT}, ${LULA_COLOR})`,
+          }}
+        />
+        <span>{t('legendLeaderBolso', lang)}</span>
+        <span aria-hidden>·</span>
+        <span>{t('legendLeaderLula', lang)}</span>
+      </>
+    )
+  }
+
   if (mode === 'diverging') {
     return (
       <>

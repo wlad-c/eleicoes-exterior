@@ -15,6 +15,14 @@ const dict = {
   lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
   bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
   swingToLula: { en: 'Swing to Lula', pt: 'Swing para Lula' },
+  leader2026: {
+    en: '2026 leader (who has more votes)',
+    pt: 'Líder 2026 (quem tem mais votos)',
+  },
+  leader2022: {
+    en: '2022 leader (who has more votes)',
+    pt: 'Líder 2022 (quem tem mais votos)',
+  },
   lulaPct2026: { en: '2026 Lula %', pt: 'Lula % 2026' },
   bolsonaroPct2026: { en: '2026 F Bolsonaro %', pt: 'F Bolsonaro % 2026' },
   lulaPct2022: { en: '2022 Lula %', pt: 'Lula % 2022' },
@@ -121,6 +129,11 @@ const dict = {
   },
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },
+  legendLeaderLula: { en: 'Lula >50% → 100%', pt: 'Lula >50% → 100%' },
+  legendLeaderBolso: {
+    en: 'Bolsonaro >50% → 100%',
+    pt: 'Bolsonaro >50% → 100%',
+  },
   legendPending: { en: 'pending', pt: 'pendente' },
   themeLight: { en: 'Light', pt: 'Claro' },
   themeDark: { en: 'Dark', pt: 'Escuro' },
