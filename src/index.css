@@ -135,20 +135,13 @@ html.dark .sticky-table-chrome {
   box-shadow: 0 1px 0 var(--line);
 }
 
-/* Page omni-scroll: Total sticks to the viewport bottom while the table is in view */
-.sticky-tf {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
-  background: var(--paper-deep);
-  background-clip: padding-box;
-  box-shadow: 0 -1px 0 var(--line), 0 -8px 14px -10px rgb(0 0 0 / 35%);
-}
-
 .results-table {
   border-collapse: separate;
   border-spacing: 0;
+}
+
+.results-table tfoot td {
+  background: var(--paper-deep);
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */
@@ -156,6 +149,43 @@ html.dark .sticky-table-chrome {
   overflow: visible;
   backdrop-filter: none;
   background: var(--paper);
+}
+
+/* Fixed Total pin (not a nested scroll pane) */
+.total-pin {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(110%);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  background: var(--paper-deep);
+  border-top: 2px solid var(--line);
+  box-shadow: 0 -10px 18px -12px rgb(0 0 0 / 45%);
+}
+
+.total-pin--on {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.total-pin-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+  align-items: baseline;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .filter-row {
