@@ -115,17 +115,12 @@ const dict = {
     pt: 'Mantenedores: edite src/data/results.json e faça o build para atualizar os números. Abas abertas buscam esses dados a cada 30 minutos.',
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
-<<<<<<< HEAD
   autoRefresh: {
     en: 'auto-refreshes every 30 min',
     pt: 'atualiza automaticamente a cada 30 min',
   },
-  legendLula: { en: 'toward Lula', pt: 'para Lula' },
-  legendBolso: { en: 'toward Bolsonaro', pt: 'para Bolsonaro' },
-=======
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },
->>>>>>> 2b488ce (Cap diverging heatmap at ±10pp so outliers stop dominating)
   legendPending: { en: 'pending', pt: 'pendente' },
   themeLight: { en: 'Light', pt: 'Claro' },
   themeDark: { en: 'Dark', pt: 'Escuro' },
