@@ -5,7 +5,7 @@ import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import { regionLabel, t } from './lib/i18n'
 import { useTheme } from './lib/theme'
-import { useResultsData } from './lib/useResultsData'
+import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type {
   CountryResult,
   Lang,
@@ -221,7 +221,7 @@ export default function App() {
             <span className="mx-1.5 text-[var(--line)]" aria-hidden>
               ·
             </span>
-            {t('autoRefresh', lang)}
+            {autoRefreshLabel(lang)}
           </p>
         </div>
 
