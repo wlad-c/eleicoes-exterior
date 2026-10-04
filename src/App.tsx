@@ -224,20 +224,20 @@ export default function App() {
 
       <section className="panel mb-4 rounded-xl p-4 sm:p-5">
         <div className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+          <div className="filter-row">
+            <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               {t('search', lang)}
               <input
-                className="control mt-1 w-full"
+                className="control mt-1 w-full min-w-0"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('search', lang)}
               />
             </label>
-            <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+            <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               {t('region', lang)}
               <select
-                className="control mt-1 w-full"
+                className="control mt-1 w-full min-w-0"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
               >
@@ -249,16 +249,25 @@ export default function App() {
                 ))}
               </select>
             </label>
-            <label className="flex cursor-pointer items-start gap-2 self-end rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
+            <label
+              className="filter-field filter-pending flex cursor-pointer items-center gap-2 rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-2 py-1.5 text-sm text-[var(--ink)] sm:px-3 sm:py-2"
+              title={`${t('showPending', lang)}. ${t('showPendingHint', lang)}`}
+            >
               <input
                 type="checkbox"
-                className="mt-1 accent-[var(--lula)]"
+                className="shrink-0 accent-[var(--lula)]"
                 checked={showPending}
                 onChange={(e) => setShowPending(e.target.checked)}
               />
-              <span>
-                <span className="font-semibold">{t('showPending', lang)}</span>
-                <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
+              <span className="min-w-0 leading-tight">
+                <span className="block truncate font-semibold normal-case tracking-normal sm:hidden">
+                  {t('showPendingShort', lang)}
+                  {!showPending ? ` (${pendingCount})` : ''}
+                </span>
+                <span className="hidden font-semibold normal-case tracking-normal sm:block">
+                  {t('showPending', lang)}
+                </span>
+                <span className="filter-pending-hint mt-0.5 hidden text-xs font-normal normal-case tracking-normal text-[var(--ink-muted)] md:block">
                   {t('showPendingHint', lang)}
                   {showPending ? '' : ` · ${pendingCount} ${t('pendingHidden', lang)}`}
                 </span>

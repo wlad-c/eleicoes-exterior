@@ -27,6 +27,10 @@ const dict = {
     en: 'Show pending countries',
     pt: 'Mostrar países pendentes',
   },
+  showPendingShort: {
+    en: 'Pending',
+    pt: 'Pendentes',
+  },
   showPendingHint: {
     en: 'Hidden by default until 2026 results are published',
     pt: 'Ocultos por padrão até a publicação dos resultados de 2026',
