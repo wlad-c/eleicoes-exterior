@@ -17,10 +17,32 @@ import { HEATMAP_METRICS } from './types'
 
 const seed = raw as ResultsData
 
+const LANG_KEY = 'eleicoes-exterior-lang'
+
+function readStoredLang(): Lang {
+  try {
+    const stored = localStorage.getItem(LANG_KEY)
+    if (stored === 'en' || stored === 'pt') return stored
+  } catch {
+    /* ignore */
+  }
+  return 'pt'
+}
+
 export default function App() {
   const { theme, setTheme } = useTheme()
   const data = useResultsData(seed)
-  const [lang, setLang] = useState<Lang>('pt')
+  const [lang, setLangState] = useState<Lang>(() =>
+    typeof window === 'undefined' ? 'pt' : readStoredLang(),
+  )
+  const setLang = (next: Lang) => {
+    setLangState(next)
+    try {
+      localStorage.setItem(LANG_KEY, next)
+    } catch {
+      /* ignore */
+    }
+  }
   const [query, setQuery] = useState('')
   const [region, setRegion] = useState('all')
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
@@ -31,6 +53,10 @@ export default function App() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const tableChromeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'
+  }, [lang])
 
   useEffect(() => {
     const el = tableChromeRef.current
