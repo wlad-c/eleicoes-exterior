@@ -12,16 +12,9 @@ import type {
   ResultsData,
   SortKey,
 } from './types'
+import { HEATMAP_METRICS } from './types'
 
 const data = raw as ResultsData
-
-const METRICS: MapMetric[] = [
-  'marginSwing',
-  'lulaSwing',
-  'bolsonaroSwing',
-  'margin2026',
-  'lulaPct2026',
-]
 
 export default function App() {
   const { theme, setTheme } = useTheme()
@@ -178,12 +171,32 @@ export default function App() {
       </section>
 
       <section className="panel mb-6 rounded-xl p-4 sm:p-5">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="brand text-lg font-bold">{t('map', lang)}</h2>
-          <span className="text-xs text-[var(--ink-muted)]">
-            {reportedCount} {t('reported', lang)} · {data.countries.length - reportedCount}{' '}
-            {t('pending', lang)}
-          </span>
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="brand text-lg font-bold">{t('map', lang)}</h2>
+            <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
+              {reportedCount} {t('reported', lang)} · {data.countries.length - reportedCount}{' '}
+              {t('pending', lang)}
+            </p>
+          </div>
+          <label className="block min-w-[220px] text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+            {t('mapMetric', lang)}
+            <select
+              className="control mt-1 w-full"
+              value={metric}
+              onChange={(e) => setMetric(e.target.value as MapMetric)}
+              aria-describedby="heatmap-hint"
+            >
+              {HEATMAP_METRICS.map((m) => (
+                <option key={m} value={m}>
+                  {t(m, lang)}
+                </option>
+              ))}
+            </select>
+            <span id="heatmap-hint" className="mt-1 block normal-case tracking-normal font-normal">
+              {t('heatmapHint', lang)}
+            </span>
+          </label>
         </div>
         <WorldMap
           countries={data.countries}
@@ -195,7 +208,7 @@ export default function App() {
       </section>
 
       <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
             {t('search', lang)}
             <input
@@ -232,20 +245,6 @@ export default function App() {
               <option value="pending">{t('statusPending', lang)}</option>
             </select>
           </label>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('mapMetric', lang)}
-            <select
-              className="control mt-1 w-full"
-              value={metric}
-              onChange={(e) => setMetric(e.target.value as MapMetric)}
-            >
-              {METRICS.map((m) => (
-                <option key={m} value={m}>
-                  {t(m, lang)}
-                </option>
-              ))}
-            </select>
-          </label>
         </div>
 
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -259,8 +258,8 @@ export default function App() {
             >
               <option value="votes2026">{t('votes2026', lang)}</option>
               <option value="votes2022">{t('votes2022', lang)}</option>
-              <option value="lulaPct2026">Lula % 2026</option>
-              <option value="bolsonaroPct2026">F.B. % 2026</option>
+              <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
+              <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
               <option value="marginSwing">{t('marginSwing', lang)}</option>
               <option value="country">{t('country', lang)}</option>
               <option value="region">{t('region', lang)}</option>
@@ -270,6 +269,7 @@ export default function App() {
 
         <ResultsTable
           rows={sorted}
+          allCountries={data.countries}
           lang={lang}
           sortKey={sortKey}
           sortDir={sortDir}

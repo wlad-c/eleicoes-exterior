@@ -27,20 +27,57 @@ export function countryName(c: CountryResult, lang: Lang): string {
 }
 
 export function metricValue(c: CountryResult, metric: MapMetric): number | null {
-  if (c.status !== 'reported' || !c.y2026) return null
   switch (metric) {
     case 'marginSwing':
-      return c.swing?.marginPp ?? null
+      return c.status === 'reported' && c.swing ? c.swing.marginPp : null
     case 'lulaSwing':
-      return c.swing?.lulaPp ?? null
+      return c.status === 'reported' && c.swing ? c.swing.lulaPp : null
     case 'bolsonaroSwing':
-      return c.swing?.bolsonaroPp ?? null
+      return c.status === 'reported' && c.swing ? c.swing.bolsonaroPp : null
     case 'margin2026':
-      return c.y2026.lulaPct - c.y2026.bolsonaroPct
+      return c.status === 'reported' && c.y2026
+        ? c.y2026.lulaPct - c.y2026.bolsonaroPct
+        : null
+    case 'margin2022':
+      return c.y2022.lulaPct - c.y2022.bolsonaroPct
     case 'lulaPct2026':
-      return c.y2026.lulaPct
+      return c.status === 'reported' && c.y2026 ? c.y2026.lulaPct : null
+    case 'bolsonaroPct2026':
+      return c.status === 'reported' && c.y2026 ? c.y2026.bolsonaroPct : null
+    case 'lulaPct2022':
+      return c.y2022.lulaPct
+    case 'bolsonaroPct2022':
+      return c.y2022.bolsonaroPct
+    case 'votes2026':
+      return c.status === 'reported' && c.y2026 ? c.y2026.totalValid : null
+    case 'votes2022':
+      return c.y2022.totalValid
     default:
       return null
+  }
+}
+
+export function formatMetricValue(
+  value: number | null,
+  metric: MapMetric,
+  lang: Lang,
+): string {
+  if (value == null) return '—'
+  switch (metric) {
+    case 'marginSwing':
+    case 'lulaSwing':
+    case 'bolsonaroSwing':
+      return fmtPp(value, lang)
+    case 'margin2026':
+    case 'margin2022':
+    case 'lulaPct2026':
+    case 'bolsonaroPct2026':
+    case 'lulaPct2022':
+    case 'bolsonaroPct2022':
+      return fmtPct(value, lang)
+    case 'votes2026':
+    case 'votes2022':
+      return fmtInt(value, lang)
   }
 }
 

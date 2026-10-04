@@ -4,8 +4,20 @@ import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { FeatureCollection, Geometry } from 'geojson'
 import worldAtlas from 'world-atlas/countries-110m.json'
-import { colorForMetric, BOLSONARO_COLOR, LULA_COLOR, NO_DATA_FILL, PENDING_FILL } from '../lib/colors'
-import { countryName, fmtPp, fmtPct, metricValue } from '../lib/format'
+import {
+  BOLSONARO_COLOR,
+  LULA_COLOR,
+  legendModeForMetric,
+  makeMetricColorizer,
+  NO_DATA_FILL,
+  PENDING_FILL,
+} from '../lib/colors'
+import {
+  countryName,
+  formatMetricValue,
+  fmtPct,
+  metricValue,
+} from '../lib/format'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
 import type { CountryResult, Lang, MapMetric } from '../types'
@@ -40,6 +52,11 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
   }, [])
 
   const height = Math.round(width * 0.48)
+  const colorize = useMemo(
+    () => makeMetricColorizer(metric, countries),
+    [metric, countries],
+  )
+  const legendMode = legendModeForMetric(metric)
 
   const byNumeric = useMemo(() => {
     const m = new Map<string, CountryResult>()
@@ -78,10 +95,7 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
           const value = c ? metricValue(c, metric) : null
           let fill = NO_DATA_FILL
           if (c) {
-            fill =
-              c.status === 'reported' && value != null
-                ? colorForMetric(metric, value)
-                : PENDING_FILL
+            fill = value != null ? colorize(value) : PENDING_FILL
           }
           const isHi = c && highlightId === c.id
           return (
@@ -121,52 +135,93 @@ export function WorldMap({ countries, metric, lang, highlightId, onSelect }: Pro
       </svg>
 
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
-        <span className="font-medium text-[var(--ink)]">{t('mapMetric', lang)}:</span>
-        <LegendSwatch from={BOLSONARO_COLOR} to={LULA_COLOR} />
-        <span>{t('legendBolso', lang)}</span>
-        <span aria-hidden>·</span>
-        <span>{t('legendLula', lang)}</span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: PENDING_FILL }} />
-          {t('legendPending', lang)}
-        </span>
+        <Legend metric={metric} mode={legendMode} lang={lang} />
       </div>
 
       {tip && (
         <div
-          className="pointer-events-none absolute z-20 max-w-[240px] rounded-md px-3 py-2 text-left text-xs shadow-lg"
+          className="pointer-events-none absolute z-20 max-w-[260px] rounded-md px-3 py-2 text-left text-xs shadow-lg"
           style={{
-            left: Math.min(tip.x + 12, width - 250),
+            left: Math.min(tip.x + 12, width - 270),
             top: Math.max(8, tip.y - 8),
             background: 'var(--tip-bg)',
             color: 'var(--tip-fg)',
           }}
         >
           <div className="font-semibold">{countryName(tip.country, lang)}</div>
-          {tip.country.status === 'reported' && tip.country.y2026 && tip.country.swing ? (
-            <>
-              <div className="mt-1 opacity-90">
-                {t('lula', lang)} {fmtPct(tip.country.y2026.lulaPct, lang)} ·{' '}
-                {t('fBolsonaro', lang)} {fmtPct(tip.country.y2026.bolsonaroPct, lang)}
-              </div>
-              <div className="mt-0.5 opacity-90">
-                {t('marginSwing', lang)}: {fmtPp(tip.country.swing.marginPp, lang)}
-              </div>
-            </>
-          ) : (
-            <div className="mt-1 opacity-80">{t('pendingHint', lang)}</div>
-          )}
+          <div className="mt-1 opacity-90">
+            {t(metric, lang)}:{' '}
+            {formatMetricValue(metricValue(tip.country, metric), metric, lang)}
+          </div>
+          {tip.country.status === 'reported' && tip.country.y2026 ? (
+            <div className="mt-0.5 opacity-80">
+              {t('lula', lang)} {fmtPct(tip.country.y2026.lulaPct, lang)} ·{' '}
+              {t('fBolsonaro', lang)} {fmtPct(tip.country.y2026.bolsonaroPct, lang)}
+            </div>
+          ) : tip.country.status === 'pending' ? (
+            <div className="mt-0.5 opacity-80">{t('pendingHint', lang)}</div>
+          ) : null}
         </div>
       )}
     </div>
   )
 }
 
-function LegendSwatch({ from, to }: { from: string; to: string }) {
+function Legend({
+  metric,
+  mode,
+  lang,
+}: {
+  metric: MapMetric
+  mode: ReturnType<typeof legendModeForMetric>
+  lang: Lang
+}) {
+  if (mode === 'diverging') {
+    return (
+      <>
+        <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+        <span
+          className="inline-block h-2.5 w-28 rounded-sm"
+          style={{
+            background: `linear-gradient(90deg, ${BOLSONARO_COLOR}, #E8EDE8, ${LULA_COLOR})`,
+          }}
+        />
+        <span>{t('legendBolso', lang)}</span>
+        <span aria-hidden>·</span>
+        <span>{t('legendLula', lang)}</span>
+        <span className="inline-flex items-center gap-1.5">
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-sm"
+            style={{ background: PENDING_FILL }}
+          />
+          {t('legendPending', lang)}
+        </span>
+      </>
+    )
+  }
+
+  const from =
+    mode === 'lula' ? '#F7F0F0' : mode === 'bolso' ? '#EEF3F9' : '#F0F2F1'
+  const to =
+    mode === 'lula' ? LULA_COLOR : mode === 'bolso' ? BOLSONARO_COLOR : '#37474F'
+
   return (
-    <span
-      className="inline-block h-2.5 w-28 rounded-sm"
-      style={{ background: `linear-gradient(90deg, ${from}, #E8EDE8, ${to})` }}
-    />
+    <>
+      <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+      <span
+        className="inline-block h-2.5 w-28 rounded-sm"
+        style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}
+      />
+      <span>{t('legendLow', lang)}</span>
+      <span aria-hidden>·</span>
+      <span>{t('legendHigh', lang)}</span>
+      <span className="inline-flex items-center gap-1.5">
+        <span
+          className="inline-block h-2.5 w-2.5 rounded-sm"
+          style={{ background: PENDING_FILL }}
+        />
+        {t('legendPending', lang)}
+      </span>
+    </>
   )
 }

@@ -1,10 +1,18 @@
-import { colorForMetric } from '../lib/colors'
-import { countryName, fmtInt, fmtPct, fmtPp } from '../lib/format'
+import { makeMetricColorizer, withAlpha } from '../lib/colors'
+import { countryName, fmtInt, fmtPct, fmtPp, metricValue } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
-import type { CountryResult, Lang, MapMetric, SortKey } from '../types'
+import {
+  heatColumnForMetric,
+  type CountryResult,
+  type HeatColumn,
+  type Lang,
+  type MapMetric,
+  type SortKey,
+} from '../types'
 
 type Props = {
   rows: CountryResult[]
+  allCountries: CountryResult[]
   lang: Lang
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
@@ -16,6 +24,7 @@ type Props = {
 
 export function ResultsTable({
   rows,
+  allCountries,
   lang,
   sortKey,
   sortDir,
@@ -33,6 +42,9 @@ export function ResultsTable({
   const arrow = (key: SortKey) =>
     sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''
 
+  const colorize = makeMetricColorizer(metric, allCountries)
+  const heatCol = heatColumnForMetric(metric)
+
   return (
     <div className="table-scroll overflow-x-auto">
       <table className="w-full min-w-[920px] border-collapse text-left text-sm">
@@ -46,19 +58,41 @@ export function ResultsTable({
               {t('region', lang)}
               {arrow('region')}
             </Th>
-            <Th onClick={() => onSort('votes2026')} align="right">
+            <Th
+              onClick={() => onSort('votes2026')}
+              align="right"
+              heated={heatCol === 'lula2026'}
+            >
               {t('lula', lang)} 2026{arrow('votes2026')}
             </Th>
-            <Th align="right">{t('fBolsonaro', lang)} 2026</Th>
-            <Th onClick={() => onSort('lulaPct2026')} align="right">
+            <Th align="right" heated={heatCol === 'bolso2026'}>
+              {t('fBolsonaro', lang)} 2026
+            </Th>
+            <Th
+              onClick={() => onSort('lulaPct2026')}
+              align="right"
+              heated={heatCol === 'lulaPct2026'}
+            >
               Lula %{arrow('lulaPct2026')}
             </Th>
-            <Th onClick={() => onSort('bolsonaroPct2026')} align="right">
+            <Th
+              onClick={() => onSort('bolsonaroPct2026')}
+              align="right"
+              heated={heatCol === 'bolsoPct2026'}
+            >
               F.B. %{arrow('bolsonaroPct2026')}
             </Th>
-            <Th align="right">{t('lula', lang)} 2022</Th>
-            <Th align="right">{t('jBolsonaro', lang)} 2022</Th>
-            <Th onClick={() => onSort('marginSwing')} align="right">
+            <Th align="right" heated={heatCol === 'lula2022'}>
+              {t('lula', lang)} 2022
+            </Th>
+            <Th align="right" heated={heatCol === 'bolso2022'}>
+              {t('jBolsonaro', lang)} 2022
+            </Th>
+            <Th
+              onClick={() => onSort('marginSwing')}
+              align="right"
+              heated={heatCol === 'marginSwing'}
+            >
               {t('marginSwing', lang)}
               {arrow('marginSwing')}
             </Th>
@@ -68,11 +102,9 @@ export function ResultsTable({
         <tbody>
           {rows.map((c) => {
             const hi = highlightId === c.id
-            const swing = c.swing?.marginPp ?? null
+            const value = metricValue(c, metric)
             const heat =
-              c.status === 'reported' && swing != null
-                ? colorForMetric(metric === 'lulaPct2026' ? 'marginSwing' : metric, metricValueForHeat(c, metric))
-                : 'transparent'
+              value != null ? withAlpha(colorize(value), 0.28) : undefined
             return (
               <tr
                 key={c.id}
@@ -88,30 +120,42 @@ export function ResultsTable({
                 <td className="px-2 py-2.5 text-[var(--ink-muted)]">
                   {regionLabel(c.region, lang)}
                 </td>
-                <td className="px-2 py-2.5 text-right tabular-nums">
+                <HeatTd col="lula2026" heatCol={heatCol} heat={heat}>
                   {fmtInt(c.y2026?.lula, lang)}
-                </td>
-                <td className="px-2 py-2.5 text-right tabular-nums">
+                </HeatTd>
+                <HeatTd col="bolso2026" heatCol={heatCol} heat={heat}>
                   {fmtInt(c.y2026?.bolsonaro, lang)}
-                </td>
-                <td className="px-2 py-2.5 text-right tabular-nums">
+                </HeatTd>
+                <HeatTd col="lulaPct2026" heatCol={heatCol} heat={heat}>
                   {fmtPct(c.y2026?.lulaPct, lang)}
-                </td>
-                <td className="px-2 py-2.5 text-right tabular-nums">
+                </HeatTd>
+                <HeatTd col="bolsoPct2026" heatCol={heatCol} heat={heat}>
                   {fmtPct(c.y2026?.bolsonaroPct, lang)}
-                </td>
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtInt(c.y2022.lula, lang)}
-                </td>
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtInt(c.y2022.bolsonaro, lang)}
-                </td>
-                <td
-                  className="px-2 py-2.5 text-right tabular-nums font-medium"
-                  style={{ background: heat === 'transparent' ? undefined : heat + '33' }}
+                </HeatTd>
+                <HeatTd
+                  col="lula2022"
+                  heatCol={heatCol}
+                  heat={heat}
+                  muted
                 >
-                  {fmtPp(swing, lang)}
-                </td>
+                  {fmtInt(c.y2022.lula, lang)}
+                </HeatTd>
+                <HeatTd
+                  col="bolso2022"
+                  heatCol={heatCol}
+                  heat={heat}
+                  muted
+                >
+                  {fmtInt(c.y2022.bolsonaro, lang)}
+                </HeatTd>
+                <HeatTd
+                  col="marginSwing"
+                  heatCol={heatCol}
+                  heat={heat}
+                  strong
+                >
+                  {fmtPp(c.swing?.marginPp, lang)}
+                </HeatTd>
                 <td className="px-2 py-2.5 text-[var(--ink-muted)]">
                   {c.status === 'pending' ? t('pendingHint', lang) : c.notes || '—'}
                 </td>
@@ -124,36 +168,50 @@ export function ResultsTable({
   )
 }
 
-function metricValueForHeat(c: CountryResult, metric: MapMetric): number | null {
-  if (!c.y2026 || !c.swing) return null
-  switch (metric) {
-    case 'marginSwing':
-      return c.swing.marginPp
-    case 'lulaSwing':
-      return c.swing.lulaPp
-    case 'bolsonaroSwing':
-      return c.swing.bolsonaroPp
-    case 'margin2026':
-      return c.y2026.lulaPct - c.y2026.bolsonaroPct
-    case 'lulaPct2026':
-      return c.y2026.lulaPct
-  }
+function HeatTd({
+  col,
+  heatCol,
+  heat,
+  children,
+  muted,
+  strong,
+}: {
+  col: HeatColumn
+  heatCol: HeatColumn
+  heat?: string
+  children: React.ReactNode
+  muted?: boolean
+  strong?: boolean
+}) {
+  const active = col === heatCol
+  return (
+    <td
+      className={`px-2 py-2.5 text-right tabular-nums ${
+        strong ? 'font-medium' : ''
+      } ${muted && !active ? 'text-[var(--ink-muted)]' : ''}`}
+      style={active && heat ? { background: heat } : undefined}
+    >
+      {children}
+    </td>
+  )
 }
 
 function Th({
   children,
   onClick,
   align = 'left',
+  heated,
 }: {
   children: React.ReactNode
   onClick?: () => void
   align?: 'left' | 'right'
+  heated?: boolean
 }) {
   return (
     <th
       className={`px-2 py-2 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
-      }`}
+      } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
     >
       {children}

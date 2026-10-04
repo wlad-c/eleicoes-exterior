@@ -47,12 +47,33 @@ export type ResultsData = {
   countries: CountryResult[]
 }
 
+/** Heatmap / map coloring metrics. Default: marginSwing. */
 export type MapMetric =
   | 'marginSwing'
   | 'lulaSwing'
   | 'bolsonaroSwing'
   | 'margin2026'
+  | 'margin2022'
   | 'lulaPct2026'
+  | 'bolsonaroPct2026'
+  | 'lulaPct2022'
+  | 'bolsonaroPct2022'
+  | 'votes2026'
+  | 'votes2022'
+
+export const HEATMAP_METRICS: MapMetric[] = [
+  'marginSwing',
+  'lulaSwing',
+  'bolsonaroSwing',
+  'margin2026',
+  'margin2022',
+  'lulaPct2026',
+  'bolsonaroPct2026',
+  'lulaPct2022',
+  'bolsonaroPct2022',
+  'votes2026',
+  'votes2022',
+]
 
 export type SortKey =
   | 'votes2026'
@@ -62,3 +83,38 @@ export type SortKey =
   | 'marginSwing'
   | 'country'
   | 'region'
+
+/** Which table column receives the heatmap tint for a metric. */
+export type HeatColumn =
+  | 'lula2026'
+  | 'bolso2026'
+  | 'lulaPct2026'
+  | 'bolsoPct2026'
+  | 'lula2022'
+  | 'bolso2022'
+  | 'marginSwing'
+  | 'none'
+
+export function heatColumnForMetric(metric: MapMetric): HeatColumn {
+  switch (metric) {
+    case 'marginSwing':
+    case 'lulaSwing':
+    case 'bolsonaroSwing':
+    case 'margin2026':
+      return 'marginSwing'
+    case 'margin2022':
+      return 'lula2022'
+    case 'lulaPct2026':
+      return 'lulaPct2026'
+    case 'bolsonaroPct2026':
+      return 'bolsoPct2026'
+    case 'lulaPct2022':
+      return 'lula2022'
+    case 'bolsonaroPct2022':
+      return 'bolso2022'
+    case 'votes2026':
+      return 'lula2026'
+    case 'votes2022':
+      return 'lula2022'
+  }
+}
