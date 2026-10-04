@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (ballot-box tallies until TSE release)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (boletins de urna até a divulgação do TSE)"
     },
-    "updatedAt": "2026-10-04T18:11:26.755Z",
+    "updatedAt": "2026-10-04T18:15:42.734Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -114,18 +114,18 @@
         "bolsonaroPct": 72.21
       },
       "y2026": {
-        "lula": 5234,
+        "lula": 5222,
         "bolsonaro": 24601,
-        "totalValid": 34318,
-        "lulaPct": 15.25,
-        "bolsonaroPct": 71.69
+        "totalValid": 34363,
+        "lulaPct": 15.2,
+        "bolsonaroPct": 71.59
       },
       "swing": {
-        "lulaPp": 1.76,
-        "bolsonaroPp": -0.52,
-        "marginPp": 2.28
+        "lulaPp": 1.71,
+        "bolsonaroPp": -0.62,
+        "marginPp": 2.33
       },
-      "notes": "Totals per BNews/Exame (34,318 valid / Lula 5,234); g1 lists Lula 5,222 / ~34,363.",
+      "notes": "g1 (candidate sum 34,363 valid).",
       "status": "reported",
       "coverage": {
         "counted": 119,
@@ -895,18 +895,18 @@
         "bolsonaroPct": 48.59
       },
       "y2026": {
-        "lula": 512,
+        "lula": 469,
         "bolsonaro": 659,
-        "totalValid": 1355,
-        "lulaPct": 37.79,
-        "bolsonaroPct": 48.63
+        "totalValid": 1347,
+        "lulaPct": 34.82,
+        "bolsonaroPct": 48.92
       },
       "swing": {
-        "lulaPp": 0.93,
-        "bolsonaroPp": 0.04,
-        "marginPp": 0.89
+        "lulaPp": -2.04,
+        "bolsonaroPp": 0.33,
+        "marginPp": -2.37
       },
-      "notes": "Abu Dhabi jurisdiction (5 BUs). Lula count per Exame (512); g1 still lists 469 with an inconsistent total.",
+      "notes": "g1 (Lula 469 / Flávio 659; 34.82% / 48.92% ⇒ 1,347 valid).",
       "status": "reported",
       "coverage": {
         "counted": 5,
