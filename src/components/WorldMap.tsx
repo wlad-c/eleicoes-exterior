@@ -121,7 +121,6 @@ export function WorldMap({
                   y: e.clientY - rect.top,
                   country: c,
                 })
-                onSelect(c.id)
               }}
               onMouseMove={(e) => {
                 if (!c) return

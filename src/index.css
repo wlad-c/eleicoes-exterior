@@ -107,6 +107,20 @@ select {
   backdrop-filter: blur(8px);
 }
 
+.sticky-table-chrome {
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+html.dark .sticky-table-chrome {
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+}
+
+.sticky-th {
+  background: var(--paper-deep);
+  box-shadow: 0 1px 0 var(--line);
+}
+
 .control {
   border: 1px solid var(--line);
   background: var(--control-bg);

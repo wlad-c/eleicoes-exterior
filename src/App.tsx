@@ -223,66 +223,68 @@ export default function App() {
       </section>
 
       <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('search', lang)}
-            <input
-              className="control mt-1 w-full"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t('search', lang)}
-            />
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-            {t('region', lang)}
-            <select
-              className="control mt-1 w-full"
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
-            >
-              <option value="all">{t('allRegions', lang)}</option>
-              {regions.map((r) => (
-                <option key={r} value={r}>
-                  {regionLabel(r, lang)}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="flex cursor-pointer items-start gap-2 self-end rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
-            <input
-              type="checkbox"
-              className="mt-1 accent-[var(--lula)]"
-              checked={showPending}
-              onChange={(e) => setShowPending(e.target.checked)}
-            />
-            <span>
-              <span className="font-semibold">{t('showPending', lang)}</span>
-              <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
-                {t('showPendingHint', lang)}
-                {showPending ? '' : ` · ${pendingCount} ${t('pendingHidden', lang)}`}
+        <div className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              {t('search', lang)}
+              <input
+                className="control mt-1 w-full"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t('search', lang)}
+              />
+            </label>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              {t('region', lang)}
+              <select
+                className="control mt-1 w-full"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
+                <option value="all">{t('allRegions', lang)}</option>
+                {regions.map((r) => (
+                  <option key={r} value={r}>
+                    {regionLabel(r, lang)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex cursor-pointer items-start gap-2 self-end rounded-md border border-[var(--line)] bg-[var(--control-bg)] px-3 py-2 text-sm text-[var(--ink)]">
+              <input
+                type="checkbox"
+                className="mt-1 accent-[var(--lula)]"
+                checked={showPending}
+                onChange={(e) => setShowPending(e.target.checked)}
+              />
+              <span>
+                <span className="font-semibold">{t('showPending', lang)}</span>
+                <span className="mt-0.5 block text-xs font-normal text-[var(--ink-muted)]">
+                  {t('showPendingHint', lang)}
+                  {showPending ? '' : ` · ${pendingCount} ${t('pendingHidden', lang)}`}
+                </span>
               </span>
-            </span>
-          </label>
-        </div>
+            </label>
+          </div>
 
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="brand text-lg font-bold">{t('table', lang)}</h2>
-          <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-            {t('sortBy', lang)}
-            <select
-              className="control"
-              value={sortKey}
-              onChange={(e) => onSort(e.target.value as SortKey)}
-            >
-              <option value="votes2026">{t('votes2026', lang)}</option>
-              <option value="votes2022">{t('votes2022', lang)}</option>
-              <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
-              <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
-              <option value="marginSwing">{t('marginSwing', lang)}</option>
-              <option value="country">{t('country', lang)}</option>
-              <option value="region">{t('region', lang)}</option>
-            </select>
-          </label>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="brand text-lg font-bold">{t('table', lang)}</h2>
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+              {t('sortBy', lang)}
+              <select
+                className="control"
+                value={sortKey}
+                onChange={(e) => onSort(e.target.value as SortKey)}
+              >
+                <option value="votes2026">{t('votes2026', lang)}</option>
+                <option value="votes2022">{t('votes2022', lang)}</option>
+                <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
+                <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
+                <option value="marginSwing">{t('marginSwing', lang)}</option>
+                <option value="country">{t('country', lang)}</option>
+                <option value="region">{t('region', lang)}</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <ResultsTable

@@ -46,9 +46,9 @@ export function ResultsTable({
   const heatCol = heatColumnForMetric(metric)
 
   return (
-    <div className="table-scroll overflow-x-auto">
+    <div className="table-scroll max-h-[min(70vh,52rem)] overflow-auto">
       <table className="w-full min-w-[920px] border-collapse text-left text-sm">
-        <thead>
+        <thead className="sticky top-0 z-20">
           <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
             <Th onClick={() => onSort('country')}>
               {t('country', lang)}
@@ -209,7 +209,7 @@ function Th({
 }) {
   return (
     <th
-      className={`px-2 py-2 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
+      className={`sticky-th px-2 py-2.5 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
       } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
