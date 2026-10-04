@@ -14,6 +14,9 @@ export const LULA_COLOR_DARK = '#EF5350'
 export const BOLSONARO_COLOR_DARK = '#64B5F6'
 export const SWING_NEUTRAL = '#E8EDE8'
 
+/** Darkest diverging heatmap shade is reached at ±this many pp (outliers clamp). */
+export const DIVERGING_PP_CAP = 10
+
 export const PENDING_FILL = 'var(--map-pending)'
 export const NO_DATA_FILL = 'var(--map-nodata)'
 
@@ -58,10 +61,10 @@ function hexToRgb(hex: string) {
   }
 }
 
-function divergingScale(absMax: number) {
-  const m = Math.max(absMax, 1)
+function divergingScale() {
   return scaleDiverging<string>()
-    .domain([-m, 0, m])
+    .domain([-DIVERGING_PP_CAP, 0, DIVERGING_PP_CAP])
+    .clamp(true)
     .interpolator((t) => {
       if (t < 0.5) {
         const u = t * 2
@@ -97,13 +100,12 @@ export function makeMetricColorizer(
   metric: MapMetric,
   countries: CountryResult[],
 ): (value: number | null) => string {
-  const [lo, hi] = extentForMetric(countries, metric)
+  const [, hi] = extentForMetric(countries, metric)
   const kind = scaleKind(metric)
   const invert = isInverted(metric)
 
   if (kind === 'divergingLB') {
-    const absMax = Math.max(Math.abs(lo), Math.abs(hi), 1)
-    const scale = divergingScale(absMax)
+    const scale = divergingScale()
     return (value) => {
       if (value == null) return PENDING_FILL
       return scale(invert ? -value : value)
