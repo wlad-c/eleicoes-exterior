@@ -3,7 +3,9 @@ import { CountryFlag } from './CountryFlag'
 import { SortableTh } from './SortableTh'
 import {
   cityBolsonaroChange,
+  cityBolsonaroVotesDelta,
   cityLulaChange,
+  cityLulaVotesDelta,
   citySwingToBolsonaro,
   citySwingToLula,
   type CityTableRow,
@@ -15,6 +17,7 @@ import {
   fmtCoverage,
   fmtInt,
   fmtPp,
+  fmtPpWithVotes,
   fmtShare,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
@@ -77,6 +80,10 @@ export function CityBreakdownTable({
     let lula2022 = 0
     let bolso2022 = 0
     let valid2022 = 0
+    let lula2022Comparable = 0
+    let bolso2022Comparable = 0
+    let lula2026Comparable = 0
+    let bolso2026Comparable = 0
     let has2022 = false
     let counted = 0
     let total = 0
@@ -91,6 +98,10 @@ export function CityBreakdownTable({
         lula2022 += c.y2022.lula
         bolso2022 += c.y2022.bolsonaro
         valid2022 += c.y2022.totalValid
+        lula2022Comparable += c.y2022.lula
+        bolso2022Comparable += c.y2022.bolsonaro
+        lula2026Comparable += c.y2026.lula
+        bolso2026Comparable += c.y2026.bolsonaro
       }
     }
     const lulaPct = valid ? (lula / valid) * 100 : null
@@ -124,6 +135,12 @@ export function CityBreakdownTable({
       bolsonaroChange,
       swingToLula,
       swingToBolsonaro,
+      lulaVotesDelta: has2022
+        ? lula2026Comparable - lula2022Comparable
+        : null,
+      bolsonaroVotesDelta: has2022
+        ? bolso2026Comparable - bolso2022Comparable
+        : null,
       coverage: total > 0 ? { counted, total } : null,
     }
   }, [rows])
@@ -325,13 +342,21 @@ export function CityBreakdownTable({
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.lulaChange, lang)}
+                {fmtPpWithVotes(
+                  totals.lulaChange,
+                  totals.lulaVotesDelta,
+                  lang,
+                )}
               </td>
             )
           case 'bolsonaroChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.bolsonaroChange, lang)}
+                {fmtPpWithVotes(
+                  totals.bolsonaroChange,
+                  totals.bolsonaroVotesDelta,
+                  lang,
+                )}
               </td>
             )
           case 'swingToLula':
@@ -657,7 +682,11 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPp(cityLulaChange(c), lang)}
+                            {fmtPpWithVotes(
+                              cityLulaChange(c),
+                              cityLulaVotesDelta(c),
+                              lang,
+                            )}
                           </td>
                         )
                       case 'bolsonaroChange':
@@ -666,7 +695,11 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPp(cityBolsonaroChange(c), lang)}
+                            {fmtPpWithVotes(
+                              cityBolsonaroChange(c),
+                              cityBolsonaroVotesDelta(c),
+                              lang,
+                            )}
                           </td>
                         )
                       case 'swingToLula':
