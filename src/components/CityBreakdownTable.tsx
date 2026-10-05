@@ -579,12 +579,12 @@ export function CityBreakdownTable({
                   key={`${c.countryId}-${c.code}`}
                   className="border-b border-[var(--line-soft)] hover:bg-[var(--chip-soft)]"
                 >
-                  <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums">
                     {index + 1}
                   </td>
                   {showCountry ? (
                     <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]"
+                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5"
                       title={fullCountry}
                     >
                       <span className="country-flag-label">
@@ -600,7 +600,7 @@ export function CityBreakdownTable({
                       showCountry
                         ? ''
                         : 'sticky-col sticky-col-city '
-                    }cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]`}
+                    }cell-truncate cell-truncate-city px-2 py-2.5`}
                     title={cityDisplayName(c, lang)}
                   >
                     <span className="cell-truncate-text">
@@ -613,7 +613,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                            className="cell-truncate cell-truncate-sm px-2 py-2.5"
                             title={
                               parent
                                 ? regionLabel(parent.region, lang)
@@ -658,7 +658,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                            className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
                           </td>
@@ -667,7 +667,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                            className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(
                               c.y2022?.bolsonaroPct,
@@ -724,7 +724,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                            className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtCoverage(c.coverage)}
                           </td>

@@ -525,11 +525,11 @@ export function ResultsTable({
                         : 'hover:bg-[var(--chip-soft)]'
                     }`}
                   >
-                    <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                    <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums">
                       {index + 1}
                     </td>
                     <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5 font-medium text-[var(--ink)]"
+                      className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5"
                       title={countryName(c, lang)}
                     >
                       <span className="country-flag-label">
@@ -556,7 +556,7 @@ export function ResultsTable({
                           return (
                             <td
                               key={col}
-                              className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                              className="cell-truncate cell-truncate-sm px-2 py-2.5"
                               title={regionLabel(c.region, lang)}
                             >
                               {regionLabel(c.region, lang)}
@@ -566,7 +566,7 @@ export function ResultsTable({
                           return (
                             <td
                               key={col}
-                              className="px-2 py-2.5 text-right tabular-nums text-[var(--ink)]"
+                              className="px-2 py-2.5 text-right tabular-nums"
                             >
                               {fmtInt(c.y2026?.totalValid, lang)}
                             </td>
@@ -604,7 +604,6 @@ export function ResultsTable({
                               col="lula2022"
                               heatCol={heatCol}
                               heat={heat}
-                              muted
                             >
                               {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang)}
                             </HeatTd>
@@ -616,7 +615,6 @@ export function ResultsTable({
                               col="bolso2022"
                               heatCol={heatCol}
                               heat={heat}
-                              muted
                             >
                               {fmtShare(
                                 c.y2022.bolsonaroPct,
@@ -632,7 +630,6 @@ export function ResultsTable({
                               col="lulaChange"
                               heatCol={heatCol}
                               heat={heat}
-                              strong
                             >
                               {fmtPpWithVotes(
                                 c.swing?.lulaPp,
@@ -648,7 +645,6 @@ export function ResultsTable({
                               col="bolsonaroChange"
                               heatCol={heatCol}
                               heat={heat}
-                              strong
                             >
                               {fmtPpWithVotes(
                                 c.swing?.bolsonaroPp,
@@ -664,7 +660,6 @@ export function ResultsTable({
                               col="swingToLula"
                               heatCol={heatCol}
                               heat={heat}
-                              strong
                             >
                               {fmtPp(
                                 c.swing != null
@@ -681,7 +676,6 @@ export function ResultsTable({
                               col="swingToBolsonaro"
                               heatCol={heatCol}
                               heat={heat}
-                              strong
                             >
                               {fmtPp(
                                 c.swing != null
@@ -695,7 +689,7 @@ export function ResultsTable({
                           return (
                             <td
                               key={col}
-                              className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                              className="px-2 py-2.5 text-right tabular-nums"
                             >
                               {fmtCoverage(c.coverage)}
                             </td>
@@ -749,22 +743,16 @@ function HeatTd({
   heatCol,
   heat,
   children,
-  muted,
-  strong,
 }: {
   col: HeatColumn
   heatCol: HeatColumn
   heat?: string
   children: React.ReactNode
-  muted?: boolean
-  strong?: boolean
 }) {
   const active = col === heatCol
   return (
     <td
-      className={`px-2 py-2.5 text-right tabular-nums ${
-        strong ? 'font-medium' : ''
-      } ${muted && !active ? 'text-[var(--ink-muted)]' : ''}`}
+      className="px-2 py-2.5 text-right tabular-nums"
       style={active && heat ? { background: heat } : undefined}
     >
       {children}
