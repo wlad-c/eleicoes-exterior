@@ -116,9 +116,19 @@ async function mapPool<T, R>(
     }
   }
   await Promise.all(
-    Array.from({ length: Math.min(concurrency, items.length) }, () => run()),
+    Array.from({ length: Math.min(concurrency, items.length || 1) }, () => run()),
   )
   return out
+}
+
+type MunVotes = {
+  countryId: string
+  city: string
+  lula: number
+  bolsonaro: number
+  totalValid: number
+  counted: number
+  total: number
 }
 
 type Agg = {
@@ -132,7 +142,7 @@ type Agg = {
 
 /**
  * Pull official TSE EA20 ZZ presidential tallies and overlay onto `base`.
- * Throws if the TSE endpoints are unreachable (caller keeps last good data).
+ * Throws if the top-level TSE endpoints are unreachable.
  */
 export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
   const baseUrl = tseBaseUrl()
@@ -161,7 +171,11 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
   const codes: string[] = []
   for (const row of ab.abr || []) {
     const code = pad(row.cdabr || '', 5)
-    if (!code || code.toLowerCase() === '000zz' || String(row.cdabr).toLowerCase() === 'zz') {
+    if (
+      !code ||
+      code.toLowerCase() === '000zz' ||
+      String(row.cdabr).toLowerCase() === 'zz'
+    ) {
       continue
     }
     const st = parseIntPT(row.s?.st)
@@ -171,9 +185,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     }
   }
 
-  const aggregates = new Map<string, Agg>()
-
-  await mapPool(codes, 12, async (code) => {
+  // Fetch municipalities in parallel, then aggregate sequentially (no races).
+  const munVotes = await mapPool(codes, 16, async (code): Promise<MunVotes | null> => {
     const countryId = cityToCountry[code]
     try {
       const doc = await fetchJson<Ea20Doc>(ea20Url(baseUrl, code))
@@ -182,27 +195,39 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       const counted = parseIntPT(doc.s?.st)
       const total = parseIntPT(doc.s?.ts)
       if (totalValid <= 0 && counted <= 0) return null
-      const city = names[code] || code
-      const agg = aggregates.get(countryId) || {
-        lula: 0,
-        bolsonaro: 0,
-        totalValid: 0,
-        counted: 0,
-        total: 0,
-        cities: [],
+      return {
+        countryId,
+        city: names[code] || code,
+        lula,
+        bolsonaro,
+        totalValid,
+        counted,
+        total,
       }
-      agg.lula += lula
-      agg.bolsonaro += bolsonaro
-      agg.totalValid += totalValid
-      agg.counted += counted
-      agg.total += total
-      agg.cities.push(`${city} ${counted}/${total}`)
-      aggregates.set(countryId, agg)
     } catch {
-      /* skip one municipality; keep others */
+      return null
     }
-    return null
   })
+
+  const aggregates = new Map<string, Agg>()
+  for (const row of munVotes) {
+    if (!row) continue
+    const agg = aggregates.get(row.countryId) || {
+      lula: 0,
+      bolsonaro: 0,
+      totalValid: 0,
+      counted: 0,
+      total: 0,
+      cities: [],
+    }
+    agg.lula += row.lula
+    agg.bolsonaro += row.bolsonaro
+    agg.totalValid += row.totalValid
+    agg.counted += row.counted
+    agg.total += row.total
+    agg.cities.push(`${row.city} ${row.counted}/${row.total}`)
+    aggregates.set(row.countryId, agg)
+  }
 
   const countries: CountryResult[] = base.countries.map((country) => {
     const agg = aggregates.get(country.id)
