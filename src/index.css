@@ -461,7 +461,8 @@ html.dark .is-x-scrolled .sticky-col-city {
 :root {
   --table-col-rank: 3.25rem;
   --table-col-abbr: 4.5rem;
-  --table-col-place: 9rem;
+  /* Area/City place column; Country full-name width tracks this via calc */
+  --table-col-place: 5.4rem; /* was 9rem (−40%) */
   --table-col-country-full: calc(
     var(--table-col-abbr) + var(--table-col-place)
   );
