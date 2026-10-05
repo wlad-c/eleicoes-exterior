@@ -127,7 +127,7 @@ export function CityBreakdownTable({
         <p className="mb-2 text-xs text-[var(--ink-muted)]">{sourceNote}</p>
       ) : null}
       <div className="table-x-scroll">
-        <table className="results-table w-full text-left text-sm">
+        <table className="results-table results-table--cities text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
               <SortableTh align="right" hint={t('hintRank', lang)}>
