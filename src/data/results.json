@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-05T00:03:19.741Z",
+    "updatedAt": "2026-10-05T00:14:42.523Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -100,13 +100,13 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-05T00:03:19.741Z",
-      "sectionsCounted": 1197,
+      "fetchedAt": "2026-10-05T00:14:42.523Z",
+      "sectionsCounted": 1276,
       "sectionsTotal": 1351,
-      "sectionsPct": 88.6,
-      "lula": 140647,
-      "bolsonaro": 130809,
-      "totalValid": 298477,
+      "sectionsPct": 94.45,
+      "lula": 149674,
+      "bolsonaro": 138613,
+      "totalValid": 316586,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6257/dados/zz/zz-c0001-e006257-u.json"
     }
   },
@@ -445,22 +445,22 @@
         "bolsonaroPct": 57.93
       },
       "y2026": {
-        "lula": 14458,
-        "bolsonaro": 37003,
-        "totalValid": 55496,
-        "lulaPct": 26.05,
-        "bolsonaroPct": 66.68
+        "lula": 19028,
+        "bolsonaro": 41687,
+        "totalValid": 65387,
+        "lulaPct": 29.1,
+        "bolsonaroPct": 63.75
       },
       "swing": {
-        "lulaPp": -5.39,
-        "bolsonaroPp": 8.75,
-        "marginPp": -14.14
+        "lulaPp": -2.34,
+        "bolsonaroPp": 5.82,
+        "marginPp": -8.16
       },
-      "notes": "TSE EA20 (BOSTON 69/69; CHICAGO 18/18; HOUSTON 23/23; MIAMI 51/51; WASHINGTON 31/31; HARTFORD 12/12; ATLANTA 22/22; ORLANDO 34/34)",
+      "notes": "TSE EA20 (BOSTON 69/69; CHICAGO 18/18; HOUSTON 23/23; MIAMI 51/51; NOVA YORK 53/53; WASHINGTON 31/31; HARTFORD 12/12; ATLANTA 22/22; ORLANDO 34/34)",
       "status": "reported",
       "coverage": {
-        "counted": 260,
-        "total": 260
+        "counted": 313,
+        "total": 313
       }
     },
     {
@@ -509,21 +509,21 @@
         "bolsonaroPct": 31.62
       },
       "y2026": {
-        "lula": 4830,
-        "bolsonaro": 2050,
-        "totalValid": 7729,
-        "lulaPct": 62.49,
-        "bolsonaroPct": 26.52
+        "lula": 9287,
+        "bolsonaro": 5170,
+        "totalValid": 15947,
+        "lulaPct": 58.24,
+        "bolsonaroPct": 32.42
       },
       "swing": {
-        "lulaPp": 8,
-        "bolsonaroPp": -5.1,
-        "marginPp": 13.1
+        "lulaPp": 3.75,
+        "bolsonaroPp": 0.8,
+        "marginPp": 2.95
       },
-      "notes": "TSE EA20 (21/47 seções; MONTREAL 15/15; OTTAWA 4/4; TORONTO 2/28)",
+      "notes": "TSE EA20 (MONTREAL 15/15; OTTAWA 4/4; TORONTO 28/28)",
       "status": "reported",
       "coverage": {
-        "counted": 21,
+        "counted": 47,
         "total": 47
       }
     },
