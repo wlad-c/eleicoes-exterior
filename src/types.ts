@@ -134,6 +134,7 @@ export type SortKey =
   | 'swingToLula'
   | 'country'
   | 'region'
+  | 'city'
 
 export type HeatColumn =
   | 'lula2026'

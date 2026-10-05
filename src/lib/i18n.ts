@@ -6,6 +6,11 @@ const dict = {
   pending: { en: 'pending', pt: 'pendentes' },
   countries: { en: 'countries', pt: 'países' },
   search: { en: 'Search country…', pt: 'Buscar país…' },
+  searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
+  tabCountries: { en: 'Countries', pt: 'Países' },
+  tabCities: { en: 'Cities', pt: 'Cidades' },
+  tableView: { en: 'Table view', pt: 'Visão da tabela' },
+  allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
   status: { en: 'Status', pt: 'Status' },
   statusAll: { en: 'All countries', pt: 'Todos os países' },
@@ -72,8 +77,8 @@ const dict = {
     pt: 'Detalhamento por cidade',
   },
   cityTableHint: {
-    en: 'Official TSE overseas municipalities (ZZ) in the selected country',
-    pt: 'Municípios oficiais do TSE no exterior (ZZ) no país selecionado',
+    en: 'Official TSE overseas municipalities (ZZ); finer voting cities where a municipality covers several places',
+    pt: 'Municípios oficiais do TSE no exterior (ZZ); cidades de votação mais finas quando um município cobre vários locais',
   },
   locationTableHint: {
     en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular municipalities; other TSE municipalities listed as-is.',
@@ -93,8 +98,8 @@ const dict = {
   cities: { en: 'cities', pt: 'cidades' },
   locations: { en: 'locations', pt: 'locais' },
   cityEmpty: {
-    en: 'No TSE city tallies for this country yet.',
-    pt: 'Ainda não há apuração por cidade do TSE para este país.',
+    en: 'No cities match these filters.',
+    pt: 'Nenhuma cidade com esses filtros.',
   },
   cityLoading: {
     en: 'Loading voting-city breakdown from TSE ballot boxes…',

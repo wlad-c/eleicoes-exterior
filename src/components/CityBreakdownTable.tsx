@@ -1,5 +1,11 @@
 import { useMemo } from 'react'
 import {
+  cityBolsonaroChange,
+  cityLulaChange,
+  citySwingToLula,
+  type CityTableRow,
+} from '../lib/cityRows'
+import {
   cityDisplayName,
   countryName,
   fmtCoverage,
@@ -8,30 +14,35 @@ import {
   fmtShare,
 } from '../lib/format'
 import { t } from '../lib/i18n'
-import type { CityResult, CountryResult, Lang } from '../types'
+import type { CountryResult, Lang, SortKey } from '../types'
 
 type Props = {
-  country: CountryResult | null
-  rows: CityResult[]
+  rows: CityTableRow[]
+  countries: Map<string, CountryResult>
   lang: Lang
   loading?: boolean
-  /** When true, rows are voting cities (Melbourne…); else TSE municipalities. */
-  isLocationLevel?: boolean
+  showCountry: boolean
   sourceNote?: string | null
+  sortKey: SortKey
+  sortDir: 'asc' | 'desc'
+  onSort: (key: SortKey) => void
+  footerNote?: string | null
 }
 
 export function CityBreakdownTable({
-  country,
   rows,
+  countries,
   lang,
   loading,
-  isLocationLevel,
+  showCountry,
   sourceNote,
+  sortKey,
+  sortDir,
+  onSort,
+  footerNote,
 }: Props) {
-  const sorted = useMemo(
-    () => [...rows].sort((a, b) => b.y2026.totalValid - a.y2026.totalValid),
-    [rows],
-  )
+  const showMunicipality = rows.some((r) => r.level === 'location')
+  const nameColSpan = 1 + (showCountry ? 1 : 0) + (showMunicipality ? 1 : 0)
 
   const totals = useMemo(() => {
     let lula = 0
@@ -43,7 +54,7 @@ export function CityBreakdownTable({
     let has2022 = false
     let counted = 0
     let total = 0
-    for (const c of sorted) {
+    for (const c of rows) {
       lula += c.y2026.lula
       bolsonaro += c.y2026.bolsonaro
       valid += c.y2026.totalValid
@@ -84,15 +95,7 @@ export function CityBreakdownTable({
       swingToLula,
       coverage: total > 0 ? { counted, total } : null,
     }
-  }, [sorted])
-
-  if (!country) {
-    return (
-      <p className="py-8 text-center text-[var(--ink-muted)]">
-        {t('selectCountryPlaceholder', lang)}
-      </p>
-    )
-  }
+  }, [rows])
 
   if (loading) {
     return (
@@ -102,7 +105,7 @@ export function CityBreakdownTable({
     )
   }
 
-  if (sorted.length === 0) {
+  if (rows.length === 0) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
         {t('cityEmpty', lang)}
@@ -110,45 +113,95 @@ export function CityBreakdownTable({
     )
   }
 
+  const arrow = (key: SortKey) =>
+    sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''
+
+  const singleCountry =
+    !showCountry && rows[0] ? countries.get(rows[0].countryId) : null
+
   return (
     <div>
-      {isLocationLevel && sourceNote ? (
+      {sourceNote ? (
         <p className="mb-2 text-xs text-[var(--ink-muted)]">{sourceNote}</p>
       ) : null}
       <div className="table-x-scroll">
         <table className="results-table w-full text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-              <Th align="right">{t('rank', lang)}</Th>
-              <Th hint={isLocationLevel ? t('hintLocation', lang) : t('hintCity', lang)}>
-                {isLocationLevel ? t('location', lang) : t('city', lang)}
+              <Th align="right" hint={t('hintRank', lang)}>
+                {t('rank', lang)}
               </Th>
-              {isLocationLevel ? (
+              <Th
+                onClick={() => onSort('city')}
+                hint={t('hintLocation', lang)}
+              >
+                {t('city', lang)}
+                {arrow('city')}
+              </Th>
+              {showCountry ? (
+                <Th onClick={() => onSort('country')} hint={t('hintCountry', lang)}>
+                  {t('country', lang)}
+                  {arrow('country')}
+                </Th>
+              ) : null}
+              {showMunicipality ? (
                 <Th hint={t('hintMunicipality', lang)}>{t('municipality', lang)}</Th>
               ) : null}
-              <Th align="right" hint={t('hintVotes2026', lang)}>
+              <Th
+                align="right"
+                hint={t('hintVotes2026', lang)}
+                onClick={() => onSort('votes2026')}
+              >
                 {t('votes2026', lang)}
+                {arrow('votes2026')}
               </Th>
-              <Th align="right" hint={t('hintShare2026', lang)}>
-                {t('lula', lang)} 2026
+              <Th
+                align="right"
+                hint={t('hintShare2026', lang)}
+                onClick={() => onSort('lulaPct2026')}
+              >
+                {t('lula', lang)} 2026{arrow('lulaPct2026')}
               </Th>
-              <Th align="right" hint={t('hintShare2026', lang)}>
-                {t('fBolsonaro', lang)} 2026
+              <Th
+                align="right"
+                hint={t('hintShare2026', lang)}
+                onClick={() => onSort('bolsonaroPct2026')}
+              >
+                {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
               </Th>
-              <Th align="right" hint={t('hintShare2022', lang)}>
-                {t('lula', lang)} 2022
+              <Th
+                align="right"
+                hint={t('hintShare2022', lang)}
+                onClick={() => onSort('votes2022')}
+              >
+                {t('lula', lang)} 2022{arrow('votes2022')}
               </Th>
               <Th align="right" hint={t('hintShare2022', lang)}>
                 {t('jBolsonaro', lang)} 2022
               </Th>
-              <Th align="right" hint={t('hintLulaChange', lang)}>
+              <Th
+                align="right"
+                hint={t('hintLulaChange', lang)}
+                onClick={() => onSort('lulaChange')}
+              >
                 {t('lulaChange', lang)}
+                {arrow('lulaChange')}
               </Th>
-              <Th align="right" hint={t('hintBolsonaroChange', lang)}>
+              <Th
+                align="right"
+                hint={t('hintBolsonaroChange', lang)}
+                onClick={() => onSort('bolsonaroChange')}
+              >
                 {t('bolsonaroChange', lang)}
+                {arrow('bolsonaroChange')}
               </Th>
-              <Th align="right" hint={t('hintSwingToLula', lang)}>
+              <Th
+                align="right"
+                hint={t('hintSwingToLula', lang)}
+                onClick={() => onSort('swingToLula')}
+              >
                 {t('swingToLula', lang)}
+                {arrow('swingToLula')}
               </Th>
               <Th align="right" hint={t('hintSections', lang)}>
                 {t('notes', lang)}
@@ -156,18 +209,11 @@ export function CityBreakdownTable({
             </tr>
           </thead>
           <tbody>
-            {sorted.map((c, index) => {
-              const swing =
-                c.swing != null
-                  ? c.swing.lulaPp - c.swing.bolsonaroPp
-                  : c.y2022 && c.y2026
-                    ? c.y2026.lulaPct -
-                      c.y2022.lulaPct -
-                      (c.y2026.bolsonaroPct - c.y2022.bolsonaroPct)
-                    : null
+            {rows.map((c, index) => {
+              const parent = countries.get(c.countryId)
               return (
                 <tr
-                  key={c.code}
+                  key={`${c.countryId}-${c.code}`}
                   className="border-b border-[var(--line-soft)] hover:bg-[var(--chip-soft)]"
                 >
                   <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
@@ -176,9 +222,16 @@ export function CityBreakdownTable({
                   <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
                     {cityDisplayName(c.name)}
                   </td>
-                  {isLocationLevel ? (
+                  {showCountry ? (
+                    <td className="px-2 py-2.5 text-[var(--ink)]">
+                      {parent ? countryName(parent, lang) : c.countryId}
+                    </td>
+                  ) : null}
+                  {showMunicipality ? (
                     <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                      {c.municipality ? cityDisplayName(c.municipality) : '—'}
+                      {c.level === 'location' && c.municipality
+                        ? cityDisplayName(c.municipality)
+                        : '—'}
                     </td>
                   ) : null}
                   <td className="px-2 py-2.5 text-right tabular-nums">
@@ -197,25 +250,13 @@ export function CityBreakdownTable({
                     {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang)}
                   </td>
                   <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(
-                      c.swing?.lulaPp ??
-                        (c.y2022 && c.y2026
-                          ? c.y2026.lulaPct - c.y2022.lulaPct
-                          : null),
-                      lang,
-                    )}
+                    {fmtPp(cityLulaChange(c), lang)}
                   </td>
                   <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(
-                      c.swing?.bolsonaroPp ??
-                        (c.y2022 && c.y2026
-                          ? c.y2026.bolsonaroPct - c.y2022.bolsonaroPct
-                          : null),
-                      lang,
-                    )}
+                    {fmtPp(cityBolsonaroChange(c), lang)}
                   </td>
                   <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(swing, lang)}
+                    {fmtPp(citySwingToLula(c), lang)}
                   </td>
                   <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                     {fmtCoverage(c.coverage)}
@@ -229,12 +270,13 @@ export function CityBreakdownTable({
               <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                 —
               </td>
-              <td className="px-2 py-2.5 text-[var(--ink)]" colSpan={isLocationLevel ? 2 : 1}>
+              <td className="px-2 py-2.5 text-[var(--ink)]" colSpan={nameColSpan}>
                 {t('tableTotal', lang)}
                 <span className="ml-2 font-normal text-[var(--ink-muted)]">
-                  {sorted.length}{' '}
-                  {isLocationLevel ? t('locations', lang) : t('cities', lang)} ·{' '}
-                  {countryName(country, lang)}
+                  {rows.length} {t('cities', lang)}
+                  {singleCountry
+                    ? ` · ${countryName(singleCountry, lang)}`
+                    : null}
                 </span>
               </td>
               <td className="px-2 py-2.5 text-right tabular-nums">
@@ -269,7 +311,7 @@ export function CityBreakdownTable({
         </table>
       </div>
       <p className="mt-2 px-1 text-xs text-[var(--ink-muted)]">
-        {t('cityNo2022Footnote', lang)}
+        {footerNote ?? t('cityNo2022Footnote', lang)}
       </p>
     </div>
   )
@@ -278,15 +320,20 @@ export function CityBreakdownTable({
 function Th({
   children,
   hint,
+  onClick,
   align = 'left',
 }: {
   children: React.ReactNode
   hint?: string
+  onClick?: () => void
   align?: 'left' | 'right'
 }) {
   return (
     <th
-      className={`px-2 py-2.5 font-medium ${align === 'right' ? 'text-right' : 'text-left'}`}
+      className={`px-2 py-2.5 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
+        onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
+      }`}
+      onClick={onClick}
     >
       <span className="block text-[11px] font-semibold uppercase tracking-wide">
         {children}

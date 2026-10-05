@@ -4,6 +4,11 @@ import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
+import {
+  cityCountForCountry,
+  compareCityRows,
+  taggedBreakdownRows,
+} from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
 import {
   countryHasLocationMap,
@@ -59,7 +64,8 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
-  const [cityCountryId, setCityCountryId] = useState('')
+  const [tableView, setTableView] = useState<'countries' | 'cities'>('countries')
+  const [cityCountryId, setCityCountryId] = useState('all')
   const [liveLocationRows, setLiveLocationRows] = useState<{
     countryId: string
     rows: CityResult[]
@@ -134,7 +140,17 @@ export default function App() {
     if (key === sortKey) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
     else {
       setSortKey(key)
-      setSortDir(key === 'country' || key === 'region' ? 'asc' : 'desc')
+      setSortDir(
+        key === 'country' || key === 'region' || key === 'city' ? 'asc' : 'desc',
+      )
+    }
+  }
+
+  function switchTableView(next: 'countries' | 'cities') {
+    setTableView(next)
+    if (next === 'countries' && sortKey === 'city') {
+      setSortKey('votes2026')
+      setSortDir('desc')
     }
   }
 
@@ -166,26 +182,21 @@ export default function App() {
     [data.countries, lang],
   )
 
-  // If the chosen id disappears after a live refresh, fall back gracefully.
-  const effectiveCityCountryId = cityCountries.some((c) => c.id === cityCountryId)
-    ? cityCountryId
-    : ''
+  // If the chosen id disappears after a live refresh, fall back to any country.
+  const effectiveCityCountryId =
+    cityCountryId === 'all' || cityCountries.some((c) => c.id === cityCountryId)
+      ? cityCountryId
+      : 'all'
 
-  const selectedCityCountry = useMemo(
-    () => cityCountries.find((c) => c.id === effectiveCityCountryId) ?? null,
-    [cityCountries, effectiveCityCountryId],
+  const countryById = useMemo(
+    () => new Map(data.countries.map((c) => [c.id, c])),
+    [data.countries],
   )
-
-  const seedLocationRows = selectedCityCountry?.locations ?? null
-  const locationRows =
-    liveLocationRows?.countryId === effectiveCityCountryId
-      ? liveLocationRows.rows
-      : seedLocationRows
 
   // Voting-city split (e.g. Melbourne/Brisbane) from TSE BUs when mapped.
   useEffect(() => {
     const id = effectiveCityCountryId
-    if (!id || !countryHasLocationMap(id)) return
+    if (!id || id === 'all' || !countryHasLocationMap(id)) return
     let cancelled = false
     void (async () => {
       setLocationLoading(true)
@@ -205,28 +216,67 @@ export default function App() {
     }
   }, [effectiveCityCountryId])
 
-  // Prefer voting-city rows; keep TSE municipalities that were not split.
-  const breakdownRows = useMemo(() => {
-    const locs = locationRows?.length
-      ? locationRows
-      : selectedCityCountry?.locations?.length
-        ? selectedCityCountry.locations
+  const citySourceCountries = useMemo(() => {
+    if (effectiveCityCountryId !== 'all') {
+      const c = data.countries.find((x) => x.id === effectiveCityCountryId)
+      return c ? [c] : []
+    }
+    return data.countries.filter((c) => {
+      if ((c.cities?.length ?? 0) === 0 && (c.locations?.length ?? 0) === 0) {
+        return false
+      }
+      if (statusFilter === 'reported' && c.status !== 'reported') return false
+      if (statusFilter === 'pending' && c.status !== 'pending') return false
+      if (region !== 'all' && c.region !== region) return false
+      return true
+    })
+  }, [data.countries, statusFilter, region, effectiveCityCountryId])
+
+  const filteredCityRows = useMemo(() => {
+    const live =
+      liveLocationRows?.countryId && liveLocationRows.countryId !== 'all'
+        ? liveLocationRows
         : null
-    if (!locs?.length) return selectedCityCountry?.cities ?? []
-    const covered = new Set(
-      locs.map((l) => (l.municipality || '').toUpperCase()),
+    const rows = citySourceCountries.flatMap((c) =>
+      taggedBreakdownRows(
+        c,
+        live?.countryId === c.id ? live.rows : null,
+      ),
     )
-    const extras = (selectedCityCountry?.cities ?? [])
-      .filter((c) => !covered.has(c.name.toUpperCase()))
-      .map((c) => ({ ...c, level: 'municipality' as const }))
-    return [...locs, ...extras].sort(
-      (a, b) => b.y2026.totalValid - a.y2026.totalValid,
+    const q = query.trim().toLowerCase()
+    if (!q) return rows
+    return rows.filter((r) => {
+      const parent = countryById.get(r.countryId)
+      return (
+        r.name.toLowerCase().includes(q) ||
+        (r.municipality || '').toLowerCase().includes(q) ||
+        Boolean(
+          parent &&
+            (parent.countryEn.toLowerCase().includes(q) ||
+              parent.countryPt.toLowerCase().includes(q) ||
+              parent.iso3.toLowerCase().includes(q)),
+        )
+      )
+    })
+  }, [citySourceCountries, liveLocationRows, query, countryById])
+
+  const sortedCities = useMemo(() => {
+    const rows = [...filteredCityRows]
+    const dir = sortDir === 'asc' ? 1 : -1
+    rows.sort(
+      (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
     )
-  }, [locationRows, selectedCityCountry])
-  const isLocationLevel = breakdownRows.some((r) => r.level === 'location')
-  const locationSource = effectiveCityCountryId
-    ? locationMapSource(effectiveCityCountryId)
-    : null
+    return rows
+  }, [filteredCityRows, sortKey, sortDir, lang, countryById])
+
+  const cityLocationSource =
+    effectiveCityCountryId !== 'all'
+      ? locationMapSource(effectiveCityCountryId)
+      : null
+  const cityLoading =
+    locationLoading &&
+    effectiveCityCountryId !== 'all' &&
+    sortedCities.length === 0
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -427,12 +477,14 @@ export default function App() {
         >
           <div className="filter-row">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              {t('search', lang)}
+              {tableView === 'cities' ? t('searchCity', lang) : t('search', lang)}
               <input
                 className="control mt-1 w-full min-w-0"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={t('search', lang)}
+                placeholder={
+                  tableView === 'cities' ? t('searchCity', lang) : t('search', lang)
+                }
               />
             </label>
             <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
@@ -464,10 +516,50 @@ export default function App() {
                 <option value="pending">{t('statusPending', lang)}</option>
               </select>
             </label>
+            {tableView === 'cities' ? (
+              <label className="filter-field filter-country text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+                {t('selectCountry', lang)}
+                <select
+                  className="control mt-1 w-full min-w-0"
+                  value={effectiveCityCountryId}
+                  onChange={(e) => setCityCountryId(e.target.value)}
+                >
+                  <option value="all">{t('allCountriesFilter', lang)}</option>
+                  {cityCountries.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {countryName(c, lang)} ({cityCountForCountry(c)})
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="brand text-lg font-bold">{t('table', lang)}</h2>
+            <div
+              className="flex gap-1"
+              role="tablist"
+              aria-label={t('tableView', lang)}
+            >
+              <button
+                type="button"
+                role="tab"
+                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-selected={tableView === 'countries'}
+                onClick={() => switchTableView('countries')}
+              >
+                {t('tabCountries', lang)}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-selected={tableView === 'cities'}
+                onClick={() => switchTableView('cities')}
+              >
+                {t('tabCities', lang)}
+              </button>
+            </div>
             <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
               {t('sortBy', lang)}
               <select
@@ -477,10 +569,15 @@ export default function App() {
                   const key = e.target.value as SortKey
                   setSortKey(key)
                   setSortDir(
-                    key === 'country' || key === 'region' ? 'asc' : 'desc',
+                    key === 'country' || key === 'region' || key === 'city'
+                      ? 'asc'
+                      : 'desc',
                   )
                 }}
               >
+                {tableView === 'cities' ? (
+                  <option value="city">{t('city', lang)}</option>
+                ) : null}
                 <option value="votes2026">{t('votes2026', lang)}</option>
                 <option value="votes2022">{t('votes2022', lang)}</option>
                 <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
@@ -493,69 +590,42 @@ export default function App() {
               </select>
             </label>
           </div>
-        </div>
-
-        <ResultsTable
-          rows={sorted}
-          allCountries={data.countries}
-          lang={lang}
-          sortKey={sortKey}
-          sortDir={sortDir}
-          onSort={onSort}
-          highlightId={activeHighlight}
-          onSelect={(id) => onSelect(id)}
-          metric={metric}
-        />
-      </section>
-
-      <section className="panel mb-4 rounded-xl p-4 sm:p-5">
-        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="brand text-lg font-bold">{t('cityTable', lang)}</h2>
-            <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
-              {isLocationLevel
-                ? t('locationTableHint', lang)
-                : t('cityTableHint', lang)}
+          {tableView === 'cities' ? (
+            <p className="text-xs text-[var(--ink-muted)]">
+              {t('locationTableHint', lang)}
             </p>
-          </div>
-          <label className="block w-full min-w-0 text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)] sm:min-w-[240px] sm:w-auto">
-            {t('selectCountry', lang)}
-            <select
-              className="control mt-1 w-full max-w-full"
-              value={effectiveCityCountryId}
-              onChange={(e) => setCityCountryId(e.target.value)}
-              disabled={cityCountries.length === 0}
-            >
-              <option value="">{t('selectCountryPlaceholder', lang)}</option>
-              {cityCountries.map((c) => {
-                const locs = c.locations?.length ? c.locations : null
-                let n = c.cities!.length
-                if (locs?.length) {
-                  const covered = new Set(
-                    locs.map((l) => (l.municipality || '').toUpperCase()),
-                  )
-                  const extras = (c.cities ?? []).filter(
-                    (city) => !covered.has(city.name.toUpperCase()),
-                  ).length
-                  n = locs.length + extras
-                }
-                return (
-                  <option key={c.id} value={c.id}>
-                    {countryName(c, lang)} ({n})
-                  </option>
-                )
-              })}
-            </select>
-          </label>
+          ) : null}
         </div>
-        <CityBreakdownTable
-          country={selectedCityCountry}
-          rows={breakdownRows}
-          lang={lang}
-          loading={locationLoading && !breakdownRows.length}
-          isLocationLevel={isLocationLevel}
-          sourceNote={locationSource ? locationSource[lang] : null}
-        />
+
+        {tableView === 'countries' ? (
+          <ResultsTable
+            rows={sorted}
+            allCountries={data.countries}
+            lang={lang}
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={onSort}
+            highlightId={activeHighlight}
+            onSelect={(id) => onSelect(id)}
+            metric={metric}
+          />
+        ) : (
+          <CityBreakdownTable
+            rows={sortedCities}
+            countries={countryById}
+            lang={lang}
+            loading={cityLoading}
+            showCountry={effectiveCityCountryId === 'all'}
+            sourceNote={
+              cityLocationSource && effectiveCityCountryId !== 'all'
+                ? cityLocationSource[lang]
+                : null
+            }
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={onSort}
+          />
+        )}
       </section>
 
       <footer className="mt-10 space-y-6 border-t border-[var(--line)] pt-6 text-sm text-[var(--ink-muted)]">
@@ -720,5 +790,7 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.swing != null
         ? c.swing.lulaPp - c.swing.bolsonaroPp
         : Number.NaN
+    case 'city':
+      return countryName(c, lang)
   }
 }
