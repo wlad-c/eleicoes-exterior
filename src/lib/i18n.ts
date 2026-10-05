@@ -101,8 +101,8 @@ const dict = {
     pt: 'Carregando detalhamento por cidade a partir dos boletins de urna do TSE…',
   },
   cityNo2022Footnote: {
-    en: '2022 shares, change and swing need place-level 2022 open data; shown as — until that series is wired in.',
-    pt: 'As % de 2022, variação e swing precisam de dados abertos de 2022 por local; ficam como — até essa série ser ligada.',
+    en: '2022 shares use official TSE section totals (votação por seção). Places that did not exist as voting locals in 2022 show — for 2022/change/swing.',
+    pt: 'As % de 2022 usam a votação por seção oficial do TSE. Locais que não existiam como locais de votação em 2022 ficam como — em 2022/variação/swing.',
   },
   hintCity: {
     en: 'TSE ZZ municipality',

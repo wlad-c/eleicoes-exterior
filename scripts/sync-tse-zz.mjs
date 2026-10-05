@@ -30,6 +30,11 @@ const CITY_TO_COUNTRY = JSON.parse(
   readFileSync(join(ROOT, 'src/data/tse-city-map.json'), 'utf8'),
 )
 
+/** TSE ZZ municipality code → 2022 YearResult (from votacao_secao open data). */
+const CITY_2022 = JSON.parse(
+  readFileSync(join(ROOT, 'src/data/tse-city-2022.json'), 'utf8'),
+)
+
 function pad(n, w) {
   return String(n).padStart(w, '0')
 }
@@ -192,13 +197,18 @@ async function main() {
     agg.totalValid += totalValid
     agg.counted += counted
     agg.total += total
+    const y2026 = yearResult(lula, bolsonaro, totalValid)
+    const y2022Raw = CITY_2022[code]
+    const y2022 = y2022Raw
+      ? yearResult(y2022Raw.lula, y2022Raw.bolsonaro, y2022Raw.totalValid)
+      : null
     agg.cities.push({
       code,
       name: city,
       level: 'municipality',
-      y2026: yearResult(lula, bolsonaro, totalValid),
-      y2022: null,
-      swing: null,
+      y2026,
+      y2022,
+      swing: swingOf(y2022, y2026),
       coverage: { counted, total },
     })
     aggregates.set(countryId, agg)

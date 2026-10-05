@@ -16,11 +16,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
 const LOC_MAP_PATH = join(ROOT, 'src/data/tse-location-map.json')
+const LOC_2022_PATH = join(ROOT, 'src/data/tse-location-2022.json')
 
 const HOST = 'https://resultados.tse.jus.br'
 const PLEITO = '3220'
 const UA =
   'eleicoes-exterior/1.0 (+https://github.com/wlad-c/eleicoes-exterior; TSE BU locations)'
+
+const LOC_2022 = JSON.parse(readFileSync(LOC_2022_PATH, 'utf8'))
 
 function pad(n, w) {
   return String(n).padStart(w, '0')
@@ -37,6 +40,86 @@ function yearResult(lula, bolsonaro, totalValid) {
     totalValid,
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
+  }
+}
+
+function swingOf(y2022, y2026) {
+  if (!y2022 || !y2026) return null
+  const lulaPp = round1(y2026.lulaPct - y2022.lulaPct)
+  const bolsonaroPp = round1(y2026.bolsonaroPct - y2022.bolsonaroPct)
+  return {
+    lulaPp,
+    bolsonaroPp,
+    marginPp: round1(lulaPp - bolsonaroPp),
+  }
+}
+
+function fold(s) {
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '')
+}
+
+const LOC_ALIASES = {
+  NAGOIA: 'NAGOYA',
+  NAGOYA: 'NAGOIA',
+  OIZUMI: 'GUNMA',
+  GUNMA: 'OIZUMI',
+}
+
+function matchLocKey(byLoc, locName, claimed) {
+  if (!byLoc) return null
+  if (byLoc[locName] && !claimed.has(fold(locName))) return locName
+  const f = fold(locName)
+  for (const k of Object.keys(byLoc)) {
+    if (fold(k) === f && !claimed.has(fold(k))) return k
+  }
+  const alias = LOC_ALIASES[f]
+  if (alias) {
+    for (const k of Object.keys(byLoc)) {
+      if ((fold(k) === alias || fold(k) === fold(alias)) && !claimed.has(fold(k))) {
+        return k
+      }
+    }
+  }
+  return null
+}
+
+function attachLoc2022(locations) {
+  const claimed = new Map()
+  for (const loc of locations) {
+    const mun = loc.municipalityCode || loc.code?.split('-')[0]
+    if (!claimed.has(mun)) claimed.set(mun, new Set())
+    const key = matchLocKey(LOC_2022[mun], loc.name, claimed.get(mun))
+    if (!key) {
+      loc.y2022 = null
+      loc.swing = null
+      continue
+    }
+    claimed.get(mun).add(fold(key))
+    const raw = LOC_2022[mun][key]
+    loc.y2022 = yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
+    loc.swing = swingOf(loc.y2022, loc.y2026)
+  }
+  for (const loc of locations) {
+    if (loc.y2022) continue
+    const mun = loc.municipalityCode || loc.code?.split('-')[0]
+    if (!claimed.has(mun)) claimed.set(mun, new Set())
+    const byLoc = LOC_2022[mun] || {}
+    const free = Object.keys(byLoc).filter((k) => !claimed.get(mun).has(fold(k)))
+    const unmatched = locations.filter((l) => {
+      const m = l.municipalityCode || l.code?.split('-')[0]
+      return m === mun && !l.y2022
+    })
+    if (free.length === 1 && unmatched.length === 1) {
+      const key = free[0]
+      claimed.get(mun).add(fold(key))
+      const raw = byLoc[key]
+      loc.y2022 = yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
+      loc.swing = swingOf(loc.y2022, loc.y2026)
+    }
   }
 }
 
@@ -169,17 +252,24 @@ async function syncCountry(countryId, cfg) {
 
   const locations = [...aggregates.values()]
     .filter((a) => a.totalValid > 0 || a.counted > 0)
-    .map((a) => ({
-      code: `${a.municipalityCode}-${a.name}`,
-      name: a.name,
-      level: 'location',
-      municipality: a.municipality,
-      y2026: yearResult(a.lula, a.bolsonaro, a.totalValid),
-      y2022: null,
-      swing: null,
-      coverage: a.total > 0 ? { counted: a.counted, total: a.total } : null,
-    }))
+    .map((a) => {
+      const y2026 = yearResult(a.lula, a.bolsonaro, a.totalValid)
+      return {
+        code: `${a.municipalityCode}-${a.name}`,
+        name: a.name,
+        level: 'location',
+        municipality: a.municipality,
+        municipalityCode: a.municipalityCode,
+        y2026,
+        y2022: null,
+        swing: null,
+        coverage: a.total > 0 ? { counted: a.counted, total: a.total } : null,
+      }
+    })
     .sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
+
+  attachLoc2022(locations)
+  for (const loc of locations) delete loc.municipalityCode
 
   return { locations, sectionsOk: ok, principals: principals.length }
 }

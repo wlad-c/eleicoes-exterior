@@ -1,6 +1,21 @@
 import locationMap from '../data/tse-location-map.json'
+import location2022 from '../data/tse-location-2022.json'
 import type { CityResult, Coverage, YearResult } from '../types'
 import { tseBaseUrl } from './tseZzLive'
+
+type Loc2022Map = Record<
+  string,
+  Record<
+    string,
+    {
+      lula: number
+      bolsonaro: number
+      totalValid: number
+      lulaPct: number
+      bolsonaroPct: number
+    }
+  >
+>
 
 const PLEITO = '3220'
 
@@ -31,6 +46,99 @@ function yearResult(lula: number, bolsonaro: number, totalValid: number): YearRe
     totalValid,
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
+  }
+}
+
+function swingOf(y2022: YearResult | null, y2026: YearResult) {
+  if (!y2022) return null
+  const lulaPp = round1(y2026.lulaPct - y2022.lulaPct)
+  const bolsonaroPp = round1(y2026.bolsonaroPct - y2022.bolsonaroPct)
+  return {
+    lulaPp,
+    bolsonaroPp,
+    marginPp: round1(lulaPp - bolsonaroPp),
+  }
+}
+
+function fold(s: string): string {
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '')
+}
+
+const LOC_ALIASES: Record<string, string> = {
+  NAGOIA: 'NAGOYA',
+  NAGOYA: 'NAGOIA',
+  OIZUMI: 'GUNMA',
+  GUNMA: 'OIZUMI',
+}
+
+function matchLocKey(
+  byLoc: Loc2022Map[string] | undefined,
+  locName: string,
+  claimed: Set<string>,
+): string | null {
+  if (!byLoc) return null
+  if (byLoc[locName] && !claimed.has(fold(locName))) return locName
+  const f = fold(locName)
+  for (const k of Object.keys(byLoc)) {
+    if (fold(k) === f && !claimed.has(fold(k))) return k
+  }
+  const alias = LOC_ALIASES[f]
+  if (alias) {
+    for (const k of Object.keys(byLoc)) {
+      if (
+        (fold(k) === alias || fold(k) === fold(alias)) &&
+        !claimed.has(fold(k))
+      ) {
+        return k
+      }
+    }
+  }
+  return null
+}
+
+function attachLoc2022(
+  rows: Array<{
+    municipalityCode: string
+    name: string
+    y2026: YearResult
+    y2022: YearResult | null
+    swing: ReturnType<typeof swingOf>
+  }>,
+) {
+  const claimed = new Map<string, Set<string>>()
+  for (const row of rows) {
+    const mun = row.municipalityCode
+    if (!claimed.has(mun)) claimed.set(mun, new Set())
+    const byLoc = (location2022 as Loc2022Map)[mun]
+    const key = matchLocKey(byLoc, row.name, claimed.get(mun)!)
+    if (!key || !byLoc) {
+      row.y2022 = null
+      row.swing = null
+      continue
+    }
+    claimed.get(mun)!.add(fold(key))
+    const raw = byLoc[key]
+    row.y2022 = yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
+    row.swing = swingOf(row.y2022, row.y2026)
+  }
+  for (const row of rows) {
+    if (row.y2022) continue
+    const mun = row.municipalityCode
+    if (!claimed.has(mun)) claimed.set(mun, new Set())
+    const byLoc = (location2022 as Loc2022Map)[mun] || {}
+    const free = Object.keys(byLoc).filter((k) => !claimed.get(mun)!.has(fold(k)))
+    const unmatched = rows.filter((r) => r.municipalityCode === mun && !r.y2022)
+    if (free.length === 1 && unmatched.length === 1) {
+      const key = free[0]
+      claimed.get(mun)!.add(fold(key))
+      const raw = byLoc[key]
+      row.y2022 = yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
+      row.swing = swingOf(row.y2022, row.y2026)
+    }
   }
 }
 
@@ -252,22 +360,37 @@ export async function fetchCountryLocations(
     }
   })
 
-  const rows: CityResult[] = [...aggregates.values()]
+  const staged = [...aggregates.values()]
     .filter((a) => a.totalValid > 0 || a.counted > 0)
     .map((a) => {
-      const coverage: Coverage | null =
-        a.total > 0 ? { counted: a.counted, total: a.total } : null
+      const y2026 = yearResult(a.lula, a.bolsonaro, a.totalValid)
       return {
-        code: `${a.municipalityCode}-${a.name}`,
-        name: a.name,
+        municipalityCode: a.municipalityCode,
         municipality: a.municipality,
-        level: 'location' as const,
-        y2026: yearResult(a.lula, a.bolsonaro, a.totalValid),
-        y2022: null,
-        swing: null,
-        coverage,
+        name: a.name,
+        y2026,
+        y2022: null as YearResult | null,
+        swing: null as ReturnType<typeof swingOf>,
+        coverage:
+          a.total > 0
+            ? ({ counted: a.counted, total: a.total } satisfies Coverage)
+            : null,
       }
     })
+
+  attachLoc2022(staged)
+
+  const rows: CityResult[] = staged
+    .map((a) => ({
+      code: `${a.municipalityCode}-${a.name}`,
+      name: a.name,
+      municipality: a.municipality,
+      level: 'location' as const,
+      y2026: a.y2026,
+      y2022: a.y2022,
+      swing: a.swing,
+      coverage: a.coverage,
+    }))
     .sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
 
   return rows
