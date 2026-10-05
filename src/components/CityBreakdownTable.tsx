@@ -227,19 +227,21 @@ export function CityBreakdownTable({
                     {index + 1}
                   </td>
                   <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
-                    <span className="country-flag-label">
-                      {parent ? (
-                        <CountryFlag
-                          iso3={parent.iso3}
-                          title={countryName(parent, lang)}
-                        />
-                      ) : null}
-                      <span>{cityDisplayName(c.name)}</span>
-                    </span>
+                    {cityDisplayName(c.name)}
                   </td>
                   {showCountry ? (
                     <td className="px-2 py-2.5 text-[var(--ink)]">
-                      {parent ? countryName(parent, lang) : c.countryId}
+                      <span className="country-flag-label">
+                        {parent ? (
+                          <CountryFlag
+                            iso3={parent.iso3}
+                            title={countryName(parent, lang)}
+                          />
+                        ) : null}
+                        <span>
+                          {parent ? countryName(parent, lang) : c.countryId}
+                        </span>
+                      </span>
                     </td>
                   ) : null}
                   {showMunicipality ? (
