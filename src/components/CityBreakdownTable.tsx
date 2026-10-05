@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { CountryFlag } from './CountryFlag'
 import {
   cityBolsonaroChange,
   cityLulaChange,
@@ -220,7 +221,15 @@ export function CityBreakdownTable({
                     {index + 1}
                   </td>
                   <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
-                    {cityDisplayName(c.name)}
+                    <span className="country-flag-label">
+                      {parent ? (
+                        <CountryFlag
+                          iso3={parent.iso3}
+                          title={countryName(parent, lang)}
+                        />
+                      ) : null}
+                      <span>{cityDisplayName(c.name)}</span>
+                    </span>
                   </td>
                   {showCountry ? (
                     <td className="px-2 py-2.5 text-[var(--ink)]">

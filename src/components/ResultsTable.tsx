@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { CountryFlag } from './CountryFlag'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
   aggregateRows,
@@ -345,7 +346,13 @@ export function ResultsTable({
                       {index + 1}
                     </td>
                     <td className="sticky-col sticky-col-country px-2 py-2.5 font-medium text-[var(--ink)]">
-                      {countryName(c, lang)}
+                      <span className="country-flag-label">
+                        <CountryFlag
+                          iso3={c.iso3}
+                          title={countryName(c, lang)}
+                        />
+                        <span>{countryName(c, lang)}</span>
+                      </span>
                       {c.notes?.startsWith('DISPUTED') ? (
                         <span
                           className="mt-0.5 block text-[10px] font-normal leading-snug text-[var(--ink-muted)]"
