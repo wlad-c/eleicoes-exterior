@@ -226,11 +226,14 @@ export function CityBreakdownTable({
                   <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                     {index + 1}
                   </td>
-                  <td className="px-2 py-2.5 font-medium text-[var(--ink)]">
+                  <td
+                    className="cell-truncate cell-truncate-lg px-2 py-2.5 font-medium text-[var(--ink)]"
+                    title={cityDisplayName(c.name)}
+                  >
                     {cityDisplayName(c.name)}
                   </td>
                   {showCountry ? (
-                    <td className="px-2 py-2.5 text-[var(--ink)]">
+                    <td className="cell-truncate cell-truncate-lg px-2 py-2.5 text-[var(--ink)]">
                       <span className="country-flag-label">
                         {parent ? (
                           <CountryFlag
@@ -238,14 +241,26 @@ export function CityBreakdownTable({
                             title={countryName(parent, lang)}
                           />
                         ) : null}
-                        <span>
+                        <span
+                          className="cell-truncate-text"
+                          title={
+                            parent ? countryName(parent, lang) : c.countryId
+                          }
+                        >
                           {parent ? countryName(parent, lang) : c.countryId}
                         </span>
                       </span>
                     </td>
                   ) : null}
                   {showMunicipality ? (
-                    <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                    <td
+                      className="cell-truncate px-2 py-2.5 text-[var(--ink-muted)]"
+                      title={
+                        c.level === 'location' && c.municipality
+                          ? cityDisplayName(c.municipality)
+                          : undefined
+                      }
+                    >
                       {c.level === 'location' && c.municipality
                         ? cityDisplayName(c.municipality)
                         : '—'}

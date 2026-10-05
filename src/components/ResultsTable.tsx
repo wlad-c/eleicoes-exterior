@@ -346,24 +346,32 @@ export function ResultsTable({
                     <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                       {index + 1}
                     </td>
-                    <td className="sticky-col sticky-col-country px-2 py-2.5 font-medium text-[var(--ink)]">
+                    <td className="sticky-col sticky-col-country cell-truncate cell-truncate-lg px-2 py-2.5 font-medium text-[var(--ink)]">
                       <span className="country-flag-label">
                         <CountryFlag
                           iso3={c.iso3}
                           title={countryName(c, lang)}
                         />
-                        <span>{countryName(c, lang)}</span>
+                        <span
+                          className="cell-truncate-text"
+                          title={countryName(c, lang)}
+                        >
+                          {countryName(c, lang)}
+                        </span>
                       </span>
                       {c.notes?.startsWith('DISPUTED') ? (
                         <span
-                          className="mt-0.5 block text-[10px] font-normal leading-snug text-[var(--ink-muted)]"
+                          className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]"
                           title={c.notes}
                         >
                           {t('disputedShort', lang)}
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                    <td
+                      className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                      title={regionLabel(c.region, lang)}
+                    >
                       {regionLabel(c.region, lang)}
                     </td>
                     <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink)]">

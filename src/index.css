@@ -387,7 +387,35 @@ html.dark .sticky-col-country {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  max-width: 100%;
   min-width: 0;
+}
+
+/* Name-like table cells: ellipsis instead of wrapping */
+.cell-truncate {
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell-truncate-lg {
+  max-width: 13rem;
+}
+
+.cell-truncate-sm {
+  max-width: 8.5rem;
+}
+
+.country-flag-label .cell-truncate-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sticky-col-country.cell-truncate {
+  max-width: 12.5rem;
 }
 
 .lang-btn[aria-pressed='true'],
