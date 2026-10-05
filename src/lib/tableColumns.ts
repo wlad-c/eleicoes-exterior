@@ -4,6 +4,7 @@ import type { DictKey } from './i18n'
 export type TableMetricCol =
   | 'region'
   | 'votes2026'
+  | 'votes2022'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
@@ -17,6 +18,7 @@ export type TableMetricCol =
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'region',
   'votes2026',
+  'votes2022',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
@@ -28,7 +30,7 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'sections',
 ]
 
-/** Default: hide region, 2022 share columns, swing to Bolsonaro, and sections. */
+/** Default: hide region, 2022 vote/share columns, swing to Bolsonaro, and sections. */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
   'lulaPct2026',
@@ -41,6 +43,7 @@ export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
 export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   region: 'region',
   votes2026: 'votes2026',
+  votes2022: 'votes2022',
   lulaPct2026: 'colLula2026',
   bolsonaroPct2026: 'colFBolsonaro2026',
   lulaPct2022: 'colLula2022',
