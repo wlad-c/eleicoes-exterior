@@ -752,8 +752,14 @@ function HeatTd({
   const active = col === heatCol
   return (
     <td
-      className="px-2 py-2.5 text-right tabular-nums"
-      style={active && heat ? { background: heat } : undefined}
+      className={`px-2 py-2.5 text-right tabular-nums${
+        active && heat ? ' heat-cell' : ''
+      }`}
+      style={
+        active && heat
+          ? ({ ['--heat-bg']: heat } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
     </td>
