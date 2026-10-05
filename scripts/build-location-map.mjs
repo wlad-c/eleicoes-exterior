@@ -47,6 +47,8 @@ function cleanLocalName(raw) {
   // "SUZUKA (PROVÍNCIA DE MIE)" → "SUZUKA"
   s = s.replace(/\s*\([^)]*\)\s*/g, ' ').trim()
   s = s.replace(/\s+/g, ' ')
+  // "LISBOA 2" / "PORTO 2" are extra polling rooms, not other cities
+  s = s.replace(/\s+\d+$/, '').trim()
   return s || null
 }
 
@@ -156,7 +158,16 @@ async function main() {
       if (!locSecs.has(loc)) locSecs.set(loc, [])
       locSecs.get(loc).push(sec)
     }
-    if (locSecs.size < 2) continue // not a broad municipality
+    // "LISBOA" + "LISBOA 2" is two rooms in the same city, not a split.
+    const collapsed = new Map()
+    for (const [loc, secs] of locSecs) {
+      const base = String(loc)
+        .replace(/\s+\d+$/, '')
+        .trim()
+      if (!collapsed.has(base)) collapsed.set(base, [])
+      collapsed.get(base).push(...secs)
+    }
+    if (collapsed.size < 2) continue // not a broad municipality
 
     if (!byCountry.has(countryId)) {
       byCountry.set(countryId, {
@@ -168,10 +179,10 @@ async function main() {
       })
     }
     const locations = {}
-    for (const [loc, secs] of [...locSecs.entries()].sort((a, b) =>
+    for (const [loc, secs] of [...collapsed.entries()].sort((a, b) =>
       a[0].localeCompare(b[0], 'pt'),
     )) {
-      locations[loc] = secs.sort()
+      locations[loc] = [...new Set(secs)].sort()
     }
     byCountry.get(countryId).municipalities[mun] = {
       name: munNames.get(mun) || mun,
