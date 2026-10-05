@@ -4,27 +4,11 @@ import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
-import {
-  cityCountForCountry,
-  compareCityRows,
-  taggedBreakdownRows,
-} from './lib/cityRows'
+import { compareCityRows, taggedBreakdownRows } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
-import {
-  countryHasLocationMap,
-  fetchCountryLocations,
-  locationMapSource,
-} from './lib/tseBuLocations'
 import { useTheme } from './lib/theme'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
-import type {
-  CityResult,
-  CountryResult,
-  Lang,
-  MapMetric,
-  ResultsData,
-  SortKey,
-} from './types'
+import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
 import { HEATMAP_METRICS } from './types'
 
 const seed = raw as ResultsData
@@ -65,12 +49,6 @@ export default function App() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const [tableView, setTableView] = useState<'countries' | 'cities'>('countries')
-  const [cityCountryId, setCityCountryId] = useState('all')
-  const [liveLocationRows, setLiveLocationRows] = useState<{
-    countryId: string
-    rows: CityResult[]
-  } | null>(null)
-  const [locationLoading, setLocationLoading] = useState(false)
   const tableChromeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -157,10 +135,6 @@ export default function App() {
   function onSelect(id: string | null) {
     setHighlightId(id)
     if (id) {
-      const hasCities = data.countries.some(
-        (c) => c.id === id && (c.cities?.length ?? 0) > 0,
-      )
-      if (hasCities) setCityCountryId(id)
       document.getElementById(`row-${id}`)?.scrollIntoView({
         block: 'nearest',
         behavior: 'smooth',
@@ -168,59 +142,12 @@ export default function App() {
     }
   }
 
-  const cityCountries = useMemo(
-    () =>
-      data.countries
-        .filter((c) => (c.cities?.length ?? 0) > 0)
-        .sort((a, b) =>
-          countryName(a, lang).localeCompare(
-            countryName(b, lang),
-            lang === 'pt' ? 'pt' : 'en',
-            { sensitivity: 'base' },
-          ),
-        ),
-    [data.countries, lang],
-  )
-
-  // If the chosen id disappears after a live refresh, fall back to any country.
-  const effectiveCityCountryId =
-    cityCountryId === 'all' || cityCountries.some((c) => c.id === cityCountryId)
-      ? cityCountryId
-      : 'all'
-
   const countryById = useMemo(
     () => new Map(data.countries.map((c) => [c.id, c])),
     [data.countries],
   )
 
-  // Voting-city split (e.g. Melbourne/Brisbane) from TSE BUs when mapped.
-  useEffect(() => {
-    const id = effectiveCityCountryId
-    if (!id || id === 'all' || !countryHasLocationMap(id)) return
-    let cancelled = false
-    void (async () => {
-      setLocationLoading(true)
-      try {
-        const rows = await fetchCountryLocations(id)
-        if (!cancelled && rows?.length) {
-          setLiveLocationRows({ countryId: id, rows })
-        }
-      } catch {
-        /* keep seed locations */
-      } finally {
-        if (!cancelled) setLocationLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [effectiveCityCountryId])
-
   const citySourceCountries = useMemo(() => {
-    if (effectiveCityCountryId !== 'all') {
-      const c = data.countries.find((x) => x.id === effectiveCityCountryId)
-      return c ? [c] : []
-    }
     return data.countries.filter((c) => {
       if ((c.cities?.length ?? 0) === 0 && (c.locations?.length ?? 0) === 0) {
         return false
@@ -230,19 +157,10 @@ export default function App() {
       if (region !== 'all' && c.region !== region) return false
       return true
     })
-  }, [data.countries, statusFilter, region, effectiveCityCountryId])
+  }, [data.countries, statusFilter, region])
 
   const filteredCityRows = useMemo(() => {
-    const live =
-      liveLocationRows?.countryId && liveLocationRows.countryId !== 'all'
-        ? liveLocationRows
-        : null
-    const rows = citySourceCountries.flatMap((c) =>
-      taggedBreakdownRows(
-        c,
-        live?.countryId === c.id ? live.rows : null,
-      ),
-    )
+    const rows = citySourceCountries.flatMap((c) => taggedBreakdownRows(c))
     const q = query.trim().toLowerCase()
     if (!q) return rows
     return rows.filter((r) => {
@@ -258,7 +176,7 @@ export default function App() {
         )
       )
     })
-  }, [citySourceCountries, liveLocationRows, query, countryById])
+  }, [citySourceCountries, query, countryById])
 
   const sortedCities = useMemo(() => {
     const rows = [...filteredCityRows]
@@ -268,15 +186,6 @@ export default function App() {
     )
     return rows
   }, [filteredCityRows, sortKey, sortDir, lang, countryById])
-
-  const cityLocationSource =
-    effectiveCityCountryId !== 'all'
-      ? locationMapSource(effectiveCityCountryId)
-      : null
-  const cityLoading =
-    locationLoading &&
-    effectiveCityCountryId !== 'all' &&
-    sortedCities.length === 0
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -477,7 +386,9 @@ export default function App() {
         >
           <div className="filter-row">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              {tableView === 'cities' ? t('searchCity', lang) : t('search', lang)}
+              <span className="filter-label">
+                {tableView === 'cities' ? t('searchCity', lang) : t('search', lang)}
+              </span>
               <input
                 className="control mt-1 w-full min-w-0"
                 value={query}
@@ -488,7 +399,7 @@ export default function App() {
               />
             </label>
             <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              {t('region', lang)}
+              <span className="filter-label">{t('region', lang)}</span>
               <select
                 className="control mt-1 w-full min-w-0"
                 value={region}
@@ -503,7 +414,7 @@ export default function App() {
               </select>
             </label>
             <label className="filter-field filter-pending text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              {t('status', lang)}
+              <span className="filter-label">{t('status', lang)}</span>
               <select
                 className="control mt-1 w-full min-w-0"
                 value={statusFilter}
@@ -516,23 +427,6 @@ export default function App() {
                 <option value="pending">{t('statusPending', lang)}</option>
               </select>
             </label>
-            {tableView === 'cities' ? (
-              <label className="filter-field filter-country text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-                {t('selectCountry', lang)}
-                <select
-                  className="control mt-1 w-full min-w-0"
-                  value={effectiveCityCountryId}
-                  onChange={(e) => setCityCountryId(e.target.value)}
-                >
-                  <option value="all">{t('allCountriesFilter', lang)}</option>
-                  {cityCountries.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {countryName(c, lang)} ({cityCountForCountry(c)})
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -590,11 +484,6 @@ export default function App() {
               </select>
             </label>
           </div>
-          {tableView === 'cities' ? (
-            <p className="text-xs text-[var(--ink-muted)]">
-              {t('locationTableHint', lang)}
-            </p>
-          ) : null}
         </div>
 
         {tableView === 'countries' ? (
@@ -614,13 +503,8 @@ export default function App() {
             rows={sortedCities}
             countries={countryById}
             lang={lang}
-            loading={cityLoading}
-            showCountry={effectiveCityCountryId === 'all'}
-            sourceNote={
-              cityLocationSource && effectiveCityCountryId !== 'all'
-                ? cityLocationSource[lang]
-                : null
-            }
+            showCountry
+            sourceNote={t('locationTableHint', lang)}
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={onSort}

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { CountryFlag } from './CountryFlag'
+import { SortableTh } from './SortableTh'
 import {
   cityBolsonaroChange,
   cityLulaChange,
@@ -129,84 +130,89 @@ export function CityBreakdownTable({
         <table className="results-table w-full text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-              <Th align="right" hint={t('hintRank', lang)}>
+              <SortableTh align="right" hint={t('hintRank', lang)}>
                 {t('rank', lang)}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 onClick={() => onSort('city')}
-                hint={t('hintLocation', lang)}
+                hint={t('hintCountry', lang)}
               >
                 {t('city', lang)}
                 {arrow('city')}
-              </Th>
+              </SortableTh>
               {showCountry ? (
-                <Th onClick={() => onSort('country')} hint={t('hintCountry', lang)}>
+                <SortableTh
+                  onClick={() => onSort('country')}
+                  hint={t('hintCountry', lang)}
+                >
                   {t('country', lang)}
                   {arrow('country')}
-                </Th>
+                </SortableTh>
               ) : null}
               {showMunicipality ? (
-                <Th hint={t('hintMunicipality', lang)}>{t('municipality', lang)}</Th>
+                <SortableTh hint={t('hintMunicipality', lang)}>
+                  {t('municipality', lang)}
+                </SortableTh>
               ) : null}
-              <Th
+              <SortableTh
                 align="right"
                 hint={t('hintVotes2026', lang)}
                 onClick={() => onSort('votes2026')}
               >
                 {t('votes2026', lang)}
                 {arrow('votes2026')}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintShare2026', lang)}
                 onClick={() => onSort('lulaPct2026')}
               >
                 {t('lula', lang)} 2026{arrow('lulaPct2026')}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintShare2026', lang)}
                 onClick={() => onSort('bolsonaroPct2026')}
               >
                 {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintShare2022', lang)}
                 onClick={() => onSort('votes2022')}
               >
                 {t('lula', lang)} 2022{arrow('votes2022')}
-              </Th>
-              <Th align="right" hint={t('hintShare2022', lang)}>
+              </SortableTh>
+              <SortableTh align="right" hint={t('hintShare2022', lang)}>
                 {t('jBolsonaro', lang)} 2022
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintLulaChange', lang)}
                 onClick={() => onSort('lulaChange')}
               >
                 {t('lulaChange', lang)}
                 {arrow('lulaChange')}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintBolsonaroChange', lang)}
                 onClick={() => onSort('bolsonaroChange')}
               >
                 {t('bolsonaroChange', lang)}
                 {arrow('bolsonaroChange')}
-              </Th>
-              <Th
+              </SortableTh>
+              <SortableTh
                 align="right"
                 hint={t('hintSwingToLula', lang)}
                 onClick={() => onSort('swingToLula')}
               >
                 {t('swingToLula', lang)}
                 {arrow('swingToLula')}
-              </Th>
-              <Th align="right" hint={t('hintSections', lang)}>
+              </SortableTh>
+              <SortableTh align="right" hint={t('hintSections', lang)}>
                 {t('notes', lang)}
-              </Th>
+              </SortableTh>
             </tr>
           </thead>
           <tbody>
@@ -326,32 +332,3 @@ export function CityBreakdownTable({
   )
 }
 
-function Th({
-  children,
-  hint,
-  onClick,
-  align = 'left',
-}: {
-  children: React.ReactNode
-  hint?: string
-  onClick?: () => void
-  align?: 'left' | 'right'
-}) {
-  return (
-    <th
-      className={`px-2 py-2.5 font-medium ${align === 'right' ? 'text-right' : 'text-left'} ${
-        onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
-      }`}
-      onClick={onClick}
-    >
-      <span className="block text-[11px] font-semibold uppercase tracking-wide">
-        {children}
-      </span>
-      {hint ? (
-        <span className="th-hint mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
-          {hint}
-        </span>
-      ) : null}
-    </th>
-  )
-}

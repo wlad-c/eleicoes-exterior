@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CountryFlag } from './CountryFlag'
+import { SortableTh } from './SortableTh'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
   aggregateRows,
@@ -157,61 +158,61 @@ export function ResultsTable({
 
   const headerRow = (
     <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-      <Th align="right" hint={t('hintRank', lang)} stickyCol="rank">
+      <SortableTh align="right" hint={t('hintRank', lang)} stickyCol="rank">
         {t('rank', lang)}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('country')}
         hint={t('hintCountry', lang)}
         stickyCol="country"
       >
         {t('country', lang)}
         {arrow('country')}
-      </Th>
-      <Th onClick={() => onSort('region')} hint={t('hintRegion', lang)}>
+      </SortableTh>
+      <SortableTh onClick={() => onSort('region')} hint={t('hintRegion', lang)}>
         {t('region', lang)}
         {arrow('region')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('votes2026')}
         align="right"
         hint={t('hintVotes2026', lang)}
       >
         {t('votes2026', lang)}
         {arrow('votes2026')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('lulaPct2026')}
         align="right"
         heated={heatCol === 'lula2026'}
         hint={t('hintShare2026', lang)}
       >
         {t('lula', lang)} 2026{arrow('lulaPct2026')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('bolsonaroPct2026')}
         align="right"
         heated={heatCol === 'bolso2026'}
         hint={t('hintShare2026', lang)}
       >
         {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('votes2022')}
         align="right"
         heated={heatCol === 'lula2022'}
         hint={t('hintShare2022', lang)}
       >
         {t('lula', lang)} 2022{arrow('votes2022')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         align="right"
         heated={heatCol === 'bolso2022'}
         hint={t('hintShare2022', lang)}
       >
         {t('jBolsonaro', lang)} 2022
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('lulaChange')}
         align="right"
         heated={heatCol === 'lulaChange'}
@@ -219,8 +220,8 @@ export function ResultsTable({
       >
         {t('lulaChange', lang)}
         {arrow('lulaChange')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('bolsonaroChange')}
         align="right"
         heated={heatCol === 'bolsonaroChange'}
@@ -228,8 +229,8 @@ export function ResultsTable({
       >
         {t('bolsonaroChange', lang)}
         {arrow('bolsonaroChange')}
-      </Th>
-      <Th
+      </SortableTh>
+      <SortableTh
         onClick={() => onSort('swingToLula')}
         align="right"
         heated={heatCol === 'swingToLula'}
@@ -237,10 +238,10 @@ export function ResultsTable({
       >
         {t('swingToLula', lang)}
         {arrow('swingToLula')}
-      </Th>
-      <Th align="right" hint={t('hintSections', lang)}>
+      </SortableTh>
+      <SortableTh align="right" hint={t('hintSections', lang)}>
         {t('notes', lang)}
-      </Th>
+      </SortableTh>
     </tr>
   )
 
@@ -500,44 +501,3 @@ function HeatTd({
   )
 }
 
-function Th({
-  children,
-  hint,
-  onClick,
-  align = 'left',
-  heated,
-  stickyCol,
-}: {
-  children: React.ReactNode
-  hint?: string
-  onClick?: () => void
-  align?: 'left' | 'right'
-  heated?: boolean
-  stickyCol?: 'rank' | 'country'
-}) {
-  const stickyClass =
-    stickyCol === 'rank'
-      ? 'sticky-col sticky-col-rank'
-      : stickyCol === 'country'
-        ? 'sticky-col sticky-col-country'
-        : ''
-  return (
-    <th
-      className={`sticky-th px-2 py-2.5 font-medium ${stickyClass} ${align === 'right' ? 'text-right' : 'text-left'} ${
-        onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
-      } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
-      onClick={onClick}
-    >
-      <span className="block normal-case tracking-normal">
-        <span className="block text-[11px] font-semibold uppercase tracking-wide">
-          {children}
-        </span>
-        {hint ? (
-          <span className="th-hint mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
-            {hint}
-          </span>
-        ) : null}
-      </span>
-    </th>
-  )
-}
