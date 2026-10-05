@@ -61,7 +61,9 @@ export function CityBreakdownTable({
   onReorderColumns,
 }: Props) {
   const tableRef = useRef<HTMLTableElement>(null)
+  const headTableRef = useRef<HTMLTableElement>(null)
   const footTableRef = useRef<HTMLTableElement>(null)
+  const headScrollRef = useRef<HTMLDivElement>(null)
   const bodyScrollRef = useRef<HTMLDivElement>(null)
   const footScrollRef = useRef<HTMLDivElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
@@ -146,11 +148,13 @@ export function CityBreakdownTable({
   }, [rows])
 
   useEffect(() => {
-    const table = tableRef.current
+    const bodyTable = tableRef.current
+    const headTable = headTableRef.current
     const footTable = footTableRef.current
     const bodyScroll = bodyScrollRef.current
     const footScroll = footScrollRef.current
-    if (!table) return
+    if (!bodyTable || !headTable || !footTable || !bodyScroll || !footScroll)
+      return
 
     const applyColWidth = (el: HTMLElement | undefined, w: number) => {
       if (!el) return
@@ -160,41 +164,42 @@ export function CityBreakdownTable({
     }
 
     const sync = () => {
-      const rankTh = table.querySelector(
+      const bodyCols = bodyTable.querySelectorAll('thead th')
+      const headCols = headTable.querySelectorAll('thead th')
+      const footCols = footTable.querySelectorAll('tr td')
+      const tableW = bodyTable.getBoundingClientRect().width
+      bodyCols.forEach((th, i) => {
+        const w = (th as HTMLElement).getBoundingClientRect().width
+        applyColWidth(headCols[i] as HTMLElement | undefined, w)
+        applyColWidth(footCols[i] as HTMLElement | undefined, w)
+      })
+      headTable.style.width = `${tableW}px`
+      footTable.style.width = `${tableW}px`
+
+      const rankTh = bodyTable.querySelector(
         'thead th.sticky-col-rank',
       ) as HTMLElement | null
       if (rankTh) {
         const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
-        table.style.setProperty('--sticky-rank-width', `${rankW}px`)
-        footTable?.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        bodyTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        headTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        footTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
       }
 
-      if (footTable && bodyScroll && footScroll) {
-        const bodyCols = table.querySelectorAll('thead th')
-        const footCols = footTable.querySelectorAll('tr td')
-        const tableW = table.getBoundingClientRect().width
-        bodyCols.forEach((th, i) => {
-          applyColWidth(
-            footCols[i] as HTMLElement | undefined,
-            (th as HTMLElement).getBoundingClientRect().width,
-          )
-        })
-        footTable.style.width = `${tableW}px`
-        const r = bodyScroll.getBoundingClientRect()
-        footScroll.style.marginLeft = `${Math.max(0, r.left)}px`
-        footScroll.style.width = `${r.width}px`
-      }
+      const r = bodyScroll.getBoundingClientRect()
+      footScroll.style.marginLeft = `${Math.max(0, r.left)}px`
+      footScroll.style.width = `${r.width}px`
     }
     sync()
     const ro = new ResizeObserver(sync)
-    ro.observe(table)
-    if (bodyScrollRef.current) ro.observe(bodyScrollRef.current)
+    ro.observe(bodyTable)
+    ro.observe(bodyScroll)
     window.addEventListener('resize', sync)
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', sync)
     }
-  }, [rows, showCountry, visibleCols, columnOrder, loading])
+  }, [rows, showCountry, visibleCols, columnOrder, loading, lang, sortKey, sortDir])
 
   // Pin Total row whenever the table is on screen (any row count).
   useEffect(() => {
@@ -223,13 +228,20 @@ export function CityBreakdownTable({
     }
   }, [rows, loading, showCountry, visibleCols, placeKind])
 
-  const syncScroll = (source: 'body' | 'foot') => {
+  const syncScroll = (source: 'head' | 'body' | 'foot') => {
+    const head = headScrollRef.current
     const body = bodyScrollRef.current
     const foot = footScrollRef.current
     const shell = shellRef.current
-    if (!body || !foot || syncingScroll.current) return
+    if (!head || !body || !foot || syncingScroll.current) return
     syncingScroll.current = true
-    const left = source === 'body' ? body.scrollLeft : foot.scrollLeft
+    const left =
+      source === 'body'
+        ? body.scrollLeft
+        : source === 'head'
+          ? head.scrollLeft
+          : foot.scrollLeft
+    head.scrollLeft = left
     body.scrollLeft = left
     foot.scrollLeft = left
     const scrolled = left > 0
@@ -385,189 +397,209 @@ export function CityBreakdownTable({
     </>
   )
 
+  const headerRow = (
+    <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
+      <SortableTh align="right" stickyCol="rank">
+        {t('rank', lang)}
+      </SortableTh>
+      {showCountry ? (
+        <SortableTh
+          onClick={() => onSort('country')}
+          hint={t('hintCountry', lang)}
+          stickyCol="country"
+          className="cell-truncate-abbr"
+        >
+          {t('country', lang)}
+          {arrow('country')}
+        </SortableTh>
+      ) : null}
+      <SortableTh
+        onClick={() => onSort('city')}
+        hint={placeHint}
+        stickyCol={showCountry ? undefined : 'city'}
+        className="cell-truncate-city"
+      >
+        {placeLabel}
+        {arrow('city')}
+      </SortableTh>
+      {metricCols.map((col) => {
+        const drag = dragProps(col)
+        switch (col) {
+          case 'region':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('region')}
+                hint={t('hintRegion', lang)}
+                {...drag}
+              >
+                {t('region', lang)}
+                {arrow('region')}
+              </SortableTh>
+            )
+          case 'votes2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintVotes2026', lang)}
+                onClick={() => onSort('votes2026')}
+                {...drag}
+              >
+                {t('votes2026', lang)}
+                {arrow('votes2026')}
+              </SortableTh>
+            )
+          case 'lulaPct2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2026', lang)}
+                onClick={() => onSort('lulaPct2026')}
+                {...drag}
+              >
+                {t('lula', lang)} 2026{arrow('lulaPct2026')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2026', lang)}
+                onClick={() => onSort('bolsonaroPct2026')}
+                {...drag}
+              >
+                {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
+              </SortableTh>
+            )
+          case 'lulaPct2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2022', lang)}
+                onClick={() => onSort('lulaPct2022')}
+                {...drag}
+              >
+                {t('lula', lang)} 2022{arrow('lulaPct2022')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2022', lang)}
+                onClick={() => onSort('bolsonaroPct2022')}
+                {...drag}
+              >
+                {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
+              </SortableTh>
+            )
+          case 'lulaChange':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintLulaChange', lang)}
+                onClick={() => onSort('lulaChange')}
+                {...drag}
+              >
+                {t('lulaChange', lang)}
+                {arrow('lulaChange')}
+              </SortableTh>
+            )
+          case 'bolsonaroChange':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintBolsonaroChange', lang)}
+                onClick={() => onSort('bolsonaroChange')}
+                {...drag}
+              >
+                {t('bolsonaroChange', lang)}
+                {arrow('bolsonaroChange')}
+              </SortableTh>
+            )
+          case 'swingToLula':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintSwingToLula', lang)}
+                onClick={() => onSort('swingToLula')}
+                {...drag}
+              >
+                {t('swingToLula', lang)}
+                {arrow('swingToLula')}
+              </SortableTh>
+            )
+          case 'swingToBolsonaro':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintSwingToBolsonaro', lang)}
+                onClick={() => onSort('swingToBolsonaro')}
+                {...drag}
+              >
+                {t('swingToBolsonaro', lang)}
+                {arrow('swingToBolsonaro')}
+              </SortableTh>
+            )
+          case 'sections':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintSections', lang)}
+                onClick={() => onSort('sections')}
+                {...drag}
+              >
+                {t('notes', lang)}
+                {arrow('sections')}
+              </SortableTh>
+            )
+        }
+      })}
+    </tr>
+  )
+
   return (
     <div>
       <div className="results-table-shell" ref={shellRef}>
-      <div
-        className="table-x-scroll"
-        ref={bodyScrollRef}
-        onScroll={() => syncScroll('body')}
-      >
-        <table
-          ref={tableRef}
-          className="results-table results-table--cities text-left text-sm"
+        {/* Sticky header under filter chrome (same pattern as Country table) */}
+        <div className="table-head-sticky">
+          <div
+            className="table-x-scroll table-x-scroll--head"
+            ref={headScrollRef}
+            onScroll={() => syncScroll('head')}
+          >
+            <table
+              ref={headTableRef}
+              className="results-table results-table--head results-table--cities text-left text-sm"
+            >
+              <thead>{headerRow}</thead>
+            </table>
+          </div>
+        </div>
+
+        <div
+          className="table-x-scroll"
+          ref={bodyScrollRef}
+          onScroll={() => syncScroll('body')}
         >
-          <thead>
-            <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-              <SortableTh align="right" stickyCol="rank">
-                {t('rank', lang)}
-              </SortableTh>
-              {showCountry ? (
-                <SortableTh
-                  onClick={() => onSort('country')}
-                  hint={t('hintCountry', lang)}
-                  stickyCol="country"
-                  className="cell-truncate-abbr"
-                >
-                  {t('country', lang)}
-                  {arrow('country')}
-                </SortableTh>
-              ) : null}
-              <SortableTh
-                onClick={() => onSort('city')}
-                hint={placeHint}
-                stickyCol={showCountry ? undefined : 'city'}
-                className="cell-truncate-city"
-              >
-                {placeLabel}
-                {arrow('city')}
-              </SortableTh>
-              {metricCols.map((col) => {
-                const drag = dragProps(col)
-                switch (col) {
-                  case 'region':
-                    return (
-                      <SortableTh
-                        key={col}
-                        onClick={() => onSort('region')}
-                        hint={t('hintRegion', lang)}
-                        {...drag}
-                      >
-                        {t('region', lang)}
-                        {arrow('region')}
-                      </SortableTh>
-                    )
-                  case 'votes2026':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintVotes2026', lang)}
-                        onClick={() => onSort('votes2026')}
-                        {...drag}
-                      >
-                        {t('votes2026', lang)}
-                        {arrow('votes2026')}
-                      </SortableTh>
-                    )
-                  case 'lulaPct2026':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintShare2026', lang)}
-                        onClick={() => onSort('lulaPct2026')}
-                        {...drag}
-                      >
-                        {t('lula', lang)} 2026{arrow('lulaPct2026')}
-                      </SortableTh>
-                    )
-                  case 'bolsonaroPct2026':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintShare2026', lang)}
-                        onClick={() => onSort('bolsonaroPct2026')}
-                        {...drag}
-                      >
-                        {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-                      </SortableTh>
-                    )
-                  case 'lulaPct2022':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintShare2022', lang)}
-                        onClick={() => onSort('lulaPct2022')}
-                        {...drag}
-                      >
-                        {t('lula', lang)} 2022{arrow('lulaPct2022')}
-                      </SortableTh>
-                    )
-                  case 'bolsonaroPct2022':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintShare2022', lang)}
-                        onClick={() => onSort('bolsonaroPct2022')}
-                        {...drag}
-                      >
-                        {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
-                      </SortableTh>
-                    )
-                  case 'lulaChange':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintLulaChange', lang)}
-                        onClick={() => onSort('lulaChange')}
-                        {...drag}
-                      >
-                        {t('lulaChange', lang)}
-                        {arrow('lulaChange')}
-                      </SortableTh>
-                    )
-                  case 'bolsonaroChange':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintBolsonaroChange', lang)}
-                        onClick={() => onSort('bolsonaroChange')}
-                        {...drag}
-                      >
-                        {t('bolsonaroChange', lang)}
-                        {arrow('bolsonaroChange')}
-                      </SortableTh>
-                    )
-                  case 'swingToLula':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintSwingToLula', lang)}
-                        onClick={() => onSort('swingToLula')}
-                        {...drag}
-                      >
-                        {t('swingToLula', lang)}
-                        {arrow('swingToLula')}
-                      </SortableTh>
-                    )
-                  case 'swingToBolsonaro':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintSwingToBolsonaro', lang)}
-                        onClick={() => onSort('swingToBolsonaro')}
-                        {...drag}
-                      >
-                        {t('swingToBolsonaro', lang)}
-                        {arrow('swingToBolsonaro')}
-                      </SortableTh>
-                    )
-                  case 'sections':
-                    return (
-                      <SortableTh
-                        key={col}
-                        align="right"
-                        hint={t('hintSections', lang)}
-                        onClick={() => onSort('sections')}
-                        {...drag}
-                      >
-                        {t('notes', lang)}
-                        {arrow('sections')}
-                      </SortableTh>
-                    )
-                }
-              })}
-            </tr>
-          </thead>
-          <tbody>
+          <table
+            ref={tableRef}
+            className="results-table results-table--cities text-left text-sm"
+          >
+            <thead aria-hidden="true" className="results-table-width-head">
+              {headerRow}
+            </thead>
+            <tbody>
             {rows.map((c, index) => {
               const parent = countries.get(c.countryId)
               const fullCountry = parent
