@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-05T00:14:42.523Z",
+    "updatedAt": "2026-10-05T00:25:30.262Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -100,13 +100,13 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-05T00:14:42.523Z",
-      "sectionsCounted": 1276,
+      "fetchedAt": "2026-10-05T00:25:30.262Z",
+      "sectionsCounted": 1283,
       "sectionsTotal": 1351,
-      "sectionsPct": 94.45,
-      "lula": 149674,
-      "bolsonaro": 138613,
-      "totalValid": 316586,
+      "sectionsPct": 94.97,
+      "lula": 149748,
+      "bolsonaro": 138665,
+      "totalValid": 316722,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6257/dados/zz/zz-c0001-e006257-u.json"
     }
   },
@@ -765,22 +765,22 @@
         "bolsonaroPct": 29.14
       },
       "y2026": {
-        "lula": 3738,
-        "bolsonaro": 1663,
-        "totalValid": 5788,
-        "lulaPct": 64.58,
-        "bolsonaroPct": 28.73
+        "lula": 3747,
+        "bolsonaro": 1681,
+        "totalValid": 5815,
+        "lulaPct": 64.44,
+        "bolsonaroPct": 28.91
       },
       "swing": {
-        "lulaPp": 1.04,
-        "bolsonaroPp": -0.41,
-        "marginPp": 1.45
+        "lulaPp": 0.9,
+        "bolsonaroPp": -0.23,
+        "marginPp": 1.13
       },
-      "notes": "TSE EA20 (BUENOS AIRES 15/15; CÓRDOBA 2/2; MENDOZA 1/1)",
+      "notes": "TSE EA20 (BUENOS AIRES 15/15; CÓRDOBA 2/2; PASO LOS LIBRES 1/1; MENDOZA 1/1; PUERTO IGUAZÚ 1/1)",
       "status": "reported",
       "coverage": {
-        "counted": 18,
-        "total": 18
+        "counted": 20,
+        "total": 20
       }
     },
     {
@@ -2735,11 +2735,24 @@
         "lulaPct": 10.26,
         "bolsonaroPct": 84.62
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 6,
+        "bolsonaro": 5,
+        "totalValid": 13,
+        "lulaPct": 46.15,
+        "bolsonaroPct": 38.46
+      },
+      "swing": {
+        "lulaPp": 35.89,
+        "bolsonaroPp": -46.16,
+        "marginPp": 82.05
+      },
+      "notes": "TSE EA20 (WINDHOEK 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "bahrain",
@@ -2818,11 +2831,24 @@
         "lulaPct": 66.67,
         "bolsonaroPct": 18.18
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 34,
+        "bolsonaro": 8,
+        "totalValid": 47,
+        "lulaPct": 72.34,
+        "bolsonaroPct": 17.02
+      },
+      "swing": {
+        "lulaPp": 5.67,
+        "bolsonaroPp": -1.16,
+        "marginPp": 6.83
+      },
+      "notes": "TSE EA20 (SÓFIA 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "cuba",
@@ -2920,11 +2946,24 @@
         "lulaPct": 32,
         "bolsonaroPct": 60
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 6,
+        "bolsonaro": 10,
+        "totalValid": 19,
+        "lulaPct": 31.58,
+        "bolsonaroPct": 52.63
+      },
+      "swing": {
+        "lulaPp": -0.42,
+        "bolsonaroPp": -7.37,
+        "marginPp": 6.95
+      },
+      "notes": "TSE EA20 (NASSAU 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "ghana",
@@ -3003,11 +3042,24 @@
         "lulaPct": 41.18,
         "bolsonaroPct": 52.94
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 14,
+        "bolsonaro": 11,
+        "totalValid": 25,
+        "lulaPct": 56,
+        "bolsonaroPct": 44
+      },
+      "swing": {
+        "lulaPp": 14.82,
+        "bolsonaroPp": -8.94,
+        "marginPp": 23.76
+      },
+      "notes": "TSE EA20 (TEERÃ 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     },
     {
       "id": "dr-congo",
@@ -3175,11 +3227,24 @@
         "lulaPct": 28.57,
         "bolsonaroPct": 57.14
       },
-      "y2026": null,
-      "swing": null,
-      "notes": "",
-      "status": "pending",
-      "coverage": null
+      "y2026": {
+        "lula": 5,
+        "bolsonaro": 0,
+        "totalValid": 5,
+        "lulaPct": 100,
+        "bolsonaroPct": 0
+      },
+      "swing": {
+        "lulaPp": 71.43,
+        "bolsonaroPp": -57.14,
+        "marginPp": 128.57
+      },
+      "notes": "TSE EA20 (PORTO PRÍNCIPE 1/1)",
+      "status": "reported",
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      }
     }
   ]
 }

@@ -128,8 +128,8 @@ const dict = {
     pt: 'O recorte é só a votação presidencial do 1º turno no exterior. Totais e o mapa refletem apenas os países marcados como apurados neste conjunto de dados, não todo o eleitorado ZZ.',
   },
   howToEdit: {
-    en: 'Maintainers: run node scripts/sync-tse-zz.mjs to pull official TSE ZZ tallies into src/data/results.json, then rebuild. Open tabs fetch that file on load, on focus, and on a timer (5 min during election-night fast window, otherwise 30 min).',
-    pt: 'Mantenedores: rode node scripts/sync-tse-zz.mjs para puxar os totais oficiais ZZ do TSE para src/data/results.json e faça o build. Abas abertas buscam esse arquivo ao carregar, ao focar e no timer (5 min na janela rápida da noite da eleição; senão 30 min).',
+    en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run build:pages to refresh the committed seed JSON.',
+    pt: 'A página ao vivo atualiza os totais do exterior direto do TSE. Opcional: npm run sync:tse && npm run build:pages para atualizar o JSON seed commitado.',
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
   autoRefresh: {
@@ -137,8 +137,8 @@ const dict = {
     pt: 'busca novos dados ao carregar / focar / a cada 30 min',
   },
   autoRefreshFast: {
-    en: 'checks for new data on load / focus / every 5 min',
-    pt: 'busca novos dados ao carregar / focar / a cada 5 min',
+    en: 'live TSE refresh on load / focus / every 5 min',
+    pt: 'atualiza do TSE ao vivo / focar / a cada 5 min',
   },
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },

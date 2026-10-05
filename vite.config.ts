@@ -39,10 +39,27 @@ export default defineConfig({
     host: true,
     port: 4837,
     strictPort: true,
+    proxy: {
+      // Browser CORS only allows github.io; proxy for local live TSE checks.
+      '/tse-api': {
+        target: 'https://resultados.tse.jus.br',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/tse-api/, ''),
+      },
+    },
   },
   preview: {
     host: true,
     port: 4838,
     strictPort: true,
+    proxy: {
+      '/tse-api': {
+        target: 'https://resultados.tse.jus.br',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/tse-api/, ''),
+      },
+    },
   },
 })

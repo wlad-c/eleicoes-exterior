@@ -1,0 +1,47 @@
+name: Sync TSE ZZ tallies
+
+# Backup persistence for cold loads / SEO. The live page also pulls TSE
+# directly in the browser every 5 minutes and does not depend on this job.
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-tse-zz
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Sync from TSE
+        run: npm run sync:tse
+
+      - name: Build Pages
+        run: npm run build:pages
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- src/data/results.json docs/; then
+            echo "No meaningful file changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/results.json docs/
+          git commit -m "chore: sync TSE ZZ tallies"
+          git push origin HEAD:main
