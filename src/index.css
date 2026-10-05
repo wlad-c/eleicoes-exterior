@@ -152,6 +152,16 @@ html.dark .sticky-table-chrome {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
+  min-width: 100%;
+}
+
+.results-table th,
+.results-table .sticky-th {
+  white-space: nowrap;
+}
+
+.results-table th .th-hint {
+  white-space: nowrap;
 }
 
 .results-table tfoot td {
@@ -215,6 +225,16 @@ html.dark .sticky-col-country {
 .table-x-scroll {
   width: 100%;
   max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Prefer growing columns over wrapping header/metric copy on wide screens */
+.results-table--cities {
+  width: max-content;
+  min-width: 100%;
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */

@@ -29,12 +29,12 @@ export function SortableTh({
       } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
     >
-      <span className="block normal-case tracking-normal">
-        <span className="block text-[11px] font-semibold uppercase tracking-wide">
+      <span className="block whitespace-nowrap normal-case tracking-normal">
+        <span className="block whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">
           {children}
         </span>
         {hint ? (
-          <span className="th-hint mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
+          <span className="th-hint mt-0.5 block whitespace-nowrap text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">
             {hint}
           </span>
         ) : null}
