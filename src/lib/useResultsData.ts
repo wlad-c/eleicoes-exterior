@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Lang, ResultsData } from '../types'
+import { fetchLiveTseZz } from './tseZzLive'
 
 /** Steady-state poll interval after the election-night fast window. */
 export const RESULTS_REFRESH_MS = 30 * 60 * 1000
@@ -8,9 +9,8 @@ export const RESULTS_REFRESH_MS = 30 * 60 * 1000
 export const FAST_RESULTS_REFRESH_MS = 5 * 60 * 1000
 
 /**
- * Until this UTC instant, open tabs poll every 5 minutes; afterward they
- * fall back to 30 minutes without needing another deploy.
- * Window opened ~2026-10-04T23:47Z for the next 4 hours.
+ * Until this UTC instant, open tabs refresh from TSE every 5 minutes;
+ * afterward they fall back to 30 minutes.
  */
 export const FAST_REFRESH_UNTIL_MS = Date.parse('2026-10-05T03:50:00.000Z')
 
@@ -42,8 +42,8 @@ export function resolveRefreshMs(
 export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
   if (isFastRefreshWindow(now)) {
     return lang === 'pt'
-      ? 'busca novos dados ao carregar / focar / a cada 5 min'
-      : 'checks for new data on load / focus / every 5 min'
+      ? 'atualiza do TSE ao vivo / focar / a cada 5 min'
+      : 'live TSE refresh on load / focus / every 5 min'
   }
   return lang === 'pt'
     ? 'busca novos dados ao carregar / focar / a cada 30 min'
@@ -57,8 +57,9 @@ function samePayload(a: ResultsData, b: ResultsData): boolean {
 }
 
 /**
- * Seed from the bundled JSON for first paint, then poll the stable public
- * copy so open tabs pick up redeployed tallies without a full reload.
+ * Seed from bundled JSON, then refresh from official TSE EA20 ZZ in the
+ * browser (no deploy required). Falls back to polling data/results.json
+ * if the live TSE fetch fails (e.g. CORS from a non-Pages origin).
  */
 export function useResultsData(initial: ResultsData): ResultsData {
   const [data, setData] = useState(initial)
@@ -68,6 +69,18 @@ export function useResultsData(initial: ResultsData): ResultsData {
     let inFlight: Promise<void> | null = null
     let lastPulledAt = 0
     let timer: number | undefined
+    // Always start from the latest applied payload so TSE overlays compound.
+    let latest = initial
+
+    async function pullDeployedSeed() {
+      const url = `${resultsEndpoint()}?t=${Date.now()}`
+      const res = await fetch(url, {
+        cache: 'no-store',
+        headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' },
+      })
+      if (!res.ok) return null
+      return (await res.json()) as ResultsData
+    }
 
     async function pull(force = false) {
       if (cancelled) return
@@ -82,15 +95,17 @@ export function useResultsData(initial: ResultsData): ResultsData {
 
       inFlight = (async () => {
         try {
-          const url = `${resultsEndpoint()}?t=${Date.now()}`
-          const res = await fetch(url, {
-            cache: 'no-store',
-            headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' },
-          })
-          if (!res.ok || cancelled) return
-          const next = (await res.json()) as ResultsData
+          // Prefer a fresh seed from Pages, then overlay live TSE.
+          const seed = (await pullDeployedSeed()) ?? latest
+          let next: ResultsData
+          try {
+            next = await fetchLiveTseZz(seed)
+          } catch {
+            next = seed
+          }
           if (cancelled) return
           lastPulledAt = Date.now()
+          latest = next
           setData((prev) => (samePayload(prev, next) ? prev : next))
         } catch {
           /* keep last good payload */
@@ -110,8 +125,6 @@ export function useResultsData(initial: ResultsData): ResultsData {
       }, refreshMs)
     }
 
-    // Critical: fetch once on mount. Previously we only waited for the
-    // interval, so open tabs could sit on stale seed data for a full cycle.
     void pull(true)
     scheduleNext()
 
@@ -132,7 +145,7 @@ export function useResultsData(initial: ResultsData): ResultsData {
       document.removeEventListener('visibilitychange', onVisible)
       window.removeEventListener('focus', onFocus)
     }
-  }, [])
+  }, [initial])
 
   return data
 }
