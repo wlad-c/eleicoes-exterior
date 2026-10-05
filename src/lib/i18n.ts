@@ -150,6 +150,10 @@ const dict = {
     en: 'total valid ballots',
     pt: 'total de votos válidos',
   },
+  hintVotes2022: {
+    en: 'total valid ballots',
+    pt: 'total de votos válidos',
+  },
   hintShare2026: {
     en: '% of valid (votes)',
     pt: '% dos válidos (votos)',

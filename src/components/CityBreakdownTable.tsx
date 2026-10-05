@@ -127,6 +127,7 @@ export function CityBreakdownTable({
       lula,
       bolsonaro,
       valid,
+      valid2022: has2022 ? valid2022 : null,
       lulaPct,
       bolsoPct,
       lula2022,
@@ -321,6 +322,12 @@ export function CityBreakdownTable({
                 {fmtInt(totals.valid, lang)}
               </td>
             )
+          case 'votes2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid2022, lang)}
+              </td>
+            )
           case 'lulaPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -448,6 +455,19 @@ export function CityBreakdownTable({
               >
                 {t('votes2026', lang)}
                 {arrow('votes2026')}
+              </SortableTh>
+            )
+          case 'votes2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintVotes2022', lang)}
+                onClick={() => onSort('votes2022')}
+                {...drag}
+              >
+                {t('votes2022', lang)}
+                {arrow('votes2022')}
               </SortableTh>
             )
           case 'lulaPct2026':
@@ -662,6 +682,15 @@ export function CityBreakdownTable({
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtInt(c.y2026.totalValid, lang)}
+                          </td>
+                        )
+                      case 'votes2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.y2022?.totalValid, lang)}
                           </td>
                         )
                       case 'lulaPct2026':

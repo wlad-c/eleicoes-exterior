@@ -242,6 +242,19 @@ export function ResultsTable({
                 {arrow('votes2026')}
               </SortableTh>
             )
+          case 'votes2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('votes2022')}
+                align="right"
+                hint={t('hintVotes2022', lang)}
+                {...drag}
+              >
+                {t('votes2022', lang)}
+                {arrow('votes2022')}
+              </SortableTh>
+            )
           case 'lulaPct2026':
             return (
               <SortableTh
@@ -398,6 +411,12 @@ export function ResultsTable({
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtInt(totals.valid2026, lang)}
+              </td>
+            )
+          case 'votes2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid2022, lang)}
               </td>
             )
           case 'lulaPct2026':
@@ -569,6 +588,15 @@ export function ResultsTable({
                               className="px-2 py-2.5 text-right tabular-nums"
                             >
                               {fmtInt(c.y2026?.totalValid, lang)}
+                            </td>
+                          )
+                        case 'votes2022':
+                          return (
+                            <td
+                              key={col}
+                              className="px-2 py-2.5 text-right tabular-nums"
+                            >
+                              {fmtInt(c.y2022.totalValid, lang)}
                             </td>
                           )
                         case 'lulaPct2026':
