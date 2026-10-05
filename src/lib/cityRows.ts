@@ -75,6 +75,14 @@ export function citySwingToLula(c: CityResult): number | null {
   return lula - bolso
 }
 
+export function citySwingToBolsonaro(c: CityResult): number | null {
+  if (c.swing != null) return c.swing.bolsonaroPp - c.swing.lulaPp
+  const lula = cityLulaChange(c)
+  const bolso = cityBolsonaroChange(c)
+  if (lula == null || bolso == null) return null
+  return bolso - lula
+}
+
 function citySortValue(
   row: CityTableRow,
   country: CountryResult | undefined,
@@ -106,6 +114,8 @@ function citySortValue(
       return cityBolsonaroChange(row) ?? Number.NaN
     case 'swingToLula':
       return citySwingToLula(row) ?? Number.NaN
+    case 'swingToBolsonaro':
+      return citySwingToBolsonaro(row) ?? Number.NaN
     case 'sections':
       return row.coverage && row.coverage.total > 0
         ? row.coverage.counted / row.coverage.total

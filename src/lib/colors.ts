@@ -34,7 +34,8 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'swingToLula':
       return 'divergingLB'
     case 'bolsonaroChange':
-      // positive Bolsonaro change → blue (inverted below)
+    case 'swingToBolsonaro':
+      // positive Bolsonaro metrics → blue (inverted below)
       return 'divergingLB'
     case 'lulaPct2026':
     case 'lulaPct2022':
@@ -46,7 +47,7 @@ function scaleKind(metric: MapMetric): ScaleKind {
 }
 
 function isInverted(metric: MapMetric): boolean {
-  return metric === 'bolsonaroChange'
+  return metric === 'bolsonaroChange' || metric === 'swingToBolsonaro'
 }
 
 function lerpColor(a: string, b: string, t: number): string {
