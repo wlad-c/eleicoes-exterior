@@ -31,7 +31,7 @@ function readStoredLang(): Lang {
 
 export default function App() {
   const { theme, setTheme } = useTheme()
-  const data = useResultsData(seed)
+  const { data, syncStatus, live } = useResultsData(seed)
   const [lang, setLangState] = useState<Lang>(() =>
     typeof window === 'undefined' ? 'pt' : readStoredLang(),
   )
@@ -146,8 +146,25 @@ export default function App() {
   const bolsoShare = totals.valid ? (totals.bolsonaro / totals.valid) * 100 : 0
   const updated = new Date(data.meta.updatedAt).toLocaleString(
     lang === 'pt' ? 'pt-BR' : 'en-GB',
-    { dateStyle: 'medium', timeStyle: 'short' },
+    { dateStyle: 'medium', timeStyle: 'medium' },
   )
+  const zz = data.meta.tseZz
+  const syncLabel =
+    syncStatus === 'syncing'
+      ? lang === 'pt'
+        ? 'atualizando TSE…'
+        : 'updating TSE…'
+      : syncStatus === 'error'
+        ? lang === 'pt'
+          ? 'falha no TSE — tentando de novo'
+          : 'TSE fetch failed — retrying'
+        : live
+          ? lang === 'pt'
+            ? 'TSE ao vivo'
+            : 'live TSE'
+          : lang === 'pt'
+            ? 'seed local'
+            : 'local seed'
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6">
@@ -216,13 +233,40 @@ export default function App() {
               {fmtInt(totals.valid, lang)} {t('validVotes', lang)}
             </p>
           </div>
-          <p className="text-xs text-[var(--ink-muted)]">
-            {t('updated', lang)}: {updated}
-            <span className="mx-1.5 text-[var(--line)]" aria-hidden>
-              ·
-            </span>
-            {autoRefreshLabel(lang)}
-          </p>
+          <div className="text-right text-xs text-[var(--ink-muted)]">
+            <p>
+              <span
+                className={
+                  syncStatus === 'syncing'
+                    ? 'font-semibold text-[var(--ink)]'
+                    : syncStatus === 'error'
+                      ? 'font-semibold text-[var(--bolso)]'
+                      : live
+                        ? 'font-semibold text-[var(--lula)]'
+                        : undefined
+                }
+              >
+                {syncLabel}
+              </span>
+              <span className="mx-1.5 text-[var(--line)]" aria-hidden>
+                ·
+              </span>
+              {autoRefreshLabel(lang)}
+            </p>
+            <p className="mt-0.5">
+              {t('updated', lang)}: {updated}
+            </p>
+            {zz ? (
+              <p className="mt-0.5 tabular-nums">
+                ZZ {fmtInt(zz.sectionsCounted, lang)}/{fmtInt(zz.sectionsTotal, lang)}{' '}
+                ({fmtPct(zz.sectionsPct, lang)})
+                <span className="mx-1.5 text-[var(--line)]" aria-hidden>
+                  ·
+                </span>
+                {fmtInt(zz.totalValid, lang)} {t('validVotes', lang)}
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">

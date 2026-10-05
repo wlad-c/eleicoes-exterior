@@ -137,8 +137,8 @@ const dict = {
     pt: 'busca novos dados ao carregar / focar / a cada 30 min',
   },
   autoRefreshFast: {
-    en: 'live TSE refresh on load / focus / every 5 min',
-    pt: 'atualiza do TSE ao vivo / focar / a cada 5 min',
+    en: 'live TSE every 2 min',
+    pt: 'TSE ao vivo a cada 2 min',
   },
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },

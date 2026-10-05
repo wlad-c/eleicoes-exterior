@@ -5,17 +5,25 @@ import { fetchLiveTseZz } from './tseZzLive'
 /** Steady-state poll interval after the election-night fast window. */
 export const RESULTS_REFRESH_MS = 30 * 60 * 1000
 
-/** Election-night / high-tempo poll interval. */
-export const FAST_RESULTS_REFRESH_MS = 5 * 60 * 1000
+/** Election-night poll interval — short so the UI visibly keeps up. */
+export const FAST_RESULTS_REFRESH_MS = 2 * 60 * 1000
 
 /**
- * Until this UTC instant, open tabs refresh from TSE every 5 minutes;
+ * Until this UTC instant, open tabs refresh from TSE on the fast interval;
  * afterward they fall back to 30 minutes.
  */
 export const FAST_REFRESH_UNTIL_MS = Date.parse('2026-10-05T03:50:00.000Z')
 
 /** Ignore focus/visibility refetches that fire more often than this. */
-const MIN_FOCUS_REFRESH_MS = 15_000
+const MIN_FOCUS_REFRESH_MS = 20_000
+
+export type SyncStatus = 'idle' | 'syncing' | 'ok' | 'error'
+
+export type ResultsDataState = {
+  data: ResultsData
+  syncStatus: SyncStatus
+  live: boolean
+}
 
 function resultsEndpoint(): string {
   return `${import.meta.env.BASE_URL}data/results.json`
@@ -42,45 +50,54 @@ export function resolveRefreshMs(
 export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
   if (isFastRefreshWindow(now)) {
     return lang === 'pt'
-      ? 'atualiza do TSE ao vivo / focar / a cada 5 min'
-      : 'live TSE refresh on load / focus / every 5 min'
+      ? 'TSE ao vivo a cada 2 min'
+      : 'live TSE every 2 min'
   }
   return lang === 'pt'
-    ? 'busca novos dados ao carregar / focar / a cada 30 min'
-    : 'checks for new data on load / focus / every 30 min'
+    ? 'atualiza a cada 30 min'
+    : 'updates every 30 min'
 }
 
 function samePayload(a: ResultsData, b: ResultsData): boolean {
   if (a.meta.updatedAt !== b.meta.updatedAt) return false
+  if (a.meta.tseZz?.sectionsCounted !== b.meta.tseZz?.sectionsCounted) {
+    return false
+  }
   if (a.countries.length !== b.countries.length) return false
-  return JSON.stringify(a) === JSON.stringify(b)
+  return JSON.stringify(a.countries) === JSON.stringify(b.countries)
+}
+
+async function pullDeployedSeed(): Promise<ResultsData | null> {
+  try {
+    const url = `${resultsEndpoint()}?t=${Date.now()}`
+    const res = await fetch(url, {
+      cache: 'no-store',
+      headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' },
+    })
+    if (!res.ok) return null
+    return (await res.json()) as ResultsData
+  } catch {
+    return null
+  }
 }
 
 /**
- * Seed from bundled JSON, then refresh from official TSE EA20 ZZ in the
- * browser (no deploy required). Falls back to polling data/results.json
- * if the live TSE fetch fails (e.g. CORS from a non-Pages origin).
+ * Seed from bundled/Pages JSON once, then keep refreshing from official TSE
+ * EA20 ZZ in the browser. After the first successful live pull, do NOT
+ * re-apply a stale Pages seed (that was wiping live tallies).
  */
-export function useResultsData(initial: ResultsData): ResultsData {
+export function useResultsData(initial: ResultsData): ResultsDataState {
   const [data, setData] = useState(initial)
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>('idle')
+  const [live, setLive] = useState(false)
 
   useEffect(() => {
     let cancelled = false
     let inFlight: Promise<void> | null = null
     let lastPulledAt = 0
     let timer: number | undefined
-    // Always start from the latest applied payload so TSE overlays compound.
     let latest = initial
-
-    async function pullDeployedSeed() {
-      const url = `${resultsEndpoint()}?t=${Date.now()}`
-      const res = await fetch(url, {
-        cache: 'no-store',
-        headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' },
-      })
-      if (!res.ok) return null
-      return (await res.json()) as ResultsData
-    }
+    let hasLive = false
 
     async function pull(force = false) {
       if (cancelled) return
@@ -94,21 +111,34 @@ export function useResultsData(initial: ResultsData): ResultsData {
       if (inFlight) return inFlight
 
       inFlight = (async () => {
+        setSyncStatus('syncing')
         try {
-          // Prefer a fresh seed from Pages, then overlay live TSE.
-          const seed = (await pullDeployedSeed()) ?? latest
-          let next: ResultsData
-          try {
-            next = await fetchLiveTseZz(seed)
-          } catch {
-            next = seed
+          // Only pull Pages seed before the first successful live TSE overlay.
+          // Re-seeding afterward can regress countries to an older deploy.
+          let base = latest
+          if (!hasLive) {
+            base = (await pullDeployedSeed()) ?? latest
           }
+
+          const next = await fetchLiveTseZz(base)
           if (cancelled) return
+          hasLive = true
+          setLive(true)
           lastPulledAt = Date.now()
           latest = next
           setData((prev) => (samePayload(prev, next) ? prev : next))
+          setSyncStatus('ok')
         } catch {
-          /* keep last good payload */
+          if (cancelled) return
+          // First failure: try seed alone so the page isn't empty.
+          if (!hasLive) {
+            const seed = await pullDeployedSeed()
+            if (seed && !cancelled) {
+              latest = seed
+              setData(seed)
+            }
+          }
+          setSyncStatus('error')
         } finally {
           inFlight = null
         }
@@ -125,8 +155,8 @@ export function useResultsData(initial: ResultsData): ResultsData {
       }, refreshMs)
     }
 
-    void pull(true)
-    scheduleNext()
+    // Chain: finish first pull, then start the interval (avoids overlap).
+    void pull(true).finally(scheduleNext)
 
     const onVisible = () => {
       if (document.visibilityState !== 'visible') return
@@ -147,5 +177,5 @@ export function useResultsData(initial: ResultsData): ResultsData {
     }
   }, [initial])
 
-  return data
+  return { data, syncStatus, live }
 }
