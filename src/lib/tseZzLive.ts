@@ -1,5 +1,5 @@
 import cityMap from '../data/tse-city-map.json'
-import type { CountryResult, ResultsData, YearResult } from '../types'
+import type { CityResult, CountryResult, ResultsData, YearResult } from '../types'
 
 const ELEICAO = '6257'
 const CARGO = '1'
@@ -123,6 +123,7 @@ async function mapPool<T, R>(
 
 type MunVotes = {
   countryId: string
+  code: string
   city: string
   lula: number
   bolsonaro: number
@@ -137,7 +138,7 @@ type Agg = {
   totalValid: number
   counted: number
   total: number
-  cities: string[]
+  cities: CityResult[]
 }
 
 /**
@@ -197,6 +198,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       if (totalValid <= 0 && counted <= 0) return null
       return {
         countryId,
+        code,
         city: names[code] || code,
         lula,
         bolsonaro,
@@ -225,8 +227,17 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.totalValid += row.totalValid
     agg.counted += row.counted
     agg.total += row.total
-    agg.cities.push(`${row.city} ${row.counted}/${row.total}`)
+    agg.cities.push({
+      code: row.code,
+      name: row.city,
+      y2026: yearResult(row.lula, row.bolsonaro, row.totalValid),
+      coverage: { counted: row.counted, total: row.total },
+    })
     aggregates.set(row.countryId, agg)
+  }
+
+  for (const agg of aggregates.values()) {
+    agg.cities.sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
   }
 
   const countries: CountryResult[] = base.countries.map((country) => {
@@ -234,15 +245,19 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     if (!agg || agg.totalValid <= 0) return country
     const y2026 = yearResult(agg.lula, agg.bolsonaro, agg.totalValid)
     const partial = agg.counted < agg.total
+    const cityNotes = agg.cities
+      .map((c) => `${c.name} ${c.coverage?.counted ?? 0}/${c.coverage?.total ?? 0}`)
+      .join('; ')
     return {
       ...country,
       y2026,
       swing: swingOf(country.y2022, y2026),
       status: 'reported',
       coverage: { counted: agg.counted, total: agg.total },
+      cities: agg.cities,
       notes: partial
-        ? `TSE EA20 live (${agg.counted}/${agg.total} seções; ${agg.cities.join('; ')})`
-        : `TSE EA20 live (${agg.cities.join('; ')})`,
+        ? `TSE EA20 live (${agg.counted}/${agg.total} seções; ${cityNotes})`
+        : `TSE EA20 live (${cityNotes})`,
     }
   })
 

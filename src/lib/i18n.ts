@@ -67,6 +67,32 @@ const dict = {
   jBolsonaro: { en: 'J Bolsonaro', pt: 'J Bolsonaro' },
   validVotes: { en: 'valid votes', pt: 'votos válidos' },
   table: { en: 'Results table', pt: 'Tabela de resultados' },
+  cityTable: {
+    en: 'City breakdown',
+    pt: 'Detalhamento por cidade',
+  },
+  cityTableHint: {
+    en: 'Official TSE overseas locations (ZZ municipalities) within the selected country',
+    pt: 'Locais oficiais do TSE no exterior (municípios ZZ) no país selecionado',
+  },
+  selectCountry: {
+    en: 'Select a country',
+    pt: 'Selecione um país',
+  },
+  selectCountryPlaceholder: {
+    en: 'Choose a country…',
+    pt: 'Escolha um país…',
+  },
+  city: { en: 'City / location', pt: 'Cidade / local' },
+  cities: { en: 'cities', pt: 'cidades' },
+  cityEmpty: {
+    en: 'No TSE city tallies for this country yet.',
+    pt: 'Ainda não há apuração por cidade do TSE para este país.',
+  },
+  hintCity: {
+    en: 'TSE ZZ municipality',
+    pt: 'município ZZ do TSE',
+  },
   map: { en: 'Swing map', pt: 'Mapa de oscilação' },
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
   pendingHint: { en: '2026 tally pending', pt: 'Apuração 2026 pendente' },

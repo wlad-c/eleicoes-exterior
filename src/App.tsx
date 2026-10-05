@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import raw from './data/results.json'
+import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
@@ -52,6 +53,7 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  const [cityCountryId, setCityCountryId] = useState('')
   const tableChromeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -128,12 +130,40 @@ export default function App() {
   function onSelect(id: string | null) {
     setHighlightId(id)
     if (id) {
+      const hasCities = data.countries.some(
+        (c) => c.id === id && (c.cities?.length ?? 0) > 0,
+      )
+      if (hasCities) setCityCountryId(id)
       document.getElementById(`row-${id}`)?.scrollIntoView({
         block: 'nearest',
         behavior: 'smooth',
       })
     }
   }
+
+  const cityCountries = useMemo(
+    () =>
+      data.countries
+        .filter((c) => (c.cities?.length ?? 0) > 0)
+        .sort((a, b) =>
+          countryName(a, lang).localeCompare(
+            countryName(b, lang),
+            lang === 'pt' ? 'pt' : 'en',
+            { sensitivity: 'base' },
+          ),
+        ),
+    [data.countries, lang],
+  )
+
+  // If the chosen id disappears after a live refresh, fall back gracefully.
+  const effectiveCityCountryId = cityCountries.some((c) => c.id === cityCountryId)
+    ? cityCountryId
+    : ''
+
+  const selectedCityCountry = useMemo(
+    () => cityCountries.find((c) => c.id === effectiveCityCountryId) ?? null,
+    [cityCountries, effectiveCityCountryId],
+  )
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -413,6 +443,34 @@ export default function App() {
           onSelect={(id) => onSelect(id)}
           metric={metric}
         />
+      </section>
+
+      <section className="panel mb-4 rounded-xl p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="brand text-lg font-bold">{t('cityTable', lang)}</h2>
+            <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
+              {t('cityTableHint', lang)}
+            </p>
+          </div>
+          <label className="block w-full min-w-0 text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)] sm:min-w-[240px] sm:w-auto">
+            {t('selectCountry', lang)}
+            <select
+              className="control mt-1 w-full max-w-full"
+              value={effectiveCityCountryId}
+              onChange={(e) => setCityCountryId(e.target.value)}
+              disabled={cityCountries.length === 0}
+            >
+              <option value="">{t('selectCountryPlaceholder', lang)}</option>
+              {cityCountries.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {countryName(c, lang)} ({c.cities!.length})
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <CityBreakdownTable country={selectedCityCountry} lang={lang} />
       </section>
 
       <footer className="mt-10 space-y-6 border-t border-[var(--line)] pt-6 text-sm text-[var(--ink-muted)]">

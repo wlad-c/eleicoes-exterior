@@ -139,7 +139,7 @@ async function main() {
   console.log(`ZZ aggregate: ${zzAgg.s?.st}/${zzAgg.s?.ts} sections (${zzAgg.s?.pst}%)`)
   console.log(`Municipalities with TSE progress: ${progress.size}`)
 
-  /** @type {Map<string, {lula:number,bolsonaro:number,totalValid:number,counted:number,total:number,cities:string[]}>} */
+  /** @type {Map<string, {lula:number,bolsonaro:number,totalValid:number,counted:number,total:number,cities:Array<{code:string,name:string,y2026:ReturnType<typeof yearResult>,coverage:{counted:number,total:number}}>}>} */
   const aggregates = new Map()
 
   const codes = [...progress.keys()].sort()
@@ -192,7 +192,12 @@ async function main() {
     agg.totalValid += totalValid
     agg.counted += counted
     agg.total += total
-    agg.cities.push(`${city} ${counted}/${total}`)
+    agg.cities.push({
+      code,
+      name: city,
+      y2026: yearResult(lula, bolsonaro, totalValid),
+      coverage: { counted, total },
+    })
     aggregates.set(countryId, agg)
 
     fetched++
@@ -200,6 +205,10 @@ async function main() {
       console.log(`  …fetched ${fetched} municipalities`)
       await sleep(50) // stay well under 100 req/s
     }
+  }
+
+  for (const agg of aggregates.values()) {
+    agg.cities.sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
   }
 
   let updated = 0
@@ -221,10 +230,14 @@ async function main() {
     country.swing = swingOf(country.y2022, y2026)
     country.status = 'reported'
     country.coverage = { counted: agg.counted, total: agg.total }
+    country.cities = agg.cities
+    const cityNotes = agg.cities
+      .map((c) => `${c.name} ${c.coverage.counted}/${c.coverage.total}`)
+      .join('; ')
     const partial = agg.counted < agg.total
     country.notes = partial
-      ? `TSE EA20 (${agg.counted}/${agg.total} seções; ${agg.cities.join('; ')})`
-      : `TSE EA20 (${agg.cities.join('; ')})`
+      ? `TSE EA20 (${agg.counted}/${agg.total} seções; ${cityNotes})`
+      : `TSE EA20 (${cityNotes})`
     updated++
     if (wasPending) newlyReported++
   }
@@ -244,10 +257,10 @@ async function main() {
   const tseSource = {
     name: 'TSE Resultados 2026 (EA20 ZZ)',
     url: 'https://resultados.tse.jus.br/',
-    role: {
-      en: 'Official overseas presidential totalization by country (ZZ municipalities) — primary 2026 source',
-      pt: 'Totalização oficial no exterior por país (municípios ZZ) — fonte primária de 2026',
-    },
+        role: {
+          en: 'Official overseas presidential totalization by country and city (ZZ municipalities) — primary 2026 source',
+          pt: 'Totalização oficial no exterior por país e cidade (municípios ZZ) — fonte primária de 2026',
+        },
   }
   if (tseIdx >= 0) sources[tseIdx] = tseSource
   else sources.splice(1, 0, tseSource)

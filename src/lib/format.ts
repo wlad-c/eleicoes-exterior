@@ -70,6 +70,15 @@ export function countryName(c: CountryResult, lang: Lang): string {
   return lang === 'pt' ? c.countryPt : c.countryEn
 }
 
+/** Title-case TSE city labels (e.g. "NOVA YORK" → "Nova York"). */
+export function cityDisplayName(name: string): string {
+  return name
+    .toLocaleLowerCase('pt-BR')
+    .replace(/(^|[\s\-/'])(\S)/g, (_, sep: string, ch: string) => {
+      return `${sep}${ch.toLocaleUpperCase('pt-BR')}`
+    })
+}
+
 /** Lula change = 2026% − 2022%. */
 export function lulaChange(c: CountryResult): number | null {
   if (c.status !== 'reported' || !c.y2026) return null

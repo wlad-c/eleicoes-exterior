@@ -23,6 +23,16 @@ export type Coverage = {
   total: number
 }
 
+/** One TSE ZZ municipality (overseas city / consular location). */
+export type CityResult = {
+  /** TSE municipality code (5-digit, zero-padded). */
+  code: string
+  /** Official TSE name (usually uppercase Portuguese). */
+  name: string
+  y2026: YearResult
+  coverage: Coverage | null
+}
+
 export type CountryResult = {
   id: string
   countryEn: string
@@ -34,6 +44,8 @@ export type CountryResult = {
   swing: Swing | null
   /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
+  /** Per-city TSE EA20 breakdown (overseas locations only). */
+  cities?: CityResult[]
   notes: string
   status: CountryStatus
 }
