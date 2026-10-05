@@ -14,7 +14,10 @@ import { regionLabel, t } from './lib/i18n'
 
 type TableView = 'countries' | 'areas' | 'cities'
 import {
+  moveColumn,
+  readStoredColumnOrder,
   readStoredTableCols,
+  writeStoredColumnOrder,
   writeStoredTableCols,
   type TableMetricCol,
 } from './lib/tableColumns'
@@ -64,11 +67,22 @@ export default function App() {
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
   )
+  const [columnOrder, setColumnOrder] = useState<TableMetricCol[]>(() =>
+    readStoredColumnOrder(),
+  )
   const tableChromeRef = useRef<HTMLDivElement>(null)
 
   function setVisibleColsPersist(next: TableMetricCol[]) {
     setVisibleCols(next)
     writeStoredTableCols(next)
+  }
+
+  function reorderColumns(from: TableMetricCol, to: TableMetricCol) {
+    setColumnOrder((prev) => {
+      const next = moveColumn(prev, from, to)
+      writeStoredColumnOrder(next)
+      return next
+    })
   }
 
   useEffect(() => {
@@ -533,7 +547,9 @@ export default function App() {
               <TableColumnPicker
                 lang={lang}
                 visible={visibleCols}
+                columnOrder={columnOrder}
                 onChange={setVisibleColsPersist}
+                onReorder={reorderColumns}
               />
               <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
                 {t('sortBy', lang)}
@@ -592,6 +608,8 @@ export default function App() {
             onSelect={(id) => onSelect(id)}
             metric={metric}
             visibleCols={visibleCols}
+            columnOrder={columnOrder}
+            onReorderColumns={reorderColumns}
           />
         ) : (
           <CityBreakdownTable
@@ -604,6 +622,8 @@ export default function App() {
             sortDir={sortDir}
             onSort={onSort}
             visibleCols={visibleCols}
+            columnOrder={columnOrder}
+            onReorderColumns={reorderColumns}
           />
         )}
       </section>

@@ -5,6 +5,13 @@ type Props = {
   align?: 'left' | 'right'
   heated?: boolean
   stickyCol?: 'rank' | 'country' | 'city'
+  draggable?: boolean
+  onDragStart?: (e: React.DragEvent<HTMLTableCellElement>) => void
+  onDragEnd?: (e: React.DragEvent<HTMLTableCellElement>) => void
+  onDragOver?: (e: React.DragEvent<HTMLTableCellElement>) => void
+  onDragLeave?: (e: React.DragEvent<HTMLTableCellElement>) => void
+  onDrop?: (e: React.DragEvent<HTMLTableCellElement>) => void
+  onClickCapture?: (e: React.MouseEvent<HTMLTableCellElement>) => void
 }
 
 /** Shared results-table header cell (country + city tables). */
@@ -15,6 +22,13 @@ export function SortableTh({
   align = 'left',
   heated,
   stickyCol,
+  draggable,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDragLeave,
+  onDrop,
+  onClickCapture,
 }: Props) {
   const stickyClass =
     stickyCol === 'rank'
@@ -28,8 +42,15 @@ export function SortableTh({
     <th
       className={`sticky-th px-2 py-2.5 font-medium ${stickyClass} ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
-      } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
+      } ${draggable ? 'col-draggable' : ''} ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
+      draggable={draggable}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
+      onClickCapture={onClickCapture}
     >
       <span className="block whitespace-nowrap normal-case tracking-normal">
         <span className="block whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">
