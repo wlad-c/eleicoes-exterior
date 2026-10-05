@@ -527,14 +527,24 @@ export default function App() {
               disabled={cityCountries.length === 0}
             >
               <option value="">{t('selectCountryPlaceholder', lang)}</option>
-              {cityCountries.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {countryName(c, lang)}
-                  {countryHasLocationMap(c.id)
-                    ? ` ★`
-                    : ` (${c.cities!.length})`}
-                </option>
-              ))}
+              {cityCountries.map((c) => {
+                const locs = c.locations?.length ? c.locations : null
+                let n = c.cities!.length
+                if (locs?.length) {
+                  const covered = new Set(
+                    locs.map((l) => (l.municipality || '').toUpperCase()),
+                  )
+                  const extras = (c.cities ?? []).filter(
+                    (city) => !covered.has(city.name.toUpperCase()),
+                  ).length
+                  n = locs.length + extras
+                }
+                return (
+                  <option key={c.id} value={c.id}>
+                    {countryName(c, lang)} ({n})
+                  </option>
+                )
+              })}
             </select>
           </label>
         </div>
