@@ -73,26 +73,24 @@ export function ResultsTable({
 
   const tableRef = useRef<HTMLTableElement>(null)
   const headTableRef = useRef<HTMLTableElement>(null)
+  const footTableRef = useRef<HTMLTableElement>(null)
   const headScrollRef = useRef<HTMLDivElement>(null)
   const bodyScrollRef = useRef<HTMLDivElement>(null)
+  const footScrollRef = useRef<HTMLDivElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
   const syncingScroll = useRef(false)
-  const inFlowTotalRef = useRef<HTMLTableRowElement>(null)
   const [pinTotal, setPinTotal] = useState(false)
 
+  // Keep the Total row pinned whenever the table is on screen.
   useEffect(() => {
     const table = tableRef.current
-    const row = inFlowTotalRef.current
-    if (!table || !row) return
+    if (!table) return
 
     const update = () => {
       const vh = window.innerHeight
       const tableRect = table.getBoundingClientRect()
-      const rowRect = row.getBoundingClientRect()
       const tableInView = tableRect.bottom > 80 && tableRect.top < vh - 40
-      // Pin while browsing the table and the real Total is still below the fold
-      const totalBelowFold = rowRect.top > vh - 4
-      setPinTotal(tableInView && totalBelowFold)
+      setPinTotal(tableInView)
     }
 
     update()
@@ -103,7 +101,6 @@ export function ResultsTable({
       threshold: [0, 0.01, 0.1, 1],
     })
     io.observe(table)
-    io.observe(row)
     return () => {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
@@ -111,24 +108,35 @@ export function ResultsTable({
     }
   }, [rows])
 
-  // Keep header/body column widths aligned (separate tables for sticky head).
+  // Keep head/body/foot column widths + foot alignment in sync.
   useEffect(() => {
     const bodyTable = tableRef.current
     const headTable = headTableRef.current
-    if (!bodyTable || !headTable) return
+    const footTable = footTableRef.current
+    const bodyScroll = bodyScrollRef.current
+    const footScroll = footScrollRef.current
+    if (!bodyTable || !headTable || !footTable || !bodyScroll || !footScroll)
+      return
+
+    const applyColWidth = (el: HTMLElement | undefined, w: number) => {
+      if (!el) return
+      el.style.width = `${w}px`
+      el.style.minWidth = `${w}px`
+      el.style.maxWidth = `${w}px`
+    }
 
     const syncWidths = () => {
       const bodyCols = bodyTable.querySelectorAll('thead th')
       const headCols = headTable.querySelectorAll('thead th')
+      const footCols = footTable.querySelectorAll('tr td')
+      const tableW = bodyTable.getBoundingClientRect().width
       bodyCols.forEach((th, i) => {
-        const headTh = headCols[i] as HTMLElement | undefined
-        if (!headTh) return
         const w = (th as HTMLElement).getBoundingClientRect().width
-        headTh.style.width = `${w}px`
-        headTh.style.minWidth = `${w}px`
-        headTh.style.maxWidth = `${w}px`
+        applyColWidth(headCols[i] as HTMLElement | undefined, w)
+        applyColWidth(footCols[i] as HTMLElement | undefined, w)
       })
-      headTable.style.width = `${bodyTable.getBoundingClientRect().width}px`
+      headTable.style.width = `${tableW}px`
+      footTable.style.width = `${tableW}px`
 
       const rankTh = bodyTable.querySelector(
         'thead th.sticky-col-rank',
@@ -137,29 +145,45 @@ export function ResultsTable({
         const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
         bodyTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
         headTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        footTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
       }
+
+      // Align the fixed foot track with the body scroller.
+      const r = bodyScroll.getBoundingClientRect()
+      footScroll.style.marginLeft = `${Math.max(0, r.left)}px`
+      footScroll.style.width = `${r.width}px`
     }
 
     syncWidths()
     const ro = new ResizeObserver(syncWidths)
     ro.observe(bodyTable)
+    ro.observe(bodyScroll)
     window.addEventListener('resize', syncWidths)
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', syncWidths)
     }
-  }, [rows, lang, sortKey, sortDir, metric, highlightId, visibleCols])
+  }, [rows, lang, sortKey, sortDir, metric, highlightId, visibleCols, columnOrder])
 
-  const syncScroll = (source: 'head' | 'body') => {
+  const syncScroll = (source: 'head' | 'body' | 'foot') => {
     const head = headScrollRef.current
     const body = bodyScrollRef.current
+    const foot = footScrollRef.current
     const shell = shellRef.current
-    if (!head || !body || syncingScroll.current) return
+    if (!head || !body || !foot || syncingScroll.current) return
     syncingScroll.current = true
-    if (source === 'body') head.scrollLeft = body.scrollLeft
-    else body.scrollLeft = head.scrollLeft
-    const scrolled = (source === 'body' ? body : head).scrollLeft > 0
+    const left =
+      source === 'body'
+        ? body.scrollLeft
+        : source === 'head'
+          ? head.scrollLeft
+          : foot.scrollLeft
+    head.scrollLeft = left
+    body.scrollLeft = left
+    foot.scrollLeft = left
+    const scrolled = left > 0
     shell?.classList.toggle('is-x-scrolled', scrolled)
+    foot.closest('.total-pin')?.classList.toggle('is-x-scrolled', scrolled)
     requestAnimationFrame(() => {
       syncingScroll.current = false
     })
@@ -682,46 +706,32 @@ export function ResultsTable({
                 )
               })}
             </tbody>
-            <tfoot>
-              <tr
-                ref={inFlowTotalRef}
-                className="border-t-2 border-[var(--line)] text-sm font-semibold"
-              >
-                {totalCells}
-              </tr>
+            {/* In-flow total kept for layout/a11y; visual Total is the fixed row */}
+            <tfoot className="results-table-width-foot" aria-hidden="true">
+              <tr className="text-sm font-semibold">{totalCells}</tr>
             </tfoot>
           </table>
         </div>
       </div>
 
-      {/* Fixed Total pin — reliable on iOS, no nested scroll container */}
+      {/* Fixed Total row — same columns/widths as the table, always on-screen */}
       <div
-        className={`total-pin ${pinTotal ? 'total-pin--on' : ''}`}
+        className={`total-pin total-pin--row ${pinTotal ? 'total-pin--on' : ''}`}
         aria-hidden={!pinTotal}
       >
-        <div className="total-pin-inner">
-          <span className="font-semibold text-[var(--ink)]">
-            {t('tableTotal', lang)}
-          </span>
-          <span className="text-[var(--ink-muted)]">
-            {totals.countries} {t('countries', lang)}
-          </span>
-          <span className="tabular-nums">
-            <span className="text-[var(--ink-muted)]">{t('lula', lang)} </span>
-            {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
-          </span>
-          <span className="tabular-nums">
-            <span className="text-[var(--ink-muted)]">
-              {t('fBolsonaro', lang)}{' '}
-            </span>
-            {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang)}
-          </span>
-          <span className="tabular-nums font-semibold">
-            <span className="text-[var(--ink-muted)]">
-              {t('swingToLula', lang)}{' '}
-            </span>
-            {fmtPp(totals.swingToLula, lang)}
-          </span>
+        <div
+          className="table-x-scroll table-x-scroll--foot"
+          ref={footScrollRef}
+          onScroll={() => syncScroll('foot')}
+        >
+          <table
+            ref={footTableRef}
+            className="results-table results-table--foot w-full text-left text-sm"
+          >
+            <tbody>
+              <tr className="text-sm font-semibold">{totalCells}</tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
