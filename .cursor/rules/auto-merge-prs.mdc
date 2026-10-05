@@ -1,0 +1,14 @@
+---
+description: Merge pull requests as soon as they are ready; do not wait for an explicit merge request.
+alwaysApply: true
+---
+
+# Auto-merge pull requests
+
+When you open or update a pull request for work on this repository:
+
+- Merge it as soon as it is ready (pushed, PR created/updated, and basic checks you own are green / mergeable).
+- Do **not** wait for the maintainer to reply “merge” or otherwise approve in chat.
+- The maintainer reviews and tests via the public site; chat sign-off is not required before merge.
+- Prefer a normal merge commit unless the repo or user has specified otherwise.
+- If merge is blocked (conflicts, failing required checks, draft that cannot be merged), fix the blocker or report it; do not leave a ready PR unmerged solely for human confirmation.
