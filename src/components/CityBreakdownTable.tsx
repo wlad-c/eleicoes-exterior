@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CountryFlag } from './CountryFlag'
 import { SortableTh } from './SortableTh'
 import {
@@ -58,6 +58,8 @@ export function CityBreakdownTable({
   onReorderColumns,
 }: Props) {
   const tableRef = useRef<HTMLTableElement>(null)
+  const inFlowTotalRef = useRef<HTMLTableRowElement>(null)
+  const [pinTotal, setPinTotal] = useState(false)
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
@@ -142,6 +144,37 @@ export function CityBreakdownTable({
       window.removeEventListener('resize', sync)
     }
   }, [rows, showCountry, visibleCols])
+
+  // Same pinned Total bar as the Country table (fixed to viewport on iOS).
+  useEffect(() => {
+    const table = tableRef.current
+    const row = inFlowTotalRef.current
+    if (!table || !row) return
+
+    const update = () => {
+      const vh = window.innerHeight
+      const tableRect = table.getBoundingClientRect()
+      const rowRect = row.getBoundingClientRect()
+      const tableInView = tableRect.bottom > 80 && tableRect.top < vh - 40
+      const totalBelowFold = rowRect.top > vh - 4
+      setPinTotal(tableInView && totalBelowFold)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    const io = new IntersectionObserver(update, {
+      root: null,
+      threshold: [0, 0.01, 0.1, 1],
+    })
+    io.observe(table)
+    io.observe(row)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+      io.disconnect()
+    }
+  }, [rows, loading, showCountry, visibleCols, placeKind])
 
   if (loading) {
     return (
@@ -515,7 +548,10 @@ export function CityBreakdownTable({
             })}
           </tbody>
           <tfoot>
-            <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
+            <tr
+              ref={inFlowTotalRef}
+              className="border-t-2 border-[var(--line)] text-sm font-semibold"
+            >
               <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                 —
               </td>
@@ -647,6 +683,38 @@ export function CityBreakdownTable({
           </tfoot>
         </table>
       </div>
+
+      {/* Fixed Total pin — same experience as Country table */}
+      <div
+        className={`total-pin ${pinTotal ? 'total-pin--on' : ''}`}
+        aria-hidden={!pinTotal}
+      >
+        <div className="total-pin-inner">
+          <span className="font-semibold text-[var(--ink)]">
+            {t('tableTotal', lang)}
+          </span>
+          <span className="text-[var(--ink-muted)]">
+            {rows.length} {placeCountLabel}
+          </span>
+          <span className="tabular-nums">
+            <span className="text-[var(--ink-muted)]">{t('lula', lang)} </span>
+            {fmtShare(totals.lulaPct, totals.lula, lang)}
+          </span>
+          <span className="tabular-nums">
+            <span className="text-[var(--ink-muted)]">
+              {t('fBolsonaro', lang)}{' '}
+            </span>
+            {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
+          </span>
+          <span className="tabular-nums font-semibold">
+            <span className="text-[var(--ink-muted)]">
+              {t('swingToLula', lang)}{' '}
+            </span>
+            {fmtPp(totals.swingToLula, lang)}
+          </span>
+        </div>
+      </div>
+
       <p className="mt-2 px-1 text-xs text-[var(--ink-muted)]">
         {footerNote ?? t('cityNo2022Footnote', lang)}
       </p>
