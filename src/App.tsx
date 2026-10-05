@@ -454,59 +454,6 @@ export default function App() {
           ref={tableChromeRef}
           className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5"
         >
-          <div className="filter-row">
-            <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              <span className="filter-label">
-                {tableView === 'areas'
-                  ? t('searchArea', lang)
-                  : tableView === 'cities'
-                    ? t('searchCity', lang)
-                    : t('search', lang)}
-              </span>
-              <input
-                className="control mt-1 w-full min-w-0"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={
-                  tableView === 'areas'
-                    ? t('searchArea', lang)
-                    : tableView === 'cities'
-                      ? t('searchCity', lang)
-                      : t('search', lang)
-                }
-              />
-            </label>
-            <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              <span className="filter-label">{t('region', lang)}</span>
-              <select
-                className="control mt-1 w-full min-w-0"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-              >
-                <option value="all">{t('allRegions', lang)}</option>
-                {regions.map((r) => (
-                  <option key={r} value={r}>
-                    {regionLabel(r, lang)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="filter-field filter-pending text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              <span className="filter-label">{t('status', lang)}</span>
-              <select
-                className="control mt-1 w-full min-w-0"
-                value={statusFilter}
-                onChange={(e) =>
-                  setStatusFilter(e.target.value as 'reported' | 'all' | 'pending')
-                }
-              >
-                <option value="reported">{t('statusReported', lang)}</option>
-                <option value="all">{t('statusAll', lang)}</option>
-                <option value="pending">{t('statusPending', lang)}</option>
-              </select>
-            </label>
-          </div>
-
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div
               className="flex gap-1"
@@ -596,6 +543,59 @@ export default function App() {
                 </select>
               </label>
             </div>
+          </div>
+
+          <div className="filter-row">
+            <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              <span className="filter-label">
+                {tableView === 'areas'
+                  ? t('searchArea', lang)
+                  : tableView === 'cities'
+                    ? t('searchCity', lang)
+                    : t('search', lang)}
+              </span>
+              <input
+                className="control mt-1 w-full min-w-0"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={
+                  tableView === 'areas'
+                    ? t('searchArea', lang)
+                    : tableView === 'cities'
+                      ? t('searchCity', lang)
+                      : t('search', lang)
+                }
+              />
+            </label>
+            <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              <span className="filter-label">{t('region', lang)}</span>
+              <select
+                className="control mt-1 w-full min-w-0"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
+                <option value="all">{t('allRegions', lang)}</option>
+                {regions.map((r) => (
+                  <option key={r} value={r}>
+                    {regionLabel(r, lang)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="filter-field filter-pending text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              <span className="filter-label">{t('status', lang)}</span>
+              <select
+                className="control mt-1 w-full min-w-0"
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value as 'reported' | 'all' | 'pending')
+                }
+              >
+                <option value="reported">{t('statusReported', lang)}</option>
+                <option value="all">{t('statusAll', lang)}</option>
+                <option value="pending">{t('statusPending', lang)}</option>
+              </select>
+            </label>
           </div>
         </div>
 
