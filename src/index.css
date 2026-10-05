@@ -184,6 +184,9 @@ html.dark .sticky-table-chrome {
 .sticky-col-rank {
   left: 0;
   z-index: 3;
+  width: var(--table-col-rank, 3.25rem);
+  min-width: var(--table-col-rank, 3.25rem);
+  max-width: var(--table-col-rank, 3.25rem);
 }
 
 .sticky-col-country,
@@ -411,17 +414,32 @@ html.dark .sticky-col-city {
   max-width: 8.5rem;
 }
 
+/*
+ * Label column widths — Country full name = Area/City (abbr + place)
+ * so the first metric column starts at the same offset on every tab.
+ */
+:root {
+  --table-col-rank: 3.25rem;
+  --table-col-abbr: 4.5rem;
+  --table-col-place: 9rem;
+  --table-col-country-full: calc(
+    var(--table-col-abbr) + var(--table-col-place)
+  );
+}
+
 .cell-truncate-city {
-  max-width: 9rem;
+  width: var(--table-col-place);
+  max-width: var(--table-col-place);
 }
 
 .cell-truncate-abbr {
-  max-width: 4.5rem;
+  width: var(--table-col-abbr);
+  max-width: var(--table-col-abbr);
 }
 
 /* Full country names in the Country table (Area/City keep abbrevs). */
 .cell-truncate-country {
-  max-width: 12rem;
+  max-width: var(--table-col-country-full);
 }
 
 .country-flag-label .cell-truncate-text {
@@ -440,18 +458,18 @@ html.dark .sticky-col-city {
 }
 
 .sticky-col-country.cell-truncate-abbr {
-  max-width: 4.5rem;
+  width: var(--table-col-abbr);
+  max-width: var(--table-col-abbr);
 }
 
 /*
- * Country table: keep head/body/foot sticky country cells the same width.
- * A narrower body max-width left a painted sticky edge mid-column (the
- * “weird line” between Country and the first metric).
+ * Country table: fixed sticky country width = abbr + place, matching
+ * Area/City so votes/stats columns share the same left edge.
  */
 .results-table--head .sticky-col-country,
 .results-table--body .sticky-col-country {
-  max-width: 12rem;
-  width: 12rem;
+  width: var(--table-col-country-full);
+  max-width: var(--table-col-country-full);
 }
 
 .sticky-col-country.cell-truncate-country {
@@ -459,7 +477,8 @@ html.dark .sticky-col-city {
 }
 
 .sticky-col-city.cell-truncate-city {
-  max-width: 9rem;
+  width: var(--table-col-place);
+  max-width: var(--table-col-place);
 }
 
 .table-col-picker summary::-webkit-details-marker {

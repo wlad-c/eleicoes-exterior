@@ -186,6 +186,7 @@ export function CityBreakdownTable({
                   onClick={() => onSort('country')}
                   hint={t('hintCountry', lang)}
                   stickyCol="country"
+                  className="cell-truncate-abbr"
                 >
                   {t('country', lang)}
                   {arrow('country')}
@@ -195,6 +196,7 @@ export function CityBreakdownTable({
                 onClick={() => onSort('city')}
                 hint={placeHint}
                 stickyCol={showCountry ? undefined : 'city'}
+                className="cell-truncate-city"
               >
                 {placeLabel}
                 {arrow('city')}
@@ -511,7 +513,7 @@ export function CityBreakdownTable({
               </td>
               {showCountry ? (
                 <td
-                  className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink-muted)]"
+                  className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink-muted)]"
                   title={
                     singleCountry ? countryName(singleCountry, lang) : undefined
                   }
@@ -522,11 +524,13 @@ export function CityBreakdownTable({
               <td
                 className={`${
                   showCountry ? '' : 'sticky-col sticky-col-city '
-                }px-2 py-2.5 text-[var(--ink)]`}
+                }cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]`}
               >
-                {t('tableTotal', lang)}
-                <span className="ml-2 font-normal text-[var(--ink-muted)]">
-                  {rows.length} {placeCountLabel}
+                <span className="cell-truncate-text">
+                  {t('tableTotal', lang)}
+                  <span className="ml-2 font-normal text-[var(--ink-muted)]">
+                    {rows.length} {placeCountLabel}
+                  </span>
                 </span>
               </td>
               {metricCols.map((col) => {

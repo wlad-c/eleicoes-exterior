@@ -5,6 +5,7 @@ type Props = {
   align?: 'left' | 'right'
   heated?: boolean
   stickyCol?: 'rank' | 'country' | 'city'
+  className?: string
   draggable?: boolean
   onDragStart?: (e: React.DragEvent<HTMLTableCellElement>) => void
   onDragEnd?: (e: React.DragEvent<HTMLTableCellElement>) => void
@@ -22,6 +23,7 @@ export function SortableTh({
   align = 'left',
   heated,
   stickyCol,
+  className = '',
   draggable,
   onDragStart,
   onDragEnd,
@@ -42,7 +44,7 @@ export function SortableTh({
     <th
       className={`sticky-th px-2 py-2.5 font-medium ${stickyClass} ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
-      } ${draggable ? 'col-draggable' : ''} ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
+      } ${draggable ? 'col-draggable' : ''} ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''} ${className}`}
       onClick={onClick}
       draggable={draggable}
       onDragStart={onDragStart}
