@@ -426,6 +426,14 @@ html.dark .sticky-col-city {
   white-space: nowrap;
 }
 
+/* Place-name cells: keep ellipsis on the inner text node */
+.cell-truncate > .cell-truncate-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .sticky-col-country.cell-truncate,
 .sticky-col-country.cell-truncate-abbr {
   max-width: 4.5rem;
