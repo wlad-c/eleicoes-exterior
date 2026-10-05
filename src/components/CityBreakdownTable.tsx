@@ -58,7 +58,11 @@ export function CityBreakdownTable({
   onReorderColumns,
 }: Props) {
   const tableRef = useRef<HTMLTableElement>(null)
-  const inFlowTotalRef = useRef<HTMLTableRowElement>(null)
+  const footTableRef = useRef<HTMLTableElement>(null)
+  const bodyScrollRef = useRef<HTMLDivElement>(null)
+  const footScrollRef = useRef<HTMLDivElement>(null)
+  const shellRef = useRef<HTMLDivElement>(null)
+  const syncingScroll = useRef(false)
   const [pinTotal, setPinTotal] = useState(false)
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
@@ -126,38 +130,65 @@ export function CityBreakdownTable({
 
   useEffect(() => {
     const table = tableRef.current
+    const footTable = footTableRef.current
+    const bodyScroll = bodyScrollRef.current
+    const footScroll = footScrollRef.current
     if (!table) return
+
+    const applyColWidth = (el: HTMLElement | undefined, w: number) => {
+      if (!el) return
+      el.style.width = `${w}px`
+      el.style.minWidth = `${w}px`
+      el.style.maxWidth = `${w}px`
+    }
+
     const sync = () => {
       const rankTh = table.querySelector(
         'thead th.sticky-col-rank',
       ) as HTMLElement | null
-      if (!rankTh) return
-      const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
-      table.style.setProperty('--sticky-rank-width', `${rankW}px`)
+      if (rankTh) {
+        const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
+        table.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        footTable?.style.setProperty('--sticky-rank-width', `${rankW}px`)
+      }
+
+      if (footTable && bodyScroll && footScroll) {
+        const bodyCols = table.querySelectorAll('thead th')
+        const footCols = footTable.querySelectorAll('tr td')
+        const tableW = table.getBoundingClientRect().width
+        bodyCols.forEach((th, i) => {
+          applyColWidth(
+            footCols[i] as HTMLElement | undefined,
+            (th as HTMLElement).getBoundingClientRect().width,
+          )
+        })
+        footTable.style.width = `${tableW}px`
+        const r = bodyScroll.getBoundingClientRect()
+        footScroll.style.marginLeft = `${Math.max(0, r.left)}px`
+        footScroll.style.width = `${r.width}px`
+      }
     }
     sync()
     const ro = new ResizeObserver(sync)
     ro.observe(table)
+    if (bodyScrollRef.current) ro.observe(bodyScrollRef.current)
     window.addEventListener('resize', sync)
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', sync)
     }
-  }, [rows, showCountry, visibleCols])
+  }, [rows, showCountry, visibleCols, columnOrder, loading])
 
-  // Same pinned Total bar as the Country table (fixed to viewport on iOS).
+  // Pin Total row whenever the table is on screen (any row count).
   useEffect(() => {
     const table = tableRef.current
-    const row = inFlowTotalRef.current
-    if (!table || !row) return
+    if (!table) return
 
     const update = () => {
       const vh = window.innerHeight
       const tableRect = table.getBoundingClientRect()
-      const rowRect = row.getBoundingClientRect()
       const tableInView = tableRect.bottom > 80 && tableRect.top < vh - 40
-      const totalBelowFold = rowRect.top > vh - 4
-      setPinTotal(tableInView && totalBelowFold)
+      setPinTotal(tableInView)
     }
 
     update()
@@ -168,13 +199,29 @@ export function CityBreakdownTable({
       threshold: [0, 0.01, 0.1, 1],
     })
     io.observe(table)
-    io.observe(row)
     return () => {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
       io.disconnect()
     }
   }, [rows, loading, showCountry, visibleCols, placeKind])
+
+  const syncScroll = (source: 'body' | 'foot') => {
+    const body = bodyScrollRef.current
+    const foot = footScrollRef.current
+    const shell = shellRef.current
+    if (!body || !foot || syncingScroll.current) return
+    syncingScroll.current = true
+    const left = source === 'body' ? body.scrollLeft : foot.scrollLeft
+    body.scrollLeft = left
+    foot.scrollLeft = left
+    const scrolled = left > 0
+    shell?.classList.toggle('is-x-scrolled', scrolled)
+    foot.closest('.total-pin')?.classList.toggle('is-x-scrolled', scrolled)
+    requestAnimationFrame(() => {
+      syncingScroll.current = false
+    })
+  }
 
   if (loading) {
     return (
@@ -202,16 +249,124 @@ export function CityBreakdownTable({
   const singleCountry =
     !showCountry && rows[0] ? countries.get(rows[0].countryId) : null
 
+  const totalCells = (
+    <>
+      <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+        —
+      </td>
+      {showCountry ? (
+        <td
+          className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink-muted)]"
+          title={
+            singleCountry ? countryName(singleCountry, lang) : undefined
+          }
+        >
+          {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
+        </td>
+      ) : null}
+      <td
+        className={`${
+          showCountry ? '' : 'sticky-col sticky-col-city '
+        }cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]`}
+      >
+        <span className="cell-truncate-text">
+          {t('tableTotal', lang)}
+          <span className="ml-2 font-normal text-[var(--ink-muted)]">
+            {rows.length} {placeCountLabel}
+          </span>
+        </span>
+      </td>
+      {metricCols.map((col) => {
+        switch (col) {
+          case 'region':
+            return (
+              <td key={col} className="px-2 py-2.5 text-[var(--ink-muted)]">
+                {singleCountry
+                  ? regionLabel(singleCountry.region, lang)
+                  : '—'}
+              </td>
+            )
+          case 'votes2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid, lang)}
+              </td>
+            )
+          case 'lulaPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.lulaPct, totals.lula, lang)}
+              </td>
+            )
+          case 'bolsonaroPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
+              </td>
+            )
+          case 'lulaPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+              </td>
+            )
+          case 'bolsonaroPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+              </td>
+            )
+          case 'lulaChange':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.lulaChange, lang)}
+              </td>
+            )
+          case 'bolsonaroChange':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.bolsonaroChange, lang)}
+              </td>
+            )
+          case 'swingToLula':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.swingToLula, lang)}
+              </td>
+            )
+          case 'swingToBolsonaro':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.swingToBolsonaro, lang)}
+              </td>
+            )
+          case 'sections':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtCoverage(totals.coverage)}
+              </td>
+            )
+        }
+      })}
+    </>
+  )
+
   return (
     <div>
+      <div className="results-table-shell" ref={shellRef}>
       <div
         className="table-x-scroll"
-        onScroll={(e) => {
-          e.currentTarget.classList.toggle(
-            'is-x-scrolled',
-            e.currentTarget.scrollLeft > 0,
-          )
-        }}
+        ref={bodyScrollRef}
+        onScroll={() => syncScroll('body')}
       >
         <table
           ref={tableRef}
@@ -547,171 +702,31 @@ export function CityBreakdownTable({
               )
             })}
           </tbody>
-          <tfoot>
-            <tr
-              ref={inFlowTotalRef}
-              className="border-t-2 border-[var(--line)] text-sm font-semibold"
-            >
-              <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                —
-              </td>
-              {showCountry ? (
-                <td
-                  className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink-muted)]"
-                  title={
-                    singleCountry ? countryName(singleCountry, lang) : undefined
-                  }
-                >
-                  {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
-                </td>
-              ) : null}
-              <td
-                className={`${
-                  showCountry ? '' : 'sticky-col sticky-col-city '
-                }cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]`}
-              >
-                <span className="cell-truncate-text">
-                  {t('tableTotal', lang)}
-                  <span className="ml-2 font-normal text-[var(--ink-muted)]">
-                    {rows.length} {placeCountLabel}
-                  </span>
-                </span>
-              </td>
-              {metricCols.map((col) => {
-                switch (col) {
-                  case 'region':
-                    return (
-                      <td key={col} className="px-2 py-2.5 text-[var(--ink-muted)]">
-                        {singleCountry
-                          ? regionLabel(singleCountry.region, lang)
-                          : '—'}
-                      </td>
-                    )
-                  case 'votes2026':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtInt(totals.valid, lang)}
-                      </td>
-                    )
-                  case 'lulaPct2026':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtShare(totals.lulaPct, totals.lula, lang)}
-                      </td>
-                    )
-                  case 'bolsonaroPct2026':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
-                      </td>
-                    )
-                  case 'lulaPct2022':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
-                      >
-                        {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
-                      </td>
-                    )
-                  case 'bolsonaroPct2022':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
-                      >
-                        {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
-                      </td>
-                    )
-                  case 'lulaChange':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtPp(totals.lulaChange, lang)}
-                      </td>
-                    )
-                  case 'bolsonaroChange':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtPp(totals.bolsonaroChange, lang)}
-                      </td>
-                    )
-                  case 'swingToLula':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtPp(totals.swingToLula, lang)}
-                      </td>
-                    )
-                  case 'swingToBolsonaro':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums"
-                      >
-                        {fmtPp(totals.swingToBolsonaro, lang)}
-                      </td>
-                    )
-                  case 'sections':
-                    return (
-                      <td
-                        key={col}
-                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
-                      >
-                        {fmtCoverage(totals.coverage)}
-                      </td>
-                    )
-                }
-              })}
-            </tr>
+          <tfoot className="results-table-width-foot" aria-hidden="true">
+            <tr className="text-sm font-semibold">{totalCells}</tr>
           </tfoot>
         </table>
       </div>
+      </div>
 
-      {/* Fixed Total pin — same experience as Country table */}
+      {/* Fixed Total row — same columns/widths as the table */}
       <div
-        className={`total-pin ${pinTotal ? 'total-pin--on' : ''}`}
+        className={`total-pin total-pin--row ${pinTotal ? 'total-pin--on' : ''}`}
         aria-hidden={!pinTotal}
       >
-        <div className="total-pin-inner">
-          <span className="font-semibold text-[var(--ink)]">
-            {t('tableTotal', lang)}
-          </span>
-          <span className="text-[var(--ink-muted)]">
-            {rows.length} {placeCountLabel}
-          </span>
-          <span className="tabular-nums">
-            <span className="text-[var(--ink-muted)]">{t('lula', lang)} </span>
-            {fmtShare(totals.lulaPct, totals.lula, lang)}
-          </span>
-          <span className="tabular-nums">
-            <span className="text-[var(--ink-muted)]">
-              {t('fBolsonaro', lang)}{' '}
-            </span>
-            {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
-          </span>
-          <span className="tabular-nums font-semibold">
-            <span className="text-[var(--ink-muted)]">
-              {t('swingToLula', lang)}{' '}
-            </span>
-            {fmtPp(totals.swingToLula, lang)}
-          </span>
+        <div
+          className="table-x-scroll table-x-scroll--foot"
+          ref={footScrollRef}
+          onScroll={() => syncScroll('foot')}
+        >
+          <table
+            ref={footTableRef}
+            className="results-table results-table--foot results-table--cities text-left text-sm"
+          >
+            <tbody>
+              <tr className="text-sm font-semibold">{totalCells}</tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
