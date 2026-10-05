@@ -513,6 +513,7 @@ export default function App() {
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                 aria-selected={tableView === 'areas'}
+                title={t('areaTableHint', lang)}
                 onClick={() => switchTableView('areas')}
               >
                 {t('tabAreas', lang)}
@@ -522,6 +523,7 @@ export default function App() {
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                 aria-selected={tableView === 'cities'}
+                title={t('cityTableHint', lang)}
                 onClick={() => switchTableView('cities')}
               >
                 {t('tabCities', lang)}
@@ -598,11 +600,6 @@ export default function App() {
             lang={lang}
             showCountry
             placeKind={tableView === 'areas' ? 'area' : 'city'}
-            sourceNote={
-              tableView === 'areas'
-                ? t('areaTableHint', lang)
-                : t('cityTableHint', lang)
-            }
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={onSort}

@@ -28,7 +28,6 @@ type Props = {
   showCountry: boolean
   /** Column label + empty/footer wording for Area vs City tabs. */
   placeKind?: 'area' | 'city'
-  sourceNote?: string | null
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
@@ -43,7 +42,6 @@ export function CityBreakdownTable({
   loading,
   showCountry,
   placeKind = 'city',
-  sourceNote,
   sortKey,
   sortDir,
   onSort,
@@ -155,9 +153,6 @@ export function CityBreakdownTable({
 
   return (
     <div>
-      {sourceNote ? (
-        <p className="mb-2 text-xs text-[var(--ink-muted)]">{sourceNote}</p>
-      ) : null}
       <div className="table-x-scroll">
         <table
           ref={tableRef}
