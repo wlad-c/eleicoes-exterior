@@ -76,8 +76,8 @@ const dict = {
     pt: 'Municípios oficiais do TSE no exterior (ZZ) no país selecionado',
   },
   locationTableHint: {
-    en: 'Voting cities from TSE ballot boxes, split inside consular municipalities when a city map is available.',
-    pt: 'Cidades de votação a partir dos boletins de urna do TSE, desagregadas dentro dos municípios consulares quando há mapa de cidades.',
+    en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular municipalities; other TSE municipalities listed as-is.',
+    pt: 'Cidades de votação a partir dos boletins de urna do TSE (NM_LOCAL_VOTACAO), desagregadas nos municípios consulares amplos; demais municípios TSE listados como estão.',
   },
   selectCountry: {
     en: 'Select a country',

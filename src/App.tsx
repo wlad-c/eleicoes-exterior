@@ -205,10 +205,25 @@ export default function App() {
     }
   }, [effectiveCityCountryId])
 
-  const breakdownRows = locationRows?.length
-    ? locationRows
-    : selectedCityCountry?.cities ?? []
-  const isLocationLevel = Boolean(locationRows?.length)
+  // Prefer voting-city rows; keep TSE municipalities that were not split.
+  const breakdownRows = useMemo(() => {
+    const locs = locationRows?.length
+      ? locationRows
+      : selectedCityCountry?.locations?.length
+        ? selectedCityCountry.locations
+        : null
+    if (!locs?.length) return selectedCityCountry?.cities ?? []
+    const covered = new Set(
+      locs.map((l) => (l.municipality || '').toUpperCase()),
+    )
+    const extras = (selectedCityCountry?.cities ?? [])
+      .filter((c) => !covered.has(c.name.toUpperCase()))
+      .map((c) => ({ ...c, level: 'municipality' as const }))
+    return [...locs, ...extras].sort(
+      (a, b) => b.y2026.totalValid - a.y2026.totalValid,
+    )
+  }, [locationRows, selectedCityCountry])
+  const isLocationLevel = breakdownRows.some((r) => r.level === 'location')
   const locationSource = effectiveCityCountryId
     ? locationMapSource(effectiveCityCountryId)
     : null
