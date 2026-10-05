@@ -11,6 +11,7 @@ export type TableMetricCol =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
+  | 'swingToBolsonaro'
   | 'sections'
 
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
@@ -23,10 +24,11 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'lulaChange',
   'bolsonaroChange',
   'swingToLula',
+  'swingToBolsonaro',
   'sections',
 ]
 
-/** Default: hide region, 2022 share columns, and sections. */
+/** Default: hide region, 2022 share columns, swing to Bolsonaro, and sections. */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
   'lulaPct2026',
@@ -46,6 +48,7 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   lulaChange: 'lulaChange',
   bolsonaroChange: 'bolsonaroChange',
   swingToLula: 'swingToLula',
+  swingToBolsonaro: 'swingToBolsonaro',
   sections: 'notes',
 }
 
