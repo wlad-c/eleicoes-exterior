@@ -195,7 +195,10 @@ async function main() {
     agg.cities.push({
       code,
       name: city,
+      level: 'municipality',
       y2026: yearResult(lula, bolsonaro, totalValid),
+      y2022: null,
+      swing: null,
       coverage: { counted, total },
     })
     aggregates.set(countryId, agg)

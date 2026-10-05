@@ -188,6 +188,141 @@
             "total": 18
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "30198-NAGÓIA",
+          "name": "NAGÓIA",
+          "level": "location",
+          "municipality": "NAGÓIA",
+          "y2026": {
+            "lula": 1151,
+            "bolsonaro": 6347,
+            "totalValid": 8596,
+            "lulaPct": 13.39,
+            "bolsonaroPct": 73.84
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 36,
+            "total": 36
+          }
+        },
+        {
+          "code": "30627-OIZUMI",
+          "name": "OIZUMI",
+          "level": "location",
+          "municipality": "TÓQUIO",
+          "y2026": {
+            "lula": 910,
+            "bolsonaro": 4482,
+            "totalValid": 6231,
+            "lulaPct": 14.6,
+            "bolsonaroPct": 71.93
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 17,
+            "total": 17
+          }
+        },
+        {
+          "code": "30627-TOQUIO",
+          "name": "TOQUIO",
+          "level": "location",
+          "municipality": "TÓQUIO",
+          "y2026": {
+            "lula": 1418,
+            "bolsonaro": 3941,
+            "totalValid": 6177,
+            "lulaPct": 22.96,
+            "bolsonaroPct": 63.8
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 26,
+            "total": 26
+          }
+        },
+        {
+          "code": "30198-SUZUKA",
+          "name": "SUZUKA",
+          "level": "location",
+          "municipality": "NAGÓIA",
+          "y2026": {
+            "lula": 300,
+            "bolsonaro": 2197,
+            "totalValid": 2826,
+            "lulaPct": 10.62,
+            "bolsonaroPct": 77.74
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 8,
+            "total": 8
+          }
+        },
+        {
+          "code": "30198-TOYOHASHI",
+          "name": "TOYOHASHI",
+          "level": "location",
+          "municipality": "NAGÓIA",
+          "y2026": {
+            "lula": 366,
+            "bolsonaro": 1915,
+            "totalValid": 2605,
+            "lulaPct": 14.05,
+            "bolsonaroPct": 73.51
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 8,
+            "total": 8
+          }
+        },
+        {
+          "code": "30198-TAKAOKA",
+          "name": "TAKAOKA",
+          "level": "location",
+          "municipality": "NAGÓIA",
+          "y2026": {
+            "lula": 94,
+            "bolsonaro": 585,
+            "totalValid": 765,
+            "lulaPct": 12.29,
+            "bolsonaroPct": 76.47
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
+          }
+        },
+        {
+          "code": "30198-HIROSHIMA",
+          "name": "HIROSHIMA",
+          "level": "location",
+          "municipality": "NAGÓIA",
+          "y2026": {
+            "lula": 111,
+            "bolsonaro": 436,
+            "totalValid": 633,
+            "lulaPct": 17.54,
+            "bolsonaroPct": 68.88
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
+          }
+        }
       ]
     },
     {
@@ -250,6 +385,103 @@
           "coverage": {
             "counted": 10,
             "total": 10
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "30562-SYDNEY",
+          "name": "SYDNEY",
+          "level": "location",
+          "municipality": "SYDNEY",
+          "y2026": {
+            "lula": 2128,
+            "bolsonaro": 1276,
+            "totalValid": 3911,
+            "lulaPct": 54.41,
+            "bolsonaroPct": 32.63
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 13,
+            "total": 13
+          }
+        },
+        {
+          "code": "30562-BRISBANE",
+          "name": "BRISBANE",
+          "level": "location",
+          "municipality": "SYDNEY",
+          "y2026": {
+            "lula": 956,
+            "bolsonaro": 498,
+            "totalValid": 1625,
+            "lulaPct": 58.83,
+            "bolsonaroPct": 30.65
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 6,
+            "total": 6
+          }
+        },
+        {
+          "code": "29491-MELBOURNE",
+          "name": "MELBOURNE",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 879,
+            "bolsonaro": 340,
+            "totalValid": 1369,
+            "lulaPct": 64.21,
+            "bolsonaroPct": 24.84
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
+          }
+        },
+        {
+          "code": "29491-PERTH",
+          "name": "PERTH",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 458,
+            "bolsonaro": 386,
+            "totalValid": 984,
+            "lulaPct": 46.54,
+            "bolsonaroPct": 39.23
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
+          }
+        },
+        {
+          "code": "29491-CAMBERRA",
+          "name": "CAMBERRA",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 141,
+            "bolsonaro": 79,
+            "totalValid": 241,
+            "lulaPct": 58.51,
+            "bolsonaroPct": 32.78
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
           }
         }
       ]
@@ -873,6 +1105,141 @@
             "total": 12
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "29416-BOSTON",
+          "name": "BOSTON",
+          "level": "location",
+          "municipality": "BOSTON",
+          "y2026": {
+            "lula": 2824,
+            "bolsonaro": 7454,
+            "totalValid": 10912,
+            "lulaPct": 25.88,
+            "bolsonaroPct": 68.31
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 45,
+            "total": 45
+          }
+        },
+        {
+          "code": "29416-FRAMINGHAM",
+          "name": "FRAMINGHAM",
+          "level": "location",
+          "municipality": "BOSTON",
+          "y2026": {
+            "lula": 997,
+            "bolsonaro": 3398,
+            "totalValid": 4697,
+            "lulaPct": 21.23,
+            "bolsonaroPct": 72.34
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 20,
+            "total": 20
+          }
+        },
+        {
+          "code": "29980-LOS ANGELES",
+          "name": "LOS ANGELES",
+          "level": "location",
+          "municipality": "LOS ANGELES",
+          "y2026": {
+            "lula": 1920,
+            "bolsonaro": 1412,
+            "totalValid": 3610,
+            "lulaPct": 53.19,
+            "bolsonaroPct": 39.11
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 21,
+            "total": 21
+          }
+        },
+        {
+          "code": "29807-HOUSTON",
+          "name": "HOUSTON",
+          "level": "location",
+          "municipality": "HOUSTON",
+          "y2026": {
+            "lula": 1030,
+            "bolsonaro": 1919,
+            "totalValid": 3349,
+            "lulaPct": 30.76,
+            "bolsonaroPct": 57.3
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 18,
+            "total": 18
+          }
+        },
+        {
+          "code": "29807-CARROLLTON",
+          "name": "CARROLLTON",
+          "level": "location",
+          "municipality": "HOUSTON",
+          "y2026": {
+            "lula": 235,
+            "bolsonaro": 667,
+            "totalValid": 976,
+            "lulaPct": 24.08,
+            "bolsonaroPct": 68.34
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 5,
+            "total": 5
+          }
+        },
+        {
+          "code": "29980-UTAH",
+          "name": "UTAH",
+          "level": "location",
+          "municipality": "LOS ANGELES",
+          "y2026": {
+            "lula": 211,
+            "bolsonaro": 582,
+            "totalValid": 883,
+            "lulaPct": 23.9,
+            "bolsonaroPct": 65.91
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
+          }
+        },
+        {
+          "code": "29416-HYANNIS",
+          "name": "HYANNIS",
+          "level": "location",
+          "municipality": "BOSTON",
+          "y2026": {
+            "lula": 98,
+            "bolsonaro": 376,
+            "totalValid": 488,
+            "lulaPct": 20.08,
+            "bolsonaroPct": 77.05
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
+          }
+        }
       ]
     },
     {
@@ -950,6 +1317,84 @@
           "coverage": {
             "counted": 11,
             "total": 11
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "30341-PORTO",
+          "name": "PORTO",
+          "level": "location",
+          "municipality": "PORTO",
+          "y2026": {
+            "lula": 9705,
+            "bolsonaro": 6972,
+            "totalValid": 18368,
+            "lulaPct": 52.84,
+            "bolsonaroPct": 37.96
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 57,
+            "total": 58
+          }
+        },
+        {
+          "code": "29955-LISBOA 2",
+          "name": "LISBOA 2",
+          "level": "location",
+          "municipality": "LISBOA",
+          "y2026": {
+            "lula": 9411,
+            "bolsonaro": 5341,
+            "totalValid": 16097,
+            "lulaPct": 58.46,
+            "bolsonaroPct": 33.18
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 49,
+            "total": 49
+          }
+        },
+        {
+          "code": "29955-LISBOA",
+          "name": "LISBOA",
+          "level": "location",
+          "municipality": "LISBOA",
+          "y2026": {
+            "lula": 5537,
+            "bolsonaro": 5207,
+            "totalValid": 11843,
+            "lulaPct": 46.75,
+            "bolsonaroPct": 43.97
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 54,
+            "total": 54
+          }
+        },
+        {
+          "code": "30341-PORTO 2",
+          "name": "PORTO 2",
+          "level": "location",
+          "municipality": "PORTO",
+          "y2026": {
+            "lula": 479,
+            "bolsonaro": 453,
+            "totalValid": 1027,
+            "lulaPct": 46.64,
+            "bolsonaroPct": 44.11
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
           }
         }
       ]
@@ -1046,6 +1491,84 @@
             "total": 4
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "30155-CIDADE DE MONTREAL",
+          "name": "CIDADE DE MONTREAL",
+          "level": "location",
+          "municipality": "MONTREAL",
+          "y2026": {
+            "lula": 3228,
+            "bolsonaro": 1213,
+            "totalValid": 4956,
+            "lulaPct": 65.13,
+            "bolsonaroPct": 24.48
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 13,
+            "total": 13
+          }
+        },
+        {
+          "code": "39063-VANCOUVER, COLÚMBIA BRITÂNICA",
+          "name": "VANCOUVER, COLÚMBIA BRITÂNICA",
+          "level": "location",
+          "municipality": "VANCOUVER",
+          "y2026": {
+            "lula": 2633,
+            "bolsonaro": 1273,
+            "totalValid": 4357,
+            "lulaPct": 60.43,
+            "bolsonaroPct": 29.22
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 12,
+            "total": 12
+          }
+        },
+        {
+          "code": "39063-ALBERTA",
+          "name": "ALBERTA",
+          "level": "location",
+          "municipality": "VANCOUVER",
+          "y2026": {
+            "lula": 588,
+            "bolsonaro": 600,
+            "totalValid": 1355,
+            "lulaPct": 43.39,
+            "bolsonaroPct": 44.28
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
+          }
+        },
+        {
+          "code": "30155-CIDADE DE QUEBEC",
+          "name": "CIDADE DE QUEBEC",
+          "level": "location",
+          "municipality": "MONTREAL",
+          "y2026": {
+            "lula": 595,
+            "bolsonaro": 243,
+            "totalValid": 933,
+            "lulaPct": 63.77,
+            "bolsonaroPct": 26.05
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 2,
+            "total": 2
+          }
+        }
       ]
     },
     {
@@ -1125,6 +1648,84 @@
             "total": 21
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "29386-BERLIM",
+          "name": "BERLIM",
+          "level": "location",
+          "municipality": "BERLIM",
+          "y2026": {
+            "lula": 5068,
+            "bolsonaro": 592,
+            "totalValid": 6099,
+            "lulaPct": 83.1,
+            "bolsonaroPct": 9.71
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 14,
+            "total": 14
+          }
+        },
+        {
+          "code": "29696-FRANKFURT",
+          "name": "FRANKFURT",
+          "level": "location",
+          "municipality": "FRANKFURT",
+          "y2026": {
+            "lula": 1914,
+            "bolsonaro": 828,
+            "totalValid": 3062,
+            "lulaPct": 62.51,
+            "bolsonaroPct": 27.04
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 13,
+            "total": 13
+          }
+        },
+        {
+          "code": "29696-COLÔNIA",
+          "name": "COLÔNIA",
+          "level": "location",
+          "municipality": "FRANKFURT",
+          "y2026": {
+            "lula": 1743,
+            "bolsonaro": 492,
+            "totalValid": 2438,
+            "lulaPct": 71.49,
+            "bolsonaroPct": 20.18
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 8,
+            "total": 8
+          }
+        },
+        {
+          "code": "29386-HAMBURGO",
+          "name": "HAMBURGO",
+          "level": "location",
+          "municipality": "BERLIM",
+          "y2026": {
+            "lula": 1436,
+            "bolsonaro": 333,
+            "totalValid": 1921,
+            "lulaPct": 74.75,
+            "bolsonaroPct": 17.33
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 6,
+            "total": 6
+          }
+        }
       ]
     },
     {
@@ -1187,6 +1788,46 @@
           "coverage": {
             "counted": 6,
             "total": 6
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "99503-EDIMBURGO",
+          "name": "EDIMBURGO",
+          "level": "location",
+          "municipality": "EDIMBURGO",
+          "y2026": {
+            "lula": 466,
+            "bolsonaro": 133,
+            "totalValid": 649,
+            "lulaPct": 71.8,
+            "bolsonaroPct": 20.49
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 5,
+            "total": 5
+          }
+        },
+        {
+          "code": "99503-MANCHESTER",
+          "name": "MANCHESTER",
+          "level": "location",
+          "municipality": "EDIMBURGO",
+          "y2026": {
+            "lula": 22,
+            "bolsonaro": 6,
+            "totalValid": 28,
+            "lulaPct": 78.57,
+            "bolsonaroPct": 21.43
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 1,
+            "total": 1
           }
         }
       ]
@@ -1810,6 +2451,46 @@
             "total": 14
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "29432-CONSULADO",
+          "name": "CONSULADO",
+          "level": "location",
+          "municipality": "BRUXELAS",
+          "y2026": {
+            "lula": 2128,
+            "bolsonaro": 1649,
+            "totalValid": 4159,
+            "lulaPct": 51.17,
+            "bolsonaroPct": 39.65
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 12,
+            "total": 12
+          }
+        },
+        {
+          "code": "29432-LUXEMBURGO",
+          "name": "LUXEMBURGO",
+          "level": "location",
+          "municipality": "BRUXELAS",
+          "y2026": {
+            "lula": 388,
+            "bolsonaro": 310,
+            "totalValid": 816,
+            "lulaPct": 47.55,
+            "bolsonaroPct": 37.99
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 2,
+            "total": 2
+          }
+        }
       ]
     },
     {
@@ -1859,6 +2540,46 @@
             "total": 13
           }
         }
+      ],
+      "locations": [
+        {
+          "code": "29360-BEIRUTE",
+          "name": "BEIRUTE",
+          "level": "location",
+          "municipality": "BEIRUTE",
+          "y2026": {
+            "lula": 1484,
+            "bolsonaro": 993,
+            "totalValid": 2630,
+            "lulaPct": 56.43,
+            "bolsonaroPct": 37.76
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 8,
+            "total": 8
+          }
+        },
+        {
+          "code": "29360-VALE DO BEKAA",
+          "name": "VALE DO BEKAA",
+          "level": "location",
+          "municipality": "BEIRUTE",
+          "y2026": {
+            "lula": 1054,
+            "bolsonaro": 145,
+            "totalValid": 1271,
+            "lulaPct": 82.93,
+            "bolsonaroPct": 11.41
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 5,
+            "total": 5
+          }
+        }
       ]
     },
     {
@@ -1906,6 +2627,46 @@
           "coverage": {
             "counted": 7,
             "total": 7
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "29688-ESTOCOLMO",
+          "name": "ESTOCOLMO",
+          "level": "location",
+          "municipality": "ESTOCOLMO",
+          "y2026": {
+            "lula": 1360,
+            "bolsonaro": 394,
+            "totalValid": 1968,
+            "lulaPct": 69.11,
+            "bolsonaroPct": 20.02
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 5,
+            "total": 5
+          }
+        },
+        {
+          "code": "29688-GOTEMBURGO",
+          "name": "GOTEMBURGO",
+          "level": "location",
+          "municipality": "ESTOCOLMO",
+          "y2026": {
+            "lula": 410,
+            "bolsonaro": 111,
+            "totalValid": 572,
+            "lulaPct": 71.68,
+            "bolsonaroPct": 19.41
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 2,
+            "total": 2
           }
         }
       ]
@@ -2418,6 +3179,46 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "29262-DUBAI",
+          "name": "DUBAI",
+          "level": "location",
+          "municipality": "ABU DHABI",
+          "y2026": {
+            "lula": 338,
+            "bolsonaro": 378,
+            "totalValid": 813,
+            "lulaPct": 41.57,
+            "bolsonaroPct": 46.49
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
+          }
+        },
+        {
+          "code": "29262-ABU DHABI",
+          "name": "ABU DHABI",
+          "level": "location",
+          "municipality": "ABU DHABI",
+          "y2026": {
+            "lula": 174,
+            "bolsonaro": 281,
+            "totalValid": 542,
+            "lulaPct": 32.1,
+            "bolsonaroPct": 51.85
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 2,
+            "total": 2
           }
         }
       ]
