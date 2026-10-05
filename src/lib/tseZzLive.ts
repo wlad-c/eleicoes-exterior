@@ -1,6 +1,7 @@
 import cityMap from '../data/tse-city-map.json'
 import city2022 from '../data/tse-city-2022.json'
 import type { CityResult, CountryResult, ResultsData, YearResult } from '../types'
+import { withPlaceNames } from './placeNames'
 
 type City2022Map = Record<
   string,
@@ -249,15 +250,17 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.total += row.total
     const y2026 = yearResult(row.lula, row.bolsonaro, row.totalValid)
     const y2022 = cityY2022(row.code)
-    agg.areas.push({
-      code: row.code,
-      name: row.city,
-      level: 'area',
-      y2026,
-      y2022,
-      swing: swingOf(y2022, y2026),
-      coverage: { counted: row.counted, total: row.total },
-    })
+    agg.areas.push(
+      withPlaceNames({
+        code: row.code,
+        name: row.city,
+        level: 'area',
+        y2026,
+        y2022,
+        swing: swingOf(y2022, y2026),
+        coverage: { counted: row.counted, total: row.total },
+      }),
+    )
     aggregates.set(row.countryId, agg)
   }
 

@@ -29,6 +29,10 @@ export type CityResult = {
   code: string
   /** Official TSE / voting-place name (usually uppercase Portuguese). */
   name: string
+  /** English display name (UI). */
+  nameEn?: string
+  /** Portuguese display name (UI). */
+  namePt?: string
   /**
    * `area` = TSE ZZ município / consular area (e.g. CAMBERRA).
    * `city` = voting city inside an area (e.g. MELBOURNE).
@@ -36,6 +40,10 @@ export type CityResult = {
   level?: 'area' | 'city'
   /** Parent TSE area name when `level === 'city'`. */
   area?: string
+  /** English display name for parent area. */
+  areaEn?: string
+  /** Portuguese display name for parent area. */
+  areaPt?: string
   y2026: YearResult
   /** Present when historical open data exists for this place; else null/omitted. */
   y2022?: YearResult | null

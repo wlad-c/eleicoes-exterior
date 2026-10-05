@@ -1,6 +1,7 @@
 import locationMap from '../data/tse-location-map.json'
 import location2022 from '../data/tse-location-2022.json'
 import type { CityResult, Coverage, YearResult } from '../types'
+import { withPlaceNames } from './placeNames'
 import { tseBaseUrl } from './tseZzLive'
 
 type Loc2022Map = Record<
@@ -381,16 +382,18 @@ export async function fetchCountryLocations(
   attachLoc2022(staged)
 
   const rows: CityResult[] = staged
-    .map((a) => ({
-      code: `${a.areaCode}-${a.name}`,
-      name: a.name,
-      area: a.area,
-      level: 'city' as const,
-      y2026: a.y2026,
-      y2022: a.y2022,
-      swing: a.swing,
-      coverage: a.coverage,
-    }))
+    .map((a) =>
+      withPlaceNames({
+        code: `${a.areaCode}-${a.name}`,
+        name: a.name,
+        area: a.area,
+        level: 'city' as const,
+        y2026: a.y2026,
+        y2022: a.y2022,
+        swing: a.swing,
+        coverage: a.coverage,
+      }),
+    )
     .sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
 
   return rows

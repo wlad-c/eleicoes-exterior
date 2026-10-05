@@ -116,7 +116,7 @@
       "countryEn": "Japan",
       "countryPt": "Japão",
       "iso3": "JPN",
-"abbrevEn": "JPN",
+      "abbrevEn": "JPN",
       "abbrevPt": "JAP",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -171,7 +171,9 @@
             "bolsonaroPp": -0.95,
             "marginPp": 2.19
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Nagoya",
+          "namePt": "Nagóia"
         },
         {
           "code": "30627",
@@ -199,7 +201,9 @@
             "bolsonaroPp": 0.99,
             "marginPp": 1.54
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tokyo",
+          "namePt": "Tóquio"
         },
         {
           "code": "29742",
@@ -227,7 +231,9 @@
             "bolsonaroPp": -2.81,
             "marginPp": 4.87
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Hamamatsu",
+          "namePt": "Hamamatsu"
         }
       ],
       "cities": [
@@ -258,7 +264,11 @@
             "counted": 36,
             "total": 36
           },
-          "area": "NAGÓIA"
+          "area": "NAGÓIA",
+          "nameEn": "Nagoya",
+          "namePt": "Nagóia",
+          "areaEn": "Nagoya",
+          "areaPt": "Nagóia"
         },
         {
           "code": "30627-OIZUMI",
@@ -287,7 +297,11 @@
             "counted": 17,
             "total": 17
           },
-          "area": "TÓQUIO"
+          "area": "TÓQUIO",
+          "nameEn": "Oizumi",
+          "namePt": "Oizumi",
+          "areaEn": "Tokyo",
+          "areaPt": "Tóquio"
         },
         {
           "code": "30627-TOQUIO",
@@ -316,7 +330,11 @@
             "counted": 26,
             "total": 26
           },
-          "area": "TÓQUIO"
+          "area": "TÓQUIO",
+          "nameEn": "Tokyo",
+          "namePt": "Tóquio",
+          "areaEn": "Tokyo",
+          "areaPt": "Tóquio"
         },
         {
           "code": "30198-SUZUKA",
@@ -345,7 +363,11 @@
             "counted": 8,
             "total": 8
           },
-          "area": "NAGÓIA"
+          "area": "NAGÓIA",
+          "nameEn": "Suzuka",
+          "namePt": "Suzuka",
+          "areaEn": "Nagoya",
+          "areaPt": "Nagóia"
         },
         {
           "code": "30198-TOYOHASHI",
@@ -374,7 +396,11 @@
             "counted": 8,
             "total": 8
           },
-          "area": "NAGÓIA"
+          "area": "NAGÓIA",
+          "nameEn": "Toyohashi",
+          "namePt": "Toyohashi",
+          "areaEn": "Nagoya",
+          "areaPt": "Nagóia"
         },
         {
           "code": "30198-TAKAOKA",
@@ -403,7 +429,11 @@
             "counted": 3,
             "total": 3
           },
-          "area": "NAGÓIA"
+          "area": "NAGÓIA",
+          "nameEn": "Takaoka",
+          "namePt": "Takaoka",
+          "areaEn": "Nagoya",
+          "areaPt": "Nagóia"
         },
         {
           "code": "30198-HIROSHIMA",
@@ -432,7 +462,11 @@
             "counted": 3,
             "total": 3
           },
-          "area": "NAGÓIA"
+          "area": "NAGÓIA",
+          "nameEn": "Hiroshima",
+          "namePt": "Hiroshima",
+          "areaEn": "Nagoya",
+          "areaPt": "Nagóia"
         }
       ]
     },
@@ -496,7 +530,9 @@
             "bolsonaroPp": 2.62,
             "marginPp": -1.26
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Sydney",
+          "namePt": "Sydney"
         },
         {
           "code": "29491",
@@ -524,7 +560,9 @@
             "bolsonaroPp": 3.81,
             "marginPp": -2.82
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Canberra",
+          "namePt": "Camberra"
         }
       ],
       "cities": [
@@ -555,7 +593,11 @@
             "counted": 13,
             "total": 13
           },
-          "area": "SYDNEY"
+          "area": "SYDNEY",
+          "nameEn": "Sydney",
+          "namePt": "Sydney",
+          "areaEn": "Sydney",
+          "areaPt": "Sydney"
         },
         {
           "code": "30562-BRISBANE",
@@ -584,7 +626,11 @@
             "counted": 6,
             "total": 6
           },
-          "area": "SYDNEY"
+          "area": "SYDNEY",
+          "nameEn": "Brisbane",
+          "namePt": "Brisbane",
+          "areaEn": "Sydney",
+          "areaPt": "Sydney"
         },
         {
           "code": "29491-MELBOURNE",
@@ -613,7 +659,11 @@
             "counted": 4,
             "total": 4
           },
-          "area": "CAMBERRA"
+          "area": "CAMBERRA",
+          "nameEn": "Melbourne",
+          "namePt": "Melbourne",
+          "areaEn": "Canberra",
+          "areaPt": "Camberra"
         },
         {
           "code": "29491-PERTH",
@@ -642,7 +692,11 @@
             "counted": 3,
             "total": 3
           },
-          "area": "CAMBERRA"
+          "area": "CAMBERRA",
+          "nameEn": "Perth",
+          "namePt": "Perth",
+          "areaEn": "Canberra",
+          "areaPt": "Camberra"
         },
         {
           "code": "29491-CAMBERRA",
@@ -671,7 +725,11 @@
             "counted": 3,
             "total": 3
           },
-          "area": "CAMBERRA"
+          "area": "CAMBERRA",
+          "nameEn": "Canberra",
+          "namePt": "Camberra",
+          "areaEn": "Canberra",
+          "areaPt": "Camberra"
         }
       ]
     },
@@ -680,7 +738,7 @@
       "countryEn": "China (mainland)",
       "countryPt": "China (continente)",
       "iso3": "CHN",
-"abbrevEn": "CHN",
+      "abbrevEn": "CHN",
       "abbrevPt": "CHN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -735,7 +793,9 @@
             "bolsonaroPp": -4.17,
             "marginPp": 16.3
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Shanghai",
+          "namePt": "Xangai"
         },
         {
           "code": "30317",
@@ -763,7 +823,9 @@
             "bolsonaroPp": -8.58,
             "marginPp": 23.03
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Beijing",
+          "namePt": "Pequim"
         },
         {
           "code": "30651",
@@ -791,7 +853,9 @@
             "bolsonaroPp": -24.03,
             "marginPp": 47.46
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Guangzhou",
+          "namePt": "Cantão"
         }
       ]
     },
@@ -855,7 +919,9 @@
             "bolsonaroPp": 3.54,
             "marginPp": -6.01
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Wellington",
+          "namePt": "Wellington"
         }
       ]
     },
@@ -864,7 +930,7 @@
       "countryEn": "Singapore",
       "countryPt": "Singapura",
       "iso3": "SGP",
-"abbrevEn": "SGP",
+      "abbrevEn": "SGP",
       "abbrevPt": "SIN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -919,7 +985,9 @@
             "bolsonaroPp": 1.57,
             "marginPp": 6.36
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Singapore",
+          "namePt": "Singapura"
         }
       ]
     },
@@ -928,7 +996,7 @@
       "countryEn": "Hong Kong",
       "countryPt": "Hong Kong",
       "iso3": "HKG",
-"abbrevEn": "HKG",
+      "abbrevEn": "HKG",
       "abbrevPt": "HKG",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -983,7 +1051,9 @@
             "bolsonaroPp": -5.28,
             "marginPp": 14.95
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Hong Kong",
+          "namePt": "Hong Kong"
         }
       ]
     },
@@ -992,7 +1062,7 @@
       "countryEn": "South Korea",
       "countryPt": "Coreia do Sul",
       "iso3": "KOR",
-"abbrevEn": "KOR",
+      "abbrevEn": "KOR",
       "abbrevPt": "COR",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -1047,7 +1117,9 @@
             "bolsonaroPp": 7.73,
             "marginPp": -13.59
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Seoul",
+          "namePt": "Seul"
         }
       ]
     },
@@ -1056,7 +1128,7 @@
       "countryEn": "Thailand",
       "countryPt": "Tailândia",
       "iso3": "THA",
-"abbrevEn": "THA",
+      "abbrevEn": "THA",
       "abbrevPt": "TAI",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -1111,7 +1183,9 @@
             "bolsonaroPp": 11.52,
             "marginPp": -14.93
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bangkok",
+          "namePt": "Bangkok"
         }
       ]
     },
@@ -1120,7 +1194,7 @@
       "countryEn": "Malaysia",
       "countryPt": "Malásia",
       "iso3": "MYS",
-"abbrevEn": "MAS",
+      "abbrevEn": "MAS",
       "abbrevPt": "MAL",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -1175,7 +1249,9 @@
             "bolsonaroPp": -9.18,
             "marginPp": 15.47
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Kuala Lumpur",
+          "namePt": "Kuala Lumpur"
         }
       ]
     },
@@ -1184,7 +1260,7 @@
       "countryEn": "Philippines",
       "countryPt": "Filipinas",
       "iso3": "PHL",
-"abbrevEn": "PHI",
+      "abbrevEn": "PHI",
       "abbrevPt": "FIL",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -1239,7 +1315,9 @@
             "bolsonaroPp": -2.33,
             "marginPp": 12.52
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Manila",
+          "namePt": "Manila"
         }
       ]
     },
@@ -1303,7 +1381,9 @@
             "bolsonaroPp": -0.12,
             "marginPp": 1.43
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Boston",
+          "namePt": "Boston"
         },
         {
           "code": "30112",
@@ -1331,7 +1411,9 @@
             "bolsonaroPp": -0.08,
             "marginPp": 2.69
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Miami",
+          "namePt": "Miami"
         },
         {
           "code": "30228",
@@ -1359,7 +1441,9 @@
             "bolsonaroPp": 1.09,
             "marginPp": 2.23
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "New York",
+          "namePt": "Nova York"
         },
         {
           "code": "99490",
@@ -1377,7 +1461,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Orlando",
+          "namePt": "Orlando"
         },
         {
           "code": "39080",
@@ -1405,7 +1491,9 @@
             "bolsonaroPp": 0.18,
             "marginPp": 2.2
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Atlanta",
+          "namePt": "Atlanta"
         },
         {
           "code": "30783",
@@ -1433,7 +1521,9 @@
             "bolsonaroPp": -2.22,
             "marginPp": 8.29
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Washington",
+          "namePt": "Washington"
         },
         {
           "code": "29980",
@@ -1461,7 +1551,9 @@
             "bolsonaroPp": 1.96,
             "marginPp": -0.05
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Los Angeles",
+          "namePt": "Los Angeles"
         },
         {
           "code": "29807",
@@ -1489,7 +1581,9 @@
             "bolsonaroPp": 4.56,
             "marginPp": -4.24
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Houston",
+          "namePt": "Houston"
         },
         {
           "code": "30503",
@@ -1517,7 +1611,9 @@
             "bolsonaroPp": 1.63,
             "marginPp": 1.96
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "San Francisco",
+          "namePt": "São Francisco"
         },
         {
           "code": "29513",
@@ -1545,7 +1641,9 @@
             "bolsonaroPp": 1.68,
             "marginPp": 2
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Chicago",
+          "namePt": "Chicago"
         },
         {
           "code": "30902",
@@ -1573,7 +1671,9 @@
             "bolsonaroPp": 6.39,
             "marginPp": -7.96
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Hartford",
+          "namePt": "Hartford"
         }
       ],
       "cities": [
@@ -1604,7 +1704,11 @@
             "counted": 45,
             "total": 45
           },
-          "area": "BOSTON"
+          "area": "BOSTON",
+          "nameEn": "Boston",
+          "namePt": "Boston",
+          "areaEn": "Boston",
+          "areaPt": "Boston"
         },
         {
           "code": "29416-FRAMINGHAM",
@@ -1633,7 +1737,11 @@
             "counted": 20,
             "total": 20
           },
-          "area": "BOSTON"
+          "area": "BOSTON",
+          "nameEn": "Framingham",
+          "namePt": "Framingham",
+          "areaEn": "Boston",
+          "areaPt": "Boston"
         },
         {
           "code": "29980-LOS ANGELES",
@@ -1662,7 +1770,11 @@
             "counted": 21,
             "total": 21
           },
-          "area": "LOS ANGELES"
+          "area": "LOS ANGELES",
+          "nameEn": "Los Angeles",
+          "namePt": "Los Angeles",
+          "areaEn": "Los Angeles",
+          "areaPt": "Los Angeles"
         },
         {
           "code": "29807-HOUSTON",
@@ -1691,7 +1803,11 @@
             "counted": 18,
             "total": 18
           },
-          "area": "HOUSTON"
+          "area": "HOUSTON",
+          "nameEn": "Houston",
+          "namePt": "Houston",
+          "areaEn": "Houston",
+          "areaPt": "Houston"
         },
         {
           "code": "29807-CARROLLTON",
@@ -1710,7 +1826,11 @@
             "counted": 5,
             "total": 5
           },
-          "area": "HOUSTON"
+          "area": "HOUSTON",
+          "nameEn": "Carrollton",
+          "namePt": "Carrollton",
+          "areaEn": "Houston",
+          "areaPt": "Houston"
         },
         {
           "code": "29980-UTAH",
@@ -1739,7 +1859,11 @@
             "counted": 4,
             "total": 4
           },
-          "area": "LOS ANGELES"
+          "area": "LOS ANGELES",
+          "nameEn": "Utah",
+          "namePt": "Utah",
+          "areaEn": "Los Angeles",
+          "areaPt": "Los Angeles"
         },
         {
           "code": "29416-HYANNIS",
@@ -1758,7 +1882,11 @@
             "counted": 4,
             "total": 4
           },
-          "area": "BOSTON"
+          "area": "BOSTON",
+          "nameEn": "Hyannis",
+          "namePt": "Hyannis",
+          "areaEn": "Boston",
+          "areaPt": "Boston"
         }
       ]
     },
@@ -1822,7 +1950,9 @@
             "bolsonaroPp": 7.07,
             "marginPp": -15.03
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Lisbon",
+          "namePt": "Lisboa"
         },
         {
           "code": "30341",
@@ -1850,7 +1980,9 @@
             "bolsonaroPp": 8.08,
             "marginPp": -15.88
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Porto",
+          "namePt": "Porto"
         },
         {
           "code": "30961",
@@ -1878,7 +2010,9 @@
             "bolsonaroPp": 7.8,
             "marginPp": -15.84
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Faro",
+          "namePt": "Faro"
         }
       ]
     },
@@ -1942,7 +2076,9 @@
             "bolsonaroPp": 1.02,
             "marginPp": 2.12
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Toronto",
+          "namePt": "Toronto"
         },
         {
           "code": "30155",
@@ -1970,7 +2106,9 @@
             "bolsonaroPp": 0.18,
             "marginPp": 4.01
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Montreal",
+          "namePt": "Montreal"
         },
         {
           "code": "39063",
@@ -1998,7 +2136,9 @@
             "bolsonaroPp": 2.45,
             "marginPp": -1.34
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Vancouver",
+          "namePt": "Vancouver"
         },
         {
           "code": "30252",
@@ -2026,7 +2166,9 @@
             "bolsonaroPp": 0.35,
             "marginPp": 7.13
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Ottawa",
+          "namePt": "Ottawa"
         }
       ],
       "cities": [
@@ -2057,7 +2199,11 @@
             "counted": 13,
             "total": 13
           },
-          "area": "MONTREAL"
+          "area": "MONTREAL",
+          "nameEn": "Montreal",
+          "namePt": "Cidade de Montreal",
+          "areaEn": "Montreal",
+          "areaPt": "Montreal"
         },
         {
           "code": "39063-VANCOUVER, COLÚMBIA BRITÂNICA",
@@ -2086,7 +2232,11 @@
             "counted": 12,
             "total": 12
           },
-          "area": "VANCOUVER"
+          "area": "VANCOUVER",
+          "nameEn": "Vancouver, British Columbia",
+          "namePt": "Vancouver, Colúmbia Britânica",
+          "areaEn": "Vancouver",
+          "areaPt": "Vancouver"
         },
         {
           "code": "39063-ALBERTA",
@@ -2115,7 +2265,11 @@
             "counted": 4,
             "total": 4
           },
-          "area": "VANCOUVER"
+          "area": "VANCOUVER",
+          "nameEn": "Alberta",
+          "namePt": "Alberta",
+          "areaEn": "Vancouver",
+          "areaPt": "Vancouver"
         },
         {
           "code": "30155-CIDADE DE QUEBEC",
@@ -2144,7 +2298,11 @@
             "counted": 2,
             "total": 2
           },
-          "area": "MONTREAL"
+          "area": "MONTREAL",
+          "nameEn": "Quebec City",
+          "namePt": "Cidade de Quebec",
+          "areaEn": "Montreal",
+          "areaPt": "Montreal"
         }
       ]
     },
@@ -2208,7 +2366,9 @@
             "bolsonaroPp": 0.27,
             "marginPp": 1.26
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Berlin",
+          "namePt": "Berlim"
         },
         {
           "code": "29696",
@@ -2236,7 +2396,9 @@
             "bolsonaroPp": 1.18,
             "marginPp": 1.28
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Frankfurt",
+          "namePt": "Frankfurt"
         },
         {
           "code": "30180",
@@ -2264,7 +2426,9 @@
             "bolsonaroPp": -0.39,
             "marginPp": 3.85
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Munich",
+          "namePt": "Munique"
         }
       ],
       "cities": [
@@ -2295,7 +2459,11 @@
             "counted": 14,
             "total": 14
           },
-          "area": "BERLIM"
+          "area": "BERLIM",
+          "nameEn": "Berlin",
+          "namePt": "Berlim",
+          "areaEn": "Berlin",
+          "areaPt": "Berlim"
         },
         {
           "code": "29696-FRANKFURT",
@@ -2324,7 +2492,11 @@
             "counted": 13,
             "total": 13
           },
-          "area": "FRANKFURT"
+          "area": "FRANKFURT",
+          "nameEn": "Frankfurt",
+          "namePt": "Frankfurt",
+          "areaEn": "Frankfurt",
+          "areaPt": "Frankfurt"
         },
         {
           "code": "29696-COLÔNIA",
@@ -2353,7 +2525,11 @@
             "counted": 8,
             "total": 8
           },
-          "area": "FRANKFURT"
+          "area": "FRANKFURT",
+          "nameEn": "Cologne",
+          "namePt": "Colônia",
+          "areaEn": "Frankfurt",
+          "areaPt": "Frankfurt"
         },
         {
           "code": "29386-HAMBURGO",
@@ -2382,7 +2558,11 @@
             "counted": 6,
             "total": 6
           },
-          "area": "BERLIM"
+          "area": "BERLIM",
+          "nameEn": "Hamburg",
+          "namePt": "Hamburgo",
+          "areaEn": "Berlin",
+          "areaPt": "Berlim"
         }
       ]
     },
@@ -2446,7 +2626,9 @@
             "bolsonaroPp": 1.18,
             "marginPp": -0.03
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "London",
+          "namePt": "Londres"
         },
         {
           "code": "99503",
@@ -2464,7 +2646,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Edinburgh",
+          "namePt": "Edimburgo"
         }
       ],
       "cities": [
@@ -2485,7 +2669,11 @@
             "counted": 5,
             "total": 5
           },
-          "area": "EDIMBURGO"
+          "area": "EDIMBURGO",
+          "nameEn": "Edinburgh",
+          "namePt": "Edimburgo",
+          "areaEn": "Edinburgh",
+          "areaPt": "Edimburgo"
         },
         {
           "code": "99503-MANCHESTER",
@@ -2504,7 +2692,11 @@
             "counted": 1,
             "total": 1
           },
-          "area": "EDIMBURGO"
+          "area": "EDIMBURGO",
+          "nameEn": "Manchester",
+          "namePt": "Manchester",
+          "areaEn": "Edinburgh",
+          "areaPt": "Edimburgo"
         }
       ]
     },
@@ -2568,7 +2760,9 @@
             "bolsonaroPp": 0.72,
             "marginPp": -0.74
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Milan",
+          "namePt": "Milão"
         },
         {
           "code": "30449",
@@ -2596,7 +2790,9 @@
             "bolsonaroPp": -0.09,
             "marginPp": 2.98
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Rome",
+          "namePt": "Roma"
         }
       ]
     },
@@ -2660,7 +2856,9 @@
             "bolsonaroPp": 0.29,
             "marginPp": 2.58
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Zurich",
+          "namePt": "Zurique"
         },
         {
           "code": "29700",
@@ -2688,7 +2886,9 @@
             "bolsonaroPp": 1.01,
             "marginPp": 0.29
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Geneva",
+          "namePt": "Genebra"
         }
       ]
     },
@@ -2752,7 +2952,9 @@
             "bolsonaroPp": 2.24,
             "marginPp": -1.96
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Paris",
+          "namePt": "Paris"
         },
         {
           "code": "99511",
@@ -2770,7 +2972,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Marseille",
+          "namePt": "Marselha"
         }
       ]
     },
@@ -2834,7 +3038,9 @@
             "bolsonaroPp": -1.11,
             "marginPp": 3.33
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Madrid",
+          "namePt": "Madri"
         },
         {
           "code": "29351",
@@ -2862,7 +3068,9 @@
             "bolsonaroPp": -0.87,
             "marginPp": 3.88
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Barcelona",
+          "namePt": "Barcelona"
         }
       ]
     },
@@ -2926,7 +3134,9 @@
             "bolsonaroPp": 5.12,
             "marginPp": -10.88
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Dublin",
+          "namePt": "Dublin"
         }
       ]
     },
@@ -2990,7 +3200,9 @@
             "bolsonaroPp": -0.75,
             "marginPp": 2.13
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Buenos Aires",
+          "namePt": "Buenos Aires"
         },
         {
           "code": "29602",
@@ -3018,7 +3230,9 @@
             "bolsonaroPp": 2.49,
             "marginPp": -3.79
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Córdoba",
+          "namePt": "Córdoba"
         },
         {
           "code": "39004",
@@ -3046,7 +3260,9 @@
             "bolsonaroPp": -6.29,
             "marginPp": 12.63
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Mendoza",
+          "namePt": "Mendoza"
         },
         {
           "code": "99155",
@@ -3074,7 +3290,9 @@
             "bolsonaroPp": 68.18,
             "marginPp": -136.36
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Puerto Iguazú",
+          "namePt": "Puerto Iguazú"
         },
         {
           "code": "30295",
@@ -3092,7 +3310,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Paso de los Libres",
+          "namePt": "Paso Los Libres"
         }
       ]
     },
@@ -3156,7 +3376,9 @@
             "bolsonaroPp": 0.57,
             "marginPp": 2.18
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Amsterdam",
+          "namePt": "Amsterdã"
         }
       ]
     },
@@ -3220,7 +3442,9 @@
             "bolsonaroPp": 0.37,
             "marginPp": -0.65
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Ciudad del Este",
+          "namePt": "Ciudad del Este"
         },
         {
           "code": "29327",
@@ -3248,7 +3472,9 @@
             "bolsonaroPp": 2.21,
             "marginPp": -1.05
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Asunción",
+          "namePt": "Assunção"
         },
         {
           "code": "30465",
@@ -3276,7 +3502,9 @@
             "bolsonaroPp": 1.44,
             "marginPp": -2.86
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Salto del Guairá",
+          "namePt": "Salto del Guairá"
         },
         {
           "code": "30309",
@@ -3304,7 +3532,9 @@
             "bolsonaroPp": 8.53,
             "marginPp": -14.82
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Pedro Juan Caballero",
+          "namePt": "Pedro Juan Caballero"
         },
         {
           "code": "29670",
@@ -3332,7 +3562,9 @@
             "bolsonaroPp": 1.79,
             "marginPp": -3.31
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Encarnación",
+          "namePt": "Encarnación"
         }
       ]
     },
@@ -3396,7 +3628,9 @@
             "bolsonaroPp": 4.52,
             "marginPp": -8.37
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Brussels",
+          "namePt": "Bruxelas"
         }
       ],
       "cities": [
@@ -3417,7 +3651,11 @@
             "counted": 12,
             "total": 12
           },
-          "area": "BRUXELAS"
+          "area": "BRUXELAS",
+          "nameEn": "Consulate",
+          "namePt": "Consulado",
+          "areaEn": "Brussels",
+          "areaPt": "Bruxelas"
         },
         {
           "code": "29432-LUXEMBURGO",
@@ -3446,7 +3684,11 @@
             "counted": 2,
             "total": 2
           },
-          "area": "BRUXELAS"
+          "area": "BRUXELAS",
+          "nameEn": "Luxembourg",
+          "namePt": "Luxemburgo",
+          "areaEn": "Brussels",
+          "areaPt": "Bruxelas"
         }
       ]
     },
@@ -3510,7 +3752,9 @@
             "bolsonaroPp": -3.92,
             "marginPp": 13.1
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Beirut",
+          "namePt": "Beirute"
         }
       ],
       "cities": [
@@ -3541,7 +3785,11 @@
             "counted": 8,
             "total": 8
           },
-          "area": "BEIRUTE"
+          "area": "BEIRUTE",
+          "nameEn": "Beirut",
+          "namePt": "Beirute",
+          "areaEn": "Beirut",
+          "areaPt": "Beirute"
         },
         {
           "code": "29360-VALE DO BEKAA",
@@ -3570,7 +3818,11 @@
             "counted": 5,
             "total": 5
           },
-          "area": "BEIRUTE"
+          "area": "BEIRUTE",
+          "nameEn": "Bekaa Valley",
+          "namePt": "Vale do Bekaa",
+          "areaEn": "Beirut",
+          "areaPt": "Beirute"
         }
       ]
     },
@@ -3634,7 +3886,9 @@
             "bolsonaroPp": 2.58,
             "marginPp": 0.03
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Stockholm",
+          "namePt": "Estocolmo"
         }
       ],
       "cities": [
@@ -3665,7 +3919,11 @@
             "counted": 5,
             "total": 5
           },
-          "area": "ESTOCOLMO"
+          "area": "ESTOCOLMO",
+          "nameEn": "Stockholm",
+          "namePt": "Estocolmo",
+          "areaEn": "Stockholm",
+          "areaPt": "Estocolmo"
         },
         {
           "code": "29688-GOTEMBURGO",
@@ -3694,7 +3952,11 @@
             "counted": 2,
             "total": 2
           },
-          "area": "ESTOCOLMO"
+          "area": "ESTOCOLMO",
+          "nameEn": "Gothenburg",
+          "namePt": "Gotemburgo",
+          "areaEn": "Stockholm",
+          "areaPt": "Estocolmo"
         }
       ]
     },
@@ -3758,7 +4020,9 @@
             "bolsonaroPp": -0.04,
             "marginPp": 2.26
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Santiago",
+          "namePt": "Santiago"
         }
       ]
     },
@@ -3822,7 +4086,9 @@
             "bolsonaroPp": 1.53,
             "marginPp": -2.98
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Santa Cruz de la Sierra",
+          "namePt": "Santa Cruz de la Sierra"
         },
         {
           "code": "29904",
@@ -3850,7 +4116,9 @@
             "bolsonaroPp": -9.33,
             "marginPp": 22.05
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "La Paz",
+          "namePt": "La Paz"
         },
         {
           "code": "29572",
@@ -3878,7 +4146,9 @@
             "bolsonaroPp": 6.96,
             "marginPp": -12.2
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Cochabamba",
+          "namePt": "Cochabamba"
         },
         {
           "code": "99210",
@@ -3896,7 +4166,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Cobija",
+          "namePt": "Cobija"
         },
         {
           "code": "99236",
@@ -3914,7 +4186,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Puerto Quijarro",
+          "namePt": "Puerto Quijarro"
         }
       ]
     },
@@ -3978,7 +4252,9 @@
             "bolsonaroPp": 3.18,
             "marginPp": -2.12
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Montevideo",
+          "namePt": "Montevidéu"
         },
         {
           "code": "29319",
@@ -4006,7 +4282,9 @@
             "bolsonaroPp": 2.38,
             "marginPp": -2.2
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Artigas",
+          "namePt": "Artigas"
         },
         {
           "code": "29521",
@@ -4024,7 +4302,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Chuy",
+          "namePt": "Chuy"
         },
         {
           "code": "99244",
@@ -4042,7 +4322,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Rivera",
+          "namePt": "Rivera"
         }
       ]
     },
@@ -4106,7 +4388,9 @@
             "bolsonaroPp": 3,
             "marginPp": -1.67
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Mexico City",
+          "namePt": "México"
         }
       ]
     },
@@ -4170,7 +4454,9 @@
             "bolsonaroPp": -1.44,
             "marginPp": 5.65
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Vienna",
+          "namePt": "Viena"
         }
       ]
     },
@@ -4234,7 +4520,9 @@
             "bolsonaroPp": -0.79,
             "marginPp": 2.84
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Cayenne",
+          "namePt": "Caiena"
         },
         {
           "code": "99333",
@@ -4252,7 +4540,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Saint-Georges",
+          "namePt": "St Georges de Loyapock"
         }
       ]
     },
@@ -4316,7 +4606,9 @@
             "bolsonaroPp": 1.18,
             "marginPp": 1.22
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Copenhagen",
+          "namePt": "Copenhague"
         }
       ]
     },
@@ -4380,7 +4672,9 @@
             "bolsonaroPp": 0.04,
             "marginPp": 0.89
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Abu Dhabi",
+          "namePt": "Abu Dhabi"
         }
       ],
       "cities": [
@@ -4411,7 +4705,11 @@
             "counted": 3,
             "total": 3
           },
-          "area": "ABU DHABI"
+          "area": "ABU DHABI",
+          "nameEn": "Dubai",
+          "namePt": "Dubai",
+          "areaEn": "Abu Dhabi",
+          "areaPt": "Abu Dhabi"
         },
         {
           "code": "29262-ABU DHABI",
@@ -4440,7 +4738,11 @@
             "counted": 2,
             "total": 2
           },
-          "area": "ABU DHABI"
+          "area": "ABU DHABI",
+          "nameEn": "Abu Dhabi",
+          "namePt": "Abu Dhabi",
+          "areaEn": "Abu Dhabi",
+          "areaPt": "Abu Dhabi"
         }
       ]
     },
@@ -4504,7 +4806,9 @@
             "bolsonaroPp": 3,
             "marginPp": -2.17
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Oslo",
+          "namePt": "Oslo"
         }
       ]
     },
@@ -4568,7 +4872,9 @@
             "bolsonaroPp": 3.32,
             "marginPp": -3.99
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Lima",
+          "namePt": "Lima"
         },
         {
           "code": "29823",
@@ -4586,7 +4892,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Iquitos",
+          "namePt": "Iquitos"
         }
       ]
     },
@@ -4650,7 +4958,9 @@
             "bolsonaroPp": -3.47,
             "marginPp": 11.83
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Ramallah",
+          "namePt": "Ramallah"
         }
       ]
     },
@@ -4704,7 +5014,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Damascus",
+          "namePt": "Damasco"
         }
       ]
     },
@@ -4768,7 +5080,9 @@
             "bolsonaroPp": 28.31,
             "marginPp": -54.61
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tel Aviv",
+          "namePt": "Tel Aviv"
         }
       ]
     },
@@ -4832,7 +5146,9 @@
             "bolsonaroPp": 12.8,
             "marginPp": -19.13
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bogotá",
+          "namePt": "Bogotá"
         }
       ]
     },
@@ -4896,7 +5212,9 @@
             "bolsonaroPp": -0.41,
             "marginPp": 4.72
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Panama City",
+          "namePt": "Panamá"
         }
       ]
     },
@@ -4960,7 +5278,9 @@
             "bolsonaroPp": 2.05,
             "marginPp": 4.09
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Helsinki",
+          "namePt": "Helsinque"
         }
       ]
     },
@@ -5024,7 +5344,9 @@
             "bolsonaroPp": 8.18,
             "marginPp": -17.73
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Budapest",
+          "namePt": "Budapeste"
         }
       ]
     },
@@ -5088,7 +5410,9 @@
             "bolsonaroPp": -11.84,
             "marginPp": 36.82
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Amman",
+          "namePt": "Amã"
         }
       ]
     },
@@ -5152,7 +5476,9 @@
             "bolsonaroPp": 1.75,
             "marginPp": -5.88
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Paramaribo",
+          "namePt": "Paramaribo"
         }
       ]
     },
@@ -5216,7 +5542,9 @@
             "bolsonaroPp": 2.71,
             "marginPp": -2.86
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Pretoria",
+          "namePt": "Pretória"
         },
         {
           "code": "29530",
@@ -5244,7 +5572,9 @@
             "bolsonaroPp": 4.64,
             "marginPp": -1.29
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Cape Town",
+          "namePt": "Cidade do Cabo"
         }
       ]
     },
@@ -5308,7 +5638,9 @@
             "bolsonaroPp": -0.35,
             "marginPp": 2.5
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Athens",
+          "namePt": "Atenas"
         }
       ]
     },
@@ -5372,7 +5704,9 @@
             "bolsonaroPp": -8.18,
             "marginPp": 19.09
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Quito",
+          "namePt": "Quito"
         }
       ]
     },
@@ -5436,7 +5770,9 @@
             "bolsonaroPp": 1.83,
             "marginPp": -0.49
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Prague",
+          "namePt": "Praga"
         }
       ]
     },
@@ -5500,7 +5836,9 @@
             "bolsonaroPp": -3.08,
             "marginPp": 12.78
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "San José",
+          "namePt": "São José"
         }
       ]
     },
@@ -5564,7 +5902,9 @@
             "bolsonaroPp": -4.87,
             "marginPp": 9.38
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Doha",
+          "namePt": "Doha"
         }
       ]
     },
@@ -5628,7 +5968,9 @@
             "bolsonaroPp": 5.37,
             "marginPp": -8.97
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Warsaw",
+          "namePt": "Varsóvia"
         }
       ]
     },
@@ -5692,7 +6034,9 @@
             "bolsonaroPp": 1.25,
             "marginPp": 0.13
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Maputo",
+          "namePt": "Maputo"
         }
       ]
     },
@@ -5756,7 +6100,9 @@
             "bolsonaroPp": -1.15,
             "marginPp": 4.29
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Luanda",
+          "namePt": "Luanda"
         }
       ]
     },
@@ -5765,7 +6111,7 @@
       "countryEn": "Taiwan",
       "countryPt": "Taiwan",
       "iso3": "TWN",
-"abbrevEn": "TWN",
+      "abbrevEn": "TWN",
       "abbrevPt": "TWN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -5820,7 +6166,9 @@
             "bolsonaroPp": 4.24,
             "marginPp": -4.35
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Taipei",
+          "namePt": "Taipé"
         }
       ]
     },
@@ -5884,7 +6232,9 @@
             "bolsonaroPp": 0.4,
             "marginPp": 3.07
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Santo Domingo",
+          "namePt": "São Domingos"
         }
       ]
     },
@@ -5948,7 +6298,9 @@
             "bolsonaroPp": 1.4,
             "marginPp": -6.23
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tallinn",
+          "namePt": "Talin"
         }
       ]
     },
@@ -6012,7 +6364,9 @@
             "bolsonaroPp": -11.3,
             "marginPp": 25.03
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Istanbul",
+          "namePt": "Istambul"
         }
       ]
     },
@@ -6076,7 +6430,9 @@
             "bolsonaroPp": -4.44,
             "marginPp": 10.64
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Guatemala City",
+          "namePt": "Guatemala"
         }
       ]
     },
@@ -6140,7 +6496,9 @@
             "bolsonaroPp": 4.22,
             "marginPp": -15.18
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tegucigalpa",
+          "namePt": "Tegucigalpa"
         }
       ]
     },
@@ -6204,7 +6562,9 @@
             "bolsonaroPp": -2.47,
             "marginPp": 9.39
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Moscow",
+          "namePt": "Moscou"
         }
       ]
     },
@@ -6268,7 +6628,9 @@
             "bolsonaroPp": 10.21,
             "marginPp": -5.42
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Managua",
+          "namePt": "Manágua"
         }
       ]
     },
@@ -6332,7 +6694,9 @@
             "bolsonaroPp": 5.77,
             "marginPp": -9.32
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Ljubljana",
+          "namePt": "Liubliana"
         }
       ]
     },
@@ -6396,7 +6760,9 @@
             "bolsonaroPp": 6.93,
             "marginPp": -6.79
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "San Salvador",
+          "namePt": "São Salvador"
         }
       ]
     },
@@ -6460,7 +6826,9 @@
             "bolsonaroPp": -11.25,
             "marginPp": 23.13
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Cairo",
+          "namePt": "Cairo"
         }
       ]
     },
@@ -6524,7 +6892,9 @@
             "bolsonaroPp": 2.56,
             "marginPp": 0.65
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Georgetown",
+          "namePt": "Georgetown"
         }
       ]
     },
@@ -6588,7 +6958,9 @@
             "bolsonaroPp": 1.2,
             "marginPp": 22.78
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bratislava",
+          "namePt": "Bratislava"
         }
       ]
     },
@@ -6652,7 +7024,9 @@
             "bolsonaroPp": -5.28,
             "marginPp": 2.53
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Praia",
+          "namePt": "Praia"
         }
       ]
     },
@@ -6661,7 +7035,7 @@
       "countryEn": "Timor-Leste",
       "countryPt": "Timor-Leste",
       "iso3": "TLS",
-"abbrevEn": "TLS",
+      "abbrevEn": "TLS",
       "abbrevPt": "TLS",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -6716,7 +7090,9 @@
             "bolsonaroPp": 1.78,
             "marginPp": 5.31
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Dili",
+          "namePt": "Díli"
         }
       ]
     },
@@ -6780,7 +7156,9 @@
             "bolsonaroPp": -11.44,
             "marginPp": 28.73
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Dakar",
+          "namePt": "Dacar"
         }
       ]
     },
@@ -6844,7 +7222,9 @@
             "bolsonaroPp": 13.26,
             "marginPp": -16.96
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bucharest",
+          "namePt": "Bucareste"
         }
       ]
     },
@@ -6908,7 +7288,9 @@
             "bolsonaroPp": -6.82,
             "marginPp": 21.32
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Riyadh",
+          "namePt": "Riade"
         }
       ]
     },
@@ -6917,7 +7299,7 @@
       "countryEn": "India",
       "countryPt": "Índia",
       "iso3": "IND",
-"abbrevEn": "IND",
+      "abbrevEn": "IND",
       "abbrevPt": "IND",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -6972,7 +7354,9 @@
             "bolsonaroPp": 22.73,
             "marginPp": -40.58
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "New Delhi",
+          "namePt": "Nova Delhi"
         },
         {
           "code": "30171",
@@ -7000,7 +7384,9 @@
             "bolsonaroPp": -7.58,
             "marginPp": -21.97
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Mumbai",
+          "namePt": "Mumbai"
         }
       ]
     },
@@ -7064,7 +7450,9 @@
             "bolsonaroPp": -0.8,
             "marginPp": 8.08
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Rabat",
+          "namePt": "Rabat"
         }
       ]
     },
@@ -7128,7 +7516,9 @@
             "bolsonaroPp": -8.14,
             "marginPp": 15.64
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Nairobi",
+          "namePt": "Nairóbi"
         }
       ]
     },
@@ -7137,7 +7527,7 @@
       "countryEn": "Indonesia",
       "countryPt": "Indonésia",
       "iso3": "IDN",
-"abbrevEn": "IDN",
+      "abbrevEn": "IDN",
       "abbrevPt": "IDN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -7192,7 +7582,9 @@
             "bolsonaroPp": 1.29,
             "marginPp": -7.48
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Jakarta",
+          "namePt": "Jacarta"
         }
       ]
     },
@@ -7256,7 +7648,9 @@
             "bolsonaroPp": 10.75,
             "marginPp": -9.47
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Belgrade",
+          "namePt": "Belgrado"
         }
       ]
     },
@@ -7320,7 +7714,9 @@
             "bolsonaroPp": -9.58,
             "marginPp": 18.48
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Abidjan",
+          "namePt": "Abidjã"
         }
       ]
     },
@@ -7384,7 +7780,9 @@
             "bolsonaroPp": 4.99,
             "marginPp": 1.08
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Zagreb",
+          "namePt": "Zagreb"
         }
       ]
     },
@@ -7448,7 +7846,9 @@
             "bolsonaroPp": -1.78,
             "marginPp": -4.54
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bissau",
+          "namePt": "Bissau"
         }
       ]
     },
@@ -7512,7 +7912,9 @@
             "bolsonaroPp": -46.35,
             "marginPp": 99.39
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Kuwait City",
+          "namePt": "Kuaite"
         }
       ]
     },
@@ -7576,7 +7978,9 @@
             "bolsonaroPp": -5.42,
             "marginPp": 11.92
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Muscat",
+          "namePt": "Mascate"
         }
       ]
     },
@@ -7640,7 +8044,9 @@
             "bolsonaroPp": -46.16,
             "marginPp": 82.05
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Windhoek",
+          "namePt": "Windhoek"
         }
       ]
     },
@@ -7704,7 +8110,9 @@
             "bolsonaroPp": -0.44,
             "marginPp": 10.29
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Bahrain",
+          "namePt": "Barein"
         }
       ]
     },
@@ -7768,7 +8176,9 @@
             "bolsonaroPp": 5.57,
             "marginPp": -34.52
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Port of Spain",
+          "namePt": "Port of Spain"
         }
       ]
     },
@@ -7832,7 +8242,9 @@
             "bolsonaroPp": -1.16,
             "marginPp": 6.83
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Sofia",
+          "namePt": "Sófia"
         }
       ]
     },
@@ -7896,7 +8308,9 @@
             "bolsonaroPp": -0.6,
             "marginPp": 5.02
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Havana",
+          "namePt": "Havana"
         }
       ]
     },
@@ -7960,7 +8374,9 @@
             "bolsonaroPp": -6.25,
             "marginPp": 30.36
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Lagos",
+          "namePt": "Lagos"
         },
         {
           "code": "99198",
@@ -7978,7 +8394,9 @@
           },
           "y2022": null,
           "swing": null,
-          "level": "area"
+          "level": "area",
+          "nameEn": "Abuja",
+          "namePt": "Abuja"
         }
       ]
     },
@@ -8042,7 +8460,9 @@
             "bolsonaroPp": 7.09,
             "marginPp": -16.98
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Nicosia",
+          "namePt": "Nicosia"
         }
       ]
     },
@@ -8106,7 +8526,9 @@
             "bolsonaroPp": -7.37,
             "marginPp": 6.95
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Nassau",
+          "namePt": "Nassau"
         }
       ]
     },
@@ -8170,7 +8592,9 @@
             "bolsonaroPp": -25.53,
             "marginPp": 32.52
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Accra",
+          "namePt": "Accra"
         }
       ]
     },
@@ -8179,7 +8603,7 @@
       "countryEn": "Vietnam",
       "countryPt": "Vietnã",
       "iso3": "VNM",
-"abbrevEn": "VIE",
+      "abbrevEn": "VIE",
       "abbrevPt": "VIE",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -8234,7 +8658,9 @@
             "bolsonaroPp": 28.28,
             "marginPp": -48.45
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Hanoi",
+          "namePt": "Hanói"
         }
       ]
     },
@@ -8298,7 +8724,9 @@
             "bolsonaroPp": -8.94,
             "marginPp": 23.76
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tehran",
+          "namePt": "Teerã"
         }
       ]
     },
@@ -8328,7 +8756,7 @@
       "countryEn": "Nepal",
       "countryPt": "Nepal",
       "iso3": "NPL",
-"abbrevEn": "NEP",
+      "abbrevEn": "NEP",
       "abbrevPt": "NEP",
       "region": "Asia (excl. Middle East)",
       "y2022": {
@@ -8383,7 +8811,9 @@
             "bolsonaroPp": -8.71,
             "marginPp": 9.73
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Kathmandu",
+          "namePt": "Katmandu"
         }
       ]
     },
@@ -8447,7 +8877,9 @@
             "bolsonaroPp": -1.95,
             "marginPp": -0.64
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Tunis",
+          "namePt": "Tunis"
         }
       ]
     },
@@ -8532,7 +8964,9 @@
             "bolsonaroPp": 27.53,
             "marginPp": -60.33
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Kingston",
+          "namePt": "Kingston-Jamaica"
         }
       ]
     },
@@ -8596,7 +9030,9 @@
             "bolsonaroPp": 6.25,
             "marginPp": -12.5
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Dar es Salaam",
+          "namePt": "Dar es Salaam"
         }
       ]
     },
@@ -8660,7 +9096,9 @@
             "bolsonaroPp": -57.14,
             "marginPp": 128.57
           },
-          "level": "area"
+          "level": "area",
+          "nameEn": "Port-au-Prince",
+          "namePt": "Porto Príncipe"
         }
       ]
     }

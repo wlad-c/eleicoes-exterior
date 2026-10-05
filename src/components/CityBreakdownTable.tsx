@@ -314,9 +314,9 @@ export function CityBreakdownTable({
                         ? ''
                         : 'sticky-col sticky-col-city '
                     }cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]`}
-                    title={cityDisplayName(c.name)}
+                    title={cityDisplayName(c, lang)}
                   >
-                    {cityDisplayName(c.name)}
+                    {cityDisplayName(c, lang)}
                   </td>
                   <td
                     className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
