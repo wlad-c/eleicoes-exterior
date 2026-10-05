@@ -171,7 +171,15 @@ export function CityBreakdownTable({
 
   return (
     <div>
-      <div className="table-x-scroll">
+      <div
+        className="table-x-scroll"
+        onScroll={(e) => {
+          e.currentTarget.classList.toggle(
+            'is-x-scrolled',
+            e.currentTarget.scrollLeft > 0,
+          )
+        }}
+      >
         <table
           ref={tableRef}
           className="results-table results-table--cities text-left text-sm"

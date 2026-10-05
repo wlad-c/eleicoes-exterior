@@ -75,6 +75,7 @@ export function ResultsTable({
   const headTableRef = useRef<HTMLTableElement>(null)
   const headScrollRef = useRef<HTMLDivElement>(null)
   const bodyScrollRef = useRef<HTMLDivElement>(null)
+  const shellRef = useRef<HTMLDivElement>(null)
   const syncingScroll = useRef(false)
   const inFlowTotalRef = useRef<HTMLTableRowElement>(null)
   const [pinTotal, setPinTotal] = useState(false)
@@ -152,10 +153,13 @@ export function ResultsTable({
   const syncScroll = (source: 'head' | 'body') => {
     const head = headScrollRef.current
     const body = bodyScrollRef.current
+    const shell = shellRef.current
     if (!head || !body || syncingScroll.current) return
     syncingScroll.current = true
     if (source === 'body') head.scrollLeft = body.scrollLeft
     else body.scrollLeft = head.scrollLeft
+    const scrolled = (source === 'body' ? body : head).scrollLeft > 0
+    shell?.classList.toggle('is-x-scrolled', scrolled)
     requestAnimationFrame(() => {
       syncingScroll.current = false
     })
@@ -451,7 +455,7 @@ export function ResultsTable({
 
   return (
     <div>
-      <div className="results-table-shell">
+      <div className="results-table-shell" ref={shellRef}>
         {/* Sticky header lives outside the body x-scroller so vertical stick works */}
         <div className="table-head-sticky">
           <div
