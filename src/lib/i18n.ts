@@ -217,7 +217,10 @@ const dict = {
   },
   Africa: { en: 'Africa', pt: 'África' },
   Americas: { en: 'Americas', pt: 'Américas' },
-  Asia: { en: 'Asia', pt: 'Ásia' },
+  'Asia (excl. Middle East)': {
+    en: 'Asia (excl. Middle East)',
+    pt: 'Ásia (excl. Oriente Médio)',
+  },
   Europe: { en: 'Europe', pt: 'Europa' },
   'Middle East': { en: 'Middle East', pt: 'Oriente Médio' },
   Oceania: { en: 'Oceania', pt: 'Oceania' },

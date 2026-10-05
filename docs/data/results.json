@@ -116,7 +116,7 @@
       "countryEn": "Japan",
       "countryPt": "Japão",
       "iso3": "JPN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 4297,
         "bolsonaro": 23007,
@@ -676,7 +676,7 @@
       "countryEn": "China (mainland)",
       "countryPt": "China (continente)",
       "iso3": "CHN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 166,
         "bolsonaro": 121,
@@ -856,7 +856,7 @@
       "countryEn": "Singapore",
       "countryPt": "Singapura",
       "iso3": "SGP",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 182,
         "bolsonaro": 97,
@@ -918,7 +918,7 @@
       "countryEn": "Hong Kong",
       "countryPt": "Hong Kong",
       "iso3": "HKG",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 55,
         "bolsonaro": 86,
@@ -980,7 +980,7 @@
       "countryEn": "South Korea",
       "countryPt": "Coreia do Sul",
       "iso3": "KOR",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 130,
         "bolsonaro": 53,
@@ -1042,7 +1042,7 @@
       "countryEn": "Thailand",
       "countryPt": "Tailândia",
       "iso3": "THA",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 46,
         "bolsonaro": 42,
@@ -1104,7 +1104,7 @@
       "countryEn": "Malaysia",
       "countryPt": "Malásia",
       "iso3": "MYS",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 27,
         "bolsonaro": 24,
@@ -1166,7 +1166,7 @@
       "countryEn": "Philippines",
       "countryPt": "Filipinas",
       "iso3": "PHL",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 20,
         "bolsonaro": 35,
@@ -5657,7 +5657,7 @@
       "countryEn": "Taiwan",
       "countryPt": "Taiwan",
       "iso3": "TWN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 79,
         "bolsonaro": 100,
@@ -6525,7 +6525,7 @@
       "countryEn": "Timor-Leste",
       "countryPt": "Timor-Leste",
       "iso3": "TLS",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 18,
         "bolsonaro": 37,
@@ -6773,7 +6773,7 @@
       "countryEn": "India",
       "countryPt": "Índia",
       "iso3": "IND",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 36,
         "bolsonaro": 14,
@@ -6987,7 +6987,7 @@
       "countryEn": "Indonesia",
       "countryPt": "Indonésia",
       "iso3": "IDN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 16,
         "bolsonaro": 30,
@@ -7997,7 +7997,7 @@
       "countryEn": "Vietnam",
       "countryPt": "Vietnã",
       "iso3": "VNM",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 13,
         "bolsonaro": 4,
@@ -8140,7 +8140,7 @@
       "countryEn": "Nepal",
       "countryPt": "Nepal",
       "iso3": "NPL",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 1,
         "bolsonaro": 14,
