@@ -184,6 +184,9 @@ html.dark .sticky-table-chrome {
 .sticky-col-rank {
   left: 0;
   z-index: 3;
+  width: var(--table-col-rank, 3.25rem);
+  min-width: var(--table-col-rank, 3.25rem);
+  max-width: var(--table-col-rank, 3.25rem);
 }
 
 .sticky-col-country,
@@ -416,6 +419,7 @@ html.dark .sticky-col-city {
  * so the first metric column starts at the same offset on every tab.
  */
 :root {
+  --table-col-rank: 3.25rem;
   --table-col-abbr: 4.5rem;
   --table-col-place: 9rem;
   --table-col-country-full: calc(
