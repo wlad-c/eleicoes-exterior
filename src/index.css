@@ -443,8 +443,19 @@ html.dark .sticky-col-city {
   max-width: 4.5rem;
 }
 
-.sticky-col-country.cell-truncate-country {
+/*
+ * Country table: keep head/body/foot sticky country cells the same width.
+ * A narrower body max-width left a painted sticky edge mid-column (the
+ * “weird line” between Country and the first metric).
+ */
+.results-table--head .sticky-col-country,
+.results-table--body .sticky-col-country {
   max-width: 12rem;
+  width: 12rem;
+}
+
+.sticky-col-country.cell-truncate-country {
+  overflow: hidden;
 }
 
 .sticky-col-city.cell-truncate-city {

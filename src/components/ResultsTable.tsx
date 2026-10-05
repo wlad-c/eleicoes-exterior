@@ -345,13 +345,15 @@ export function ResultsTable({
       <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
         —
       </td>
-      <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink)]">
-        {t('tableTotal', lang)}
-        {!visible.has('region') ? (
-          <span className="ml-2 font-normal text-[var(--ink-muted)]">
-            {totals.countries} {t('countries', lang)}
-          </span>
-        ) : null}
+      <td className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5 text-[var(--ink)]">
+        <span className="cell-truncate-text">
+          {t('tableTotal', lang)}
+          {!visible.has('region') ? (
+            <span className="ml-2 font-normal text-[var(--ink-muted)]">
+              {totals.countries} {t('countries', lang)}
+            </span>
+          ) : null}
+        </span>
       </td>
       {metricCols.map((col) => {
         switch (col) {
