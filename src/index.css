@@ -164,6 +164,17 @@ html.dark .sticky-table-chrome {
   white-space: nowrap;
 }
 
+/* Body rows share one type treatment; thead + Total row stay distinct */
+.results-table--body tbody td,
+.results-table--cities:not(.results-table--foot) tbody td {
+  color: var(--ink);
+  font-weight: 400;
+  font-size: inherit;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: normal;
+}
+
 .results-table tfoot td {
   background: var(--paper-deep);
 }
