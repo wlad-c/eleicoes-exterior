@@ -1,10 +1,11 @@
 name: Sync TSE ZZ tallies
 
 # Backup persistence for cold loads / SEO. The live page also pulls TSE
-# directly in the browser every 5 minutes and does not depend on this job.
+# directly in the browser and does not depend on this job.
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    # Every 48h (00:00 UTC on even calendar days).
+    - cron: '0 0 */2 * *'
   workflow_dispatch:
 
 permissions:

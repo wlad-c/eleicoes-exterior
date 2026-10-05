@@ -15,7 +15,7 @@ App runs at [http://localhost:4837/eleicoes-exterior/](http://localhost:4837/ele
 
 The live page pulls overseas (ZZ) presidential tallies **directly from the TSE** in the browser on load, on focus, and every **2 minutes** (through `2026-10-05T03:50:00Z`, then every 30 minutes). Vote updates do not require a redeploy.
 
-Optional seed sync (cold load / SEO; also via GitHub Actions every 5 minutes):
+Optional seed sync (cold load / SEO; also via GitHub Actions every 48 hours):
 
 ```bash
 npm run sync:tse
