@@ -419,6 +419,11 @@ html.dark .sticky-col-city {
   max-width: 4.5rem;
 }
 
+/* Full country names in the Country table (Area/City keep abbrevs). */
+.cell-truncate-country {
+  max-width: 12rem;
+}
+
 .country-flag-label .cell-truncate-text {
   min-width: 0;
   overflow: hidden;
@@ -434,9 +439,12 @@ html.dark .sticky-col-city {
   white-space: nowrap;
 }
 
-.sticky-col-country.cell-truncate,
 .sticky-col-country.cell-truncate-abbr {
   max-width: 4.5rem;
+}
+
+.sticky-col-country.cell-truncate-country {
+  max-width: 12rem;
 }
 
 .sticky-col-city.cell-truncate-city {

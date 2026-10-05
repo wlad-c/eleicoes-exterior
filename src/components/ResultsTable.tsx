@@ -5,7 +5,6 @@ import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
   aggregateRows,
   bolsonaroVotesDelta,
-  countryAbbrev,
   countryName,
   fmtCoverage,
   fmtInt,
@@ -480,7 +479,7 @@ export function ResultsTable({
                       {index + 1}
                     </td>
                     <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 font-medium text-[var(--ink)]"
+                      className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5 font-medium text-[var(--ink)]"
                       title={countryName(c, lang)}
                     >
                       <span className="country-flag-label">
@@ -489,7 +488,7 @@ export function ResultsTable({
                           title={countryName(c, lang)}
                         />
                         <span className="cell-truncate-text">
-                          {countryAbbrev(c, lang)}
+                          {countryName(c, lang)}
                         </span>
                       </span>
                       {c.notes?.startsWith('DISPUTED') ? (
