@@ -70,15 +70,10 @@ export function countryName(c: CountryResult, lang: Lang): string {
   return lang === 'pt' ? c.countryPt : c.countryEn
 }
 
-/** Short country code for dense tables (ISO3, with a few familiar overrides). */
-const COUNTRY_ABBREV_OVERRIDES: Record<string, string> = {
-  GBR: 'UK',
-  USA: 'US',
-  ARE: 'UAE',
-}
-
-export function countryAbbrev(c: CountryResult): string {
-  return COUNTRY_ABBREV_OVERRIDES[c.iso3] ?? c.iso3
+/** Language-aware short country code for dense tables. */
+export function countryAbbrev(c: CountryResult, lang: Lang): string {
+  if (lang === 'pt') return c.abbrevPt || c.iso3
+  return c.abbrevEn || c.iso3
 }
 
 /** Title-case TSE city labels (e.g. "NOVA YORK" → "Nova York"). */

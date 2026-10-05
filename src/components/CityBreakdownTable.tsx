@@ -287,7 +287,7 @@ export function CityBreakdownTable({
               const fullCountry = parent
                 ? countryName(parent, lang)
                 : c.countryId
-              const abbr = parent ? countryAbbrev(parent) : c.countryId
+              const abbr = parent ? countryAbbrev(parent, lang) : c.countryId
               return (
                 <tr
                   key={`${c.countryId}-${c.code}`}
@@ -382,7 +382,7 @@ export function CityBreakdownTable({
               </td>
               {showCountry ? (
                 <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink-muted)]">
-                  {singleCountry ? countryAbbrev(singleCountry) : '—'}
+                  {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
                 </td>
               ) : null}
               <td

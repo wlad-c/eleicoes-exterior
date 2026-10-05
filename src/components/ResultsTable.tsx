@@ -403,7 +403,7 @@ export function ResultsTable({
                           className="cell-truncate-text"
                           title={countryName(c, lang)}
                         >
-                          {countryAbbrev(c)}
+                          {countryAbbrev(c, lang)}
                         </span>
                       </span>
                       {c.notes?.startsWith('DISPUTED') ? (

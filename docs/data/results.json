@@ -116,6 +116,8 @@
       "countryEn": "Japan",
       "countryPt": "Japão",
       "iso3": "JPN",
+"abbrevEn": "JPN",
+      "abbrevPt": "JAP",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 4297,
@@ -439,6 +441,8 @@
       "countryEn": "Australia",
       "countryPt": "Austrália",
       "iso3": "AUS",
+      "abbrevEn": "AUS",
+      "abbrevPt": "AUS",
       "region": "Oceania",
       "y2022": {
         "lula": 3485,
@@ -676,6 +680,8 @@
       "countryEn": "China (mainland)",
       "countryPt": "China (continente)",
       "iso3": "CHN",
+"abbrevEn": "CHN",
+      "abbrevPt": "CHN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 166,
@@ -794,6 +800,8 @@
       "countryEn": "New Zealand",
       "countryPt": "Nova Zelândia",
       "iso3": "NZL",
+      "abbrevEn": "NZL",
+      "abbrevPt": "NZL",
       "region": "Oceania",
       "y2022": {
         "lula": 329,
@@ -856,6 +864,8 @@
       "countryEn": "Singapore",
       "countryPt": "Singapura",
       "iso3": "SGP",
+"abbrevEn": "SGP",
+      "abbrevPt": "SIN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 182,
@@ -918,6 +928,8 @@
       "countryEn": "Hong Kong",
       "countryPt": "Hong Kong",
       "iso3": "HKG",
+"abbrevEn": "HKG",
+      "abbrevPt": "HKG",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 55,
@@ -980,6 +992,8 @@
       "countryEn": "South Korea",
       "countryPt": "Coreia do Sul",
       "iso3": "KOR",
+"abbrevEn": "KOR",
+      "abbrevPt": "COR",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 130,
@@ -1042,6 +1056,8 @@
       "countryEn": "Thailand",
       "countryPt": "Tailândia",
       "iso3": "THA",
+"abbrevEn": "THA",
+      "abbrevPt": "TAI",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 46,
@@ -1104,6 +1120,8 @@
       "countryEn": "Malaysia",
       "countryPt": "Malásia",
       "iso3": "MYS",
+"abbrevEn": "MAS",
+      "abbrevPt": "MAL",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 27,
@@ -1166,6 +1184,8 @@
       "countryEn": "Philippines",
       "countryPt": "Filipinas",
       "iso3": "PHL",
+"abbrevEn": "PHI",
+      "abbrevPt": "FIL",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 20,
@@ -1228,6 +1248,8 @@
       "countryEn": "United States",
       "countryPt": "Estados Unidos",
       "iso3": "USA",
+      "abbrevEn": "USA",
+      "abbrevPt": "EUA",
       "region": "Americas",
       "y2022": {
         "lula": 20541,
@@ -1745,6 +1767,8 @@
       "countryEn": "Portugal",
       "countryPt": "Portugal",
       "iso3": "PRT",
+      "abbrevEn": "POR",
+      "abbrevPt": "POR",
       "region": "Europe",
       "y2022": {
         "lula": 21839,
@@ -1863,6 +1887,8 @@
       "countryEn": "Canada",
       "countryPt": "Canadá",
       "iso3": "CAN",
+      "abbrevEn": "CAN",
+      "abbrevPt": "CAN",
       "region": "Americas",
       "y2022": {
         "lula": 11821,
@@ -2127,6 +2153,8 @@
       "countryEn": "Germany",
       "countryPt": "Alemanha",
       "iso3": "DEU",
+      "abbrevEn": "GER",
+      "abbrevPt": "ALE",
       "region": "Europe",
       "y2022": {
         "lula": 11875,
@@ -2363,6 +2391,8 @@
       "countryEn": "United Kingdom",
       "countryPt": "Reino Unido",
       "iso3": "GBR",
+      "abbrevEn": "UK",
+      "abbrevPt": "RU",
       "region": "Europe",
       "y2022": {
         "lula": 8165,
@@ -2483,6 +2513,8 @@
       "countryEn": "Italy",
       "countryPt": "Itália",
       "iso3": "ITA",
+      "abbrevEn": "ITA",
+      "abbrevPt": "ITA",
       "region": "Europe",
       "y2022": {
         "lula": 5418,
@@ -2573,6 +2605,8 @@
       "countryEn": "Switzerland",
       "countryPt": "Suíça",
       "iso3": "CHE",
+      "abbrevEn": "SUI",
+      "abbrevPt": "SUI",
       "region": "Europe",
       "y2022": {
         "lula": 4664,
@@ -2663,6 +2697,8 @@
       "countryEn": "France",
       "countryPt": "França",
       "iso3": "FRA",
+      "abbrevEn": "FRA",
+      "abbrevPt": "FRA",
       "region": "Europe",
       "y2022": {
         "lula": 7809,
@@ -2743,6 +2779,8 @@
       "countryEn": "Spain",
       "countryPt": "Espanha",
       "iso3": "ESP",
+      "abbrevEn": "ESP",
+      "abbrevPt": "ESP",
       "region": "Europe",
       "y2022": {
         "lula": 5912,
@@ -2833,6 +2871,8 @@
       "countryEn": "Ireland",
       "countryPt": "Irlanda",
       "iso3": "IRL",
+      "abbrevEn": "IRL",
+      "abbrevPt": "IRL",
       "region": "Europe",
       "y2022": {
         "lula": 5951,
@@ -2895,6 +2935,8 @@
       "countryEn": "Argentina",
       "countryPt": "Argentina",
       "iso3": "ARG",
+      "abbrevEn": "ARG",
+      "abbrevPt": "ARG",
       "region": "Americas",
       "y2022": {
         "lula": 4634,
@@ -3059,6 +3101,8 @@
       "countryEn": "Netherlands",
       "countryPt": "Países Baixos",
       "iso3": "NLD",
+      "abbrevEn": "NED",
+      "abbrevPt": "PBS",
       "region": "Europe",
       "y2022": {
         "lula": 4094,
@@ -3121,6 +3165,8 @@
       "countryEn": "Paraguay",
       "countryPt": "Paraguai",
       "iso3": "PRY",
+      "abbrevEn": "PAR",
+      "abbrevPt": "PAR",
       "region": "Americas",
       "y2022": {
         "lula": 634,
@@ -3295,6 +3341,8 @@
       "countryEn": "Belgium",
       "countryPt": "Bélgica",
       "iso3": "BEL",
+      "abbrevEn": "BEL",
+      "abbrevPt": "BEL",
       "region": "Europe",
       "y2022": {
         "lula": 1984,
@@ -3407,6 +3455,8 @@
       "countryEn": "Lebanon",
       "countryPt": "Líbano",
       "iso3": "LBN",
+      "abbrevEn": "LBN",
+      "abbrevPt": "LIB",
       "region": "Middle East",
       "y2022": {
         "lula": 1601,
@@ -3529,6 +3579,8 @@
       "countryEn": "Sweden",
       "countryPt": "Suécia",
       "iso3": "SWE",
+      "abbrevEn": "SWE",
+      "abbrevPt": "SUE",
       "region": "Europe",
       "y2022": {
         "lula": 1632,
@@ -3651,6 +3703,8 @@
       "countryEn": "Chile",
       "countryPt": "Chile",
       "iso3": "CHL",
+      "abbrevEn": "CHI",
+      "abbrevPt": "CHI",
       "region": "Americas",
       "y2022": {
         "lula": 869,
@@ -3713,6 +3767,8 @@
       "countryEn": "Bolivia",
       "countryPt": "Bolívia",
       "iso3": "BOL",
+      "abbrevEn": "BOL",
+      "abbrevPt": "BOL",
       "region": "Americas",
       "y2022": {
         "lula": 347,
@@ -3867,6 +3923,8 @@
       "countryEn": "Uruguay",
       "countryPt": "Uruguai",
       "iso3": "URY",
+      "abbrevEn": "URU",
+      "abbrevPt": "URU",
       "region": "Americas",
       "y2022": {
         "lula": 813,
@@ -3993,6 +4051,8 @@
       "countryEn": "Mexico",
       "countryPt": "México",
       "iso3": "MEX",
+      "abbrevEn": "MEX",
+      "abbrevPt": "MEX",
       "region": "Americas",
       "y2022": {
         "lula": 614,
@@ -4055,6 +4115,8 @@
       "countryEn": "Austria",
       "countryPt": "Áustria",
       "iso3": "AUT",
+      "abbrevEn": "AUT",
+      "abbrevPt": "AUT",
       "region": "Europe",
       "y2022": {
         "lula": 864,
@@ -4117,6 +4179,8 @@
       "countryEn": "French Guiana",
       "countryPt": "Guiana Francesa",
       "iso3": "GUF",
+      "abbrevEn": "GUF",
+      "abbrevPt": "GUF",
       "region": "Americas",
       "y2022": {
         "lula": 584,
@@ -4197,6 +4261,8 @@
       "countryEn": "Denmark",
       "countryPt": "Dinamarca",
       "iso3": "DNK",
+      "abbrevEn": "DEN",
+      "abbrevPt": "DIN",
       "region": "Europe",
       "y2022": {
         "lula": 936,
@@ -4259,6 +4325,8 @@
       "countryEn": "United Arab Emirates",
       "countryPt": "Emirados Árabes Unidos",
       "iso3": "ARE",
+      "abbrevEn": "UAE",
+      "abbrevPt": "EAU",
       "region": "Middle East",
       "y2022": {
         "lula": 352,
@@ -4381,6 +4449,8 @@
       "countryEn": "Norway",
       "countryPt": "Noruega",
       "iso3": "NOR",
+      "abbrevEn": "NOR",
+      "abbrevPt": "NOR",
       "region": "Europe",
       "y2022": {
         "lula": 549,
@@ -4443,6 +4513,8 @@
       "countryEn": "Peru",
       "countryPt": "Peru",
       "iso3": "PER",
+      "abbrevEn": "PER",
+      "abbrevPt": "PER",
       "region": "Americas",
       "y2022": {
         "lula": 273,
@@ -4523,6 +4595,8 @@
       "countryEn": "Palestine",
       "countryPt": "Palestina",
       "iso3": "PSE",
+      "abbrevEn": "PLE",
+      "abbrevPt": "PAL",
       "region": "Middle East",
       "y2022": {
         "lula": 592,
@@ -4585,6 +4659,8 @@
       "countryEn": "Syria",
       "countryPt": "Síria",
       "iso3": "SYR",
+      "abbrevEn": "SYR",
+      "abbrevPt": "SIR",
       "region": "Middle East",
       "y2022": {
         "lula": 0,
@@ -4637,6 +4713,8 @@
       "countryEn": "Israel",
       "countryPt": "Israel",
       "iso3": "ISR",
+      "abbrevEn": "ISR",
+      "abbrevPt": "ISR",
       "region": "Middle East",
       "y2022": {
         "lula": 274,
@@ -4699,6 +4777,8 @@
       "countryEn": "Colombia",
       "countryPt": "Colômbia",
       "iso3": "COL",
+      "abbrevEn": "COL",
+      "abbrevPt": "COL",
       "region": "Americas",
       "y2022": {
         "lula": 365,
@@ -4761,6 +4841,8 @@
       "countryEn": "Panama",
       "countryPt": "Panamá",
       "iso3": "PAN",
+      "abbrevEn": "PAN",
+      "abbrevPt": "PAN",
       "region": "Americas",
       "y2022": {
         "lula": 214,
@@ -4823,6 +4905,8 @@
       "countryEn": "Finland",
       "countryPt": "Finlândia",
       "iso3": "FIN",
+      "abbrevEn": "FIN",
+      "abbrevPt": "FIN",
       "region": "Europe",
       "y2022": {
         "lula": 390,
@@ -4885,6 +4969,8 @@
       "countryEn": "Hungary",
       "countryPt": "Hungria",
       "iso3": "HUN",
+      "abbrevEn": "HUN",
+      "abbrevPt": "HUN",
       "region": "Europe",
       "y2022": {
         "lula": 491,
@@ -4947,6 +5033,8 @@
       "countryEn": "Jordan",
       "countryPt": "Jordânia",
       "iso3": "JOR",
+      "abbrevEn": "JOR",
+      "abbrevPt": "JOR",
       "region": "Middle East",
       "y2022": {
         "lula": 338,
@@ -5009,6 +5097,8 @@
       "countryEn": "Suriname",
       "countryPt": "Suriname",
       "iso3": "SUR",
+      "abbrevEn": "SUR",
+      "abbrevPt": "SUR",
       "region": "Americas",
       "y2022": {
         "lula": 125,
@@ -5071,6 +5161,8 @@
       "countryEn": "South Africa",
       "countryPt": "África do Sul",
       "iso3": "ZAF",
+      "abbrevEn": "RSA",
+      "abbrevPt": "AFS",
       "region": "Africa",
       "y2022": {
         "lula": 155,
@@ -5161,6 +5253,8 @@
       "countryEn": "Greece",
       "countryPt": "Grécia",
       "iso3": "GRC",
+      "abbrevEn": "GRE",
+      "abbrevPt": "GRE",
       "region": "Europe",
       "y2022": {
         "lula": 164,
@@ -5223,6 +5317,8 @@
       "countryEn": "Ecuador",
       "countryPt": "Equador",
       "iso3": "ECU",
+      "abbrevEn": "ECU",
+      "abbrevPt": "EQU",
       "region": "Americas",
       "y2022": {
         "lula": 110,
@@ -5285,6 +5381,8 @@
       "countryEn": "Czech Republic",
       "countryPt": "Tchéquia",
       "iso3": "CZE",
+      "abbrevEn": "CZE",
+      "abbrevPt": "TCH",
       "region": "Europe",
       "y2022": {
         "lula": 253,
@@ -5347,6 +5445,8 @@
       "countryEn": "Costa Rica",
       "countryPt": "Costa Rica",
       "iso3": "CRI",
+      "abbrevEn": "CRC",
+      "abbrevPt": "CRC",
       "region": "Americas",
       "y2022": {
         "lula": 136,
@@ -5409,6 +5509,8 @@
       "countryEn": "Qatar",
       "countryPt": "Catar",
       "iso3": "QAT",
+      "abbrevEn": "QAT",
+      "abbrevPt": "CAT",
       "region": "Middle East",
       "y2022": {
         "lula": 132,
@@ -5471,6 +5573,8 @@
       "countryEn": "Poland",
       "countryPt": "Polônia",
       "iso3": "POL",
+      "abbrevEn": "POL",
+      "abbrevPt": "POL",
       "region": "Europe",
       "y2022": {
         "lula": 213,
@@ -5533,6 +5637,8 @@
       "countryEn": "Mozambique",
       "countryPt": "Moçambique",
       "iso3": "MOZ",
+      "abbrevEn": "MOZ",
+      "abbrevPt": "MOC",
       "region": "Africa",
       "y2022": {
         "lula": 117,
@@ -5595,6 +5701,8 @@
       "countryEn": "Angola",
       "countryPt": "Angola",
       "iso3": "AGO",
+      "abbrevEn": "ANG",
+      "abbrevPt": "ANG",
       "region": "Africa",
       "y2022": {
         "lula": 124,
@@ -5657,6 +5765,8 @@
       "countryEn": "Taiwan",
       "countryPt": "Taiwan",
       "iso3": "TWN",
+"abbrevEn": "TWN",
+      "abbrevPt": "TWN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 79,
@@ -5719,6 +5829,8 @@
       "countryEn": "Dominican Republic",
       "countryPt": "República Dominicana",
       "iso3": "DOM",
+      "abbrevEn": "DOM",
+      "abbrevPt": "DOM",
       "region": "Americas",
       "y2022": {
         "lula": 65,
@@ -5781,6 +5893,8 @@
       "countryEn": "Estonia",
       "countryPt": "Estônia",
       "iso3": "EST",
+      "abbrevEn": "EST",
+      "abbrevPt": "EST",
       "region": "Europe",
       "y2022": {
         "lula": 148,
@@ -5843,6 +5957,8 @@
       "countryEn": "Turkey",
       "countryPt": "Turquia",
       "iso3": "TUR",
+      "abbrevEn": "TUR",
+      "abbrevPt": "TUR",
       "region": "Middle East",
       "y2022": {
         "lula": 91,
@@ -5905,6 +6021,8 @@
       "countryEn": "Guatemala",
       "countryPt": "Guatemala",
       "iso3": "GTM",
+      "abbrevEn": "GUA",
+      "abbrevPt": "GUA",
       "region": "Americas",
       "y2022": {
         "lula": 32,
@@ -5967,6 +6085,8 @@
       "countryEn": "Honduras",
       "countryPt": "Honduras",
       "iso3": "HND",
+      "abbrevEn": "HON",
+      "abbrevPt": "HON",
       "region": "Americas",
       "y2022": {
         "lula": 35,
@@ -6029,6 +6149,8 @@
       "countryEn": "Russia",
       "countryPt": "Rússia",
       "iso3": "RUS",
+      "abbrevEn": "RUS",
+      "abbrevPt": "RUS",
       "region": "Europe",
       "y2022": {
         "lula": 45,
@@ -6091,6 +6213,8 @@
       "countryEn": "Nicaragua",
       "countryPt": "Nicarágua",
       "iso3": "NIC",
+      "abbrevEn": "NCA",
+      "abbrevPt": "NIC",
       "region": "Americas",
       "y2022": {
         "lula": 34,
@@ -6153,6 +6277,8 @@
       "countryEn": "Slovenia",
       "countryPt": "Eslovênia",
       "iso3": "SVN",
+      "abbrevEn": "SVN",
+      "abbrevPt": "SVN",
       "region": "Europe",
       "y2022": {
         "lula": 50,
@@ -6215,6 +6341,8 @@
       "countryEn": "El Salvador",
       "countryPt": "El Salvador",
       "iso3": "SLV",
+      "abbrevEn": "SLV",
+      "abbrevPt": "SLV",
       "region": "Americas",
       "y2022": {
         "lula": 22,
@@ -6277,6 +6405,8 @@
       "countryEn": "Egypt",
       "countryPt": "Egito",
       "iso3": "EGY",
+      "abbrevEn": "EGY",
+      "abbrevPt": "EGI",
       "region": "Africa",
       "y2022": {
         "lula": 42,
@@ -6339,6 +6469,8 @@
       "countryEn": "Guyana",
       "countryPt": "Guiana",
       "iso3": "GUY",
+      "abbrevEn": "GUY",
+      "abbrevPt": "GUY",
       "region": "Americas",
       "y2022": {
         "lula": 7,
@@ -6401,6 +6533,8 @@
       "countryEn": "Slovakia",
       "countryPt": "Eslováquia",
       "iso3": "SVK",
+      "abbrevEn": "SVK",
+      "abbrevPt": "SVK",
       "region": "Europe",
       "y2022": {
         "lula": 24,
@@ -6463,6 +6597,8 @@
       "countryEn": "Cape Verde",
       "countryPt": "Cabo Verde",
       "iso3": "CPV",
+      "abbrevEn": "CPV",
+      "abbrevPt": "CPV",
       "region": "Africa",
       "y2022": {
         "lula": 38,
@@ -6525,6 +6661,8 @@
       "countryEn": "Timor-Leste",
       "countryPt": "Timor-Leste",
       "iso3": "TLS",
+"abbrevEn": "TLS",
+      "abbrevPt": "TLS",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 18,
@@ -6587,6 +6725,8 @@
       "countryEn": "Senegal",
       "countryPt": "Senegal",
       "iso3": "SEN",
+      "abbrevEn": "SEN",
+      "abbrevPt": "SEN",
       "region": "Africa",
       "y2022": {
         "lula": 26,
@@ -6649,6 +6789,8 @@
       "countryEn": "Romania",
       "countryPt": "Romênia",
       "iso3": "ROU",
+      "abbrevEn": "ROU",
+      "abbrevPt": "ROM",
       "region": "Europe",
       "y2022": {
         "lula": 29,
@@ -6711,6 +6853,8 @@
       "countryEn": "Saudi Arabia",
       "countryPt": "Arábia Saudita",
       "iso3": "SAU",
+      "abbrevEn": "KSA",
+      "abbrevPt": "SAU",
       "region": "Middle East",
       "y2022": {
         "lula": 26,
@@ -6773,6 +6917,8 @@
       "countryEn": "India",
       "countryPt": "Índia",
       "iso3": "IND",
+"abbrevEn": "IND",
+      "abbrevPt": "IND",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 36,
@@ -6863,6 +7009,8 @@
       "countryEn": "Morocco",
       "countryPt": "Marrocos",
       "iso3": "MAR",
+      "abbrevEn": "MAR",
+      "abbrevPt": "MAR",
       "region": "Africa",
       "y2022": {
         "lula": 34,
@@ -6925,6 +7073,8 @@
       "countryEn": "Kenya",
       "countryPt": "Quênia",
       "iso3": "KEN",
+      "abbrevEn": "KEN",
+      "abbrevPt": "QUE",
       "region": "Africa",
       "y2022": {
         "lula": 25,
@@ -6987,6 +7137,8 @@
       "countryEn": "Indonesia",
       "countryPt": "Indonésia",
       "iso3": "IDN",
+"abbrevEn": "IDN",
+      "abbrevPt": "IDN",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 16,
@@ -7049,6 +7201,8 @@
       "countryEn": "Serbia",
       "countryPt": "Sérvia",
       "iso3": "SRB",
+      "abbrevEn": "SRB",
+      "abbrevPt": "SER",
       "region": "Europe",
       "y2022": {
         "lula": 30,
@@ -7111,6 +7265,8 @@
       "countryEn": "Ivory Coast",
       "countryPt": "Costa do Marfim",
       "iso3": "CIV",
+      "abbrevEn": "CIV",
+      "abbrevPt": "CDM",
       "region": "Africa",
       "y2022": {
         "lula": 21,
@@ -7173,6 +7329,8 @@
       "countryEn": "Croatia",
       "countryPt": "Croácia",
       "iso3": "HRV",
+      "abbrevEn": "CRO",
+      "abbrevPt": "CRO",
       "region": "Europe",
       "y2022": {
         "lula": 25,
@@ -7235,6 +7393,8 @@
       "countryEn": "Guinea-Bissau",
       "countryPt": "Guiné-Bissau",
       "iso3": "GNB",
+      "abbrevEn": "GNB",
+      "abbrevPt": "GNB",
       "region": "Africa",
       "y2022": {
         "lula": 23,
@@ -7297,6 +7457,8 @@
       "countryEn": "Kuwait",
       "countryPt": "Kuwait",
       "iso3": "KWT",
+      "abbrevEn": "KUW",
+      "abbrevPt": "KUW",
       "region": "Middle East",
       "y2022": {
         "lula": 9,
@@ -7359,6 +7521,8 @@
       "countryEn": "Oman",
       "countryPt": "Omã",
       "iso3": "OMN",
+      "abbrevEn": "OMA",
+      "abbrevPt": "OMA",
       "region": "Middle East",
       "y2022": {
         "lula": 11,
@@ -7421,6 +7585,8 @@
       "countryEn": "Namibia",
       "countryPt": "Namíbia",
       "iso3": "NAM",
+      "abbrevEn": "NAM",
+      "abbrevPt": "NAM",
       "region": "Africa",
       "y2022": {
         "lula": 4,
@@ -7483,6 +7649,8 @@
       "countryEn": "Bahrain",
       "countryPt": "Bahrein",
       "iso3": "BHR",
+      "abbrevEn": "BHR",
+      "abbrevPt": "BHR",
       "region": "Middle East",
       "y2022": {
         "lula": 10,
@@ -7545,6 +7713,8 @@
       "countryEn": "Trinidad and Tobago",
       "countryPt": "Trinidad e Tobago",
       "iso3": "TTO",
+      "abbrevEn": "TRI",
+      "abbrevPt": "TRI",
       "region": "Americas",
       "y2022": {
         "lula": 17,
@@ -7607,6 +7777,8 @@
       "countryEn": "Bulgaria",
       "countryPt": "Bulgária",
       "iso3": "BGR",
+      "abbrevEn": "BUL",
+      "abbrevPt": "BUL",
       "region": "Europe",
       "y2022": {
         "lula": 22,
@@ -7669,6 +7841,8 @@
       "countryEn": "Cuba",
       "countryPt": "Cuba",
       "iso3": "CUB",
+      "abbrevEn": "CUB",
+      "abbrevPt": "CUB",
       "region": "Americas",
       "y2022": {
         "lula": 28,
@@ -7731,6 +7905,8 @@
       "countryEn": "Nigeria",
       "countryPt": "Nigéria",
       "iso3": "NGA",
+      "abbrevEn": "NGA",
+      "abbrevPt": "NIG",
       "region": "Africa",
       "y2022": {
         "lula": 16,
@@ -7811,6 +7987,8 @@
       "countryEn": "Cyprus",
       "countryPt": "Chipre",
       "iso3": "CYP",
+      "abbrevEn": "CYP",
+      "abbrevPt": "CPR",
       "region": "Europe",
       "y2022": {
         "lula": 13,
@@ -7873,6 +8051,8 @@
       "countryEn": "Bahamas",
       "countryPt": "Bahamas",
       "iso3": "BHS",
+      "abbrevEn": "BAH",
+      "abbrevPt": "BAH",
       "region": "Americas",
       "y2022": {
         "lula": 8,
@@ -7935,6 +8115,8 @@
       "countryEn": "Ghana",
       "countryPt": "Gana",
       "iso3": "GHA",
+      "abbrevEn": "GHA",
+      "abbrevPt": "GAN",
       "region": "Africa",
       "y2022": {
         "lula": 12,
@@ -7997,6 +8179,8 @@
       "countryEn": "Vietnam",
       "countryPt": "Vietnã",
       "iso3": "VNM",
+"abbrevEn": "VIE",
+      "abbrevPt": "VIE",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 13,
@@ -8059,6 +8243,8 @@
       "countryEn": "Iran",
       "countryPt": "Irã",
       "iso3": "IRN",
+      "abbrevEn": "IRN",
+      "abbrevPt": "IRA",
       "region": "Middle East",
       "y2022": {
         "lula": 7,
@@ -8121,6 +8307,8 @@
       "countryEn": "DR Congo",
       "countryPt": "RD Congo",
       "iso3": "COD",
+      "abbrevEn": "COD",
+      "abbrevPt": "RDC",
       "region": "Africa",
       "y2022": {
         "lula": 2,
@@ -8140,6 +8328,8 @@
       "countryEn": "Nepal",
       "countryPt": "Nepal",
       "iso3": "NPL",
+"abbrevEn": "NEP",
+      "abbrevPt": "NEP",
       "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 1,
@@ -8202,6 +8392,8 @@
       "countryEn": "Tunisia",
       "countryPt": "Tunísia",
       "iso3": "TUN",
+      "abbrevEn": "TUN",
+      "abbrevPt": "TUN",
       "region": "Africa",
       "y2022": {
         "lula": 8,
@@ -8264,6 +8456,8 @@
       "countryEn": "Zambia",
       "countryPt": "Zâmbia",
       "iso3": "ZMB",
+      "abbrevEn": "ZAM",
+      "abbrevPt": "ZAM",
       "region": "Africa",
       "y2022": {
         "lula": 11,
@@ -8283,6 +8477,8 @@
       "countryEn": "Jamaica",
       "countryPt": "Jamaica",
       "iso3": "JAM",
+      "abbrevEn": "JAM",
+      "abbrevPt": "JAM",
       "region": "Americas",
       "y2022": {
         "lula": 7,
@@ -8345,6 +8541,8 @@
       "countryEn": "Tanzania",
       "countryPt": "Tanzânia",
       "iso3": "TZA",
+      "abbrevEn": "TAN",
+      "abbrevPt": "TAN",
       "region": "Africa",
       "y2022": {
         "lula": 6,
@@ -8407,6 +8605,8 @@
       "countryEn": "Haiti",
       "countryPt": "Haiti",
       "iso3": "HTI",
+      "abbrevEn": "HAI",
+      "abbrevPt": "HAI",
       "region": "Americas",
       "y2022": {
         "lula": 2,

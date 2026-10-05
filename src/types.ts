@@ -48,6 +48,10 @@ export type CountryResult = {
   countryEn: string
   countryPt: string
   iso3: string
+  /** Short display code for English UI (FIFA/IOC-style when clearer than ISO3). */
+  abbrevEn: string
+  /** Short display code for Portuguese UI (Brazilian/Portuguese media form). */
+  abbrevPt: string
   region: string
   y2022: YearResult
   y2026: YearResult | null
