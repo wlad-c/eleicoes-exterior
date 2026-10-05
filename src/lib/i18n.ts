@@ -7,8 +7,11 @@ const dict = {
   countries: { en: 'countries', pt: 'países' },
   search: { en: 'Search country…', pt: 'Buscar país…' },
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
-  tabCountries: { en: 'Countries', pt: 'Países' },
-  tabCities: { en: 'Cities', pt: 'Cidades' },
+  tabCountries: { en: 'Country', pt: 'País' },
+  tabLocalOverview: { en: 'Local overview', pt: 'Visão local' },
+  tabLocalDetailed: { en: 'Local detailed', pt: 'Detalhe local' },
+  /** @deprecated use tabLocalDetailed */
+  tabCities: { en: 'Local detailed', pt: 'Detalhe local' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
@@ -56,8 +59,8 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Applies to both country and city tables',
-    pt: 'Vale para as tabelas de país e de cidade',
+    en: 'Applies to country and local tables',
+    pt: 'Vale para as tabelas de país e locais',
   },
   colLula2026: { en: 'Lula 2026', pt: 'Lula 2026' },
   colFBolsonaro2026: { en: 'F Bolsonaro 2026', pt: 'F Bolsonaro 2026' },
@@ -88,6 +91,10 @@ const dict = {
   cityTableHint: {
     en: 'Official TSE overseas municipalities (ZZ); finer voting cities where a municipality covers several places',
     pt: 'Municípios oficiais do TSE no exterior (ZZ); cidades de votação mais finas quando um município cobre vários locais',
+  },
+  municipalityTableHint: {
+    en: 'Official TSE overseas municipalities (ZZ). Broad consulates aggregate several voting cities (e.g. Melbourne and Perth under Canberra).',
+    pt: 'Municípios oficiais do TSE no exterior (ZZ). Consulados amplos agregam várias cidades de votação (ex.: Melbourne e Perth sob Canberra).',
   },
   locationTableHint: {
     en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular municipalities; other TSE municipalities listed as-is.',

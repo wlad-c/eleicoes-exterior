@@ -5,7 +5,29 @@ export type CityTableRow = CityResult & {
   countryId: string
 }
 
-/** Voting cities + unsplit TSE municipalities for one country. */
+/** Official TSE ZZ municipalities only (e.g. CAMBERRA, SYDNEY). */
+export function municipalityRowsForCountry(
+  country: CountryResult,
+): CityResult[] {
+  return (country.cities ?? []).map((c) => ({
+    ...c,
+    level: c.level ?? ('municipality' as const),
+  }))
+}
+
+export function taggedMunicipalityRows(
+  country: CountryResult,
+): CityTableRow[] {
+  return municipalityRowsForCountry(country).map((row) => ({
+    ...row,
+    countryId: country.id,
+  }))
+}
+
+/**
+ * Voting cities + unsplit TSE municipalities for one country
+ * (e.g. MELBOURNE/PERTH under CAMBERRA, plus other municípios as-is).
+ */
 export function breakdownRowsForCountry(
   country: CountryResult,
   liveLocations?: CityResult[] | null,
@@ -15,11 +37,11 @@ export function breakdownRowsForCountry(
     : country.locations?.length
       ? country.locations
       : null
-  if (!locs?.length) return country.cities ?? []
+  if (!locs?.length) return municipalityRowsForCountry(country)
   const covered = new Set(
     locs.map((l) => (l.municipality || '').toUpperCase()),
   )
-  const extras = (country.cities ?? [])
+  const extras = municipalityRowsForCountry(country)
     .filter((c) => !covered.has(c.name.toUpperCase()))
     .map((c) => ({ ...c, level: 'municipality' as const }))
   return [...locs, ...extras]
