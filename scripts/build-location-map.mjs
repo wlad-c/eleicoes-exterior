@@ -4,7 +4,7 @@
  * - perfil_eleitor_secao (NM_LOCAL_VOTACAO per section)
  * - correspondência esperada / EA16 principals (sections that actually vote)
  *
- * Only municipalities with 2+ distinct voting locals are included.
+ * Only areas with 2+ distinct voting cities are included.
  *
  * Usage: node scripts/build-location-map.mjs
  */
@@ -147,7 +147,7 @@ async function main() {
     if (!secToLocal.get(mun).has(sec)) secToLocal.get(mun).set(sec, name)
   }
 
-  /** countryId -> { municipalities: { munCode: { name, locations: { loc: sections[] } } } } */
+  /** countryId -> { areas: { areaCode: { name, cities: { city: sections[] } } } } */
   const byCountry = new Map()
 
   for (const [mun, secMap] of secToLocal) {
@@ -167,7 +167,7 @@ async function main() {
       if (!collapsed.has(base)) collapsed.set(base, [])
       collapsed.get(base).push(...secs)
     }
-    if (collapsed.size < 2) continue // not a broad municipality
+    if (collapsed.size < 2) continue // not a broad area
 
     if (!byCountry.has(countryId)) {
       byCountry.set(countryId, {
@@ -175,18 +175,18 @@ async function main() {
           en: 'TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)',
           pt: 'Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)',
         },
-        municipalities: {},
+        areas: {},
       })
     }
-    const locations = {}
+    const cities = {}
     for (const [loc, secs] of [...collapsed.entries()].sort((a, b) =>
       a[0].localeCompare(b[0], 'pt'),
     )) {
-      locations[loc] = [...new Set(secs)].sort()
+      cities[loc] = [...new Set(secs)].sort()
     }
-    byCountry.get(countryId).municipalities[mun] = {
+    byCountry.get(countryId).areas[mun] = {
       name: munNames.get(mun) || mun,
-      locations,
+      cities,
     }
   }
 
@@ -202,9 +202,9 @@ async function main() {
     Object.entries(out).map(([id, cfg]) => [
       id,
       {
-        muns: Object.keys(cfg.municipalities).length,
-        locations: Object.values(cfg.municipalities).reduce(
-          (n, m) => n + Object.keys(m.locations).length,
+        areas: Object.keys(cfg.areas).length,
+        cities: Object.values(cfg.areas).reduce(
+          (n, m) => n + Object.keys(m.cities).length,
           0,
         ),
       },

@@ -21,12 +21,12 @@ const PLEITO = '3220'
 
 type MunLocConfig = {
   name: string
-  locations: Record<string, string[] | '*'>
+  cities: Record<string, string[] | '*'>
 }
 
 type CountryLocConfig = {
-  source: { en: string; pt: string }
-  municipalities: Record<string, MunLocConfig>
+  source?: { en: string; pt: string }
+  areas: Record<string, MunLocConfig>
 }
 
 type LocMap = Record<string, CountryLocConfig>
@@ -102,7 +102,7 @@ function matchLocKey(
 
 function attachLoc2022(
   rows: Array<{
-    municipalityCode: string
+    areaCode: string
     name: string
     y2026: YearResult
     y2022: YearResult | null
@@ -111,7 +111,7 @@ function attachLoc2022(
 ) {
   const claimed = new Map<string, Set<string>>()
   for (const row of rows) {
-    const mun = row.municipalityCode
+    const mun = row.areaCode
     if (!claimed.has(mun)) claimed.set(mun, new Set())
     const byLoc = (location2022 as Loc2022Map)[mun]
     const key = matchLocKey(byLoc, row.name, claimed.get(mun)!)
@@ -127,11 +127,11 @@ function attachLoc2022(
   }
   for (const row of rows) {
     if (row.y2022) continue
-    const mun = row.municipalityCode
+    const mun = row.areaCode
     if (!claimed.has(mun)) claimed.set(mun, new Set())
     const byLoc = (location2022 as Loc2022Map)[mun] || {}
     const free = Object.keys(byLoc).filter((k) => !claimed.get(mun)!.has(fold(k)))
-    const unmatched = rows.filter((r) => r.municipalityCode === mun && !r.y2022)
+    const unmatched = rows.filter((r) => r.areaCode === mun && !r.y2022)
     if (free.length === 1 && unmatched.length === 1) {
       const key = free[0]
       claimed.get(mun)!.add(fold(key))
@@ -214,12 +214,12 @@ function resolveLocation(
   section: string,
   munCfg: MunLocConfig,
 ): string | null {
-  for (const [loc, secs] of Object.entries(munCfg.locations)) {
+  for (const [loc, secs] of Object.entries(munCfg.cities)) {
     if (secs === '*') continue
     if (secs.includes(section)) return loc
   }
-  if (munCfg.locations.Sydney === '*' || Object.values(munCfg.locations).includes('*')) {
-    const star = Object.entries(munCfg.locations).find(([, v]) => v === '*')
+  if (munCfg.cities.Sydney === '*' || Object.values(munCfg.cities).includes('*')) {
+    const star = Object.entries(munCfg.cities).find(([, v]) => v === '*')
     return star?.[0] ?? null
   }
   return null
@@ -267,17 +267,17 @@ export async function fetchCountryLocations(
     }>
   }>(csUrl)
 
-  const munCodes = new Set(Object.keys(cfg.municipalities))
+  const areaCodes = new Set(Object.keys(cfg.areas))
   const principals: PrincipalSec[] = []
   for (const mu of cs.abr?.[0]?.mu || []) {
     const munCode = pad(mu.cd || '', 5)
-    if (!munCodes.has(munCode)) continue
+    if (!areaCodes.has(munCode)) continue
     for (const zon of mu.zon || []) {
       for (const sec of zon.sec || []) {
         if (!sec.ns || sec.nsp || !sec.da) continue
         principals.push({
           munCode,
-          munName: mu.nm || cfg.municipalities[munCode]?.name || munCode,
+          munName: mu.nm || cfg.areas[munCode]?.name || munCode,
           zone: pad(zon.cd || '1', 4),
           section: pad(sec.ns, 4),
         })
@@ -287,8 +287,8 @@ export async function fetchCountryLocations(
 
   type Agg = {
     name: string
-    municipality: string
-    municipalityCode: string
+    area: string
+    areaCode: string
     lula: number
     bolsonaro: number
     totalValid: number
@@ -297,14 +297,14 @@ export async function fetchCountryLocations(
   }
   const aggregates = new Map<string, Agg>()
 
-  // Pre-register locations so empty ones still appear if needed
-  for (const [munCode, munCfg] of Object.entries(cfg.municipalities)) {
-    for (const locName of Object.keys(munCfg.locations)) {
+  // Pre-register cities so empty ones still appear if needed
+  for (const [munCode, munCfg] of Object.entries(cfg.areas)) {
+    for (const locName of Object.keys(munCfg.cities)) {
       const id = `${munCode}:${locName}`
       aggregates.set(id, {
         name: locName.toUpperCase(),
-        municipality: munCfg.name,
-        municipalityCode: munCode,
+        area: munCfg.name,
+        areaCode: munCode,
         lula: 0,
         bolsonaro: 0,
         totalValid: 0,
@@ -316,7 +316,7 @@ export async function fetchCountryLocations(
 
   // Coverage totals = principal sections actually present in EA16 (skip nsp aggregates).
   for (const p of principals) {
-    const munCfg = cfg.municipalities[p.munCode]
+    const munCfg = cfg.areas[p.munCode]
     if (!munCfg) continue
     const locName = resolveLocation(p.section, munCfg)
     if (!locName) continue
@@ -325,7 +325,7 @@ export async function fetchCountryLocations(
   }
 
   await mapPool(principals, 12, async (p) => {
-    const munCfg = cfg.municipalities[p.munCode]
+    const munCfg = cfg.areas[p.munCode]
     if (!munCfg) return
     const locName = resolveLocation(p.section, munCfg)
     if (!locName) return
@@ -365,8 +365,8 @@ export async function fetchCountryLocations(
     .map((a) => {
       const y2026 = yearResult(a.lula, a.bolsonaro, a.totalValid)
       return {
-        municipalityCode: a.municipalityCode,
-        municipality: a.municipality,
+        areaCode: a.areaCode,
+        area: a.area,
         name: a.name,
         y2026,
         y2022: null as YearResult | null,
@@ -382,10 +382,10 @@ export async function fetchCountryLocations(
 
   const rows: CityResult[] = staged
     .map((a) => ({
-      code: `${a.municipalityCode}-${a.name}`,
+      code: `${a.areaCode}-${a.name}`,
       name: a.name,
-      municipality: a.municipality,
-      level: 'location' as const,
+      area: a.area,
+      level: 'city' as const,
       y2026: a.y2026,
       y2022: a.y2022,
       swing: a.swing,

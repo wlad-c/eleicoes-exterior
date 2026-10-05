@@ -14,16 +14,16 @@
         "name": "TSE Dados Abertos — 2022 1st round",
         "url": "https://dadosabertos.tse.jus.br/",
         "role": {
-          "en": "Official 2022 overseas presidential results by country, TSE municipality, and voting local (votação por seção, UF ZZ)",
-          "pt": "Resultados oficiais de 2022 no exterior por país, município TSE e local de votação (votação por seção, UF ZZ)"
+          "en": "Official 2022 overseas presidential results by country, TSE area, and voting city (votação por seção, UF ZZ)",
+          "pt": "Resultados oficiais de 2022 no exterior por país, área TSE e cidade de votação (votação por seção, UF ZZ)"
         }
       },
       {
         "name": "TSE Resultados 2026 (EA20 ZZ)",
         "url": "https://resultados.tse.jus.br/",
         "role": {
-          "en": "Official overseas presidential totalization by country and city (ZZ municipalities) — primary 2026 source",
-          "pt": "Totalização oficial no exterior por país e cidade (municípios ZZ) — fonte primária de 2026"
+          "en": "Official overseas presidential totalization by country and area (ZZ areas) — primary 2026 source",
+          "pt": "Totalização oficial no exterior por país e área (áreas ZZ) — fonte primária de 2026"
         }
       },
       {
@@ -116,9 +116,9 @@
       "countryEn": "Japan",
       "countryPt": "Japão",
       "iso3": "JPN",
-      "abbrevEn": "JPN",
+"abbrevEn": "JPN",
       "abbrevPt": "JAP",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 4297,
         "bolsonaro": 23007,
@@ -144,7 +144,7 @@
         "counted": 119,
         "total": 119
       },
-      "cities": [
+      "areas": [
         {
           "code": "30198",
           "name": "NAGÓIA",
@@ -170,7 +170,8 @@
             "lulaPp": 1.24,
             "bolsonaroPp": -0.95,
             "marginPp": 2.19
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30627",
@@ -197,7 +198,8 @@
             "lulaPp": 2.53,
             "bolsonaroPp": 0.99,
             "marginPp": 1.54
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29742",
@@ -224,15 +226,15 @@
             "lulaPp": 2.06,
             "bolsonaroPp": -2.81,
             "marginPp": 4.87
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "30198-NAGÓIA",
           "name": "NAGÓIA",
-          "level": "location",
-          "municipality": "NAGÓIA",
+          "level": "city",
           "y2026": {
             "lula": 1151,
             "bolsonaro": 6347,
@@ -255,13 +257,13 @@
           "coverage": {
             "counted": 36,
             "total": 36
-          }
+          },
+          "area": "NAGÓIA"
         },
         {
           "code": "30627-OIZUMI",
           "name": "OIZUMI",
-          "level": "location",
-          "municipality": "TÓQUIO",
+          "level": "city",
           "y2026": {
             "lula": 910,
             "bolsonaro": 4482,
@@ -284,13 +286,13 @@
           "coverage": {
             "counted": 17,
             "total": 17
-          }
+          },
+          "area": "TÓQUIO"
         },
         {
           "code": "30627-TOQUIO",
           "name": "TOQUIO",
-          "level": "location",
-          "municipality": "TÓQUIO",
+          "level": "city",
           "y2026": {
             "lula": 1418,
             "bolsonaro": 3941,
@@ -313,13 +315,13 @@
           "coverage": {
             "counted": 26,
             "total": 26
-          }
+          },
+          "area": "TÓQUIO"
         },
         {
           "code": "30198-SUZUKA",
           "name": "SUZUKA",
-          "level": "location",
-          "municipality": "NAGÓIA",
+          "level": "city",
           "y2026": {
             "lula": 300,
             "bolsonaro": 2197,
@@ -342,13 +344,13 @@
           "coverage": {
             "counted": 8,
             "total": 8
-          }
+          },
+          "area": "NAGÓIA"
         },
         {
           "code": "30198-TOYOHASHI",
           "name": "TOYOHASHI",
-          "level": "location",
-          "municipality": "NAGÓIA",
+          "level": "city",
           "y2026": {
             "lula": 366,
             "bolsonaro": 1915,
@@ -371,13 +373,13 @@
           "coverage": {
             "counted": 8,
             "total": 8
-          }
+          },
+          "area": "NAGÓIA"
         },
         {
           "code": "30198-TAKAOKA",
           "name": "TAKAOKA",
-          "level": "location",
-          "municipality": "NAGÓIA",
+          "level": "city",
           "y2026": {
             "lula": 94,
             "bolsonaro": 585,
@@ -400,13 +402,13 @@
           "coverage": {
             "counted": 3,
             "total": 3
-          }
+          },
+          "area": "NAGÓIA"
         },
         {
           "code": "30198-HIROSHIMA",
           "name": "HIROSHIMA",
-          "level": "location",
-          "municipality": "NAGÓIA",
+          "level": "city",
           "y2026": {
             "lula": 111,
             "bolsonaro": 436,
@@ -429,7 +431,8 @@
           "coverage": {
             "counted": 3,
             "total": 3
-          }
+          },
+          "area": "NAGÓIA"
         }
       ]
     },
@@ -466,7 +469,7 @@
         "counted": 29,
         "total": 29
       },
-      "cities": [
+      "areas": [
         {
           "code": "30562",
           "name": "SYDNEY",
@@ -492,7 +495,8 @@
             "lulaPp": 1.36,
             "bolsonaroPp": 2.62,
             "marginPp": -1.26
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29491",
@@ -519,15 +523,15 @@
             "lulaPp": 0.99,
             "bolsonaroPp": 3.81,
             "marginPp": -2.82
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "30562-SYDNEY",
           "name": "SYDNEY",
-          "level": "location",
-          "municipality": "SYDNEY",
+          "level": "city",
           "y2026": {
             "lula": 2128,
             "bolsonaro": 1276,
@@ -550,13 +554,13 @@
           "coverage": {
             "counted": 13,
             "total": 13
-          }
+          },
+          "area": "SYDNEY"
         },
         {
           "code": "30562-BRISBANE",
           "name": "BRISBANE",
-          "level": "location",
-          "municipality": "SYDNEY",
+          "level": "city",
           "y2026": {
             "lula": 956,
             "bolsonaro": 498,
@@ -579,13 +583,13 @@
           "coverage": {
             "counted": 6,
             "total": 6
-          }
+          },
+          "area": "SYDNEY"
         },
         {
           "code": "29491-MELBOURNE",
           "name": "MELBOURNE",
-          "level": "location",
-          "municipality": "CAMBERRA",
+          "level": "city",
           "y2026": {
             "lula": 879,
             "bolsonaro": 340,
@@ -608,13 +612,13 @@
           "coverage": {
             "counted": 4,
             "total": 4
-          }
+          },
+          "area": "CAMBERRA"
         },
         {
           "code": "29491-PERTH",
           "name": "PERTH",
-          "level": "location",
-          "municipality": "CAMBERRA",
+          "level": "city",
           "y2026": {
             "lula": 458,
             "bolsonaro": 386,
@@ -637,13 +641,13 @@
           "coverage": {
             "counted": 3,
             "total": 3
-          }
+          },
+          "area": "CAMBERRA"
         },
         {
           "code": "29491-CAMBERRA",
           "name": "CAMBERRA",
-          "level": "location",
-          "municipality": "CAMBERRA",
+          "level": "city",
           "y2026": {
             "lula": 141,
             "bolsonaro": 79,
@@ -666,7 +670,8 @@
           "coverage": {
             "counted": 3,
             "total": 3
-          }
+          },
+          "area": "CAMBERRA"
         }
       ]
     },
@@ -675,9 +680,9 @@
       "countryEn": "China (mainland)",
       "countryPt": "China (continente)",
       "iso3": "CHN",
-      "abbrevEn": "CHN",
+"abbrevEn": "CHN",
       "abbrevPt": "CHN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 166,
         "bolsonaro": 121,
@@ -703,7 +708,7 @@
         "counted": 3,
         "total": 3
       },
-      "cities": [
+      "areas": [
         {
           "code": "30848",
           "name": "XANGAI",
@@ -729,7 +734,8 @@
             "lulaPp": 12.13,
             "bolsonaroPp": -4.17,
             "marginPp": 16.3
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30317",
@@ -756,7 +762,8 @@
             "lulaPp": 14.45,
             "bolsonaroPp": -8.58,
             "marginPp": 23.03
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30651",
@@ -783,7 +790,8 @@
             "lulaPp": 23.43,
             "bolsonaroPp": -24.03,
             "marginPp": 47.46
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -820,7 +828,7 @@
         "counted": 5,
         "total": 5
       },
-      "cities": [
+      "areas": [
         {
           "code": "30805",
           "name": "WELLINGTON",
@@ -846,7 +854,8 @@
             "lulaPp": -2.47,
             "bolsonaroPp": 3.54,
             "marginPp": -6.01
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -855,9 +864,9 @@
       "countryEn": "Singapore",
       "countryPt": "Singapura",
       "iso3": "SGP",
-      "abbrevEn": "SGP",
+"abbrevEn": "SGP",
       "abbrevPt": "SIN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 182,
         "bolsonaro": 97,
@@ -883,7 +892,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29548",
           "name": "SINGAPURA",
@@ -909,7 +918,8 @@
             "lulaPp": 7.93,
             "bolsonaroPp": 1.57,
             "marginPp": 6.36
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -918,9 +928,9 @@
       "countryEn": "Hong Kong",
       "countryPt": "Hong Kong",
       "iso3": "HKG",
-      "abbrevEn": "HKG",
+"abbrevEn": "HKG",
       "abbrevPt": "HKG",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 55,
         "bolsonaro": 86,
@@ -946,7 +956,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29793",
           "name": "HONG KONG",
@@ -972,7 +982,8 @@
             "lulaPp": 9.67,
             "bolsonaroPp": -5.28,
             "marginPp": 14.95
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -981,9 +992,9 @@
       "countryEn": "South Korea",
       "countryPt": "Coreia do Sul",
       "iso3": "KOR",
-      "abbrevEn": "KOR",
+"abbrevEn": "KOR",
       "abbrevPt": "COR",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 130,
         "bolsonaro": 53,
@@ -1009,7 +1020,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30538",
           "name": "SEUL",
@@ -1035,7 +1046,8 @@
             "lulaPp": -5.86,
             "bolsonaroPp": 7.73,
             "marginPp": -13.59
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -1044,9 +1056,9 @@
       "countryEn": "Thailand",
       "countryPt": "Tailândia",
       "iso3": "THA",
-      "abbrevEn": "THA",
+"abbrevEn": "THA",
       "abbrevPt": "TAI",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 46,
         "bolsonaro": 42,
@@ -1072,7 +1084,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29343",
           "name": "BANGKOK",
@@ -1098,7 +1110,8 @@
             "lulaPp": -3.41,
             "bolsonaroPp": 11.52,
             "marginPp": -14.93
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -1107,9 +1120,9 @@
       "countryEn": "Malaysia",
       "countryPt": "Malásia",
       "iso3": "MYS",
-      "abbrevEn": "MAS",
+"abbrevEn": "MAS",
       "abbrevPt": "MAL",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 27,
         "bolsonaro": 24,
@@ -1135,7 +1148,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29890",
           "name": "KUALA LUMPUR",
@@ -1161,7 +1174,8 @@
             "lulaPp": 6.29,
             "bolsonaroPp": -9.18,
             "marginPp": 15.47
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -1170,9 +1184,9 @@
       "countryEn": "Philippines",
       "countryPt": "Filipinas",
       "iso3": "PHL",
-      "abbrevEn": "PHI",
+"abbrevEn": "PHI",
       "abbrevPt": "FIL",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 20,
         "bolsonaro": 35,
@@ -1198,7 +1212,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30082",
           "name": "MANILA",
@@ -1224,7 +1238,8 @@
             "lulaPp": 10.19,
             "bolsonaroPp": -2.33,
             "marginPp": 12.52
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -1261,7 +1276,7 @@
         "counted": 358,
         "total": 358
       },
-      "cities": [
+      "areas": [
         {
           "code": "29416",
           "name": "BOSTON",
@@ -1287,7 +1302,8 @@
             "lulaPp": 1.31,
             "bolsonaroPp": -0.12,
             "marginPp": 1.43
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30112",
@@ -1314,7 +1330,8 @@
             "lulaPp": 2.61,
             "bolsonaroPp": -0.08,
             "marginPp": 2.69
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30228",
@@ -1341,7 +1358,8 @@
             "lulaPp": 3.32,
             "bolsonaroPp": 1.09,
             "marginPp": 2.23
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99490",
@@ -1358,7 +1376,8 @@
             "total": 34
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         },
         {
           "code": "39080",
@@ -1385,7 +1404,8 @@
             "lulaPp": 2.38,
             "bolsonaroPp": 0.18,
             "marginPp": 2.2
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30783",
@@ -1412,7 +1432,8 @@
             "lulaPp": 6.07,
             "bolsonaroPp": -2.22,
             "marginPp": 8.29
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29980",
@@ -1439,7 +1460,8 @@
             "lulaPp": 1.91,
             "bolsonaroPp": 1.96,
             "marginPp": -0.05
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29807",
@@ -1466,7 +1488,8 @@
             "lulaPp": 0.32,
             "bolsonaroPp": 4.56,
             "marginPp": -4.24
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30503",
@@ -1493,7 +1516,8 @@
             "lulaPp": 3.59,
             "bolsonaroPp": 1.63,
             "marginPp": 1.96
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29513",
@@ -1520,7 +1544,8 @@
             "lulaPp": 3.68,
             "bolsonaroPp": 1.68,
             "marginPp": 2
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30902",
@@ -1547,15 +1572,15 @@
             "lulaPp": -1.57,
             "bolsonaroPp": 6.39,
             "marginPp": -7.96
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29416-BOSTON",
           "name": "BOSTON",
-          "level": "location",
-          "municipality": "BOSTON",
+          "level": "city",
           "y2026": {
             "lula": 2824,
             "bolsonaro": 7454,
@@ -1578,13 +1603,13 @@
           "coverage": {
             "counted": 45,
             "total": 45
-          }
+          },
+          "area": "BOSTON"
         },
         {
           "code": "29416-FRAMINGHAM",
           "name": "FRAMINGHAM",
-          "level": "location",
-          "municipality": "BOSTON",
+          "level": "city",
           "y2026": {
             "lula": 997,
             "bolsonaro": 3398,
@@ -1607,13 +1632,13 @@
           "coverage": {
             "counted": 20,
             "total": 20
-          }
+          },
+          "area": "BOSTON"
         },
         {
           "code": "29980-LOS ANGELES",
           "name": "LOS ANGELES",
-          "level": "location",
-          "municipality": "LOS ANGELES",
+          "level": "city",
           "y2026": {
             "lula": 1920,
             "bolsonaro": 1412,
@@ -1636,13 +1661,13 @@
           "coverage": {
             "counted": 21,
             "total": 21
-          }
+          },
+          "area": "LOS ANGELES"
         },
         {
           "code": "29807-HOUSTON",
           "name": "HOUSTON",
-          "level": "location",
-          "municipality": "HOUSTON",
+          "level": "city",
           "y2026": {
             "lula": 1030,
             "bolsonaro": 1919,
@@ -1665,13 +1690,13 @@
           "coverage": {
             "counted": 18,
             "total": 18
-          }
+          },
+          "area": "HOUSTON"
         },
         {
           "code": "29807-CARROLLTON",
           "name": "CARROLLTON",
-          "level": "location",
-          "municipality": "HOUSTON",
+          "level": "city",
           "y2026": {
             "lula": 235,
             "bolsonaro": 667,
@@ -1684,13 +1709,13 @@
           "coverage": {
             "counted": 5,
             "total": 5
-          }
+          },
+          "area": "HOUSTON"
         },
         {
           "code": "29980-UTAH",
           "name": "UTAH",
-          "level": "location",
-          "municipality": "LOS ANGELES",
+          "level": "city",
           "y2026": {
             "lula": 211,
             "bolsonaro": 582,
@@ -1713,13 +1738,13 @@
           "coverage": {
             "counted": 4,
             "total": 4
-          }
+          },
+          "area": "LOS ANGELES"
         },
         {
           "code": "29416-HYANNIS",
           "name": "HYANNIS",
-          "level": "location",
-          "municipality": "BOSTON",
+          "level": "city",
           "y2026": {
             "lula": 98,
             "bolsonaro": 376,
@@ -1732,7 +1757,8 @@
           "coverage": {
             "counted": 4,
             "total": 4
-          }
+          },
+          "area": "BOSTON"
         }
       ]
     },
@@ -1769,7 +1795,7 @@
         "counted": 176,
         "total": 176
       },
-      "cities": [
+      "areas": [
         {
           "code": "29955",
           "name": "LISBOA",
@@ -1795,7 +1821,8 @@
             "lulaPp": -7.96,
             "bolsonaroPp": 7.07,
             "marginPp": -15.03
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30341",
@@ -1822,7 +1849,8 @@
             "lulaPp": -7.8,
             "bolsonaroPp": 8.08,
             "marginPp": -15.88
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30961",
@@ -1849,7 +1877,8 @@
             "lulaPp": -8.04,
             "bolsonaroPp": 7.8,
             "marginPp": -15.84
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -1886,7 +1915,7 @@
         "counted": 63,
         "total": 63
       },
-      "cities": [
+      "areas": [
         {
           "code": "30635",
           "name": "TORONTO",
@@ -1912,7 +1941,8 @@
             "lulaPp": 3.14,
             "bolsonaroPp": 1.02,
             "marginPp": 2.12
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30155",
@@ -1939,7 +1969,8 @@
             "lulaPp": 4.19,
             "bolsonaroPp": 0.18,
             "marginPp": 4.01
-          }
+          },
+          "level": "area"
         },
         {
           "code": "39063",
@@ -1966,7 +1997,8 @@
             "lulaPp": 1.11,
             "bolsonaroPp": 2.45,
             "marginPp": -1.34
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30252",
@@ -1993,15 +2025,15 @@
             "lulaPp": 7.48,
             "bolsonaroPp": 0.35,
             "marginPp": 7.13
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "30155-CIDADE DE MONTREAL",
           "name": "CIDADE DE MONTREAL",
-          "level": "location",
-          "municipality": "MONTREAL",
+          "level": "city",
           "y2026": {
             "lula": 3228,
             "bolsonaro": 1213,
@@ -2024,13 +2056,13 @@
           "coverage": {
             "counted": 13,
             "total": 13
-          }
+          },
+          "area": "MONTREAL"
         },
         {
           "code": "39063-VANCOUVER, COLÚMBIA BRITÂNICA",
           "name": "VANCOUVER, COLÚMBIA BRITÂNICA",
-          "level": "location",
-          "municipality": "VANCOUVER",
+          "level": "city",
           "y2026": {
             "lula": 2633,
             "bolsonaro": 1273,
@@ -2053,13 +2085,13 @@
           "coverage": {
             "counted": 12,
             "total": 12
-          }
+          },
+          "area": "VANCOUVER"
         },
         {
           "code": "39063-ALBERTA",
           "name": "ALBERTA",
-          "level": "location",
-          "municipality": "VANCOUVER",
+          "level": "city",
           "y2026": {
             "lula": 588,
             "bolsonaro": 600,
@@ -2082,13 +2114,13 @@
           "coverage": {
             "counted": 4,
             "total": 4
-          }
+          },
+          "area": "VANCOUVER"
         },
         {
           "code": "30155-CIDADE DE QUEBEC",
           "name": "CIDADE DE QUEBEC",
-          "level": "location",
-          "municipality": "MONTREAL",
+          "level": "city",
           "y2026": {
             "lula": 595,
             "bolsonaro": 243,
@@ -2111,7 +2143,8 @@
           "coverage": {
             "counted": 2,
             "total": 2
-          }
+          },
+          "area": "MONTREAL"
         }
       ]
     },
@@ -2148,7 +2181,7 @@
         "counted": 62,
         "total": 62
       },
-      "cities": [
+      "areas": [
         {
           "code": "29386",
           "name": "BERLIM",
@@ -2174,7 +2207,8 @@
             "lulaPp": 1.53,
             "bolsonaroPp": 0.27,
             "marginPp": 1.26
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29696",
@@ -2201,7 +2235,8 @@
             "lulaPp": 2.46,
             "bolsonaroPp": 1.18,
             "marginPp": 1.28
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30180",
@@ -2228,15 +2263,15 @@
             "lulaPp": 3.46,
             "bolsonaroPp": -0.39,
             "marginPp": 3.85
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29386-BERLIM",
           "name": "BERLIM",
-          "level": "location",
-          "municipality": "BERLIM",
+          "level": "city",
           "y2026": {
             "lula": 5068,
             "bolsonaro": 592,
@@ -2259,13 +2294,13 @@
           "coverage": {
             "counted": 14,
             "total": 14
-          }
+          },
+          "area": "BERLIM"
         },
         {
           "code": "29696-FRANKFURT",
           "name": "FRANKFURT",
-          "level": "location",
-          "municipality": "FRANKFURT",
+          "level": "city",
           "y2026": {
             "lula": 1914,
             "bolsonaro": 828,
@@ -2288,13 +2323,13 @@
           "coverage": {
             "counted": 13,
             "total": 13
-          }
+          },
+          "area": "FRANKFURT"
         },
         {
           "code": "29696-COLÔNIA",
           "name": "COLÔNIA",
-          "level": "location",
-          "municipality": "FRANKFURT",
+          "level": "city",
           "y2026": {
             "lula": 1743,
             "bolsonaro": 492,
@@ -2317,13 +2352,13 @@
           "coverage": {
             "counted": 8,
             "total": 8
-          }
+          },
+          "area": "FRANKFURT"
         },
         {
           "code": "29386-HAMBURGO",
           "name": "HAMBURGO",
-          "level": "location",
-          "municipality": "BERLIM",
+          "level": "city",
           "y2026": {
             "lula": 1436,
             "bolsonaro": 333,
@@ -2346,7 +2381,8 @@
           "coverage": {
             "counted": 6,
             "total": 6
-          }
+          },
+          "area": "BERLIM"
         }
       ]
     },
@@ -2383,7 +2419,7 @@
         "counted": 54,
         "total": 54
       },
-      "cities": [
+      "areas": [
         {
           "code": "29971",
           "name": "LONDRES",
@@ -2409,7 +2445,8 @@
             "lulaPp": 1.15,
             "bolsonaroPp": 1.18,
             "marginPp": -0.03
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99503",
@@ -2426,15 +2463,15 @@
             "total": 6
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "99503-EDIMBURGO",
           "name": "EDIMBURGO",
-          "level": "location",
-          "municipality": "EDIMBURGO",
+          "level": "city",
           "y2026": {
             "lula": 466,
             "bolsonaro": 133,
@@ -2447,13 +2484,13 @@
           "coverage": {
             "counted": 5,
             "total": 5
-          }
+          },
+          "area": "EDIMBURGO"
         },
         {
           "code": "99503-MANCHESTER",
           "name": "MANCHESTER",
-          "level": "location",
-          "municipality": "EDIMBURGO",
+          "level": "city",
           "y2026": {
             "lula": 22,
             "bolsonaro": 6,
@@ -2466,7 +2503,8 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "area": "EDIMBURGO"
         }
       ]
     },
@@ -2503,7 +2541,7 @@
         "counted": 59,
         "total": 59
       },
-      "cities": [
+      "areas": [
         {
           "code": "30120",
           "name": "MILÃO",
@@ -2529,7 +2567,8 @@
             "lulaPp": -0.02,
             "bolsonaroPp": 0.72,
             "marginPp": -0.74
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30449",
@@ -2556,7 +2595,8 @@
             "lulaPp": 2.89,
             "bolsonaroPp": -0.09,
             "marginPp": 2.98
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -2593,7 +2633,7 @@
         "counted": 34,
         "total": 34
       },
-      "cities": [
+      "areas": [
         {
           "code": "30864",
           "name": "ZURIQUE",
@@ -2619,7 +2659,8 @@
             "lulaPp": 2.87,
             "bolsonaroPp": 0.29,
             "marginPp": 2.58
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29700",
@@ -2646,7 +2687,8 @@
             "lulaPp": 1.3,
             "bolsonaroPp": 1.01,
             "marginPp": 0.29
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -2683,7 +2725,7 @@
         "counted": 38,
         "total": 38
       },
-      "cities": [
+      "areas": [
         {
           "code": "30287",
           "name": "PARIS",
@@ -2709,7 +2751,8 @@
             "lulaPp": 0.28,
             "bolsonaroPp": 2.24,
             "marginPp": -1.96
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99511",
@@ -2726,7 +2769,8 @@
             "total": 4
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -2763,7 +2807,7 @@
         "counted": 52,
         "total": 52
       },
-      "cities": [
+      "areas": [
         {
           "code": "30066",
           "name": "MADRI",
@@ -2789,7 +2833,8 @@
             "lulaPp": 2.22,
             "bolsonaroPp": -1.11,
             "marginPp": 3.33
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29351",
@@ -2816,7 +2861,8 @@
             "lulaPp": 3.01,
             "bolsonaroPp": -0.87,
             "marginPp": 3.88
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -2853,7 +2899,7 @@
         "counted": 28,
         "total": 28
       },
-      "cities": [
+      "areas": [
         {
           "code": "29661",
           "name": "DUBLIN",
@@ -2879,7 +2925,8 @@
             "lulaPp": -5.76,
             "bolsonaroPp": 5.12,
             "marginPp": -10.88
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -2916,7 +2963,7 @@
         "counted": 20,
         "total": 20
       },
-      "cities": [
+      "areas": [
         {
           "code": "29467",
           "name": "BUENOS AIRES",
@@ -2942,7 +2989,8 @@
             "lulaPp": 1.38,
             "bolsonaroPp": -0.75,
             "marginPp": 2.13
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29602",
@@ -2969,7 +3017,8 @@
             "lulaPp": -1.3,
             "bolsonaroPp": 2.49,
             "marginPp": -3.79
-          }
+          },
+          "level": "area"
         },
         {
           "code": "39004",
@@ -2996,7 +3045,8 @@
             "lulaPp": 6.34,
             "bolsonaroPp": -6.29,
             "marginPp": 12.63
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99155",
@@ -3023,7 +3073,8 @@
             "lulaPp": -68.18,
             "bolsonaroPp": 68.18,
             "marginPp": -136.36
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30295",
@@ -3040,7 +3091,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -3077,7 +3129,7 @@
         "counted": 17,
         "total": 17
       },
-      "cities": [
+      "areas": [
         {
           "code": "30457",
           "name": "AMSTERDÃ",
@@ -3103,7 +3155,8 @@
             "lulaPp": 2.75,
             "bolsonaroPp": 0.57,
             "marginPp": 2.18
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -3140,7 +3193,7 @@
         "counted": 15,
         "total": 15
       },
-      "cities": [
+      "areas": [
         {
           "code": "29556",
           "name": "CIUDAD DEL ESTE",
@@ -3166,7 +3219,8 @@
             "lulaPp": -0.28,
             "bolsonaroPp": 0.37,
             "marginPp": -0.65
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29327",
@@ -3193,7 +3247,8 @@
             "lulaPp": 1.16,
             "bolsonaroPp": 2.21,
             "marginPp": -1.05
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30465",
@@ -3220,7 +3275,8 @@
             "lulaPp": -1.42,
             "bolsonaroPp": 1.44,
             "marginPp": -2.86
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30309",
@@ -3247,7 +3303,8 @@
             "lulaPp": -6.29,
             "bolsonaroPp": 8.53,
             "marginPp": -14.82
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29670",
@@ -3274,7 +3331,8 @@
             "lulaPp": -1.52,
             "bolsonaroPp": 1.79,
             "marginPp": -3.31
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -3311,7 +3369,7 @@
         "counted": 14,
         "total": 14
       },
-      "cities": [
+      "areas": [
         {
           "code": "29432",
           "name": "BRUXELAS",
@@ -3337,15 +3395,15 @@
             "lulaPp": -3.85,
             "bolsonaroPp": 4.52,
             "marginPp": -8.37
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29432-CONSULADO",
           "name": "CONSULADO",
-          "level": "location",
-          "municipality": "BRUXELAS",
+          "level": "city",
           "y2026": {
             "lula": 2128,
             "bolsonaro": 1649,
@@ -3358,13 +3416,13 @@
           "coverage": {
             "counted": 12,
             "total": 12
-          }
+          },
+          "area": "BRUXELAS"
         },
         {
           "code": "29432-LUXEMBURGO",
           "name": "LUXEMBURGO",
-          "level": "location",
-          "municipality": "BRUXELAS",
+          "level": "city",
           "y2026": {
             "lula": 388,
             "bolsonaro": 310,
@@ -3387,7 +3445,8 @@
           "coverage": {
             "counted": 2,
             "total": 2
-          }
+          },
+          "area": "BRUXELAS"
         }
       ]
     },
@@ -3424,7 +3483,7 @@
         "counted": 13,
         "total": 13
       },
-      "cities": [
+      "areas": [
         {
           "code": "29360",
           "name": "BEIRUTE",
@@ -3450,15 +3509,15 @@
             "lulaPp": 9.18,
             "bolsonaroPp": -3.92,
             "marginPp": 13.1
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29360-BEIRUTE",
           "name": "BEIRUTE",
-          "level": "location",
-          "municipality": "BEIRUTE",
+          "level": "city",
           "y2026": {
             "lula": 1484,
             "bolsonaro": 993,
@@ -3481,13 +3540,13 @@
           "coverage": {
             "counted": 8,
             "total": 8
-          }
+          },
+          "area": "BEIRUTE"
         },
         {
           "code": "29360-VALE DO BEKAA",
           "name": "VALE DO BEKAA",
-          "level": "location",
-          "municipality": "BEIRUTE",
+          "level": "city",
           "y2026": {
             "lula": 1054,
             "bolsonaro": 145,
@@ -3510,7 +3569,8 @@
           "coverage": {
             "counted": 5,
             "total": 5
-          }
+          },
+          "area": "BEIRUTE"
         }
       ]
     },
@@ -3547,7 +3607,7 @@
         "counted": 7,
         "total": 7
       },
-      "cities": [
+      "areas": [
         {
           "code": "29688",
           "name": "ESTOCOLMO",
@@ -3573,15 +3633,15 @@
             "lulaPp": 2.61,
             "bolsonaroPp": 2.58,
             "marginPp": 0.03
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29688-ESTOCOLMO",
           "name": "ESTOCOLMO",
-          "level": "location",
-          "municipality": "ESTOCOLMO",
+          "level": "city",
           "y2026": {
             "lula": 1360,
             "bolsonaro": 394,
@@ -3604,13 +3664,13 @@
           "coverage": {
             "counted": 5,
             "total": 5
-          }
+          },
+          "area": "ESTOCOLMO"
         },
         {
           "code": "29688-GOTEMBURGO",
           "name": "GOTEMBURGO",
-          "level": "location",
-          "municipality": "ESTOCOLMO",
+          "level": "city",
           "y2026": {
             "lula": 410,
             "bolsonaro": 111,
@@ -3633,7 +3693,8 @@
           "coverage": {
             "counted": 2,
             "total": 2
-          }
+          },
+          "area": "ESTOCOLMO"
         }
       ]
     },
@@ -3670,7 +3731,7 @@
         "counted": 5,
         "total": 5
       },
-      "cities": [
+      "areas": [
         {
           "code": "30481",
           "name": "SANTIAGO",
@@ -3696,7 +3757,8 @@
             "lulaPp": 2.22,
             "bolsonaroPp": -0.04,
             "marginPp": 2.26
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -3733,7 +3795,7 @@
         "counted": 9,
         "total": 9
       },
-      "cities": [
+      "areas": [
         {
           "code": "30473",
           "name": "SANTA CRUZ DE LA SIERRA",
@@ -3759,7 +3821,8 @@
             "lulaPp": -1.45,
             "bolsonaroPp": 1.53,
             "marginPp": -2.98
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29904",
@@ -3786,7 +3849,8 @@
             "lulaPp": 12.72,
             "bolsonaroPp": -9.33,
             "marginPp": 22.05
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29572",
@@ -3813,7 +3877,8 @@
             "lulaPp": -5.24,
             "bolsonaroPp": 6.96,
             "marginPp": -12.2
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99210",
@@ -3830,7 +3895,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         },
         {
           "code": "99236",
@@ -3847,7 +3913,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -3884,7 +3951,7 @@
         "counted": 7,
         "total": 7
       },
-      "cities": [
+      "areas": [
         {
           "code": "30147",
           "name": "MONTEVIDÉU",
@@ -3910,7 +3977,8 @@
             "lulaPp": 1.06,
             "bolsonaroPp": 3.18,
             "marginPp": -2.12
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29319",
@@ -3937,7 +4005,8 @@
             "lulaPp": 0.18,
             "bolsonaroPp": 2.38,
             "marginPp": -2.2
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29521",
@@ -3954,7 +4023,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         },
         {
           "code": "99244",
@@ -3971,7 +4041,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -4008,7 +4079,7 @@
         "counted": 6,
         "total": 6
       },
-      "cities": [
+      "areas": [
         {
           "code": "30104",
           "name": "MEXICO",
@@ -4034,7 +4105,8 @@
             "lulaPp": 1.33,
             "bolsonaroPp": 3,
             "marginPp": -1.67
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4071,7 +4143,7 @@
         "counted": 5,
         "total": 5
       },
-      "cities": [
+      "areas": [
         {
           "code": "30767",
           "name": "VIENA",
@@ -4097,7 +4169,8 @@
             "lulaPp": 4.21,
             "bolsonaroPp": -1.44,
             "marginPp": 5.65
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4134,7 +4207,7 @@
         "counted": 6,
         "total": 6
       },
-      "cities": [
+      "areas": [
         {
           "code": "29475",
           "name": "CAIENA",
@@ -4160,7 +4233,8 @@
             "lulaPp": 2.05,
             "bolsonaroPp": -0.79,
             "marginPp": 2.84
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99333",
@@ -4177,7 +4251,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -4214,7 +4289,7 @@
         "counted": 4,
         "total": 4
       },
-      "cities": [
+      "areas": [
         {
           "code": "29599",
           "name": "COPENHAGUE",
@@ -4240,7 +4315,8 @@
             "lulaPp": 2.4,
             "bolsonaroPp": 1.18,
             "marginPp": 1.22
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4277,7 +4353,7 @@
         "counted": 5,
         "total": 5
       },
-      "cities": [
+      "areas": [
         {
           "code": "29262",
           "name": "ABU DHABI",
@@ -4303,15 +4379,15 @@
             "lulaPp": 0.93,
             "bolsonaroPp": 0.04,
             "marginPp": 0.89
-          }
+          },
+          "level": "area"
         }
       ],
-      "locations": [
+      "cities": [
         {
           "code": "29262-DUBAI",
           "name": "DUBAI",
-          "level": "location",
-          "municipality": "ABU DHABI",
+          "level": "city",
           "y2026": {
             "lula": 338,
             "bolsonaro": 378,
@@ -4334,13 +4410,13 @@
           "coverage": {
             "counted": 3,
             "total": 3
-          }
+          },
+          "area": "ABU DHABI"
         },
         {
           "code": "29262-ABU DHABI",
           "name": "ABU DHABI",
-          "level": "location",
-          "municipality": "ABU DHABI",
+          "level": "city",
           "y2026": {
             "lula": 174,
             "bolsonaro": 281,
@@ -4363,7 +4439,8 @@
           "coverage": {
             "counted": 2,
             "total": 2
-          }
+          },
+          "area": "ABU DHABI"
         }
       ]
     },
@@ -4400,7 +4477,7 @@
         "counted": 3,
         "total": 3
       },
-      "cities": [
+      "areas": [
         {
           "code": "30244",
           "name": "OSLO",
@@ -4426,7 +4503,8 @@
             "lulaPp": 0.83,
             "bolsonaroPp": 3,
             "marginPp": -2.17
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4463,7 +4541,7 @@
         "counted": 4,
         "total": 4
       },
-      "cities": [
+      "areas": [
         {
           "code": "29947",
           "name": "LIMA",
@@ -4489,7 +4567,8 @@
             "lulaPp": -0.67,
             "bolsonaroPp": 3.32,
             "marginPp": -3.99
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29823",
@@ -4506,7 +4585,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -4543,7 +4623,7 @@
         "counted": 3,
         "total": 3
       },
-      "cities": [
+      "areas": [
         {
           "code": "30414",
           "name": "RAMALLAH",
@@ -4569,7 +4649,8 @@
             "lulaPp": 8.36,
             "bolsonaroPp": -3.47,
             "marginPp": 11.83
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4606,7 +4687,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29637",
           "name": "DAMASCO",
@@ -4622,7 +4703,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -4659,7 +4741,7 @@
         "counted": 5,
         "total": 5
       },
-      "cities": [
+      "areas": [
         {
           "code": "30619",
           "name": "TEL AVIV",
@@ -4685,7 +4767,8 @@
             "lulaPp": -26.3,
             "bolsonaroPp": 28.31,
             "marginPp": -54.61
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4722,7 +4805,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29408",
           "name": "BOGOTÁ",
@@ -4748,7 +4831,8 @@
             "lulaPp": -6.33,
             "bolsonaroPp": 12.8,
             "marginPp": -19.13
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4785,7 +4869,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "30260",
           "name": "PANAMA",
@@ -4811,7 +4895,8 @@
             "lulaPp": 4.31,
             "bolsonaroPp": -0.41,
             "marginPp": 4.72
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4848,7 +4933,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29785",
           "name": "HELSINQUE",
@@ -4874,7 +4959,8 @@
             "lulaPp": 6.14,
             "bolsonaroPp": 2.05,
             "marginPp": 4.09
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4911,7 +4997,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29459",
           "name": "BUDAPESTE",
@@ -4937,7 +5023,8 @@
             "lulaPp": -9.55,
             "bolsonaroPp": 8.18,
             "marginPp": -17.73
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -4974,7 +5061,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29289",
           "name": "AMÃ",
@@ -5000,7 +5087,8 @@
             "lulaPp": 24.98,
             "bolsonaroPp": -11.84,
             "marginPp": 36.82
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5037,7 +5125,7 @@
         "counted": 3,
         "total": 3
       },
-      "cities": [
+      "areas": [
         {
           "code": "30279",
           "name": "PARAMARIBO",
@@ -5063,7 +5151,8 @@
             "lulaPp": -4.13,
             "bolsonaroPp": 1.75,
             "marginPp": -5.88
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5100,7 +5189,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "30376",
           "name": "PRETÓRIA",
@@ -5126,7 +5215,8 @@
             "lulaPp": -0.15,
             "bolsonaroPp": 2.71,
             "marginPp": -2.86
-          }
+          },
+          "level": "area"
         },
         {
           "code": "29530",
@@ -5153,7 +5243,8 @@
             "lulaPp": 3.35,
             "bolsonaroPp": 4.64,
             "marginPp": -1.29
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5190,7 +5281,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29335",
           "name": "ATENAS",
@@ -5216,7 +5307,8 @@
             "lulaPp": 2.15,
             "bolsonaroPp": -0.35,
             "marginPp": 2.5
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5253,7 +5345,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "30392",
           "name": "QUITO",
@@ -5279,7 +5371,8 @@
             "lulaPp": 10.91,
             "bolsonaroPp": -8.18,
             "marginPp": 19.09
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5316,7 +5409,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30350",
           "name": "PRAGA",
@@ -5342,7 +5435,8 @@
             "lulaPp": 1.34,
             "bolsonaroPp": 1.83,
             "marginPp": -0.49
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5379,7 +5473,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30511",
           "name": "SÃO JOSÉ",
@@ -5405,7 +5499,8 @@
             "lulaPp": 9.7,
             "bolsonaroPp": -3.08,
             "marginPp": 12.78
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5442,7 +5537,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29653",
           "name": "DOHA",
@@ -5468,7 +5563,8 @@
             "lulaPp": 4.51,
             "bolsonaroPp": -4.87,
             "marginPp": 9.38
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5505,7 +5601,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30740",
           "name": "VARSÓVIA",
@@ -5531,7 +5627,8 @@
             "lulaPp": -3.6,
             "bolsonaroPp": 5.37,
             "marginPp": -8.97
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5568,7 +5665,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30090",
           "name": "MAPUTO",
@@ -5594,7 +5691,8 @@
             "lulaPp": 1.38,
             "bolsonaroPp": 1.25,
             "marginPp": 0.13
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5631,7 +5729,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29998",
           "name": "LUANDA",
@@ -5657,7 +5755,8 @@
             "lulaPp": 3.14,
             "bolsonaroPp": -1.15,
             "marginPp": 4.29
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5666,9 +5765,9 @@
       "countryEn": "Taiwan",
       "countryPt": "Taiwan",
       "iso3": "TWN",
-      "abbrevEn": "TWN",
+"abbrevEn": "TWN",
       "abbrevPt": "TWN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 79,
         "bolsonaro": 100,
@@ -5694,7 +5793,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30570",
           "name": "TAIPÉ",
@@ -5720,7 +5819,8 @@
             "lulaPp": -0.11,
             "bolsonaroPp": 4.24,
             "marginPp": -4.35
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5757,7 +5857,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30490",
           "name": "SÃO DOMINGOS",
@@ -5783,7 +5883,8 @@
             "lulaPp": 3.47,
             "bolsonaroPp": 0.4,
             "marginPp": 3.07
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5820,7 +5921,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "99317",
           "name": "TALIN",
@@ -5846,7 +5947,8 @@
             "lulaPp": -4.83,
             "bolsonaroPp": 1.4,
             "marginPp": -6.23
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5883,7 +5985,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39306",
           "name": "ISTAMBUL",
@@ -5909,7 +6011,8 @@
             "lulaPp": 13.73,
             "bolsonaroPp": -11.3,
             "marginPp": 25.03
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -5946,7 +6049,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "98000",
           "name": "GUATEMALA",
@@ -5972,7 +6075,8 @@
             "lulaPp": 6.2,
             "bolsonaroPp": -4.44,
             "marginPp": 10.64
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6009,7 +6113,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30600",
           "name": "TEGUCIGALPA",
@@ -6035,7 +6139,8 @@
             "lulaPp": -10.96,
             "bolsonaroPp": 4.22,
             "marginPp": -15.18
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6072,7 +6177,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30163",
           "name": "MOSCOU",
@@ -6098,7 +6203,8 @@
             "lulaPp": 6.92,
             "bolsonaroPp": -2.47,
             "marginPp": 9.39
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6135,7 +6241,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30074",
           "name": "MANÁGUA",
@@ -6161,7 +6267,8 @@
             "lulaPp": 4.79,
             "bolsonaroPp": 10.21,
             "marginPp": -5.42
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6198,7 +6305,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39160",
           "name": "LIUBLIANA",
@@ -6224,7 +6331,8 @@
             "lulaPp": -3.55,
             "bolsonaroPp": 5.77,
             "marginPp": -9.32
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6261,7 +6369,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30520",
           "name": "SÃO SALVADOR",
@@ -6287,7 +6395,8 @@
             "lulaPp": 0.14,
             "bolsonaroPp": 6.93,
             "marginPp": -6.79
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6324,7 +6433,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29483",
           "name": "CAIRO",
@@ -6350,7 +6459,8 @@
             "lulaPp": 11.88,
             "bolsonaroPp": -11.25,
             "marginPp": 23.13
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6387,7 +6497,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29718",
           "name": "GEORGETOWN",
@@ -6413,7 +6523,8 @@
             "lulaPp": 3.21,
             "bolsonaroPp": 2.56,
             "marginPp": 0.65
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6450,7 +6561,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39209",
           "name": "BRATISLAVA",
@@ -6476,7 +6587,8 @@
             "lulaPp": 23.98,
             "bolsonaroPp": 1.2,
             "marginPp": 22.78
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6513,7 +6625,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30368",
           "name": "PRAIA",
@@ -6539,7 +6651,8 @@
             "lulaPp": -2.75,
             "bolsonaroPp": -5.28,
             "marginPp": 2.53
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6548,9 +6661,9 @@
       "countryEn": "Timor-Leste",
       "countryPt": "Timor-Leste",
       "iso3": "TLS",
-      "abbrevEn": "TLS",
+"abbrevEn": "TLS",
       "abbrevPt": "TLS",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 18,
         "bolsonaro": 37,
@@ -6576,7 +6689,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29645",
           "name": "DÍLI",
@@ -6602,7 +6715,8 @@
             "lulaPp": 7.09,
             "bolsonaroPp": 1.78,
             "marginPp": 5.31
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6639,7 +6753,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29610",
           "name": "DACAR",
@@ -6665,7 +6779,8 @@
             "lulaPp": 17.29,
             "bolsonaroPp": -11.44,
             "marginPp": 28.73
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6702,7 +6817,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29440",
           "name": "BUCARESTE",
@@ -6728,7 +6843,8 @@
             "lulaPp": -3.7,
             "bolsonaroPp": 13.26,
             "marginPp": -16.96
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6765,7 +6881,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30422",
           "name": "RIADE",
@@ -6791,7 +6907,8 @@
             "lulaPp": 14.5,
             "bolsonaroPp": -6.82,
             "marginPp": 21.32
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6800,9 +6917,9 @@
       "countryEn": "India",
       "countryPt": "Índia",
       "iso3": "IND",
-      "abbrevEn": "IND",
+"abbrevEn": "IND",
       "abbrevPt": "IND",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 36,
         "bolsonaro": 14,
@@ -6828,7 +6945,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "30210",
           "name": "NOVA DELHI",
@@ -6854,7 +6971,8 @@
             "lulaPp": -17.85,
             "bolsonaroPp": 22.73,
             "marginPp": -40.58
-          }
+          },
+          "level": "area"
         },
         {
           "code": "30171",
@@ -6881,7 +6999,8 @@
             "lulaPp": -29.55,
             "bolsonaroPp": -7.58,
             "marginPp": -21.97
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6918,7 +7037,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30406",
           "name": "RABAT",
@@ -6944,7 +7063,8 @@
             "lulaPp": 7.28,
             "bolsonaroPp": -0.8,
             "marginPp": 8.08
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -6981,7 +7101,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30201",
           "name": "NAIRÓBI",
@@ -7007,7 +7127,8 @@
             "lulaPp": 7.5,
             "bolsonaroPp": -8.14,
             "marginPp": 15.64
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7016,9 +7137,9 @@
       "countryEn": "Indonesia",
       "countryPt": "Indonésia",
       "iso3": "IDN",
-      "abbrevEn": "IDN",
+"abbrevEn": "IDN",
       "abbrevPt": "IDN",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 16,
         "bolsonaro": 30,
@@ -7044,7 +7165,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29840",
           "name": "JACARTA",
@@ -7070,7 +7191,8 @@
             "lulaPp": -6.19,
             "bolsonaroPp": 1.29,
             "marginPp": -7.48
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7107,7 +7229,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29378",
           "name": "BELGRADO",
@@ -7133,7 +7255,8 @@
             "lulaPp": 1.28,
             "bolsonaroPp": 10.75,
             "marginPp": -9.47
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7170,7 +7293,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29254",
           "name": "ABIDJÃ",
@@ -7196,7 +7319,8 @@
             "lulaPp": 8.9,
             "bolsonaroPp": -9.58,
             "marginPp": 18.48
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7233,7 +7357,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39020",
           "name": "ZAGREB",
@@ -7259,7 +7383,8 @@
             "lulaPp": 6.07,
             "bolsonaroPp": 4.99,
             "marginPp": 1.08
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7296,7 +7421,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29394",
           "name": "BISSAU",
@@ -7322,7 +7447,8 @@
             "lulaPp": -6.32,
             "bolsonaroPp": -1.78,
             "marginPp": -4.54
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7359,7 +7485,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29882",
           "name": "KUAITE",
@@ -7385,7 +7511,8 @@
             "lulaPp": 53.04,
             "bolsonaroPp": -46.35,
             "marginPp": 99.39
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7422,7 +7549,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39102",
           "name": "MASCATE",
@@ -7448,7 +7575,8 @@
             "lulaPp": 6.5,
             "bolsonaroPp": -5.42,
             "marginPp": 11.92
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7485,7 +7613,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30821",
           "name": "WINDHOEK",
@@ -7511,7 +7639,8 @@
             "lulaPp": 35.89,
             "bolsonaroPp": -46.16,
             "marginPp": 82.05
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7548,7 +7677,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "99473",
           "name": "BAREIN",
@@ -7574,7 +7703,8 @@
             "lulaPp": 9.85,
             "bolsonaroPp": -0.44,
             "marginPp": 10.29
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7611,7 +7741,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30325",
           "name": "PORT OF SPAIN",
@@ -7637,7 +7767,8 @@
             "lulaPp": -28.95,
             "bolsonaroPp": 5.57,
             "marginPp": -34.52
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7674,7 +7805,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30546",
           "name": "SÓFIA",
@@ -7700,7 +7831,8 @@
             "lulaPp": 5.67,
             "bolsonaroPp": -1.16,
             "marginPp": 6.83
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7737,7 +7869,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29777",
           "name": "HAVANA",
@@ -7763,7 +7895,8 @@
             "lulaPp": 4.42,
             "bolsonaroPp": -0.6,
             "marginPp": 5.02
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7800,7 +7933,7 @@
         "counted": 2,
         "total": 2
       },
-      "cities": [
+      "areas": [
         {
           "code": "29912",
           "name": "LAGOS",
@@ -7826,7 +7959,8 @@
             "lulaPp": 24.11,
             "bolsonaroPp": -6.25,
             "marginPp": 30.36
-          }
+          },
+          "level": "area"
         },
         {
           "code": "99198",
@@ -7843,7 +7977,8 @@
             "total": 1
           },
           "y2022": null,
-          "swing": null
+          "swing": null,
+          "level": "area"
         }
       ]
     },
@@ -7880,7 +8015,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "39322",
           "name": "NICOSIA",
@@ -7906,7 +8041,8 @@
             "lulaPp": -9.89,
             "bolsonaroPp": 7.09,
             "marginPp": -16.98
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -7943,7 +8079,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "99180",
           "name": "NASSAU",
@@ -7969,7 +8105,8 @@
             "lulaPp": -0.42,
             "bolsonaroPp": -7.37,
             "marginPp": 6.95
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8006,7 +8143,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29270",
           "name": "ACCRA",
@@ -8032,7 +8169,8 @@
             "lulaPp": 6.99,
             "bolsonaroPp": -25.53,
             "marginPp": 32.52
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8041,9 +8179,9 @@
       "countryEn": "Vietnam",
       "countryPt": "Vietnã",
       "iso3": "VNM",
-      "abbrevEn": "VIE",
+"abbrevEn": "VIE",
       "abbrevPt": "VIE",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 13,
         "bolsonaro": 4,
@@ -8069,7 +8207,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29750",
           "name": "HANÓI",
@@ -8095,7 +8233,8 @@
             "lulaPp": -20.17,
             "bolsonaroPp": 28.28,
             "marginPp": -48.45
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8132,7 +8271,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30597",
           "name": "TEERÃ",
@@ -8158,7 +8297,8 @@
             "lulaPp": 14.82,
             "bolsonaroPp": -8.94,
             "marginPp": 23.76
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8188,9 +8328,9 @@
       "countryEn": "Nepal",
       "countryPt": "Nepal",
       "iso3": "NPL",
-      "abbrevEn": "NEP",
+"abbrevEn": "NEP",
       "abbrevPt": "NEP",
-      "region": "Asia",
+      "region": "Asia (excl. Middle East)",
       "y2022": {
         "lula": 1,
         "bolsonaro": 14,
@@ -8216,7 +8356,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "29173",
           "name": "KATMANDU",
@@ -8242,7 +8382,8 @@
             "lulaPp": 1.02,
             "bolsonaroPp": -8.71,
             "marginPp": 9.73
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8279,7 +8420,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30708",
           "name": "TUNIS",
@@ -8305,7 +8446,8 @@
             "lulaPp": -2.59,
             "bolsonaroPp": -1.95,
             "marginPp": -0.64
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8363,7 +8505,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "99430",
           "name": "KINGSTON-JAMAICA",
@@ -8389,7 +8531,8 @@
             "lulaPp": -32.8,
             "bolsonaroPp": 27.53,
             "marginPp": -60.33
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8426,7 +8569,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "38962",
           "name": "DAR ES SALAAM",
@@ -8452,7 +8595,8 @@
             "lulaPp": -6.25,
             "bolsonaroPp": 6.25,
             "marginPp": -12.5
-          }
+          },
+          "level": "area"
         }
       ]
     },
@@ -8489,7 +8633,7 @@
         "counted": 1,
         "total": 1
       },
-      "cities": [
+      "areas": [
         {
           "code": "30333",
           "name": "PORTO PRÍNCIPE",
@@ -8515,7 +8659,8 @@
             "lulaPp": 71.43,
             "bolsonaroPp": -57.14,
             "marginPp": 128.57
-          }
+          },
+          "level": "area"
         }
       ]
     }

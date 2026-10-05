@@ -5,8 +5,14 @@ import { ResultsTable } from './components/ResultsTable'
 import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
-import { compareCityRows, taggedBreakdownRows } from './lib/cityRows'
+import {
+  compareCityRows,
+  taggedAreaRows,
+  taggedBreakdownRows,
+} from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
+
+type TableView = 'countries' | 'areas' | 'cities'
 import {
   readStoredTableCols,
   writeStoredTableCols,
@@ -54,7 +60,7 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
-  const [tableView, setTableView] = useState<'countries' | 'cities'>('countries')
+  const [tableView, setTableView] = useState<TableView>('countries')
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
   )
@@ -140,7 +146,7 @@ export default function App() {
     }
   }
 
-  function switchTableView(next: 'countries' | 'cities') {
+  function switchTableView(next: TableView) {
     setTableView(next)
     if (next === 'countries' && sortKey === 'city') {
       setSortKey('votes2026')
@@ -165,7 +171,7 @@ export default function App() {
 
   const citySourceCountries = useMemo(() => {
     return data.countries.filter((c) => {
-      if ((c.cities?.length ?? 0) === 0 && (c.locations?.length ?? 0) === 0) {
+      if ((c.areas?.length ?? 0) === 0 && (c.cities?.length ?? 0) === 0) {
         return false
       }
       if (statusFilter === 'reported' && c.status !== 'reported') return false
@@ -175,26 +181,46 @@ export default function App() {
     })
   }, [data.countries, statusFilter, region])
 
+  function matchesPlaceQuery(
+    r: { name: string; area?: string; countryId: string },
+    q: string,
+  ) {
+    if (!q) return true
+    const parent = countryById.get(r.countryId)
+    return (
+      r.name.toLowerCase().includes(q) ||
+      (r.area || '').toLowerCase().includes(q) ||
+      Boolean(
+        parent &&
+          (parent.countryEn.toLowerCase().includes(q) ||
+            parent.countryPt.toLowerCase().includes(q) ||
+            parent.iso3.toLowerCase().includes(q) ||
+            parent.abbrevEn.toLowerCase().includes(q) ||
+            parent.abbrevPt.toLowerCase().includes(q)),
+      )
+    )
+  }
+
+  const filteredAreaRows = useMemo(() => {
+    const rows = citySourceCountries.flatMap((c) => taggedAreaRows(c))
+    const q = query.trim().toLowerCase()
+    return rows.filter((r) => matchesPlaceQuery(r, q))
+  }, [citySourceCountries, query, countryById])
+
   const filteredCityRows = useMemo(() => {
     const rows = citySourceCountries.flatMap((c) => taggedBreakdownRows(c))
     const q = query.trim().toLowerCase()
-    if (!q) return rows
-    return rows.filter((r) => {
-      const parent = countryById.get(r.countryId)
-      return (
-        r.name.toLowerCase().includes(q) ||
-        (r.municipality || '').toLowerCase().includes(q) ||
-        Boolean(
-          parent &&
-            (parent.countryEn.toLowerCase().includes(q) ||
-              parent.countryPt.toLowerCase().includes(q) ||
-              parent.iso3.toLowerCase().includes(q) ||
-              parent.abbrevEn.toLowerCase().includes(q) ||
-              parent.abbrevPt.toLowerCase().includes(q)),
-        )
-      )
-    })
+    return rows.filter((r) => matchesPlaceQuery(r, q))
   }, [citySourceCountries, query, countryById])
+
+  const sortedAreas = useMemo(() => {
+    const rows = [...filteredAreaRows]
+    const dir = sortDir === 'asc' ? 1 : -1
+    rows.sort(
+      (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
+    )
+    return rows
+  }, [filteredAreaRows, sortKey, sortDir, lang, countryById])
 
   const sortedCities = useMemo(() => {
     const rows = [...filteredCityRows]
@@ -405,14 +431,22 @@ export default function App() {
           <div className="filter-row">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               <span className="filter-label">
-                {tableView === 'cities' ? t('searchCity', lang) : t('search', lang)}
+                {tableView === 'areas'
+                  ? t('searchArea', lang)
+                  : tableView === 'cities'
+                    ? t('searchCity', lang)
+                    : t('search', lang)}
               </span>
               <input
                 className="control mt-1 w-full min-w-0"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={
-                  tableView === 'cities' ? t('searchCity', lang) : t('search', lang)
+                  tableView === 'areas'
+                    ? t('searchArea', lang)
+                    : tableView === 'cities'
+                      ? t('searchCity', lang)
+                      : t('search', lang)
                 }
               />
             </label>
@@ -466,6 +500,15 @@ export default function App() {
                 type="button"
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-selected={tableView === 'areas'}
+                onClick={() => switchTableView('areas')}
+              >
+                {t('tabAreas', lang)}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                 aria-selected={tableView === 'cities'}
                 onClick={() => switchTableView('cities')}
               >
@@ -493,6 +536,9 @@ export default function App() {
                     )
                   }}
                 >
+                  {tableView === 'areas' ? (
+                    <option value="city">{t('area', lang)}</option>
+                  ) : null}
                   {tableView === 'cities' ? (
                     <option value="city">{t('city', lang)}</option>
                   ) : null}
@@ -535,11 +581,16 @@ export default function App() {
           />
         ) : (
           <CityBreakdownTable
-            rows={sortedCities}
+            rows={tableView === 'areas' ? sortedAreas : sortedCities}
             countries={countryById}
             lang={lang}
             showCountry
-            sourceNote={t('locationTableHint', lang)}
+            placeKind={tableView === 'areas' ? 'area' : 'city'}
+            sourceNote={
+              tableView === 'areas'
+                ? t('areaTableHint', lang)
+                : t('cityTableHint', lang)
+            }
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={onSort}
