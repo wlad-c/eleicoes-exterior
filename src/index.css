@@ -305,9 +305,9 @@ html.dark .sticky-col-country {
 }
 
 .filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: end;
   gap: clamp(0.35rem, 1.2vw, 0.75rem);
   width: 100%;
 }
@@ -315,54 +315,26 @@ html.dark .sticky-col-country {
 .filter-field {
   display: block;
   min-width: 0;
+  width: 100%;
 }
 
-.filter-search {
-  flex: 1.4 1 0;
-}
-
-.filter-region {
-  flex: 1 1 0;
-}
-
-.filter-pending {
-  flex: 1.15 1 0;
-}
-
-.filter-country {
-  flex: 1.2 1 0;
+.filter-label {
+  display: block;
+  min-height: 1rem;
+  line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 640px) {
-  .filter-search {
-    flex: 1.2 1 0;
-  }
-
-  .filter-region {
-    flex: 0.95 1 0;
-  }
-
-  .filter-pending {
-    flex: 0.95 1 0;
+  .filter-row {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr) minmax(0, 0.95fr);
   }
 
   .filter-row .control {
     padding: 0.35rem 0.45rem;
     font-size: 0.875rem;
-  }
-}
-
-@media (min-width: 900px) {
-  .filter-search {
-    flex: 1.6 1 0;
-  }
-
-  .filter-region {
-    flex: 1 1 0;
-  }
-
-  .filter-pending {
-    flex: 1.15 1 0;
   }
 }
 
