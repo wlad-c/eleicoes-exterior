@@ -1,53 +1,105 @@
-import { useRef, type DragEvent, type MouseEvent } from 'react'
+import { useRef, type PointerEvent as ReactPointerEvent } from 'react'
 import type { TableMetricCol } from './tableColumns'
 
+const DRAG_THRESHOLD_PX = 6
+
 /**
- * HTML5 drag helpers for reordering metric columns.
- * Suppresses the header sort click that would otherwise fire after a drop.
+ * Pointer-based column reorder (mouse + touch).
+ * HTML5 drag-and-drop is unreliable on iOS; this uses setPointerCapture instead.
+ * Shared order is applied by the caller (same handler for country/area/city).
  */
 export function useColumnDrag(
   onReorder: ((from: TableMetricCol, to: TableMetricCol) => void) | undefined,
 ) {
   const dragFrom = useRef<TableMetricCol | null>(null)
-  const dragged = useRef(false)
+  const overCol = useRef<TableMetricCol | null>(null)
+  const activeEl = useRef<HTMLElement | null>(null)
+  const start = useRef<{ x: number; y: number } | null>(null)
+  const moved = useRef(false)
+  const suppressClick = useRef(false)
+
+  function clearHighlights() {
+    document
+      .querySelectorAll('.col-dragging, .col-drag-over')
+      .forEach((el) => {
+        el.classList.remove('col-dragging', 'col-drag-over')
+      })
+  }
+
+  function highlightOver(clientX: number, clientY: number) {
+    const el = document.elementFromPoint(clientX, clientY)
+    const target = el?.closest('[data-col-id]') as HTMLElement | null
+    document
+      .querySelectorAll('.col-drag-over')
+      .forEach((n) => n.classList.remove('col-drag-over'))
+    const id = target?.dataset.colId as TableMetricCol | undefined
+    if (id && id !== dragFrom.current) {
+      target?.classList.add('col-drag-over')
+      overCol.current = id
+    } else {
+      overCol.current = null
+    }
+  }
+
+  function endDrag(pointerId: number | null) {
+    const from = dragFrom.current
+    const to = overCol.current
+    if (activeEl.current && pointerId != null) {
+      try {
+        activeEl.current.releasePointerCapture(pointerId)
+      } catch {
+        /* already released */
+      }
+    }
+    clearHighlights()
+    dragFrom.current = null
+    overCol.current = null
+    activeEl.current = null
+    start.current = null
+    if (moved.current) suppressClick.current = true
+    moved.current = false
+    if (from && to && from !== to && onReorder) onReorder(from, to)
+  }
 
   function dragProps(col: TableMetricCol) {
     if (!onReorder) return {}
     return {
-      draggable: true as const,
-      onDragStart: (e: DragEvent) => {
+      draggable: false as const,
+      'data-col-id': col,
+      onPointerDown: (e: ReactPointerEvent<HTMLElement>) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return
+        const t = e.target as HTMLElement
+        if (t.closest('input, a, button, select, textarea')) return
         dragFrom.current = col
-        dragged.current = false
-        e.dataTransfer.setData('text/plain', col)
-        e.dataTransfer.effectAllowed = 'move'
-        ;(e.currentTarget as HTMLElement).classList.add('col-dragging')
+        overCol.current = null
+        moved.current = false
+        start.current = { x: e.clientX, y: e.clientY }
+        activeEl.current = e.currentTarget
+        activeEl.current.classList.add('col-dragging')
+        activeEl.current.setPointerCapture(e.pointerId)
       },
-      onDragEnd: (e: DragEvent) => {
-        ;(e.currentTarget as HTMLElement).classList.remove('col-dragging')
-        dragFrom.current = null
+      onPointerMove: (e: ReactPointerEvent<HTMLElement>) => {
+        if (!dragFrom.current || !start.current) return
+        const dx = e.clientX - start.current.x
+        const dy = e.clientY - start.current.y
+        if (!moved.current && dx * dx + dy * dy < DRAG_THRESHOLD_PX ** 2) return
+        moved.current = true
+        highlightOver(e.clientX, e.clientY)
       },
-      onDragOver: (e: DragEvent) => {
-        e.preventDefault()
-        e.dataTransfer.dropEffect = 'move'
-        ;(e.currentTarget as HTMLElement).classList.add('col-drag-over')
+      onPointerUp: (e: ReactPointerEvent<HTMLElement>) => {
+        if (!dragFrom.current) return
+        if (moved.current) highlightOver(e.clientX, e.clientY)
+        endDrag(e.pointerId)
       },
-      onDragLeave: (e: DragEvent) => {
-        ;(e.currentTarget as HTMLElement).classList.remove('col-drag-over')
+      onPointerCancel: () => {
+        moved.current = false
+        endDrag(null)
       },
-      onDrop: (e: DragEvent) => {
-        e.preventDefault()
-        ;(e.currentTarget as HTMLElement).classList.remove('col-drag-over')
-        const from = (e.dataTransfer.getData('text/plain') ||
-          dragFrom.current) as TableMetricCol | null
-        if (!from || from === col) return
-        dragged.current = true
-        onReorder(from, col)
-      },
-      onClickCapture: (e: MouseEvent) => {
-        if (!dragged.current) return
+      onClickCapture: (e: React.MouseEvent) => {
+        if (!suppressClick.current) return
         e.preventDefault()
         e.stopPropagation()
-        dragged.current = false
+        suppressClick.current = false
       },
     }
   }

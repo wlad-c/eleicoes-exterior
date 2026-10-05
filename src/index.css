@@ -487,12 +487,15 @@ html.dark .sticky-col-city {
 
 .col-draggable {
   cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .col-draggable:active,
 .col-dragging {
   cursor: grabbing;
   opacity: 0.72;
+  touch-action: none;
 }
 
 .col-drag-over {
@@ -506,6 +509,16 @@ html.dark .sticky-col-city {
   line-height: 1;
   letter-spacing: -0.12em;
   opacity: 0.55;
+  flex-shrink: 0;
+}
+
+th.col-draggable .col-drag-handle {
+  opacity: 0.4;
+}
+
+th.col-draggable:hover .col-drag-handle,
+th.col-dragging .col-drag-handle {
+  opacity: 0.85;
 }
 
 .table-col-picker-menu {
