@@ -163,18 +163,26 @@ html.dark .sticky-table-chrome {
   visibility: collapse;
 }
 
-/* Freeze country column while the table pans horizontally */
+/* Freeze rank + country while the table pans horizontally */
 .sticky-col {
   position: -webkit-sticky;
   position: sticky;
-  left: 0;
-  z-index: 2;
   background: var(--paper);
   background-clip: padding-box;
+}
+
+.sticky-col-rank {
+  left: 0;
+  z-index: 3;
+}
+
+.sticky-col-country {
+  left: var(--sticky-rank-width, 2.75rem);
+  z-index: 2;
   box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
 }
 
-html.dark .sticky-col {
+html.dark .sticky-col-country {
   box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
 }
 
@@ -183,9 +191,17 @@ html.dark .sticky-col {
   background: var(--paper-deep);
 }
 
+.results-table thead .sticky-col-country {
+  z-index: 7;
+}
+
 .results-table tfoot .sticky-col {
   z-index: 3;
   background: var(--paper-deep);
+}
+
+.results-table tfoot .sticky-col-country {
+  z-index: 4;
 }
 
 .results-table tbody tr:hover .sticky-col {

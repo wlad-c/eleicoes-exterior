@@ -49,6 +49,7 @@ const dict = {
   legendLow: { en: 'low', pt: 'baixo' },
   legendHigh: { en: 'high', pt: 'alto' },
   sortBy: { en: 'Sort', pt: 'Ordenar' },
+  rank: { en: '#', pt: '#' },
   country: { en: 'Country', pt: 'País' },
   region: { en: 'Region', pt: 'Região' },
   runningTotal: { en: 'Running total (reported)', pt: 'Total parcial (apurados)' },
@@ -74,6 +75,10 @@ const dict = {
     pt: 'Apuração 2026 contestada — ver notas / aguardando TSE',
   },
   notes: { en: 'Sections', pt: 'Seções' },
+  hintRank: {
+    en: 'by current sort / filter',
+    pt: 'pela ordenação / filtro atual',
+  },
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'world region', pt: 'região' },
   hintVotes2026: {

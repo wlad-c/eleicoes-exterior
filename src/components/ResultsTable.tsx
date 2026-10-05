@@ -109,6 +109,15 @@ export function ResultsTable({
         headTh.style.maxWidth = `${w}px`
       })
       headTable.style.width = `${bodyTable.getBoundingClientRect().width}px`
+
+      const rankTh = bodyTable.querySelector(
+        'thead th.sticky-col-rank',
+      ) as HTMLElement | null
+      if (rankTh) {
+        const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
+        bodyTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
+        headTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
+      }
     }
 
     syncWidths()
@@ -147,10 +156,13 @@ export function ResultsTable({
 
   const headerRow = (
     <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
+      <Th align="right" hint={t('hintRank', lang)} stickyCol="rank">
+        {t('rank', lang)}
+      </Th>
       <Th
         onClick={() => onSort('country')}
         hint={t('hintCountry', lang)}
-        stickyCol
+        stickyCol="country"
       >
         {t('country', lang)}
         {arrow('country')}
@@ -233,7 +245,10 @@ export function ResultsTable({
 
   const totalCells = (
     <>
-      <td className="sticky-col px-2 py-2.5 text-[var(--ink)]">
+      <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+        —
+      </td>
+      <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink)]">
         {t('tableTotal', lang)}
       </td>
       <td className="px-2 py-2.5 font-normal text-[var(--ink-muted)]">
@@ -310,7 +325,7 @@ export function ResultsTable({
               {headerRow}
             </thead>
             <tbody>
-              {rows.map((c) => {
+              {rows.map((c, index) => {
                 const hi = highlightId === c.id
                 const value = metricValue(c, metric)
                 const heat =
@@ -326,7 +341,10 @@ export function ResultsTable({
                         : 'hover:bg-[var(--chip-soft)]'
                     }`}
                   >
-                    <td className="sticky-col px-2 py-2.5 font-medium text-[var(--ink)]">
+                    <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                      {index + 1}
+                    </td>
+                    <td className="sticky-col sticky-col-country px-2 py-2.5 font-medium text-[var(--ink)]">
                       {countryName(c, lang)}
                       {c.notes?.startsWith('DISPUTED') ? (
                         <span
@@ -488,11 +506,17 @@ function Th({
   onClick?: () => void
   align?: 'left' | 'right'
   heated?: boolean
-  stickyCol?: boolean
+  stickyCol?: 'rank' | 'country'
 }) {
+  const stickyClass =
+    stickyCol === 'rank'
+      ? 'sticky-col sticky-col-rank'
+      : stickyCol === 'country'
+        ? 'sticky-col sticky-col-country'
+        : ''
   return (
     <th
-      className={`sticky-th px-2 py-2.5 font-medium ${stickyCol ? 'sticky-col' : ''} ${align === 'right' ? 'text-right' : 'text-left'} ${
+      className={`sticky-th px-2 py-2.5 font-medium ${stickyClass} ${align === 'right' ? 'text-right' : 'text-left'} ${
         onClick ? 'cursor-pointer select-none hover:text-[var(--ink)]' : ''
       } ${heated ? 'text-[var(--ink)] underline decoration-[var(--accent)] underline-offset-4' : ''}`}
       onClick={onClick}
