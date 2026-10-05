@@ -4,6 +4,7 @@ import { SortableTh } from './SortableTh'
 import {
   cityBolsonaroChange,
   cityLulaChange,
+  citySwingToBolsonaro,
   citySwingToLula,
   type CityTableRow,
 } from '../lib/cityRows'
@@ -99,6 +100,10 @@ export function CityBreakdownTable({
       lulaChange != null && bolsonaroChange != null
         ? lulaChange - bolsonaroChange
         : null
+    const swingToBolsonaro =
+      lulaChange != null && bolsonaroChange != null
+        ? bolsonaroChange - lulaChange
+        : null
     return {
       lula,
       bolsonaro,
@@ -112,6 +117,7 @@ export function CityBreakdownTable({
       lulaChange,
       bolsonaroChange,
       swingToLula,
+      swingToBolsonaro,
       coverage: total > 0 ? { counted, total } : null,
     }
   }, [rows])
@@ -308,6 +314,19 @@ export function CityBreakdownTable({
                         {arrow('swingToLula')}
                       </SortableTh>
                     )
+                  case 'swingToBolsonaro':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintSwingToBolsonaro', lang)}
+                        onClick={() => onSort('swingToBolsonaro')}
+                        {...drag}
+                      >
+                        {t('swingToBolsonaro', lang)}
+                        {arrow('swingToBolsonaro')}
+                      </SortableTh>
+                    )
                   case 'sections':
                     return (
                       <SortableTh
@@ -461,6 +480,15 @@ export function CityBreakdownTable({
                             {fmtPp(citySwingToLula(c), lang)}
                           </td>
                         )
+                      case 'swingToBolsonaro':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(citySwingToBolsonaro(c), lang)}
+                          </td>
+                        )
                       case 'sections':
                         return (
                           <td
@@ -581,6 +609,15 @@ export function CityBreakdownTable({
                         className="px-2 py-2.5 text-right tabular-nums"
                       >
                         {fmtPp(totals.swingToLula, lang)}
+                      </td>
+                    )
+                  case 'swingToBolsonaro':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtPp(totals.swingToBolsonaro, lang)}
                       </td>
                     )
                   case 'sections':

@@ -118,6 +118,14 @@ export function swingToLula(c: CountryResult): number | null {
   return l - b
 }
 
+/** Swing to Bolsonaro = Bolsonaro change − Lula change. */
+export function swingToBolsonaro(c: CountryResult): number | null {
+  const l = lulaChange(c)
+  const b = bolsonaroChange(c)
+  if (l == null || b == null) return null
+  return b - l
+}
+
 export function metricValue(c: CountryResult, metric: MapMetric): number | null {
   switch (metric) {
     case 'leader2026': {
@@ -139,6 +147,8 @@ export function metricValue(c: CountryResult, metric: MapMetric): number | null 
       return bolsonaroChange(c)
     case 'swingToLula':
       return swingToLula(c)
+    case 'swingToBolsonaro':
+      return swingToBolsonaro(c)
     case 'lulaPct2026':
       return c.status === 'reported' && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
@@ -173,6 +183,7 @@ export function formatMetricValue(
     case 'lulaChange':
     case 'bolsonaroChange':
     case 'swingToLula':
+    case 'swingToBolsonaro':
       return fmtPp(value, lang)
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
@@ -212,6 +223,7 @@ export type RowTotals = {
   lulaChange: number | null
   bolsonaroChange: number | null
   swingToLula: number | null
+  swingToBolsonaro: number | null
   lulaVotesDelta: number | null
   bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
@@ -276,6 +288,10 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaChange != null && bolsonaroChange != null
       ? lulaChange - bolsonaroChange
       : null
+  const swingToBolsonaro =
+    lulaChange != null && bolsonaroChange != null
+      ? bolsonaroChange - lulaChange
+      : null
 
   return {
     countries: rows.length,
@@ -292,6 +308,7 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaChange,
     bolsonaroChange,
     swingToLula,
+    swingToBolsonaro,
     lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
     bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,

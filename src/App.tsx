@@ -587,6 +587,9 @@ export default function App() {
                     {t('bolsonaroChange', lang)}
                   </option>
                   <option value="swingToLula">{t('swingToLula', lang)}</option>
+                  <option value="swingToBolsonaro">
+                    {t('swingToBolsonaro', lang)}
+                  </option>
                   <option value="sections">{t('notes', lang)}</option>
                   <option value="country">{t('country', lang)}</option>
                   <option value="region">{t('region', lang)}</option>
@@ -793,6 +796,10 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
     case 'swingToLula':
       return c.swing != null
         ? c.swing.lulaPp - c.swing.bolsonaroPp
+        : Number.NaN
+    case 'swingToBolsonaro':
+      return c.swing != null
+        ? c.swing.bolsonaroPp - c.swing.lulaPp
         : Number.NaN
     case 'sections':
       return c.coverage && c.coverage.total > 0

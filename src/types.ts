@@ -112,6 +112,7 @@ export type ResultsData = {
  * Leader: who has more valid votes (share intensity from 50%→100%).
  * Changes: 2026% − 2022%.
  * Swing to Lula: Lula change − Bolsonaro change.
+ * Swing to Bolsonaro: Bolsonaro change − Lula change.
  */
 export type MapMetric =
   | 'leader2026'
@@ -119,6 +120,7 @@ export type MapMetric =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
+  | 'swingToBolsonaro'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
@@ -130,6 +132,7 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'lulaChange',
   'bolsonaroChange',
   'swingToLula',
+  'swingToBolsonaro',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
@@ -146,6 +149,7 @@ export type SortKey =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
+  | 'swingToBolsonaro'
   | 'sections'
   | 'country'
   | 'region'
@@ -159,6 +163,7 @@ export type HeatColumn =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
+  | 'swingToBolsonaro'
   | 'none'
 
 export function heatColumnForMetric(metric: MapMetric): HeatColumn {
@@ -172,6 +177,8 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'bolsonaroChange'
     case 'swingToLula':
       return 'swingToLula'
+    case 'swingToBolsonaro':
+      return 'swingToBolsonaro'
     case 'lulaPct2026':
       return 'lula2026'
     case 'bolsonaroPct2026':
