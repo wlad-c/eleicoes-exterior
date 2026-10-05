@@ -31,6 +31,8 @@ function patch(path, byIso3) {
       countryEn,
       countryPt,
       iso3,
+      abbrevEn: _oldEn,
+      abbrevPt: _oldPt,
       region,
       y2022,
       y2026,
