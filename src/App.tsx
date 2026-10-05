@@ -182,14 +182,26 @@ export default function App() {
   }, [data.countries, statusFilter, region])
 
   function matchesPlaceQuery(
-    r: { name: string; area?: string; countryId: string },
+    r: {
+      name: string
+      nameEn?: string
+      namePt?: string
+      area?: string
+      areaEn?: string
+      areaPt?: string
+      countryId: string
+    },
     q: string,
   ) {
     if (!q) return true
     const parent = countryById.get(r.countryId)
     return (
       r.name.toLowerCase().includes(q) ||
+      (r.nameEn || '').toLowerCase().includes(q) ||
+      (r.namePt || '').toLowerCase().includes(q) ||
       (r.area || '').toLowerCase().includes(q) ||
+      (r.areaEn || '').toLowerCase().includes(q) ||
+      (r.areaPt || '').toLowerCase().includes(q) ||
       Boolean(
         parent &&
           (parent.countryEn.toLowerCase().includes(q) ||

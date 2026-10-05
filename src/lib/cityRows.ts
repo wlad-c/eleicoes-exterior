@@ -83,7 +83,7 @@ function citySortValue(
 ): number | string {
   switch (key) {
     case 'city':
-      return cityDisplayName(row.name)
+      return cityDisplayName(row, lang)
     case 'country':
       return country ? countryName(country, lang) : row.countryId
     case 'region':
@@ -128,21 +128,21 @@ export function compareCityRows(
   if (typeof av === 'string' && typeof bv === 'string') {
     const cmp = av.localeCompare(bv, locale, { sensitivity: 'base' })
     if (cmp !== 0) return cmp
-    return cityDisplayName(a.name).localeCompare(cityDisplayName(b.name), locale, {
+    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
       sensitivity: 'base',
     })
   }
   const an = av as number
   const bn = bv as number
   if (Number.isNaN(an) && Number.isNaN(bn)) {
-    return cityDisplayName(a.name).localeCompare(cityDisplayName(b.name), locale, {
+    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
       sensitivity: 'base',
     })
   }
   if (Number.isNaN(an)) return 1
   if (Number.isNaN(bn)) return -1
   if (an === bn) {
-    return cityDisplayName(a.name).localeCompare(cityDisplayName(b.name), locale, {
+    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
       sensitivity: 'base',
     })
   }

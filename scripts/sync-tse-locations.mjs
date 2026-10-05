@@ -299,6 +299,17 @@ async function main() {
 
   results.meta.updatedAt = new Date().toISOString()
   writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
+
+  // Keep bilingual place labels in sync with place-names.json
+  try {
+    const { execFileSync } = await import('node:child_process')
+    execFileSync(process.execPath, [join(__dirname, 'apply-place-names.mjs')], {
+      stdio: 'inherit',
+    })
+  } catch (e) {
+    console.warn('apply-place-names skipped:', e.message)
+  }
+
   console.log(JSON.stringify(summary, null, 2))
 }
 

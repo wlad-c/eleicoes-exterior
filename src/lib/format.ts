@@ -76,13 +76,26 @@ export function countryAbbrev(c: CountryResult, lang: Lang): string {
   return c.abbrevEn || c.iso3
 }
 
-/** Title-case TSE city labels (e.g. "NOVA YORK" → "Nova York"). */
-export function cityDisplayName(name: string): string {
+/** Title-case TSE place labels as a Portuguese fallback (e.g. "NOVA YORK" → "Nova York"). */
+export function titleCasePlaceName(name: string): string {
   return name
     .toLocaleLowerCase('pt-BR')
     .replace(/(^|[\s\-/'])(\S)/g, (_, sep: string, ch: string) => {
       return `${sep}${ch.toLocaleUpperCase('pt-BR')}`
     })
+}
+
+/**
+ * Language-aware area/city label.
+ * Prefers nameEn/namePt from the dataset; falls back to title-cased TSE `name`.
+ */
+export function cityDisplayName(
+  place: string | { name: string; nameEn?: string; namePt?: string },
+  lang: Lang = 'pt',
+): string {
+  if (typeof place === 'string') return titleCasePlaceName(place)
+  if (lang === 'en') return place.nameEn || titleCasePlaceName(place.name)
+  return place.namePt || titleCasePlaceName(place.name)
 }
 
 /** Lula change = 2026% − 2022%. */
