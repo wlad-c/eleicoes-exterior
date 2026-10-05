@@ -5,9 +5,15 @@ import { ResultsTable } from './components/ResultsTable'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import { regionLabel, t } from './lib/i18n'
+import {
+  countryHasLocationMap,
+  fetchCountryLocations,
+  locationMapSource,
+} from './lib/tseBuLocations'
 import { useTheme } from './lib/theme'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type {
+  CityResult,
   CountryResult,
   Lang,
   MapMetric,
@@ -54,6 +60,11 @@ export default function App() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const [cityCountryId, setCityCountryId] = useState('')
+  const [liveLocationRows, setLiveLocationRows] = useState<{
+    countryId: string
+    rows: CityResult[]
+  } | null>(null)
+  const [locationLoading, setLocationLoading] = useState(false)
   const tableChromeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -164,6 +175,43 @@ export default function App() {
     () => cityCountries.find((c) => c.id === effectiveCityCountryId) ?? null,
     [cityCountries, effectiveCityCountryId],
   )
+
+  const seedLocationRows = selectedCityCountry?.locations ?? null
+  const locationRows =
+    liveLocationRows?.countryId === effectiveCityCountryId
+      ? liveLocationRows.rows
+      : seedLocationRows
+
+  // Voting-city split (e.g. Melbourne/Brisbane) from TSE BUs when mapped.
+  useEffect(() => {
+    const id = effectiveCityCountryId
+    if (!id || !countryHasLocationMap(id)) return
+    let cancelled = false
+    void (async () => {
+      setLocationLoading(true)
+      try {
+        const rows = await fetchCountryLocations(id)
+        if (!cancelled && rows?.length) {
+          setLiveLocationRows({ countryId: id, rows })
+        }
+      } catch {
+        /* keep seed locations */
+      } finally {
+        if (!cancelled) setLocationLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [effectiveCityCountryId])
+
+  const breakdownRows = locationRows?.length
+    ? locationRows
+    : selectedCityCountry?.cities ?? []
+  const isLocationLevel = Boolean(locationRows?.length)
+  const locationSource = effectiveCityCountryId
+    ? locationMapSource(effectiveCityCountryId)
+    : null
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -450,7 +498,9 @@ export default function App() {
           <div>
             <h2 className="brand text-lg font-bold">{t('cityTable', lang)}</h2>
             <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
-              {t('cityTableHint', lang)}
+              {isLocationLevel
+                ? t('locationTableHint', lang)
+                : t('cityTableHint', lang)}
             </p>
           </div>
           <label className="block w-full min-w-0 text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)] sm:min-w-[240px] sm:w-auto">
@@ -464,13 +514,23 @@ export default function App() {
               <option value="">{t('selectCountryPlaceholder', lang)}</option>
               {cityCountries.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {countryName(c, lang)} ({c.cities!.length})
+                  {countryName(c, lang)}
+                  {countryHasLocationMap(c.id)
+                    ? ` ★`
+                    : ` (${c.cities!.length})`}
                 </option>
               ))}
             </select>
           </label>
         </div>
-        <CityBreakdownTable country={selectedCityCountry} lang={lang} />
+        <CityBreakdownTable
+          country={selectedCityCountry}
+          rows={breakdownRows}
+          lang={lang}
+          loading={locationLoading && !breakdownRows.length}
+          isLocationLevel={isLocationLevel}
+          sourceNote={locationSource ? locationSource[lang] : null}
+        />
       </section>
 
       <footer className="mt-10 space-y-6 border-t border-[var(--line)] pt-6 text-sm text-[var(--ink-muted)]">

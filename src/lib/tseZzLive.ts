@@ -230,7 +230,10 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.cities.push({
       code: row.code,
       name: row.city,
+      level: 'municipality',
       y2026: yearResult(row.lula, row.bolsonaro, row.totalValid),
+      y2022: null,
+      swing: null,
       coverage: { counted: row.counted, total: row.total },
     })
     aggregates.set(row.countryId, agg)

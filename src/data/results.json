@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-05T03:31:22.118Z",
+    "updatedAt": "2026-10-05T04:02:38.382Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -250,6 +250,103 @@
           "coverage": {
             "counted": 10,
             "total": 10
+          }
+        }
+      ],
+      "locations": [
+        {
+          "code": "30562-SYDNEY",
+          "name": "SYDNEY",
+          "level": "location",
+          "municipality": "SYDNEY",
+          "y2026": {
+            "lula": 2128,
+            "bolsonaro": 1276,
+            "totalValid": 3911,
+            "lulaPct": 54.41,
+            "bolsonaroPct": 32.63
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 13,
+            "total": 13
+          }
+        },
+        {
+          "code": "30562-BRISBANE",
+          "name": "BRISBANE",
+          "level": "location",
+          "municipality": "SYDNEY",
+          "y2026": {
+            "lula": 956,
+            "bolsonaro": 498,
+            "totalValid": 1625,
+            "lulaPct": 58.83,
+            "bolsonaroPct": 30.65
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 6,
+            "total": 6
+          }
+        },
+        {
+          "code": "29491-MELBOURNE",
+          "name": "MELBOURNE",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 879,
+            "bolsonaro": 340,
+            "totalValid": 1369,
+            "lulaPct": 64.21,
+            "bolsonaroPct": 24.84
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 4,
+            "total": 4
+          }
+        },
+        {
+          "code": "29491-PERTH",
+          "name": "PERTH",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 458,
+            "bolsonaro": 386,
+            "totalValid": 984,
+            "lulaPct": 46.54,
+            "bolsonaroPct": 39.23
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
+          }
+        },
+        {
+          "code": "29491-CAMBERRA",
+          "name": "CAMBERRA",
+          "level": "location",
+          "municipality": "CAMBERRA",
+          "y2026": {
+            "lula": 141,
+            "bolsonaro": 79,
+            "totalValid": 241,
+            "lulaPct": 58.51,
+            "bolsonaroPct": 32.78
+          },
+          "y2022": null,
+          "swing": null,
+          "coverage": {
+            "counted": 3,
+            "total": 3
           }
         }
       ]

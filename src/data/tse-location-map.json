@@ -1,0 +1,37 @@
+{
+  "australia": {
+    "source": {
+      "en": "Itamaraty voting-place notices + TSE ballot-box files (arquivo-urna / EA18)",
+      "pt": "Avisos de locais de votação do Itamaraty + boletins de urna do TSE (arquivo-urna / EA18)"
+    },
+    "municipalities": {
+      "29491": {
+        "name": "CAMBERRA",
+        "locations": {
+          "Camberra": ["0732", "0735", "0736"],
+          "Melbourne": ["0739", "0741", "0750", "1150"],
+          "Perth": ["0742", "0744", "0749"]
+        }
+      },
+      "30562": {
+        "name": "SYDNEY",
+        "locations": {
+          "Brisbane": [
+            "1960",
+            "1961",
+            "1963",
+            "2951",
+            "3007",
+            "3189",
+            "3203",
+            "3299",
+            "3631",
+            "3729",
+            "3864"
+          ],
+          "Sydney": "*"
+        }
+      }
+    }
+  }
+}

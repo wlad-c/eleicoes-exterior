@@ -72,8 +72,12 @@ const dict = {
     pt: 'Detalhamento por cidade',
   },
   cityTableHint: {
-    en: 'Official TSE overseas locations (ZZ municipalities) within the selected country',
-    pt: 'Locais oficiais do TSE no exterior (municípios ZZ) no país selecionado',
+    en: 'Official TSE overseas municipalities (ZZ) in the selected country',
+    pt: 'Municípios oficiais do TSE no exterior (ZZ) no país selecionado',
+  },
+  locationTableHint: {
+    en: 'Voting cities from TSE ballot boxes, split inside consular municipalities when a city map is available.',
+    pt: 'Cidades de votação a partir dos boletins de urna do TSE, desagregadas dentro dos municípios consulares quando há mapa de cidades.',
   },
   selectCountry: {
     en: 'Select a country',
@@ -84,14 +88,33 @@ const dict = {
     pt: 'Escolha um país…',
   },
   city: { en: 'City / location', pt: 'Cidade / local' },
+  location: { en: 'Voting city', pt: 'Cidade de votação' },
+  municipality: { en: 'TSE municipality', pt: 'Município TSE' },
   cities: { en: 'cities', pt: 'cidades' },
+  locations: { en: 'locations', pt: 'locais' },
   cityEmpty: {
     en: 'No TSE city tallies for this country yet.',
     pt: 'Ainda não há apuração por cidade do TSE para este país.',
   },
+  cityLoading: {
+    en: 'Loading voting-city breakdown from TSE ballot boxes…',
+    pt: 'Carregando detalhamento por cidade a partir dos boletins de urna do TSE…',
+  },
+  cityNo2022Footnote: {
+    en: '2022 shares, change and swing need place-level 2022 open data; shown as — until that series is wired in.',
+    pt: 'As % de 2022, variação e swing precisam de dados abertos de 2022 por local; ficam como — até essa série ser ligada.',
+  },
   hintCity: {
     en: 'TSE ZZ municipality',
     pt: 'município ZZ do TSE',
+  },
+  hintLocation: {
+    en: 'voting city (from BUs)',
+    pt: 'cidade de votação (pelos BUs)',
+  },
+  hintMunicipality: {
+    en: 'TSE ZZ parent municipality',
+    pt: 'município ZZ pai no TSE',
   },
   map: { en: 'Swing map', pt: 'Mapa de oscilação' },
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
