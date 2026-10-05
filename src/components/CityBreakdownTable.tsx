@@ -16,7 +16,7 @@ import {
   fmtPp,
   fmtShare,
 } from '../lib/format'
-import { t } from '../lib/i18n'
+import { regionLabel, t } from '../lib/i18n'
 import type { TableMetricCol } from '../lib/tableColumns'
 import type { CountryResult, Lang, SortKey } from '../types'
 
@@ -178,6 +178,13 @@ export function CityBreakdownTable({
                   {arrow('country')}
                 </SortableTh>
               ) : null}
+              <SortableTh
+                onClick={() => onSort('region')}
+                hint={t('hintRegion', lang)}
+              >
+                {t('region', lang)}
+                {arrow('region')}
+              </SortableTh>
               {visible.has('votes2026') ? (
                 <SortableTh
                   align="right"
@@ -299,6 +306,14 @@ export function CityBreakdownTable({
                       </span>
                     </td>
                   ) : null}
+                  <td
+                    className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                    title={
+                      parent ? regionLabel(parent.region, lang) : undefined
+                    }
+                  >
+                    {parent ? regionLabel(parent.region, lang) : '—'}
+                  </td>
                   {visible.has('votes2026') ? (
                     <td className="px-2 py-2.5 text-right tabular-nums">
                       {fmtInt(c.y2026.totalValid, lang)}
@@ -364,6 +379,11 @@ export function CityBreakdownTable({
                   {singleCountry ? countryAbbrev(singleCountry) : '—'}
                 </td>
               ) : null}
+              <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                {singleCountry
+                  ? regionLabel(singleCountry.region, lang)
+                  : '—'}
+              </td>
               {visible.has('votes2026') ? (
                 <td className="px-2 py-2.5 text-right tabular-nums">
                   {fmtInt(totals.valid, lang)}
