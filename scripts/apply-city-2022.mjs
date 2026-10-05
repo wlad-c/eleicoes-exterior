@@ -84,7 +84,7 @@ function matchLocKey(byLoc, locName, claimed) {
 }
 
 function munCodeFromCity(city) {
-  if (city.level === 'location' && city.code?.includes('-')) {
+  if (city.level === 'city' && city.code?.includes('-')) {
     return city.code.split('-')[0]
   }
   return city.code
@@ -97,7 +97,7 @@ let citiesMissing = 0
 let locsMissing = 0
 
 for (const country of results.countries) {
-  for (const city of country.cities || []) {
+  for (const city of country.areas || []) {
     const raw = CITY_2022[city.code]
     if (raw) {
       city.y2022 = yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
@@ -110,7 +110,7 @@ for (const country of results.countries) {
     }
   }
 
-  const locRows = country.locations || []
+  const locRows = country.cities || []
   const claimed = new Map()
   // Pass 1: exact / folded / alias
   for (const loc of locRows) {
@@ -152,8 +152,8 @@ for (const country of results.countries) {
 const src2022 = results.meta.sources?.find((s) => /2022/i.test(s.name))
 if (src2022) {
   src2022.role = {
-    en: 'Official 2022 overseas presidential results by country, TSE municipality, and voting local (votação por seção, UF ZZ)',
-    pt: 'Resultados oficiais de 2022 no exterior por país, município TSE e local de votação (votação por seção, UF ZZ)',
+    en: 'Official 2022 overseas presidential results by country, TSE area, and voting city (votação por seção, UF ZZ)',
+    pt: 'Resultados oficiais de 2022 no exterior por país, área TSE e cidade de votação (votação por seção, UF ZZ)',
   }
 }
 

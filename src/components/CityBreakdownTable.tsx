@@ -26,6 +26,8 @@ type Props = {
   lang: Lang
   loading?: boolean
   showCountry: boolean
+  /** Column label + empty/footer wording for Area vs City tabs. */
+  placeKind?: 'area' | 'city'
   sourceNote?: string | null
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
@@ -40,6 +42,7 @@ export function CityBreakdownTable({
   lang,
   loading,
   showCountry,
+  placeKind = 'city',
   sourceNote,
   sortKey,
   sortDir,
@@ -135,10 +138,14 @@ export function CityBreakdownTable({
   if (rows.length === 0) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
-        {t('cityEmpty', lang)}
+        {t(placeKind === 'area' ? 'areaEmpty' : 'cityEmpty', lang)}
       </p>
     )
   }
+
+  const placeLabel = t(placeKind === 'area' ? 'area' : 'city', lang)
+  const placeHint = t(placeKind === 'area' ? 'hintArea' : 'hintCity', lang)
+  const placeCountLabel = t(placeKind === 'area' ? 'areas' : 'cities', lang)
 
   const arrow = (key: SortKey) =>
     sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''
@@ -173,10 +180,10 @@ export function CityBreakdownTable({
               ) : null}
               <SortableTh
                 onClick={() => onSort('city')}
-                hint={t('hintCity', lang)}
+                hint={placeHint}
                 stickyCol={showCountry ? undefined : 'city'}
               >
-                {t('city', lang)}
+                {placeLabel}
                 {arrow('city')}
               </SortableTh>
               <SortableTh
@@ -385,7 +392,7 @@ export function CityBreakdownTable({
               >
                 {t('tableTotal', lang)}
                 <span className="ml-2 font-normal text-[var(--ink-muted)]">
-                  {rows.length} {t('cities', lang)}
+                  {rows.length} {placeCountLabel}
                 </span>
               </td>
               <td className="px-2 py-2.5 text-[var(--ink-muted)]">

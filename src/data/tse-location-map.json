@@ -1,13 +1,9 @@
 {
   "australia": {
-    "source": {
-      "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
-      "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    "areas": {
       "29491": {
         "name": "CAMBERRA",
-        "locations": {
+        "cities": {
           "CAMBERRA": [
             "0732",
             "0735",
@@ -28,7 +24,7 @@
       },
       "30562": {
         "name": "SYDNEY",
-        "locations": {
+        "cities": {
           "BRISBANE": [
             "1960",
             "1961",
@@ -54,17 +50,17 @@
           ]
         }
       }
-    }
-  },
-  "belgium": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "belgium": {
+    "areas": {
       "29432": {
         "name": "BRUXELAS",
-        "locations": {
+        "cities": {
           "CONSULADO": [
             "1935",
             "1936",
@@ -85,17 +81,17 @@
           ]
         }
       }
-    }
-  },
-  "canada": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "canada": {
+    "areas": {
       "30155": {
         "name": "MONTREAL",
-        "locations": {
+        "cities": {
           "CIDADE DE MONTREAL": [
             "0256",
             "0257",
@@ -119,7 +115,7 @@
       },
       "39063": {
         "name": "VANCOUVER",
-        "locations": {
+        "cities": {
           "ALBERTA": [
             "1293",
             "1295",
@@ -142,17 +138,17 @@
           ]
         }
       }
-    }
-  },
-  "germany": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "germany": {
+    "areas": {
       "29386": {
         "name": "BERLIM",
-        "locations": {
+        "cities": {
           "BERLIM": [
             "1362",
             "1709",
@@ -181,7 +177,7 @@
       },
       "29696": {
         "name": "FRANKFURT",
-        "locations": {
+        "cities": {
           "COLÔNIA": [
             "0945",
             "0946",
@@ -209,17 +205,17 @@
           ]
         }
       }
-    }
-  },
-  "japan": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "japan": {
+    "areas": {
       "30198": {
         "name": "NAGÓIA",
-        "locations": {
+        "cities": {
           "HIROSHIMA": [
             "0202",
             "0203",
@@ -292,7 +288,7 @@
       },
       "30627": {
         "name": "TÓQUIO",
-        "locations": {
+        "cities": {
           "OIZUMI": [
             "1395",
             "1795",
@@ -342,17 +338,17 @@
           ]
         }
       }
-    }
-  },
-  "lebanon": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "lebanon": {
+    "areas": {
       "29360": {
         "name": "BEIRUTE",
-        "locations": {
+        "cities": {
           "BEIRUTE": [
             "1055",
             "1580",
@@ -372,17 +368,17 @@
           ]
         }
       }
-    }
-  },
-  "sweden": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "sweden": {
+    "areas": {
       "29688": {
         "name": "ESTOCOLMO",
-        "locations": {
+        "cities": {
           "ESTOCOLMO": [
             "0929",
             "1380",
@@ -396,17 +392,17 @@
           ]
         }
       }
-    }
-  },
-  "united-arab-emirates": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "united-arab-emirates": {
+    "areas": {
       "29262": {
         "name": "ABU DHABI",
-        "locations": {
+        "cities": {
           "ABU DHABI": [
             "1977",
             "1978"
@@ -418,17 +414,17 @@
           ]
         }
       }
-    }
-  },
-  "united-kingdom": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "united-kingdom": {
+    "areas": {
       "99503": {
         "name": "EDIMBURGO",
-        "locations": {
+        "cities": {
           "EDIMBURGO": [
             "1683",
             "3271",
@@ -441,17 +437,17 @@
           ]
         }
       }
-    }
-  },
-  "united-states": {
+    },
     "source": {
       "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
       "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
-    },
-    "municipalities": {
+    }
+  },
+  "united-states": {
+    "areas": {
       "29416": {
         "name": "BOSTON",
-        "locations": {
+        "cities": {
           "BOSTON": [
             "0031",
             "0032",
@@ -531,7 +527,7 @@
       },
       "29807": {
         "name": "HOUSTON",
-        "locations": {
+        "cities": {
           "CARROLLTON": [
             "0940",
             "1074",
@@ -563,7 +559,7 @@
       },
       "29980": {
         "name": "LOS ANGELES",
-        "locations": {
+        "cities": {
           "LOS ANGELES": [
             "0193",
             "0194",
@@ -595,6 +591,10 @@
           ]
         }
       }
+    },
+    "source": {
+      "en": "TSE open data (perfil eleitor por seção / NM_LOCAL_VOTACAO) + ballot boxes (arquivo-urna)",
+      "pt": "Dados abertos do TSE (perfil do eleitor por seção / NM_LOCAL_VOTACAO) + boletins de urna (arquivo-urna)"
     }
   }
 }

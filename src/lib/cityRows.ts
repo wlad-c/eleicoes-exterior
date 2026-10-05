@@ -5,53 +5,47 @@ export type CityTableRow = CityResult & {
   countryId: string
 }
 
-/** Official TSE ZZ municipalities only (e.g. CAMBERRA, SYDNEY). */
-export function municipalityRowsForCountry(
-  country: CountryResult,
-): CityResult[] {
-  return (country.cities ?? []).map((c) => ({
+/** Official TSE ZZ areas only (e.g. CAMBERRA, SYDNEY). */
+export function areaRowsForCountry(country: CountryResult): CityResult[] {
+  return (country.areas ?? []).map((c) => ({
     ...c,
-    level: c.level ?? ('municipality' as const),
+    level: c.level ?? ('area' as const),
   }))
 }
 
-export function taggedMunicipalityRows(
-  country: CountryResult,
-): CityTableRow[] {
-  return municipalityRowsForCountry(country).map((row) => ({
+export function taggedAreaRows(country: CountryResult): CityTableRow[] {
+  return areaRowsForCountry(country).map((row) => ({
     ...row,
     countryId: country.id,
   }))
 }
 
 /**
- * Voting cities + unsplit TSE municipalities for one country
- * (e.g. MELBOURNE/PERTH under CAMBERRA, plus other municípios as-is).
+ * Voting cities + unsplit TSE areas for one country
+ * (e.g. MELBOURNE/PERTH under CAMBERRA, plus other areas as-is).
  */
 export function breakdownRowsForCountry(
   country: CountryResult,
-  liveLocations?: CityResult[] | null,
+  liveCities?: CityResult[] | null,
 ): CityResult[] {
-  const locs = liveLocations?.length
-    ? liveLocations
-    : country.locations?.length
-      ? country.locations
+  const locs = liveCities?.length
+    ? liveCities
+    : country.cities?.length
+      ? country.cities
       : null
-  if (!locs?.length) return municipalityRowsForCountry(country)
-  const covered = new Set(
-    locs.map((l) => (l.municipality || '').toUpperCase()),
-  )
-  const extras = municipalityRowsForCountry(country)
+  if (!locs?.length) return areaRowsForCountry(country)
+  const covered = new Set(locs.map((l) => (l.area || '').toUpperCase()))
+  const extras = areaRowsForCountry(country)
     .filter((c) => !covered.has(c.name.toUpperCase()))
-    .map((c) => ({ ...c, level: 'municipality' as const }))
+    .map((c) => ({ ...c, level: 'area' as const }))
   return [...locs, ...extras]
 }
 
 export function taggedBreakdownRows(
   country: CountryResult,
-  liveLocations?: CityResult[] | null,
+  liveCities?: CityResult[] | null,
 ): CityTableRow[] {
-  return breakdownRowsForCountry(country, liveLocations).map((row) => ({
+  return breakdownRowsForCountry(country, liveCities).map((row) => ({
     ...row,
     countryId: country.id,
   }))

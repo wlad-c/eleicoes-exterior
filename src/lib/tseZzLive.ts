@@ -158,7 +158,7 @@ type Agg = {
   totalValid: number
   counted: number
   total: number
-  cities: CityResult[]
+  areas: CityResult[]
 }
 
 /**
@@ -206,7 +206,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     }
   }
 
-  // Fetch municipalities in parallel, then aggregate sequentially (no races).
+  // Fetch areas in parallel, then aggregate sequentially (no races).
   const munVotes = await mapPool(codes, 16, async (code): Promise<MunVotes | null> => {
     const countryId = cityToCountry[code]
     try {
@@ -240,7 +240,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       totalValid: 0,
       counted: 0,
       total: 0,
-      cities: [],
+      areas: [],
     }
     agg.lula += row.lula
     agg.bolsonaro += row.bolsonaro
@@ -249,10 +249,10 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.total += row.total
     const y2026 = yearResult(row.lula, row.bolsonaro, row.totalValid)
     const y2022 = cityY2022(row.code)
-    agg.cities.push({
+    agg.areas.push({
       code: row.code,
       name: row.city,
-      level: 'municipality',
+      level: 'area',
       y2026,
       y2022,
       swing: swingOf(y2022, y2026),
@@ -262,7 +262,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
   }
 
   for (const agg of aggregates.values()) {
-    agg.cities.sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
+    agg.areas.sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
   }
 
   const countries: CountryResult[] = base.countries.map((country) => {
@@ -270,7 +270,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     if (!agg || agg.totalValid <= 0) return country
     const y2026 = yearResult(agg.lula, agg.bolsonaro, agg.totalValid)
     const partial = agg.counted < agg.total
-    const cityNotes = agg.cities
+    const areaNotes = agg.areas
       .map((c) => `${c.name} ${c.coverage?.counted ?? 0}/${c.coverage?.total ?? 0}`)
       .join('; ')
     return {
@@ -279,10 +279,10 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       swing: swingOf(country.y2022, y2026),
       status: 'reported',
       coverage: { counted: agg.counted, total: agg.total },
-      cities: agg.cities,
+      areas: agg.areas,
       notes: partial
-        ? `TSE EA20 live (${agg.counted}/${agg.total} seções; ${cityNotes})`
-        : `TSE EA20 live (${cityNotes})`,
+        ? `TSE EA20 live (${agg.counted}/${agg.total} seções; ${areaNotes})`
+        : `TSE EA20 live (${areaNotes})`,
     }
   })
 

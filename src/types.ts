@@ -23,19 +23,19 @@ export type Coverage = {
   total: number
 }
 
-/** One overseas place: TSE ZZ municipality, or a voting city inside one. */
+/** One overseas place: TSE ZZ area, or a voting city inside one. */
 export type CityResult = {
-  /** TSE municipality code, or `{mun}-{LOCATION}` for voting-city rows. */
+  /** TSE area code, or `{area}-{CITY}` for voting-city rows. */
   code: string
   /** Official TSE / voting-place name (usually uppercase Portuguese). */
   name: string
   /**
-   * `municipality` = TSE ZZ município (e.g. CAMBERRA).
-   * `location` = voting city inside a município (e.g. MELBOURNE).
+   * `area` = TSE ZZ município / consular area (e.g. CAMBERRA).
+   * `city` = voting city inside an area (e.g. MELBOURNE).
    */
-  level?: 'municipality' | 'location'
-  /** Parent TSE municipality name when `level === 'location'`. */
-  municipality?: string
+  level?: 'area' | 'city'
+  /** Parent TSE area name when `level === 'city'`. */
+  area?: string
   y2026: YearResult
   /** Present when historical open data exists for this place; else null/omitted. */
   y2022?: YearResult | null
@@ -54,13 +54,13 @@ export type CountryResult = {
   swing: Swing | null
   /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
-  /** Per-city TSE EA20 breakdown (ZZ municipalities). */
-  cities?: CityResult[]
+  /** Official TSE EA20 ZZ areas (municípios / consular districts). */
+  areas?: CityResult[]
   /**
    * Finer voting-city rows from TSE ballot boxes + location map
    * (e.g. Melbourne/Brisbane inside Canberra/Sydney).
    */
-  locations?: CityResult[]
+  cities?: CityResult[]
   notes: string
   status: CountryStatus
 }

@@ -90,7 +90,7 @@ function matchLocKey(byLoc, locName, claimed) {
 function attachLoc2022(locations) {
   const claimed = new Map()
   for (const loc of locations) {
-    const mun = loc.municipalityCode || loc.code?.split('-')[0]
+    const mun = loc.areaCode || loc.code?.split('-')[0]
     if (!claimed.has(mun)) claimed.set(mun, new Set())
     const key = matchLocKey(LOC_2022[mun], loc.name, claimed.get(mun))
     if (!key) {
@@ -105,12 +105,12 @@ function attachLoc2022(locations) {
   }
   for (const loc of locations) {
     if (loc.y2022) continue
-    const mun = loc.municipalityCode || loc.code?.split('-')[0]
+    const mun = loc.areaCode || loc.code?.split('-')[0]
     if (!claimed.has(mun)) claimed.set(mun, new Set())
     const byLoc = LOC_2022[mun] || {}
     const free = Object.keys(byLoc).filter((k) => !claimed.get(mun).has(fold(k)))
     const unmatched = locations.filter((l) => {
-      const m = l.municipalityCode || l.code?.split('-')[0]
+      const m = l.areaCode || l.code?.split('-')[0]
       return m === mun && !l.y2022
     })
     if (free.length === 1 && unmatched.length === 1) {
@@ -166,18 +166,18 @@ function parseBuCandidateVotes(bu) {
 }
 
 function resolveLocation(section, munCfg) {
-  for (const [loc, secs] of Object.entries(munCfg.locations)) {
+  for (const [loc, secs] of Object.entries(munCfg.cities)) {
     if (secs === '*') continue
     if (secs.includes(section)) return loc
   }
-  const star = Object.entries(munCfg.locations).find(([, v]) => v === '*')
+  const star = Object.entries(munCfg.cities).find(([, v]) => v === '*')
   return star?.[0] ?? null
 }
 
 async function syncCountry(countryId, cfg) {
   const csUrl = `${HOST}/oficial/ele2026/arquivo-urna/${PLEITO}/config/zz/zz-p00${PLEITO}-cs.json`
   const cs = await fetchJson(csUrl)
-  const munCodes = new Set(Object.keys(cfg.municipalities))
+  const munCodes = new Set(Object.keys(cfg.areas))
   const principals = []
   for (const mu of cs.abr?.[0]?.mu || []) {
     const munCode = pad(mu.cd || '', 5)
@@ -187,7 +187,7 @@ async function syncCountry(countryId, cfg) {
         if (!sec.ns || sec.nsp || !sec.da) continue
         principals.push({
           munCode,
-          munName: mu.nm || cfg.municipalities[munCode].name,
+          munName: mu.nm || cfg.areas[munCode].name,
           zone: pad(zon.cd || '1', 4),
           section: pad(sec.ns, 4),
         })
@@ -196,12 +196,12 @@ async function syncCountry(countryId, cfg) {
   }
 
   const aggregates = new Map()
-  for (const [munCode, munCfg] of Object.entries(cfg.municipalities)) {
-    for (const locName of Object.keys(munCfg.locations)) {
+  for (const [munCode, munCfg] of Object.entries(cfg.areas)) {
+    for (const locName of Object.keys(munCfg.cities)) {
       aggregates.set(`${munCode}:${locName}`, {
         name: locName.toUpperCase(),
-        municipality: munCfg.name,
-        municipalityCode: munCode,
+        area: munCfg.name,
+        areaCode: munCode,
         lula: 0,
         bolsonaro: 0,
         totalValid: 0,
@@ -213,7 +213,7 @@ async function syncCountry(countryId, cfg) {
 
   // Coverage totals = principal EA16 sections (aggregated nsp sections excluded).
   for (const p of principals) {
-    const munCfg = cfg.municipalities[p.munCode]
+    const munCfg = cfg.areas[p.munCode]
     const locName = resolveLocation(p.section, munCfg)
     if (!locName) continue
     const agg = aggregates.get(`${p.munCode}:${locName}`)
@@ -222,7 +222,7 @@ async function syncCountry(countryId, cfg) {
 
   let ok = 0
   for (const p of principals) {
-    const munCfg = cfg.municipalities[p.munCode]
+    const munCfg = cfg.areas[p.munCode]
     const locName = resolveLocation(p.section, munCfg)
     if (!locName) continue
     const agg = aggregates.get(`${p.munCode}:${locName}`)
@@ -255,11 +255,11 @@ async function syncCountry(countryId, cfg) {
     .map((a) => {
       const y2026 = yearResult(a.lula, a.bolsonaro, a.totalValid)
       return {
-        code: `${a.municipalityCode}-${a.name}`,
+        code: `${a.areaCode}-${a.name}`,
         name: a.name,
-        level: 'location',
-        municipality: a.municipality,
-        municipalityCode: a.municipalityCode,
+        level: 'city',
+        area: a.area,
+        areaCode: a.areaCode,
         y2026,
         y2022: null,
         swing: null,
@@ -269,7 +269,7 @@ async function syncCountry(countryId, cfg) {
     .sort((a, b) => b.y2026.totalValid - a.y2026.totalValid)
 
   attachLoc2022(locations)
-  for (const loc of locations) delete loc.municipalityCode
+  for (const loc of locations) delete loc.areaCode
 
   return { locations, sectionsOk: ok, principals: principals.length }
 }
@@ -287,14 +287,14 @@ async function main() {
       console.warn(`  country ${countryId} missing from results.json`)
       continue
     }
-    country.locations = locations
+    country.cities = locations
     summary[countryId] = {
-      locations: locations.length,
+      cities: locations.length,
       sectionsOk,
       principals,
       sample: locations.map((l) => `${l.name}:${l.y2026.totalValid}`),
     }
-    console.log(`  → ${locations.length} locations from ${sectionsOk}/${principals} BUs`)
+    console.log(`  → ${locations.length} cities from ${sectionsOk}/${principals} BUs`)
   }
 
   results.meta.updatedAt = new Date().toISOString()

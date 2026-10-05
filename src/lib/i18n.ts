@@ -7,11 +7,10 @@ const dict = {
   countries: { en: 'countries', pt: 'países' },
   search: { en: 'Search country…', pt: 'Buscar país…' },
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
+  searchArea: { en: 'Search area or country…', pt: 'Buscar área ou país…' },
   tabCountries: { en: 'Country', pt: 'País' },
-  tabLocalOverview: { en: 'Local overview', pt: 'Visão local' },
-  tabLocalDetailed: { en: 'Local detailed', pt: 'Detalhe local' },
-  /** @deprecated use tabLocalDetailed */
-  tabCities: { en: 'Local detailed', pt: 'Detalhe local' },
+  tabAreas: { en: 'Area', pt: 'Área' },
+  tabCities: { en: 'City', pt: 'Cidade' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
@@ -59,8 +58,8 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Applies to country and local tables',
-    pt: 'Vale para as tabelas de país e locais',
+    en: 'Applies to country, area, and city tables',
+    pt: 'Vale para as tabelas de país, área e cidade',
   },
   colLula2026: { en: 'Lula 2026', pt: 'Lula 2026' },
   colFBolsonaro2026: { en: 'F Bolsonaro 2026', pt: 'F Bolsonaro 2026' },
@@ -88,17 +87,13 @@ const dict = {
     en: 'City breakdown',
     pt: 'Detalhamento por cidade',
   },
+  areaTableHint: {
+    en: 'Official TSE overseas areas (ZZ). Broad consulates aggregate several voting cities (e.g. Melbourne and Perth under Canberra).',
+    pt: 'Áreas oficiais do TSE no exterior (ZZ). Consulados amplos agregam várias cidades de votação (ex.: Melbourne e Perth sob Canberra).',
+  },
   cityTableHint: {
-    en: 'Official TSE overseas municipalities (ZZ); finer voting cities where a municipality covers several places',
-    pt: 'Municípios oficiais do TSE no exterior (ZZ); cidades de votação mais finas quando um município cobre vários locais',
-  },
-  municipalityTableHint: {
-    en: 'Official TSE overseas municipalities (ZZ). Broad consulates aggregate several voting cities (e.g. Melbourne and Perth under Canberra).',
-    pt: 'Municípios oficiais do TSE no exterior (ZZ). Consulados amplos agregam várias cidades de votação (ex.: Melbourne e Perth sob Canberra).',
-  },
-  locationTableHint: {
-    en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular municipalities; other TSE municipalities listed as-is.',
-    pt: 'Cidades de votação a partir dos boletins de urna do TSE (NM_LOCAL_VOTACAO), desagregadas nos municípios consulares amplos; demais municípios TSE listados como estão.',
+    en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular areas; other TSE areas listed as-is.',
+    pt: 'Cidades de votação a partir dos boletins de urna do TSE (NM_LOCAL_VOTACAO), desagregadas nas áreas consulares amplas; demais áreas TSE listadas como estão.',
   },
   selectCountry: {
     en: 'Select a country',
@@ -108,11 +103,14 @@ const dict = {
     en: 'Choose a country…',
     pt: 'Escolha um país…',
   },
+  area: { en: 'Area', pt: 'Área' },
   city: { en: 'City', pt: 'Cidade' },
-  location: { en: 'Voting city', pt: 'Cidade de votação' },
-  municipality: { en: 'Municipality', pt: 'Município' },
+  areas: { en: 'areas', pt: 'áreas' },
   cities: { en: 'cities', pt: 'cidades' },
-  locations: { en: 'locations', pt: 'locais' },
+  areaEmpty: {
+    en: 'No areas match these filters.',
+    pt: 'Nenhuma área com esses filtros.',
+  },
   cityEmpty: {
     en: 'No cities match these filters.',
     pt: 'Nenhuma cidade com esses filtros.',
@@ -125,17 +123,13 @@ const dict = {
     en: '2022 shares use official TSE section totals (votação por seção). Places that did not exist as voting locals in 2022 show — for 2022/change/swing.',
     pt: 'As % de 2022 usam a votação por seção oficial do TSE. Locais que não existiam como locais de votação em 2022 ficam como — em 2022/variação/swing.',
   },
+  hintArea: {
+    en: 'TSE area',
+    pt: 'área TSE',
+  },
   hintCity: {
     en: 'name',
     pt: 'nome',
-  },
-  hintLocation: {
-    en: 'name',
-    pt: 'nome',
-  },
-  hintMunicipality: {
-    en: 'TSE municipality',
-    pt: 'município TSE',
   },
   map: { en: 'Swing map', pt: 'Mapa de oscilação' },
   noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
