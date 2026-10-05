@@ -447,6 +447,29 @@ html.dark .sticky-col-city {
   display: none;
 }
 
+.col-draggable {
+  cursor: grab;
+}
+
+.col-draggable:active,
+.col-dragging {
+  cursor: grabbing;
+  opacity: 0.72;
+}
+
+.col-drag-over {
+  outline: 1px dashed var(--accent);
+  outline-offset: -1px;
+  background: var(--chip-soft);
+}
+
+.col-drag-handle {
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: -0.12em;
+  opacity: 0.55;
+}
+
 .table-col-picker-menu {
   max-height: min(70vh, 24rem);
   overflow-y: auto;

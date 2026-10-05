@@ -58,8 +58,12 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Applies to country, area, and city tables',
-    pt: 'Vale para as tabelas de país, área e cidade',
+    en: 'Drag to reorder. Applies to country, area, and city tables.',
+    pt: 'Arraste para reordenar. Vale para as tabelas de país, área e cidade.',
+  },
+  tableColumnsDrag: {
+    en: 'Drag to reorder columns',
+    pt: 'Arraste para reordenar colunas',
   },
   colLula2026: { en: 'Lula 2026', pt: 'Lula 2026' },
   colFBolsonaro2026: { en: 'F Bolsonaro 2026', pt: 'F Bolsonaro 2026' },

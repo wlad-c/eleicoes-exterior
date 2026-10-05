@@ -17,7 +17,11 @@ import {
   fmtShare,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
-import type { TableMetricCol } from '../lib/tableColumns'
+import {
+  orderedVisibleCols,
+  type TableMetricCol,
+} from '../lib/tableColumns'
+import { useColumnDrag } from '../lib/useColumnDrag'
 import type { CountryResult, Lang, SortKey } from '../types'
 
 type Props = {
@@ -33,6 +37,8 @@ type Props = {
   onSort: (key: SortKey) => void
   footerNote?: string | null
   visibleCols: TableMetricCol[]
+  columnOrder: TableMetricCol[]
+  onReorderColumns: (from: TableMetricCol, to: TableMetricCol) => void
 }
 
 export function CityBreakdownTable({
@@ -47,9 +53,15 @@ export function CityBreakdownTable({
   onSort,
   footerNote,
   visibleCols,
+  columnOrder,
+  onReorderColumns,
 }: Props) {
   const tableRef = useRef<HTMLTableElement>(null)
-  const visible = useMemo(() => new Set(visibleCols), [visibleCols])
+  const metricCols = useMemo(
+    () => orderedVisibleCols(columnOrder, visibleCols),
+    [columnOrder, visibleCols],
+  )
+  const { dragProps } = useColumnDrag(onReorderColumns)
 
   const totals = useMemo(() => {
     let lula = 0
@@ -181,101 +193,136 @@ export function CityBreakdownTable({
                 {placeLabel}
                 {arrow('city')}
               </SortableTh>
-              {visible.has('region') ? (
-                <SortableTh
-                  onClick={() => onSort('region')}
-                  hint={t('hintRegion', lang)}
-                >
-                  {t('region', lang)}
-                  {arrow('region')}
-                </SortableTh>
-              ) : null}
-              {visible.has('votes2026') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintVotes2026', lang)}
-                  onClick={() => onSort('votes2026')}
-                >
-                  {t('votes2026', lang)}
-                  {arrow('votes2026')}
-                </SortableTh>
-              ) : null}
-              {visible.has('lulaPct2026') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintShare2026', lang)}
-                  onClick={() => onSort('lulaPct2026')}
-                >
-                  {t('lula', lang)} 2026{arrow('lulaPct2026')}
-                </SortableTh>
-              ) : null}
-              {visible.has('bolsonaroPct2026') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintShare2026', lang)}
-                  onClick={() => onSort('bolsonaroPct2026')}
-                >
-                  {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-                </SortableTh>
-              ) : null}
-              {visible.has('lulaPct2022') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintShare2022', lang)}
-                  onClick={() => onSort('lulaPct2022')}
-                >
-                  {t('lula', lang)} 2022{arrow('lulaPct2022')}
-                </SortableTh>
-              ) : null}
-              {visible.has('bolsonaroPct2022') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintShare2022', lang)}
-                  onClick={() => onSort('bolsonaroPct2022')}
-                >
-                  {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
-                </SortableTh>
-              ) : null}
-              {visible.has('lulaChange') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintLulaChange', lang)}
-                  onClick={() => onSort('lulaChange')}
-                >
-                  {t('lulaChange', lang)}
-                  {arrow('lulaChange')}
-                </SortableTh>
-              ) : null}
-              {visible.has('bolsonaroChange') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintBolsonaroChange', lang)}
-                  onClick={() => onSort('bolsonaroChange')}
-                >
-                  {t('bolsonaroChange', lang)}
-                  {arrow('bolsonaroChange')}
-                </SortableTh>
-              ) : null}
-              {visible.has('swingToLula') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintSwingToLula', lang)}
-                  onClick={() => onSort('swingToLula')}
-                >
-                  {t('swingToLula', lang)}
-                  {arrow('swingToLula')}
-                </SortableTh>
-              ) : null}
-              {visible.has('sections') ? (
-                <SortableTh
-                  align="right"
-                  hint={t('hintSections', lang)}
-                  onClick={() => onSort('sections')}
-                >
-                  {t('notes', lang)}
-                  {arrow('sections')}
-                </SortableTh>
-              ) : null}
+              {metricCols.map((col) => {
+                const drag = dragProps(col)
+                switch (col) {
+                  case 'region':
+                    return (
+                      <SortableTh
+                        key={col}
+                        onClick={() => onSort('region')}
+                        hint={t('hintRegion', lang)}
+                        {...drag}
+                      >
+                        {t('region', lang)}
+                        {arrow('region')}
+                      </SortableTh>
+                    )
+                  case 'votes2026':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintVotes2026', lang)}
+                        onClick={() => onSort('votes2026')}
+                        {...drag}
+                      >
+                        {t('votes2026', lang)}
+                        {arrow('votes2026')}
+                      </SortableTh>
+                    )
+                  case 'lulaPct2026':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintShare2026', lang)}
+                        onClick={() => onSort('lulaPct2026')}
+                        {...drag}
+                      >
+                        {t('lula', lang)} 2026{arrow('lulaPct2026')}
+                      </SortableTh>
+                    )
+                  case 'bolsonaroPct2026':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintShare2026', lang)}
+                        onClick={() => onSort('bolsonaroPct2026')}
+                        {...drag}
+                      >
+                        {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
+                      </SortableTh>
+                    )
+                  case 'lulaPct2022':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintShare2022', lang)}
+                        onClick={() => onSort('lulaPct2022')}
+                        {...drag}
+                      >
+                        {t('lula', lang)} 2022{arrow('lulaPct2022')}
+                      </SortableTh>
+                    )
+                  case 'bolsonaroPct2022':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintShare2022', lang)}
+                        onClick={() => onSort('bolsonaroPct2022')}
+                        {...drag}
+                      >
+                        {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
+                      </SortableTh>
+                    )
+                  case 'lulaChange':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintLulaChange', lang)}
+                        onClick={() => onSort('lulaChange')}
+                        {...drag}
+                      >
+                        {t('lulaChange', lang)}
+                        {arrow('lulaChange')}
+                      </SortableTh>
+                    )
+                  case 'bolsonaroChange':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintBolsonaroChange', lang)}
+                        onClick={() => onSort('bolsonaroChange')}
+                        {...drag}
+                      >
+                        {t('bolsonaroChange', lang)}
+                        {arrow('bolsonaroChange')}
+                      </SortableTh>
+                    )
+                  case 'swingToLula':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintSwingToLula', lang)}
+                        onClick={() => onSort('swingToLula')}
+                        {...drag}
+                      >
+                        {t('swingToLula', lang)}
+                        {arrow('swingToLula')}
+                      </SortableTh>
+                    )
+                  case 'sections':
+                    return (
+                      <SortableTh
+                        key={col}
+                        align="right"
+                        hint={t('hintSections', lang)}
+                        onClick={() => onSort('sections')}
+                        {...drag}
+                      >
+                        {t('notes', lang)}
+                        {arrow('sections')}
+                      </SortableTh>
+                    )
+                }
+              })}
             </tr>
           </thead>
           <tbody>
@@ -318,61 +365,113 @@ export function CityBreakdownTable({
                       {cityDisplayName(c, lang)}
                     </span>
                   </td>
-                  {visible.has('region') ? (
-                    <td
-                      className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
-                      title={
-                        parent ? regionLabel(parent.region, lang) : undefined
-                      }
-                    >
-                      {parent ? regionLabel(parent.region, lang) : '—'}
-                    </td>
-                  ) : null}
-                  {visible.has('votes2026') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtInt(c.y2026.totalValid, lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('lulaPct2026') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('bolsonaroPct2026') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtShare(c.y2026.bolsonaroPct, c.y2026.bolsonaro, lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('lulaPct2022') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                      {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('bolsonaroPct2022') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                      {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('lulaChange') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtPp(cityLulaChange(c), lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('bolsonaroChange') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtPp(cityBolsonaroChange(c), lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('swingToLula') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums">
-                      {fmtPp(citySwingToLula(c), lang)}
-                    </td>
-                  ) : null}
-                  {visible.has('sections') ? (
-                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                      {fmtCoverage(c.coverage)}
-                    </td>
-                  ) : null}
+                  {metricCols.map((col) => {
+                    switch (col) {
+                      case 'region':
+                        return (
+                          <td
+                            key={col}
+                            className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                            title={
+                              parent
+                                ? regionLabel(parent.region, lang)
+                                : undefined
+                            }
+                          >
+                            {parent ? regionLabel(parent.region, lang) : '—'}
+                          </td>
+                        )
+                      case 'votes2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.y2026.totalValid, lang)}
+                          </td>
+                        )
+                      case 'lulaPct2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang)}
+                          </td>
+                        )
+                      case 'bolsonaroPct2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              c.y2026.bolsonaroPct,
+                              c.y2026.bolsonaro,
+                              lang,
+                            )}
+                          </td>
+                        )
+                      case 'lulaPct2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                          >
+                            {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
+                          </td>
+                        )
+                      case 'bolsonaroPct2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                          >
+                            {fmtShare(
+                              c.y2022?.bolsonaroPct,
+                              c.y2022?.bolsonaro,
+                              lang,
+                            )}
+                          </td>
+                        )
+                      case 'lulaChange':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(cityLulaChange(c), lang)}
+                          </td>
+                        )
+                      case 'bolsonaroChange':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(cityBolsonaroChange(c), lang)}
+                          </td>
+                        )
+                      case 'swingToLula':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(citySwingToLula(c), lang)}
+                          </td>
+                        )
+                      case 'sections':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                          >
+                            {fmtCoverage(c.coverage)}
+                          </td>
+                        )
+                    }
+                  })}
                 </tr>
               )
             })}
@@ -402,58 +501,99 @@ export function CityBreakdownTable({
                   {rows.length} {placeCountLabel}
                 </span>
               </td>
-              {visible.has('region') ? (
-                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                  {singleCountry
-                    ? regionLabel(singleCountry.region, lang)
-                    : '—'}
-                </td>
-              ) : null}
-              {visible.has('votes2026') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtInt(totals.valid, lang)}
-                </td>
-              ) : null}
-              {visible.has('lulaPct2026') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtShare(totals.lulaPct, totals.lula, lang)}
-                </td>
-              ) : null}
-              {visible.has('bolsonaroPct2026') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
-                </td>
-              ) : null}
-              {visible.has('lulaPct2022') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
-                </td>
-              ) : null}
-              {visible.has('bolsonaroPct2022') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
-                </td>
-              ) : null}
-              {visible.has('lulaChange') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtPp(totals.lulaChange, lang)}
-                </td>
-              ) : null}
-              {visible.has('bolsonaroChange') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtPp(totals.bolsonaroChange, lang)}
-                </td>
-              ) : null}
-              {visible.has('swingToLula') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums">
-                  {fmtPp(totals.swingToLula, lang)}
-                </td>
-              ) : null}
-              {visible.has('sections') ? (
-                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                  {fmtCoverage(totals.coverage)}
-                </td>
-              ) : null}
+              {metricCols.map((col) => {
+                switch (col) {
+                  case 'region':
+                    return (
+                      <td key={col} className="px-2 py-2.5 text-[var(--ink-muted)]">
+                        {singleCountry
+                          ? regionLabel(singleCountry.region, lang)
+                          : '—'}
+                      </td>
+                    )
+                  case 'votes2026':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtInt(totals.valid, lang)}
+                      </td>
+                    )
+                  case 'lulaPct2026':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtShare(totals.lulaPct, totals.lula, lang)}
+                      </td>
+                    )
+                  case 'bolsonaroPct2026':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
+                      </td>
+                    )
+                  case 'lulaPct2022':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                      >
+                        {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+                      </td>
+                    )
+                  case 'bolsonaroPct2022':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                      >
+                        {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+                      </td>
+                    )
+                  case 'lulaChange':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtPp(totals.lulaChange, lang)}
+                      </td>
+                    )
+                  case 'bolsonaroChange':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtPp(totals.bolsonaroChange, lang)}
+                      </td>
+                    )
+                  case 'swingToLula':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums"
+                      >
+                        {fmtPp(totals.swingToLula, lang)}
+                      </td>
+                    )
+                  case 'sections':
+                    return (
+                      <td
+                        key={col}
+                        className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+                      >
+                        {fmtCoverage(totals.coverage)}
+                      </td>
+                    )
+                }
+              })}
             </tr>
           </tfoot>
         </table>
