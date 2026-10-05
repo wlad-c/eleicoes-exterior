@@ -5,7 +5,6 @@ import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
   aggregateRows,
   bolsonaroVotesDelta,
-  countryAbbrev,
   countryName,
   fmtCoverage,
   fmtInt,
@@ -309,6 +308,20 @@ export function ResultsTable({
                 {arrow('swingToLula')}
               </SortableTh>
             )
+          case 'swingToBolsonaro':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('swingToBolsonaro')}
+                align="right"
+                heated={heatCol === 'swingToBolsonaro'}
+                hint={t('hintSwingToBolsonaro', lang)}
+                {...drag}
+              >
+                {t('swingToBolsonaro', lang)}
+                {arrow('swingToBolsonaro')}
+              </SortableTh>
+            )
           case 'sections':
             return (
               <SortableTh
@@ -409,6 +422,12 @@ export function ResultsTable({
                 {fmtPp(totals.swingToLula, lang)}
               </td>
             )
+          case 'swingToBolsonaro':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.swingToBolsonaro, lang)}
+              </td>
+            )
           case 'sections':
             return (
               <td
@@ -480,7 +499,7 @@ export function ResultsTable({
                       {index + 1}
                     </td>
                     <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 font-medium text-[var(--ink)]"
+                      className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5 font-medium text-[var(--ink)]"
                       title={countryName(c, lang)}
                     >
                       <span className="country-flag-label">
@@ -489,7 +508,7 @@ export function ResultsTable({
                           title={countryName(c, lang)}
                         />
                         <span className="cell-truncate-text">
-                          {countryAbbrev(c, lang)}
+                          {countryName(c, lang)}
                         </span>
                       </span>
                       {c.notes?.startsWith('DISPUTED') ? (
@@ -620,6 +639,23 @@ export function ResultsTable({
                               {fmtPp(
                                 c.swing != null
                                   ? c.swing.lulaPp - c.swing.bolsonaroPp
+                                  : null,
+                                lang,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'swingToBolsonaro':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="swingToBolsonaro"
+                              heatCol={heatCol}
+                              heat={heat}
+                              strong
+                            >
+                              {fmtPp(
+                                c.swing != null
+                                  ? c.swing.bolsonaroPp - c.swing.lulaPp
                                   : null,
                                 lang,
                               )}

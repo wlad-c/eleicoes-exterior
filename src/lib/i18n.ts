@@ -22,6 +22,7 @@ const dict = {
   lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
   bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
   swingToLula: { en: 'Swing to Lula', pt: 'Swing para Lula' },
+  swingToBolsonaro: { en: 'Swing to Bolsonaro', pt: 'Swing para Bolsonaro' },
   leader2026: {
     en: '2026 leader (who has more votes)',
     pt: 'Líder 2026 (quem tem mais votos)',
@@ -168,6 +169,10 @@ const dict = {
   hintSwingToLula: {
     en: 'Lula Δ − Bolso Δ',
     pt: 'Lula Δ − Bolso Δ',
+  },
+  hintSwingToBolsonaro: {
+    en: 'Bolso Δ − Lula Δ',
+    pt: 'Bolso Δ − Lula Δ',
   },
   hintSections: {
     en: 'counted / total',
