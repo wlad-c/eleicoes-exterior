@@ -174,10 +174,12 @@ export function ResultsTable({
         {t('country', lang)}
         {arrow('country')}
       </SortableTh>
-      <SortableTh onClick={() => onSort('region')} hint={t('hintRegion', lang)}>
-        {t('region', lang)}
-        {arrow('region')}
-      </SortableTh>
+      {visible.has('region') ? (
+        <SortableTh onClick={() => onSort('region')} hint={t('hintRegion', lang)}>
+          {t('region', lang)}
+          {arrow('region')}
+        </SortableTh>
+      ) : null}
       {visible.has('votes2026') ? (
         <SortableTh
           onClick={() => onSort('votes2026')}
@@ -281,10 +283,17 @@ export function ResultsTable({
       </td>
       <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink)]">
         {t('tableTotal', lang)}
+        {!visible.has('region') ? (
+          <span className="ml-2 font-normal text-[var(--ink-muted)]">
+            {totals.countries} {t('countries', lang)}
+          </span>
+        ) : null}
       </td>
-      <td className="px-2 py-2.5 font-normal text-[var(--ink-muted)]">
-        {totals.countries} {t('countries', lang)}
-      </td>
+      {visible.has('region') ? (
+        <td className="px-2 py-2.5 font-normal text-[var(--ink-muted)]">
+          {totals.countries} {t('countries', lang)}
+        </td>
+      ) : null}
       {visible.has('votes2026') ? (
         <td className="px-2 py-2.5 text-right tabular-nums">
           {fmtInt(totals.valid2026, lang)}
@@ -415,12 +424,14 @@ export function ResultsTable({
                         </span>
                       ) : null}
                     </td>
-                    <td
-                      className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
-                      title={regionLabel(c.region, lang)}
-                    >
-                      {regionLabel(c.region, lang)}
-                    </td>
+                    {visible.has('region') ? (
+                      <td
+                        className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                        title={regionLabel(c.region, lang)}
+                      >
+                        {regionLabel(c.region, lang)}
+                      </td>
+                    ) : null}
                     {visible.has('votes2026') ? (
                       <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink)]">
                         {fmtInt(c.y2026?.totalValid, lang)}

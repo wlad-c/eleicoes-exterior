@@ -186,13 +186,15 @@ export function CityBreakdownTable({
                 {placeLabel}
                 {arrow('city')}
               </SortableTh>
-              <SortableTh
-                onClick={() => onSort('region')}
-                hint={t('hintRegion', lang)}
-              >
-                {t('region', lang)}
-                {arrow('region')}
-              </SortableTh>
+              {visible.has('region') ? (
+                <SortableTh
+                  onClick={() => onSort('region')}
+                  hint={t('hintRegion', lang)}
+                >
+                  {t('region', lang)}
+                  {arrow('region')}
+                </SortableTh>
+              ) : null}
               {visible.has('votes2026') ? (
                 <SortableTh
                   align="right"
@@ -318,14 +320,16 @@ export function CityBreakdownTable({
                   >
                     {cityDisplayName(c, lang)}
                   </td>
-                  <td
-                    className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
-                    title={
-                      parent ? regionLabel(parent.region, lang) : undefined
-                    }
-                  >
-                    {parent ? regionLabel(parent.region, lang) : '—'}
-                  </td>
+                  {visible.has('region') ? (
+                    <td
+                      className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
+                      title={
+                        parent ? regionLabel(parent.region, lang) : undefined
+                      }
+                    >
+                      {parent ? regionLabel(parent.region, lang) : '—'}
+                    </td>
+                  ) : null}
                   {visible.has('votes2026') ? (
                     <td className="px-2 py-2.5 text-right tabular-nums">
                       {fmtInt(c.y2026.totalValid, lang)}
@@ -395,11 +399,13 @@ export function CityBreakdownTable({
                   {rows.length} {placeCountLabel}
                 </span>
               </td>
-              <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                {singleCountry
-                  ? regionLabel(singleCountry.region, lang)
-                  : '—'}
-              </td>
+              {visible.has('region') ? (
+                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                  {singleCountry
+                    ? regionLabel(singleCountry.region, lang)
+                    : '—'}
+                </td>
+              ) : null}
               {visible.has('votes2026') ? (
                 <td className="px-2 py-2.5 text-right tabular-nums">
                   {fmtInt(totals.valid, lang)}
