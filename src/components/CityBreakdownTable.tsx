@@ -294,14 +294,15 @@ export function CityBreakdownTable({
                     {index + 1}
                   </td>
                   {showCountry ? (
-                    <td className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]">
+                    <td
+                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]"
+                      title={fullCountry}
+                    >
                       <span className="country-flag-label">
                         {parent ? (
                           <CountryFlag iso3={parent.iso3} title={fullCountry} />
                         ) : null}
-                        <span className="cell-truncate-text" title={fullCountry}>
-                          {abbr}
-                        </span>
+                        <span className="cell-truncate-text">{abbr}</span>
                       </span>
                     </td>
                   ) : null}
@@ -313,7 +314,9 @@ export function CityBreakdownTable({
                     }cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]`}
                     title={cityDisplayName(c, lang)}
                   >
-                    {cityDisplayName(c, lang)}
+                    <span className="cell-truncate-text">
+                      {cityDisplayName(c, lang)}
+                    </span>
                   </td>
                   {visible.has('region') ? (
                     <td
@@ -380,7 +383,12 @@ export function CityBreakdownTable({
                 —
               </td>
               {showCountry ? (
-                <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink-muted)]">
+                <td
+                  className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink-muted)]"
+                  title={
+                    singleCountry ? countryName(singleCountry, lang) : undefined
+                  }
+                >
                   {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
                 </td>
               ) : null}
