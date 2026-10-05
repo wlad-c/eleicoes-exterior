@@ -51,9 +51,8 @@ export function TableColumnPicker({
           {columnOrder.map((col) => {
             const checked = visibleSet.has(col)
             const id = `table-col-${col}`
-            const drag = dragProps(col)
             return (
-              <li key={col} className="col-draggable rounded-sm" {...drag}>
+              <li key={col} className="col-draggable rounded-sm" {...dragProps(col)}>
                 <label
                   htmlFor={id}
                   className="flex cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-sm hover:bg-[var(--chip-soft)]"
@@ -72,6 +71,7 @@ export function TableColumnPicker({
                     disabled={checked && visible.length <= 1}
                     onChange={() => toggle(col)}
                     onClick={(e) => e.stopPropagation()}
+                    onPointerDown={(e) => e.stopPropagation()}
                   />
                   <span>{t(TABLE_METRIC_COL_LABEL[col], lang)}</span>
                 </label>

@@ -59,8 +59,8 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Drag to reorder. Applies to country, area, and city tables.',
-    pt: 'Arraste para reordenar. Vale para as tabelas de país, área e cidade.',
+    en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for country, area, and city.',
+    pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para país, área e cidade.',
   },
   tableColumnsDrag: {
     en: 'Drag to reorder columns',
