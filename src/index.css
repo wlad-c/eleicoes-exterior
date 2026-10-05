@@ -239,12 +239,33 @@ html.dark .is-x-scrolled .sticky-col-city {
   z-index: 4;
 }
 
-.results-table tbody tr:hover .sticky-col {
+/* Paint every cell — with border-collapse:separate, tr backgrounds
+   do not show through, so sticky-only hover looked like a name-column
+   highlight. Skip the pinned Total foot table. */
+.results-table--body tbody tr:hover td,
+.results-table--cities:not(.results-table--foot) tbody tr:hover td {
   background: var(--chip-soft);
+  background-clip: padding-box;
 }
 
-.results-table tbody tr.row-hi .sticky-col {
+.results-table--body tbody tr.row-hi td {
   background: var(--chip);
+  background-clip: padding-box;
+}
+
+.results-table--body tbody td.heat-cell,
+.results-table--cities:not(.results-table--foot) tbody td.heat-cell {
+  background: var(--heat-bg);
+  background-clip: padding-box;
+}
+
+.results-table--body tbody tr:hover td.heat-cell,
+.results-table--cities:not(.results-table--foot) tbody tr:hover td.heat-cell {
+  background: color-mix(in srgb, var(--heat-bg) 70%, var(--chip-soft));
+}
+
+.results-table--body tbody tr.row-hi td.heat-cell {
+  background: color-mix(in srgb, var(--heat-bg) 70%, var(--chip));
 }
 
 .table-x-scroll {
