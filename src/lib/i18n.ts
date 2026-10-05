@@ -129,10 +129,6 @@ const dict = {
     pt: 'Apuração 2026 contestada — ver notas / aguardando TSE',
   },
   notes: { en: 'Sections', pt: 'Seções' },
-  hintRank: {
-    en: 'by current sort / filter',
-    pt: 'pela ordenação / filtro atual',
-  },
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'world region', pt: 'região' },
   hintVotes2026: {

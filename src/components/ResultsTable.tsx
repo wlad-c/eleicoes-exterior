@@ -158,7 +158,7 @@ export function ResultsTable({
 
   const headerRow = (
     <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-      <SortableTh align="right" hint={t('hintRank', lang)} stickyCol="rank">
+      <SortableTh align="right" stickyCol="rank">
         {t('rank', lang)}
       </SortableTh>
       <SortableTh

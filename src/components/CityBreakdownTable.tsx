@@ -130,7 +130,7 @@ export function CityBreakdownTable({
         <table className="results-table results-table--cities text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-              <SortableTh align="right" hint={t('hintRank', lang)}>
+              <SortableTh align="right">
                 {t('rank', lang)}
               </SortableTh>
               <SortableTh
