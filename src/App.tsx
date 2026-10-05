@@ -2,10 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import raw from './data/results.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
+import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import { compareCityRows, taggedBreakdownRows } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
+import {
+  readStoredTableCols,
+  writeStoredTableCols,
+  type TableMetricCol,
+} from './lib/tableColumns'
 import { useTheme } from './lib/theme'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
@@ -49,7 +55,15 @@ export default function App() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const [tableView, setTableView] = useState<'countries' | 'cities'>('countries')
+  const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
+    readStoredTableCols(),
+  )
   const tableChromeRef = useRef<HTMLDivElement>(null)
+
+  function setVisibleColsPersist(next: TableMetricCol[]) {
+    setVisibleCols(next)
+    writeStoredTableCols(next)
+  }
 
   useEffect(() => {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'
@@ -454,35 +468,51 @@ export default function App() {
                 {t('tabCities', lang)}
               </button>
             </div>
-            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-              {t('sortBy', lang)}
-              <select
-                className="control"
-                value={sortKey}
-                onChange={(e) => {
-                  const key = e.target.value as SortKey
-                  setSortKey(key)
-                  setSortDir(
-                    key === 'country' || key === 'region' || key === 'city'
-                      ? 'asc'
-                      : 'desc',
-                  )
-                }}
-              >
-                {tableView === 'cities' ? (
-                  <option value="city">{t('city', lang)}</option>
-                ) : null}
-                <option value="votes2026">{t('votes2026', lang)}</option>
-                <option value="votes2022">{t('votes2022', lang)}</option>
-                <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
-                <option value="bolsonaroPct2026">{t('bolsonaroPct2026', lang)}</option>
-                <option value="lulaChange">{t('lulaChange', lang)}</option>
-                <option value="bolsonaroChange">{t('bolsonaroChange', lang)}</option>
-                <option value="swingToLula">{t('swingToLula', lang)}</option>
-                <option value="country">{t('country', lang)}</option>
-                <option value="region">{t('region', lang)}</option>
-              </select>
-            </label>
+            <div className="flex flex-wrap items-center gap-2">
+              <TableColumnPicker
+                lang={lang}
+                visible={visibleCols}
+                onChange={setVisibleColsPersist}
+              />
+              <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+                {t('sortBy', lang)}
+                <select
+                  className="control"
+                  value={sortKey}
+                  onChange={(e) => {
+                    const key = e.target.value as SortKey
+                    setSortKey(key)
+                    setSortDir(
+                      key === 'country' || key === 'region' || key === 'city'
+                        ? 'asc'
+                        : 'desc',
+                    )
+                  }}
+                >
+                  {tableView === 'cities' ? (
+                    <option value="city">{t('city', lang)}</option>
+                  ) : null}
+                  <option value="votes2026">{t('votes2026', lang)}</option>
+                  <option value="votes2022">{t('votes2022', lang)}</option>
+                  <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
+                  <option value="bolsonaroPct2026">
+                    {t('bolsonaroPct2026', lang)}
+                  </option>
+                  <option value="lulaPct2022">{t('lulaPct2022', lang)}</option>
+                  <option value="bolsonaroPct2022">
+                    {t('bolsonaroPct2022', lang)}
+                  </option>
+                  <option value="lulaChange">{t('lulaChange', lang)}</option>
+                  <option value="bolsonaroChange">
+                    {t('bolsonaroChange', lang)}
+                  </option>
+                  <option value="swingToLula">{t('swingToLula', lang)}</option>
+                  <option value="sections">{t('notes', lang)}</option>
+                  <option value="country">{t('country', lang)}</option>
+                  <option value="region">{t('region', lang)}</option>
+                </select>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -497,6 +527,7 @@ export default function App() {
             highlightId={activeHighlight}
             onSelect={(id) => onSelect(id)}
             metric={metric}
+            visibleCols={visibleCols}
           />
         ) : (
           <CityBreakdownTable
@@ -508,6 +539,7 @@ export default function App() {
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={onSort}
+            visibleCols={visibleCols}
           />
         )}
       </section>
@@ -666,6 +698,10 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
       return c.y2026?.bolsonaroPct ?? Number.NaN
+    case 'lulaPct2022':
+      return c.y2022.lulaPct
+    case 'bolsonaroPct2022':
+      return c.y2022.bolsonaroPct
     case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
     case 'bolsonaroChange':
@@ -673,6 +709,10 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
     case 'swingToLula':
       return c.swing != null
         ? c.swing.lulaPp - c.swing.bolsonaroPp
+        : Number.NaN
+    case 'sections':
+      return c.coverage && c.coverage.total > 0
+        ? c.coverage.counted / c.coverage.total
         : Number.NaN
     case 'city':
       return countryName(c, lang)

@@ -80,12 +80,20 @@ function citySortValue(
       return row.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
       return row.y2026?.bolsonaroPct ?? Number.NaN
+    case 'lulaPct2022':
+      return row.y2022?.lulaPct ?? Number.NaN
+    case 'bolsonaroPct2022':
+      return row.y2022?.bolsonaroPct ?? Number.NaN
     case 'lulaChange':
       return cityLulaChange(row) ?? Number.NaN
     case 'bolsonaroChange':
       return cityBolsonaroChange(row) ?? Number.NaN
     case 'swingToLula':
       return citySwingToLula(row) ?? Number.NaN
+    case 'sections':
+      return row.coverage && row.coverage.total > 0
+        ? row.coverage.counted / row.coverage.total
+        : Number.NaN
   }
 }
 

@@ -186,13 +186,15 @@ html.dark .sticky-table-chrome {
   z-index: 3;
 }
 
-.sticky-col-country {
+.sticky-col-country,
+.sticky-col-city {
   left: var(--sticky-rank-width, 2.75rem);
   z-index: 2;
   box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
 }
 
-html.dark .sticky-col-country {
+html.dark .sticky-col-country,
+html.dark .sticky-col-city {
   box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
 }
 
@@ -201,7 +203,8 @@ html.dark .sticky-col-country {
   background: var(--paper-deep);
 }
 
-.results-table thead .sticky-col-country {
+.results-table thead .sticky-col-country,
+.results-table thead .sticky-col-city {
   z-index: 7;
 }
 
@@ -210,7 +213,8 @@ html.dark .sticky-col-country {
   background: var(--paper-deep);
 }
 
-.results-table tfoot .sticky-col-country {
+.results-table tfoot .sticky-col-country,
+.results-table tfoot .sticky-col-city {
   z-index: 4;
 }
 
@@ -407,6 +411,14 @@ html.dark .sticky-col-country {
   max-width: 8.5rem;
 }
 
+.cell-truncate-city {
+  max-width: 9rem;
+}
+
+.cell-truncate-abbr {
+  max-width: 5.75rem;
+}
+
 .country-flag-label .cell-truncate-text {
   min-width: 0;
   overflow: hidden;
@@ -414,8 +426,22 @@ html.dark .sticky-col-country {
   white-space: nowrap;
 }
 
-.sticky-col-country.cell-truncate {
-  max-width: 12.5rem;
+.sticky-col-country.cell-truncate,
+.sticky-col-country.cell-truncate-abbr {
+  max-width: 5.75rem;
+}
+
+.sticky-col-city.cell-truncate-city {
+  max-width: 9rem;
+}
+
+.table-col-picker summary::-webkit-details-marker {
+  display: none;
+}
+
+.table-col-picker-menu {
+  max-height: min(70vh, 24rem);
+  overflow-y: auto;
 }
 
 .lang-btn[aria-pressed='true'],

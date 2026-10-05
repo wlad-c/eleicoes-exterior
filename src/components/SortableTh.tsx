@@ -4,7 +4,7 @@ type Props = {
   onClick?: () => void
   align?: 'left' | 'right'
   heated?: boolean
-  stickyCol?: 'rank' | 'country'
+  stickyCol?: 'rank' | 'country' | 'city'
 }
 
 /** Shared results-table header cell (country + city tables). */
@@ -21,7 +21,9 @@ export function SortableTh({
       ? 'sticky-col sticky-col-rank'
       : stickyCol === 'country'
         ? 'sticky-col sticky-col-country'
-        : ''
+        : stickyCol === 'city'
+          ? 'sticky-col sticky-col-city'
+          : ''
   return (
     <th
       className={`sticky-th px-2 py-2.5 font-medium ${stickyClass} ${align === 'right' ? 'text-right' : 'text-left'} ${

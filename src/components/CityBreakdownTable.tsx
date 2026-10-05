@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { CountryFlag } from './CountryFlag'
 import { SortableTh } from './SortableTh'
 import {
@@ -9,6 +9,7 @@ import {
 } from '../lib/cityRows'
 import {
   cityDisplayName,
+  countryAbbrev,
   countryName,
   fmtCoverage,
   fmtInt,
@@ -16,6 +17,7 @@ import {
   fmtShare,
 } from '../lib/format'
 import { t } from '../lib/i18n'
+import type { TableMetricCol } from '../lib/tableColumns'
 import type { CountryResult, Lang, SortKey } from '../types'
 
 type Props = {
@@ -29,6 +31,7 @@ type Props = {
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
   footerNote?: string | null
+  visibleCols: TableMetricCol[]
 }
 
 export function CityBreakdownTable({
@@ -42,9 +45,10 @@ export function CityBreakdownTable({
   sortDir,
   onSort,
   footerNote,
+  visibleCols,
 }: Props) {
-  const showMunicipality = rows.some((r) => r.level === 'location')
-  const nameColSpan = 1 + (showCountry ? 1 : 0) + (showMunicipality ? 1 : 0)
+  const tableRef = useRef<HTMLTableElement>(null)
+  const visible = useMemo(() => new Set(visibleCols), [visibleCols])
 
   const totals = useMemo(() => {
     let lula = 0
@@ -99,6 +103,27 @@ export function CityBreakdownTable({
     }
   }, [rows])
 
+  useEffect(() => {
+    const table = tableRef.current
+    if (!table) return
+    const sync = () => {
+      const rankTh = table.querySelector(
+        'thead th.sticky-col-rank',
+      ) as HTMLElement | null
+      if (!rankTh) return
+      const rankW = Math.ceil(rankTh.getBoundingClientRect().width)
+      table.style.setProperty('--sticky-rank-width', `${rankW}px`)
+    }
+    sync()
+    const ro = new ResizeObserver(sync)
+    ro.observe(table)
+    window.addEventListener('resize', sync)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', sync)
+    }
+  }, [rows, showCountry, visibleCols])
+
   if (loading) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
@@ -127,15 +152,19 @@ export function CityBreakdownTable({
         <p className="mb-2 text-xs text-[var(--ink-muted)]">{sourceNote}</p>
       ) : null}
       <div className="table-x-scroll">
-        <table className="results-table results-table--cities text-left text-sm">
+        <table
+          ref={tableRef}
+          className="results-table results-table--cities text-left text-sm"
+        >
           <thead>
             <tr className="border-b border-[var(--line)] text-xs uppercase tracking-wide text-[var(--ink-muted)]">
-              <SortableTh align="right">
+              <SortableTh align="right" stickyCol="rank">
                 {t('rank', lang)}
               </SortableTh>
               <SortableTh
                 onClick={() => onSort('city')}
-                hint={t('hintCountry', lang)}
+                hint={t('hintCity', lang)}
+                stickyCol="city"
               >
                 {t('city', lang)}
                 {arrow('city')}
@@ -149,195 +178,237 @@ export function CityBreakdownTable({
                   {arrow('country')}
                 </SortableTh>
               ) : null}
-              {showMunicipality ? (
-                <SortableTh hint={t('hintMunicipality', lang)}>
-                  {t('municipality', lang)}
+              {visible.has('votes2026') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintVotes2026', lang)}
+                  onClick={() => onSort('votes2026')}
+                >
+                  {t('votes2026', lang)}
+                  {arrow('votes2026')}
                 </SortableTh>
               ) : null}
-              <SortableTh
-                align="right"
-                hint={t('hintVotes2026', lang)}
-                onClick={() => onSort('votes2026')}
-              >
-                {t('votes2026', lang)}
-                {arrow('votes2026')}
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintShare2026', lang)}
-                onClick={() => onSort('lulaPct2026')}
-              >
-                {t('lula', lang)} 2026{arrow('lulaPct2026')}
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintShare2026', lang)}
-                onClick={() => onSort('bolsonaroPct2026')}
-              >
-                {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintShare2022', lang)}
-                onClick={() => onSort('votes2022')}
-              >
-                {t('lula', lang)} 2022{arrow('votes2022')}
-              </SortableTh>
-              <SortableTh align="right" hint={t('hintShare2022', lang)}>
-                {t('jBolsonaro', lang)} 2022
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintLulaChange', lang)}
-                onClick={() => onSort('lulaChange')}
-              >
-                {t('lulaChange', lang)}
-                {arrow('lulaChange')}
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintBolsonaroChange', lang)}
-                onClick={() => onSort('bolsonaroChange')}
-              >
-                {t('bolsonaroChange', lang)}
-                {arrow('bolsonaroChange')}
-              </SortableTh>
-              <SortableTh
-                align="right"
-                hint={t('hintSwingToLula', lang)}
-                onClick={() => onSort('swingToLula')}
-              >
-                {t('swingToLula', lang)}
-                {arrow('swingToLula')}
-              </SortableTh>
-              <SortableTh align="right" hint={t('hintSections', lang)}>
-                {t('notes', lang)}
-              </SortableTh>
+              {visible.has('lulaPct2026') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintShare2026', lang)}
+                  onClick={() => onSort('lulaPct2026')}
+                >
+                  {t('lula', lang)} 2026{arrow('lulaPct2026')}
+                </SortableTh>
+              ) : null}
+              {visible.has('bolsonaroPct2026') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintShare2026', lang)}
+                  onClick={() => onSort('bolsonaroPct2026')}
+                >
+                  {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
+                </SortableTh>
+              ) : null}
+              {visible.has('lulaPct2022') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintShare2022', lang)}
+                  onClick={() => onSort('lulaPct2022')}
+                >
+                  {t('lula', lang)} 2022{arrow('lulaPct2022')}
+                </SortableTh>
+              ) : null}
+              {visible.has('bolsonaroPct2022') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintShare2022', lang)}
+                  onClick={() => onSort('bolsonaroPct2022')}
+                >
+                  {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
+                </SortableTh>
+              ) : null}
+              {visible.has('lulaChange') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintLulaChange', lang)}
+                  onClick={() => onSort('lulaChange')}
+                >
+                  {t('lulaChange', lang)}
+                  {arrow('lulaChange')}
+                </SortableTh>
+              ) : null}
+              {visible.has('bolsonaroChange') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintBolsonaroChange', lang)}
+                  onClick={() => onSort('bolsonaroChange')}
+                >
+                  {t('bolsonaroChange', lang)}
+                  {arrow('bolsonaroChange')}
+                </SortableTh>
+              ) : null}
+              {visible.has('swingToLula') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintSwingToLula', lang)}
+                  onClick={() => onSort('swingToLula')}
+                >
+                  {t('swingToLula', lang)}
+                  {arrow('swingToLula')}
+                </SortableTh>
+              ) : null}
+              {visible.has('sections') ? (
+                <SortableTh
+                  align="right"
+                  hint={t('hintSections', lang)}
+                  onClick={() => onSort('sections')}
+                >
+                  {t('notes', lang)}
+                  {arrow('sections')}
+                </SortableTh>
+              ) : null}
             </tr>
           </thead>
           <tbody>
             {rows.map((c, index) => {
               const parent = countries.get(c.countryId)
+              const fullCountry = parent
+                ? countryName(parent, lang)
+                : c.countryId
+              const abbr = parent ? countryAbbrev(parent) : c.countryId
               return (
                 <tr
                   key={`${c.countryId}-${c.code}`}
                   className="border-b border-[var(--line-soft)] hover:bg-[var(--chip-soft)]"
                 >
-                  <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                     {index + 1}
                   </td>
                   <td
-                    className="cell-truncate cell-truncate-lg px-2 py-2.5 font-medium text-[var(--ink)]"
+                    className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]"
                     title={cityDisplayName(c.name)}
                   >
                     {cityDisplayName(c.name)}
                   </td>
                   {showCountry ? (
-                    <td className="cell-truncate cell-truncate-lg px-2 py-2.5 text-[var(--ink)]">
+                    <td className="cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]">
                       <span className="country-flag-label">
                         {parent ? (
-                          <CountryFlag
-                            iso3={parent.iso3}
-                            title={countryName(parent, lang)}
-                          />
+                          <CountryFlag iso3={parent.iso3} title={fullCountry} />
                         ) : null}
-                        <span
-                          className="cell-truncate-text"
-                          title={
-                            parent ? countryName(parent, lang) : c.countryId
-                          }
-                        >
-                          {parent ? countryName(parent, lang) : c.countryId}
+                        <span className="cell-truncate-text" title={fullCountry}>
+                          {abbr}
                         </span>
                       </span>
                     </td>
                   ) : null}
-                  {showMunicipality ? (
-                    <td
-                      className="cell-truncate px-2 py-2.5 text-[var(--ink-muted)]"
-                      title={
-                        c.level === 'location' && c.municipality
-                          ? cityDisplayName(c.municipality)
-                          : undefined
-                      }
-                    >
-                      {c.level === 'location' && c.municipality
-                        ? cityDisplayName(c.municipality)
-                        : '—'}
+                  {visible.has('votes2026') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtInt(c.y2026.totalValid, lang)}
                     </td>
                   ) : null}
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtInt(c.y2026.totalValid, lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtShare(c.y2026.bolsonaroPct, c.y2026.bolsonaro, lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                    {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                    {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(cityLulaChange(c), lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(cityBolsonaroChange(c), lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums">
-                    {fmtPp(citySwingToLula(c), lang)}
-                  </td>
-                  <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                    {fmtCoverage(c.coverage)}
-                  </td>
+                  {visible.has('lulaPct2026') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('bolsonaroPct2026') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtShare(c.y2026.bolsonaroPct, c.y2026.bolsonaro, lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('lulaPct2022') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                      {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('bolsonaroPct2022') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                      {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('lulaChange') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtPp(cityLulaChange(c), lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('bolsonaroChange') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtPp(cityBolsonaroChange(c), lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('swingToLula') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums">
+                      {fmtPp(citySwingToLula(c), lang)}
+                    </td>
+                  ) : null}
+                  {visible.has('sections') ? (
+                    <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                      {fmtCoverage(c.coverage)}
+                    </td>
+                  ) : null}
                 </tr>
               )
             })}
           </tbody>
           <tfoot>
             <tr className="border-t-2 border-[var(--line)] text-sm font-semibold">
-              <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+              <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                 —
               </td>
-              <td className="px-2 py-2.5 text-[var(--ink)]" colSpan={nameColSpan}>
+              <td className="sticky-col sticky-col-city px-2 py-2.5 text-[var(--ink)]">
                 {t('tableTotal', lang)}
                 <span className="ml-2 font-normal text-[var(--ink-muted)]">
                   {rows.length} {t('cities', lang)}
-                  {singleCountry
-                    ? ` · ${countryName(singleCountry, lang)}`
-                    : null}
                 </span>
               </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtInt(totals.valid, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.lulaPct, totals.lula, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.lulaChange, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.bolsonaroChange, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.swingToLula, lang)}
-              </td>
-              <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
-                {fmtCoverage(totals.coverage)}
-              </td>
+              {showCountry ? (
+                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
+                  {singleCountry ? countryAbbrev(singleCountry) : '—'}
+                </td>
+              ) : null}
+              {visible.has('votes2026') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtInt(totals.valid, lang)}
+                </td>
+              ) : null}
+              {visible.has('lulaPct2026') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtShare(totals.lulaPct, totals.lula, lang)}
+                </td>
+              ) : null}
+              {visible.has('bolsonaroPct2026') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
+                </td>
+              ) : null}
+              {visible.has('lulaPct2022') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+                </td>
+              ) : null}
+              {visible.has('bolsonaroPct2022') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+                </td>
+              ) : null}
+              {visible.has('lulaChange') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtPp(totals.lulaChange, lang)}
+                </td>
+              ) : null}
+              {visible.has('bolsonaroChange') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtPp(totals.bolsonaroChange, lang)}
+                </td>
+              ) : null}
+              {visible.has('swingToLula') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums">
+                  {fmtPp(totals.swingToLula, lang)}
+                </td>
+              ) : null}
+              {visible.has('sections') ? (
+                <td className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
+                  {fmtCoverage(totals.coverage)}
+                </td>
+              ) : null}
             </tr>
           </tfoot>
         </table>
@@ -348,4 +419,3 @@ export function CityBreakdownTable({
     </div>
   )
 }
-
