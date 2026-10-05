@@ -161,23 +161,24 @@ export function CityBreakdownTable({
               <SortableTh align="right" stickyCol="rank">
                 {t('rank', lang)}
               </SortableTh>
-              <SortableTh
-                onClick={() => onSort('city')}
-                hint={t('hintCity', lang)}
-                stickyCol="city"
-              >
-                {t('city', lang)}
-                {arrow('city')}
-              </SortableTh>
               {showCountry ? (
                 <SortableTh
                   onClick={() => onSort('country')}
                   hint={t('hintCountry', lang)}
+                  stickyCol="country"
                 >
                   {t('country', lang)}
                   {arrow('country')}
                 </SortableTh>
               ) : null}
+              <SortableTh
+                onClick={() => onSort('city')}
+                hint={t('hintCity', lang)}
+                stickyCol={showCountry ? undefined : 'city'}
+              >
+                {t('city', lang)}
+                {arrow('city')}
+              </SortableTh>
               <SortableTh
                 onClick={() => onSort('region')}
                 hint={t('hintRegion', lang)}
@@ -288,14 +289,8 @@ export function CityBreakdownTable({
                   <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                     {index + 1}
                   </td>
-                  <td
-                    className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]"
-                    title={cityDisplayName(c.name)}
-                  >
-                    {cityDisplayName(c.name)}
-                  </td>
                   {showCountry ? (
-                    <td className="cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]">
+                    <td className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink)]">
                       <span className="country-flag-label">
                         {parent ? (
                           <CountryFlag iso3={parent.iso3} title={fullCountry} />
@@ -306,6 +301,16 @@ export function CityBreakdownTable({
                       </span>
                     </td>
                   ) : null}
+                  <td
+                    className={`${
+                      showCountry
+                        ? ''
+                        : 'sticky-col sticky-col-city '
+                    }cell-truncate cell-truncate-city px-2 py-2.5 font-medium text-[var(--ink)]`}
+                    title={cityDisplayName(c.name)}
+                  >
+                    {cityDisplayName(c.name)}
+                  </td>
                   <td
                     className="cell-truncate cell-truncate-sm px-2 py-2.5 text-[var(--ink-muted)]"
                     title={
@@ -368,17 +373,21 @@ export function CityBreakdownTable({
               <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]">
                 —
               </td>
-              <td className="sticky-col sticky-col-city px-2 py-2.5 text-[var(--ink)]">
+              {showCountry ? (
+                <td className="sticky-col sticky-col-country px-2 py-2.5 text-[var(--ink-muted)]">
+                  {singleCountry ? countryAbbrev(singleCountry) : '—'}
+                </td>
+              ) : null}
+              <td
+                className={`${
+                  showCountry ? '' : 'sticky-col sticky-col-city '
+                }px-2 py-2.5 text-[var(--ink)]`}
+              >
                 {t('tableTotal', lang)}
                 <span className="ml-2 font-normal text-[var(--ink-muted)]">
                   {rows.length} {t('cities', lang)}
                 </span>
               </td>
-              {showCountry ? (
-                <td className="px-2 py-2.5 text-[var(--ink-muted)]">
-                  {singleCountry ? countryAbbrev(singleCountry) : '—'}
-                </td>
-              ) : null}
               <td className="px-2 py-2.5 text-[var(--ink-muted)]">
                 {singleCountry
                   ? regionLabel(singleCountry.region, lang)
