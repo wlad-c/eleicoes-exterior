@@ -8,14 +8,14 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-05T06:09:31.088Z",
+    "updatedAt": "2026-10-05T06:19:13.185Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
         "url": "https://dadosabertos.tse.jus.br/",
         "role": {
-          "en": "Official 2022 overseas presidential results by country (ZZ)",
-          "pt": "Resultados oficiais de 2022 no exterior por país (ZZ)"
+          "en": "Official 2022 overseas presidential results by country, TSE municipality, and voting local (votação por seção, UF ZZ)",
+          "pt": "Resultados oficiais de 2022 no exterior por país, município TSE e local de votação (votação por seção, UF ZZ)"
         }
       },
       {
@@ -156,6 +156,18 @@
           "coverage": {
             "counted": 58,
             "total": 58
+          },
+          "y2022": {
+            "lula": 1682,
+            "bolsonaro": 10684,
+            "totalValid": 14156,
+            "lulaPct": 11.88,
+            "bolsonaroPct": 75.47
+          },
+          "swing": {
+            "lulaPp": 1.24,
+            "bolsonaroPp": -0.95,
+            "marginPp": 2.19
           }
         },
         {
@@ -171,6 +183,18 @@
           "coverage": {
             "counted": 43,
             "total": 43
+          },
+          "y2022": {
+            "lula": 1966,
+            "bolsonaro": 8103,
+            "totalValid": 12105,
+            "lulaPct": 16.24,
+            "bolsonaroPct": 66.94
+          },
+          "swing": {
+            "lulaPp": 2.53,
+            "bolsonaroPp": 0.99,
+            "marginPp": 1.54
           }
         },
         {
@@ -186,6 +210,18 @@
           "coverage": {
             "counted": 18,
             "total": 18
+          },
+          "y2022": {
+            "lula": 649,
+            "bolsonaro": 4220,
+            "totalValid": 5599,
+            "lulaPct": 11.59,
+            "bolsonaroPct": 75.37
+          },
+          "swing": {
+            "lulaPp": 2.06,
+            "bolsonaroPp": -2.81,
+            "marginPp": 4.87
           }
         }
       ],
@@ -202,8 +238,18 @@
             "lulaPct": 13.39,
             "bolsonaroPct": 73.84
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1039,
+            "bolsonaro": 6475,
+            "totalValid": 8630,
+            "lulaPct": 12.04,
+            "bolsonaroPct": 75.03
+          },
+          "swing": {
+            "lulaPp": 1.35,
+            "bolsonaroPp": -1.19,
+            "marginPp": 2.54
+          },
           "coverage": {
             "counted": 36,
             "total": 36
@@ -221,8 +267,18 @@
             "lulaPct": 14.6,
             "bolsonaroPct": 71.93
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 713,
+            "bolsonaro": 4216,
+            "totalValid": 5862,
+            "lulaPct": 12.16,
+            "bolsonaroPct": 71.92
+          },
+          "swing": {
+            "lulaPp": 2.44,
+            "bolsonaroPp": 0.01,
+            "marginPp": 2.43
+          },
           "coverage": {
             "counted": 17,
             "total": 17
@@ -240,8 +296,18 @@
             "lulaPct": 22.96,
             "bolsonaroPct": 63.8
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1253,
+            "bolsonaro": 3887,
+            "totalValid": 6243,
+            "lulaPct": 20.07,
+            "bolsonaroPct": 62.26
+          },
+          "swing": {
+            "lulaPp": 2.89,
+            "bolsonaroPp": 1.54,
+            "marginPp": 1.35
+          },
           "coverage": {
             "counted": 26,
             "total": 26
@@ -259,8 +325,18 @@
             "lulaPct": 10.62,
             "bolsonaroPct": 77.74
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 234,
+            "bolsonaro": 1945,
+            "totalValid": 2458,
+            "lulaPct": 9.52,
+            "bolsonaroPct": 79.13
+          },
+          "swing": {
+            "lulaPp": 1.1,
+            "bolsonaroPp": -1.39,
+            "marginPp": 2.49
+          },
           "coverage": {
             "counted": 8,
             "total": 8
@@ -278,8 +354,18 @@
             "lulaPct": 14.05,
             "bolsonaroPct": 73.51
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 245,
+            "bolsonaro": 1419,
+            "totalValid": 1927,
+            "lulaPct": 12.71,
+            "bolsonaroPct": 73.64
+          },
+          "swing": {
+            "lulaPp": 1.34,
+            "bolsonaroPp": -0.13,
+            "marginPp": 1.47
+          },
           "coverage": {
             "counted": 8,
             "total": 8
@@ -297,8 +383,18 @@
             "lulaPct": 12.29,
             "bolsonaroPct": 76.47
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 76,
+            "bolsonaro": 481,
+            "totalValid": 613,
+            "lulaPct": 12.4,
+            "bolsonaroPct": 78.47
+          },
+          "swing": {
+            "lulaPp": -0.11,
+            "bolsonaroPp": -2,
+            "marginPp": 1.89
+          },
           "coverage": {
             "counted": 3,
             "total": 3
@@ -316,8 +412,18 @@
             "lulaPct": 17.54,
             "bolsonaroPct": 68.88
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 88,
+            "bolsonaro": 364,
+            "totalValid": 528,
+            "lulaPct": 16.67,
+            "bolsonaroPct": 68.94
+          },
+          "swing": {
+            "lulaPp": 0.87,
+            "bolsonaroPp": -0.06,
+            "marginPp": 0.93
+          },
           "coverage": {
             "counted": 3,
             "total": 3
@@ -370,6 +476,18 @@
           "coverage": {
             "counted": 19,
             "total": 19
+          },
+          "y2022": {
+            "lula": 2385,
+            "bolsonaro": 1291,
+            "totalValid": 4388,
+            "lulaPct": 54.35,
+            "bolsonaroPct": 29.42
+          },
+          "swing": {
+            "lulaPp": 1.36,
+            "bolsonaroPp": 2.62,
+            "marginPp": -1.26
           }
         },
         {
@@ -385,6 +503,18 @@
           "coverage": {
             "counted": 10,
             "total": 10
+          },
+          "y2022": {
+            "lula": 1100,
+            "bolsonaro": 535,
+            "totalValid": 1964,
+            "lulaPct": 56.01,
+            "bolsonaroPct": 27.24
+          },
+          "swing": {
+            "lulaPp": 0.99,
+            "bolsonaroPp": 3.81,
+            "marginPp": -2.82
           }
         }
       ],
@@ -401,8 +531,18 @@
             "lulaPct": 54.41,
             "bolsonaroPct": 32.63
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1663,
+            "bolsonaro": 964,
+            "totalValid": 3121,
+            "lulaPct": 53.28,
+            "bolsonaroPct": 30.89
+          },
+          "swing": {
+            "lulaPp": 1.13,
+            "bolsonaroPp": 1.74,
+            "marginPp": -0.61
+          },
           "coverage": {
             "counted": 13,
             "total": 13
@@ -420,8 +560,18 @@
             "lulaPct": 58.83,
             "bolsonaroPct": 30.65
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 722,
+            "bolsonaro": 327,
+            "totalValid": 1267,
+            "lulaPct": 56.99,
+            "bolsonaroPct": 25.81
+          },
+          "swing": {
+            "lulaPp": 1.84,
+            "bolsonaroPp": 4.84,
+            "marginPp": -3
+          },
           "coverage": {
             "counted": 6,
             "total": 6
@@ -439,8 +589,18 @@
             "lulaPct": 64.21,
             "bolsonaroPct": 24.84
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 701,
+            "bolsonaro": 232,
+            "totalValid": 1096,
+            "lulaPct": 63.96,
+            "bolsonaroPct": 21.17
+          },
+          "swing": {
+            "lulaPp": 0.25,
+            "bolsonaroPp": 3.67,
+            "marginPp": -3.42
+          },
           "coverage": {
             "counted": 4,
             "total": 4
@@ -458,8 +618,18 @@
             "lulaPct": 46.54,
             "bolsonaroPct": 39.23
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 293,
+            "bolsonaro": 221,
+            "totalValid": 632,
+            "lulaPct": 46.36,
+            "bolsonaroPct": 34.97
+          },
+          "swing": {
+            "lulaPp": 0.18,
+            "bolsonaroPp": 4.26,
+            "marginPp": -4.08
+          },
           "coverage": {
             "counted": 3,
             "total": 3
@@ -477,8 +647,18 @@
             "lulaPct": 58.51,
             "bolsonaroPct": 32.78
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 106,
+            "bolsonaro": 82,
+            "totalValid": 236,
+            "lulaPct": 44.92,
+            "bolsonaroPct": 34.75
+          },
+          "swing": {
+            "lulaPp": 13.59,
+            "bolsonaroPp": -1.97,
+            "marginPp": 15.56
+          },
           "coverage": {
             "counted": 3,
             "total": 3
@@ -531,6 +711,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 93,
+            "bolsonaro": 48,
+            "totalValid": 179,
+            "lulaPct": 51.96,
+            "bolsonaroPct": 26.82
+          },
+          "swing": {
+            "lulaPp": 12.13,
+            "bolsonaroPp": -4.17,
+            "marginPp": 16.3
           }
         },
         {
@@ -546,6 +738,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 48,
+            "bolsonaro": 19,
+            "totalValid": 76,
+            "lulaPct": 63.16,
+            "bolsonaroPct": 25
+          },
+          "swing": {
+            "lulaPp": 14.45,
+            "bolsonaroPp": -8.58,
+            "marginPp": 23.03
           }
         },
         {
@@ -561,6 +765,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 25,
+            "bolsonaro": 54,
+            "totalValid": 87,
+            "lulaPct": 28.74,
+            "bolsonaroPct": 62.07
+          },
+          "swing": {
+            "lulaPp": 23.43,
+            "bolsonaroPp": -24.03,
+            "marginPp": 47.46
           }
         }
       ]
@@ -610,6 +826,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 329,
+            "bolsonaro": 71,
+            "totalValid": 451,
+            "lulaPct": 72.95,
+            "bolsonaroPct": 15.74
+          },
+          "swing": {
+            "lulaPp": -2.47,
+            "bolsonaroPp": 3.54,
+            "marginPp": -6.01
           }
         }
       ]
@@ -659,6 +887,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 182,
+            "bolsonaro": 97,
+            "totalValid": 390,
+            "lulaPct": 46.67,
+            "bolsonaroPct": 24.87
+          },
+          "swing": {
+            "lulaPp": 7.93,
+            "bolsonaroPp": 1.57,
+            "marginPp": 6.36
           }
         }
       ]
@@ -708,6 +948,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 55,
+            "bolsonaro": 86,
+            "totalValid": 178,
+            "lulaPct": 30.9,
+            "bolsonaroPct": 48.31
+          },
+          "swing": {
+            "lulaPp": 9.67,
+            "bolsonaroPp": -5.28,
+            "marginPp": 14.95
           }
         }
       ]
@@ -757,6 +1009,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 130,
+            "bolsonaro": 53,
+            "totalValid": 207,
+            "lulaPct": 62.8,
+            "bolsonaroPct": 25.6
+          },
+          "swing": {
+            "lulaPp": -5.86,
+            "bolsonaroPp": 7.73,
+            "marginPp": -13.59
           }
         }
       ]
@@ -806,6 +1070,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 46,
+            "bolsonaro": 42,
+            "totalValid": 105,
+            "lulaPct": 43.81,
+            "bolsonaroPct": 40
+          },
+          "swing": {
+            "lulaPp": -3.41,
+            "bolsonaroPp": 11.52,
+            "marginPp": -14.93
           }
         }
       ]
@@ -855,6 +1131,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 27,
+            "bolsonaro": 24,
+            "totalValid": 57,
+            "lulaPct": 47.37,
+            "bolsonaroPct": 42.11
+          },
+          "swing": {
+            "lulaPp": 6.29,
+            "bolsonaroPp": -9.18,
+            "marginPp": 15.47
           }
         }
       ]
@@ -904,6 +1192,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 20,
+            "bolsonaro": 35,
+            "totalValid": 63,
+            "lulaPct": 31.75,
+            "bolsonaroPct": 55.56
+          },
+          "swing": {
+            "lulaPp": 10.19,
+            "bolsonaroPp": -2.33,
+            "marginPp": 12.52
           }
         }
       ]
@@ -953,6 +1253,18 @@
           "coverage": {
             "counted": 69,
             "total": 69
+          },
+          "y2022": {
+            "lula": 2982,
+            "bolsonaro": 9046,
+            "totalValid": 12943,
+            "lulaPct": 23.04,
+            "bolsonaroPct": 69.89
+          },
+          "swing": {
+            "lulaPp": 1.31,
+            "bolsonaroPp": -0.12,
+            "marginPp": 1.43
           }
         },
         {
@@ -968,6 +1280,18 @@
           "coverage": {
             "counted": 51,
             "total": 51
+          },
+          "y2022": {
+            "lula": 2548,
+            "bolsonaro": 11682,
+            "totalValid": 15732,
+            "lulaPct": 16.2,
+            "bolsonaroPct": 74.26
+          },
+          "swing": {
+            "lulaPp": 2.61,
+            "bolsonaroPp": -0.08,
+            "marginPp": 2.69
           }
         },
         {
@@ -983,6 +1307,18 @@
           "coverage": {
             "counted": 53,
             "total": 53
+          },
+          "y2022": {
+            "lula": 4716,
+            "bolsonaro": 5088,
+            "totalValid": 10997,
+            "lulaPct": 42.88,
+            "bolsonaroPct": 46.27
+          },
+          "swing": {
+            "lulaPp": 3.32,
+            "bolsonaroPp": 1.09,
+            "marginPp": 2.23
           }
         },
         {
@@ -998,7 +1334,9 @@
           "coverage": {
             "counted": 34,
             "total": 34
-          }
+          },
+          "y2022": null,
+          "swing": null
         },
         {
           "code": "39080",
@@ -1013,6 +1351,18 @@
           "coverage": {
             "counted": 22,
             "total": 22
+          },
+          "y2022": {
+            "lula": 973,
+            "bolsonaro": 2879,
+            "totalValid": 4320,
+            "lulaPct": 22.52,
+            "bolsonaroPct": 66.64
+          },
+          "swing": {
+            "lulaPp": 2.38,
+            "bolsonaroPp": 0.18,
+            "marginPp": 2.2
           }
         },
         {
@@ -1028,6 +1378,18 @@
           "coverage": {
             "counted": 31,
             "total": 31
+          },
+          "y2022": {
+            "lula": 2271,
+            "bolsonaro": 2089,
+            "totalValid": 5010,
+            "lulaPct": 45.33,
+            "bolsonaroPct": 41.7
+          },
+          "swing": {
+            "lulaPp": 6.07,
+            "bolsonaroPp": -2.22,
+            "marginPp": 8.29
           }
         },
         {
@@ -1043,6 +1405,18 @@
           "coverage": {
             "counted": 25,
             "total": 25
+          },
+          "y2022": {
+            "lula": 1793,
+            "bolsonaro": 1671,
+            "totalValid": 3938,
+            "lulaPct": 45.53,
+            "bolsonaroPct": 42.43
+          },
+          "swing": {
+            "lulaPp": 1.91,
+            "bolsonaroPp": 1.96,
+            "marginPp": -0.05
           }
         },
         {
@@ -1058,6 +1432,18 @@
           "coverage": {
             "counted": 23,
             "total": 23
+          },
+          "y2022": {
+            "lula": 1195,
+            "bolsonaro": 2282,
+            "totalValid": 4127,
+            "lulaPct": 28.96,
+            "bolsonaroPct": 55.29
+          },
+          "swing": {
+            "lulaPp": 0.32,
+            "bolsonaroPp": 4.56,
+            "marginPp": -4.24
           }
         },
         {
@@ -1073,6 +1459,18 @@
           "coverage": {
             "counted": 20,
             "total": 20
+          },
+          "y2022": {
+            "lula": 2174,
+            "bolsonaro": 1344,
+            "totalValid": 4030,
+            "lulaPct": 53.95,
+            "bolsonaroPct": 33.35
+          },
+          "swing": {
+            "lulaPp": 3.59,
+            "bolsonaroPp": 1.63,
+            "marginPp": 1.96
           }
         },
         {
@@ -1088,6 +1486,18 @@
           "coverage": {
             "counted": 18,
             "total": 18
+          },
+          "y2022": {
+            "lula": 1446,
+            "bolsonaro": 947,
+            "totalValid": 2811,
+            "lulaPct": 51.44,
+            "bolsonaroPct": 33.69
+          },
+          "swing": {
+            "lulaPp": 3.68,
+            "bolsonaroPp": 1.68,
+            "marginPp": 2
           }
         },
         {
@@ -1103,6 +1513,18 @@
           "coverage": {
             "counted": 12,
             "total": 12
+          },
+          "y2022": {
+            "lula": 443,
+            "bolsonaro": 820,
+            "totalValid": 1431,
+            "lulaPct": 30.96,
+            "bolsonaroPct": 57.3
+          },
+          "swing": {
+            "lulaPp": -1.57,
+            "bolsonaroPp": 6.39,
+            "marginPp": -7.96
           }
         }
       ],
@@ -1119,8 +1541,18 @@
             "lulaPct": 25.88,
             "bolsonaroPct": 68.31
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 2250,
+            "bolsonaro": 6320,
+            "totalValid": 9253,
+            "lulaPct": 24.32,
+            "bolsonaroPct": 68.3
+          },
+          "swing": {
+            "lulaPp": 1.56,
+            "bolsonaroPp": 0.01,
+            "marginPp": 1.55
+          },
           "coverage": {
             "counted": 45,
             "total": 45
@@ -1138,8 +1570,18 @@
             "lulaPct": 21.23,
             "bolsonaroPct": 72.34
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 732,
+            "bolsonaro": 2726,
+            "totalValid": 3690,
+            "lulaPct": 19.84,
+            "bolsonaroPct": 73.88
+          },
+          "swing": {
+            "lulaPp": 1.39,
+            "bolsonaroPp": -1.54,
+            "marginPp": 2.93
+          },
           "coverage": {
             "counted": 20,
             "total": 20
@@ -1157,8 +1599,18 @@
             "lulaPct": 53.19,
             "bolsonaroPct": 39.11
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1671,
+            "bolsonaro": 1309,
+            "totalValid": 3422,
+            "lulaPct": 48.83,
+            "bolsonaroPct": 38.25
+          },
+          "swing": {
+            "lulaPp": 4.36,
+            "bolsonaroPp": 0.86,
+            "marginPp": 3.5
+          },
           "coverage": {
             "counted": 21,
             "total": 21
@@ -1176,8 +1628,18 @@
             "lulaPct": 30.76,
             "bolsonaroPct": 57.3
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1195,
+            "bolsonaro": 2282,
+            "totalValid": 4127,
+            "lulaPct": 28.96,
+            "bolsonaroPct": 55.29
+          },
+          "swing": {
+            "lulaPp": 1.8,
+            "bolsonaroPp": 2.01,
+            "marginPp": -0.21
+          },
           "coverage": {
             "counted": 18,
             "total": 18
@@ -1214,8 +1676,18 @@
             "lulaPct": 23.9,
             "bolsonaroPct": 65.91
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 122,
+            "bolsonaro": 362,
+            "totalValid": 516,
+            "lulaPct": 23.64,
+            "bolsonaroPct": 70.16
+          },
+          "swing": {
+            "lulaPp": 0.26,
+            "bolsonaroPp": -4.25,
+            "marginPp": 4.51
+          },
           "coverage": {
             "counted": 4,
             "total": 4
@@ -1287,6 +1759,18 @@
           "coverage": {
             "counted": 103,
             "total": 103
+          },
+          "y2022": {
+            "lula": 12153,
+            "bolsonaro": 6068,
+            "totalValid": 19770,
+            "lulaPct": 61.47,
+            "bolsonaroPct": 30.69
+          },
+          "swing": {
+            "lulaPp": -7.96,
+            "bolsonaroPp": 7.07,
+            "marginPp": -15.03
           }
         },
         {
@@ -1302,6 +1786,18 @@
           "coverage": {
             "counted": 62,
             "total": 62
+          },
+          "y2022": {
+            "lula": 8813,
+            "bolsonaro": 4420,
+            "totalValid": 14618,
+            "lulaPct": 60.29,
+            "bolsonaroPct": 30.24
+          },
+          "swing": {
+            "lulaPp": -7.8,
+            "bolsonaroPp": 8.08,
+            "marginPp": -15.88
           }
         },
         {
@@ -1317,6 +1813,18 @@
           "coverage": {
             "counted": 11,
             "total": 11
+          },
+          "y2022": {
+            "lula": 873,
+            "bolsonaro": 730,
+            "totalValid": 1777,
+            "lulaPct": 49.13,
+            "bolsonaroPct": 41.08
+          },
+          "swing": {
+            "lulaPp": -8.04,
+            "bolsonaroPp": 7.8,
+            "marginPp": -15.84
           }
         }
       ],
@@ -1333,8 +1841,18 @@
             "lulaPct": 52.84,
             "bolsonaroPct": 37.96
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 8813,
+            "bolsonaro": 4420,
+            "totalValid": 14618,
+            "lulaPct": 60.29,
+            "bolsonaroPct": 30.24
+          },
+          "swing": {
+            "lulaPp": -7.45,
+            "bolsonaroPp": 7.72,
+            "marginPp": -15.17
+          },
           "coverage": {
             "counted": 57,
             "total": 58
@@ -1371,8 +1889,18 @@
             "lulaPct": 46.75,
             "bolsonaroPct": 43.97
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 12153,
+            "bolsonaro": 6068,
+            "totalValid": 19770,
+            "lulaPct": 61.47,
+            "bolsonaroPct": 30.69
+          },
+          "swing": {
+            "lulaPp": -14.72,
+            "bolsonaroPp": 13.28,
+            "marginPp": -28
+          },
           "coverage": {
             "counted": 54,
             "total": 54
@@ -1444,6 +1972,18 @@
           "coverage": {
             "counted": 28,
             "total": 28
+          },
+          "y2022": {
+            "lula": 4663,
+            "bolsonaro": 3425,
+            "totalValid": 9222,
+            "lulaPct": 50.56,
+            "bolsonaroPct": 37.14
+          },
+          "swing": {
+            "lulaPp": 3.14,
+            "bolsonaroPp": 1.02,
+            "marginPp": 2.12
           }
         },
         {
@@ -1459,6 +1999,18 @@
           "coverage": {
             "counted": 15,
             "total": 15
+          },
+          "y2022": {
+            "lula": 3475,
+            "bolsonaro": 1404,
+            "totalValid": 5722,
+            "lulaPct": 60.73,
+            "bolsonaroPct": 24.54
+          },
+          "swing": {
+            "lulaPp": 4.19,
+            "bolsonaroPp": 0.18,
+            "marginPp": 4.01
           }
         },
         {
@@ -1474,6 +2026,18 @@
           "coverage": {
             "counted": 16,
             "total": 16
+          },
+          "y2022": {
+            "lula": 3119,
+            "bolsonaro": 1712,
+            "totalValid": 5641,
+            "lulaPct": 55.29,
+            "bolsonaroPct": 30.35
+          },
+          "swing": {
+            "lulaPp": 1.11,
+            "bolsonaroPp": 2.45,
+            "marginPp": -1.34
           }
         },
         {
@@ -1489,6 +2053,18 @@
           "coverage": {
             "counted": 4,
             "total": 4
+          },
+          "y2022": {
+            "lula": 564,
+            "bolsonaro": 318,
+            "totalValid": 1109,
+            "lulaPct": 50.86,
+            "bolsonaroPct": 28.67
+          },
+          "swing": {
+            "lulaPp": 7.48,
+            "bolsonaroPp": 0.35,
+            "marginPp": 7.13
           }
         }
       ],
@@ -1505,8 +2081,18 @@
             "lulaPct": 65.13,
             "bolsonaroPct": 24.48
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 3018,
+            "bolsonaro": 1244,
+            "totalValid": 4995,
+            "lulaPct": 60.42,
+            "bolsonaroPct": 24.9
+          },
+          "swing": {
+            "lulaPp": 4.71,
+            "bolsonaroPp": -0.42,
+            "marginPp": 5.13
+          },
           "coverage": {
             "counted": 13,
             "total": 13
@@ -1524,8 +2110,18 @@
             "lulaPct": 60.43,
             "bolsonaroPct": 29.22
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 2707,
+            "bolsonaro": 1304,
+            "totalValid": 4693,
+            "lulaPct": 57.68,
+            "bolsonaroPct": 27.79
+          },
+          "swing": {
+            "lulaPp": 2.75,
+            "bolsonaroPp": 1.43,
+            "marginPp": 1.32
+          },
           "coverage": {
             "counted": 12,
             "total": 12
@@ -1543,8 +2139,18 @@
             "lulaPct": 43.39,
             "bolsonaroPct": 44.28
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 412,
+            "bolsonaro": 408,
+            "totalValid": 948,
+            "lulaPct": 43.46,
+            "bolsonaroPct": 43.04
+          },
+          "swing": {
+            "lulaPp": -0.07,
+            "bolsonaroPp": 1.24,
+            "marginPp": -1.31
+          },
           "coverage": {
             "counted": 4,
             "total": 4
@@ -1562,8 +2168,18 @@
             "lulaPct": 63.77,
             "bolsonaroPct": 26.05
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 457,
+            "bolsonaro": 160,
+            "totalValid": 727,
+            "lulaPct": 62.86,
+            "bolsonaroPct": 22.01
+          },
+          "swing": {
+            "lulaPp": 0.91,
+            "bolsonaroPp": 4.04,
+            "marginPp": -3.13
+          },
           "coverage": {
             "counted": 2,
             "total": 2
@@ -1616,6 +2232,18 @@
           "coverage": {
             "counted": 20,
             "total": 20
+          },
+          "y2022": {
+            "lula": 5713,
+            "bolsonaro": 809,
+            "totalValid": 7179,
+            "lulaPct": 79.58,
+            "bolsonaroPct": 11.27
+          },
+          "swing": {
+            "lulaPp": 1.53,
+            "bolsonaroPp": 0.27,
+            "marginPp": 1.26
           }
         },
         {
@@ -1631,6 +2259,18 @@
           "coverage": {
             "counted": 21,
             "total": 21
+          },
+          "y2022": {
+            "lula": 3143,
+            "bolsonaro": 1120,
+            "totalValid": 4904,
+            "lulaPct": 64.09,
+            "bolsonaroPct": 22.84
+          },
+          "swing": {
+            "lulaPp": 2.46,
+            "bolsonaroPp": 1.18,
+            "marginPp": 1.28
           }
         },
         {
@@ -1646,6 +2286,18 @@
           "coverage": {
             "counted": 21,
             "total": 21
+          },
+          "y2022": {
+            "lula": 3019,
+            "bolsonaro": 1241,
+            "totalValid": 5018,
+            "lulaPct": 60.16,
+            "bolsonaroPct": 24.73
+          },
+          "swing": {
+            "lulaPp": 3.46,
+            "bolsonaroPp": -0.39,
+            "marginPp": 3.85
           }
         }
       ],
@@ -1662,8 +2314,18 @@
             "lulaPct": 83.1,
             "bolsonaroPct": 9.71
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 4502,
+            "bolsonaro": 518,
+            "totalValid": 5497,
+            "lulaPct": 81.9,
+            "bolsonaroPct": 9.42
+          },
+          "swing": {
+            "lulaPp": 1.2,
+            "bolsonaroPp": 0.29,
+            "marginPp": 0.91
+          },
           "coverage": {
             "counted": 14,
             "total": 14
@@ -1681,8 +2343,18 @@
             "lulaPct": 62.51,
             "bolsonaroPct": 27.04
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1766,
+            "bolsonaro": 795,
+            "totalValid": 2974,
+            "lulaPct": 59.38,
+            "bolsonaroPct": 26.73
+          },
+          "swing": {
+            "lulaPp": 3.13,
+            "bolsonaroPp": 0.31,
+            "marginPp": 2.82
+          },
           "coverage": {
             "counted": 13,
             "total": 13
@@ -1700,8 +2372,18 @@
             "lulaPct": 71.49,
             "bolsonaroPct": 20.18
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1377,
+            "bolsonaro": 325,
+            "totalValid": 1930,
+            "lulaPct": 71.35,
+            "bolsonaroPct": 16.84
+          },
+          "swing": {
+            "lulaPp": 0.14,
+            "bolsonaroPp": 3.34,
+            "marginPp": -3.2
+          },
           "coverage": {
             "counted": 8,
             "total": 8
@@ -1719,8 +2401,18 @@
             "lulaPct": 74.75,
             "bolsonaroPct": 17.33
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1211,
+            "bolsonaro": 291,
+            "totalValid": 1682,
+            "lulaPct": 72,
+            "bolsonaroPct": 17.3
+          },
+          "swing": {
+            "lulaPp": 2.75,
+            "bolsonaroPp": 0.03,
+            "marginPp": 2.72
+          },
           "coverage": {
             "counted": 6,
             "total": 6
@@ -1773,6 +2465,18 @@
           "coverage": {
             "counted": 48,
             "total": 48
+          },
+          "y2022": {
+            "lula": 8165,
+            "bolsonaro": 5170,
+            "totalValid": 14796,
+            "lulaPct": 55.18,
+            "bolsonaroPct": 34.94
+          },
+          "swing": {
+            "lulaPp": 1.15,
+            "bolsonaroPp": 1.18,
+            "marginPp": -0.03
           }
         },
         {
@@ -1788,7 +2492,9 @@
           "coverage": {
             "counted": 6,
             "total": 6
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ],
       "locations": [
@@ -1877,6 +2583,18 @@
           "coverage": {
             "counted": 37,
             "total": 37
+          },
+          "y2022": {
+            "lula": 3124,
+            "bolsonaro": 2483,
+            "totalValid": 6226,
+            "lulaPct": 50.18,
+            "bolsonaroPct": 39.88
+          },
+          "swing": {
+            "lulaPp": -0.02,
+            "bolsonaroPp": 0.72,
+            "marginPp": -0.74
           }
         },
         {
@@ -1892,6 +2610,18 @@
           "coverage": {
             "counted": 22,
             "total": 22
+          },
+          "y2022": {
+            "lula": 2294,
+            "bolsonaro": 1401,
+            "totalValid": 4189,
+            "lulaPct": 54.76,
+            "bolsonaroPct": 33.44
+          },
+          "swing": {
+            "lulaPp": 2.89,
+            "bolsonaroPp": -0.09,
+            "marginPp": 2.98
           }
         }
       ]
@@ -1941,6 +2671,18 @@
           "coverage": {
             "counted": 19,
             "total": 19
+          },
+          "y2022": {
+            "lula": 2683,
+            "bolsonaro": 2243,
+            "totalValid": 5690,
+            "lulaPct": 47.15,
+            "bolsonaroPct": 39.42
+          },
+          "swing": {
+            "lulaPp": 2.87,
+            "bolsonaroPp": 0.29,
+            "marginPp": 2.58
           }
         },
         {
@@ -1956,6 +2698,18 @@
           "coverage": {
             "counted": 15,
             "total": 15
+          },
+          "y2022": {
+            "lula": 1981,
+            "bolsonaro": 1930,
+            "totalValid": 4493,
+            "lulaPct": 44.09,
+            "bolsonaroPct": 42.96
+          },
+          "swing": {
+            "lulaPp": 1.3,
+            "bolsonaroPp": 1.01,
+            "marginPp": 0.29
           }
         }
       ]
@@ -2005,6 +2759,18 @@
           "coverage": {
             "counted": 34,
             "total": 34
+          },
+          "y2022": {
+            "lula": 7809,
+            "bolsonaro": 1384,
+            "totalValid": 10063,
+            "lulaPct": 77.6,
+            "bolsonaroPct": 13.75
+          },
+          "swing": {
+            "lulaPp": 0.28,
+            "bolsonaroPp": 2.24,
+            "marginPp": -1.96
           }
         },
         {
@@ -2020,7 +2786,9 @@
           "coverage": {
             "counted": 4,
             "total": 4
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -2069,6 +2837,18 @@
           "coverage": {
             "counted": 30,
             "total": 30
+          },
+          "y2022": {
+            "lula": 2842,
+            "bolsonaro": 2004,
+            "totalValid": 5437,
+            "lulaPct": 52.27,
+            "bolsonaroPct": 36.86
+          },
+          "swing": {
+            "lulaPp": 2.22,
+            "bolsonaroPp": -1.11,
+            "marginPp": 3.33
           }
         },
         {
@@ -2084,6 +2864,18 @@
           "coverage": {
             "counted": 22,
             "total": 22
+          },
+          "y2022": {
+            "lula": 3070,
+            "bolsonaro": 901,
+            "totalValid": 4373,
+            "lulaPct": 70.2,
+            "bolsonaroPct": 20.6
+          },
+          "swing": {
+            "lulaPp": 3.01,
+            "bolsonaroPp": -0.87,
+            "marginPp": 3.88
           }
         }
       ]
@@ -2133,6 +2925,18 @@
           "coverage": {
             "counted": 28,
             "total": 28
+          },
+          "y2022": {
+            "lula": 5951,
+            "bolsonaro": 1038,
+            "totalValid": 7594,
+            "lulaPct": 78.36,
+            "bolsonaroPct": 13.67
+          },
+          "swing": {
+            "lulaPp": -5.76,
+            "bolsonaroPp": 5.12,
+            "marginPp": -10.88
           }
         }
       ]
@@ -2182,6 +2986,18 @@
           "coverage": {
             "counted": 15,
             "total": 15
+          },
+          "y2022": {
+            "lula": 4406,
+            "bolsonaro": 1910,
+            "totalValid": 6812,
+            "lulaPct": 64.68,
+            "bolsonaroPct": 28.04
+          },
+          "swing": {
+            "lulaPp": 1.38,
+            "bolsonaroPp": -0.75,
+            "marginPp": 2.13
           }
         },
         {
@@ -2197,6 +3013,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 172,
+            "bolsonaro": 138,
+            "totalValid": 338,
+            "lulaPct": 50.89,
+            "bolsonaroPct": 40.83
+          },
+          "swing": {
+            "lulaPp": -1.3,
+            "bolsonaroPp": 2.49,
+            "marginPp": -3.79
           }
         },
         {
@@ -2212,6 +3040,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 52,
+            "bolsonaro": 77,
+            "totalValid": 139,
+            "lulaPct": 37.41,
+            "bolsonaroPct": 55.4
+          },
+          "swing": {
+            "lulaPp": 6.34,
+            "bolsonaroPp": -6.29,
+            "marginPp": 12.63
           }
         },
         {
@@ -2227,6 +3067,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 4,
+            "bolsonaro": 0,
+            "totalValid": 4,
+            "lulaPct": 100,
+            "bolsonaroPct": 0
+          },
+          "swing": {
+            "lulaPp": -68.18,
+            "bolsonaroPp": 68.18,
+            "marginPp": -136.36
           }
         },
         {
@@ -2242,7 +3094,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -2291,6 +3145,18 @@
           "coverage": {
             "counted": 17,
             "total": 17
+          },
+          "y2022": {
+            "lula": 4094,
+            "bolsonaro": 961,
+            "totalValid": 5770,
+            "lulaPct": 70.95,
+            "bolsonaroPct": 16.66
+          },
+          "swing": {
+            "lulaPp": 2.75,
+            "bolsonaroPp": 0.57,
+            "marginPp": 2.18
           }
         }
       ]
@@ -2340,6 +3206,18 @@
           "coverage": {
             "counted": 7,
             "total": 7
+          },
+          "y2022": {
+            "lula": 240,
+            "bolsonaro": 2561,
+            "totalValid": 2875,
+            "lulaPct": 8.35,
+            "bolsonaroPct": 89.08
+          },
+          "swing": {
+            "lulaPp": -0.28,
+            "bolsonaroPp": 0.37,
+            "marginPp": -0.65
           }
         },
         {
@@ -2355,6 +3233,18 @@
           "coverage": {
             "counted": 4,
             "total": 4
+          },
+          "y2022": {
+            "lula": 256,
+            "bolsonaro": 772,
+            "totalValid": 1143,
+            "lulaPct": 22.4,
+            "bolsonaroPct": 67.54
+          },
+          "swing": {
+            "lulaPp": 1.16,
+            "bolsonaroPp": 2.21,
+            "marginPp": -1.05
           }
         },
         {
@@ -2370,6 +3260,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 29,
+            "bolsonaro": 535,
+            "totalValid": 575,
+            "lulaPct": 5.04,
+            "bolsonaroPct": 93.04
+          },
+          "swing": {
+            "lulaPp": -1.42,
+            "bolsonaroPp": 1.44,
+            "marginPp": -2.86
           }
         },
         {
@@ -2385,6 +3287,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 92,
+            "bolsonaro": 230,
+            "totalValid": 350,
+            "lulaPct": 26.29,
+            "bolsonaroPct": 65.71
+          },
+          "swing": {
+            "lulaPp": -6.29,
+            "bolsonaroPp": 8.53,
+            "marginPp": -14.82
           }
         },
         {
@@ -2400,6 +3314,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 15,
+            "bolsonaro": 111,
+            "totalValid": 131,
+            "lulaPct": 11.45,
+            "bolsonaroPct": 84.73
+          },
+          "swing": {
+            "lulaPp": -1.52,
+            "bolsonaroPp": 1.79,
+            "marginPp": -3.31
           }
         }
       ]
@@ -2449,6 +3375,18 @@
           "coverage": {
             "counted": 14,
             "total": 14
+          },
+          "y2022": {
+            "lula": 1984,
+            "bolsonaro": 1271,
+            "totalValid": 3646,
+            "lulaPct": 54.42,
+            "bolsonaroPct": 34.86
+          },
+          "swing": {
+            "lulaPp": -3.85,
+            "bolsonaroPp": 4.52,
+            "marginPp": -8.37
           }
         }
       ],
@@ -2484,8 +3422,18 @@
             "lulaPct": 47.55,
             "bolsonaroPct": 37.99
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 253,
+            "bolsonaro": 174,
+            "totalValid": 517,
+            "lulaPct": 48.94,
+            "bolsonaroPct": 33.66
+          },
+          "swing": {
+            "lulaPp": -1.39,
+            "bolsonaroPp": 4.33,
+            "marginPp": -5.72
+          },
           "coverage": {
             "counted": 2,
             "total": 2
@@ -2538,6 +3486,18 @@
           "coverage": {
             "counted": 13,
             "total": 13
+          },
+          "y2022": {
+            "lula": 1601,
+            "bolsonaro": 947,
+            "totalValid": 2850,
+            "lulaPct": 56.18,
+            "bolsonaroPct": 33.23
+          },
+          "swing": {
+            "lulaPp": 9.18,
+            "bolsonaroPp": -3.92,
+            "marginPp": 13.1
           }
         }
       ],
@@ -2554,8 +3514,18 @@
             "lulaPct": 56.43,
             "bolsonaroPct": 37.76
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 986,
+            "bolsonaro": 652,
+            "totalValid": 1887,
+            "lulaPct": 52.25,
+            "bolsonaroPct": 34.55
+          },
+          "swing": {
+            "lulaPp": 4.18,
+            "bolsonaroPp": 3.21,
+            "marginPp": 0.97
+          },
           "coverage": {
             "counted": 8,
             "total": 8
@@ -2573,8 +3543,18 @@
             "lulaPct": 82.93,
             "bolsonaroPct": 11.41
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 615,
+            "bolsonaro": 295,
+            "totalValid": 963,
+            "lulaPct": 63.86,
+            "bolsonaroPct": 30.63
+          },
+          "swing": {
+            "lulaPp": 19.07,
+            "bolsonaroPp": -19.22,
+            "marginPp": 38.29
+          },
           "coverage": {
             "counted": 5,
             "total": 5
@@ -2627,6 +3607,18 @@
           "coverage": {
             "counted": 7,
             "total": 7
+          },
+          "y2022": {
+            "lula": 1632,
+            "bolsonaro": 421,
+            "totalValid": 2433,
+            "lulaPct": 67.08,
+            "bolsonaroPct": 17.3
+          },
+          "swing": {
+            "lulaPp": 2.61,
+            "bolsonaroPp": 2.58,
+            "marginPp": 0.03
           }
         }
       ],
@@ -2643,8 +3635,18 @@
             "lulaPct": 69.11,
             "bolsonaroPct": 20.02
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 1323,
+            "bolsonaro": 359,
+            "totalValid": 2003,
+            "lulaPct": 66.05,
+            "bolsonaroPct": 17.92
+          },
+          "swing": {
+            "lulaPp": 3.06,
+            "bolsonaroPp": 2.1,
+            "marginPp": 0.96
+          },
           "coverage": {
             "counted": 5,
             "total": 5
@@ -2662,8 +3664,18 @@
             "lulaPct": 71.68,
             "bolsonaroPct": 19.41
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 309,
+            "bolsonaro": 62,
+            "totalValid": 430,
+            "lulaPct": 71.86,
+            "bolsonaroPct": 14.42
+          },
+          "swing": {
+            "lulaPp": -0.18,
+            "bolsonaroPp": 4.99,
+            "marginPp": -5.17
+          },
           "coverage": {
             "counted": 2,
             "total": 2
@@ -2716,6 +3728,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 869,
+            "bolsonaro": 796,
+            "totalValid": 1937,
+            "lulaPct": 44.86,
+            "bolsonaroPct": 41.09
+          },
+          "swing": {
+            "lulaPp": 2.22,
+            "bolsonaroPp": -0.04,
+            "marginPp": 2.26
           }
         }
       ]
@@ -2765,6 +3789,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 191,
+            "bolsonaro": 1014,
+            "totalValid": 1270,
+            "lulaPct": 15.04,
+            "bolsonaroPct": 79.84
+          },
+          "swing": {
+            "lulaPp": -1.45,
+            "bolsonaroPp": 1.53,
+            "marginPp": -2.98
           }
         },
         {
@@ -2780,6 +3816,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 63,
+            "bolsonaro": 115,
+            "totalValid": 203,
+            "lulaPct": 31.03,
+            "bolsonaroPct": 56.65
+          },
+          "swing": {
+            "lulaPp": 12.72,
+            "bolsonaroPp": -9.33,
+            "marginPp": 22.05
           }
         },
         {
@@ -2795,6 +3843,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 93,
+            "bolsonaro": 148,
+            "totalValid": 258,
+            "lulaPct": 36.05,
+            "bolsonaroPct": 57.36
+          },
+          "swing": {
+            "lulaPp": -5.24,
+            "bolsonaroPp": 6.96,
+            "marginPp": -12.2
           }
         },
         {
@@ -2810,7 +3870,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         },
         {
           "code": "99236",
@@ -2825,7 +3887,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -2874,6 +3938,18 @@
           "coverage": {
             "counted": 4,
             "total": 4
+          },
+          "y2022": {
+            "lula": 687,
+            "bolsonaro": 434,
+            "totalValid": 1290,
+            "lulaPct": 53.26,
+            "bolsonaroPct": 33.64
+          },
+          "swing": {
+            "lulaPp": 1.06,
+            "bolsonaroPp": 3.18,
+            "marginPp": -2.12
           }
         },
         {
@@ -2889,6 +3965,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 116,
+            "bolsonaro": 245,
+            "totalValid": 412,
+            "lulaPct": 28.16,
+            "bolsonaroPct": 59.47
+          },
+          "swing": {
+            "lulaPp": 0.18,
+            "bolsonaroPp": 2.38,
+            "marginPp": -2.2
           }
         },
         {
@@ -2904,7 +3992,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         },
         {
           "code": "99244",
@@ -2919,7 +4009,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -2968,6 +4060,18 @@
           "coverage": {
             "counted": 6,
             "total": 6
+          },
+          "y2022": {
+            "lula": 614,
+            "bolsonaro": 595,
+            "totalValid": 1389,
+            "lulaPct": 44.2,
+            "bolsonaroPct": 42.84
+          },
+          "swing": {
+            "lulaPp": 1.33,
+            "bolsonaroPp": 3,
+            "marginPp": -1.67
           }
         }
       ]
@@ -3017,6 +4121,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 864,
+            "bolsonaro": 313,
+            "totalValid": 1386,
+            "lulaPct": 62.34,
+            "bolsonaroPct": 22.58
+          },
+          "swing": {
+            "lulaPp": 4.21,
+            "bolsonaroPp": -1.44,
+            "marginPp": 5.65
           }
         }
       ]
@@ -3066,6 +4182,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 584,
+            "bolsonaro": 666,
+            "totalValid": 1371,
+            "lulaPct": 42.6,
+            "bolsonaroPct": 48.58
+          },
+          "swing": {
+            "lulaPp": 2.05,
+            "bolsonaroPp": -0.79,
+            "marginPp": 2.84
           }
         },
         {
@@ -3081,7 +4209,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -3130,6 +4260,18 @@
           "coverage": {
             "counted": 4,
             "total": 4
+          },
+          "y2022": {
+            "lula": 936,
+            "bolsonaro": 147,
+            "totalValid": 1222,
+            "lulaPct": 76.6,
+            "bolsonaroPct": 12.03
+          },
+          "swing": {
+            "lulaPp": 2.4,
+            "bolsonaroPp": 1.18,
+            "marginPp": 1.22
           }
         }
       ]
@@ -3179,6 +4321,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 352,
+            "bolsonaro": 464,
+            "totalValid": 955,
+            "lulaPct": 36.86,
+            "bolsonaroPct": 48.59
+          },
+          "swing": {
+            "lulaPp": 0.93,
+            "bolsonaroPp": 0.04,
+            "marginPp": 0.89
           }
         }
       ],
@@ -3195,8 +4349,18 @@
             "lulaPct": 41.57,
             "bolsonaroPct": 46.49
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 233,
+            "bolsonaro": 264,
+            "totalValid": 590,
+            "lulaPct": 39.49,
+            "bolsonaroPct": 44.75
+          },
+          "swing": {
+            "lulaPp": 2.08,
+            "bolsonaroPp": 1.74,
+            "marginPp": 0.34
+          },
           "coverage": {
             "counted": 3,
             "total": 3
@@ -3214,8 +4378,18 @@
             "lulaPct": 32.1,
             "bolsonaroPct": 51.85
           },
-          "y2022": null,
-          "swing": null,
+          "y2022": {
+            "lula": 119,
+            "bolsonaro": 200,
+            "totalValid": 365,
+            "lulaPct": 32.6,
+            "bolsonaroPct": 54.79
+          },
+          "swing": {
+            "lulaPp": -0.5,
+            "bolsonaroPp": -2.94,
+            "marginPp": 2.44
+          },
           "coverage": {
             "counted": 2,
             "total": 2
@@ -3268,6 +4442,18 @@
           "coverage": {
             "counted": 3,
             "total": 3
+          },
+          "y2022": {
+            "lula": 549,
+            "bolsonaro": 161,
+            "totalValid": 830,
+            "lulaPct": 66.14,
+            "bolsonaroPct": 19.4
+          },
+          "swing": {
+            "lulaPp": 0.83,
+            "bolsonaroPp": 3,
+            "marginPp": -2.17
           }
         }
       ]
@@ -3317,6 +4503,18 @@
           "coverage": {
             "counted": 3,
             "total": 3
+          },
+          "y2022": {
+            "lula": 273,
+            "bolsonaro": 384,
+            "totalValid": 788,
+            "lulaPct": 34.64,
+            "bolsonaroPct": 48.73
+          },
+          "swing": {
+            "lulaPp": -0.67,
+            "bolsonaroPp": 3.32,
+            "marginPp": -3.99
           }
         },
         {
@@ -3332,7 +4530,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -3381,6 +4581,18 @@
           "coverage": {
             "counted": 3,
             "total": 3
+          },
+          "y2022": {
+            "lula": 592,
+            "bolsonaro": 52,
+            "totalValid": 698,
+            "lulaPct": 84.81,
+            "bolsonaroPct": 7.45
+          },
+          "swing": {
+            "lulaPp": 8.36,
+            "bolsonaroPp": -3.47,
+            "marginPp": 11.83
           }
         }
       ]
@@ -3430,7 +4642,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -3479,6 +4693,18 @@
           "coverage": {
             "counted": 5,
             "total": 5
+          },
+          "y2022": {
+            "lula": 274,
+            "bolsonaro": 320,
+            "totalValid": 696,
+            "lulaPct": 39.37,
+            "bolsonaroPct": 45.98
+          },
+          "swing": {
+            "lulaPp": -26.3,
+            "bolsonaroPp": 28.31,
+            "marginPp": -54.61
           }
         }
       ]
@@ -3528,6 +4754,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 365,
+            "bolsonaro": 242,
+            "totalValid": 691,
+            "lulaPct": 52.82,
+            "bolsonaroPct": 35.02
+          },
+          "swing": {
+            "lulaPp": -6.33,
+            "bolsonaroPp": 12.8,
+            "marginPp": -19.13
           }
         }
       ]
@@ -3577,6 +4815,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 214,
+            "bolsonaro": 349,
+            "totalValid": 678,
+            "lulaPct": 31.56,
+            "bolsonaroPct": 51.47
+          },
+          "swing": {
+            "lulaPp": 4.31,
+            "bolsonaroPp": -0.41,
+            "marginPp": 4.72
           }
         }
       ]
@@ -3626,6 +4876,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 390,
+            "bolsonaro": 127,
+            "totalValid": 625,
+            "lulaPct": 62.4,
+            "bolsonaroPct": 20.32
+          },
+          "swing": {
+            "lulaPp": 6.14,
+            "bolsonaroPp": 2.05,
+            "marginPp": 4.09
           }
         }
       ]
@@ -3675,6 +4937,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 491,
+            "bolsonaro": 72,
+            "totalValid": 607,
+            "lulaPct": 80.89,
+            "bolsonaroPct": 11.86
+          },
+          "swing": {
+            "lulaPp": -9.55,
+            "bolsonaroPp": 8.18,
+            "marginPp": -17.73
           }
         }
       ]
@@ -3724,6 +4998,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 338,
+            "bolsonaro": 107,
+            "totalValid": 552,
+            "lulaPct": 61.23,
+            "bolsonaroPct": 19.38
+          },
+          "swing": {
+            "lulaPp": 24.98,
+            "bolsonaroPp": -11.84,
+            "marginPp": 36.82
           }
         }
       ]
@@ -3773,6 +5059,18 @@
           "coverage": {
             "counted": 3,
             "total": 3
+          },
+          "y2022": {
+            "lula": 125,
+            "bolsonaro": 311,
+            "totalValid": 471,
+            "lulaPct": 26.54,
+            "bolsonaroPct": 66.03
+          },
+          "swing": {
+            "lulaPp": -4.13,
+            "bolsonaroPp": 1.75,
+            "marginPp": -5.88
           }
         }
       ]
@@ -3822,6 +5120,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 73,
+            "bolsonaro": 193,
+            "totalValid": 303,
+            "lulaPct": 24.09,
+            "bolsonaroPct": 63.7
+          },
+          "swing": {
+            "lulaPp": -0.15,
+            "bolsonaroPp": 2.71,
+            "marginPp": -2.86
           }
         },
         {
@@ -3837,6 +5147,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 82,
+            "bolsonaro": 49,
+            "totalValid": 155,
+            "lulaPct": 52.9,
+            "bolsonaroPct": 31.61
+          },
+          "swing": {
+            "lulaPp": 3.35,
+            "bolsonaroPp": 4.64,
+            "marginPp": -1.29
           }
         }
       ]
@@ -3886,6 +5208,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 164,
+            "bolsonaro": 205,
+            "totalValid": 437,
+            "lulaPct": 37.53,
+            "bolsonaroPct": 46.91
+          },
+          "swing": {
+            "lulaPp": 2.15,
+            "bolsonaroPp": -0.35,
+            "marginPp": 2.5
           }
         }
       ]
@@ -3935,6 +5269,18 @@
           "coverage": {
             "counted": 2,
             "total": 2
+          },
+          "y2022": {
+            "lula": 110,
+            "bolsonaro": 231,
+            "totalValid": 383,
+            "lulaPct": 28.72,
+            "bolsonaroPct": 60.31
+          },
+          "swing": {
+            "lulaPp": 10.91,
+            "bolsonaroPp": -8.18,
+            "marginPp": 19.09
           }
         }
       ]
@@ -3984,6 +5330,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 253,
+            "bolsonaro": 58,
+            "totalValid": 367,
+            "lulaPct": 68.94,
+            "bolsonaroPct": 15.8
+          },
+          "swing": {
+            "lulaPp": 1.34,
+            "bolsonaroPp": 1.83,
+            "marginPp": -0.49
           }
         }
       ]
@@ -4033,6 +5391,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 136,
+            "bolsonaro": 169,
+            "totalValid": 367,
+            "lulaPct": 37.06,
+            "bolsonaroPct": 46.05
+          },
+          "swing": {
+            "lulaPp": 9.7,
+            "bolsonaroPp": -3.08,
+            "marginPp": 12.78
           }
         }
       ]
@@ -4082,6 +5452,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 132,
+            "bolsonaro": 192,
+            "totalValid": 360,
+            "lulaPct": 36.67,
+            "bolsonaroPct": 53.33
+          },
+          "swing": {
+            "lulaPp": 4.51,
+            "bolsonaroPp": -4.87,
+            "marginPp": 9.38
           }
         }
       ]
@@ -4131,6 +5513,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 213,
+            "bolsonaro": 55,
+            "totalValid": 311,
+            "lulaPct": 68.49,
+            "bolsonaroPct": 17.68
+          },
+          "swing": {
+            "lulaPp": -3.6,
+            "bolsonaroPp": 5.37,
+            "marginPp": -8.97
           }
         }
       ]
@@ -4180,6 +5574,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 117,
+            "bolsonaro": 150,
+            "totalValid": 291,
+            "lulaPct": 40.21,
+            "bolsonaroPct": 51.55
+          },
+          "swing": {
+            "lulaPp": 1.38,
+            "bolsonaroPp": 1.25,
+            "marginPp": 0.13
           }
         }
       ]
@@ -4229,6 +5635,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 124,
+            "bolsonaro": 93,
+            "totalValid": 236,
+            "lulaPct": 52.54,
+            "bolsonaroPct": 39.41
+          },
+          "swing": {
+            "lulaPp": 3.14,
+            "bolsonaroPp": -1.15,
+            "marginPp": 4.29
           }
         }
       ]
@@ -4278,6 +5696,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 79,
+            "bolsonaro": 100,
+            "totalValid": 223,
+            "lulaPct": 35.43,
+            "bolsonaroPct": 44.84
+          },
+          "swing": {
+            "lulaPp": -0.11,
+            "bolsonaroPp": 4.24,
+            "marginPp": -4.35
           }
         }
       ]
@@ -4327,6 +5757,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 65,
+            "bolsonaro": 117,
+            "totalValid": 209,
+            "lulaPct": 31.1,
+            "bolsonaroPct": 55.98
+          },
+          "swing": {
+            "lulaPp": 3.47,
+            "bolsonaroPp": 0.4,
+            "marginPp": 3.07
           }
         }
       ]
@@ -4376,6 +5818,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 148,
+            "bolsonaro": 16,
+            "totalValid": 186,
+            "lulaPct": 79.57,
+            "bolsonaroPct": 8.6
+          },
+          "swing": {
+            "lulaPp": -4.83,
+            "bolsonaroPp": 1.4,
+            "marginPp": -6.23
           }
         }
       ]
@@ -4425,6 +5879,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 72,
+            "bolsonaro": 44,
+            "totalValid": 126,
+            "lulaPct": 57.14,
+            "bolsonaroPct": 34.92
+          },
+          "swing": {
+            "lulaPp": 13.73,
+            "bolsonaroPp": -11.3,
+            "marginPp": 25.03
           }
         }
       ]
@@ -4474,6 +5940,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 32,
+            "bolsonaro": 90,
+            "totalValid": 147,
+            "lulaPct": 21.77,
+            "bolsonaroPct": 61.22
+          },
+          "swing": {
+            "lulaPp": 6.2,
+            "bolsonaroPp": -4.44,
+            "marginPp": 10.64
           }
         }
       ]
@@ -4523,6 +6001,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 35,
+            "bolsonaro": 47,
+            "totalValid": 88,
+            "lulaPct": 39.77,
+            "bolsonaroPct": 53.41
+          },
+          "swing": {
+            "lulaPp": -10.96,
+            "bolsonaroPp": 4.22,
+            "marginPp": -15.18
           }
         }
       ]
@@ -4572,6 +6062,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 45,
+            "bolsonaro": 28,
+            "totalValid": 84,
+            "lulaPct": 53.57,
+            "bolsonaroPct": 33.33
+          },
+          "swing": {
+            "lulaPp": 6.92,
+            "bolsonaroPp": -2.47,
+            "marginPp": 9.39
           }
         }
       ]
@@ -4621,6 +6123,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 34,
+            "bolsonaro": 32,
+            "totalValid": 79,
+            "lulaPct": 43.04,
+            "bolsonaroPct": 40.51
+          },
+          "swing": {
+            "lulaPp": 4.79,
+            "bolsonaroPp": 10.21,
+            "marginPp": -5.42
           }
         }
       ]
@@ -4670,6 +6184,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 50,
+            "bolsonaro": 15,
+            "totalValid": 76,
+            "lulaPct": 65.79,
+            "bolsonaroPct": 19.74
+          },
+          "swing": {
+            "lulaPp": -3.55,
+            "bolsonaroPp": 5.77,
+            "marginPp": -9.32
           }
         }
       ]
@@ -4719,6 +6245,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 22,
+            "bolsonaro": 41,
+            "totalValid": 74,
+            "lulaPct": 29.73,
+            "bolsonaroPct": 55.41
+          },
+          "swing": {
+            "lulaPp": 0.14,
+            "bolsonaroPp": 6.93,
+            "marginPp": -6.79
           }
         }
       ]
@@ -4768,6 +6306,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 42,
+            "bolsonaro": 21,
+            "totalValid": 70,
+            "lulaPct": 60,
+            "bolsonaroPct": 30
+          },
+          "swing": {
+            "lulaPp": 11.88,
+            "bolsonaroPp": -11.25,
+            "marginPp": 23.13
           }
         }
       ]
@@ -4817,6 +6367,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 7,
+            "bolsonaro": 55,
+            "totalValid": 70,
+            "lulaPct": 10,
+            "bolsonaroPct": 78.57
+          },
+          "swing": {
+            "lulaPp": 3.21,
+            "bolsonaroPp": 2.56,
+            "marginPp": 0.65
           }
         }
       ]
@@ -4866,6 +6428,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 24,
+            "bolsonaro": 14,
+            "totalValid": 66,
+            "lulaPct": 36.36,
+            "bolsonaroPct": 21.21
+          },
+          "swing": {
+            "lulaPp": 23.98,
+            "bolsonaroPp": 1.2,
+            "marginPp": 22.78
           }
         }
       ]
@@ -4915,6 +6489,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 38,
+            "bolsonaro": 22,
+            "totalValid": 65,
+            "lulaPct": 58.46,
+            "bolsonaroPct": 33.85
+          },
+          "swing": {
+            "lulaPp": -2.75,
+            "bolsonaroPp": -5.28,
+            "marginPp": 2.53
           }
         }
       ]
@@ -4964,6 +6550,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 18,
+            "bolsonaro": 37,
+            "totalValid": 65,
+            "lulaPct": 27.69,
+            "bolsonaroPct": 56.92
+          },
+          "swing": {
+            "lulaPp": 7.09,
+            "bolsonaroPp": 1.78,
+            "marginPp": 5.31
           }
         }
       ]
@@ -5013,6 +6611,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 26,
+            "bolsonaro": 23,
+            "totalValid": 55,
+            "lulaPct": 47.27,
+            "bolsonaroPct": 41.82
+          },
+          "swing": {
+            "lulaPp": 17.29,
+            "bolsonaroPp": -11.44,
+            "marginPp": 28.73
           }
         }
       ]
@@ -5062,6 +6672,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 29,
+            "bolsonaro": 12,
+            "totalValid": 54,
+            "lulaPct": 53.7,
+            "bolsonaroPct": 22.22
+          },
+          "swing": {
+            "lulaPp": -3.7,
+            "bolsonaroPp": 13.26,
+            "marginPp": -16.96
           }
         }
       ]
@@ -5111,6 +6733,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 26,
+            "bolsonaro": 18,
+            "totalValid": 54,
+            "lulaPct": 48.15,
+            "bolsonaroPct": 33.33
+          },
+          "swing": {
+            "lulaPp": 14.5,
+            "bolsonaroPp": -6.82,
+            "marginPp": 21.32
           }
         }
       ]
@@ -5160,6 +6794,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 27,
+            "bolsonaro": 12,
+            "totalValid": 41,
+            "lulaPct": 65.85,
+            "bolsonaroPct": 29.27
+          },
+          "swing": {
+            "lulaPp": -17.85,
+            "bolsonaroPp": 22.73,
+            "marginPp": -40.58
           }
         },
         {
@@ -5175,6 +6821,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 9,
+            "bolsonaro": 2,
+            "totalValid": 12,
+            "lulaPct": 75,
+            "bolsonaroPct": 16.67
+          },
+          "swing": {
+            "lulaPp": -29.55,
+            "bolsonaroPp": -7.58,
+            "marginPp": -21.97
           }
         }
       ]
@@ -5224,6 +6882,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 34,
+            "bolsonaro": 8,
+            "totalValid": 53,
+            "lulaPct": 64.15,
+            "bolsonaroPct": 15.09
+          },
+          "swing": {
+            "lulaPp": 7.28,
+            "bolsonaroPp": -0.8,
+            "marginPp": 8.08
           }
         }
       ]
@@ -5273,6 +6943,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 25,
+            "bolsonaro": 23,
+            "totalValid": 51,
+            "lulaPct": 49.02,
+            "bolsonaroPct": 45.1
+          },
+          "swing": {
+            "lulaPp": 7.5,
+            "bolsonaroPp": -8.14,
+            "marginPp": 15.64
           }
         }
       ]
@@ -5322,6 +7004,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 16,
+            "bolsonaro": 30,
+            "totalValid": 50,
+            "lulaPct": 32,
+            "bolsonaroPct": 60
+          },
+          "swing": {
+            "lulaPp": -6.19,
+            "bolsonaroPp": 1.29,
+            "marginPp": -7.48
           }
         }
       ]
@@ -5371,6 +7065,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 30,
+            "bolsonaro": 8,
+            "totalValid": 49,
+            "lulaPct": 61.22,
+            "bolsonaroPct": 16.33
+          },
+          "swing": {
+            "lulaPp": 1.28,
+            "bolsonaroPp": 10.75,
+            "marginPp": -9.47
           }
         }
       ]
@@ -5420,6 +7126,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 21,
+            "bolsonaro": 18,
+            "totalValid": 46,
+            "lulaPct": 45.65,
+            "bolsonaroPct": 39.13
+          },
+          "swing": {
+            "lulaPp": 8.9,
+            "bolsonaroPp": -9.58,
+            "marginPp": 18.48
           }
         }
       ]
@@ -5469,6 +7187,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 25,
+            "bolsonaro": 14,
+            "totalValid": 46,
+            "lulaPct": 54.35,
+            "bolsonaroPct": 30.43
+          },
+          "swing": {
+            "lulaPp": 6.07,
+            "bolsonaroPp": 4.99,
+            "marginPp": 1.08
           }
         }
       ]
@@ -5518,6 +7248,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 23,
+            "bolsonaro": 21,
+            "totalValid": 44,
+            "lulaPct": 52.27,
+            "bolsonaroPct": 47.73
+          },
+          "swing": {
+            "lulaPp": -6.32,
+            "bolsonaroPp": -1.78,
+            "marginPp": -4.54
           }
         }
       ]
@@ -5567,6 +7309,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 9,
+            "bolsonaro": 27,
+            "totalValid": 43,
+            "lulaPct": 20.93,
+            "bolsonaroPct": 62.79
+          },
+          "swing": {
+            "lulaPp": 53.04,
+            "bolsonaroPp": -46.35,
+            "marginPp": 99.39
           }
         }
       ]
@@ -5616,6 +7370,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 11,
+            "bolsonaro": 25,
+            "totalValid": 41,
+            "lulaPct": 26.83,
+            "bolsonaroPct": 60.98
+          },
+          "swing": {
+            "lulaPp": 6.5,
+            "bolsonaroPp": -5.42,
+            "marginPp": 11.92
           }
         }
       ]
@@ -5665,6 +7431,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 4,
+            "bolsonaro": 33,
+            "totalValid": 39,
+            "lulaPct": 10.26,
+            "bolsonaroPct": 84.62
+          },
+          "swing": {
+            "lulaPp": 35.89,
+            "bolsonaroPp": -46.16,
+            "marginPp": 82.05
           }
         }
       ]
@@ -5714,6 +7492,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 10,
+            "bolsonaro": 22,
+            "totalValid": 38,
+            "lulaPct": 26.32,
+            "bolsonaroPct": 57.89
+          },
+          "swing": {
+            "lulaPp": 9.85,
+            "bolsonaroPp": -0.44,
+            "marginPp": 10.29
           }
         }
       ]
@@ -5763,6 +7553,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 17,
+            "bolsonaro": 16,
+            "totalValid": 34,
+            "lulaPct": 50,
+            "bolsonaroPct": 47.06
+          },
+          "swing": {
+            "lulaPp": -28.95,
+            "bolsonaroPp": 5.57,
+            "marginPp": -34.52
           }
         }
       ]
@@ -5812,6 +7614,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 22,
+            "bolsonaro": 6,
+            "totalValid": 33,
+            "lulaPct": 66.67,
+            "bolsonaroPct": 18.18
+          },
+          "swing": {
+            "lulaPp": 5.67,
+            "bolsonaroPp": -1.16,
+            "marginPp": 6.83
           }
         }
       ]
@@ -5861,6 +7675,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 28,
+            "bolsonaro": 1,
+            "totalValid": 31,
+            "lulaPct": 90.32,
+            "bolsonaroPct": 3.23
+          },
+          "swing": {
+            "lulaPp": 4.42,
+            "bolsonaroPp": -0.6,
+            "marginPp": 5.02
           }
         }
       ]
@@ -5910,6 +7736,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 16,
+            "bolsonaro": 7,
+            "totalValid": 28,
+            "lulaPct": 57.14,
+            "bolsonaroPct": 25
+          },
+          "swing": {
+            "lulaPp": 24.11,
+            "bolsonaroPp": -6.25,
+            "marginPp": 30.36
           }
         },
         {
@@ -5925,7 +7763,9 @@
           "coverage": {
             "counted": 1,
             "total": 1
-          }
+          },
+          "y2022": null,
+          "swing": null
         }
       ]
     },
@@ -5974,6 +7814,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 13,
+            "bolsonaro": 7,
+            "totalValid": 25,
+            "lulaPct": 52,
+            "bolsonaroPct": 28
+          },
+          "swing": {
+            "lulaPp": -9.89,
+            "bolsonaroPp": 7.09,
+            "marginPp": -16.98
           }
         }
       ]
@@ -6023,6 +7875,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 8,
+            "bolsonaro": 15,
+            "totalValid": 25,
+            "lulaPct": 32,
+            "bolsonaroPct": 60
+          },
+          "swing": {
+            "lulaPp": -0.42,
+            "bolsonaroPp": -7.37,
+            "marginPp": 6.95
           }
         }
       ]
@@ -6072,6 +7936,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 12,
+            "bolsonaro": 9,
+            "totalValid": 22,
+            "lulaPct": 54.55,
+            "bolsonaroPct": 40.91
+          },
+          "swing": {
+            "lulaPp": 6.99,
+            "bolsonaroPp": -25.53,
+            "marginPp": 32.52
           }
         }
       ]
@@ -6121,6 +7997,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 13,
+            "bolsonaro": 4,
+            "totalValid": 20,
+            "lulaPct": 65,
+            "bolsonaroPct": 20
+          },
+          "swing": {
+            "lulaPp": -20.17,
+            "bolsonaroPp": 28.28,
+            "marginPp": -48.45
           }
         }
       ]
@@ -6170,6 +8058,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 7,
+            "bolsonaro": 9,
+            "totalValid": 17,
+            "lulaPct": 41.18,
+            "bolsonaroPct": 52.94
+          },
+          "swing": {
+            "lulaPp": 14.82,
+            "bolsonaroPp": -8.94,
+            "marginPp": 23.76
           }
         }
       ]
@@ -6238,6 +8138,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 1,
+            "bolsonaro": 14,
+            "totalValid": 15,
+            "lulaPct": 6.67,
+            "bolsonaroPct": 93.33
+          },
+          "swing": {
+            "lulaPp": 1.02,
+            "bolsonaroPp": -8.71,
+            "marginPp": 9.73
           }
         }
       ]
@@ -6287,6 +8199,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 8,
+            "bolsonaro": 6,
+            "totalValid": 14,
+            "lulaPct": 57.14,
+            "bolsonaroPct": 42.86
+          },
+          "swing": {
+            "lulaPp": -2.59,
+            "bolsonaroPp": -1.95,
+            "marginPp": -0.64
           }
         }
       ]
@@ -6355,6 +8279,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 7,
+            "bolsonaro": 6,
+            "totalValid": 13,
+            "lulaPct": 53.85,
+            "bolsonaroPct": 46.15
+          },
+          "swing": {
+            "lulaPp": -32.8,
+            "bolsonaroPp": 27.53,
+            "marginPp": -60.33
           }
         }
       ]
@@ -6404,6 +8340,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 6,
+            "bolsonaro": 2,
+            "totalValid": 8,
+            "lulaPct": 75,
+            "bolsonaroPct": 25
+          },
+          "swing": {
+            "lulaPp": -6.25,
+            "bolsonaroPp": 6.25,
+            "marginPp": -12.5
           }
         }
       ]
@@ -6453,6 +8401,18 @@
           "coverage": {
             "counted": 1,
             "total": 1
+          },
+          "y2022": {
+            "lula": 2,
+            "bolsonaro": 4,
+            "totalValid": 7,
+            "lulaPct": 28.57,
+            "bolsonaroPct": 57.14
+          },
+          "swing": {
+            "lulaPp": 71.43,
+            "bolsonaroPp": -57.14,
+            "marginPp": 128.57
           }
         }
       ]

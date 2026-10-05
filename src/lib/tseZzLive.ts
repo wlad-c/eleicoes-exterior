@@ -1,5 +1,18 @@
 import cityMap from '../data/tse-city-map.json'
+import city2022 from '../data/tse-city-2022.json'
 import type { CityResult, CountryResult, ResultsData, YearResult } from '../types'
+
+type City2022Map = Record<
+  string,
+  {
+    name?: string
+    lula: number
+    bolsonaro: number
+    totalValid: number
+    lulaPct: number
+    bolsonaroPct: number
+  }
+>
 
 const ELEICAO = '6257'
 const CARGO = '1'
@@ -48,7 +61,8 @@ function yearResult(lula: number, bolsonaro: number, totalValid: number): YearRe
   }
 }
 
-function swingOf(y2022: YearResult, y2026: YearResult) {
+function swingOf(y2022: YearResult | null | undefined, y2026: YearResult) {
+  if (!y2022) return null
   const lulaPp = round1(y2026.lulaPct - y2022.lulaPct)
   const bolsonaroPp = round1(y2026.bolsonaroPct - y2022.bolsonaroPct)
   return {
@@ -56,6 +70,12 @@ function swingOf(y2022: YearResult, y2026: YearResult) {
     bolsonaroPp,
     marginPp: round1(lulaPp - bolsonaroPp),
   }
+}
+
+function cityY2022(code: string): YearResult | null {
+  const raw = (city2022 as City2022Map)[code]
+  if (!raw) return null
+  return yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -227,13 +247,15 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.totalValid += row.totalValid
     agg.counted += row.counted
     agg.total += row.total
+    const y2026 = yearResult(row.lula, row.bolsonaro, row.totalValid)
+    const y2022 = cityY2022(row.code)
     agg.cities.push({
       code: row.code,
       name: row.city,
       level: 'municipality',
-      y2026: yearResult(row.lula, row.bolsonaro, row.totalValid),
-      y2022: null,
-      swing: null,
+      y2026,
+      y2022,
+      swing: swingOf(y2022, y2026),
       coverage: { counted: row.counted, total: row.total },
     })
     aggregates.set(row.countryId, agg)
