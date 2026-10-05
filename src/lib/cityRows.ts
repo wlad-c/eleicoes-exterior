@@ -67,6 +67,17 @@ export function cityBolsonaroChange(c: CityResult): number | null {
   return null
 }
 
+/** Absolute vote delta vs 2022 (for "+2.4 pp (+1,077)" cells). */
+export function cityLulaVotesDelta(c: CityResult): number | null {
+  if (!c.y2022 || !c.y2026) return null
+  return c.y2026.lula - c.y2022.lula
+}
+
+export function cityBolsonaroVotesDelta(c: CityResult): number | null {
+  if (!c.y2022 || !c.y2026) return null
+  return c.y2026.bolsonaro - c.y2022.bolsonaro
+}
+
 export function citySwingToLula(c: CityResult): number | null {
   if (c.swing != null) return c.swing.lulaPp - c.swing.bolsonaroPp
   const lula = cityLulaChange(c)
