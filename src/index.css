@@ -416,7 +416,7 @@ html.dark .sticky-col-city {
 }
 
 .cell-truncate-abbr {
-  max-width: 5.75rem;
+  max-width: 4.5rem;
 }
 
 .country-flag-label .cell-truncate-text {
@@ -428,7 +428,7 @@ html.dark .sticky-col-city {
 
 .sticky-col-country.cell-truncate,
 .sticky-col-country.cell-truncate-abbr {
-  max-width: 5.75rem;
+  max-width: 4.5rem;
 }
 
 .sticky-col-city.cell-truncate-city {

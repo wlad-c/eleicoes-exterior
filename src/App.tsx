@@ -116,7 +116,9 @@ export default function App() {
       return (
         c.countryEn.toLowerCase().includes(q) ||
         c.countryPt.toLowerCase().includes(q) ||
-        c.iso3.toLowerCase().includes(q)
+        c.iso3.toLowerCase().includes(q) ||
+        c.abbrevEn.toLowerCase().includes(q) ||
+        c.abbrevPt.toLowerCase().includes(q)
       )
     })
   }, [data.countries, query, region, statusFilter])
@@ -186,7 +188,9 @@ export default function App() {
           parent &&
             (parent.countryEn.toLowerCase().includes(q) ||
               parent.countryPt.toLowerCase().includes(q) ||
-              parent.iso3.toLowerCase().includes(q)),
+              parent.iso3.toLowerCase().includes(q) ||
+              parent.abbrevEn.toLowerCase().includes(q) ||
+              parent.abbrevPt.toLowerCase().includes(q)),
         )
       )
     })
