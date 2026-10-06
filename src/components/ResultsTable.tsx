@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CountryFlag } from './CountryFlag'
+import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
@@ -547,19 +548,15 @@ export function ResultsTable({
                     <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums">
                       {index + 1}
                     </td>
-                    <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5"
-                      title={countryName(c, lang)}
-                    >
-                      <span className="country-flag-label">
-                        <CountryFlag
-                          iso3={c.iso3}
-                          title={countryName(c, lang)}
-                        />
-                        <span className="cell-truncate-text">
-                          {countryName(c, lang)}
+                    <td className="sticky-col sticky-col-country cell-truncate cell-truncate-country px-2 py-2.5">
+                      <NameTip label={countryName(c, lang)} when="truncate">
+                        <span className="country-flag-label">
+                          <CountryFlag iso3={c.iso3} />
+                          <span className="cell-truncate-text">
+                            {countryName(c, lang)}
+                          </span>
                         </span>
-                      </span>
+                      </NameTip>
                       {c.notes?.startsWith('DISPUTED') ? (
                         <span
                           className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]"

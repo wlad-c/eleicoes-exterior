@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CountryFlag } from './CountryFlag'
+import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
 import {
   cityBolsonaroChange,
@@ -295,13 +296,16 @@ export function CityBreakdownTable({
         —
       </td>
       {showCountry ? (
-        <td
-          className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink-muted)]"
-          title={
-            singleCountry ? countryName(singleCountry, lang) : undefined
-          }
-        >
-          {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
+        <td className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5 text-[var(--ink-muted)]">
+          {singleCountry ? (
+            <NameTip label={countryName(singleCountry, lang)}>
+              <span className="cell-truncate-text">
+                {countryAbbrev(singleCountry, lang)}
+              </span>
+            </NameTip>
+          ) : (
+            '—'
+          )}
         </td>
       ) : null}
       <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]">
@@ -641,25 +645,24 @@ export function CityBreakdownTable({
                     {index + 1}
                   </td>
                   {showCountry ? (
-                    <td
-                      className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5"
-                      title={fullCountry}
-                    >
-                      <span className="country-flag-label">
-                        {parent ? (
-                          <CountryFlag iso3={parent.iso3} title={fullCountry} />
-                        ) : null}
-                        <span className="cell-truncate-text">{abbr}</span>
-                      </span>
+                    <td className="sticky-col sticky-col-country cell-truncate cell-truncate-abbr px-2 py-2.5">
+                      <NameTip label={fullCountry}>
+                        <span className="country-flag-label">
+                          {parent ? <CountryFlag iso3={parent.iso3} /> : null}
+                          <span className="cell-truncate-text">{abbr}</span>
+                        </span>
+                      </NameTip>
                     </td>
                   ) : null}
-                  <td
-                    className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5"
-                    title={cityDisplayName(c, lang)}
-                  >
-                    <span className="cell-truncate-text">
-                      {cityDisplayName(c, lang)}
-                    </span>
+                  <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
+                    <NameTip
+                      label={cityDisplayName(c, lang)}
+                      when="truncate"
+                    >
+                      <span className="cell-truncate-text">
+                        {cityDisplayName(c, lang)}
+                      </span>
+                    </NameTip>
                   </td>
                   {metricCols.map((col) => {
                     switch (col) {
