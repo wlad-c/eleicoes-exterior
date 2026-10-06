@@ -449,10 +449,10 @@ export default function App() {
         />
       </section>
 
-      <section className="panel panel-results mb-4 rounded-xl p-4 sm:p-5">
+      <section className="panel panel-results mb-4 rounded-xl px-2 py-4 sm:p-5">
         <div
           ref={tableChromeRef}
-          className="sticky-table-chrome sticky top-0 z-30 -mx-4 mb-3 space-y-3 border-b border-[var(--line)] px-4 pb-3 sm:-mx-5 sm:px-5"
+          className="sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 space-y-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div
