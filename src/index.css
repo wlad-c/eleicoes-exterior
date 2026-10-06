@@ -300,7 +300,8 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 
   .results-table {
-    min-width: 60rem;
+    /* Was 60rem — leftover width inflated label columns and hid stats */
+    min-width: 36rem;
     width: max-content;
     font-size: 0.8125rem;
   }
@@ -308,8 +309,13 @@ html.dark .is-x-scrolled .sticky-col-city {
   .results-table th,
   .results-table td {
     white-space: nowrap;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+  }
+
+  .sticky-col-rank {
+    padding-left: 0.2rem;
+    padding-right: 0.3rem;
   }
 
   .th-hint {
@@ -459,7 +465,7 @@ html.dark .is-x-scrolled .sticky-col-city {
  * so the first metric column starts at the same offset on every tab.
  */
 :root {
-  --table-col-rank: 3.25rem;
+  --table-col-rank: 2.5rem;
   --table-col-abbr: 4.5rem;
   /* Area/City place column; Country full-name width tracks this via calc */
   --table-col-place: 5.4rem; /* was 9rem (−40%) */
@@ -468,13 +474,24 @@ html.dark .is-x-scrolled .sticky-col-city {
   );
 }
 
+@media (max-width: 900px) {
+  :root {
+    /* Must follow the base :root above or desktop vars win on mobile */
+    --table-col-rank: 1.75rem;
+    --table-col-abbr: 4.15rem; /* flag + 3-letter code */
+    --table-col-place: 4.75rem;
+  }
+}
+
 .cell-truncate-city {
   width: var(--table-col-place);
+  min-width: var(--table-col-place);
   max-width: var(--table-col-place);
 }
 
 .cell-truncate-abbr {
   width: var(--table-col-abbr);
+  min-width: var(--table-col-abbr);
   max-width: var(--table-col-abbr);
 }
 
@@ -500,16 +517,20 @@ html.dark .is-x-scrolled .sticky-col-city {
 
 .sticky-col-country.cell-truncate-abbr {
   width: var(--table-col-abbr);
+  min-width: var(--table-col-abbr);
   max-width: var(--table-col-abbr);
 }
 
 /*
- * Country table: fixed sticky country width = abbr + place, matching
+ * Country table only: sticky country width = abbr + place, matching
  * Area/City so votes/stats columns share the same left edge.
+ * Do not apply to Area/City head (.results-table--cities) — those use abbr.
  */
-.results-table--head .sticky-col-country,
-.results-table--body .sticky-col-country {
+.results-table--body .sticky-col-country.cell-truncate-country,
+.results-table--head:not(.results-table--cities)
+  .sticky-col-country.cell-truncate-country {
   width: var(--table-col-country-full);
+  min-width: var(--table-col-country-full);
   max-width: var(--table-col-country-full);
 }
 
@@ -519,6 +540,7 @@ html.dark .is-x-scrolled .sticky-col-city {
 
 .sticky-col-city.cell-truncate-city {
   width: var(--table-col-place);
+  min-width: var(--table-col-place);
   max-width: var(--table-col-place);
 }
 
