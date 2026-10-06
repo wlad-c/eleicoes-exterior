@@ -299,13 +299,6 @@ html.dark .is-x-scrolled .sticky-col-city {
     overscroll-behavior-x: contain;
   }
 
-  :root {
-    /* Right-aligned # sat in a wide column and read as empty left gutter */
-    --table-col-rank: 1.75rem;
-    --table-col-abbr: 3.85rem;
-    --table-col-place: 4.75rem;
-  }
-
   .results-table {
     /* Was 60rem — leftover width inflated label columns and hid stats */
     min-width: 36rem;
@@ -479,6 +472,15 @@ html.dark .is-x-scrolled .sticky-col-city {
   --table-col-country-full: calc(
     var(--table-col-abbr) + var(--table-col-place)
   );
+}
+
+@media (max-width: 900px) {
+  :root {
+    /* Must follow the base :root above or desktop vars win on mobile */
+    --table-col-rank: 1.75rem;
+    --table-col-abbr: 4.15rem; /* flag + 3-letter code */
+    --table-col-place: 4.75rem;
+  }
 }
 
 .cell-truncate-city {
