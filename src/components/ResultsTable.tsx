@@ -558,12 +558,11 @@ export function ResultsTable({
                         </span>
                       </NameTip>
                       {c.notes?.startsWith('DISPUTED') ? (
-                        <span
-                          className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]"
-                          title={c.notes}
-                        >
-                          {t('disputedShort', lang)}
-                        </span>
+                        <NameTip label={c.notes}>
+                          <span className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]">
+                            {t('disputedShort', lang)}
+                          </span>
+                        </NameTip>
                       ) : null}
                     </td>
                     {metricCols.map((col) => {
@@ -573,9 +572,15 @@ export function ResultsTable({
                             <td
                               key={col}
                               className="cell-truncate cell-truncate-sm px-2 py-2.5"
-                              title={regionLabel(c.region, lang)}
                             >
-                              {regionLabel(c.region, lang)}
+                              <NameTip
+                                label={regionLabel(c.region, lang)}
+                                when="truncate"
+                              >
+                                <span className="cell-truncate-text">
+                                  {regionLabel(c.region, lang)}
+                                </span>
+                              </NameTip>
                             </td>
                           )
                         case 'votes2026':

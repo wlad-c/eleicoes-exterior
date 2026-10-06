@@ -655,10 +655,7 @@ export function CityBreakdownTable({
                     </td>
                   ) : null}
                   <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
-                    <NameTip
-                      label={cityDisplayName(c, lang)}
-                      when="truncate"
-                    >
+                    <NameTip label={cityDisplayName(c, lang)}>
                       <span className="cell-truncate-text">
                         {cityDisplayName(c, lang)}
                       </span>
@@ -671,13 +668,19 @@ export function CityBreakdownTable({
                           <td
                             key={col}
                             className="cell-truncate cell-truncate-sm px-2 py-2.5"
-                            title={
-                              parent
-                                ? regionLabel(parent.region, lang)
-                                : undefined
-                            }
                           >
-                            {parent ? regionLabel(parent.region, lang) : '—'}
+                            {parent ? (
+                              <NameTip
+                                label={regionLabel(parent.region, lang)}
+                                when="truncate"
+                              >
+                                <span className="cell-truncate-text">
+                                  {regionLabel(parent.region, lang)}
+                                </span>
+                              </NameTip>
+                            ) : (
+                              '—'
+                            )}
                           </td>
                         )
                       case 'votes2026':
