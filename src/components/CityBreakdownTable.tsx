@@ -187,6 +187,16 @@ export function CityBreakdownTable({
         footTable.style.setProperty('--sticky-rank-width', `${rankW}px`)
       }
 
+      const countryTh = bodyTable.querySelector(
+        'thead th.sticky-col-country',
+      ) as HTMLElement | null
+      const countryW = countryTh
+        ? Math.ceil(countryTh.getBoundingClientRect().width)
+        : 0
+      bodyTable.style.setProperty('--sticky-country-width', `${countryW}px`)
+      headTable.style.setProperty('--sticky-country-width', `${countryW}px`)
+      footTable.style.setProperty('--sticky-country-width', `${countryW}px`)
+
       const r = bodyScroll.getBoundingClientRect()
       footScroll.style.marginLeft = `${Math.max(0, r.left)}px`
       footScroll.style.width = `${r.width}px`
@@ -294,11 +304,7 @@ export function CityBreakdownTable({
           {singleCountry ? countryAbbrev(singleCountry, lang) : '—'}
         </td>
       ) : null}
-      <td
-        className={`${
-          showCountry ? '' : 'sticky-col sticky-col-city '
-        }cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]`}
-      >
+      <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5 text-[var(--ink)]">
         <span className="cell-truncate-text">
           {t('tableTotal', lang)}
           <span className="ml-2 font-normal text-[var(--ink-muted)]">
@@ -423,7 +429,7 @@ export function CityBreakdownTable({
       <SortableTh
         onClick={() => onSort('city')}
         hint={placeHint}
-        stickyCol={showCountry ? undefined : 'city'}
+        stickyCol="city"
         className="cell-truncate-city"
       >
         {placeLabel}
@@ -648,11 +654,7 @@ export function CityBreakdownTable({
                     </td>
                   ) : null}
                   <td
-                    className={`${
-                      showCountry
-                        ? ''
-                        : 'sticky-col sticky-col-city '
-                    }cell-truncate cell-truncate-city px-2 py-2.5`}
+                    className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5"
                     title={cityDisplayName(c, lang)}
                   >
                     <span className="cell-truncate-text">
