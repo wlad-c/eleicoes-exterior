@@ -497,6 +497,10 @@ html.dark .is-x-scrolled .sticky-col-city {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Instant — no fade/delay (native title tooltips are ~1s) */
+  opacity: 1;
+  transition: none;
+  animation: none;
 }
 
 /* Name-like table cells: ellipsis instead of wrapping */

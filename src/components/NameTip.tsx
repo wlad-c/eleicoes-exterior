@@ -20,11 +20,14 @@ type Props = {
   when?: 'always' | 'truncate'
 }
 
-type Coords = { top: number; left: number }
+type TipState =
+  | { open: false }
+  | { open: true; top: number; left: number }
 
 /**
  * Hover tip for abbreviated / truncated place names.
  * Portals to document.body so sticky + overflow:hidden cells don’t clip it.
+ * No native `title` — browsers delay that ~1s; this tip opens on pointer enter.
  */
 export function NameTip({
   label,
@@ -34,20 +37,19 @@ export function NameTip({
 }: Props) {
   const tipId = useId()
   const wrapRef = useRef<HTMLSpanElement>(null)
-  const [open, setOpen] = useState(false)
-  const [coords, setCoords] = useState<Coords>({ top: 0, left: 0 })
+  const [tip, setTip] = useState<TipState>({ open: false })
 
-  const placeTip = useCallback(() => {
+  const showTip = useCallback(() => {
     const el = wrapRef.current
     if (!el || !label.trim()) {
-      setOpen(false)
+      setTip({ open: false })
       return
     }
     if (when === 'truncate') {
       const textEl =
         el.querySelector<HTMLElement>('.cell-truncate-text') ?? el
       if (textEl.scrollWidth <= textEl.clientWidth + 1) {
-        setOpen(false)
+        setTip({ open: false })
         return
       }
     }
@@ -58,20 +60,21 @@ export function NameTip({
       window.innerWidth - tipWidth - 8,
     )
     const top = Math.min(r.bottom + 6, window.innerHeight - 36)
-    setCoords({ top, left })
-    setOpen(true)
+    setTip({ open: true, top, left })
   }, [label, when])
 
+  const hideTip = useCallback(() => setTip({ open: false }), [])
+
   useLayoutEffect(() => {
-    if (!open) return
-    const close = () => setOpen(false)
+    if (!tip.open) return
+    const close = () => setTip({ open: false })
     window.addEventListener('scroll', close, true)
     window.addEventListener('resize', close)
     return () => {
       window.removeEventListener('scroll', close, true)
       window.removeEventListener('resize', close)
     }
-  }, [open])
+  }, [tip.open])
 
   if (!label.trim()) {
     return <span className={className}>{children}</span>
@@ -81,21 +84,21 @@ export function NameTip({
     <span
       ref={wrapRef}
       className={`name-tip ${className}`.trim()}
-      title={label}
-      aria-describedby={open ? tipId : undefined}
-      onMouseEnter={placeTip}
-      onFocus={placeTip}
-      onMouseLeave={() => setOpen(false)}
-      onBlur={() => setOpen(false)}
+      aria-label={label}
+      aria-describedby={tip.open ? tipId : undefined}
+      onPointerEnter={showTip}
+      onPointerLeave={hideTip}
+      onFocus={showTip}
+      onBlur={hideTip}
     >
       {children}
-      {open
+      {tip.open
         ? createPortal(
             <span
               id={tipId}
               role="tooltip"
               className="name-hover-tip"
-              style={{ top: coords.top, left: coords.left }}
+              style={{ top: tip.top, left: tip.left }}
             >
               {label}
             </span>,
