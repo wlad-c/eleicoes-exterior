@@ -24,10 +24,34 @@ type TipState =
   | { open: false }
   | { open: true; top: number; left: number }
 
+/** True when label text is wider than the visible box (ellipsis). */
+function isEllipsisTruncated(root: HTMLElement): boolean {
+  const textEl =
+    root.querySelector<HTMLElement>('.cell-truncate-text') ?? root
+
+  // Range width is more reliable than scrollWidth for nested flex/block text.
+  try {
+    const range = document.createRange()
+    range.selectNodeContents(textEl)
+    const textWidth = range.getBoundingClientRect().width
+    if (textWidth > textEl.clientWidth + 0.5) return true
+  } catch {
+    /* ignore Range failures in odd hosts */
+  }
+
+  let node: HTMLElement | null = textEl
+  while (node) {
+    if (node.scrollWidth > node.clientWidth + 0.5) return true
+    if (node.tagName === 'TD' || node.tagName === 'TH') break
+    node = node.parentElement
+  }
+  return false
+}
+
 /**
  * Hover tip for abbreviated / truncated place names.
  * Portals to document.body so sticky + overflow:hidden cells don’t clip it.
- * No native `title` — browsers delay that ~1s; this tip opens on pointer enter.
+ * Uses the shared `.app-tip` look (same as the map tip).
  */
 export function NameTip({
   label,
@@ -45,21 +69,23 @@ export function NameTip({
       setTip({ open: false })
       return
     }
-    if (when === 'truncate') {
-      const textEl =
-        el.querySelector<HTMLElement>('.cell-truncate-text') ?? el
-      if (textEl.scrollWidth <= textEl.clientWidth + 1) {
-        setTip({ open: false })
-        return
-      }
+    if (when === 'truncate' && !isEllipsisTruncated(el)) {
+      setTip({ open: false })
+      return
     }
     const r = el.getBoundingClientRect()
-    const tipWidth = Math.min(280, Math.max(120, label.length * 7))
+    const tipWidth = Math.min(260, Math.max(96, label.length * 7))
     const left = Math.min(
       Math.max(8, r.left),
       window.innerWidth - tipWidth - 8,
     )
-    const top = Math.min(r.bottom + 6, window.innerHeight - 36)
+    // Prefer below the cell; flip above if near the bottom chrome / Total row.
+    const below = r.bottom + 8
+    const above = r.top - 8
+    const top =
+      below + 28 > window.innerHeight - 48
+        ? Math.max(8, above - 28)
+        : below
     setTip({ open: true, top, left })
   }, [label, when])
 
@@ -68,10 +94,11 @@ export function NameTip({
   useLayoutEffect(() => {
     if (!tip.open) return
     const close = () => setTip({ open: false })
-    window.addEventListener('scroll', close, true)
+    // Bubble only — capture would close on nested table-x-scroll noise.
+    window.addEventListener('scroll', close)
     window.addEventListener('resize', close)
     return () => {
-      window.removeEventListener('scroll', close, true)
+      window.removeEventListener('scroll', close)
       window.removeEventListener('resize', close)
     }
   }, [tip.open])
@@ -97,10 +124,10 @@ export function NameTip({
             <span
               id={tipId}
               role="tooltip"
-              className="name-hover-tip"
+              className="app-tip app-tip--fixed"
               style={{ top: tip.top, left: tip.left }}
             >
-              {label}
+              <span className="app-tip-title">{label}</span>
             </span>,
             document.body,
           )

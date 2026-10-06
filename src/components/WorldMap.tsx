@@ -156,34 +156,34 @@ export function WorldMap({
 
       {tip && (
         <div
-          className="pointer-events-none absolute z-20 max-w-[260px] rounded-md px-3 py-2 text-left text-xs shadow-lg"
+          className="app-tip app-tip--map"
           style={{
             left: Math.min(tip.x + 12, width - 270),
             top: Math.max(8, tip.y - 8),
-            background: 'var(--tip-bg)',
-            color: 'var(--tip-fg)',
           }}
         >
-          <div className="font-semibold">{countryName(tip.country, lang)}</div>
-          <div className="mt-1 opacity-90">
+          <span className="app-tip-title">
+            {countryName(tip.country, lang)}
+          </span>
+          <span className="app-tip-meta">
             {t(metric, lang)}:{' '}
             {formatMetricValue(metricValue(tip.country, metric), metric, lang)}
-          </div>
+          </span>
           {tip.country.status === 'reported' && tip.country.y2026 && metric !== 'leader2022' ? (
-            <div className="mt-0.5 opacity-80">
+            <span className="app-tip-meta-muted">
               {t('lula', lang)} {fmtPct(tip.country.y2026.lulaPct, lang)} ·{' '}
               {t('fBolsonaro', lang)} {fmtPct(tip.country.y2026.bolsonaroPct, lang)}
-            </div>
+            </span>
           ) : metric === 'leader2022' ||
             metric === 'lulaPct2022' ||
             metric === 'bolsonaroPct2022' ? (
-            <div className="mt-0.5 opacity-80">
+            <span className="app-tip-meta-muted">
               {t('lula', lang)} {fmtPct(tip.country.y2022.lulaPct, lang)} ·{' '}
               {t('jBolsonaro', lang)}{' '}
               {fmtPct(tip.country.y2022.bolsonaroPct, lang)}
-            </div>
+            </span>
           ) : tip.country.status === 'pending' ? (
-            <div className="mt-0.5 opacity-80">{t('pendingHint', lang)}</div>
+            <span className="app-tip-meta-muted">{t('pendingHint', lang)}</span>
           ) : null}
         </div>
       )}
