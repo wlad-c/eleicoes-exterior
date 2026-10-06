@@ -194,27 +194,36 @@ html.dark .sticky-table-chrome {
 
 .sticky-col-rank {
   left: 0;
-  z-index: 3;
+  z-index: 4;
   width: var(--table-col-rank, 3.25rem);
   min-width: var(--table-col-rank, 3.25rem);
   max-width: var(--table-col-rank, 3.25rem);
 }
 
-.sticky-col-country,
-.sticky-col-city {
+.sticky-col-country {
   left: var(--sticky-rank-width, 2.75rem);
-  z-index: 2;
+  z-index: 3;
   /* No resting shadow — it read as a “weird line” in the Country
      name gap. Only cast an edge when the table is panned sideways. */
   box-shadow: none;
 }
 
-.is-x-scrolled .sticky-col-country,
+/* Area/City name freezes after rank (+ country abbr when present) */
+.sticky-col-city {
+  left: calc(
+    var(--sticky-rank-width, 2.75rem) + var(--sticky-country-width, 0px)
+  );
+  z-index: 2;
+  box-shadow: none;
+}
+
+/* Shadow on the outermost frozen label only */
+.is-x-scrolled .sticky-col-country:not(:has(~ .sticky-col-city)),
 .is-x-scrolled .sticky-col-city {
   box-shadow: 6px 0 8px -6px rgba(12, 31, 26, 0.22);
 }
 
-html.dark .is-x-scrolled .sticky-col-country,
+html.dark .is-x-scrolled .sticky-col-country:not(:has(~ .sticky-col-city)),
 html.dark .is-x-scrolled .sticky-col-city {
   box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.55);
 }
@@ -224,9 +233,16 @@ html.dark .is-x-scrolled .sticky-col-city {
   background: var(--paper-deep);
 }
 
-.results-table thead .sticky-col-country,
-.results-table thead .sticky-col-city {
+.results-table thead .sticky-col-rank {
+  z-index: 8;
+}
+
+.results-table thead .sticky-col-country {
   z-index: 7;
+}
+
+.results-table thead .sticky-col-city {
+  z-index: 6;
 }
 
 .results-table tfoot .sticky-col {
@@ -234,9 +250,16 @@ html.dark .is-x-scrolled .sticky-col-city {
   background: var(--paper-deep);
 }
 
-.results-table tfoot .sticky-col-country,
-.results-table tfoot .sticky-col-city {
+.results-table tfoot .sticky-col-rank {
+  z-index: 5;
+}
+
+.results-table tfoot .sticky-col-country {
   z-index: 4;
+}
+
+.results-table tfoot .sticky-col-city {
+  z-index: 3;
 }
 
 /* Paint every cell — with border-collapse:separate, tr backgrounds
