@@ -164,6 +164,23 @@ html.dark .sticky-table-chrome {
   white-space: nowrap;
 }
 
+/*
+ * Dense tables: metric columns hug content (width: 1% + nowrap).
+ * Label columns keep an explicit width so leftover viewport width does
+ * not open empty gutters between % / vote figures while names truncate.
+ */
+.results-table th,
+.results-table td {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+
+.results-table th:not(.sticky-col),
+.results-table td:not(.sticky-col) {
+  width: 1%;
+  white-space: nowrap;
+}
+
 /* Body rows share one type treatment; thead + Total row stay distinct */
 .results-table--body tbody td,
 .results-table--cities:not(.results-table--foot) tbody td {
@@ -337,10 +354,17 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 }
 
-/* Prefer growing columns over wrapping header/metric copy on wide screens */
-.results-table--cities {
+/*
+ * Size to content. Stretching to 100% dumped leftover viewport width into
+ * metric columns (empty gutters) while capped place names stayed truncated.
+ * Spare room stays to the right of the table, not between columns.
+ */
+.results-table--cities,
+.results-table--body,
+.results-table--head:not(.results-table--cities),
+.results-table--foot {
   width: max-content;
-  min-width: 100%;
+  min-width: max-content;
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */
@@ -348,6 +372,13 @@ html.dark .is-x-scrolled .sticky-col-city {
   overflow: visible;
   backdrop-filter: none;
   background: var(--paper);
+}
+
+/* Header subtitles ("total de votos", …) inflate every metric column */
+@media (max-width: 1100px) {
+  .th-hint {
+    display: none;
+  }
 }
 
 @media (max-width: 900px) {
@@ -364,36 +395,43 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 
   .results-table {
-    /* Was 60rem — leftover width inflated label columns and hid stats */
-    min-width: 42rem;
+    /* Content-sized — fixed min-width was inventing empty gutters */
+    min-width: 0;
     width: max-content;
     font-size: 0.8125rem;
   }
 
-  /* Keep metric columns from collapsing so there is real horizontal overflow */
+  /*
+   * Metrics hug content. Former 7.25rem min-width forced empty space
+   * between columns while BAIRRO/city names stayed truncated.
+   */
   .results-table th:not(.sticky-col),
   .results-table td:not(.sticky-col) {
-    min-width: 7.25rem;
+    min-width: 0;
+    width: 1%;
+    padding-left: 0.28rem;
+    padding-right: 0.28rem;
   }
 
   .results-table th,
   .results-table td {
     white-space: nowrap;
-    padding-left: 0.35rem;
-    padding-right: 0.35rem;
+    padding-left: 0.28rem;
+    padding-right: 0.28rem;
   }
 
   .results-table--cities {
     /* Room so the last metric clears the viewport when fully panned */
-    padding-inline-end: 1rem;
+    padding-inline-end: 0.75rem;
   }
 
   .sticky-col-rank {
-    padding-left: 0.2rem;
-    padding-right: 0.3rem;
+    padding-left: 0.15rem;
+    padding-right: 0.25rem;
   }
 
-  .th-hint {
+  /* Drag handles add ~1rem per metric header on phones — hide them */
+  .col-drag-handle {
     display: none;
   }
 
@@ -664,14 +702,16 @@ html.dark .is-x-scrolled .sticky-col-city {
 /*
  * Label column widths — Country full name = Area/City (abbr + place)
  * so the first metric column starts at the same offset on every tab.
+ * Place width is intentionally generous so names (Piraporinha, …) are
+ * readable; metrics stay content-sized and must not steal that space.
  */
 :root {
-  --table-col-rank: 2.5rem;
-  --table-col-abbr: 4.5rem;
+  --table-col-rank: 2.35rem;
+  --table-col-abbr: 4.25rem;
   /* Flag-only country column on very small screens */
   --table-col-flag: 2.25rem;
-  /* Area/City place column; Country full-name width tracks this via calc */
-  --table-col-place: 5.4rem; /* was 9rem (−40%) */
+  /* Area/City/Bairro place column */
+  --table-col-place: 8.5rem;
   --table-col-country-full: calc(
     var(--table-col-abbr) + var(--table-col-place)
   );
@@ -682,22 +722,48 @@ html.dark .is-x-scrolled .sticky-col-city {
   :root {
     /* Fits longest names (e.g. Emirados Árabes Unidos) + flag */
     --table-col-country-full: 14.5rem;
+    --table-col-place: 9.5rem;
   }
 }
 
 @media (max-width: 900px) {
   :root {
     /* Must follow the base :root above or desktop vars win on mobile */
-    --table-col-rank: 1.75rem;
-    --table-col-abbr: 4.15rem; /* flag + 3-letter code */
-    --table-col-place: 4.75rem;
+    --table-col-rank: 1.6rem;
+    --table-col-abbr: 3.5rem; /* flag + 3-letter code, tighter */
+    --table-col-place: 7.75rem; /* was 4.75 — names were clipping first */
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --table-col-rank: 1.5rem;
-    --table-col-flag: 2.1rem;
+    --table-col-rank: 1.4rem;
+    --table-col-flag: 2rem;
+    --table-col-abbr: 3.35rem;
+    --table-col-place: 7.25rem;
+  }
+}
+
+/* Bairro tab: two-line cell (name + UF · município · zona) needs more room */
+.results-table--suburb .sticky-col-city.cell-truncate-city {
+  width: 9.75rem;
+  min-width: 9.75rem;
+  max-width: 9.75rem;
+}
+
+@media (max-width: 900px) {
+  .results-table--suburb .sticky-col-city.cell-truncate-city {
+    width: 8.5rem;
+    min-width: 8.5rem;
+    max-width: 8.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .results-table--suburb .sticky-col-city.cell-truncate-city {
+    width: 8rem;
+    min-width: 8rem;
+    max-width: 8rem;
   }
 }
 

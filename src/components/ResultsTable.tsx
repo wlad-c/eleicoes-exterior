@@ -529,7 +529,7 @@ export function ResultsTable({
           >
             <table
               ref={headTableRef}
-              className="results-table results-table--head w-full text-left text-sm"
+              className="results-table results-table--head text-left text-sm"
             >
               <thead>{headerRow}</thead>
             </table>
@@ -543,7 +543,7 @@ export function ResultsTable({
         >
           <table
             ref={tableRef}
-            className="results-table results-table--body w-full text-left text-sm"
+            className="results-table results-table--body text-left text-sm"
           >
             <thead aria-hidden="true" className="results-table-width-head">
               {headerRow}
@@ -771,7 +771,7 @@ export function ResultsTable({
         >
           <table
             ref={footTableRef}
-            className="results-table results-table--foot w-full text-left text-sm"
+            className="results-table results-table--foot text-left text-sm"
           >
             <tbody>
               <tr className="text-sm font-semibold">{totalCells}</tr>

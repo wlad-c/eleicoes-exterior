@@ -99,6 +99,8 @@ export function CityBreakdownTable({
   const areaUfCompact = useAreaUfCompact()
   /** Area tab: Brazilian UFs → SP/RJ/… instead of truncated full names. */
   const preferBrazilUf = placeKind === 'area' && areaUfCompact
+  const tableKindClass =
+    placeKind === 'suburb' ? 'results-table--suburb' : ''
   const countryColClass = flagOnlyLabels
     ? 'cell-truncate-flag'
     : 'cell-truncate-abbr'
@@ -753,7 +755,7 @@ export function CityBreakdownTable({
           >
             <table
               ref={headTableRef}
-              className="results-table results-table--head results-table--cities text-left text-sm"
+              className={`results-table results-table--head results-table--cities ${tableKindClass} text-left text-sm`}
             >
               <thead>{headerRow}</thead>
             </table>
@@ -775,7 +777,7 @@ export function CityBreakdownTable({
           >
           <table
             ref={tableRef}
-            className="results-table results-table--cities text-left text-sm"
+            className={`results-table results-table--cities ${tableKindClass} text-left text-sm`}
           >
             <thead aria-hidden="true" className="results-table-width-head">
               {headerRow}
@@ -1031,7 +1033,7 @@ export function CityBreakdownTable({
         >
           <table
             ref={footTableRef}
-            className="results-table results-table--foot results-table--cities text-left text-sm"
+            className={`results-table results-table--foot results-table--cities ${tableKindClass} text-left text-sm`}
           >
             <tbody>
               <tr className="text-sm font-semibold">{totalCells}</tr>
