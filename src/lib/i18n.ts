@@ -13,14 +13,7 @@ const dict = {
   tabCities: { en: 'City', pt: 'Cidade' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
-  clearCountryFocus: {
-    en: 'Show all countries',
-    pt: 'Mostrar todos os países',
-  },
-  focusedCountryPlaces: {
-    en: 'Showing places in',
-    pt: 'Mostrando locais em',
-  },
+  clearSearch: { en: 'Clear search', pt: 'Limpar busca' },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
   status: { en: 'Status', pt: 'Status' },
   statusAll: { en: 'All countries', pt: 'Todos os países' },
