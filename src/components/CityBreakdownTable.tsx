@@ -17,6 +17,7 @@ import {
   type CityTableRow,
 } from '../lib/cityRows'
 import {
+  areaDisplayName,
   cityDisplayName,
   countryAbbrev,
   countryName,
@@ -32,7 +33,10 @@ import {
   type TableMetricCol,
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
-import { useCountryLabelMode } from '../lib/useMediaQuery'
+import {
+  useAreaUfCompact,
+  useCountryLabelMode,
+} from '../lib/useMediaQuery'
 import { useVisualViewportBottom } from '../lib/useVisualViewportBottom'
 import type { CountryResult, Lang, SortKey } from '../types'
 
@@ -82,6 +86,9 @@ export function CityBreakdownTable({
   /** Flag-only on very small screens; otherwise abbreviations. */
   const countryLabelMode = useCountryLabelMode()
   const flagOnlyLabels = countryLabelMode === 'flag'
+  const areaUfCompact = useAreaUfCompact()
+  /** Area tab: Brazilian UFs → SP/RJ/… instead of truncated full names. */
+  const preferBrazilUf = placeKind === 'area' && areaUfCompact
   const countryColClass = flagOnlyLabels
     ? 'cell-truncate-flag'
     : 'cell-truncate-abbr'
@@ -745,6 +752,12 @@ export function CityBreakdownTable({
               const shortCountry = parent
                 ? countryAbbrev(parent, lang)
                 : c.countryId
+              const fullPlace = cityDisplayName(c, lang)
+              const visiblePlace = areaDisplayName(c, lang, {
+                domestic: parent?.domestic,
+                preferUf: preferBrazilUf,
+              })
+              const showingUf = visiblePlace !== fullPlace
               return (
                 <tr
                   key={key}
@@ -771,10 +784,11 @@ export function CityBreakdownTable({
                     </td>
                   ) : null}
                   <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
-                    <NameTip label={cityDisplayName(c, lang)}>
-                      <span className="cell-truncate-text">
-                        {cityDisplayName(c, lang)}
-                      </span>
+                    <NameTip
+                      label={fullPlace}
+                      when={showingUf ? 'always' : 'truncate'}
+                    >
+                      <span className="cell-truncate-text">{visiblePlace}</span>
                     </NameTip>
                   </td>
                   {metricCols.map((col) => {
