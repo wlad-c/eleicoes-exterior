@@ -300,9 +300,20 @@ html.dark .is-x-scrolled .sticky-col-city {
   overscroll-behavior-x: contain;
 }
 
-/* Virtualized breakdown tables use the window scroller (see CityBreakdownTable).
- * Do not nest a max-height pane — mobile .table-x-scroll { overflow-y: hidden }
- * previously clipped Brazil city/local lists to ~one viewport of rows. */
+/*
+ * Large Brazil City/Local tables: dedicated xy scrollport.
+ * Must beat the mobile `.table-x-scroll { overflow-y: hidden }` rule — that
+ * override previously left only ~one screen of rows reachable. A window-tall
+ * overflow-x container (no max-height) also breaks sideways panning on iOS.
+ */
+.table-x-scroll.table-x-scroll--virtual {
+  max-height: min(70dvh, 40rem);
+  overflow-x: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
 
 .results-table--cities tbody tr:not(.virtual-pad-row) {
   content-visibility: auto;
@@ -329,6 +340,13 @@ html.dark .is-x-scrolled .sticky-col-city {
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+  }
+
+  /* Keep both-axis scroll for virtualized Brazil breakdowns */
+  .table-x-scroll.table-x-scroll--virtual {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: min(65dvh, 36rem);
   }
 
   .results-table {
