@@ -1,5 +1,11 @@
-import { useVirtualizer } from '@tanstack/react-virtual'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useWindowVirtualizer } from '@tanstack/react-virtual'
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { CountryFlag } from './CountryFlag'
 import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
@@ -101,20 +107,49 @@ export function CityBreakdownTable({
   const colCount =
     1 /* rank */ + (showCountry ? 1 : 0) + 1 /* place */ + metricCols.length
 
-  const virtualizer = useVirtualizer({
+  /**
+   * Window-scroll virtualization (not a nested pane). Nested max-height scroll
+   * broke on ≤900px — mobile CSS forced overflow-y:hidden, so only ~14 rows
+   * were reachable. Page scroll must keep every row accessible.
+   */
+  const [scrollMargin, setScrollMargin] = useState(0)
+  useLayoutEffect(() => {
+    if (!shouldVirtualize) {
+      setScrollMargin(0)
+      return
+    }
+    const el = tableRef.current
+    if (!el) return
+    const sync = () => {
+      const top = el.getBoundingClientRect().top + window.scrollY
+      setScrollMargin((prev) => (Math.abs(prev - top) > 0.5 ? top : prev))
+    }
+    sync()
+    const ro = new ResizeObserver(sync)
+    ro.observe(el)
+    window.addEventListener('resize', sync)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', sync)
+    }
+  }, [shouldVirtualize, rows.length, loading, showCountry, metricCols.length])
+
+  const virtualizer = useWindowVirtualizer({
     count: rows.length,
-    getScrollElement: () => bodyScrollRef.current,
     estimateSize: () => ROW_ESTIMATE_PX,
-    overscan: 16,
+    overscan: 24,
+    scrollMargin,
     enabled: shouldVirtualize,
   })
   const virtualItems = shouldVirtualize ? virtualizer.getVirtualItems() : null
-  const paddingTop = virtualItems?.[0]?.start ?? 0
-  const paddingBottom = virtualItems
+  const paddingTop = virtualItems?.[0]
+    ? Math.max(0, virtualItems[0].start - scrollMargin)
+    : 0
+  const paddingBottom = virtualItems?.length
     ? Math.max(
         0,
         virtualizer.getTotalSize() -
-          (virtualItems[virtualItems.length - 1]?.end ?? 0),
+          (virtualItems[virtualItems.length - 1]!.end - scrollMargin),
       )
     : 0
 
@@ -715,7 +750,7 @@ export function CityBreakdownTable({
         </div>
 
         <div
-          className={`table-x-scroll${shouldVirtualize ? ' table-x-scroll--virtual' : ''}`}
+          className="table-x-scroll"
           ref={bodyScrollRef}
           onScroll={() => {
             syncScroll('body')

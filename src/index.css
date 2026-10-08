@@ -300,12 +300,9 @@ html.dark .is-x-scrolled .sticky-col-city {
   overscroll-behavior-x: contain;
 }
 
-/* Large breakdown tables (e.g. Brazil municipalities) scroll inside a windowed body. */
-.table-x-scroll--virtual {
-  max-height: min(70vh, 40rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
+/* Virtualized breakdown tables use the window scroller (see CityBreakdownTable).
+ * Do not nest a max-height pane — mobile .table-x-scroll { overflow-y: hidden }
+ * previously clipped Brazil city/local lists to ~one viewport of rows. */
 
 .results-table--cities tbody tr:not(.virtual-pad-row) {
   content-visibility: auto;
