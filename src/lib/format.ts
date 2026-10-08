@@ -17,8 +17,10 @@ export function fmtShare(
   pct: number | null | undefined,
   votes: number | null | undefined,
   lang: Lang,
+  opts?: { compact?: boolean },
 ): string {
   if (pct == null || votes == null) return '—'
+  if (opts?.compact) return fmtPct(pct, lang)
   return `${fmtPct(pct, lang)} (${fmtInt(votes, lang)})`
 }
 
@@ -50,9 +52,10 @@ export function fmtPpWithVotes(
   pp: number | null | undefined,
   votesDelta: number | null | undefined,
   lang: Lang,
+  opts?: { compact?: boolean },
 ): string {
   if (pp == null) return '—'
-  if (votesDelta == null) return fmtPp(pp, lang)
+  if (opts?.compact || votesDelta == null) return fmtPp(pp, lang)
   return `${fmtPp(pp, lang)} (${fmtSignedInt(votesDelta, lang)})`
 }
 

@@ -37,6 +37,17 @@ export const COUNTRY_FLAG_ONLY_MQ = '(max-width: 640px)'
  */
 export const AREA_UF_COMPACT_MQ = '(max-width: 1100px)'
 
+/**
+ * Dense metric cells: show `57,6%` / `-4,6 pp` without vote counts in
+ * parentheses so more columns fit on phones and small tablets.
+ */
+export const TABLE_COMPACT_METRICS_MQ = '(max-width: 900px)'
+
+/** True when share/Δ cells should omit absolute vote counts. */
+export function useTableCompactMetrics(): boolean {
+  return useMediaQuery(TABLE_COMPACT_METRICS_MQ)
+}
+
 export type CountryLabelMode = 'flag' | 'abbrev'
 
 /** Area/City country column: flag-only on narrow viewports, else abbreviation. */

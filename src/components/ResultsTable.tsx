@@ -22,6 +22,7 @@ import {
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
 import { useHorizontalTouchScroll } from '../lib/useHorizontalTouchScroll'
+import { useTableCompactMetrics } from '../lib/useMediaQuery'
 import { useVisualViewportBottom } from '../lib/useVisualViewportBottom'
 import {
   heatColumnForMetric,
@@ -67,6 +68,8 @@ export function ResultsTable({
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
   )
+  const compactMetrics = useTableCompactMetrics()
+  const shareOpts = compactMetrics ? { compact: true } : undefined
   const { dragProps } = useColumnDrag(onReorderColumns)
   const mixed2022Vs2026 = useMemo(() => {
     const has2026 = rows.some((c) => c.status === 'reported' && c.y2026)
@@ -443,13 +446,13 @@ export function ResultsTable({
           case 'lulaPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.lulaPct2026, totals.lula2026, lang)}
+                {fmtShare(totals.lulaPct2026, totals.lula2026, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang)}
+                {fmtShare(totals.bolsoPct2026, totals.bolso2026, lang, shareOpts)}
               </td>
             )
           case 'lulaPct2022':
@@ -458,7 +461,7 @@ export function ResultsTable({
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
               >
-                {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+                {fmtShare(totals.lulaPct2022, totals.lula2022, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2022':
@@ -467,23 +470,19 @@ export function ResultsTable({
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
               >
-                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
               </td>
             )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang)}
+                {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPpWithVotes(
-                  totals.bolsonaroChange,
-                  totals.bolsonaroVotesDelta,
-                  lang,
-                )}
+                {fmtPpWithVotes(totals.bolsonaroChange, totals.bolsonaroVotesDelta, lang, shareOpts)}
               </td>
             )
           case 'swingToLula':
@@ -629,7 +628,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang)}
+                              {fmtShare(c.y2026?.lulaPct, c.y2026?.lula, lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'bolsonaroPct2026':
@@ -640,11 +639,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtShare(
-                                c.y2026?.bolsonaroPct,
-                                c.y2026?.bolsonaro,
-                                lang,
-                              )}
+                              {fmtShare(c.y2026?.bolsonaroPct, c.y2026?.bolsonaro, lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'lulaPct2022':
@@ -655,7 +650,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang)}
+                              {fmtShare(c.y2022.lulaPct, c.y2022.lula, lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'bolsonaroPct2022':
@@ -666,11 +661,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtShare(
-                                c.y2022.bolsonaroPct,
-                                c.y2022.bolsonaro,
-                                lang,
-                              )}
+                              {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'lulaChange':
@@ -681,11 +672,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtPpWithVotes(
-                                c.swing?.lulaPp,
-                                lulaVotesDelta(c),
-                                lang,
-                              )}
+                              {fmtPpWithVotes(c.swing?.lulaPp, lulaVotesDelta(c), lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'bolsonaroChange':
@@ -696,11 +683,7 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtPpWithVotes(
-                                c.swing?.bolsonaroPp,
-                                bolsonaroVotesDelta(c),
-                                lang,
-                              )}
+                              {fmtPpWithVotes(c.swing?.bolsonaroPp, bolsonaroVotesDelta(c), lang, shareOpts)}
                             </HeatTd>
                           )
                         case 'swingToLula':

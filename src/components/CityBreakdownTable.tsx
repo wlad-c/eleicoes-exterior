@@ -39,6 +39,7 @@ import { useHorizontalTouchScroll } from '../lib/useHorizontalTouchScroll'
 import {
   useAreaUfCompact,
   useCountryLabelMode,
+  useTableCompactMetrics,
 } from '../lib/useMediaQuery'
 import { useVisualViewportBottom } from '../lib/useVisualViewportBottom'
 import type { CountryResult, Lang, SortKey } from '../types'
@@ -98,6 +99,8 @@ export function CityBreakdownTable({
   const countryLabelMode = useCountryLabelMode()
   const flagOnlyLabels = countryLabelMode === 'flag'
   const areaUfCompact = useAreaUfCompact()
+  const compactMetrics = useTableCompactMetrics()
+  const shareOpts = compactMetrics ? { compact: true } : undefined
   /** Area tab: Brazilian UFs → SP/RJ/… instead of truncated full names. */
   const preferBrazilUf = placeKind === 'area' && areaUfCompact
   const tableKindClass =
@@ -483,13 +486,13 @@ export function CityBreakdownTable({
           case 'lulaPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.lulaPct, totals.lula, lang)}
+                {fmtShare(totals.lulaPct, totals.lula, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtShare(totals.bolsoPct, totals.bolsonaro, lang)}
+                {fmtShare(totals.bolsoPct, totals.bolsonaro, lang, shareOpts)}
               </td>
             )
           case 'lulaPct2022':
@@ -498,7 +501,7 @@ export function CityBreakdownTable({
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
               >
-                {fmtShare(totals.lulaPct2022, totals.lula2022, lang)}
+                {fmtShare(totals.lulaPct2022, totals.lula2022, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2022':
@@ -507,27 +510,19 @@ export function CityBreakdownTable({
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
               >
-                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang)}
+                {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
               </td>
             )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPpWithVotes(
-                  totals.lulaChange,
-                  totals.lulaVotesDelta,
-                  lang,
-                )}
+                {fmtPpWithVotes(totals.lulaChange, totals.lulaVotesDelta, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPpWithVotes(
-                  totals.bolsonaroChange,
-                  totals.bolsonaroVotesDelta,
-                  lang,
-                )}
+                {fmtPpWithVotes(totals.bolsonaroChange, totals.bolsonaroVotesDelta, lang, shareOpts)}
               </td>
             )
           case 'swingToLula':
@@ -910,7 +905,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang)}
+                            {fmtShare(c.y2026.lulaPct, c.y2026.lula, lang, shareOpts)}
                           </td>
                         )
                       case 'bolsonaroPct2026':
@@ -919,11 +914,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtShare(
-                              c.y2026.bolsonaroPct,
-                              c.y2026.bolsonaro,
-                              lang,
-                            )}
+                            {fmtShare(c.y2026.bolsonaroPct, c.y2026.bolsonaro, lang, shareOpts)}
                           </td>
                         )
                       case 'lulaPct2022':
@@ -932,7 +923,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang)}
+                            {fmtShare(c.y2022?.lulaPct, c.y2022?.lula, lang, shareOpts)}
                           </td>
                         )
                       case 'bolsonaroPct2022':
@@ -941,11 +932,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtShare(
-                              c.y2022?.bolsonaroPct,
-                              c.y2022?.bolsonaro,
-                              lang,
-                            )}
+                            {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang, shareOpts)}
                           </td>
                         )
                       case 'lulaChange':
@@ -954,11 +941,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPpWithVotes(
-                              cityLulaChange(c),
-                              cityLulaVotesDelta(c),
-                              lang,
-                            )}
+                            {fmtPpWithVotes(cityLulaChange(c), cityLulaVotesDelta(c), lang, shareOpts)}
                           </td>
                         )
                       case 'bolsonaroChange':
@@ -967,11 +950,7 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPpWithVotes(
-                              cityBolsonaroChange(c),
-                              cityBolsonaroVotesDelta(c),
-                              lang,
-                            )}
+                            {fmtPpWithVotes(cityBolsonaroChange(c), cityBolsonaroVotesDelta(c), lang, shareOpts)}
                           </td>
                         )
                       case 'swingToLula':
