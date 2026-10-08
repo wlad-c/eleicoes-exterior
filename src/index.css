@@ -447,6 +447,19 @@ html.dark .is-x-scrolled .sticky-col-city {
   outline-offset: 1px;
 }
 
+/* Visually hidden, available to assistive tech */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .country-flag {
   display: inline-block;
   width: 1.25rem;
@@ -557,6 +570,8 @@ html.dark .is-x-scrolled .sticky-col-city {
 :root {
   --table-col-rank: 2.5rem;
   --table-col-abbr: 4.5rem;
+  /* Flag-only country column on very small screens */
+  --table-col-flag: 2.25rem;
   /* Area/City place column; Country full-name width tracks this via calc */
   --table-col-place: 5.4rem; /* was 9rem (−40%) */
   --table-col-country-full: calc(
@@ -581,6 +596,13 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 }
 
+@media (max-width: 640px) {
+  :root {
+    --table-col-rank: 1.5rem;
+    --table-col-flag: 2.1rem;
+  }
+}
+
 .cell-truncate-city {
   width: var(--table-col-place);
   min-width: var(--table-col-place);
@@ -591,6 +613,12 @@ html.dark .is-x-scrolled .sticky-col-city {
   width: var(--table-col-abbr);
   min-width: var(--table-col-abbr);
   max-width: var(--table-col-abbr);
+}
+
+.cell-truncate-flag {
+  width: var(--table-col-flag);
+  min-width: var(--table-col-flag);
+  max-width: var(--table-col-flag);
 }
 
 /* Full country names (Country table; Area/City on wide screens). */
@@ -619,6 +647,20 @@ html.dark .is-x-scrolled .sticky-col-city {
   max-width: var(--table-col-abbr);
 }
 
+.sticky-col-country.cell-truncate-flag {
+  width: var(--table-col-flag);
+  min-width: var(--table-col-flag);
+  max-width: var(--table-col-flag);
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+.sticky-col-country.cell-truncate-flag .country-flag-label {
+  gap: 0;
+  justify-content: center;
+  max-width: none;
+}
+
 /*
  * Sticky country width for full-name columns.
  * Narrow viewports: Country table width = abbr + place so metrics align
@@ -631,6 +673,14 @@ html.dark .is-x-scrolled .sticky-col-city {
   width: var(--table-col-country-full);
   min-width: var(--table-col-country-full);
   max-width: var(--table-col-country-full);
+}
+
+.results-table--body .sticky-col-country.cell-truncate-flag,
+.results-table--head .sticky-col-country.cell-truncate-flag,
+.results-table--cities .sticky-col-country.cell-truncate-flag {
+  width: var(--table-col-flag);
+  min-width: var(--table-col-flag);
+  max-width: var(--table-col-flag);
 }
 
 .sticky-col-country.cell-truncate-country {
