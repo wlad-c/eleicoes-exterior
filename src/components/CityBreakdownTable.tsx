@@ -37,8 +37,8 @@ type Props = {
   lang: Lang
   loading?: boolean
   showCountry: boolean
-  /** Column label + empty/footer wording for Area vs City tabs. */
-  placeKind?: 'area' | 'city'
+  /** Column label + empty/footer wording for Area / City / Suburb tabs. */
+  placeKind?: 'area' | 'city' | 'suburb'
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
@@ -300,14 +300,38 @@ export function CityBreakdownTable({
   if (rows.length === 0) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
-        {t(placeKind === 'area' ? 'areaEmpty' : 'cityEmpty', lang)}
+        {t(
+          placeKind === 'area'
+            ? 'areaEmpty'
+            : placeKind === 'suburb'
+              ? 'suburbEmpty'
+              : 'cityEmpty',
+          lang,
+        )}
       </p>
     )
   }
 
-  const placeLabel = t(placeKind === 'area' ? 'area' : 'city', lang)
-  const placeHint = t(placeKind === 'area' ? 'hintArea' : 'hintCity', lang)
-  const placeCountLabel = t(placeKind === 'area' ? 'areas' : 'cities', lang)
+  const placeLabel = t(
+    placeKind === 'area' ? 'area' : placeKind === 'suburb' ? 'suburb' : 'city',
+    lang,
+  )
+  const placeHint = t(
+    placeKind === 'area'
+      ? 'hintArea'
+      : placeKind === 'suburb'
+        ? 'hintCity'
+        : 'hintCity',
+    lang,
+  )
+  const placeCountLabel = t(
+    placeKind === 'area'
+      ? 'areas'
+      : placeKind === 'suburb'
+        ? 'suburbs'
+        : 'cities',
+    lang,
+  )
 
   const arrow = (key: SortKey) =>
     sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''

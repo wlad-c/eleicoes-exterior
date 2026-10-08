@@ -8,12 +8,25 @@ const dict = {
   search: { en: 'Search country…', pt: 'Buscar país…' },
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
   searchArea: { en: 'Search area or country…', pt: 'Buscar área ou país…' },
+  searchSuburb: {
+    en: 'Search municipality, state, or Brazil…',
+    pt: 'Buscar município, UF ou Brasil…',
+  },
   tabCountries: { en: 'Country', pt: 'País' },
   tabAreas: { en: 'Area', pt: 'Área' },
   tabCities: { en: 'City', pt: 'Cidade' },
+  tabSuburbs: { en: 'Suburb', pt: 'Município' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   clearSearch: { en: 'Clear search', pt: 'Limpar busca' },
+  includeBrazil: {
+    en: 'Include Brazil',
+    pt: 'Incluir Brasil',
+  },
+  includeBrazilHint: {
+    en: 'Off by default — turn on or select Brazil on the map to show domestic rows in the tables',
+    pt: 'Desligado por padrão — ligue ou selecione Brasil no mapa para ver linhas domésticas nas tabelas',
+  },
   allRegions: { en: 'All regions', pt: 'Todas as regiões' },
   status: { en: 'Status', pt: 'Status' },
   statusAll: { en: 'All countries', pt: 'Todos os países' },
@@ -60,8 +73,8 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for country, area, and city.',
-    pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para país, área e cidade.',
+    en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for country, area, city, and suburb.',
+    pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para país, área, cidade e município.',
   },
   tableColumnsDrag: {
     en: 'Drag to reorder columns',
@@ -94,12 +107,16 @@ const dict = {
     pt: 'Detalhamento por cidade',
   },
   areaTableHint: {
-    en: 'Official TSE overseas areas (ZZ). Broad consulates aggregate several voting cities (e.g. Melbourne and Perth under Canberra).',
-    pt: 'Áreas oficiais do TSE no exterior (ZZ). Consulados amplos agregam várias cidades de votação (ex.: Melbourne e Perth sob Canberra).',
+    en: 'Overseas: TSE ZZ consular areas. Brazil: states (UF) and the Federal District.',
+    pt: 'Exterior: áreas consulares ZZ do TSE. Brasil: estados (UF) e o Distrito Federal.',
   },
   cityTableHint: {
     en: 'Voting cities from TSE ballot boxes (NM_LOCAL_VOTACAO), split inside broad consular areas; other TSE areas listed as-is.',
     pt: 'Cidades de votação a partir dos boletins de urna do TSE (NM_LOCAL_VOTACAO), desagregadas nas áreas consulares amplas; demais áreas TSE listadas como estão.',
+  },
+  suburbTableHint: {
+    en: 'Brazil only — municipalities (municípios), the domestic suburb-equivalent grain under each state.',
+    pt: 'Só Brasil — municípios, o recorte doméstico equivalente a subúrbio sob cada UF.',
   },
   selectCountry: {
     en: 'Select a country',
@@ -111,8 +128,10 @@ const dict = {
   },
   area: { en: 'Area', pt: 'Área' },
   city: { en: 'City', pt: 'Cidade' },
+  suburb: { en: 'Suburb', pt: 'Município' },
   areas: { en: 'areas', pt: 'áreas' },
   cities: { en: 'cities', pt: 'cidades' },
+  suburbs: { en: 'municipalities', pt: 'municípios' },
   areaEmpty: {
     en: 'No areas match these filters.',
     pt: 'Nenhuma área com esses filtros.',
@@ -120,6 +139,10 @@ const dict = {
   cityEmpty: {
     en: 'No cities match these filters.',
     pt: 'Nenhuma cidade com esses filtros.',
+  },
+  suburbEmpty: {
+    en: 'No municipalities match these filters. Select Brazil or turn on Include Brazil.',
+    pt: 'Nenhum município com esses filtros. Selecione Brasil ou ligue Incluir Brasil.',
   },
   cityLoading: {
     en: 'Loading voting-city breakdown from TSE ballot boxes…',
@@ -198,12 +221,12 @@ const dict = {
     pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing para Lula é a variação de Lula menos a de Bolsonaro (pontos percentuais).',
   },
   disclaimerScope: {
-    en: 'Scope is overseas 1st-round presidential voting only. Aggregates and the map reflect only countries marked reported in this dataset, not the full ZZ electorate.',
-    pt: 'O recorte é só a votação presidencial do 1º turno no exterior. Totais e o mapa refletem apenas os países marcados como apurados neste conjunto de dados, não todo o eleitorado ZZ.',
+    en: 'Default scope is overseas 1st-round presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas running total.',
+    pt: 'O recorte padrão é a votação presidencial do 1º turno no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total parcial do exterior.',
   },
   howToEdit: {
-    en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run build:pages to refresh the committed seed JSON.',
-    pt: 'A página ao vivo atualiza os totais do exterior direto do TSE. Opcional: npm run sync:tse && npm run build:pages para atualizar o JSON seed commitado.',
+    en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run sync:brazil && npm run build:pages to refresh the committed seed JSON.',
+    pt: 'A página ao vivo atualiza os totais do exterior direto do TSE. Opcional: npm run sync:tse && npm run sync:brazil && npm run build:pages para atualizar o JSON seed commitado.',
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
   autoRefresh: {
@@ -226,11 +249,12 @@ const dict = {
   themeDark: { en: 'Dark', pt: 'Escuro' },
   themeToggle: { en: 'Toggle color theme', pt: 'Alternar tema de cores' },
   scope: {
-    en: 'Overseas 1st round only · F Bolsonaro compared to J Bolsonaro 2022',
-    pt: 'Somente exterior 1º turno · F Bolsonaro comparado a J Bolsonaro 2022',
+    en: '1st round · overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
+    pt: '1º turno · exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
   },
   Africa: { en: 'Africa', pt: 'África' },
   Americas: { en: 'Americas', pt: 'Américas' },
+  Brazil: { en: 'Brazil', pt: 'Brasil' },
   'Asia (excl. Middle East)': {
     en: 'Asia (excl. Middle East)',
     pt: 'Ásia (excl. Oriente Médio)',

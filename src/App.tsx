@@ -9,10 +9,12 @@ import {
   compareCityRows,
   taggedAreaRows,
   taggedBreakdownRows,
+  taggedSuburbRows,
 } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
 
-type TableView = 'countries' | 'areas' | 'cities'
+type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
+const BRAZIL_ID = 'brazil'
 import {
   moveColumn,
   readStoredColumnOrder,
@@ -79,6 +81,8 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  /** Domestic Brazil is hidden from tables until toggled or selected on the map. */
+  const [includeBrazil, setIncludeBrazil] = useState(false)
   const [tableView, setTableView] = useState<TableView>('countries')
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
@@ -124,9 +128,25 @@ export default function App() {
     }
   }, [])
 
-  const regions = useMemo(
-    () => [...new Set(data.countries.map((c) => c.region))].sort(),
+  const brazilCountry = useMemo(
+    () => data.countries.find((c) => c.id === BRAZIL_ID) ?? null,
     [data.countries],
+  )
+  const showBrazilInTables = includeBrazil || highlightId === BRAZIL_ID
+  const showSuburbTab = Boolean(
+    showBrazilInTables && (brazilCountry?.suburbs?.length ?? 0) > 0,
+  )
+
+  const regions = useMemo(
+    () =>
+      [
+        ...new Set(
+          data.countries
+            .filter((c) => showBrazilInTables || !c.domestic)
+            .map((c) => c.region),
+        ),
+      ].sort(),
+    [data.countries, showBrazilInTables],
   )
 
   const totals = useMemo(() => runningTotals(data.countries), [data.countries])
@@ -134,17 +154,23 @@ export default function App() {
     () => data.countries.filter((c) => c.status === 'reported'),
     [data.countries],
   )
-  const reportedAgg = useMemo(
-    () => aggregateRows(reportedCountries),
+  /** Overseas-only set for the header aggregate cards. */
+  const reportedOverseas = useMemo(
+    () => reportedCountries.filter((c) => !c.domestic),
     [reportedCountries],
   )
-  const reportedCount = reportedCountries.length
+  const reportedAgg = useMemo(
+    () => aggregateRows(reportedOverseas),
+    [reportedOverseas],
+  )
+  const reportedCount = reportedOverseas.length
 
   const mapCountries = reportedCountries
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return data.countries.filter((c) => {
+      if (c.domestic && !showBrazilInTables) return false
       if (statusFilter === 'reported' && c.status !== 'reported') return false
       if (statusFilter === 'pending' && c.status !== 'pending') return false
       if (region !== 'all' && c.region !== region) return false
@@ -157,7 +183,7 @@ export default function App() {
         c.abbrevPt.toLowerCase().includes(q)
       )
     })
-  }, [data.countries, query, region, statusFilter])
+  }, [data.countries, query, region, statusFilter, showBrazilInTables])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -202,6 +228,24 @@ export default function App() {
       return
     }
     const country = data.countries.find((c) => c.id === id)
+    if (country?.domestic) {
+      setIncludeBrazil(true)
+      setQuery(countryName(country, lang))
+      setTableView(
+        (country.suburbs?.length ?? 0) > 0
+          ? 'suburbs'
+          : (country.areas?.length ?? 0) > 0
+            ? 'areas'
+            : 'countries',
+      )
+      window.setTimeout(() => {
+        tableChromeRef.current?.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth',
+        })
+      }, 0)
+      return
+    }
     const hasBreakdown =
       !!country &&
       ((country.areas?.length ?? 0) > 0 || (country.cities?.length ?? 0) > 0)
@@ -230,7 +274,12 @@ export default function App() {
 
   const citySourceCountries = useMemo(() => {
     return data.countries.filter((c) => {
-      if ((c.areas?.length ?? 0) === 0 && (c.cities?.length ?? 0) === 0) {
+      if (c.domestic && !showBrazilInTables) return false
+      if (
+        (c.areas?.length ?? 0) === 0 &&
+        (c.cities?.length ?? 0) === 0 &&
+        (c.suburbs?.length ?? 0) === 0
+      ) {
         return false
       }
       if (statusFilter === 'reported' && c.status !== 'reported') return false
@@ -238,7 +287,7 @@ export default function App() {
       if (region !== 'all' && c.region !== region) return false
       return true
     })
-  }, [data.countries, statusFilter, region])
+  }, [data.countries, statusFilter, region, showBrazilInTables])
 
   function matchesPlaceQuery(
     r: {
@@ -279,7 +328,18 @@ export default function App() {
   }, [citySourceCountries, query, countryById])
 
   const filteredCityRows = useMemo(() => {
-    const rows = citySourceCountries.flatMap((c) => taggedBreakdownRows(c))
+    // City tab stays overseas voting-city grain (skip domestic Brazil).
+    const rows = citySourceCountries
+      .filter((c) => !c.domestic)
+      .flatMap((c) => taggedBreakdownRows(c))
+    const q = query.trim().toLowerCase()
+    return rows.filter((r) => matchesPlaceQuery(r, q))
+  }, [citySourceCountries, query, countryById])
+
+  const filteredSuburbRows = useMemo(() => {
+    const rows = citySourceCountries
+      .filter((c) => c.domestic)
+      .flatMap((c) => taggedSuburbRows(c))
     const q = query.trim().toLowerCase()
     return rows.filter((r) => matchesPlaceQuery(r, q))
   }, [citySourceCountries, query, countryById])
@@ -301,6 +361,18 @@ export default function App() {
     )
     return rows
   }, [filteredCityRows, sortKey, sortDir, lang, countryById])
+
+  const sortedSuburbs = useMemo(() => {
+    const rows = [...filteredSuburbRows]
+    const dir = sortDir === 'asc' ? 1 : -1
+    rows.sort(
+      (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
+    )
+    return rows
+  }, [filteredSuburbRows, sortKey, sortDir, lang, countryById])
+
+  const effectiveTableView: TableView =
+    tableView === 'suburbs' && !showSuburbTab ? 'countries' : tableView
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -396,7 +468,11 @@ export default function App() {
               {t('runningTotal', lang)}
             </h2>
             <p className="mt-1 text-sm text-[var(--ink-muted)]">
-              {totals.reported}/{data.countries.length} {t('countries', lang)} ·{' '}
+              {totals.reported}/
+              {
+                data.countries.filter((c) => !c.domestic).length
+              }{' '}
+              {t('countries', lang)} ·{' '}
               {fmtInt(totals.valid, lang)} {t('validVotes', lang)}
             </p>
           </div>
@@ -509,7 +585,7 @@ export default function App() {
                 type="button"
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={tableView === 'countries'}
+                aria-selected={effectiveTableView === 'countries'}
                 onClick={() => switchTableView('countries')}
               >
                 {t('tabCountries', lang)}
@@ -518,7 +594,7 @@ export default function App() {
                 type="button"
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={tableView === 'areas'}
+                aria-selected={effectiveTableView === 'areas'}
                 title={t('areaTableHint', lang)}
                 onClick={() => switchTableView('areas')}
               >
@@ -528,14 +604,54 @@ export default function App() {
                 type="button"
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={tableView === 'cities'}
+                aria-selected={effectiveTableView === 'cities'}
                 title={t('cityTableHint', lang)}
                 onClick={() => switchTableView('cities')}
               >
                 {t('tabCities', lang)}
               </button>
+              {showSuburbTab ? (
+                <button
+                  type="button"
+                  role="tab"
+                  className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+                  aria-selected={effectiveTableView === 'suburbs'}
+                  title={t('suburbTableHint', lang)}
+                  onClick={() => switchTableView('suburbs')}
+                >
+                  {t('tabSuburbs', lang)}
+                </button>
+              ) : null}
             </div>
             <div className="flex flex-wrap items-center gap-2">
+              <label
+                className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
+                title={t('includeBrazilHint', lang)}
+              >
+                <input
+                  type="checkbox"
+                  className="accent-[var(--accent)]"
+                  checked={includeBrazil}
+                  onChange={(e) => {
+                    const on = e.target.checked
+                    setIncludeBrazil(on)
+                    if (on && !query.trim() && brazilCountry) {
+                      // Keep tables filterable; do not force Brazil search.
+                    }
+                    if (!on && highlightId === BRAZIL_ID) {
+                      setHighlightId(null)
+                      if (
+                        query === countryName(brazilCountry!, lang) ||
+                        query === brazilCountry?.countryEn ||
+                        query === brazilCountry?.countryPt
+                      ) {
+                        setQuery('')
+                      }
+                    }
+                  }}
+                />
+                {t('includeBrazil', lang)}
+              </label>
               <TableColumnPicker
                 lang={lang}
                 visible={visibleCols}
@@ -558,11 +674,14 @@ export default function App() {
                     )
                   }}
                 >
-                  {tableView === 'areas' ? (
+                  {effectiveTableView === 'areas' ? (
                     <option value="city">{t('area', lang)}</option>
                   ) : null}
-                  {tableView === 'cities' ? (
+                  {effectiveTableView === 'cities' ? (
                     <option value="city">{t('city', lang)}</option>
+                  ) : null}
+                  {effectiveTableView === 'suburbs' ? (
+                    <option value="city">{t('suburb', lang)}</option>
                   ) : null}
                   <option value="votes2026">{t('votes2026', lang)}</option>
                   <option value="votes2022">{t('votes2022', lang)}</option>
@@ -593,11 +712,13 @@ export default function App() {
           <div className="filter-row">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               <span className="filter-label">
-                {tableView === 'areas'
+                {effectiveTableView === 'areas'
                   ? t('searchArea', lang)
-                  : tableView === 'cities'
+                  : effectiveTableView === 'cities'
                     ? t('searchCity', lang)
-                    : t('search', lang)}
+                    : effectiveTableView === 'suburbs'
+                      ? t('searchSuburb', lang)
+                      : t('search', lang)}
               </span>
               <span className="filter-search-wrap mt-1">
                 <input
@@ -605,11 +726,13 @@ export default function App() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={
-                    tableView === 'areas'
+                    effectiveTableView === 'areas'
                       ? t('searchArea', lang)
-                      : tableView === 'cities'
+                      : effectiveTableView === 'cities'
                         ? t('searchCity', lang)
-                        : t('search', lang)
+                        : effectiveTableView === 'suburbs'
+                          ? t('searchSuburb', lang)
+                          : t('search', lang)
                   }
                 />
                 {query ? (
@@ -657,7 +780,7 @@ export default function App() {
           </div>
         </div>
 
-        {tableView === 'countries' ? (
+        {effectiveTableView === 'countries' ? (
           <ResultsTable
             rows={sorted}
             allCountries={data.countries}
@@ -674,11 +797,23 @@ export default function App() {
           />
         ) : (
           <CityBreakdownTable
-            rows={tableView === 'areas' ? sortedAreas : sortedCities}
+            rows={
+              effectiveTableView === 'areas'
+                ? sortedAreas
+                : effectiveTableView === 'suburbs'
+                  ? sortedSuburbs
+                  : sortedCities
+            }
             countries={countryById}
             lang={lang}
             showCountry
-            placeKind={tableView === 'areas' ? 'area' : 'city'}
+            placeKind={
+              effectiveTableView === 'areas'
+                ? 'area'
+                : effectiveTableView === 'suburbs'
+                  ? 'suburb'
+                  : 'city'
+            }
             sortKey={sortKey}
             sortDir={sortDir}
             onSort={onSort}
