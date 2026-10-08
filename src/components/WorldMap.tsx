@@ -97,7 +97,14 @@ export function WorldMap({
           setTip(null)
         }}
       >
-        <rect width={width} height={height} fill="transparent" />
+        {/* Ocean / empty space — clear selection when a country is focused */}
+        <rect
+          width={width}
+          height={height}
+          fill="transparent"
+          className={highlightId ? 'cursor-pointer' : undefined}
+          onClick={() => onSelect(null)}
+        />
         {features.map((f, i) => {
           const rawId = f.id
           const numericKey =
@@ -122,7 +129,11 @@ export function WorldMap({
               fill={fill}
               stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--map-stroke)'}
               strokeWidth={isHi ? 1.6 : 0.4}
-              className={c ? 'cursor-pointer transition-[stroke-width] duration-200' : ''}
+              className={
+                c || highlightId
+                  ? 'cursor-pointer transition-[stroke-width] duration-200'
+                  : ''
+              }
               onMouseEnter={(e) => {
                 if (!c) return
                 const rect = wrapRef.current?.getBoundingClientRect()
@@ -144,7 +155,11 @@ export function WorldMap({
                 })
               }}
               onMouseLeave={() => setTip(null)}
-              onClick={() => c && onSelect(c.id)}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (c) onSelect(c.id)
+                else onSelect(null)
+              }}
             />
           )
         })}
