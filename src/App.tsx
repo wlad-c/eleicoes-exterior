@@ -693,7 +693,7 @@ export default function App() {
             rows={tableView === 'areas' ? sortedAreas : sortedCities}
             countries={countryById}
             lang={lang}
-            showCountry={!activeFocusCountryId}
+            showCountry
             placeKind={tableView === 'areas' ? 'area' : 'city'}
             sortKey={sortKey}
             sortDir={sortDir}
