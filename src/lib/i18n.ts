@@ -9,13 +9,13 @@ const dict = {
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
   searchArea: { en: 'Search area or country…', pt: 'Buscar área ou país…' },
   searchSuburb: {
-    en: 'Search local, municipality, or Brazil…',
-    pt: 'Buscar local, município ou Brasil…',
+    en: 'Search zone, municipality, or Brazil…',
+    pt: 'Buscar zona, município ou Brasil…',
   },
   tabCountries: { en: 'Country', pt: 'País' },
   tabAreas: { en: 'Area', pt: 'Área' },
   tabCities: { en: 'City', pt: 'Cidade' },
-  tabSuburbs: { en: 'Suburb', pt: 'Local' },
+  tabSuburbs: { en: 'Zone', pt: 'Zona' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   clearSearch: { en: 'Clear search', pt: 'Limpar busca' },
@@ -115,8 +115,8 @@ const dict = {
     pt: 'Exterior: cidades de votação dos boletins de urna do TSE (NM_LOCAL_VOTACAO). Brasil: municípios sob cada UF.',
   },
   suburbTableHint: {
-    en: 'Brazil only — voting locals inside each municipality (NM_LOCAL_VOTACAO), the suburb-equivalent grain.',
-    pt: 'Só Brasil — locais de votação dentro de cada município (NM_LOCAL_VOTACAO), o recorte equivalente a subúrbio.',
+    en: 'Brazil only — electoral zones (NR_ZONA) inside each municipality; the suburb-equivalent grain (not individual voting places).',
+    pt: 'Só Brasil — zonas eleitorais (NR_ZONA) dentro de cada município; o recorte equivalente a subúrbio (não o local de votação).',
   },
   selectCountry: {
     en: 'Select a country',
@@ -128,10 +128,10 @@ const dict = {
   },
   area: { en: 'Area', pt: 'Área' },
   city: { en: 'City', pt: 'Cidade' },
-  suburb: { en: 'Suburb', pt: 'Local' },
+  suburb: { en: 'Zone', pt: 'Zona' },
   areas: { en: 'areas', pt: 'áreas' },
   cities: { en: 'cities', pt: 'cidades' },
-  suburbs: { en: 'locals', pt: 'locais' },
+  suburbs: { en: 'zones', pt: 'zonas' },
   areaEmpty: {
     en: 'No areas match these filters.',
     pt: 'Nenhuma área com esses filtros.',
@@ -141,20 +141,20 @@ const dict = {
     pt: 'Nenhuma cidade com esses filtros.',
   },
   suburbEmpty: {
-    en: 'No voting locals match these filters. Select Brazil or turn on Include Brazil.',
-    pt: 'Nenhum local de votação com esses filtros. Selecione Brasil ou ligue Incluir Brasil.',
+    en: 'No electoral zones match these filters. Select Brazil or turn on Include Brazil.',
+    pt: 'Nenhuma zona eleitoral com esses filtros. Selecione Brasil ou ligue Incluir Brasil.',
   },
   cityLoading: {
     en: 'Loading city / municipality breakdown…',
     pt: 'Carregando detalhamento por cidade / município…',
   },
   suburbLoading: {
-    en: 'Loading voting locals inside Brazilian municipalities…',
-    pt: 'Carregando locais de votação nos municípios do Brasil…',
+    en: 'Loading electoral zones inside Brazilian municipalities…',
+    pt: 'Carregando zonas eleitorais nos municípios do Brasil…',
   },
   suburbLoadError: {
-    en: 'Could not load voting locals (~94k rows). Check your connection and try again — this tab is not the municipality list.',
-    pt: 'Não foi possível carregar os locais de votação (~94 mil linhas). Verifique a conexão e tente de novo — esta aba não é a lista de municípios.',
+    en: 'Could not load electoral zones. Check your connection and try again — this tab is zone-level, not the municipality list.',
+    pt: 'Não foi possível carregar as zonas eleitorais. Verifique a conexão e tente de novo — esta aba é por zona, não a lista de municípios.',
   },
   suburbRetry: { en: 'Retry', pt: 'Tentar de novo' },
   cityNo2022Footnote: {

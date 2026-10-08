@@ -3,7 +3,8 @@
  * Build Brazil within-municipality (suburb-equivalent) presidential tallies
  * from official TSE votacao_secao open data — 2022 + 2026, 1st round.
  *
- * Grain: NM_LOCAL_VOTACAO inside each município (UF + CD_MUNICIPIO).
+ * Grain: NR_ZONA (electoral zone) inside each município — not NM_LOCAL_VOTACAO
+ * (individual voting places are too fine for the Local/Zona tab).
  * Writes: src/data/brazil-suburbs.json
  *
  * Usage: node scripts/build-brazil-locals.mjs
@@ -30,7 +31,7 @@ const OUT = join(ROOT, 'src/data/brazil-suburbs.json')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
 
 const CDN = 'https://cdn.tse.jus.br'
-const UA = 'eleicoes-exterior/1.0 (+brazil locals builder)'
+const UA = 'eleicoes-exterior/1.0 (+brazil zona builder)'
 
 const YEARS = [
   {
@@ -93,17 +94,6 @@ function yearResult(lula, bolsonaro, totalValid) {
   }
 }
 
-function swingOf(y2022, y2026) {
-  if (!y2022 || !y2026) return null
-  const lulaPp = round1(y2026.lulaPct - y2022.lulaPct)
-  const bolsonaroPp = round1(y2026.bolsonaroPct - y2022.bolsonaroPct)
-  return {
-    lulaPp,
-    bolsonaroPp,
-    marginPp: round1(lulaPp - bolsonaroPp),
-  }
-}
-
 function titleCasePt(name) {
   return String(name || '')
     .toLocaleLowerCase('pt-BR')
@@ -134,19 +124,42 @@ function parseCsvLine(line) {
   return cols
 }
 
+async function download(url, dest) {
+  const res = await fetch(url, { headers: { 'User-Agent': UA } })
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
+  await pipeline(Readable.fromWeb(res.body), createWriteStream(dest))
+}
+
 async function ensureCsv(yearCfg, work) {
   mkdirSync(work, { recursive: true })
-  const zipPath = join(work, `${yearCfg.csv}.zip`)
   const csvPath = join(work, yearCfg.csv)
   if (existsSync(csvPath) && statSync(csvPath).size > 1_000_000) {
     console.log(`Reusing ${csvPath}`)
     return csvPath
   }
-  console.log(`Downloading ${yearCfg.zip}…`)
-  const res = await fetch(yearCfg.zip, { headers: { 'User-Agent': UA } })
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${yearCfg.zip}`)
-  await pipeline(Readable.fromWeb(res.body), createWriteStream(zipPath))
-  console.log(`Extracting ${yearCfg.csv}…`)
+  // Prefer already-extracted copy from prior syncs
+  const alt = join(tmpdir(), 'eleicoes-brazil-2022', yearCfg.csv)
+  if (yearCfg.year === 2022 && existsSync(alt) && statSync(alt).size > 1_000_000) {
+    console.log(`Linking ${alt}`)
+    try {
+      const { symlinkSync, unlinkSync } = await import('node:fs')
+      try {
+        unlinkSync(csvPath)
+      } catch {
+        /* */
+      }
+      symlinkSync(alt, csvPath)
+      return csvPath
+    } catch {
+      /* fall through to download */
+    }
+  }
+  const zipPath = join(work, `${yearCfg.csv}.zip`)
+  if (!existsSync(zipPath) || statSync(zipPath).size < 1_000_000) {
+    console.log(`Downloading ${yearCfg.zip}…`)
+    await download(yearCfg.zip, zipPath)
+  }
+  console.log(`Unzipping ${yearCfg.csv}…`)
   execFileSync('unzip', ['-o', zipPath, yearCfg.csv, '-d', work], {
     stdio: 'inherit',
   })
@@ -154,7 +167,8 @@ async function ensureCsv(yearCfg, work) {
 }
 
 /**
- * Accumulate Map key → { uf, munCode, munName, local, lula, bolsonaro, totalValid }
+ * Accumulate Map key → { uf, munCode, munName, zona, lula, bolsonaro, totalValid }
+ * Grain: electoral zone (NR_ZONA) within município.
  */
 async function aggregateYear(csvPath, into) {
   const rl = createInterface({
@@ -171,14 +185,17 @@ async function aggregateYear(csvPath, into) {
         'SG_UF',
         'CD_MUNICIPIO',
         'NM_MUNICIPIO',
+        'NR_ZONA',
         'NR_TURNO',
         'CD_CARGO',
         'DS_CARGO',
         'NR_VOTAVEL',
         'QT_VOTOS',
-        'NM_LOCAL_VOTACAO',
       ]) {
         idx[name] = header.indexOf(name)
+      }
+      if (idx.NR_ZONA < 0) {
+        throw new Error('CSV missing NR_ZONA — cannot build zona grain')
       }
       continue
     }
@@ -193,18 +210,19 @@ async function aggregateYear(csvPath, into) {
     if (nr === '95' || nr === '96' || nr === '97') continue
     const votes = Number.parseInt(cols[idx.QT_VOTOS], 10) || 0
     if (!votes) continue
-    const local = (cols[idx.NM_LOCAL_VOTACAO] || '').trim()
-    if (!local) continue
+    const zonaRaw = String(cols[idx.NR_ZONA] || '').trim()
+    if (!zonaRaw) continue
+    const zona = pad(zonaRaw, 3)
     const munCode = pad(cols[idx.CD_MUNICIPIO], 5)
     const munName = cols[idx.NM_MUNICIPIO] || munCode
-    const key = `${uf}|${munCode}|${local.toUpperCase()}`
+    const key = `${uf}|${munCode}|${zona}`
     let row = into.get(key)
     if (!row) {
       row = {
         uf,
         munCode,
         munName,
-        local,
+        zona,
         lula: 0,
         bolsonaro: 0,
         totalValid: 0,
@@ -216,7 +234,7 @@ async function aggregateYear(csvPath, into) {
     else if (nr === '22') row.bolsonaro += votes
     rows += 1
   }
-  console.log(`  aggregated ${rows} vote lines → ${into.size} locals`)
+  console.log(`  aggregated ${rows} vote lines → ${into.size} zones`)
 }
 
 async function main() {
@@ -230,7 +248,6 @@ async function main() {
     await aggregateYear(csvPath, cfg.year === 2022 ? by2022 : by2026)
   }
 
-  // Union keys from both years
   const keys = new Set([...by2022.keys(), ...by2026.keys()])
   const suburbs = []
   for (const key of keys) {
@@ -243,16 +260,15 @@ async function main() {
     const y2022 = b
       ? yearResult(b.lula, b.bolsonaro, b.totalValid)
       : null
-    if (!y2026 && !y2022) continue
-    // Prefer rows that have 2026; keep 2022-only as pending-style with zeros? Skip 2022-only for cleaner UI.
     if (!y2026) continue
     const munPretty = titleCasePt(base.munName)
-    const localPretty = titleCasePt(base.local)
+    const zonaLabelPt = `Zona ${base.zona}`
+    const zonaLabelEn = `Zone ${base.zona}`
     const row = {
-      code: `${base.uf}-${base.munCode}-${base.local.toUpperCase()}`,
-      name: base.local,
-      nameEn: localPretty,
-      namePt: localPretty,
+      code: `${base.uf}-${base.munCode}-Z${base.zona}`,
+      name: zonaLabelPt,
+      nameEn: zonaLabelEn,
+      namePt: zonaLabelPt,
       level: 'suburb',
       area: `${base.uf} · ${base.munName}`,
       areaEn: `${base.uf} · ${munPretty}`,
@@ -260,14 +276,13 @@ async function main() {
       y2026,
     }
     if (y2022) row.y2022 = y2022
-    // swing is derived client-side from y2022/y2026
     suburbs.push(row)
   }
 
   suburbs.sort((a, b) => {
     const area = a.area.localeCompare(b.area, 'pt')
     if (area !== 0) return area
-    return a.name.localeCompare(b.name, 'pt')
+    return a.name.localeCompare(b.name, 'pt', { numeric: true })
   })
 
   writeFileSync(
@@ -275,6 +290,7 @@ async function main() {
     JSON.stringify(
       {
         countryId: 'brazil',
+        grain: 'zona',
         updatedAt: new Date().toISOString(),
         count: suburbs.length,
         suburbs,
@@ -283,9 +299,8 @@ async function main() {
       0,
     ) + '\n',
   )
-  console.log(`\nWrote ${suburbs.length} suburbs → ${OUT}`)
+  console.log(`\nWrote ${suburbs.length} electoral zones → ${OUT}`)
 
-  // Patch suburbCount on results.json Brazil row
   try {
     const results = JSON.parse(
       await import('node:fs').then((fs) =>

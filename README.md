@@ -1,6 +1,6 @@
 # eleições exterior
 
-Bilingual (EN/PT) explorer for **Brazilian presidential results abroad** — 1st round only — comparing 2026 ballot-box tallies to 2022 TSE open data. Flávio Bolsonaro is compared to Jair Bolsonaro (2022). Optional domestic Brazil (states as Area, municipalities as City, voting locals as Suburb) is available via **Include Brazil** or selecting Brazil on the map.
+Bilingual (EN/PT) explorer for **Brazilian presidential results abroad** — 1st round only — comparing 2026 ballot-box tallies to 2022 TSE open data. Flávio Bolsonaro is compared to Jair Bolsonaro (2022). Optional domestic Brazil (states as Area, municipalities as City, electoral zones as Zona) is available via **Include Brazil** or selecting Brazil on the map.
 
 ## Run locally
 
@@ -20,7 +20,7 @@ Optional seed sync (cold load / SEO; also via GitHub Actions every 48 hours):
 ```bash
 npm run sync:tse
 npm run sync:brazil           # domestic BR: national + UF areas + municipalities
-npm run build:brazil-locals   # within-municipality voting locals (Suburb tab)
+npm run build:brazil-locals   # within-municipality electoral zones (Zona tab)
 npm run build:pages
 ```
 

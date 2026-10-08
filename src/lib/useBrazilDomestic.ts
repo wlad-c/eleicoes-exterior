@@ -31,8 +31,6 @@ let citiesInflight: Promise<CityResult[] | null> | null = null
 let suburbsInflight: Promise<CityResult[] | null> | null = null
 
 const BRAZIL_ID = 'brazil'
-/** Reject mistaken/stale caches that served the municipality file as suburbs. */
-const MIN_SUBURB_ROWS = 20_000
 
 function citiesUrl(bust?: string): string {
   const base = `${import.meta.env.BASE_URL}data/brazil-cities.json`
@@ -44,7 +42,7 @@ function suburbsUrl(bust?: string): string {
   return bust ? `${base}?v=${encodeURIComponent(bust)}` : base
 }
 
-/** Stamp countryId once so table tagging can reuse the array without remapping ~90k rows. */
+/** Stamp countryId once so table tagging can reuse the array without remapping. */
 function stampCountryId(rows: CityResult[], countryId: string): CityResult[] {
   for (const row of rows) {
     const tagged = row as CityTableRow
@@ -53,14 +51,31 @@ function stampCountryId(rows: CityResult[], countryId: string): CityResult[] {
   return rows
 }
 
+/**
+ * Reject mistaken/stale caches that served municipalities (or voting-place
+ * lists) instead of electoral-zone rows (codes like SP-71072-Z001).
+ */
 function looksLikeMunicipalityFile(rows: CityResult[]): boolean {
-  if (rows.length > 0 && rows.length < MIN_SUBURB_ROWS) return true
+  if (!rows.length) return true
+  const sample = rows.slice(0, 30)
+  let cityLike = 0
+  for (const r of sample) {
+    const parts = (r.code || '').split('-')
+    if (r.level === 'city' || parts.length <= 2) cityLike += 1
+  }
+  return cityLike >= Math.ceil(sample.length * 0.5)
+}
+
+function isValidZonaPayload(rows: CityResult[]): boolean {
+  if (rows.length < 1000) return false
+  if (looksLikeMunicipalityFile(rows)) return false
   const sample = rows[0]
-  if (!sample) return false
-  // Voting locals use codes like UF-MUNCODE-LOCAL; municipalities are UF-MUNCODE.
   const parts = (sample.code || '').split('-')
-  if (parts.length <= 2 && sample.level === 'city') return true
-  return false
+  return (
+    parts.length >= 3 &&
+    (/^Z\d+/i.test(parts[parts.length - 1] || '') ||
+      /zona|zone/i.test(sample.name || ''))
+  )
 }
 
 async function fetchCities(opts?: {
@@ -106,9 +121,9 @@ async function fetchSuburbs(opts?: {
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as SuburbsPayload
       const rows = data.suburbs ?? []
-      if (looksLikeMunicipalityFile(rows)) {
+      if (!isValidZonaPayload(rows)) {
         throw new Error(
-          `Unexpected suburbs payload (${rows.length} rows) — refusing municipality-shaped data`,
+          `Unexpected suburbs payload (${rows.length} rows) — expected electoral zones`,
         )
       }
       suburbsCached = stampCountryId(rows, BRAZIL_ID)
@@ -180,12 +195,12 @@ export function useBrazilDomestic(opts: {
 
   useEffect(() => {
     if (!wantSuburbs) return
-    if (suburbsCached && !looksLikeMunicipalityFile(suburbsCached)) {
+    if (suburbsCached && isValidZonaPayload(suburbsCached)) {
       setSuburbsFetched(suburbsCached)
       setSuburbsError(null)
       return
     }
-    if (suburbsCached && looksLikeMunicipalityFile(suburbsCached)) {
+    if (suburbsCached && !isValidZonaPayload(suburbsCached)) {
       suburbsCached = null
     }
     let cancelled = false
@@ -215,7 +230,7 @@ export function useBrazilDomestic(opts: {
   const cities = citiesCached ?? citiesFetched
   const suburbsRaw = suburbsCached ?? suburbsFetched
   const suburbs =
-    suburbsRaw && looksLikeMunicipalityFile(suburbsRaw) ? null : suburbsRaw
+    suburbsRaw && isValidZonaPayload(suburbsRaw) ? suburbsRaw : null
 
   return {
     cities,
