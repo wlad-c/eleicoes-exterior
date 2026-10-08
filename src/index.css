@@ -621,7 +621,7 @@ html.dark .is-x-scrolled .sticky-col-city {
   max-width: var(--table-col-flag);
 }
 
-/* Full country names (Country table; Area/City on wide screens). */
+/* Full country names in the Country table (Area/City keep abbrevs). */
 .cell-truncate-country {
   max-width: var(--table-col-country-full);
 }
@@ -662,14 +662,12 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Sticky country width for full-name columns.
- * Narrow viewports: Country table width = abbr + place so metrics align
- * with Area/City. Wide viewports: Area/City also use full names.
+ * Country table sticky country width = abbr + place so metrics align
+ * with Area/City (which keep abbreviations). Do not apply to Area/City.
  */
 .results-table--body .sticky-col-country.cell-truncate-country,
 .results-table--head:not(.results-table--cities)
-  .sticky-col-country.cell-truncate-country,
-.results-table--cities .sticky-col-country.cell-truncate-country {
+  .sticky-col-country.cell-truncate-country {
   width: var(--table-col-country-full);
   min-width: var(--table-col-country-full);
   max-width: var(--table-col-country-full);

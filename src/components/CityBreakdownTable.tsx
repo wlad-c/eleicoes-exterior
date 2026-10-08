@@ -71,16 +71,12 @@ export function CityBreakdownTable({
   const shellRef = useRef<HTMLDivElement>(null)
   const syncingScroll = useRef(false)
   const [pinTotal, setPinTotal] = useState(false)
-  /** flag → abbrev → full country labels by viewport width. */
+  /** Flag-only on very small screens; otherwise abbreviations. */
   const countryLabelMode = useCountryLabelMode()
-  const fullCountryLabels = countryLabelMode === 'full'
   const flagOnlyLabels = countryLabelMode === 'flag'
-  const countryColClass =
-    countryLabelMode === 'full'
-      ? 'cell-truncate-country'
-      : countryLabelMode === 'flag'
-        ? 'cell-truncate-flag'
-        : 'cell-truncate-abbr'
+  const countryColClass = flagOnlyLabels
+    ? 'cell-truncate-flag'
+    : 'cell-truncate-abbr'
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
@@ -321,17 +317,12 @@ export function CityBreakdownTable({
           className={`sticky-col sticky-col-country cell-truncate ${countryColClass} px-2 py-2.5 text-[var(--ink-muted)]`}
         >
           {singleCountry ? (
-            <NameTip
-              label={countryName(singleCountry, lang)}
-              when={fullCountryLabels ? 'truncate' : 'always'}
-            >
+            <NameTip label={countryName(singleCountry, lang)}>
               <span className="country-flag-label">
                 <CountryFlag iso3={singleCountry.iso3} />
                 {!flagOnlyLabels ? (
                   <span className="cell-truncate-text">
-                    {fullCountryLabels
-                      ? countryName(singleCountry, lang)
-                      : countryAbbrev(singleCountry, lang)}
+                    {countryAbbrev(singleCountry, lang)}
                   </span>
                 ) : null}
               </span>
@@ -675,9 +666,6 @@ export function CityBreakdownTable({
               const shortCountry = parent
                 ? countryAbbrev(parent, lang)
                 : c.countryId
-              const countryLabel = fullCountryLabels
-                ? fullCountry
-                : shortCountry
               return (
                 <tr
                   key={`${c.countryId}-${c.code}`}
@@ -690,15 +678,12 @@ export function CityBreakdownTable({
                     <td
                       className={`sticky-col sticky-col-country cell-truncate ${countryColClass} px-2 py-2.5`}
                     >
-                      <NameTip
-                        label={fullCountry}
-                        when={fullCountryLabels ? 'truncate' : 'always'}
-                      >
+                      <NameTip label={fullCountry}>
                         <span className="country-flag-label">
                           {parent ? <CountryFlag iso3={parent.iso3} /> : null}
                           {!flagOnlyLabels || !parent ? (
                             <span className="cell-truncate-text">
-                              {countryLabel}
+                              {shortCountry}
                             </span>
                           ) : null}
                         </span>
