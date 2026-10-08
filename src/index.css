@@ -315,10 +315,12 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 .table-y-scroll--virtual > .table-x-scroll {
-  /* Inner pane is as tall as the (virtualized) table; only pans sideways */
+  /* Inner pane is as tall as the (virtualized) table; pans sideways.
+   * Do NOT set touch-action: pan-x — that blocks vertical scrolling of the
+   * outer .table-y-scroll--virtual on iOS (touches hit this full-size child). */
   overflow-x: scroll;
   overflow-y: hidden;
-  touch-action: pan-x pinch-zoom;
+  touch-action: manipulation;
   overscroll-behavior-x: contain;
 }
 
