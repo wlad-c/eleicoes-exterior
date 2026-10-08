@@ -22,6 +22,7 @@ import {
   countryAbbrev,
   countryName,
   placeParentLabel,
+  placeParentLabelCompact,
   fmtCoverage,
   fmtInt,
   fmtPp,
@@ -812,10 +813,16 @@ export function CityBreakdownTable({
                 preferUf: preferBrazilUf,
               })
               const showingUf = visiblePlace !== fullPlace
-              const parentPlace =
+              const parentPlaceFull =
                 placeKind === 'suburb' ? placeParentLabel(c, lang) : ''
-              const placeTip = parentPlace
-                ? `${fullPlace} · ${parentPlace}`
+              const parentPlace =
+                placeKind === 'suburb'
+                  ? areaUfCompact
+                    ? placeParentLabelCompact(c, lang)
+                    : parentPlaceFull
+                  : ''
+              const placeTip = parentPlaceFull
+                ? `${fullPlace} · ${parentPlaceFull}`
                 : fullPlace
               return (
                 <tr

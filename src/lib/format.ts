@@ -137,6 +137,23 @@ export function placeParentLabel(
   return place.areaPt || place.area || ''
 }
 
+/**
+ * Compact parent for narrow screens: `SP · Zona 372` instead of
+ * `SP · São Paulo · Zona 372` — drops the city so the place column can stay
+ * dense (full string remains on the name tooltip).
+ */
+export function placeParentLabelCompact(
+  place: { area?: string; areaEn?: string; areaPt?: string },
+  lang: Lang,
+): string {
+  const full = placeParentLabel(place, lang)
+  const m = full.match(
+    /^([A-Za-z]{2})\s*·\s*.+?\s*·\s*((?:Zona|Zone)\s*\d+)\s*$/i,
+  )
+  if (m) return `${m[1].toUpperCase()} · ${m[2]}`
+  return full
+}
+
 /** Lula change = 2026% − 2022%. */
 export function lulaChange(c: CountryResult): number | null {
   if (c.status !== 'reported' || !c.y2026) return null

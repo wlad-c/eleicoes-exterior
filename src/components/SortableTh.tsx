@@ -68,7 +68,12 @@ export function SortableTh({
               ⋮⋮
             </span>
           ) : null}
-          <span className={align === 'right' ? 'ml-auto' : ''}>{children}</span>
+          <span
+            className={`th-title ${align === 'right' ? 'ml-auto' : ''}`}
+            title={typeof children === 'string' ? children : undefined}
+          >
+            {children}
+          </span>
         </span>
         {hint ? (
           <span className="th-hint mt-0.5 block whitespace-nowrap text-[10px] font-normal normal-case tracking-normal text-[var(--ink-muted)] opacity-90">

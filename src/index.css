@@ -379,6 +379,29 @@ html.dark .is-x-scrolled .sticky-col-city {
   .th-hint {
     display: none;
   }
+
+  /* Drag handles add ~1rem per metric header — hide until there is room */
+  .col-drag-handle {
+    display: none;
+  }
+
+  /*
+   * Cap metric header titles so long labels (F Bolsonaro 2026, Variação…)
+   * do not force empty space wider than the numbers beneath them.
+   */
+  .results-table th:not(.sticky-col) .th-title {
+    display: block;
+    max-width: 5.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 900px) {
+  .results-table th:not(.sticky-col) .th-title {
+    max-width: 4.75rem;
+  }
 }
 
 @media (max-width: 900px) {
@@ -428,11 +451,6 @@ html.dark .is-x-scrolled .sticky-col-city {
   .sticky-col-rank {
     padding-left: 0.15rem;
     padding-right: 0.25rem;
-  }
-
-  /* Drag handles add ~1rem per metric header on phones — hide them */
-  .col-drag-handle {
-    display: none;
   }
 
   .map-wrap {
@@ -744,26 +762,29 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 }
 
-/* Bairro tab: two-line cell (name + UF · município · zona) needs more room */
+/*
+ * Bairro tab: name + compact parent (`SP · Zona 372` below 1100px).
+ * Sized for the name; parent is secondary and may ellipsis.
+ */
 .results-table--suburb .sticky-col-city.cell-truncate-city {
-  width: 9.75rem;
-  min-width: 9.75rem;
-  max-width: 9.75rem;
+  width: 8.25rem;
+  min-width: 8.25rem;
+  max-width: 8.25rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 8.5rem;
-    min-width: 8.5rem;
-    max-width: 8.5rem;
+    width: 7rem;
+    min-width: 7rem;
+    max-width: 7rem;
   }
 }
 
 @media (max-width: 640px) {
   .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 8rem;
-    min-width: 8rem;
-    max-width: 8rem;
+    width: 6.5rem;
+    min-width: 6.5rem;
+    max-width: 6.5rem;
   }
 }
 
