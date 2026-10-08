@@ -36,8 +36,8 @@ const dict = {
   bolsonaroPct2026: { en: '2026 F Bolsonaro %', pt: 'F Bolsonaro % 2026' },
   lulaPct2022: { en: '2022 Lula %', pt: 'Lula % 2022' },
   bolsonaroPct2022: { en: '2022 J Bolsonaro %', pt: 'J Bolsonaro % 2022' },
-  votes2026: { en: '2026 valid votes', pt: 'Votos válidos 2026' },
-  votes2022: { en: '2022 valid votes', pt: 'Votos válidos 2022' },
+  votes2026: { en: 'Votes 2026', pt: 'Votos 2026' },
+  votes2022: { en: 'Votes 2022', pt: 'Votos 2022' },
   showPending: {
     en: 'Show pending countries',
     pt: 'Mostrar países pendentes',
@@ -87,7 +87,7 @@ const dict = {
   lula: { en: 'Lula', pt: 'Lula' },
   fBolsonaro: { en: 'F Bolsonaro', pt: 'F Bolsonaro' },
   jBolsonaro: { en: 'J Bolsonaro', pt: 'J Bolsonaro' },
-  validVotes: { en: 'valid votes', pt: 'votos válidos' },
+  validVotes: { en: 'votes', pt: 'votos' },
   table: { en: 'Results table', pt: 'Tabela de resultados' },
   cityTable: {
     en: 'City breakdown',
@@ -148,12 +148,12 @@ const dict = {
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'world region', pt: 'região' },
   hintVotes2026: {
-    en: 'total valid ballots',
-    pt: 'total de votos válidos',
+    en: 'total votes',
+    pt: 'total de votos',
   },
   hintVotes2022: {
-    en: 'total valid ballots',
-    pt: 'total de votos válidos',
+    en: 'total votes',
+    pt: 'total de votos',
   },
   hintShare2026: {
     en: '% of valid (votes)',
