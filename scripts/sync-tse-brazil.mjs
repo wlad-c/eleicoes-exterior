@@ -4,13 +4,15 @@
  *
  * Hierarchy for the Brazil country row:
  *   country  → national BR (excludes ZZ overseas)
- *   areas[]  → 27 UFs (states + DF)
- *   suburbs[]→ municipalities (municípios) — Brazil-only 4th tab
+ *   areas[]  → 27 UFs (states + DF) — Area tab
+ *   cities   → municipalities (lazy brazil-cities.json) — City tab
+ *   suburbs  → voting locals inside munis (build:brazil-locals) — Suburb tab
  *
  * 2026: official TSE EA20 JSON
  * 2022: official TSE open data votacao_secao_2022_BR.csv (streamed)
  *
  * Usage: node scripts/sync-tse-brazil.mjs
+ *        npm run build:brazil-locals   # within-municipality locals
  */
 import {
   createReadStream,
@@ -30,7 +32,7 @@ import { Readable } from 'node:stream'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
-const SUBURBS_PATH = join(ROOT, 'src/data/brazil-suburbs.json')
+const CITIES_PATH = join(ROOT, 'src/data/brazil-cities.json')
 const BRAZIL_2022_CACHE = join(ROOT, 'src/data/tse-brazil-2022.json')
 
 const HOST = 'https://resultados.tse.jus.br'
@@ -452,7 +454,8 @@ async function main() {
     }
   })
 
-  const suburbs = []
+  /** Municipalities → City tab (lazy brazil-cities.json). */
+  const cities = []
   for (const m of mun2026) {
     if (!m?.y2026) continue
     const prevKey = `${m.uf}|${m.code}`
@@ -461,12 +464,12 @@ async function main() {
       ? yearResult(prevRaw.lula, prevRaw.bolsonaro, prevRaw.totalValid)
       : null
     const pretty = titleCasePt(m.name)
-    suburbs.push({
+    cities.push({
       code: `${m.uf}-${m.code}`,
       name: m.name,
       nameEn: pretty,
       namePt: pretty,
-      level: 'suburb',
+      level: 'city',
       area: m.uf,
       areaEn: UF_META[m.uf].en,
       areaPt: UF_META[m.uf].pt,
@@ -476,27 +479,34 @@ async function main() {
       coverage: m.coverage,
     })
   }
-  suburbs.sort((a, b) => {
+  cities.sort((a, b) => {
     const uf = a.area.localeCompare(b.area)
     if (uf !== 0) return uf
     return a.name.localeCompare(b.name, 'pt')
   })
 
-  // Municipalities live in a separate JSON so the overseas seed stays small;
-  // the client lazy-loads them when Include Brazil is on.
   writeFileSync(
-    SUBURBS_PATH,
+    CITIES_PATH,
     JSON.stringify(
       {
         countryId: 'brazil',
         updatedAt: new Date().toISOString(),
-        count: suburbs.length,
-        suburbs,
+        count: cities.length,
+        cities,
       },
       null,
       0,
     ) + '\n',
   )
+
+  // Preserve suburbCount from prior locals build if present.
+  let suburbCount = 0
+  try {
+    const prevBr = results.countries.find((c) => c.id === 'brazil')
+    suburbCount = prevBr?.suburbCount ?? 0
+  } catch {
+    /* ignore */
+  }
 
   const brazil = {
     id: 'brazil',
@@ -513,8 +523,9 @@ async function main() {
     coverage: brCoverage,
     areas,
     cities: [],
+    cityCount: cities.length,
     suburbs: [],
-    suburbCount: suburbs.length,
+    suburbCount,
     notes: `TSE EA20 domestic UFs (${brCoverage ? `${brCoverage.counted}/${brCoverage.total}` : 'n/a'} sections; excludes ZZ overseas)`,
     status: 'reported',
   }
@@ -556,9 +567,12 @@ async function main() {
 
   writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
   console.log(
-    `Wrote Brazil: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${suburbs.length} suburbs (lazy file)`,
+    `Wrote Brazil: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${cities.length} cities (lazy file)`,
   )
-  console.log(`  ${SUBURBS_PATH}`)
+  console.log(`  ${CITIES_PATH}`)
+  console.log(
+    'Within-municipality locals: npm run build:brazil-locals → brazil-suburbs.json',
+  )
 }
 
 main().catch((err) => {

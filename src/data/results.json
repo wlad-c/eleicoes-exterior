@@ -130,7 +130,7 @@
       "fetchedAt": "2026-10-08T16:48:27.016Z",
       "sectionsCounted": 497897,
       "sectionsTotal": 497897,
-      "sectionsPct": 100.0,
+      "sectionsPct": 100,
       "lula": 53722151,
       "bolsonaro": 55960603,
       "totalValid": 118969906,
@@ -987,7 +987,8 @@
       "suburbs": [],
       "notes": "TSE EA20 domestic UFs (497897/497897 sections; excludes ZZ overseas)",
       "status": "reported",
-      "suburbCount": 5571
+      "suburbCount": 93780,
+      "cityCount": 5571
     },
     {
       "id": "japan",

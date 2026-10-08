@@ -11,6 +11,7 @@
     "preview": "vite preview --outDir docs",
     "sync:tse": "node scripts/build-city-2022.mjs && node scripts/sync-tse-zz.mjs && node scripts/build-location-map.mjs && node scripts/sync-tse-locations.mjs && node scripts/apply-place-names.mjs",
     "sync:brazil": "node scripts/sync-tse-brazil.mjs",
+    "build:brazil-locals": "node scripts/build-brazil-locals.mjs",
     "sync:locations": "node scripts/sync-tse-locations.mjs",
     "build:locations": "node scripts/build-location-map.mjs",
     "build:city-2022": "node scripts/build-city-2022.mjs",

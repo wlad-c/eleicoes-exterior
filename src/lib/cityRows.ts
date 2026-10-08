@@ -51,7 +51,23 @@ export function taggedBreakdownRows(
   }))
 }
 
-/** Brazilian municipalities (suburb-equivalent), Brazil only. */
+/** Brazilian municipalities for the City tab (domestic). */
+export function brazilCityRowsForCountry(country: CountryResult): CityResult[] {
+  if (!country.domestic) return []
+  return (country.cities ?? []).map((c) => ({
+    ...c,
+    level: c.level ?? ('city' as const),
+  }))
+}
+
+export function taggedBrazilCityRows(country: CountryResult): CityTableRow[] {
+  return brazilCityRowsForCountry(country).map((row) => ({
+    ...row,
+    countryId: country.id,
+  }))
+}
+
+/** Within-municipality voting locals (Brazil Suburb tab). */
 export function suburbRowsForCountry(country: CountryResult): CityResult[] {
   return (country.suburbs ?? []).map((c) => ({
     ...c,
@@ -67,6 +83,9 @@ export function taggedSuburbRows(country: CountryResult): CityTableRow[] {
 }
 
 export function cityCountForCountry(country: CountryResult): number {
+  if (country.domestic) {
+    return (country.cities?.length ?? country.cityCount ?? 0) || 0
+  }
   return breakdownRowsForCountry(country).length
 }
 
