@@ -1,8 +1,15 @@
+import { collatorFor } from './collator'
 import { cityDisplayName, countryName } from './format'
 import type { CityResult, CountryResult, Lang, SortKey } from '../types'
 
 export type CityTableRow = CityResult & {
   countryId: string
+}
+
+function asTagged(row: CityResult, countryId: string): CityTableRow {
+  const tagged = row as CityTableRow
+  if (tagged.countryId === countryId) return tagged
+  return { ...row, countryId }
 }
 
 /** Official TSE ZZ areas only (e.g. CAMBERRA, SYDNEY). */
@@ -14,10 +21,7 @@ export function areaRowsForCountry(country: CountryResult): CityResult[] {
 }
 
 export function taggedAreaRows(country: CountryResult): CityTableRow[] {
-  return areaRowsForCountry(country).map((row) => ({
-    ...row,
-    countryId: country.id,
-  }))
+  return areaRowsForCountry(country).map((row) => asTagged(row, country.id))
 }
 
 /**
@@ -45,41 +49,39 @@ export function taggedBreakdownRows(
   country: CountryResult,
   liveCities?: CityResult[] | null,
 ): CityTableRow[] {
-  return breakdownRowsForCountry(country, liveCities).map((row) => ({
-    ...row,
-    countryId: country.id,
-  }))
+  return breakdownRowsForCountry(country, liveCities).map((row) =>
+    asTagged(row, country.id),
+  )
 }
 
 /** Brazilian municipalities for the City tab (domestic). */
 export function brazilCityRowsForCountry(country: CountryResult): CityResult[] {
   if (!country.domestic) return []
-  return (country.cities ?? []).map((c) => ({
-    ...c,
-    level: c.level ?? ('city' as const),
-  }))
+  return country.cities ?? []
 }
 
 export function taggedBrazilCityRows(country: CountryResult): CityTableRow[] {
-  return brazilCityRowsForCountry(country).map((row) => ({
-    ...row,
-    countryId: country.id,
-  }))
+  const rows = brazilCityRowsForCountry(country)
+  if (!rows.length) return []
+  // Lazy-loaded Brazil payloads are stamped with countryId once on fetch.
+  if ((rows[0] as CityTableRow).countryId === country.id) {
+    return rows as CityTableRow[]
+  }
+  return rows.map((row) => asTagged(row, country.id))
 }
 
 /** Within-municipality voting locals (Brazil Suburb tab). */
 export function suburbRowsForCountry(country: CountryResult): CityResult[] {
-  return (country.suburbs ?? []).map((c) => ({
-    ...c,
-    level: c.level ?? ('suburb' as const),
-  }))
+  return country.suburbs ?? []
 }
 
 export function taggedSuburbRows(country: CountryResult): CityTableRow[] {
-  return suburbRowsForCountry(country).map((row) => ({
-    ...row,
-    countryId: country.id,
-  }))
+  const rows = suburbRowsForCountry(country)
+  if (!rows.length) return []
+  if ((rows[0] as CityTableRow).countryId === country.id) {
+    return rows as CityTableRow[]
+  }
+  return rows.map((row) => asTagged(row, country.id))
 }
 
 export function cityCountForCountry(country: CountryResult): number {
@@ -179,27 +181,23 @@ export function compareCityRows(
   const cb = countries.get(b.countryId)
   const av = citySortValue(a, ca, key, lang)
   const bv = citySortValue(b, cb, key, lang)
-  const locale = lang === 'pt' ? 'pt' : 'en'
+  const collator = collatorFor(lang)
   if (typeof av === 'string' && typeof bv === 'string') {
-    const cmp = av.localeCompare(bv, locale, { sensitivity: 'base' })
+    const cmp = collator.compare(av, bv)
     if (cmp !== 0) return cmp
-    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
-      sensitivity: 'base',
-    })
+    return collator.compare(cityDisplayName(a, lang), cityDisplayName(b, lang))
   }
   const an = av as number
   const bn = bv as number
   if (Number.isNaN(an) && Number.isNaN(bn)) {
-    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
-      sensitivity: 'base',
-    })
+    return collator.compare(cityDisplayName(a, lang), cityDisplayName(b, lang))
   }
   if (Number.isNaN(an)) return 1
   if (Number.isNaN(bn)) return -1
   if (an === bn) {
-    return cityDisplayName(a, lang).localeCompare(cityDisplayName(b, lang), locale, {
-      sensitivity: 'base',
-    })
+    // Stable, cheap tie-break for large Brazil tables (many shared vote totals).
+    if (a.code !== b.code) return a.code < b.code ? -1 : 1
+    return collator.compare(cityDisplayName(a, lang), cityDisplayName(b, lang))
   }
   return an - bn
 }

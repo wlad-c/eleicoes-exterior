@@ -1,4 +1,11 @@
-import { startTransition, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  startTransition,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import raw from './data/results.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
@@ -13,8 +20,10 @@ import {
   taggedSuburbRows,
 } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
+import { collatorFor } from './lib/collator'
 import {
-  prefetchBrazilDomestic,
+  prefetchBrazilCities,
+  prefetchBrazilSuburbs,
   useBrazilDomestic,
 } from './lib/useBrazilDomestic'
 
@@ -88,6 +97,8 @@ export default function App() {
     }
   }
   const [query, setQuery] = useState('')
+  /** Keep typing snappy while large Brazil tables filter/sort. */
+  const deferredQuery = useDeferredValue(query)
   const [region, setRegion] = useState('all')
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
     'reported',
@@ -216,7 +227,7 @@ export default function App() {
   const mapCountries = reportedCountries
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     return data.countries.filter((c) => {
       if (c.domestic && !showBrazilInTables) return false
       if (statusFilter === 'reported' && c.status !== 'reported') return false
@@ -231,7 +242,7 @@ export default function App() {
         c.abbrevPt.toLowerCase().includes(q)
       )
     })
-  }, [data.countries, query, region, statusFilter, showBrazilInTables])
+  }, [data.countries, deferredQuery, region, statusFilter, showBrazilInTables])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -278,7 +289,7 @@ export default function App() {
     const country = data.countries.find((c) => c.id === id)
     if (country?.domestic) {
       setIncludeBrazil(true)
-      prefetchBrazilDomestic()
+      prefetchBrazilCities()
       setQuery(countryName(country, lang))
       // Municipalities live on City; within-muni locals on Suburb.
       setTableView(
@@ -378,9 +389,9 @@ export default function App() {
   const filteredAreaRows = useMemo(() => {
     if (effectiveTableView !== 'areas') return []
     const rows = citySourceCountries.flatMap((c) => taggedAreaRows(c))
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById, effectiveTableView])
+  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
 
   const filteredCityRows = useMemo(() => {
     if (effectiveTableView !== 'cities') return []
@@ -388,7 +399,7 @@ export default function App() {
     const rows = citySourceCountries.flatMap((c) =>
       c.domestic ? taggedBrazilCityRows(c) : taggedBreakdownRows(c),
     )
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     if (!q) return rows
     const countryOnly = citySourceCountries.some(
       (c) =>
@@ -412,7 +423,7 @@ export default function App() {
       })
     }
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById, effectiveTableView])
+  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
 
   const filteredSuburbRows = useMemo(() => {
     // Within-municipality voting locals — Brazil only.
@@ -420,7 +431,7 @@ export default function App() {
     const rows = citySourceCountries
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     if (!q) return rows
     const countryOnly = citySourceCountries.some(
       (c) =>
@@ -433,7 +444,7 @@ export default function App() {
     )
     if (countryOnly) return rows
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById, effectiveTableView])
+  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
 
   const sortedAreas = useMemo(() => {
     if (effectiveTableView !== 'areas') return []
@@ -729,8 +740,8 @@ export default function App() {
                   className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                   aria-selected={effectiveTableView === 'suburbs'}
                   title={t('suburbTableHint', lang)}
-                  onMouseEnter={prefetchBrazilDomestic}
-                  onFocus={prefetchBrazilDomestic}
+                  onMouseEnter={prefetchBrazilSuburbs}
+                  onFocus={prefetchBrazilSuburbs}
                   onClick={() => switchTableView('suburbs')}
                 >
                   {t('tabSuburbs', lang)}
@@ -741,8 +752,8 @@ export default function App() {
               <label
                 className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
                 title={t('includeBrazilHint', lang)}
-                onMouseEnter={prefetchBrazilDomestic}
-                onFocus={prefetchBrazilDomestic}
+                onMouseEnter={prefetchBrazilCities}
+                onFocus={prefetchBrazilCities}
               >
                 <input
                   type="checkbox"
@@ -750,7 +761,7 @@ export default function App() {
                   checked={includeBrazil}
                   onChange={(e) => {
                     const on = e.target.checked
-                    if (on) prefetchBrazilDomestic()
+                    if (on) prefetchBrazilCities()
                     startTransition(() => setIncludeBrazil(on))
                     if (!on && highlightId === BRAZIL_ID) {
                       setHighlightId(null)
@@ -1065,24 +1076,19 @@ function SwingCard({
 function compare(a: CountryResult, b: CountryResult, key: SortKey, lang: Lang): number {
   const av = sortValue(a, key, lang)
   const bv = sortValue(b, key, lang)
+  const collator = collatorFor(lang)
   if (typeof av === 'string' && typeof bv === 'string') {
-    const locale = lang === 'pt' ? 'pt' : 'en'
-    return av.localeCompare(bv, locale, { sensitivity: 'base' })
+    return collator.compare(av, bv)
   }
   const an = av as number
   const bn = bv as number
   if (Number.isNaN(an) && Number.isNaN(bn)) {
-    // Stable tie-break by country name when metric is missing
-    return countryName(a, lang).localeCompare(countryName(b, lang), lang === 'pt' ? 'pt' : 'en', {
-      sensitivity: 'base',
-    })
+    return collator.compare(countryName(a, lang), countryName(b, lang))
   }
   if (Number.isNaN(an)) return 1
   if (Number.isNaN(bn)) return -1
   if (an === bn) {
-    return countryName(a, lang).localeCompare(countryName(b, lang), lang === 'pt' ? 'pt' : 'en', {
-      sensitivity: 'base',
-    })
+    return collator.compare(countryName(a, lang), countryName(b, lang))
   }
   return an - bn
 }

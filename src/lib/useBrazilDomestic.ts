@@ -1,5 +1,6 @@
 import { startTransition, useEffect, useState } from 'react'
 import type { CityResult } from '../types'
+import type { CityTableRow } from './cityRows'
 
 type CitiesPayload = {
   countryId: string
@@ -25,12 +26,23 @@ let suburbsCached: CityResult[] | null = null
 let citiesInflight: Promise<CityResult[] | null> | null = null
 let suburbsInflight: Promise<CityResult[] | null> | null = null
 
+const BRAZIL_ID = 'brazil'
+
 function citiesUrl(): string {
   return `${import.meta.env.BASE_URL}data/brazil-cities.json`
 }
 
 function suburbsUrl(): string {
   return `${import.meta.env.BASE_URL}data/brazil-suburbs.json`
+}
+
+/** Stamp countryId once so table tagging can reuse the array without remapping ~90k rows. */
+function stampCountryId(rows: CityResult[], countryId: string): CityResult[] {
+  for (const row of rows) {
+    const tagged = row as CityTableRow
+    if (tagged.countryId !== countryId) tagged.countryId = countryId
+  }
+  return rows
 }
 
 async function fetchCities(): Promise<CityResult[] | null> {
@@ -44,7 +56,7 @@ async function fetchCities(): Promise<CityResult[] | null> {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as CitiesPayload
-      citiesCached = data.cities ?? []
+      citiesCached = stampCountryId(data.cities ?? [], BRAZIL_ID)
       return citiesCached
     } catch {
       return null
@@ -66,7 +78,7 @@ async function fetchSuburbs(): Promise<CityResult[] | null> {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as SuburbsPayload
-      suburbsCached = data.suburbs ?? []
+      suburbsCached = stampCountryId(data.suburbs ?? [], BRAZIL_ID)
       return suburbsCached
     } catch {
       return null
@@ -77,9 +89,13 @@ async function fetchSuburbs(): Promise<CityResult[] | null> {
   return suburbsInflight
 }
 
-/** Prefetch municipalities (and kick suburb download) on Include Brazil hover. */
-export function prefetchBrazilDomestic(): void {
+/** Prefetch municipalities only (~2MB). Do not pull suburbs (~41MB) until that tab needs them. */
+export function prefetchBrazilCities(): void {
   void fetchCities()
+}
+
+/** Prefetch voting-local suburbs when the Suburb tab is about to be opened. */
+export function prefetchBrazilSuburbs(): void {
   void fetchSuburbs()
 }
 
@@ -91,15 +107,21 @@ export function useBrazilDomestic(opts: {
   wantSuburbs: boolean
 }): BrazilDomesticState {
   const { wantCities, wantSuburbs } = opts
-  const [citiesFetched, setCitiesFetched] = useState<CityResult[] | null>(null)
+  const [citiesFetched, setCitiesFetched] = useState<CityResult[] | null>(
+    () => citiesCached,
+  )
   const [suburbsFetched, setSuburbsFetched] = useState<CityResult[] | null>(
-    null,
+    () => suburbsCached,
   )
   const [citiesLoading, setCitiesLoading] = useState(false)
   const [suburbsLoading, setSuburbsLoading] = useState(false)
 
   useEffect(() => {
-    if (!wantCities || citiesCached) return
+    if (!wantCities) return
+    if (citiesCached) {
+      setCitiesFetched(citiesCached)
+      return
+    }
     let cancelled = false
     setCitiesLoading(true)
     void fetchCities().then((rows) => {
@@ -115,7 +137,11 @@ export function useBrazilDomestic(opts: {
   }, [wantCities])
 
   useEffect(() => {
-    if (!wantSuburbs || suburbsCached) return
+    if (!wantSuburbs) return
+    if (suburbsCached) {
+      setSuburbsFetched(suburbsCached)
+      return
+    }
     let cancelled = false
     setSuburbsLoading(true)
     void fetchSuburbs().then((rows) => {
