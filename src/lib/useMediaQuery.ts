@@ -32,10 +32,21 @@ export const COUNTRY_NO_TRUNCATE_MQ = '(min-width: 1100px)'
 export const COUNTRY_FLAG_ONLY_MQ = '(max-width: 640px)'
 
 /**
- * Narrow place column (see `--table-col-place` in index.css) — Area tab
- * prefers Brazilian UF codes over ellipsis-truncated state names.
+ * Narrow / mid viewports — Area tab prefers Brazilian UF codes over
+ * ellipsis-truncated state names; Bairro parent line uses `SP · Zona 372`.
  */
-export const AREA_UF_COMPACT_MQ = '(max-width: 900px)'
+export const AREA_UF_COMPACT_MQ = '(max-width: 1100px)'
+
+/**
+ * Dense metric cells: show `57,6%` / `-4,6 pp` without vote counts in
+ * parentheses so more columns fit on phones and small tablets.
+ */
+export const TABLE_COMPACT_METRICS_MQ = '(max-width: 900px)'
+
+/** True when share/Δ cells should omit absolute vote counts. */
+export function useTableCompactMetrics(): boolean {
+  return useMediaQuery(TABLE_COMPACT_METRICS_MQ)
+}
 
 export type CountryLabelMode = 'flag' | 'abbrev'
 

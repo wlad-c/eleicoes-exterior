@@ -17,8 +17,10 @@ export function fmtShare(
   pct: number | null | undefined,
   votes: number | null | undefined,
   lang: Lang,
+  opts?: { compact?: boolean },
 ): string {
   if (pct == null || votes == null) return '—'
+  if (opts?.compact) return fmtPct(pct, lang)
   return `${fmtPct(pct, lang)} (${fmtInt(votes, lang)})`
 }
 
@@ -50,9 +52,10 @@ export function fmtPpWithVotes(
   pp: number | null | undefined,
   votesDelta: number | null | undefined,
   lang: Lang,
+  opts?: { compact?: boolean },
 ): string {
   if (pp == null) return '—'
-  if (votesDelta == null) return fmtPp(pp, lang)
+  if (opts?.compact || votesDelta == null) return fmtPp(pp, lang)
   return `${fmtPp(pp, lang)} (${fmtSignedInt(votesDelta, lang)})`
 }
 
@@ -135,6 +138,23 @@ export function placeParentLabel(
 ): string {
   if (lang === 'en') return place.areaEn || place.area || ''
   return place.areaPt || place.area || ''
+}
+
+/**
+ * Compact parent for narrow screens: `SP · Zona 372` instead of
+ * `SP · São Paulo · Zona 372` — drops the city so the place column can stay
+ * dense (full string remains on the name tooltip).
+ */
+export function placeParentLabelCompact(
+  place: { area?: string; areaEn?: string; areaPt?: string },
+  lang: Lang,
+): string {
+  const full = placeParentLabel(place, lang)
+  const m = full.match(
+    /^([A-Za-z]{2})\s*·\s*.+?\s*·\s*((?:Zona|Zone)\s*\d+)\s*$/i,
+  )
+  if (m) return `${m[1].toUpperCase()} · ${m[2]}`
+  return full
 }
 
 /** Lula change = 2026% − 2022%. */
