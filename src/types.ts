@@ -34,10 +34,11 @@ export type CityResult = {
   /** Portuguese display name (UI). */
   namePt?: string
   /**
-   * `area` = TSE ZZ município / consular area (e.g. CAMBERRA).
-   * `city` = voting city inside an area (e.g. MELBOURNE).
+   * `area` = TSE ZZ município / consular area (e.g. CAMBERRA), or Brazilian UF.
+   * `city` = voting city inside an overseas area (e.g. MELBOURNE).
+   * `suburb` = Brazilian municipality (município) — Brazil-only 4th tab.
    */
-  level?: 'area' | 'city'
+  level?: 'area' | 'city' | 'suburb'
   /** Parent TSE area name when `level === 'city'`. */
   area?: string
   /** English display name for parent area. */
@@ -66,13 +67,20 @@ export type CountryResult = {
   swing: Swing | null
   /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
-  /** Official TSE EA20 ZZ areas (municípios / consular districts). */
+  /** Official TSE EA20 ZZ areas (municípios / consular districts), or Brazilian UFs. */
   areas?: CityResult[]
   /**
    * Finer voting-city rows from TSE ballot boxes + location map
    * (e.g. Melbourne/Brisbane inside Canberra/Sydney).
    */
   cities?: CityResult[]
+  /**
+   * Brazilian municipalities (municípios) — suburb-equivalent grain.
+   * Only populated for the domestic Brazil row.
+   */
+  suburbs?: CityResult[]
+  /** Domestic Brazil (not overseas ZZ). Excluded from overseas aggregates by default. */
+  domestic?: boolean
   notes: string
   status: CountryStatus
 }
@@ -103,6 +111,8 @@ export type ResultsData = {
     }
     /** Latest official TSE ZZ (overseas) presidential rollup from EA20 sync. */
     tseZz?: TseZzRollup
+    /** Latest official TSE BR (domestic) presidential rollup from EA20 sync. */
+    tseBr?: TseZzRollup
   }
   countries: CountryResult[]
 }

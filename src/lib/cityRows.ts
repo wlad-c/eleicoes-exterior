@@ -51,6 +51,21 @@ export function taggedBreakdownRows(
   }))
 }
 
+/** Brazilian municipalities (suburb-equivalent), Brazil only. */
+export function suburbRowsForCountry(country: CountryResult): CityResult[] {
+  return (country.suburbs ?? []).map((c) => ({
+    ...c,
+    level: c.level ?? ('suburb' as const),
+  }))
+}
+
+export function taggedSuburbRows(country: CountryResult): CityTableRow[] {
+  return suburbRowsForCountry(country).map((row) => ({
+    ...row,
+    countryId: country.id,
+  }))
+}
+
 export function cityCountForCountry(country: CountryResult): number {
   return breakdownRowsForCountry(country).length
 }

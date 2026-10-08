@@ -199,6 +199,8 @@ export function runningTotals(countries: CountryResult[]) {
   let valid = 0
   let reported = 0
   for (const c of countries) {
+    // Keep the header total overseas-only; domestic Brazil dwarfs ZZ.
+    if (c.domestic) continue
     if (c.status !== 'reported' || !c.y2026) continue
     lula += c.y2026.lula
     bolsonaro += c.y2026.bolsonaro
