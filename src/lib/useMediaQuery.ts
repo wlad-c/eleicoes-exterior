@@ -20,30 +20,21 @@ export function useMediaQuery(query: string): boolean {
 }
 
 /**
- * Wide enough that metric columns fit — country names need not truncate.
+ * Wide enough that metric columns fit — Country table names need not truncate.
  * (App shell is max-w-6xl / 7xl / 96rem; 68.75rem ≈ 1100px.)
  */
 export const COUNTRY_NO_TRUNCATE_MQ = '(min-width: 1100px)'
 
 /**
- * Extra room after columns fit — Area/City can show full country names
- * instead of abbreviations.
- */
-export const COUNTRY_FULL_NAME_MQ = '(min-width: 1280px)'
-
-/**
- * Very small screens — country column shows flag only (no abbrev / name text).
+ * Very small screens — country column shows flag only (no abbrev text).
  * Matches the filter-row mobile breakpoint.
  */
 export const COUNTRY_FLAG_ONLY_MQ = '(max-width: 640px)'
 
-export type CountryLabelMode = 'flag' | 'abbrev' | 'full'
+export type CountryLabelMode = 'flag' | 'abbrev'
 
-/** Area/City country column: flag-only → abbrev → full name by viewport. */
+/** Area/City country column: flag-only on narrow viewports, else abbreviation. */
 export function useCountryLabelMode(): CountryLabelMode {
   const flagOnly = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
-  const fullNames = useMediaQuery(COUNTRY_FULL_NAME_MQ)
-  if (flagOnly) return 'flag'
-  if (fullNames) return 'full'
-  return 'abbrev'
+  return flagOnly ? 'flag' : 'abbrev'
 }
