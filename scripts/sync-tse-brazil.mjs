@@ -6,13 +6,13 @@
  *   country  → national BR (excludes ZZ overseas)
  *   areas[]  → 27 UFs (states + DF) — Area tab
  *   cities   → municipalities (lazy brazil-cities.json) — City tab
- *   suburbs  → voting locals inside munis (build:brazil-locals) — Suburb tab
+ *   suburbs  → electoral zones inside munis (build:brazil-locals) — Zona tab
  *
  * 2026: official TSE EA20 JSON
  * 2022: official TSE open data votacao_secao_2022_BR.csv (streamed)
  *
  * Usage: node scripts/sync-tse-brazil.mjs
- *        npm run build:brazil-locals   # within-municipality locals
+ *        npm run build:brazil-locals   # within-municipality electoral zones
  */
 import {
   createReadStream,

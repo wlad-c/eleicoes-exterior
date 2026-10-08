@@ -36,7 +36,8 @@ export type CityResult = {
   /**
    * `area` = TSE ZZ município / consular area (e.g. CAMBERRA), or Brazilian UF.
    * `city` = voting city inside an overseas area (e.g. MELBOURNE).
-   * `suburb` = Brazilian municipality (município) — Brazil-only 4th tab.
+   * `suburb` = Brazilian electoral zone (NR_ZONA) inside a municipality —
+   * Brazil-only 4th tab (suburb-equivalent grain).
    */
   level?: 'area' | 'city' | 'suburb'
   /** Parent TSE area name when `level === 'city'`. */
@@ -77,11 +78,11 @@ export type CountryResult = {
   /** Count of Brazilian municipalities when `cities` is not yet loaded. */
   cityCount?: number
   /**
-   * Within-municipality grain for Brazil (voting locals / suburb-equivalent).
-   * Lazy-loaded from brazil-suburbs.json when the Suburb tab needs them.
+   * Within-municipality grain for Brazil (electoral zones / suburb-equivalent).
+   * Lazy-loaded from brazil-suburbs.json when the Zona tab needs them.
    */
   suburbs?: CityResult[]
-  /** Count of Brazil suburb rows when `suburbs` is not yet loaded. */
+  /** Count of Brazil zona rows when `suburbs` is not yet loaded. */
   suburbCount?: number
   /** Domestic Brazil (not overseas ZZ). Excluded from overseas aggregates by default. */
   domestic?: boolean
