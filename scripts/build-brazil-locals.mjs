@@ -5,6 +5,11 @@
  *
  * Grain: NR_ZONA (electoral zone) inside each município — not NM_LOCAL_VOTACAO
  * (individual voting places are too fine for the Local/Zona tab).
+ *
+ * Labels (G1-style): prefer official TRE zone nicknames when known
+ * (e.g. Piraporinha, Bela Vista, Copacabana), else top NM_BAIRRO from
+ * eleitorado_local_votacao — never opaque "Zona 001" alone.
+ *
  * Writes: src/data/brazil-suburbs.json
  *
  * Usage: node scripts/build-brazil-locals.mjs
@@ -14,6 +19,7 @@ import {
   createWriteStream,
   mkdirSync,
   writeFileSync,
+  readFileSync,
   existsSync,
   statSync,
 } from 'node:fs'
@@ -29,6 +35,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT = join(ROOT, 'src/data/brazil-suburbs.json')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
+const NICKNAMES_PATH = join(ROOT, 'scripts/data/tre-zona-nicknames.json')
 
 const CDN = 'https://cdn.tse.jus.br'
 const UA = 'eleicoes-exterior/1.0 (+brazil zona builder)'
@@ -45,6 +52,9 @@ const YEARS = [
     csv: 'votacao_secao_2026_BR.csv',
   },
 ]
+
+/** Neighborhood registry used to name each electoral zone. */
+const BAIRRO_ZIP = `${CDN}/estatistica/sead/odsele/eleitorado_locais_votacao/eleitorado_local_votacao_2026.zip`
 
 const UF_META = {
   AC: { en: 'Acre', pt: 'Acre' },
@@ -76,6 +86,8 @@ const UF_META = {
   TO: { en: 'Tocantins', pt: 'Tocantins' },
 }
 
+const UF_LIST = Object.keys(UF_META)
+
 function pad(n, w) {
   return String(n).padStart(w, '0')
 }
@@ -94,13 +106,14 @@ function yearResult(lula, bolsonaro, totalValid) {
   }
 }
 
+const TITLE_SMALL = new Set(['de', 'da', 'do', 'das', 'dos', 'e'])
+
 function titleCasePt(name) {
-  return String(name || '')
-    .toLocaleLowerCase('pt-BR')
-    .replace(
-      /(^|[\s\-/'])(\S)/g,
-      (_, sep, ch) => `${sep}${ch.toLocaleUpperCase('pt-BR')}`,
-    )
+  const lower = String(name || '').toLocaleLowerCase('pt-BR')
+  return lower.replace(/(^|[\s\-/'])(\S+)/g, (full, sep, word, offset) => {
+    if (offset > 0 && TITLE_SMALL.has(word)) return `${sep}${word}`
+    return `${sep}${word.charAt(0).toLocaleUpperCase('pt-BR')}${word.slice(1)}`
+  })
 }
 
 function parseCsvLine(line) {
@@ -122,6 +135,13 @@ function parseCsvLine(line) {
   }
   cols.push(cur)
   return cols
+}
+
+function isNullishBairro(raw) {
+  const b = String(raw || '').trim()
+  if (!b) return true
+  const u = b.toUpperCase()
+  return u === '#NULO#' || u === '#NE#' || u === '-' || u === 'NULL'
 }
 
 async function download(url, dest) {
@@ -164,6 +184,113 @@ async function ensureCsv(yearCfg, work) {
     stdio: 'inherit',
   })
   return csvPath
+}
+
+/**
+ * Map `UF|munCode|zona` → top 1–2 neighborhood names (title-cased), weighted by
+ * QT_ELEITOR_SECAO from eleitorado_local_votacao_2026.
+ */
+async function loadZoneBairros(work) {
+  mkdirSync(work, { recursive: true })
+  const zipPath = join(work, 'eleitorado_local_votacao_2026.zip')
+  const cached = join(tmpdir(), 'eleitorado-locais', 'eleitorado_local_votacao_2026.zip')
+  if (existsSync(cached) && statSync(cached).size > 1_000_000) {
+    if (!existsSync(zipPath) || statSync(zipPath).size < 1_000_000) {
+      console.log(`Linking bairro zip from ${cached}`)
+      try {
+        const { symlinkSync, unlinkSync, copyFileSync } = await import('node:fs')
+        try {
+          unlinkSync(zipPath)
+        } catch {
+          /* */
+        }
+        try {
+          symlinkSync(cached, zipPath)
+        } catch {
+          copyFileSync(cached, zipPath)
+        }
+      } catch {
+        /* fall through */
+      }
+    }
+  }
+  if (!existsSync(zipPath) || statSync(zipPath).size < 1_000_000) {
+    console.log(`Downloading ${BAIRRO_ZIP}…`)
+    await download(BAIRRO_ZIP, zipPath)
+  }
+
+  /** @type {Map<string, Map<string, number>>} */
+  const weights = new Map()
+
+  for (const uf of UF_LIST) {
+    const entry = `eleitorado_local_votacao_2026_${uf}.csv`
+    const csvPath = join(work, entry)
+    if (!existsSync(csvPath) || statSync(csvPath).size < 10_000) {
+      execFileSync('unzip', ['-o', '-j', zipPath, entry, '-d', work], {
+        stdio: 'pipe',
+      })
+    }
+    console.log(`  bairros ${uf}…`)
+    const rl = createInterface({
+      input: createReadStream(csvPath, { encoding: 'latin1' }),
+      crlfDelay: Infinity,
+    })
+    let header = null
+    const idx = {}
+    for await (const line of rl) {
+      if (!header) {
+        header = parseCsvLine(line).map((h) => h.replace(/^\uFEFF/, ''))
+        for (const name of [
+          'SG_UF',
+          'CD_MUNICIPIO',
+          'NR_ZONA',
+          'NR_TURNO',
+          'NM_BAIRRO',
+          'QT_ELEITOR_SECAO',
+        ]) {
+          idx[name] = header.indexOf(name)
+        }
+        if (idx.NM_BAIRRO < 0) {
+          throw new Error(`${entry} missing NM_BAIRRO`)
+        }
+        continue
+      }
+      const cols = parseCsvLine(line)
+      if (cols[idx.NR_TURNO] !== '1') continue
+      const rowUf = cols[idx.SG_UF] || uf
+      if (!UF_META[rowUf]) continue
+      const bairro = cols[idx.NM_BAIRRO]
+      if (isNullishBairro(bairro)) continue
+      const zona = pad(cols[idx.NR_ZONA], 3)
+      const munCode = pad(cols[idx.CD_MUNICIPIO], 5)
+      const qt = Number.parseInt(cols[idx.QT_ELEITOR_SECAO], 10) || 0
+      if (!qt) continue
+      const key = `${rowUf}|${munCode}|${zona}`
+      let bag = weights.get(key)
+      if (!bag) {
+        bag = new Map()
+        weights.set(key, bag)
+      }
+      bag.set(bairro, (bag.get(bairro) || 0) + qt)
+    }
+  }
+
+  /** @type {Map<string, string[]>} */
+  const top = new Map()
+  for (const [key, bag] of weights) {
+    const ranked = [...bag.entries()].sort((a, b) => b[1] - a[1])
+    const picked = [ranked[0][0]]
+    // Second neighborhood only when it is a meaningful share of the top one.
+    if (ranked.length > 1 && ranked[1][1] >= ranked[0][1] * 0.25) {
+      picked.push(ranked[1][0])
+    }
+    top.set(
+      key,
+      picked.map((n) => titleCasePt(n)),
+    )
+  }
+  console.log(`  zone→bairro labels for ${top.size} zones`)
+  return top
 }
 
 /**
@@ -237,10 +364,48 @@ async function aggregateYear(csvPath, into) {
   console.log(`  aggregated ${rows} vote lines → ${into.size} zones`)
 }
 
+function loadOfficialNicknames() {
+  /** @type {Map<string, string>} */
+  const map = new Map()
+  if (!existsSync(NICKNAMES_PATH)) {
+    console.warn(`No ${NICKNAMES_PATH} — falling back to bairro labels only`)
+    return map
+  }
+  const data = JSON.parse(readFileSync(NICKNAMES_PATH, 'utf8'))
+  for (const [key, name] of Object.entries(data.zones || {})) {
+    if (name) map.set(key, String(name))
+  }
+  console.log(`  loaded ${map.size} official TRE zone nicknames`)
+  return map
+}
+
+/**
+ * G1-style place label: one recognizable neighborhood/region name when possible.
+ * @param {string[]|undefined} bairros
+ * @param {string|undefined} nickname
+ * @param {string} zona
+ */
+function zoneLabels(bairros, nickname, zona) {
+  const zonaPt = `Zona ${zona}`
+  const zonaEn = `Zone ${zona}`
+  if (nickname) {
+    return { namePt: nickname, nameEn: nickname, labelKind: 'tre-nickname' }
+  }
+  if (bairros?.length) {
+    const place = bairros.join(' / ')
+    return { namePt: place, nameEn: place, labelKind: 'bairro' }
+  }
+  return { namePt: zonaPt, nameEn: zonaEn, labelKind: 'zona' }
+}
+
 async function main() {
   const work = join(tmpdir(), 'eleicoes-brazil-locals')
   const by2022 = new Map()
   const by2026 = new Map()
+
+  console.log('\n=== zone neighborhood labels ===')
+  const nicknames = loadOfficialNicknames()
+  const bairroByZone = await loadZoneBairros(work)
 
   for (const cfg of YEARS) {
     console.log(`\n=== ${cfg.year} ===`)
@@ -250,6 +415,8 @@ async function main() {
 
   const keys = new Set([...by2022.keys(), ...by2026.keys()])
   const suburbs = []
+  let labeled = 0
+  let nicknamed = 0
   for (const key of keys) {
     const a = by2026.get(key)
     const b = by2022.get(key)
@@ -262,17 +429,29 @@ async function main() {
       : null
     if (!y2026) continue
     const munPretty = titleCasePt(base.munName)
-    const zonaLabelPt = `Zona ${base.zona}`
-    const zonaLabelEn = `Zone ${base.zona}`
+    const bairros = bairroByZone.get(key)
+    const nickname = nicknames.get(key)
+    const { namePt, nameEn, labelKind } = zoneLabels(
+      bairros,
+      nickname,
+      base.zona,
+    )
+    if (labelKind !== 'zona') labeled += 1
+    if (labelKind === 'tre-nickname') nicknamed += 1
+    const zonaPt = `Zona ${base.zona}`
+    const zonaEn = `Zone ${base.zona}`
+    // Parent line keeps the official zone number so the opaque TSE id stays findable.
+    const areaPt = `${base.uf} · ${munPretty} · ${zonaPt}`
+    const areaEn = `${base.uf} · ${munPretty} · ${zonaEn}`
     const row = {
       code: `${base.uf}-${base.munCode}-Z${base.zona}`,
-      name: zonaLabelPt,
-      nameEn: zonaLabelEn,
-      namePt: zonaLabelPt,
+      name: namePt,
+      nameEn,
+      namePt,
       level: 'suburb',
-      area: `${base.uf} · ${base.munName}`,
-      areaEn: `${base.uf} · ${munPretty}`,
-      areaPt: `${base.uf} · ${munPretty}`,
+      area: `${base.uf} · ${base.munName} · ${zonaPt}`,
+      areaEn,
+      areaPt,
       y2026,
     }
     if (y2022) row.y2022 = y2022
@@ -291,15 +470,20 @@ async function main() {
       {
         countryId: 'brazil',
         grain: 'zona',
+        labelSource: 'tre-zona-nicknames + eleitorado_local_votacao.NM_BAIRRO',
         updatedAt: new Date().toISOString(),
         count: suburbs.length,
+        labeled,
+        nicknamed,
         suburbs,
       },
       null,
       0,
     ) + '\n',
   )
-  console.log(`\nWrote ${suburbs.length} electoral zones → ${OUT}`)
+  console.log(
+    `\nWrote ${suburbs.length} electoral zones (${labeled} labeled, ${nicknamed} TRE nicknames) → ${OUT}`,
+  )
 
   try {
     const results = JSON.parse(

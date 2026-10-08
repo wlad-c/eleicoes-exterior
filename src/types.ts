@@ -36,8 +36,8 @@ export type CityResult = {
   /**
    * `area` = TSE ZZ município / consular area (e.g. CAMBERRA), or Brazilian UF.
    * `city` = voting city inside an overseas area (e.g. MELBOURNE).
-   * `suburb` = Brazilian electoral zone (NR_ZONA) inside a municipality —
-   * Brazil-only 4th tab (suburb-equivalent grain).
+   * `suburb` = Brazilian electoral zone (NR_ZONA) inside a municipality,
+   * labeled by its main TSE neighborhoods (NM_BAIRRO) — Brazil-only 4th tab.
    */
   level?: 'area' | 'city' | 'suburb'
   /** Parent TSE area name when `level === 'city'`. */
