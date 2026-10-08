@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import raw from './data/results.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
+import { CountryFlag } from './components/CountryFlag'
 import { ResultsTable } from './components/ResultsTable'
 import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import {
+  areaRowsForCountry,
+  cityCountForCountry,
   compareCityRows,
   taggedAreaRows,
   taggedBreakdownRows,
@@ -64,6 +67,8 @@ export default function App() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const [tableView, setTableView] = useState<TableView>('countries')
+  /** When set, Area/City tables show only this country's places. */
+  const [focusCountryId, setFocusCountryId] = useState<string | null>(null)
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
   )
@@ -162,20 +167,40 @@ export default function App() {
 
   function switchTableView(next: TableView) {
     setTableView(next)
-    if (next === 'countries' && sortKey === 'city') {
-      setSortKey('votes2026')
-      setSortDir('desc')
+    if (next === 'countries') {
+      setFocusCountryId(null)
+      if (sortKey === 'city') {
+        setSortKey('votes2026')
+        setSortDir('desc')
+      }
     }
   }
 
   function onSelect(id: string | null) {
     setHighlightId(id)
-    if (id) {
-      document.getElementById(`row-${id}`)?.scrollIntoView({
-        block: 'nearest',
-        behavior: 'smooth',
-      })
+    if (!id) {
+      setFocusCountryId(null)
+      return
     }
+    const country = data.countries.find((c) => c.id === id)
+    const hasBreakdown =
+      !!country &&
+      ((country.areas?.length ?? 0) > 0 || (country.cities?.length ?? 0) > 0)
+    if (hasBreakdown) {
+      setFocusCountryId(id)
+      setTableView('cities')
+      window.setTimeout(() => {
+        tableChromeRef.current?.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth',
+        })
+      }, 0)
+      return
+    }
+    document.getElementById(`row-${id}`)?.scrollIntoView({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
   }
 
   const countryById = useMemo(
@@ -183,7 +208,16 @@ export default function App() {
     [data.countries],
   )
 
+  const focusedCountry =
+    focusCountryId != null ? countryById.get(focusCountryId) ?? null : null
+  // Drop stale focus if the country disappears after a live refresh.
+  const activeFocusCountryId = focusedCountry ? focusCountryId : null
+
   const citySourceCountries = useMemo(() => {
+    if (activeFocusCountryId) {
+      const c = countryById.get(activeFocusCountryId)
+      return c ? [c] : []
+    }
     return data.countries.filter((c) => {
       if ((c.areas?.length ?? 0) === 0 && (c.cities?.length ?? 0) === 0) {
         return false
@@ -193,7 +227,13 @@ export default function App() {
       if (region !== 'all' && c.region !== region) return false
       return true
     })
-  }, [data.countries, statusFilter, region])
+  }, [
+    data.countries,
+    statusFilter,
+    region,
+    activeFocusCountryId,
+    countryById,
+  ])
 
   function matchesPlaceQuery(
     r: {
@@ -597,6 +637,34 @@ export default function App() {
               </select>
             </label>
           </div>
+
+          {focusedCountry && tableView !== 'countries' ? (
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-md bg-[var(--chip-soft)] px-3 py-2 text-sm">
+              <p className="min-w-0 text-[var(--ink)]">
+                <span className="text-[var(--ink-muted)]">
+                  {t('focusedCountryPlaces', lang)}{' '}
+                </span>
+                <span className="country-flag-label font-semibold">
+                  <CountryFlag iso3={focusedCountry.iso3} />
+                  {countryName(focusedCountry, lang)}
+                </span>
+                <span className="ml-2 font-normal text-[var(--ink-muted)]">
+                  (
+                  {tableView === 'areas'
+                    ? areaRowsForCountry(focusedCountry).length
+                    : cityCountForCountry(focusedCountry)}{' '}
+                  {t(tableView === 'areas' ? 'areas' : 'cities', lang)})
+                </span>
+              </p>
+              <button
+                type="button"
+                className="lang-btn control shrink-0 px-2.5 py-1 text-xs font-semibold"
+                onClick={() => setFocusCountryId(null)}
+              >
+                {t('clearCountryFocus', lang)}
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {tableView === 'countries' ? (
@@ -619,7 +687,7 @@ export default function App() {
             rows={tableView === 'areas' ? sortedAreas : sortedCities}
             countries={countryById}
             lang={lang}
-            showCountry
+            showCountry={!activeFocusCountryId}
             placeKind={tableView === 'areas' ? 'area' : 'city'}
             sortKey={sortKey}
             sortDir={sortDir}
