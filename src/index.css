@@ -350,7 +350,11 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 }
 
-/* Fixed Total row — full table columns, viewport-pinned (iOS-safe) */
+/*
+ * Fixed Total row — full table columns, viewport-pinned.
+ * `bottom` is overridden via useVisualViewportBottom so it stays on the
+ * visible bottom above the on-screen keyboard / iPad accessory bar.
+ */
 .total-pin {
   position: fixed;
   left: 0;
