@@ -128,6 +128,15 @@ export function areaDisplayName(
   return cityDisplayName(place, lang)
 }
 
+/** Parent UF · municipality label for Brazil voting-local (Local tab) rows. */
+export function placeParentLabel(
+  place: { area?: string; areaEn?: string; areaPt?: string },
+  lang: Lang,
+): string {
+  if (lang === 'en') return place.areaEn || place.area || ''
+  return place.areaPt || place.area || ''
+}
+
 /** Lula change = 2026% − 2022%. */
 export function lulaChange(c: CountryResult): number | null {
   if (c.status !== 'reported' || !c.y2026) return null

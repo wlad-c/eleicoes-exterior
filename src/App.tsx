@@ -940,6 +940,16 @@ export default function App() {
                 brazilDomestic.suburbsLoading &&
                 !brazilDomestic.suburbs?.length)
             }
+            loadError={
+              effectiveTableView === 'suburbs'
+                ? brazilDomestic.suburbsError
+                : null
+            }
+            onRetryLoad={
+              effectiveTableView === 'suburbs'
+                ? brazilDomestic.retrySuburbs
+                : undefined
+            }
             showCountry
             placeKind={
               effectiveTableView === 'areas'

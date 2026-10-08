@@ -21,6 +21,7 @@ import {
   cityDisplayName,
   countryAbbrev,
   countryName,
+  placeParentLabel,
   fmtCoverage,
   fmtInt,
   fmtPp,
@@ -45,6 +46,9 @@ type Props = {
   countries: Map<string, CountryResult>
   lang: Lang
   loading?: boolean
+  /** Failed to load Local-tab payload (not the same as empty filters). */
+  loadError?: string | null
+  onRetryLoad?: () => void
   showCountry: boolean
   /** Column label + empty/footer wording for Area / City / Suburb tabs. */
   placeKind?: 'area' | 'city' | 'suburb'
@@ -62,6 +66,8 @@ export function CityBreakdownTable({
   countries,
   lang,
   loading,
+  loadError,
+  onRetryLoad,
   showCountry,
   placeKind = 'city',
   sortKey,
@@ -107,10 +113,12 @@ export function CityBreakdownTable({
    * working. Mobile CSS must not force overflow-y:hidden on this class
    * (see `.table-x-scroll--virtual` in index.css).
    */
+  const rowEstimatePx =
+    placeKind === 'suburb' ? ROW_ESTIMATE_PX + 14 : ROW_ESTIMATE_PX
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => bodyScrollRef.current,
-    estimateSize: () => ROW_ESTIMATE_PX,
+    estimateSize: () => rowEstimatePx,
     overscan: 24,
     enabled: shouldVirtualize,
   })
@@ -332,6 +340,23 @@ export function CityBreakdownTable({
       <p className="py-8 text-center text-[var(--ink-muted)]">
         {t(placeKind === 'suburb' ? 'suburbLoading' : 'cityLoading', lang)}
       </p>
+    )
+  }
+
+  if (loadError && rows.length === 0 && placeKind === 'suburb') {
+    return (
+      <div className="space-y-3 py-8 text-center text-[var(--ink-muted)]">
+        <p>{t('suburbLoadError', lang)}</p>
+        {onRetryLoad ? (
+          <button
+            type="button"
+            className="control px-3 py-1.5 text-sm font-semibold text-[var(--ink)]"
+            onClick={onRetryLoad}
+          >
+            {t('suburbRetry', lang)}
+          </button>
+        ) : null}
+      </div>
     )
   }
 
@@ -764,6 +789,11 @@ export function CityBreakdownTable({
                 preferUf: preferBrazilUf,
               })
               const showingUf = visiblePlace !== fullPlace
+              const parentPlace =
+                placeKind === 'suburb' ? placeParentLabel(c, lang) : ''
+              const placeTip = parentPlace
+                ? `${fullPlace} · ${parentPlace}`
+                : fullPlace
               return (
                 <tr
                   key={key}
@@ -791,10 +821,17 @@ export function CityBreakdownTable({
                   ) : null}
                   <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
                     <NameTip
-                      label={fullPlace}
-                      when={showingUf ? 'always' : 'truncate'}
+                      label={placeTip}
+                      when={showingUf || parentPlace ? 'always' : 'truncate'}
                     >
-                      <span className="cell-truncate-text">{visiblePlace}</span>
+                      <span className="cell-truncate-text">
+                        {visiblePlace}
+                        {parentPlace ? (
+                          <span className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]">
+                            {parentPlace}
+                          </span>
+                        ) : null}
+                      </span>
                     </NameTip>
                   </td>
                   {metricCols.map((col) => {

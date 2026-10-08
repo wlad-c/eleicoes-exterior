@@ -152,6 +152,11 @@ const dict = {
     en: 'Loading voting locals inside Brazilian municipalities…',
     pt: 'Carregando locais de votação nos municípios do Brasil…',
   },
+  suburbLoadError: {
+    en: 'Could not load voting locals (~94k rows). Check your connection and try again — this tab is not the municipality list.',
+    pt: 'Não foi possível carregar os locais de votação (~94 mil linhas). Verifique a conexão e tente de novo — esta aba não é a lista de municípios.',
+  },
+  suburbRetry: { en: 'Retry', pt: 'Tentar de novo' },
   cityNo2022Footnote: {
     en: '2022 shares use official TSE section totals (votação por seção). Places that did not exist as voting locals in 2022 show — for 2022/change/swing.',
     pt: 'As % de 2022 usam a votação por seção oficial do TSE. Locais que não existiam como locais de votação em 2022 ficam como — em 2022/variação/swing.',
