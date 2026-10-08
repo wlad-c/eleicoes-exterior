@@ -27,10 +27,7 @@ import {
   type TableMetricCol,
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
-import {
-  COUNTRY_FULL_NAME_MQ,
-  useMediaQuery,
-} from '../lib/useMediaQuery'
+import { useCountryLabelMode } from '../lib/useMediaQuery'
 import type { CountryResult, Lang, SortKey } from '../types'
 
 type Props = {
@@ -74,11 +71,16 @@ export function CityBreakdownTable({
   const shellRef = useRef<HTMLDivElement>(null)
   const syncingScroll = useRef(false)
   const [pinTotal, setPinTotal] = useState(false)
-  /** Wide screens: show full country names instead of abbreviations. */
-  const fullCountryLabels = useMediaQuery(COUNTRY_FULL_NAME_MQ)
-  const countryColClass = fullCountryLabels
-    ? 'cell-truncate-country'
-    : 'cell-truncate-abbr'
+  /** flag → abbrev → full country labels by viewport width. */
+  const countryLabelMode = useCountryLabelMode()
+  const fullCountryLabels = countryLabelMode === 'full'
+  const flagOnlyLabels = countryLabelMode === 'flag'
+  const countryColClass =
+    countryLabelMode === 'full'
+      ? 'cell-truncate-country'
+      : countryLabelMode === 'flag'
+        ? 'cell-truncate-flag'
+        : 'cell-truncate-abbr'
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
@@ -229,7 +231,7 @@ export function CityBreakdownTable({
     lang,
     sortKey,
     sortDir,
-    fullCountryLabels,
+    countryLabelMode,
   ])
 
   // Pin Total row whenever the table is on screen (any row count).
@@ -257,7 +259,7 @@ export function CityBreakdownTable({
       window.removeEventListener('resize', update)
       io.disconnect()
     }
-  }, [rows, loading, showCountry, visibleCols, placeKind, fullCountryLabels])
+  }, [rows, loading, showCountry, visibleCols, placeKind, countryLabelMode])
 
   const syncScroll = (source: 'head' | 'body' | 'foot') => {
     const head = headScrollRef.current
@@ -323,10 +325,15 @@ export function CityBreakdownTable({
               label={countryName(singleCountry, lang)}
               when={fullCountryLabels ? 'truncate' : 'always'}
             >
-              <span className="cell-truncate-text">
-                {fullCountryLabels
-                  ? countryName(singleCountry, lang)
-                  : countryAbbrev(singleCountry, lang)}
+              <span className="country-flag-label">
+                <CountryFlag iso3={singleCountry.iso3} />
+                {!flagOnlyLabels ? (
+                  <span className="cell-truncate-text">
+                    {fullCountryLabels
+                      ? countryName(singleCountry, lang)
+                      : countryAbbrev(singleCountry, lang)}
+                  </span>
+                ) : null}
               </span>
             </NameTip>
           ) : (
@@ -448,11 +455,15 @@ export function CityBreakdownTable({
       {showCountry ? (
         <SortableTh
           onClick={() => onSort('country')}
-          hint={t('hintCountry', lang)}
+          hint={flagOnlyLabels ? undefined : t('hintCountry', lang)}
           stickyCol="country"
           className={countryColClass}
         >
-          {t('country', lang)}
+          {flagOnlyLabels ? (
+            <span className="sr-only">{t('country', lang)}</span>
+          ) : (
+            t('country', lang)
+          )}
           {arrow('country')}
         </SortableTh>
       ) : null}
@@ -685,9 +696,11 @@ export function CityBreakdownTable({
                       >
                         <span className="country-flag-label">
                           {parent ? <CountryFlag iso3={parent.iso3} /> : null}
-                          <span className="cell-truncate-text">
-                            {countryLabel}
-                          </span>
+                          {!flagOnlyLabels || !parent ? (
+                            <span className="cell-truncate-text">
+                              {countryLabel}
+                            </span>
+                          ) : null}
                         </span>
                       </NameTip>
                     </td>
