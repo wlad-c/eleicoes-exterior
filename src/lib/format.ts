@@ -128,7 +128,7 @@ export function areaDisplayName(
   return cityDisplayName(place, lang)
 }
 
-/** Parent UF · municipality label for Brazil voting-local (Local tab) rows. */
+/** Parent UF · municipality · zone label for Brazil neighborhood (Bairro tab) rows. */
 export function placeParentLabel(
   place: { area?: string; areaEn?: string; areaPt?: string },
   lang: Lang,
