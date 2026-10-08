@@ -21,6 +21,7 @@ import {
   type TableMetricCol,
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
+import { useHorizontalTouchScroll } from '../lib/useHorizontalTouchScroll'
 import { useVisualViewportBottom } from '../lib/useVisualViewportBottom'
 import {
   heatColumnForMetric,
@@ -197,6 +198,17 @@ export function ResultsTable({
       syncingScroll.current = false
     })
   }
+
+  useHorizontalTouchScroll(
+    bodyScrollRef,
+    () => syncScroll('body'),
+    [rows.length, visibleCols, columnOrder],
+  )
+  useHorizontalTouchScroll(
+    headScrollRef,
+    () => syncScroll('head'),
+    [rows.length, visibleCols, columnOrder],
+  )
 
   if (rows.length === 0) {
     return (

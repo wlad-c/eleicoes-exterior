@@ -34,6 +34,7 @@ import {
   type TableMetricCol,
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
+import { useHorizontalTouchScroll } from '../lib/useHorizontalTouchScroll'
 import {
   useAreaUfCompact,
   useCountryLabelMode,
@@ -82,7 +83,10 @@ export function CityBreakdownTable({
   const headTableRef = useRef<HTMLTableElement>(null)
   const footTableRef = useRef<HTMLTableElement>(null)
   const headScrollRef = useRef<HTMLDivElement>(null)
+  /** Horizontal body scroller (always). */
   const bodyScrollRef = useRef<HTMLDivElement>(null)
+  /** Vertical virtualizer scroller (outer); null when not virtualizing. */
+  const bodyYScrollRef = useRef<HTMLDivElement>(null)
   const footScrollRef = useRef<HTMLDivElement>(null)
   const totalPinRef = useRef<HTMLDivElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
@@ -108,16 +112,16 @@ export function CityBreakdownTable({
     1 /* rank */ + (showCountry ? 1 : 0) + 1 /* place */ + metricCols.length
 
   /**
-   * Nested xy scrollport for large Brazil tables. A window-tall overflow-x
-   * pane breaks horizontal panning on iOS; a max-height pane keeps both axes
-   * working. Mobile CSS must not force overflow-y:hidden on this class
-   * (see `.table-x-scroll--virtual` in index.css).
+   * Split axes for iOS: outer = vertical virtualizer, inner = horizontal pan.
+   * A single element with overflow-x+y auto still drops sideways gestures on
+   * Safari when sticky columns are present.
    */
   const rowEstimatePx =
     placeKind === 'suburb' ? ROW_ESTIMATE_PX + 14 : ROW_ESTIMATE_PX
   const virtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => bodyScrollRef.current,
+    getScrollElement: () =>
+      shouldVirtualize ? bodyYScrollRef.current : bodyScrollRef.current,
     estimateSize: () => rowEstimatePx,
     overscan: 24,
     enabled: shouldVirtualize,
@@ -334,6 +338,17 @@ export function CityBreakdownTable({
       syncingScroll.current = false
     })
   }
+
+  useHorizontalTouchScroll(
+    bodyScrollRef,
+    () => syncScroll('body'),
+    [rows.length, shouldVirtualize, loading],
+  )
+  useHorizontalTouchScroll(
+    headScrollRef,
+    () => syncScroll('head'),
+    [rows.length, shouldVirtualize, loading],
+  )
 
   if (loading) {
     return (
@@ -746,12 +761,18 @@ export function CityBreakdownTable({
         </div>
 
         <div
-          className={`table-x-scroll${shouldVirtualize ? ' table-x-scroll--virtual' : ''}`}
-          ref={bodyScrollRef}
-          onScroll={() => {
-            syncScroll('body')
-          }}
+          className={
+            shouldVirtualize ? 'table-y-scroll table-y-scroll--virtual' : undefined
+          }
+          ref={shouldVirtualize ? bodyYScrollRef : undefined}
         >
+          <div
+            className="table-x-scroll"
+            ref={bodyScrollRef}
+            onScroll={() => {
+              syncScroll('body')
+            }}
+          >
           <table
             ref={tableRef}
             className="results-table results-table--cities text-left text-sm"
@@ -993,7 +1014,8 @@ export function CityBreakdownTable({
             <tr className="text-sm font-semibold">{totalCells}</tr>
           </tfoot>
         </table>
-      </div>
+          </div>
+        </div>
       </div>
 
       {/* Fixed Total row — same columns/widths as the table */}
