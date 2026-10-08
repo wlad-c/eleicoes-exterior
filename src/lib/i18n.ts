@@ -148,6 +148,10 @@ const dict = {
     en: 'Loading voting-city breakdown from TSE ballot boxes…',
     pt: 'Carregando detalhamento por cidade a partir dos boletins de urna do TSE…',
   },
+  suburbLoading: {
+    en: 'Loading Brazilian municipalities…',
+    pt: 'Carregando municípios do Brasil…',
+  },
   cityNo2022Footnote: {
     en: '2022 shares use official TSE section totals (votação por seção). Places that did not exist as voting locals in 2022 show — for 2022/change/swing.',
     pt: 'As % de 2022 usam a votação por seção oficial do TSE. Locais que não existiam como locais de votação em 2022 ficam como — em 2022/variação/swing.',

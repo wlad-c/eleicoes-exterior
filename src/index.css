@@ -300,6 +300,18 @@ html.dark .is-x-scrolled .sticky-col-city {
   overscroll-behavior-x: contain;
 }
 
+/* Large breakdown tables (e.g. Brazil municipalities) scroll inside a windowed body. */
+.table-x-scroll--virtual {
+  max-height: min(70vh, 40rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.results-table--cities tbody tr:not(.virtual-pad-row) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 42px;
+}
+
 /* Prefer growing columns over wrapping header/metric copy on wide screens */
 .results-table--cities {
   width: max-content;

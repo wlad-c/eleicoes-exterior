@@ -19,6 +19,7 @@
     "apply:place-names": "node scripts/apply-place-names.mjs"
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.14.13",
     "d3-geo": "^3.1.1",
     "d3-scale": "^4.0.2",
     "react": "^19.2.8",

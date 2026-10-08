@@ -1,7 +1,12 @@
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CountryFlag } from './CountryFlag'
 import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
+
+/** Window large breakdown tables (Brazil municipalities) without dropping rows. */
+const VIRTUALIZE_AT = 80
+const ROW_ESTIMATE_PX = 42
 import {
   cityBolsonaroChange,
   cityBolsonaroVotesDelta,
@@ -85,6 +90,26 @@ export function CityBreakdownTable({
     [columnOrder, visibleCols],
   )
   const { dragProps } = useColumnDrag(onReorderColumns)
+  const shouldVirtualize = rows.length >= VIRTUALIZE_AT
+  const colCount =
+    1 /* rank */ + (showCountry ? 1 : 0) + 1 /* place */ + metricCols.length
+
+  const virtualizer = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => bodyScrollRef.current,
+    estimateSize: () => ROW_ESTIMATE_PX,
+    overscan: 16,
+    enabled: shouldVirtualize,
+  })
+  const virtualItems = shouldVirtualize ? virtualizer.getVirtualItems() : null
+  const paddingTop = virtualItems?.[0]?.start ?? 0
+  const paddingBottom = virtualItems
+    ? Math.max(
+        0,
+        virtualizer.getTotalSize() -
+          (virtualItems[virtualItems.length - 1]?.end ?? 0),
+      )
+    : 0
 
   const totals = useMemo(() => {
     let lula = 0
@@ -292,7 +317,7 @@ export function CityBreakdownTable({
   if (loading) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
-        {t('cityLoading', lang)}
+        {t(placeKind === 'suburb' ? 'suburbLoading' : 'cityLoading', lang)}
       </p>
     )
   }
@@ -678,9 +703,11 @@ export function CityBreakdownTable({
         </div>
 
         <div
-          className="table-x-scroll"
+          className={`table-x-scroll${shouldVirtualize ? ' table-x-scroll--virtual' : ''}`}
           ref={bodyScrollRef}
-          onScroll={() => syncScroll('body')}
+          onScroll={() => {
+            syncScroll('body')
+          }}
         >
           <table
             ref={tableRef}
@@ -690,7 +717,22 @@ export function CityBreakdownTable({
               {headerRow}
             </thead>
             <tbody>
-            {rows.map((c, index) => {
+            {paddingTop > 0 ? (
+              <tr aria-hidden="true" className="virtual-pad-row">
+                <td
+                  colSpan={colCount}
+                  style={{
+                    height: paddingTop,
+                    padding: 0,
+                    border: 'none',
+                  }}
+                />
+              </tr>
+            ) : null}
+            {(virtualItems
+              ? virtualItems.map((vi) => ({ c: rows[vi.index], index: vi.index, key: vi.key }))
+              : rows.map((c, index) => ({ c, index, key: `${c.countryId}-${c.code}` }))
+            ).map(({ c, index, key }) => {
               const parent = countries.get(c.countryId)
               const fullCountry = parent
                 ? countryName(parent, lang)
@@ -700,7 +742,8 @@ export function CityBreakdownTable({
                 : c.countryId
               return (
                 <tr
-                  key={`${c.countryId}-${c.code}`}
+                  key={key}
+                  data-index={index}
                   className="border-b border-[var(--line-soft)] hover:bg-[var(--chip-soft)]"
                 >
                   <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums">
@@ -871,6 +914,18 @@ export function CityBreakdownTable({
                 </tr>
               )
             })}
+            {paddingBottom > 0 ? (
+              <tr aria-hidden="true" className="virtual-pad-row">
+                <td
+                  colSpan={colCount}
+                  style={{
+                    height: paddingBottom,
+                    padding: 0,
+                    border: 'none',
+                  }}
+                />
+              </tr>
+            ) : null}
           </tbody>
           <tfoot className="results-table-width-foot" aria-hidden="true">
             <tr className="text-sm font-semibold">{totalCells}</tr>
