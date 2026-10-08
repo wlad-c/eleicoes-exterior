@@ -564,6 +564,14 @@ html.dark .is-x-scrolled .sticky-col-city {
   );
 }
 
+/* Columns fit on mid/large screens — room for full country names without ellipsis */
+@media (min-width: 1100px) {
+  :root {
+    /* Fits longest names (e.g. Emirados Árabes Unidos) + flag */
+    --table-col-country-full: 14.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   :root {
     /* Must follow the base :root above or desktop vars win on mobile */
@@ -585,7 +593,7 @@ html.dark .is-x-scrolled .sticky-col-city {
   max-width: var(--table-col-abbr);
 }
 
-/* Full country names in the Country table (Area/City keep abbrevs). */
+/* Full country names (Country table; Area/City on wide screens). */
 .cell-truncate-country {
   max-width: var(--table-col-country-full);
 }
@@ -612,13 +620,14 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Country table only: sticky country width = abbr + place, matching
- * Area/City so votes/stats columns share the same left edge.
- * Do not apply to Area/City head (.results-table--cities) — those use abbr.
+ * Sticky country width for full-name columns.
+ * Narrow viewports: Country table width = abbr + place so metrics align
+ * with Area/City. Wide viewports: Area/City also use full names.
  */
 .results-table--body .sticky-col-country.cell-truncate-country,
 .results-table--head:not(.results-table--cities)
-  .sticky-col-country.cell-truncate-country {
+  .sticky-col-country.cell-truncate-country,
+.results-table--cities .sticky-col-country.cell-truncate-country {
   width: var(--table-col-country-full);
   min-width: var(--table-col-country-full);
   max-width: var(--table-col-country-full);
@@ -626,6 +635,21 @@ html.dark .is-x-scrolled .sticky-col-city {
 
 .sticky-col-country.cell-truncate-country {
   overflow: hidden;
+}
+
+/* When the country column is wide enough, skip ellipsis clipping */
+@media (min-width: 1100px) {
+  .sticky-col-country.cell-truncate-country {
+    overflow: visible;
+  }
+
+  .sticky-col-country.cell-truncate-country .cell-truncate-text,
+  .sticky-col-country.cell-truncate-country
+    .country-flag-label
+    .cell-truncate-text {
+    overflow: visible;
+    text-overflow: clip;
+  }
 }
 
 .sticky-col-city.cell-truncate-city {
