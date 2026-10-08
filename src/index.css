@@ -294,30 +294,45 @@ html.dark .is-x-scrolled .sticky-col-city {
 .table-x-scroll {
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  /* Prefer scroll over auto — iOS is more reliable creating a pan layer */
+  overflow-x: scroll;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
 }
 
 /*
- * Large Brazil City/Local tables: dedicated xy scrollport.
- * Must beat the mobile `.table-x-scroll { overflow-y: hidden }` rule — that
- * override previously left only ~one screen of rows reachable. A window-tall
- * overflow-x container (no max-height) also breaks sideways panning on iOS.
+ * Large Brazil tables: outer vertical scroller + inner horizontal scroller.
+ * Sharing both axes on one element drops sideways pans on iOS Safari when
+ * sticky label columns are present.
  */
-.table-x-scroll.table-x-scroll--virtual {
+.table-y-scroll--virtual {
   max-height: min(70dvh, 40rem);
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pan-y;
+}
+
+.table-y-scroll--virtual > .table-x-scroll {
+  /* Inner pane is as tall as the (virtualized) table; only pans sideways */
+  overflow-x: scroll;
+  overflow-y: hidden;
+  touch-action: pan-x pinch-zoom;
+  overscroll-behavior-x: contain;
 }
 
 .results-table--cities tbody tr:not(.virtual-pad-row) {
   content-visibility: auto;
   contain-intrinsic-size: auto 42px;
+}
+
+@supports (-webkit-touch-callout: none) {
+  /* content-visibility can zero scrollWidth on iOS inside overflow-x panes */
+  .results-table--cities tbody tr:not(.virtual-pad-row) {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
+  }
 }
 
 /* Prefer growing columns over wrapping header/metric copy on wide screens */
@@ -336,24 +351,27 @@ html.dark .is-x-scrolled .sticky-col-city {
 @media (max-width: 900px) {
   /* Wide table pans horizontally; page keeps the only vertical scroll */
   .table-x-scroll {
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
   }
 
-  /* Keep both-axis scroll for virtualized Brazil breakdowns */
-  .table-x-scroll.table-x-scroll--virtual {
-    overflow-x: auto;
-    overflow-y: auto;
+  .table-y-scroll--virtual {
     max-height: min(65dvh, 36rem);
   }
 
   .results-table {
     /* Was 60rem — leftover width inflated label columns and hid stats */
-    min-width: 36rem;
+    min-width: 42rem;
     width: max-content;
     font-size: 0.8125rem;
+  }
+
+  /* Keep metric columns from collapsing so there is real horizontal overflow */
+  .results-table th:not(.sticky-col),
+  .results-table td:not(.sticky-col) {
+    min-width: 7.25rem;
   }
 
   .results-table th,
@@ -361,6 +379,11 @@ html.dark .is-x-scrolled .sticky-col-city {
     white-space: nowrap;
     padding-left: 0.35rem;
     padding-right: 0.35rem;
+  }
+
+  .results-table--cities {
+    /* Room so the last metric clears the viewport when fully panned */
+    padding-inline-end: 1rem;
   }
 
   .sticky-col-rank {
