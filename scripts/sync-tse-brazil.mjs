@@ -30,6 +30,7 @@ import { Readable } from 'node:stream'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
+const SUBURBS_PATH = join(ROOT, 'src/data/brazil-suburbs.json')
 const BRAZIL_2022_CACHE = join(ROOT, 'src/data/tse-brazil-2022.json')
 
 const HOST = 'https://resultados.tse.jus.br'
@@ -481,6 +482,22 @@ async function main() {
     return a.name.localeCompare(b.name, 'pt')
   })
 
+  // Municipalities live in a separate JSON so the overseas seed stays small;
+  // the client lazy-loads them when Include Brazil is on.
+  writeFileSync(
+    SUBURBS_PATH,
+    JSON.stringify(
+      {
+        countryId: 'brazil',
+        updatedAt: new Date().toISOString(),
+        count: suburbs.length,
+        suburbs,
+      },
+      null,
+      0,
+    ) + '\n',
+  )
+
   const brazil = {
     id: 'brazil',
     countryEn: 'Brazil',
@@ -496,7 +513,8 @@ async function main() {
     coverage: brCoverage,
     areas,
     cities: [],
-    suburbs,
+    suburbs: [],
+    suburbCount: suburbs.length,
     notes: `TSE EA20 domestic UFs (${brCoverage ? `${brCoverage.counted}/${brCoverage.total}` : 'n/a'} sections; excludes ZZ overseas)`,
     status: 'reported',
   }
@@ -538,8 +556,9 @@ async function main() {
 
   writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
   console.log(
-    `Wrote Brazil: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${suburbs.length} suburbs`,
+    `Wrote Brazil: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${suburbs.length} suburbs (lazy file)`,
   )
+  console.log(`  ${SUBURBS_PATH}`)
 }
 
 main().catch((err) => {

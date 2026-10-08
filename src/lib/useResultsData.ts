@@ -58,13 +58,32 @@ export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
     : 'updates every 30 min'
 }
 
+/**
+ * Cheap equality for live TSE overlays. Avoids JSON.stringify on the full
+ * country tree (Brazil municipalities alone are thousands of rows).
+ */
 function samePayload(a: ResultsData, b: ResultsData): boolean {
   if (a.meta.updatedAt !== b.meta.updatedAt) return false
   if (a.meta.tseZz?.sectionsCounted !== b.meta.tseZz?.sectionsCounted) {
     return false
   }
+  if (a.meta.tseBr?.sectionsCounted !== b.meta.tseBr?.sectionsCounted) {
+    return false
+  }
   if (a.countries.length !== b.countries.length) return false
-  return JSON.stringify(a.countries) === JSON.stringify(b.countries)
+  for (let i = 0; i < a.countries.length; i++) {
+    const ca = a.countries[i]
+    const cb = b.countries[i]
+    if (ca.id !== cb.id || ca.status !== cb.status) return false
+    if (ca.y2026?.totalValid !== cb.y2026?.totalValid) return false
+    if (ca.y2026?.lula !== cb.y2026?.lula) return false
+    if (ca.y2026?.bolsonaro !== cb.y2026?.bolsonaro) return false
+    if (ca.coverage?.counted !== cb.coverage?.counted) return false
+    if (ca.coverage?.total !== cb.coverage?.total) return false
+    if ((ca.areas?.length ?? 0) !== (cb.areas?.length ?? 0)) return false
+    if ((ca.cities?.length ?? 0) !== (cb.cities?.length ?? 0)) return false
+  }
+  return true
 }
 
 async function pullDeployedSeed(): Promise<ResultsData | null> {

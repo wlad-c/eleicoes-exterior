@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { startTransition, useEffect, useMemo, useRef, useState } from 'react'
 import raw from './data/results.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { ResultsTable } from './components/ResultsTable'
@@ -12,6 +12,10 @@ import {
   taggedSuburbRows,
 } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
+import {
+  prefetchBrazilSuburbs,
+  useBrazilSuburbs,
+} from './lib/useBrazilSuburbs'
 
 type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
 const BRAZIL_ID = 'brazil'
@@ -42,9 +46,14 @@ function readStoredLang(): Lang {
   return 'pt'
 }
 
+function brazilHasSuburbData(c: CountryResult | null | undefined): boolean {
+  if (!c) return false
+  return (c.suburbs?.length ?? 0) > 0 || (c.suburbCount ?? 0) > 0
+}
+
 export default function App() {
   const { theme, setTheme } = useTheme()
-  const { data, syncStatus, live } = useResultsData(seed)
+  const { data: seedData, syncStatus, live } = useResultsData(seed)
   const [lang, setLangState] = useState<Lang>(() =>
     typeof window === 'undefined' ? 'pt' : readStoredLang(),
   )
@@ -84,6 +93,25 @@ export default function App() {
   /** Domestic Brazil is hidden from tables until toggled or selected on the map. */
   const [includeBrazil, setIncludeBrazil] = useState(false)
   const [tableView, setTableView] = useState<TableView>('countries')
+  const wantBrazilSuburbs =
+    includeBrazil || highlightId === BRAZIL_ID
+  const brazilSuburbs = useBrazilSuburbs(wantBrazilSuburbs)
+
+  const data = useMemo(() => {
+    if (!brazilSuburbs.suburbs?.length) return seedData
+    return {
+      ...seedData,
+      countries: seedData.countries.map((c) =>
+        c.id === BRAZIL_ID
+          ? {
+              ...c,
+              suburbs: brazilSuburbs.suburbs!,
+              suburbCount: brazilSuburbs.suburbs!.length,
+            }
+          : c,
+      ),
+    }
+  }, [seedData, brazilSuburbs.suburbs])
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
   )
@@ -134,7 +162,7 @@ export default function App() {
   )
   const showBrazilInTables = includeBrazil || highlightId === BRAZIL_ID
   const showSuburbTab = Boolean(
-    showBrazilInTables && (brazilCountry?.suburbs?.length ?? 0) > 0,
+    showBrazilInTables && brazilHasSuburbData(brazilCountry),
   )
 
   const regions = useMemo(
@@ -230,9 +258,10 @@ export default function App() {
     const country = data.countries.find((c) => c.id === id)
     if (country?.domestic) {
       setIncludeBrazil(true)
+      prefetchBrazilSuburbs()
       setQuery(countryName(country, lang))
       setTableView(
-        (country.suburbs?.length ?? 0) > 0
+        brazilHasSuburbData(country)
           ? 'suburbs'
           : (country.areas?.length ?? 0) > 0
             ? 'areas'
@@ -278,7 +307,7 @@ export default function App() {
       if (
         (c.areas?.length ?? 0) === 0 &&
         (c.cities?.length ?? 0) === 0 &&
-        (c.suburbs?.length ?? 0) === 0
+        !brazilHasSuburbData(c)
       ) {
         return false
       }
@@ -289,7 +318,7 @@ export default function App() {
     })
   }, [data.countries, statusFilter, region, showBrazilInTables])
 
-  function matchesPlaceQuery(
+  const matchesPlaceQuery = (
     r: {
       name: string
       nameEn?: string
@@ -300,7 +329,7 @@ export default function App() {
       countryId: string
     },
     q: string,
-  ) {
+  ) => {
     if (!q) return true
     const parent = countryById.get(r.countryId)
     return (
@@ -321,58 +350,99 @@ export default function App() {
     )
   }
 
+  const effectiveTableView: TableView =
+    tableView === 'suburbs' && !showSuburbTab ? 'countries' : tableView
+
   const filteredAreaRows = useMemo(() => {
+    if (effectiveTableView !== 'areas') return []
     const rows = citySourceCountries.flatMap((c) => taggedAreaRows(c))
     const q = query.trim().toLowerCase()
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById])
+  }, [citySourceCountries, query, countryById, effectiveTableView])
 
   const filteredCityRows = useMemo(() => {
+    if (effectiveTableView !== 'cities') return []
     // City tab stays overseas voting-city grain (skip domestic Brazil).
     const rows = citySourceCountries
       .filter((c) => !c.domestic)
       .flatMap((c) => taggedBreakdownRows(c))
     const q = query.trim().toLowerCase()
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById])
+  }, [citySourceCountries, query, countryById, effectiveTableView])
 
   const filteredSuburbRows = useMemo(() => {
+    // Skip the 5k+ municipality walk unless the Suburb tab is open.
+    if (effectiveTableView !== 'suburbs') return []
     const rows = citySourceCountries
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
     const q = query.trim().toLowerCase()
+    if (!q) return rows
+    // Map-select sets the query to "Brazil"/"Brasil" — that matches every row
+    // via the parent country, so skip the per-field scan.
+    const countryOnly = citySourceCountries.some(
+      (c) =>
+        c.domestic &&
+        (c.countryEn.toLowerCase() === q ||
+          c.countryPt.toLowerCase() === q ||
+          c.iso3.toLowerCase() === q ||
+          c.abbrevEn.toLowerCase() === q ||
+          c.abbrevPt.toLowerCase() === q),
+    )
+    if (countryOnly) return rows
     return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, query, countryById])
+  }, [citySourceCountries, query, countryById, effectiveTableView])
 
   const sortedAreas = useMemo(() => {
+    if (effectiveTableView !== 'areas') return []
     const rows = [...filteredAreaRows]
     const dir = sortDir === 'asc' ? 1 : -1
     rows.sort(
       (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
     )
     return rows
-  }, [filteredAreaRows, sortKey, sortDir, lang, countryById])
+  }, [
+    filteredAreaRows,
+    sortKey,
+    sortDir,
+    lang,
+    countryById,
+    effectiveTableView,
+  ])
 
   const sortedCities = useMemo(() => {
+    if (effectiveTableView !== 'cities') return []
     const rows = [...filteredCityRows]
     const dir = sortDir === 'asc' ? 1 : -1
     rows.sort(
       (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
     )
     return rows
-  }, [filteredCityRows, sortKey, sortDir, lang, countryById])
+  }, [
+    filteredCityRows,
+    sortKey,
+    sortDir,
+    lang,
+    countryById,
+    effectiveTableView,
+  ])
 
   const sortedSuburbs = useMemo(() => {
+    if (effectiveTableView !== 'suburbs') return []
     const rows = [...filteredSuburbRows]
     const dir = sortDir === 'asc' ? 1 : -1
     rows.sort(
       (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
     )
     return rows
-  }, [filteredSuburbRows, sortKey, sortDir, lang, countryById])
-
-  const effectiveTableView: TableView =
-    tableView === 'suburbs' && !showSuburbTab ? 'countries' : tableView
+  }, [
+    filteredSuburbRows,
+    sortKey,
+    sortDir,
+    lang,
+    countryById,
+    effectiveTableView,
+  ])
 
   // Drop highlight if the selected country is hidden again
   const highlightVisible =
@@ -627,6 +697,8 @@ export default function App() {
               <label
                 className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
                 title={t('includeBrazilHint', lang)}
+                onMouseEnter={prefetchBrazilSuburbs}
+                onFocus={prefetchBrazilSuburbs}
               >
                 <input
                   type="checkbox"
@@ -634,10 +706,8 @@ export default function App() {
                   checked={includeBrazil}
                   onChange={(e) => {
                     const on = e.target.checked
-                    setIncludeBrazil(on)
-                    if (on && !query.trim() && brazilCountry) {
-                      // Keep tables filterable; do not force Brazil search.
-                    }
+                    if (on) prefetchBrazilSuburbs()
+                    startTransition(() => setIncludeBrazil(on))
                     if (!on && highlightId === BRAZIL_ID) {
                       setHighlightId(null)
                       if (
@@ -806,6 +876,11 @@ export default function App() {
             }
             countries={countryById}
             lang={lang}
+            loading={
+              effectiveTableView === 'suburbs' &&
+              brazilSuburbs.loading &&
+              !brazilSuburbs.suburbs?.length
+            }
             showCountry
             placeKind={
               effectiveTableView === 'areas'

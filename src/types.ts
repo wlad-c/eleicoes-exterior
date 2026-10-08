@@ -76,9 +76,11 @@ export type CountryResult = {
   cities?: CityResult[]
   /**
    * Brazilian municipalities (municípios) — suburb-equivalent grain.
-   * Only populated for the domestic Brazil row.
+   * Lazy-loaded from brazil-suburbs.json when Include Brazil is on.
    */
   suburbs?: CityResult[]
+  /** Count of municipalities when `suburbs` is not yet loaded into memory. */
+  suburbCount?: number
   /** Domestic Brazil (not overseas ZZ). Excluded from overseas aggregates by default. */
   domestic?: boolean
   notes: string

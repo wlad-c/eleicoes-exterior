@@ -9,12 +9,19 @@ import { defineConfig } from 'vite'
 const rootDir = dirname(fileURLToPath(import.meta.url))
 const resultsSrc = resolve(rootDir, 'src/data/results.json')
 const resultsPublic = resolve(rootDir, 'public/data/results.json')
+const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
+const suburbsPublic = resolve(rootDir, 'public/data/brazil-suburbs.json')
 
-/** Keep a stable public URL in sync with the editable source JSON. */
+/** Keep stable public URLs in sync with the editable source JSON. */
 function syncResultsJson(): Plugin {
   const write = () => {
     mkdirSync(dirname(resultsPublic), { recursive: true })
     copyFileSync(resultsSrc, resultsPublic)
+    try {
+      copyFileSync(suburbsSrc, suburbsPublic)
+    } catch {
+      /* suburbs file optional until first brazil sync */
+    }
   }
 
   return {
@@ -25,8 +32,10 @@ function syncResultsJson(): Plugin {
     configureServer(server) {
       write()
       server.watcher.add(resultsSrc)
+      server.watcher.add(suburbsSrc)
       server.watcher.on('change', (path) => {
-        if (resolve(path) === resultsSrc) write()
+        const abs = resolve(path)
+        if (abs === resultsSrc || abs === suburbsSrc) write()
       })
     },
   }
