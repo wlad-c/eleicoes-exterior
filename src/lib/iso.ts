@@ -140,6 +140,7 @@ export const ISO3_TO_ISO2: Record<string, string> = {
   BHR: 'bh',
   BHS: 'bs',
   BOL: 'bo',
+  BRA: 'br',
   CAN: 'ca',
   CHE: 'ch',
   CHL: 'cl',
