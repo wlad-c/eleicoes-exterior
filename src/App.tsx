@@ -179,7 +179,13 @@ export default function App() {
   function onSelect(id: string | null) {
     setHighlightId(id)
     if (!id) {
+      // Map click outside the selected country — back to Country table, no focus.
       setFocusCountryId(null)
+      setTableView('countries')
+      if (sortKey === 'city') {
+        setSortKey('votes2026')
+        setSortDir('desc')
+      }
       return
     }
     const country = data.countries.find((c) => c.id === id)
