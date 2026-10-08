@@ -8,14 +8,15 @@ import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from
 import {
   compareCityRows,
   taggedAreaRows,
+  taggedBrazilCityRows,
   taggedBreakdownRows,
   taggedSuburbRows,
 } from './lib/cityRows'
 import { regionLabel, t } from './lib/i18n'
 import {
-  prefetchBrazilSuburbs,
-  useBrazilSuburbs,
-} from './lib/useBrazilSuburbs'
+  prefetchBrazilDomestic,
+  useBrazilDomestic,
+} from './lib/useBrazilDomestic'
 
 type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
 const BRAZIL_ID = 'brazil'
@@ -44,6 +45,11 @@ function readStoredLang(): Lang {
     /* ignore */
   }
   return 'pt'
+}
+
+function brazilHasCityData(c: CountryResult | null | undefined): boolean {
+  if (!c) return false
+  return (c.cities?.length ?? 0) > 0 || (c.cityCount ?? 0) > 0
 }
 
 function brazilHasSuburbData(c: CountryResult | null | undefined): boolean {
@@ -93,25 +99,38 @@ export default function App() {
   /** Domestic Brazil is hidden from tables until toggled or selected on the map. */
   const [includeBrazil, setIncludeBrazil] = useState(false)
   const [tableView, setTableView] = useState<TableView>('countries')
-  const wantBrazilSuburbs =
+  const wantBrazil =
     includeBrazil || highlightId === BRAZIL_ID
-  const brazilSuburbs = useBrazilSuburbs(wantBrazilSuburbs)
+  // Cities (municipalities) when Brazil is included; locals only on Suburb tab
+  // (that file is large — avoid downloading until needed).
+  const brazilDomestic = useBrazilDomestic({
+    wantCities: wantBrazil,
+    wantSuburbs: wantBrazil && tableView === 'suburbs',
+  })
 
   const data = useMemo(() => {
-    if (!brazilSuburbs.suburbs?.length) return seedData
+    if (!brazilDomestic.cities?.length && !brazilDomestic.suburbs?.length) {
+      return seedData
+    }
     return {
       ...seedData,
       countries: seedData.countries.map((c) =>
         c.id === BRAZIL_ID
           ? {
               ...c,
-              suburbs: brazilSuburbs.suburbs!,
-              suburbCount: brazilSuburbs.suburbs!.length,
+              cities: brazilDomestic.cities ?? c.cities,
+              cityCount:
+                brazilDomestic.cities?.length ?? c.cityCount ?? c.cities?.length,
+              suburbs: brazilDomestic.suburbs ?? c.suburbs,
+              suburbCount:
+                brazilDomestic.suburbs?.length ??
+                c.suburbCount ??
+                c.suburbs?.length,
             }
           : c,
       ),
     }
-  }, [seedData, brazilSuburbs.suburbs])
+  }, [seedData, brazilDomestic.cities, brazilDomestic.suburbs])
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
     readStoredTableCols(),
   )
@@ -162,7 +181,8 @@ export default function App() {
   )
   const showBrazilInTables = includeBrazil || highlightId === BRAZIL_ID
   const showSuburbTab = Boolean(
-    showBrazilInTables && brazilHasSuburbData(brazilCountry),
+    showBrazilInTables &&
+      (brazilHasSuburbData(brazilCountry) || brazilDomestic.suburbsLoading),
   )
 
   const regions = useMemo(
@@ -258,11 +278,12 @@ export default function App() {
     const country = data.countries.find((c) => c.id === id)
     if (country?.domestic) {
       setIncludeBrazil(true)
-      prefetchBrazilSuburbs()
+      prefetchBrazilDomestic()
       setQuery(countryName(country, lang))
+      // Municipalities live on City; within-muni locals on Suburb.
       setTableView(
-        brazilHasSuburbData(country)
-          ? 'suburbs'
+        brazilHasCityData(country) || brazilHasSuburbData(country)
+          ? 'cities'
           : (country.areas?.length ?? 0) > 0
             ? 'areas'
             : 'countries',
@@ -306,8 +327,9 @@ export default function App() {
       if (c.domestic && !showBrazilInTables) return false
       if (
         (c.areas?.length ?? 0) === 0 &&
-        (c.cities?.length ?? 0) === 0 &&
-        !brazilHasSuburbData(c)
+        !brazilHasCityData(c) &&
+        !brazilHasSuburbData(c) &&
+        (c.cities?.length ?? 0) === 0
       ) {
         return false
       }
@@ -362,24 +384,44 @@ export default function App() {
 
   const filteredCityRows = useMemo(() => {
     if (effectiveTableView !== 'cities') return []
-    // City tab stays overseas voting-city grain (skip domestic Brazil).
-    const rows = citySourceCountries
-      .filter((c) => !c.domestic)
-      .flatMap((c) => taggedBreakdownRows(c))
+    // Overseas: voting-city splits. Brazil: municipalities.
+    const rows = citySourceCountries.flatMap((c) =>
+      c.domestic ? taggedBrazilCityRows(c) : taggedBreakdownRows(c),
+    )
     const q = query.trim().toLowerCase()
+    if (!q) return rows
+    const countryOnly = citySourceCountries.some(
+      (c) =>
+        c.countryEn.toLowerCase() === q ||
+        c.countryPt.toLowerCase() === q ||
+        c.iso3.toLowerCase() === q ||
+        c.abbrevEn.toLowerCase() === q ||
+        c.abbrevPt.toLowerCase() === q,
+    )
+    if (countryOnly) {
+      return rows.filter((r) => {
+        const parent = countryById.get(r.countryId)
+        return (
+          parent &&
+          (parent.countryEn.toLowerCase() === q ||
+            parent.countryPt.toLowerCase() === q ||
+            parent.iso3.toLowerCase() === q ||
+            parent.abbrevEn.toLowerCase() === q ||
+            parent.abbrevPt.toLowerCase() === q)
+        )
+      })
+    }
     return rows.filter((r) => matchesPlaceQuery(r, q))
   }, [citySourceCountries, query, countryById, effectiveTableView])
 
   const filteredSuburbRows = useMemo(() => {
-    // Skip the 5k+ municipality walk unless the Suburb tab is open.
+    // Within-municipality voting locals — Brazil only.
     if (effectiveTableView !== 'suburbs') return []
     const rows = citySourceCountries
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
     const q = query.trim().toLowerCase()
     if (!q) return rows
-    // Map-select sets the query to "Brazil"/"Brasil" — that matches every row
-    // via the parent country, so skip the per-field scan.
     const countryOnly = citySourceCountries.some(
       (c) =>
         c.domestic &&
@@ -687,6 +729,8 @@ export default function App() {
                   className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                   aria-selected={effectiveTableView === 'suburbs'}
                   title={t('suburbTableHint', lang)}
+                  onMouseEnter={prefetchBrazilDomestic}
+                  onFocus={prefetchBrazilDomestic}
                   onClick={() => switchTableView('suburbs')}
                 >
                   {t('tabSuburbs', lang)}
@@ -697,8 +741,8 @@ export default function App() {
               <label
                 className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
                 title={t('includeBrazilHint', lang)}
-                onMouseEnter={prefetchBrazilSuburbs}
-                onFocus={prefetchBrazilSuburbs}
+                onMouseEnter={prefetchBrazilDomestic}
+                onFocus={prefetchBrazilDomestic}
               >
                 <input
                   type="checkbox"
@@ -706,7 +750,7 @@ export default function App() {
                   checked={includeBrazil}
                   onChange={(e) => {
                     const on = e.target.checked
-                    if (on) prefetchBrazilSuburbs()
+                    if (on) prefetchBrazilDomestic()
                     startTransition(() => setIncludeBrazil(on))
                     if (!on && highlightId === BRAZIL_ID) {
                       setHighlightId(null)
@@ -877,9 +921,13 @@ export default function App() {
             countries={countryById}
             lang={lang}
             loading={
-              effectiveTableView === 'suburbs' &&
-              brazilSuburbs.loading &&
-              !brazilSuburbs.suburbs?.length
+              (effectiveTableView === 'cities' &&
+                showBrazilInTables &&
+                brazilDomestic.citiesLoading &&
+                !brazilDomestic.cities?.length) ||
+              (effectiveTableView === 'suburbs' &&
+                brazilDomestic.suburbsLoading &&
+                !brazilDomestic.suburbs?.length)
             }
             showCountry
             placeKind={

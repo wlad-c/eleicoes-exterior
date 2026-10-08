@@ -70,16 +70,18 @@ export type CountryResult = {
   /** Official TSE EA20 ZZ areas (municípios / consular districts), or Brazilian UFs. */
   areas?: CityResult[]
   /**
-   * Finer voting-city rows from TSE ballot boxes + location map
-   * (e.g. Melbourne/Brisbane inside Canberra/Sydney).
+   * Voting cities: overseas NM_LOCAL_VOTACAO splits, or Brazilian municipalities.
+   * Brazil municipalities are lazy-loaded from brazil-cities.json.
    */
   cities?: CityResult[]
+  /** Count of Brazilian municipalities when `cities` is not yet loaded. */
+  cityCount?: number
   /**
-   * Brazilian municipalities (municípios) — suburb-equivalent grain.
-   * Lazy-loaded from brazil-suburbs.json when Include Brazil is on.
+   * Within-municipality grain for Brazil (voting locals / suburb-equivalent).
+   * Lazy-loaded from brazil-suburbs.json when the Suburb tab needs them.
    */
   suburbs?: CityResult[]
-  /** Count of municipalities when `suburbs` is not yet loaded into memory. */
+  /** Count of Brazil suburb rows when `suburbs` is not yet loaded. */
   suburbCount?: number
   /** Domestic Brazil (not overseas ZZ). Excluded from overseas aggregates by default. */
   domestic?: boolean

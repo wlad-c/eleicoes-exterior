@@ -361,8 +361,13 @@ export function CityBreakdownTable({
   const arrow = (key: SortKey) =>
     sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''
 
+  // When every visible row is the same country (e.g. Brazil focused), show
+  // flag + abbrev in the Total row too — never drop the country column.
+  const singleCountryId = rows[0]?.countryId
   const singleCountry =
-    !showCountry && rows[0] ? countries.get(rows[0].countryId) : null
+    singleCountryId && rows.every((r) => r.countryId === singleCountryId)
+      ? countries.get(singleCountryId) ?? null
+      : null
 
   const totalCells = (
     <>

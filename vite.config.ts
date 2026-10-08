@@ -9,6 +9,8 @@ import { defineConfig } from 'vite'
 const rootDir = dirname(fileURLToPath(import.meta.url))
 const resultsSrc = resolve(rootDir, 'src/data/results.json')
 const resultsPublic = resolve(rootDir, 'public/data/results.json')
+const citiesSrc = resolve(rootDir, 'src/data/brazil-cities.json')
+const citiesPublic = resolve(rootDir, 'public/data/brazil-cities.json')
 const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
 const suburbsPublic = resolve(rootDir, 'public/data/brazil-suburbs.json')
 
@@ -17,10 +19,15 @@ function syncResultsJson(): Plugin {
   const write = () => {
     mkdirSync(dirname(resultsPublic), { recursive: true })
     copyFileSync(resultsSrc, resultsPublic)
-    try {
-      copyFileSync(suburbsSrc, suburbsPublic)
-    } catch {
-      /* suburbs file optional until first brazil sync */
+    for (const [src, dest] of [
+      [citiesSrc, citiesPublic],
+      [suburbsSrc, suburbsPublic],
+    ] as const) {
+      try {
+        copyFileSync(src, dest)
+      } catch {
+        /* optional until brazil sync / locals build */
+      }
     }
   }
 
@@ -32,10 +39,13 @@ function syncResultsJson(): Plugin {
     configureServer(server) {
       write()
       server.watcher.add(resultsSrc)
+      server.watcher.add(citiesSrc)
       server.watcher.add(suburbsSrc)
       server.watcher.on('change', (path) => {
         const abs = resolve(path)
-        if (abs === resultsSrc || abs === suburbsSrc) write()
+        if (abs === resultsSrc || abs === citiesSrc || abs === suburbsSrc) {
+          write()
+        }
       })
     },
   }
