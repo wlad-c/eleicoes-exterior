@@ -28,6 +28,7 @@ import {
 } from '../lib/tableColumns'
 import { useColumnDrag } from '../lib/useColumnDrag'
 import { useCountryLabelMode } from '../lib/useMediaQuery'
+import { useVisualViewportBottom } from '../lib/useVisualViewportBottom'
 import type { CountryResult, Lang, SortKey } from '../types'
 
 type Props = {
@@ -68,9 +69,11 @@ export function CityBreakdownTable({
   const headScrollRef = useRef<HTMLDivElement>(null)
   const bodyScrollRef = useRef<HTMLDivElement>(null)
   const footScrollRef = useRef<HTMLDivElement>(null)
+  const totalPinRef = useRef<HTMLDivElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
   const syncingScroll = useRef(false)
   const [pinTotal, setPinTotal] = useState(false)
+  useVisualViewportBottom(totalPinRef, pinTotal)
   /** Flag-only on very small screens; otherwise abbreviations. */
   const countryLabelMode = useCountryLabelMode()
   const flagOnlyLabels = countryLabelMode === 'flag'
@@ -236,7 +239,8 @@ export function CityBreakdownTable({
     if (!table) return
 
     const update = () => {
-      const vh = window.innerHeight
+      const vv = window.visualViewport
+      const vh = vv?.height ?? window.innerHeight
       const tableRect = table.getBoundingClientRect()
       const tableInView = tableRect.bottom > 80 && tableRect.top < vh - 40
       setPinTotal(tableInView)
@@ -245,6 +249,8 @@ export function CityBreakdownTable({
     update()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
+    window.visualViewport?.addEventListener('resize', update)
+    window.visualViewport?.addEventListener('scroll', update)
     const io = new IntersectionObserver(update, {
       root: null,
       threshold: [0, 0.01, 0.1, 1],
@@ -253,6 +259,8 @@ export function CityBreakdownTable({
     return () => {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('scroll', update)
       io.disconnect()
     }
   }, [rows, loading, showCountry, visibleCols, placeKind, countryLabelMode])
@@ -849,6 +857,7 @@ export function CityBreakdownTable({
 
       {/* Fixed Total row — same columns/widths as the table */}
       <div
+        ref={totalPinRef}
         className={`total-pin total-pin--row ${pinTotal ? 'total-pin--on' : ''}`}
         aria-hidden={!pinTotal}
       >
