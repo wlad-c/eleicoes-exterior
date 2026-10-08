@@ -752,6 +752,12 @@ export function CityBreakdownTable({
               const shortCountry = parent
                 ? countryAbbrev(parent, lang)
                 : c.countryId
+              const fullPlace = cityDisplayName(c, lang)
+              const visiblePlace = areaDisplayName(c, lang, {
+                domestic: parent?.domestic,
+                preferUf: preferBrazilUf,
+              })
+              const showingUf = visiblePlace !== fullPlace
               return (
                 <tr
                   key={key}
@@ -778,24 +784,12 @@ export function CityBreakdownTable({
                     </td>
                   ) : null}
                   <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
-                    {(() => {
-                      const fullPlace = cityDisplayName(c, lang)
-                      const visiblePlace = areaDisplayName(c, lang, {
-                        domestic: parent?.domestic,
-                        preferUf: preferBrazilUf,
-                      })
-                      const showingUf = visiblePlace !== fullPlace
-                      return (
-                        <NameTip
-                          label={fullPlace}
-                          when={showingUf ? 'always' : 'truncate'}
-                        >
-                          <span className="cell-truncate-text">
-                            {visiblePlace}
-                          </span>
-                        </NameTip>
-                      )
-                    })()}
+                    <NameTip
+                      label={fullPlace}
+                      when={showingUf ? 'always' : 'truncate'}
+                    >
+                      <span className="cell-truncate-text">{visiblePlace}</span>
+                    </NameTip>
                   </td>
                   {metricCols.map((col) => {
                     switch (col) {
