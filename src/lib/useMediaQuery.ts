@@ -31,10 +31,21 @@ export const COUNTRY_NO_TRUNCATE_MQ = '(min-width: 1100px)'
  */
 export const COUNTRY_FLAG_ONLY_MQ = '(max-width: 640px)'
 
+/**
+ * Narrow place column (see `--table-col-place` in index.css) — Area tab
+ * prefers Brazilian UF codes over ellipsis-truncated state names.
+ */
+export const AREA_UF_COMPACT_MQ = '(max-width: 900px)'
+
 export type CountryLabelMode = 'flag' | 'abbrev'
 
 /** Area/City country column: flag-only on narrow viewports, else abbreviation. */
 export function useCountryLabelMode(): CountryLabelMode {
   const flagOnly = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
   return flagOnly ? 'flag' : 'abbrev'
+}
+
+/** True when the Area place column is too narrow for full UF names. */
+export function useAreaUfCompact(): boolean {
+  return useMediaQuery(AREA_UF_COMPACT_MQ)
 }

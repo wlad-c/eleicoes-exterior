@@ -98,6 +98,36 @@ export function cityDisplayName(
   return place.namePt || titleCasePlaceName(place.name)
 }
 
+/** Standard IBGE/TSE UF code (AC…TO) when the place is a Brazilian state/DF row. */
+export function brazilUfAbbrev(place: {
+  code?: string
+  name: string
+}): string | null {
+  const code = (place.code || place.name || '').trim().toUpperCase()
+  return /^[A-Z]{2}$/.test(code) ? code : null
+}
+
+/**
+ * Area-tab place label. On compact viewports, Brazilian UFs show the 2-letter
+ * abbreviation (SP, RJ) instead of a truncated full state name.
+ */
+export function areaDisplayName(
+  place: {
+    code?: string
+    name: string
+    nameEn?: string
+    namePt?: string
+  },
+  lang: Lang,
+  opts?: { domestic?: boolean; preferUf?: boolean },
+): string {
+  if (opts?.preferUf && opts.domestic) {
+    const uf = brazilUfAbbrev(place)
+    if (uf) return uf
+  }
+  return cityDisplayName(place, lang)
+}
+
 /** Lula change = 2026% − 2022%. */
 export function lulaChange(c: CountryResult): number | null {
   if (c.status !== 'reported' || !c.y2026) return null
