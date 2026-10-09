@@ -20,6 +20,7 @@ import {
   LULA_COLOR_LIGHT,
   VOTES_COLOR,
   VOTES_COLOR_LIGHT,
+  extentForMetric,
   legendModeForMetric,
   makeMetricColorizer,
   NO_DATA_FILL,
@@ -425,9 +426,24 @@ export function WorldMap({
     neighborhoodCities,
   ])
 
+  /**
+   * Scale domain from what the choropleth is comparing.
+   * On the world map, skip domestic Brazil so overseas places use the
+   * full colour range (Brazil still draws, clamped to the dark end).
+   */
+  const scaleRows: VoteLike[] = useMemo(() => {
+    if (focus.level !== 'world') return colorRows
+    const overseas = countries.filter((c) => !c.domestic)
+    return overseas.length ? overseas : colorRows
+  }, [focus.level, colorRows, countries])
+
   const colorize = useMemo(
-    () => makeMetricColorizer(metric, colorRows),
-    [metric, colorRows],
+    () => makeMetricColorizer(metric, scaleRows),
+    [metric, scaleRows],
+  )
+  const legendExtent = useMemo(
+    () => extentForMetric(scaleRows, metric),
+    [scaleRows, metric],
   )
   const legendMode = legendModeForMetric(metric)
 
@@ -896,7 +912,12 @@ export function WorldMap({
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
-        <Legend metric={metric} mode={legendMode} lang={lang} />
+        <Legend
+          metric={metric}
+          mode={legendMode}
+          lang={lang}
+          extent={legendExtent}
+        />
       </div>
 
       {tip
@@ -998,10 +1019,12 @@ function Legend({
   metric,
   mode,
   lang,
+  extent,
 }: {
   metric: MapMetric
   mode: ReturnType<typeof legendModeForMetric>
   lang: Lang
+  extent: [number, number]
 }) {
   if (mode === 'leader') {
     return (
@@ -1045,6 +1068,7 @@ function Legend({
         : '#EEF3F9'
   const to =
     mode === 'lula' ? LULA_COLOR : mode === 'votes' ? VOTES_COLOR : BOLSONARO_COLOR
+  const [lo, hi] = extent
 
   return (
     <>
@@ -1053,9 +1077,9 @@ function Legend({
         className="inline-block h-2.5 w-28 rounded-sm"
         style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}
       />
-      <span>{t('legendLow', lang)}</span>
-      <span aria-hidden>·</span>
-      <span>{t('legendHigh', lang)}</span>
+      <span>{formatMetricValue(lo, metric, lang)}</span>
+      <span aria-hidden>→</span>
+      <span>{formatMetricValue(hi, metric, lang)}</span>
     </>
   )
 }

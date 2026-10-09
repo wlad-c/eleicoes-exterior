@@ -1250,7 +1250,6 @@ export default function App() {
         {effectiveTableView === 'countries' ? (
           <ResultsTable
             rows={sorted}
-            allCountries={data.countries}
             lang={lang}
             sortKey={sortKey}
             sortDir={sortDir}

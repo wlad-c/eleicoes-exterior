@@ -109,22 +109,37 @@ function leaderColor(value: number): string {
   return lerpColor(BOLSONARO_COLOR_LIGHT, BOLSONARO_COLOR, t)
 }
 
-function sequentialScale(max: number, toward: 'lula' | 'bolso' | 'votes') {
-  const hi =
+function sequentialScale(
+  domainLo: number,
+  domainHi: number,
+  toward: 'lula' | 'bolso' | 'votes',
+) {
+  const hiColor =
     toward === 'lula'
       ? LULA_COLOR
       : toward === 'bolso'
         ? BOLSONARO_COLOR
         : VOTES_COLOR
-  const lo =
+  const loColor =
     toward === 'lula'
       ? '#F7F0F0'
       : toward === 'bolso'
         ? '#EEF3F9'
         : VOTES_COLOR_LIGHT
+  let lo = domainLo
+  let hi = domainHi
+  if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
+    lo = 0
+    hi = 1
+  }
+  // Identical values → solid mid tone (avoid a zero-width domain).
+  if (hi <= lo) {
+    hi = lo + Math.max(Math.abs(lo) * 1e-6, 1e-6)
+  }
   return scaleSequential<string>()
-    .domain([0, Math.max(max, 1)])
-    .interpolator((t) => lerpColor(lo, hi, t))
+    .domain([lo, hi])
+    .clamp(true)
+    .interpolator((t) => lerpColor(loColor, hiColor, t))
 }
 
 export function extentForMetric(
@@ -144,7 +159,7 @@ export function makeMetricColorizer(
   metric: MapMetric,
   rows: VoteLike[],
 ): (value: number | null) => string {
-  const [, hi] = extentForMetric(rows, metric)
+  const [lo, hi] = extentForMetric(rows, metric)
   const kind = scaleKind(metric)
   const invert = isInverted(metric)
 
@@ -160,41 +175,11 @@ export function makeMetricColorizer(
     }
   }
 
-  // Absolute vote counts: log scale so one huge place (e.g. Brazil)
-  // does not flatten every other region to the light end.
-  const voteCountMetric =
-    metric === 'votes2026' ||
-    metric === 'votes2022' ||
-    metric === 'lulaVotes2026' ||
-    metric === 'lulaVotes2022' ||
-    metric === 'bolsonaroVotes2026' ||
-    metric === 'bolsonaroVotes2022'
-
-  if (kind === 'lulaSeq') {
-    const scale = sequentialScale(
-      voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
-      'lula',
-    )
-    return (value) =>
-      value == null
-        ? PENDING_FILL
-        : scale(voteCountMetric ? Math.log1p(value) : value)
-  }
-
-  if (kind === 'votesSeq') {
-    const scale = sequentialScale(Math.log1p(Math.max(hi, 1)), 'votes')
-    return (value) =>
-      value == null ? PENDING_FILL : scale(Math.log1p(value))
-  }
-
-  const scale = sequentialScale(
-    voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
-    'bolso',
-  )
-  return (value) =>
-    value == null
-      ? PENDING_FILL
-      : scale(voteCountMetric ? Math.log1p(value) : value)
+  // Sequential metrics stretch across the visible min→max (not fixed 0→max).
+  const toward =
+    kind === 'lulaSeq' ? 'lula' : kind === 'votesSeq' ? 'votes' : 'bolso'
+  const scale = sequentialScale(lo, hi, toward)
+  return (value) => (value == null ? PENDING_FILL : scale(value))
 }
 
 export function withAlpha(color: string, alpha: number): string {
