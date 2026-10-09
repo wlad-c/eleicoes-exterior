@@ -35,7 +35,6 @@ import {
 
 type Props = {
   rows: CountryResult[]
-  allCountries: CountryResult[]
   lang: Lang
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
@@ -50,7 +49,6 @@ type Props = {
 
 export function ResultsTable({
   rows,
-  allCountries,
   lang,
   sortKey,
   sortDir,
@@ -222,7 +220,8 @@ export function ResultsTable({
   const arrow = (key: SortKey) =>
     sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''
 
-  const colorize = makeMetricColorizer(metric, allCountries)
+  // Heat colours stretch to the rows currently on screen (filters / tabs).
+  const colorize = makeMetricColorizer(metric, rows)
   const heatCol = heatColumnForMetric(metric)
 
   const headerRow = (
