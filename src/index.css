@@ -536,6 +536,74 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 }
 
+/* Map zoom stage + floating controls */
+.map-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.35rem;
+  /* Keep page scroll when unzoomed; lock gestures once zoomed for pan. */
+  touch-action: pan-y;
+  background: color-mix(in srgb, var(--paper-deep) 55%, transparent);
+}
+
+.map-stage.is-zoomed {
+  touch-action: none;
+}
+
+.map-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.map-zoom-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.map-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: var(--control-bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.map-zoom-btn:hover:not(:disabled),
+.map-zoom-btn:focus-visible:not(:disabled) {
+  border-color: var(--accent, var(--ink));
+  outline: none;
+}
+
+.map-zoom-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.map-zoom-btn--reset {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 /*
  * Fixed Total row — full table columns, viewport-pinned.
  * `bottom` is overridden via useVisualViewportBottom so it stays on the
