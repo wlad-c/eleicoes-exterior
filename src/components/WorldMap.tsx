@@ -395,7 +395,13 @@ export function WorldMap({
   const canGoBack = focus.level !== 'world'
 
   return (
-    <div ref={wrapRef} className="map-wrap relative w-full">
+    <div
+      ref={wrapRef}
+      className="map-wrap relative w-full"
+      // Clear when the pointer leaves the whole map chrome (incl. tip).
+      // Per-path mouseleave would dismiss before the tip × can be pressed.
+      onMouseLeave={clearTip}
+    >
       {canGoBack ? (
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <button
@@ -419,7 +425,6 @@ export function WorldMap({
         role="img"
         aria-label={t('map', lang)}
         className="w-full overflow-visible"
-        onMouseLeave={clearTip}
       >
         <rect
           width={width}
@@ -472,7 +477,6 @@ export function WorldMap({
                   if (!f.row) return
                   showTipAt(e, f.label, f.row)
                 }}
-                onMouseLeave={clearTip}
                 onClick={(e) => {
                   e.stopPropagation()
                   handleFeatureClick(e, f)
@@ -502,7 +506,6 @@ export function WorldMap({
                 if (!f.row) return
                 showTipAt(e, f.label, f.row)
               }}
-              onMouseLeave={clearTip}
               onClick={(e) => {
                 e.stopPropagation()
                 handleFeatureClick(e, f)
