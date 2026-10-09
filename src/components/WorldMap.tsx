@@ -426,24 +426,15 @@ export function WorldMap({
     neighborhoodCities,
   ])
 
-  /**
-   * Scale domain from what the choropleth is comparing.
-   * On the world map, skip domestic Brazil so overseas places use the
-   * full colour range (Brazil still draws, clamped to the dark end).
-   */
-  const scaleRows: VoteLike[] = useMemo(() => {
-    if (focus.level !== 'world') return colorRows
-    const overseas = countries.filter((c) => !c.domestic)
-    return overseas.length ? overseas : colorRows
-  }, [focus.level, colorRows, countries])
-
+  // Colour domain = every place drawn in this view (incl. domestic Brazil).
+  // Vote-count metrics still use log1p inside makeMetricColorizer.
   const colorize = useMemo(
-    () => makeMetricColorizer(metric, scaleRows),
-    [metric, scaleRows],
+    () => makeMetricColorizer(metric, colorRows),
+    [metric, colorRows],
   )
   const legendExtent = useMemo(
-    () => extentForMetric(scaleRows, metric),
-    [scaleRows, metric],
+    () => extentForMetric(colorRows, metric),
+    [colorRows, metric],
   )
   const legendMode = legendModeForMetric(metric)
 
