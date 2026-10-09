@@ -12,6 +12,9 @@
  *
  * Writes: src/data/brazil-suburbs.json
  *
+ * After rebuilding tallies, run `node scripts/enrich-suburb-coords.mjs` to
+ * attach WGS84 centroids (NR_LATITUDE / NR_LONGITUDE) for the city map.
+ *
  * Usage: node scripts/build-brazil-locals.mjs
  */
 import {
