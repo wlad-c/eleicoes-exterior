@@ -108,18 +108,6 @@ export function CityBreakdownTable({
   const countryColClass = flagOnlyLabels
     ? 'cell-truncate-flag'
     : 'cell-truncate-abbr'
-  /**
-   * Floor for the place column from the longest name in the full row set
-   * (virtualization only mounts a window — without this, long names clip).
-   */
-  /**
-   * Soft floor only — long names wrap inside max-width instead of forcing
-   * a 40ch column that leaves empty space after short names like “Grajaú”.
-   */
-  const placeColStyle = useMemo(() => {
-    const ch = placeKind === 'suburb' ? (areaUfCompact ? 16 : 18) : 14
-    return { ['--table-col-place' as string]: `${ch}ch` }
-  }, [placeKind, areaUfCompact])
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
@@ -127,7 +115,11 @@ export function CityBreakdownTable({
   const { dragProps } = useColumnDrag(onReorderColumns)
   const shouldVirtualize = rows.length >= VIRTUALIZE_AT
   const colCount =
-    1 /* rank */ + (showCountry ? 1 : 0) + 1 /* place */ + metricCols.length
+    1 /* rank */ +
+    (showCountry ? 1 : 0) +
+    1 /* place */ +
+    metricCols.length +
+    1 /* trailing spacer */
 
   /**
    * Split axes for iOS: outer = vertical virtualizer, inner = horizontal pan.
@@ -564,6 +556,7 @@ export function CityBreakdownTable({
             )
         }
       })}
+      <td className="table-col-spacer" aria-hidden="true" />
     </>
   )
 
@@ -752,6 +745,7 @@ export function CityBreakdownTable({
             )
         }
       })}
+      <th className="table-col-spacer" aria-hidden="true" />
     </tr>
   )
 
@@ -768,7 +762,6 @@ export function CityBreakdownTable({
             <table
               ref={headTableRef}
               className={`results-table results-table--head results-table--cities ${tableKindClass} text-left text-sm`}
-              style={placeColStyle}
             >
               <thead>{headerRow}</thead>
             </table>
@@ -791,7 +784,6 @@ export function CityBreakdownTable({
           <table
             ref={tableRef}
             className={`results-table results-table--cities ${tableKindClass} text-left text-sm`}
-            style={placeColStyle}
           >
             <thead aria-hidden="true" className="results-table-width-head">
               {headerRow}
@@ -1003,6 +995,7 @@ export function CityBreakdownTable({
                         )
                     }
                   })}
+                  <td className="table-col-spacer" aria-hidden="true" />
                 </tr>
               )
             })}
@@ -1041,7 +1034,6 @@ export function CityBreakdownTable({
           <table
             ref={footTableRef}
             className={`results-table results-table--foot results-table--cities ${tableKindClass} text-left text-sm`}
-            style={placeColStyle}
           >
             <tbody>
               <tr className="text-sm font-semibold">{totalCells}</tr>

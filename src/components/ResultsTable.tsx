@@ -402,6 +402,7 @@ export function ResultsTable({
             )
         }
       })}
+      <th className="table-col-spacer" aria-hidden="true" />
     </tr>
   )
 
@@ -513,6 +514,7 @@ export function ResultsTable({
             )
         }
       })}
+      <td className="table-col-spacer" aria-hidden="true" />
     </>
   )
 
@@ -729,6 +731,7 @@ export function ResultsTable({
                           )
                       }
                     })}
+                    <td className="table-col-spacer" aria-hidden="true" />
                   </tr>
                 )
               })}

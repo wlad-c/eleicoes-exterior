@@ -171,8 +171,8 @@ html.dark .sticky-table-chrome {
   padding-right: 0.35rem;
 }
 
-.results-table th:not(.sticky-col),
-.results-table td:not(.sticky-col) {
+.results-table th:not(.sticky-col):not(.table-col-spacer),
+.results-table td:not(.sticky-col):not(.table-col-spacer) {
   width: 1%;
   white-space: nowrap;
 }
@@ -368,16 +368,28 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Size to content. Stretching to 100% dumped leftover viewport width into
- * metric columns (empty gutters) while capped place names stayed truncated.
- * Spare room stays to the right of the table, not between columns.
+ * Fill the pane. Metrics hug (width:1%); place/country columns size to
+ * their text; a trailing .table-col-spacer (width:100%) absorbs leftover
+ * so spare space sits after the last metric — never between columns.
  */
 .results-table--cities,
 .results-table--body,
 .results-table--head:not(.results-table--cities),
 .results-table--foot {
-  width: max-content;
-  min-width: max-content;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* Absorbs leftover pane width so name + metric columns stay dense */
+.results-table th.table-col-spacer,
+.results-table td.table-col-spacer {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  padding: 0 !important;
+  border: none;
+  pointer-events: none;
+  white-space: normal;
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */
@@ -427,17 +439,18 @@ html.dark .is-x-scrolled .sticky-col-city {
   /*
    * Metrics hug content. Former 7.25rem min-width forced empty space
    * between columns while BAIRRO/city names stayed truncated.
+   * Spacer keeps width:100% (see base rule) — exclude it here.
    */
-  .results-table th:not(.sticky-col),
-  .results-table td:not(.sticky-col) {
+  .results-table th:not(.sticky-col):not(.table-col-spacer),
+  .results-table td:not(.sticky-col):not(.table-col-spacer) {
     min-width: 0;
     width: 1%;
     padding-left: 0.28rem;
     padding-right: 0.28rem;
   }
 
-  .results-table th,
-  .results-table td {
+  .results-table th:not(.table-col-spacer),
+  .results-table td:not(.table-col-spacer) {
     white-space: nowrap;
     padding-left: 0.28rem;
     padding-right: 0.28rem;
@@ -893,28 +906,28 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Place / neighborhood / city name: grow with content up to a modest cap,
- * wrapping long dual-bairro labels instead of ellipsis or a wide empty
- * gutter after short names.
+ * Place / neighborhood / city name: size to the full label (no ellipsis,
+ * no max-width cap). Leftover pane width goes to .table-col-spacer.
  */
 .cell-truncate-city,
 .sticky-col-city.cell-truncate-city,
 .results-table--suburb .sticky-col-city.cell-truncate-city {
   width: auto;
   min-width: var(--table-col-place-min);
-  /* Keep modest so short names don’t sit in a wide empty cell; long
-     labels wrap (full text still visible). */
-  max-width: 10.5rem;
-  overflow: hidden;
+  max-width: none;
+  overflow: visible;
+}
+
+.sticky-col-city.cell-truncate-city .name-tip {
+  overflow: visible;
+  max-width: none;
 }
 
 .sticky-col-city.cell-truncate-city .cell-truncate-text {
   display: block;
   overflow: visible;
   text-overflow: clip;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  white-space: nowrap;
   line-height: 1.25;
 }
 
@@ -980,15 +993,24 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Country table sticky country width = abbr + place so metrics align
- * with Area/City (which keep abbreviations). Do not apply to Area/City.
+ * Country table: name column sizes to the label; spacer takes leftover.
  */
 .results-table--body .sticky-col-country.cell-truncate-country,
 .results-table--head:not(.results-table--cities)
-  .sticky-col-country.cell-truncate-country {
-  width: var(--table-col-country-full);
+  .sticky-col-country.cell-truncate-country,
+.results-table--foot .sticky-col-country.cell-truncate-country {
+  width: auto;
   min-width: var(--table-col-country-full);
-  max-width: var(--table-col-country-full);
+  max-width: none;
+}
+
+.results-table--body .sticky-col-country.cell-truncate-country .name-tip,
+.results-table--head:not(.results-table--cities)
+  .sticky-col-country.cell-truncate-country
+  .name-tip,
+.results-table--foot .sticky-col-country.cell-truncate-country .name-tip {
+  overflow: visible;
+  max-width: none;
 }
 
 .results-table--body .sticky-col-country.cell-truncate-flag,
@@ -1000,22 +1022,16 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 .sticky-col-country.cell-truncate-country {
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* When the country column is wide enough, skip ellipsis clipping */
-@media (min-width: 1100px) {
-  .sticky-col-country.cell-truncate-country {
-    overflow: visible;
-  }
-
-  .sticky-col-country.cell-truncate-country .cell-truncate-text,
-  .sticky-col-country.cell-truncate-country
-    .country-flag-label
-    .cell-truncate-text {
-    overflow: visible;
-    text-overflow: clip;
-  }
+.sticky-col-country.cell-truncate-country .cell-truncate-text,
+.sticky-col-country.cell-truncate-country
+  .country-flag-label
+  .cell-truncate-text {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 
 .table-col-picker summary::-webkit-details-marker {
