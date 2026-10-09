@@ -160,18 +160,41 @@ export function makeMetricColorizer(
     }
   }
 
+  // Absolute vote counts: log scale so one huge place (e.g. Brazil)
+  // does not flatten every other region to the light end.
+  const voteCountMetric =
+    metric === 'votes2026' ||
+    metric === 'votes2022' ||
+    metric === 'lulaVotes2026' ||
+    metric === 'lulaVotes2022' ||
+    metric === 'bolsonaroVotes2026' ||
+    metric === 'bolsonaroVotes2022'
+
   if (kind === 'lulaSeq') {
-    const scale = sequentialScale(Math.max(hi, 1), 'lula')
-    return (value) => (value == null ? PENDING_FILL : scale(value))
+    const scale = sequentialScale(
+      voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
+      'lula',
+    )
+    return (value) =>
+      value == null
+        ? PENDING_FILL
+        : scale(voteCountMetric ? Math.log1p(value) : value)
   }
 
   if (kind === 'votesSeq') {
-    const scale = sequentialScale(Math.max(hi, 1), 'votes')
-    return (value) => (value == null ? PENDING_FILL : scale(value))
+    const scale = sequentialScale(Math.log1p(Math.max(hi, 1)), 'votes')
+    return (value) =>
+      value == null ? PENDING_FILL : scale(Math.log1p(value))
   }
 
-  const scale = sequentialScale(Math.max(hi, 1), 'bolso')
-  return (value) => (value == null ? PENDING_FILL : scale(value))
+  const scale = sequentialScale(
+    voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
+    'bolso',
+  )
+  return (value) =>
+    value == null
+      ? PENDING_FILL
+      : scale(voteCountMetric ? Math.log1p(value) : value)
 }
 
 export function withAlpha(color: string, alpha: number): string {
