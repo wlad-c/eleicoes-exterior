@@ -304,6 +304,18 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return c.y2022?.lulaPct ?? null
     case 'bolsonaroPct2022':
       return c.y2022?.bolsonaroPct ?? null
+    case 'votes2026':
+      return isReported(c) && c.y2026 ? c.y2026.totalValid : null
+    case 'votes2022':
+      return c.y2022?.totalValid ?? null
+    case 'lulaVotes2026':
+      return isReported(c) && c.y2026 ? c.y2026.lula : null
+    case 'lulaVotes2022':
+      return c.y2022?.lula ?? null
+    case 'bolsonaroVotes2026':
+      return isReported(c) && c.y2026 ? c.y2026.bolsonaro : null
+    case 'bolsonaroVotes2022':
+      return c.y2022?.bolsonaro ?? null
   }
 }
 
@@ -337,6 +349,13 @@ export function formatMetricValue(
     case 'lulaPct2022':
     case 'bolsonaroPct2022':
       return fmtPct(value, lang)
+    case 'votes2026':
+    case 'votes2022':
+    case 'lulaVotes2026':
+    case 'lulaVotes2022':
+    case 'bolsonaroVotes2026':
+    case 'bolsonaroVotes2022':
+      return fmtInt(value, lang)
   }
 }
 

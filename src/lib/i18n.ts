@@ -81,8 +81,18 @@ const dict = {
   bolsonaroPct2026: { en: '2026 F Bolsonaro %', pt: 'F Bolsonaro % 2026' },
   lulaPct2022: { en: '2022 Lula %', pt: 'Lula % 2022' },
   bolsonaroPct2022: { en: '2022 J Bolsonaro %', pt: 'J Bolsonaro % 2022' },
-  votes2026: { en: 'Votes 2026', pt: 'Votos 2026' },
-  votes2022: { en: 'Votes 2022', pt: 'Votos 2022' },
+  votes2026: { en: 'Total votes 2026', pt: 'Total de votos 2026' },
+  votes2022: { en: 'Total votes 2022', pt: 'Total de votos 2022' },
+  lulaVotes2026: { en: 'Lula votes 2026', pt: 'Votos Lula 2026' },
+  lulaVotes2022: { en: 'Lula votes 2022', pt: 'Votos Lula 2022' },
+  bolsonaroVotes2026: {
+    en: 'F Bolsonaro votes 2026',
+    pt: 'Votos F Bolsonaro 2026',
+  },
+  bolsonaroVotes2022: {
+    en: 'J Bolsonaro votes 2022',
+    pt: 'Votos J Bolsonaro 2022',
+  },
   showPending: {
     en: 'Show pending countries',
     pt: 'Mostrar países pendentes',

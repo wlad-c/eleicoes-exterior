@@ -18,6 +18,8 @@ import {
   BOLSONARO_COLOR_LIGHT,
   LULA_COLOR,
   LULA_COLOR_LIGHT,
+  VOTES_COLOR,
+  VOTES_COLOR_LIGHT,
   legendModeForMetric,
   makeMetricColorizer,
   NO_DATA_FILL,
@@ -1035,8 +1037,14 @@ function Legend({
     )
   }
 
-  const from = mode === 'lula' ? '#F7F0F0' : '#EEF3F9'
-  const to = mode === 'lula' ? LULA_COLOR : BOLSONARO_COLOR
+  const from =
+    mode === 'lula'
+      ? '#F7F0F0'
+      : mode === 'votes'
+        ? VOTES_COLOR_LIGHT
+        : '#EEF3F9'
+  const to =
+    mode === 'lula' ? LULA_COLOR : mode === 'votes' ? VOTES_COLOR : BOLSONARO_COLOR
 
   return (
     <>

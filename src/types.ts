@@ -149,6 +149,12 @@ export type MapMetric =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'votes2026'
+  | 'votes2022'
+  | 'lulaVotes2026'
+  | 'lulaVotes2022'
+  | 'bolsonaroVotes2026'
+  | 'bolsonaroVotes2022'
 
 export const HEATMAP_METRICS: MapMetric[] = [
   'leader2026',
@@ -161,6 +167,12 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'votes2026',
+  'votes2022',
+  'lulaVotes2026',
+  'lulaVotes2022',
+  'bolsonaroVotes2026',
+  'bolsonaroVotes2022',
 ]
 
 export type SortKey =
@@ -204,12 +216,19 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'swingToBolsonaro':
       return 'swingToBolsonaro'
     case 'lulaPct2026':
+    case 'lulaVotes2026':
       return 'lula2026'
     case 'bolsonaroPct2026':
+    case 'bolsonaroVotes2026':
       return 'bolso2026'
     case 'lulaPct2022':
+    case 'lulaVotes2022':
       return 'lula2022'
     case 'bolsonaroPct2022':
+    case 'bolsonaroVotes2022':
       return 'bolso2022'
+    case 'votes2026':
+    case 'votes2022':
+      return 'none'
   }
 }
