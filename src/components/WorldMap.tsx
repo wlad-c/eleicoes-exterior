@@ -31,6 +31,7 @@ import {
 } from '../lib/format'
 import {
   brazilUfCollection,
+  citiesWithNeighborhoods,
   fetchCityFeature,
   fetchUfMunicipalityCollection,
   suburbsForCity,
@@ -52,6 +53,11 @@ type Props = {
   metric: MapMetric
   lang: Lang
   focus: MapFocus
+  /**
+   * At Brazil focus: `ufs` = state choropleth (Area tab);
+   * `cities` = map of municipalities that have neighborhood (zona) data.
+   */
+  brazilGrain?: 'ufs' | 'cities'
   highlightId: string | null
   onPick: (pick: MapPick) => void
   onBack: () => void
@@ -70,8 +76,10 @@ type DrawnFeature = {
   row: VoteLike | undefined
   label: string
   pick: MapPick
-  /** Circle marker (neighborhood) instead of a path fill. */
+  /** Circle marker (neighborhood / city point) instead of a path fill. */
   circle?: { cx: number; cy: number; r: number }
+  /** UF city choropleth: municipality has a neighborhood drill-down. */
+  multiZone?: boolean
 }
 
 export function WorldMap({
@@ -82,6 +90,7 @@ export function WorldMap({
   metric,
   lang,
   focus,
+  brazilGrain = 'ufs',
   highlightId,
   onPick,
   onBack,
@@ -207,8 +216,15 @@ export function WorldMap({
 
   const height = Math.round(width * (width < 520 ? 0.58 : 0.48))
 
+  const neighborhoodCities = useMemo(
+    () => citiesWithNeighborhoods(cities, suburbs),
+    [cities, suburbs],
+  )
+
   const colorRows: VoteLike[] = useMemo(() => {
-    if (focus.level === 'brazil') return areas
+    if (focus.level === 'brazil') {
+      return brazilGrain === 'cities' ? neighborhoodCities : areas
+    }
     if (focus.level === 'uf') {
       return cities.filter((c) => c.area === focus.uf)
     }
@@ -217,7 +233,15 @@ export function WorldMap({
       return local.length ? local : cities.filter((c) => c.code === focus.cityCode)
     }
     return countries
-  }, [focus, areas, cities, suburbs, countries])
+  }, [
+    focus,
+    brazilGrain,
+    areas,
+    cities,
+    suburbs,
+    countries,
+    neighborhoodCities,
+  ])
 
   const colorize = useMemo(
     () => makeMetricColorizer(metric, colorRows),
@@ -283,6 +307,49 @@ export function WorldMap({
       if (!ufMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
       const projection = geoNaturalEarth1().fitSize([width, height], ufMesh)
       const path = geoPath(projection)
+
+      // City / Bairro tabs: real map of municipalities that have zona/bairro data.
+      if (brazilGrain === 'cities') {
+        const items: DrawnFeature[] = ufMesh.features.map((f) => {
+          const uf = f.properties.uf
+          return {
+            id: `__uf-${uf}`,
+            d: path(f) ?? '',
+            row: undefined,
+            label: uf,
+            pick: { kind: 'uf', uf },
+          }
+        })
+        const withCoords = neighborhoodCities.filter(
+          (c) => c.lat != null && c.lon != null,
+        )
+        // Marker size from vote volume so capitals read larger.
+        let maxV = 1
+        for (const c of withCoords) {
+          maxV = Math.max(maxV, c.y2026?.totalValid ?? 0)
+        }
+        for (const c of withCoords) {
+          const pt = projection([c.lon as number, c.lat as number])
+          if (!pt) continue
+          const votes = c.y2026?.totalValid ?? 0
+          const t = Math.sqrt(votes / maxV)
+          const r = 3.5 + t * 10
+          items.push({
+            id: c.code,
+            d: '',
+            row: c,
+            label: cityDisplayName(c, lang),
+            pick: {
+              kind: 'city',
+              uf: c.area || c.code.slice(0, 2),
+              cityCode: c.code,
+            },
+            circle: { cx: pt[0], cy: pt[1], r },
+          })
+        }
+        return { drawn: items, fitReady: true }
+      }
+
       const items: DrawnFeature[] = ufMesh.features.map((f) => {
         const uf = f.properties.uf
         const row = areaByUf.get(uf)
@@ -301,6 +368,7 @@ export function WorldMap({
       if (!munMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
       const projection = geoNaturalEarth1().fitSize([width, height], munMesh)
       const path = geoPath(projection)
+      const multi = new Set(neighborhoodCities.map((c) => c.code))
       const items: DrawnFeature[] = munMesh.features.map((f) => {
         const code = f.properties.id
         const row = cityByCode.get(code)
@@ -310,15 +378,23 @@ export function WorldMap({
           row,
           label: row ? cityDisplayName(row, lang) : code,
           pick: { kind: 'city', uf: focus.uf, cityCode: code },
+          // Emphasize cities that drill into a neighborhood map.
+          multiZone: multi.has(code),
         }
       })
       return { drawn: items, fitReady: true }
     }
 
-    // City → neighborhoods (electoral zones). Zone polygons are not in
-    // open data, so multi-zone cities use colored markers inside the mun.
+    // City → neighborhoods at TSE voting-local centroids (real geography).
     if (!cityFeature) return { drawn: [] as DrawnFeature[], fitReady: false }
-    const projection = geoNaturalEarth1().fitSize([width, height], cityFeature)
+    const pad = Math.max(16, Math.round(Math.min(width, height) * 0.04))
+    const projection = geoNaturalEarth1().fitExtent(
+      [
+        [pad, pad],
+        [width - pad, height - pad],
+      ],
+      cityFeature,
+    )
     const path = geoPath(projection)
     const local = suburbsForCity(suburbs, focus.cityCode)
     const cityRow = cityByCode.get(focus.cityCode)
@@ -345,12 +421,7 @@ export function WorldMap({
     const [[x0, y0], [x1, y1]] = path.bounds(cityFeature)
     const cx = (x0 + x1) / 2
     const cy = (y0 + y1) / 2
-    const span = Math.max(x1 - x0, y1 - y0, 40)
-    const n = local.length
-    const cols = Math.ceil(Math.sqrt(n))
-    const rowsN = Math.ceil(n / cols)
-    const cell = (span * 0.72) / Math.max(cols, rowsN)
-    const r = Math.max(5, Math.min(18, cell * 0.38))
+    const geoPts = local.filter((s) => s.lat != null && s.lon != null)
     const items: DrawnFeature[] = [
       {
         id: `__outline-${focus.cityCode}`,
@@ -360,12 +431,56 @@ export function WorldMap({
         pick: { kind: 'background' },
       },
     ]
+
+    if (geoPts.length >= Math.max(2, Math.ceil(local.length * 0.5))) {
+      // Geographic placement from TSE lat/lon centroids.
+      let maxV = 1
+      for (const s of geoPts) {
+        maxV = Math.max(maxV, s.y2026?.totalValid ?? 0)
+      }
+      for (const sub of local) {
+        let cxp = cx
+        let cyp = cy
+        if (sub.lat != null && sub.lon != null) {
+          const pt = projection([sub.lon, sub.lat])
+          if (pt) {
+            cxp = pt[0]
+            cyp = pt[1]
+          }
+        } else {
+          // Rare missing coords: nudge near mun centroid so the tip still works.
+          const [gx, gy] = geoCentroid(cityFeature)
+          const fall = projection([gx, gy]) ?? [cx, cy]
+          cxp = fall[0]
+          cyp = fall[1]
+        }
+        const votes = sub.y2026?.totalValid ?? 0
+        const t = Math.sqrt(votes / maxV)
+        const r = 5 + t * 12
+        items.push({
+          id: sub.code,
+          d: '',
+          row: sub,
+          label: cityDisplayName(sub, lang),
+          pick: { kind: 'suburb', suburbCode: sub.code },
+          circle: { cx: cxp, cy: cyp, r },
+        })
+      }
+      return { drawn: items, fitReady: true }
+    }
+
+    // Fallback grid only when coords are mostly missing.
+    const span = Math.max(x1 - x0, y1 - y0, 40)
+    const n = local.length
+    const cols = Math.ceil(Math.sqrt(n))
+    const rowsN = Math.ceil(n / cols)
+    const cell = (span * 0.72) / Math.max(cols, rowsN)
+    const r = Math.max(5, Math.min(18, cell * 0.38))
     local.forEach((sub, i) => {
       const col = i % cols
       const rowI = Math.floor(i / cols)
       const ox = (col - (cols - 1) / 2) * cell
       const oy = (rowI - (rowsN - 1) / 2) * cell
-      // Prefer geographic centroid jitter when available for a less grid-like feel.
       const [gx, gy] = geoCentroid(cityFeature)
       const [pcx, pcy] = projection([gx, gy]) ?? [cx, cy]
       items.push({
@@ -380,6 +495,7 @@ export function WorldMap({
     return { drawn: items, fitReady: true }
   }, [
     focus,
+    brazilGrain,
     width,
     height,
     byNumeric,
@@ -389,6 +505,7 @@ export function WorldMap({
     areaByUf,
     cityByCode,
     suburbs,
+    neighborhoodCities,
     lang,
   ])
 
@@ -415,7 +532,7 @@ export function WorldMap({
             ← {t('mapBack', lang)}
           </button>
           <span className="text-xs text-[var(--ink-muted)]">
-            {focusLabel(focus, areas, cities, lang)}
+            {focusLabel(focus, areas, cities, lang, brazilGrain)}
           </span>
         </div>
       ) : null}
@@ -452,7 +569,7 @@ export function WorldMap({
           const value = f.row ? metricValue(f.row, metric) : null
           let fill = NO_DATA_FILL
           if (f.id.startsWith('__outline-')) {
-            fill = 'var(--map-nodata)'
+            fill = 'var(--paper-deep)'
           } else if (f.row) {
             fill = value != null ? colorize(value) : PENDING_FILL
           }
@@ -466,8 +583,9 @@ export function WorldMap({
                 cy={f.circle.cy}
                 r={f.circle.r}
                 fill={fill}
-                stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--map-stroke)'}
-                strokeWidth={isHi ? 2 : 0.8}
+                stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--ink)'}
+                strokeOpacity={isHi ? 1 : 0.35}
+                strokeWidth={isHi ? 2.25 : 1}
                 className="cursor-pointer transition-[stroke-width] duration-200"
                 onMouseEnter={(e) => {
                   if (!f.row) return
@@ -484,15 +602,43 @@ export function WorldMap({
               />
             )
           }
+          const isUfBackdrop =
+            brazilGrain === 'cities' &&
+            focus.level === 'brazil' &&
+            f.id.startsWith('__uf-')
+          const isCityOutline = f.id.startsWith('__outline-')
           return (
             <path
               key={f.id}
               data-map-id={f.id}
               d={f.d}
-              fill={fill}
-              fillOpacity={f.id.startsWith('__outline-') ? 0.35 : 1}
-              stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--map-stroke)'}
-              strokeWidth={isHi ? 1.6 : focus.level === 'world' ? 0.4 : 0.55}
+              fill={
+                isCityOutline
+                  ? 'var(--paper-deep)'
+                  : isUfBackdrop
+                    ? 'var(--map-nodata)'
+                    : fill
+              }
+              fillOpacity={isCityOutline ? 0.85 : isUfBackdrop ? 0.55 : 1}
+              stroke={
+                isHi
+                  ? 'var(--map-stroke-hi)'
+                  : isCityOutline
+                    ? 'var(--ink)'
+                    : 'var(--map-stroke)'
+              }
+              strokeOpacity={isCityOutline ? 0.55 : 1}
+              strokeWidth={
+                isHi
+                  ? 1.6
+                  : isCityOutline
+                    ? 1.4
+                    : f.multiZone
+                      ? 1.15
+                      : focus.level === 'world'
+                        ? 0.4
+                        : 0.55
+              }
               className={
                 f.pick.kind !== 'background' || canGoBack
                   ? 'cursor-pointer transition-[stroke-width] duration-200'
@@ -577,8 +723,14 @@ function focusLabel(
   areas: CityResult[],
   cities: CityResult[],
   lang: Lang,
+  brazilGrain: 'ufs' | 'cities' = 'ufs',
 ): string {
   if (focus.level === 'brazil') {
+    if (brazilGrain === 'cities') {
+      return lang === 'pt'
+        ? 'Brasil · cidades com bairros'
+        : 'Brazil · cities with neighborhoods'
+    }
     return lang === 'pt' ? 'Brasil · UFs' : 'Brazil · states'
   }
   if (focus.level === 'uf') {
@@ -589,7 +741,7 @@ function focusLabel(
   if (focus.level === 'city') {
     const city = cities.find((c) => c.code === focus.cityCode)
     const name = city ? cityDisplayName(city, lang) : focus.cityCode
-    return `${name} · ${lang === 'pt' ? 'bairros' : 'neighborhoods'}`
+    return `${name} · ${lang === 'pt' ? 'bairros (zonas)' : 'neighborhoods (zones)'}`
   }
   return ''
 }

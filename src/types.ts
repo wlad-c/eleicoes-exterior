@@ -51,6 +51,15 @@ export type CityResult = {
   y2022?: YearResult | null
   swing?: Swing | null
   coverage: Coverage | null
+  /**
+   * WGS84 centroid from TSE voting-local coordinates
+   * (`eleitorado_local_votacao` NR_LATITUDE / NR_LONGITUDE). Used to place
+   * Brazil city / neighborhood markers on the map.
+   */
+  lat?: number
+  lon?: number
+  /** Brazil only: number of electoral zones (neighborhood grain) in this city. */
+  zoneCount?: number
 }
 
 export type CountryResult = {

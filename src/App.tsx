@@ -16,6 +16,7 @@ import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from
 import {
   parentFocus,
   tableViewForFocus,
+  ufFromCityCode,
   type MapFocus,
   type MapPick,
 } from './lib/brazilGeo'
@@ -304,6 +305,54 @@ export default function App() {
       setSortKey('votes2026')
       setSortDir('desc')
     }
+    // City / Bairro tabs drive a Brazil city map (municipalities with
+    // neighborhood data) — not the world choropleth.
+    if (next === 'cities' || next === 'suburbs') {
+      setIncludeBrazil(true)
+      prefetchBrazilCities()
+      if (next === 'suburbs') prefetchBrazilSuburbs()
+      applyCountryFilter(BRAZIL_ID)
+      setHighlightId(BRAZIL_ID)
+
+      if (next === 'suburbs' && selectedCityKeys.length === 1) {
+        const parsed = parsePlaceFilterKey(selectedCityKeys[0])
+        const cityCode = parsed?.code
+        const uf = cityCode ? ufFromCityCode(cityCode) : null
+        if (cityCode && uf) {
+          setMapFocus({ level: 'city', uf, cityCode })
+          setHighlightId(cityCode)
+          return
+        }
+      }
+      if (selectedAreaKeys.length === 1) {
+        const parsed = parsePlaceFilterKey(selectedAreaKeys[0])
+        const uf = parsed?.code
+        if (uf && /^[A-Z]{2}$/.test(uf)) {
+          setMapFocus({ level: 'uf', uf })
+          setHighlightId(uf)
+          return
+        }
+      }
+      if (mapFocus.level === 'world' || mapFocus.level === 'brazil') {
+        setMapFocus({ level: 'brazil' })
+      }
+      // Keep uf/city drill if the user already zoomed the map.
+    }
+    if (next === 'areas') {
+      setIncludeBrazil(true)
+      prefetchBrazilCities()
+      applyCountryFilter(BRAZIL_ID)
+      if (mapFocus.level === 'world') {
+        setMapFocus({ level: 'brazil' })
+        setHighlightId(BRAZIL_ID)
+      } else if (mapFocus.level === 'city') {
+        setMapFocus({ level: 'uf', uf: mapFocus.uf })
+        setHighlightId(mapFocus.uf)
+      }
+    }
+    if (next === 'countries' && mapFocus.level !== 'world') {
+      setMapFocus({ level: 'world' })
+    }
   }
 
   function clearSearch() {
@@ -347,6 +396,14 @@ export default function App() {
   }
 
   function syncTabToFocus(focus: MapFocus) {
+    // Zooming out to Brazil while on City/Bairro keeps that tab — the map
+    // switches to the “cities with neighborhoods” grain instead of UFs.
+    if (
+      focus.level === 'brazil' &&
+      (tableView === 'cities' || tableView === 'suburbs')
+    ) {
+      return
+    }
     const next = tableViewForFocus(focus)
     setTableView(next)
     if (next === 'countries' && sortKey === 'city') {
@@ -936,6 +993,11 @@ export default function App() {
           metric={metric}
           lang={lang}
           focus={mapFocus}
+          brazilGrain={
+            effectiveTableView === 'cities' || effectiveTableView === 'suburbs'
+              ? 'cities'
+              : 'ufs'
+          }
           highlightId={activeHighlight}
           onPick={onMapPick}
           onBack={mapBack}

@@ -248,6 +248,33 @@ export function suburbsForCity(
   return suburbs.filter((s) => s.code.startsWith(prefix))
 }
 
+/**
+ * Municipalities with a within-city neighborhood (zona) breakdown.
+ * Prefer `zoneCount` from brazil-cities.json; fall back to counting suburbs.
+ */
+export function citiesWithNeighborhoods(
+  cities: CityResult[] | null | undefined,
+  suburbs?: CityResult[] | null,
+): CityResult[] {
+  if (!cities?.length) return []
+  if (cities.some((c) => c.zoneCount != null)) {
+    return cities.filter((c) => (c.zoneCount ?? 0) >= 2)
+  }
+  if (!suburbs?.length) return []
+  const counts = new Map<string, number>()
+  for (const s of suburbs) {
+    const code = s.code.replace(/-Z\d{3}$/, '')
+    counts.set(code, (counts.get(code) || 0) + 1)
+  }
+  return cities.filter((c) => (counts.get(c.code) || 0) >= 2)
+}
+
+/** Parse `UF-#####` city code → UF. */
+export function ufFromCityCode(cityCode: string): string | null {
+  const m = /^([A-Z]{2})-/.exec(cityCode)
+  return m?.[1] ?? null
+}
+
 export function parentFocus(focus: MapFocus): MapFocus {
   switch (focus.level) {
     case 'city':
