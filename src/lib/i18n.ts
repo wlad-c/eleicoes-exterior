@@ -18,6 +18,31 @@ const dict = {
   tabSuburbs: { en: 'Neighborhood', pt: 'Bairro' },
   tableView: { en: 'Table view', pt: 'Visão da tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
+  allAreasFilter: { en: 'Any area', pt: 'Qualquer área' },
+  allCitiesFilter: { en: 'Any city', pt: 'Qualquer cidade' },
+  filterCountry: { en: 'Country', pt: 'País' },
+  filterArea: { en: 'Area', pt: 'Área' },
+  filterCity: { en: 'City', pt: 'Cidade' },
+  filterSearchCountry: {
+    en: 'Search countries…',
+    pt: 'Buscar países…',
+  },
+  filterSearchArea: {
+    en: 'Search areas…',
+    pt: 'Buscar áreas…',
+  },
+  filterSearchCity: {
+    en: 'Search cities…',
+    pt: 'Buscar cidades…',
+  },
+  filterEmpty: {
+    en: 'No matches',
+    pt: 'Sem resultados',
+  },
+  filterSelected: {
+    en: 'selected',
+    pt: 'selecionados',
+  },
   clearSearch: { en: 'Clear search', pt: 'Limpar busca' },
   includeBrazil: {
     en: 'Include Brazil',
