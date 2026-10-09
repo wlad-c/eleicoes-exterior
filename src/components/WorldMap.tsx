@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { createPortal } from 'react-dom'
 import { feature } from 'topojson-client'
@@ -71,6 +72,13 @@ type Tip = {
   row: VoteLike
 }
 
+type MapView = { k: number; x: number; y: number }
+
+const VIEW_RESET: MapView = { k: 1, x: 0, y: 0 }
+const ZOOM_MIN = 1
+const ZOOM_MAX = 8
+const ZOOM_STEP = 1.4
+
 type DrawnFeature = {
   id: string
   d: string
@@ -98,8 +106,19 @@ export function WorldMap({
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
+  const viewRef = useRef<MapView>(VIEW_RESET)
+  const dragRef = useRef<{
+    pointerId: number
+    lastX: number
+    lastY: number
+    moved: boolean
+  } | null>(null)
+  /** Survives pointerup so the trailing click after a pan is ignored. */
+  const suppressClickRef = useRef(false)
   const [width, setWidth] = useState(960)
   const [tip, setTip] = useState<Tip | null>(null)
+  const [view, setView] = useState<MapView>(VIEW_RESET)
   const ufMesh = useMemo(() => brazilUfCollection(), [])
   const [munMesh, setMunMesh] = useState<FeatureCollection<
     Geometry,
@@ -110,6 +129,10 @@ export function WorldMap({
     { id: string }
   > | null>(null)
   const [geoLoading, setGeoLoading] = useState(false)
+
+  useEffect(() => {
+    viewRef.current = view
+  }, [view])
 
   useEffect(() => {
     const el = wrapRef.current
@@ -124,7 +147,10 @@ export function WorldMap({
   // Drill / back leaves a hover tip stranded on touch (no mouseleave).
   useEffect(() => {
     setTip(null)
+    setView(VIEW_RESET)
   }, [focus])
+
+  const height = Math.round(width * (width < 520 ? 0.58 : 0.48))
 
   useEffect(() => {
     if (!tip) return
@@ -192,9 +218,138 @@ export function WorldMap({
     [clearTip],
   )
 
+  const svgPoint = useCallback(
+    (clientX: number, clientY: number) => {
+      const svg = svgRef.current
+      if (!svg) return { x: width / 2, y: height / 2 }
+      const ctm = svg.getScreenCTM()
+      if (!ctm) return { x: width / 2, y: height / 2 }
+      const pt = svg.createSVGPoint()
+      pt.x = clientX
+      pt.y = clientY
+      const p = pt.matrixTransform(ctm.inverse())
+      return { x: p.x, y: p.y }
+    },
+    [width, height],
+  )
+
+  const applyZoom = useCallback(
+    (factor: number, anchor?: { x: number; y: number }) => {
+      setView((v) => {
+        const nextK = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v.k * factor))
+        if (nextK === ZOOM_MIN) return VIEW_RESET
+        if (Math.abs(nextK - v.k) < 0.001) return v
+        const ax = anchor?.x ?? width / 2
+        const ay = anchor?.y ?? height / 2
+        const scale = nextK / v.k
+        return {
+          k: nextK,
+          x: ax - (ax - v.x) * scale,
+          y: ay - (ay - v.y) * scale,
+        }
+      })
+    },
+    [width, height],
+  )
+
+  const zoomIn = useCallback(() => {
+    clearTip()
+    applyZoom(ZOOM_STEP)
+  }, [applyZoom, clearTip])
+
+  const zoomOut = useCallback(() => {
+    clearTip()
+    applyZoom(1 / ZOOM_STEP)
+  }, [applyZoom, clearTip])
+
+  const zoomReset = useCallback(() => {
+    clearTip()
+    setView(VIEW_RESET)
+  }, [clearTip])
+
+  useEffect(() => {
+    const svg = svgRef.current
+    if (!svg) return
+    const onWheelNative = (e: WheelEvent) => {
+      e.preventDefault()
+      clearTip()
+      const anchor = svgPoint(e.clientX, e.clientY)
+      const factor =
+        Math.abs(e.deltaY) > 40
+          ? e.deltaY < 0
+            ? ZOOM_STEP
+            : 1 / ZOOM_STEP
+          : e.deltaY < 0
+            ? 1.12
+            : 1 / 1.12
+      applyZoom(factor, anchor)
+    }
+    // Non-passive so preventDefault actually stops page scroll while zooming.
+    svg.addEventListener('wheel', onWheelNative, { passive: false })
+    return () => svg.removeEventListener('wheel', onWheelNative)
+  }, [applyZoom, clearTip, svgPoint])
+
+  const onStagePointerDown = useCallback(
+    (e: ReactPointerEvent<SVGSVGElement>) => {
+      if (e.button !== 0) return
+      // Only pan when zoomed; unzoomed clicks still select features.
+      if (viewRef.current.k <= 1.001) return
+      const target = e.target as Element | null
+      // Let feature clicks / tip path work; pan from empty chrome.
+      if (target?.closest?.('[data-map-id]')) return
+      dragRef.current = {
+        pointerId: e.pointerId,
+        lastX: e.clientX,
+        lastY: e.clientY,
+        moved: false,
+      }
+      e.currentTarget.setPointerCapture(e.pointerId)
+    },
+    [],
+  )
+
+  const onStagePointerMove = useCallback(
+    (e: ReactPointerEvent<SVGSVGElement>) => {
+      const drag = dragRef.current
+      if (!drag || drag.pointerId !== e.pointerId) return
+      const dx = e.clientX - drag.lastX
+      const dy = e.clientY - drag.lastY
+      if (!drag.moved && dx * dx + dy * dy < 9) return
+      drag.moved = true
+      drag.lastX = e.clientX
+      drag.lastY = e.clientY
+      const svg = svgRef.current
+      const ctm = svg?.getScreenCTM()
+      const scale = ctm ? ctm.a : 1
+      setView((v) => ({
+        ...v,
+        x: v.x + dx / scale,
+        y: v.y + dy / scale,
+      }))
+      clearTip()
+    },
+    [clearTip],
+  )
+
+  const endStageDrag = useCallback((e: ReactPointerEvent<SVGSVGElement>) => {
+    const drag = dragRef.current
+    if (!drag || drag.pointerId !== e.pointerId) return
+    if (drag.moved) suppressClickRef.current = true
+    dragRef.current = null
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {
+      /* already released */
+    }
+  }, [])
+
   /** Touch synthesizes mouseenter then never mouseleave — keep tip until dismiss. */
   const handleFeatureClick = useCallback(
     (e: ReactMouseEvent, f: DrawnFeature) => {
+      if (suppressClickRef.current) {
+        suppressClickRef.current = false
+        return
+      }
       if (f.row) showTipAt(e, f.label, f.row)
       else clearTip()
       onPick(f.pick)
@@ -240,8 +395,6 @@ export function WorldMap({
       cancelled = true
     }
   }, [focus, cities])
-
-  const height = Math.round(width * (width < 520 ? 0.58 : 0.48))
 
   const neighborhoodCities = useMemo(
     () => citiesWithNeighborhoods(cities, suburbs),
@@ -564,34 +717,84 @@ export function WorldMap({
         </div>
       ) : null}
 
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label={t('map', lang)}
-        className="w-full overflow-visible"
-      >
-        <rect
-          width={width}
-          height={height}
-          fill="transparent"
-          className={
-            canGoBack || highlightId ? 'cursor-pointer' : undefined
-          }
-          onClick={() => {
-            clearTip()
-            onPick({ kind: 'background' })
-          }}
-        />
-        {!fitReady && geoLoading ? (
-          <text
-            x={width / 2}
-            y={height / 2}
-            textAnchor="middle"
-            className="fill-[var(--ink-muted)] text-sm"
+      <div className={`map-stage${view.k > 1.001 ? ' is-zoomed' : ''}`}>
+        <div
+          className="map-zoom-controls"
+          role="group"
+          aria-label={t('mapZoomIn', lang)}
+        >
+          <button
+            type="button"
+            className="map-zoom-btn"
+            aria-label={t('mapZoomIn', lang)}
+            title={t('mapZoomIn', lang)}
+            disabled={view.k >= ZOOM_MAX - 0.001}
+            onClick={zoomIn}
           >
-            {t('mapLoading', lang)}
-          </text>
-        ) : null}
+            +
+          </button>
+          <button
+            type="button"
+            className="map-zoom-btn"
+            aria-label={t('mapZoomOut', lang)}
+            title={t('mapZoomOut', lang)}
+            disabled={view.k <= ZOOM_MIN + 0.001}
+            onClick={zoomOut}
+          >
+            −
+          </button>
+          <button
+            type="button"
+            className="map-zoom-btn map-zoom-btn--reset"
+            aria-label={t('mapZoomReset', lang)}
+            title={t('mapZoomReset', lang)}
+            disabled={view.k <= ZOOM_MIN + 0.001}
+            onClick={zoomReset}
+          >
+            1×
+          </button>
+        </div>
+
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${width} ${height}`}
+          role="img"
+          aria-label={t('map', lang)}
+          className={view.k > 1.001 ? 'cursor-grab' : undefined}
+          onPointerDown={onStagePointerDown}
+          onPointerMove={onStagePointerMove}
+          onPointerUp={endStageDrag}
+          onPointerCancel={endStageDrag}
+        >
+          <rect
+            width={width}
+            height={height}
+            fill="transparent"
+            className={
+              canGoBack || highlightId || view.k > 1.001
+                ? 'cursor-pointer'
+                : undefined
+            }
+            onClick={() => {
+              if (suppressClickRef.current) {
+                suppressClickRef.current = false
+                return
+              }
+              clearTip()
+              onPick({ kind: 'background' })
+            }}
+          />
+          {!fitReady && geoLoading ? (
+            <text
+              x={width / 2}
+              y={height / 2}
+              textAnchor="middle"
+              className="fill-[var(--ink-muted)] text-sm"
+            >
+              {t('mapLoading', lang)}
+            </text>
+          ) : null}
+          <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
         {drawn.map((f) => {
           const value = f.row ? metricValue(f.row, metric) : null
           let fill = NO_DATA_FILL
@@ -686,7 +889,9 @@ export function WorldMap({
             />
           )
         })}
-      </svg>
+          </g>
+        </svg>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
         <Legend metric={metric} mode={legendMode} lang={lang} />
