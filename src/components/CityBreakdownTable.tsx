@@ -31,6 +31,7 @@ import {
   fmtPpWithVotes,
   fmtShare,
 } from '../lib/format'
+import { foldForSearch } from '../lib/searchText'
 import { regionLabel, t } from '../lib/i18n'
 import {
   orderedVisibleCols,
@@ -405,6 +406,23 @@ export function CityBreakdownTable({
       </p>
     )
   }
+
+  /** Folded display names that collide across Brazil municipalities in view. */
+  const duplicateBrazilCityNames = useMemo(() => {
+    if (placeKind !== 'city') return new Set<string>()
+    const counts = new Map<string, number>()
+    for (const r of rows) {
+      const parent = countries.get(r.countryId)
+      if (!parent?.domestic) continue
+      const key = foldForSearch(cityDisplayName(r, lang))
+      counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+    const dups = new Set<string>()
+    for (const [key, n] of counts) {
+      if (n > 1) dups.add(key)
+    }
+    return dups
+  }, [rows, placeKind, countries, lang])
 
   const placeLabel = t(
     placeKind === 'area' ? 'area' : placeKind === 'suburb' ? 'suburb' : 'city',
@@ -815,15 +833,27 @@ export function CityBreakdownTable({
                 ? countryAbbrev(parent, lang)
                 : c.countryId
               const fullPlace = cityDisplayName(c, lang)
-              const visiblePlace = areaDisplayName(c, lang, {
+              const cityUf =
+                placeKind === 'city' && parent?.domestic
+                  ? cityPlaceParentLabel(c, lang, { domestic: true })
+                  : ''
+              const disambiguateCity =
+                Boolean(cityUf) &&
+                duplicateBrazilCityNames.has(foldForSearch(fullPlace))
+              const baseVisiblePlace = areaDisplayName(c, lang, {
                 domestic: parent?.domestic,
                 preferUf: preferBrazilUf,
               })
+              // Homonymous municipalities (Campo Grande in MS/AL/RN): put UF
+              // in the primary label so rows are not indistinguishable.
+              const visiblePlace = disambiguateCity
+                ? `${fullPlace} (${cityUf})`
+                : baseVisiblePlace
               const showingUf = visiblePlace !== fullPlace
               const parentPlaceFull =
                 placeKind === 'suburb'
                   ? placeParentLabel(c, lang)
-                  : placeKind === 'city'
+                  : placeKind === 'city' && !disambiguateCity
                     ? cityPlaceParentLabel(c, lang, {
                         domestic: parent?.domestic,
                       })
@@ -848,7 +878,9 @@ export function CityBreakdownTable({
                   : parentPlace
               const placeTip = parentPlaceFull
                 ? `${fullPlace} · ${parentPlaceFull}`
-                : fullPlace
+                : disambiguateCity
+                  ? `${fullPlace} (${cityUf})`
+                  : fullPlace
               return (
                 <tr
                   key={key}
