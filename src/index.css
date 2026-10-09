@@ -756,16 +756,16 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Place / neighborhood / city name: readable width, wrap long dual-bairro
- * labels instead of ellipsis — and instead of a 40ch column that parks
- * empty space between “Grajaú” and the vote figures.
+ * Place / neighborhood / city name: grow with content up to a modest cap,
+ * wrapping long dual-bairro labels instead of ellipsis or a wide empty
+ * gutter after short names.
  */
 .cell-truncate-city,
 .sticky-col-city.cell-truncate-city,
 .results-table--suburb .sticky-col-city.cell-truncate-city {
-  width: max(var(--table-col-place-min), var(--table-col-place, 16ch));
-  min-width: max(var(--table-col-place-min), var(--table-col-place, 16ch));
-  max-width: 15.5rem;
+  width: auto;
+  min-width: var(--table-col-place-min);
+  max-width: 12.75rem;
   overflow: hidden;
 }
 
