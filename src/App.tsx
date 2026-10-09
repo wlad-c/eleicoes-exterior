@@ -397,7 +397,7 @@ export default function App() {
 
   function syncTabToFocus(focus: MapFocus) {
     // Zooming out to Brazil while on City/Bairro keeps that tab — the map
-    // switches to the “cities with neighborhoods” grain instead of UFs.
+    // shows the national municipality choropleth instead of UFs.
     if (
       focus.level === 'brazil' &&
       (tableView === 'cities' || tableView === 'suburbs')

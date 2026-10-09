@@ -37,9 +37,11 @@ import {
 import {
   brazilUfCollection,
   citiesWithNeighborhoods,
+  fetchBrazilMunicipalityCollection,
   fetchCityFeature,
   fetchUfMunicipalityCollection,
   suburbsForCity,
+  ufFromCityCode,
   type MapFocus,
   type MapPick,
 } from '../lib/brazilGeo'
@@ -124,6 +126,11 @@ export function WorldMap({
   const [view, setView] = useState<MapView>(VIEW_RESET)
   const ufMesh = useMemo(() => brazilUfCollection(), [])
   const [munMesh, setMunMesh] = useState<FeatureCollection<
+    Geometry,
+    { id: string }
+  > | null>(null)
+  /** National municipality mesh for Brazil City-tab choropleth. */
+  const [brazilMunMesh, setBrazilMunMesh] = useState<FeatureCollection<
     Geometry,
     { id: string }
   > | null>(null)
@@ -382,6 +389,24 @@ export function WorldMap({
 
   useEffect(() => {
     let cancelled = false
+    if (!(focus.level === 'brazil' && brazilGrain === 'cities')) {
+      return
+    }
+    if (!cities.length) return
+    setGeoLoading(true)
+    void fetchBrazilMunicipalityCollection(cities).then((fc) => {
+      if (!cancelled) {
+        setBrazilMunMesh(fc)
+        setGeoLoading(false)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [focus.level, brazilGrain, cities])
+
+  useEffect(() => {
+    let cancelled = false
     if (focus.level !== 'city') {
       setCityFeature(null)
       return
@@ -406,7 +431,8 @@ export function WorldMap({
 
   const colorRows: VoteLike[] = useMemo(() => {
     if (focus.level === 'brazil') {
-      return brazilGrain === 'cities' ? neighborhoodCities : areas
+      // City tab: colour every municipality on the national choropleth.
+      return brazilGrain === 'cities' ? cities : areas
     }
     if (focus.level === 'uf') {
       return cities.filter((c) => c.area === focus.uf)
@@ -497,43 +523,34 @@ export function WorldMap({
       const projection = geoNaturalEarth1().fitSize([width, height], ufMesh)
       const path = geoPath(projection)
 
-      // City / Bairro tabs: real map of municipalities that have zona/bairro data.
+      // City / Bairro tabs: national municipality choropleth + UF outlines.
       if (brazilGrain === 'cities') {
-        const items: DrawnFeature[] = ufMesh.features.map((f) => {
-          const uf = f.properties.uf
+        if (!brazilMunMesh) {
+          return { drawn: [] as DrawnFeature[], fitReady: false }
+        }
+        const multi = new Set(neighborhoodCities.map((c) => c.code))
+        const items: DrawnFeature[] = brazilMunMesh.features.map((f) => {
+          const code = f.properties.id
+          const row = cityByCode.get(code)
+          const uf = ufFromCityCode(code) ?? row?.area ?? ''
           return {
+            id: code,
+            d: path(f) ?? '',
+            row,
+            label: row ? cityDisplayName(row, lang) : code,
+            pick: { kind: 'city', uf, cityCode: code },
+            multiZone: multi.has(code),
+          }
+        })
+        // State borders on top so the combined UF + município view reads clearly.
+        for (const f of ufMesh.features) {
+          const uf = f.properties.uf
+          items.push({
             id: `__uf-${uf}`,
             d: path(f) ?? '',
             row: undefined,
             label: uf,
             pick: { kind: 'uf', uf },
-          }
-        })
-        const withCoords = neighborhoodCities.filter(
-          (c) => c.lat != null && c.lon != null,
-        )
-        // Marker size from vote volume so capitals read larger.
-        let maxV = 1
-        for (const c of withCoords) {
-          maxV = Math.max(maxV, c.y2026?.totalValid ?? 0)
-        }
-        for (const c of withCoords) {
-          const pt = projection([c.lon as number, c.lat as number])
-          if (!pt) continue
-          const votes = c.y2026?.totalValid ?? 0
-          const t = Math.sqrt(votes / maxV)
-          const r = 3.5 + t * 10
-          items.push({
-            id: c.code,
-            d: '',
-            row: c,
-            label: cityDisplayName(c, lang),
-            pick: {
-              kind: 'city',
-              uf: c.area || c.code.slice(0, 2),
-              cityCode: c.code,
-            },
-            circle: { cx: pt[0], cy: pt[1], r },
           })
         }
         return { drawn: items, fitReady: true }
@@ -690,6 +707,7 @@ export function WorldMap({
     byNumeric,
     ufMesh,
     munMesh,
+    brazilMunMesh,
     cityFeature,
     areaByUf,
     cityByCode,
@@ -841,7 +859,7 @@ export function WorldMap({
               />
             )
           }
-          const isUfBackdrop =
+          const isUfOutline =
             brazilGrain === 'cities' &&
             focus.level === 'brazil' &&
             f.id.startsWith('__uf-')
@@ -852,31 +870,33 @@ export function WorldMap({
               data-map-id={f.id}
               d={f.d}
               fill={
-                isCityOutline
-                  ? 'var(--paper-deep)'
-                  : isUfBackdrop
-                    ? 'var(--map-nodata)'
+                isUfOutline
+                  ? 'none'
+                  : isCityOutline
+                    ? 'var(--paper-deep)'
                     : fill
               }
-              fillOpacity={isCityOutline ? 0.85 : isUfBackdrop ? 0.55 : 1}
+              fillOpacity={isCityOutline ? 0.85 : 1}
               stroke={
                 isHi
                   ? 'var(--map-stroke-hi)'
-                  : isCityOutline
+                  : isUfOutline || isCityOutline
                     ? 'var(--ink)'
                     : 'var(--map-stroke)'
               }
-              strokeOpacity={isCityOutline ? 0.55 : 1}
+              strokeOpacity={isUfOutline ? 0.7 : isCityOutline ? 0.55 : 1}
               strokeWidth={
                 isHi
                   ? 1.6
-                  : isCityOutline
-                    ? 1.4
-                    : f.multiZone
-                      ? 1.15
-                      : focus.level === 'world'
-                        ? 0.4
-                        : 0.55
+                  : isUfOutline
+                    ? 1.15
+                    : isCityOutline
+                      ? 1.4
+                      : f.multiZone
+                        ? 1.15
+                        : focus.level === 'world'
+                          ? 0.4
+                          : 0.55
               }
               className={
                 f.pick.kind !== 'background' || canGoBack
@@ -988,8 +1008,8 @@ function focusLabel(
   if (focus.level === 'brazil') {
     if (brazilGrain === 'cities') {
       return lang === 'pt'
-        ? 'Brasil · cidades com bairros'
-        : 'Brazil · cities with neighborhoods'
+        ? 'Brasil · municípios'
+        : 'Brazil · municipalities'
     }
     return lang === 'pt' ? 'Brasil · UFs' : 'Brazil · states'
   }

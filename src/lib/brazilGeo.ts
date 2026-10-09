@@ -239,6 +239,29 @@ export async function fetchCityFeature(
   return fc.features.find((f) => f.properties.id === cityCode) ?? null
 }
 
+/**
+ * All municipality polygons for Brazil (union of per-UF IBGE meshes).
+ * Used for the national City-tab choropleth.
+ */
+export async function fetchBrazilMunicipalityCollection(
+  cities: CityResult[],
+): Promise<FeatureCollection<Geometry, { id: string }> | null> {
+  if (!cities.length) return null
+  const ufs = [
+    ...new Set(
+      cities
+        .map((c) => c.area)
+        .filter((uf): uf is string => !!uf && !!UF_TO_IBGE[uf]),
+    ),
+  ].sort()
+  const parts = await Promise.all(
+    ufs.map((uf) => fetchUfMunicipalityCollection(uf, cities)),
+  )
+  const features = parts.flatMap((fc) => fc?.features ?? [])
+  if (!features.length) return null
+  return { type: 'FeatureCollection', features }
+}
+
 export function suburbsForCity(
   suburbs: CityResult[] | null | undefined,
   cityCode: string,
