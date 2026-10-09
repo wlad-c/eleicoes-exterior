@@ -683,8 +683,16 @@ html.dark .is-x-scrolled .sticky-col-city {
   justify-content: space-between;
   gap: 0.4rem;
   width: 100%;
-  min-height: 2.35rem;
+  min-height: var(--filter-control-height, 2.35rem);
   cursor: pointer;
+}
+
+/* Keep search + Global regions select the same height as multi-selects */
+.filter-row--primary .filter-search-input,
+.filter-row--primary .filter-global-region .control {
+  box-sizing: border-box;
+  min-height: var(--filter-control-height, 2.35rem);
+  height: var(--filter-control-height, 2.35rem);
 }
 
 .multi-select-trigger:disabled {
