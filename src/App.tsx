@@ -33,6 +33,7 @@ import {
 } from './lib/geoFilters'
 import { regionLabel, t } from './lib/i18n'
 import { collatorFor } from './lib/collator'
+import { searchIncludes } from './lib/searchText'
 import {
   prefetchBrazilCities,
   prefetchBrazilSuburbs,
@@ -227,7 +228,7 @@ export default function App() {
   const mapCountries = reportedCountries
 
   const filtered = useMemo(() => {
-    const q = deferredQuery.trim().toLowerCase()
+    const q = deferredQuery.trim()
     return data.countries.filter((c) => {
       if (c.domestic && !showBrazilInTables) return false
       if (statusFilter === 'reported' && c.status !== 'reported') return false
@@ -236,11 +237,11 @@ export default function App() {
       if (!rowMatchesCountryFilter(c.id, selectedCountryIds)) return false
       if (!q) return true
       return (
-        c.countryEn.toLowerCase().includes(q) ||
-        c.countryPt.toLowerCase().includes(q) ||
-        c.iso3.toLowerCase().includes(q) ||
-        c.abbrevEn.toLowerCase().includes(q) ||
-        c.abbrevPt.toLowerCase().includes(q)
+        searchIncludes(c.countryEn, q) ||
+        searchIncludes(c.countryPt, q) ||
+        searchIncludes(c.iso3, q) ||
+        searchIncludes(c.abbrevEn, q) ||
+        searchIncludes(c.abbrevPt, q)
       )
     })
   }, [
@@ -445,19 +446,19 @@ export default function App() {
     if (!q) return true
     const parent = countryById.get(r.countryId)
     return (
-      r.name.toLowerCase().includes(q) ||
-      (r.nameEn || '').toLowerCase().includes(q) ||
-      (r.namePt || '').toLowerCase().includes(q) ||
-      (r.area || '').toLowerCase().includes(q) ||
-      (r.areaEn || '').toLowerCase().includes(q) ||
-      (r.areaPt || '').toLowerCase().includes(q) ||
+      searchIncludes(r.name, q) ||
+      searchIncludes(r.nameEn || '', q) ||
+      searchIncludes(r.namePt || '', q) ||
+      searchIncludes(r.area || '', q) ||
+      searchIncludes(r.areaEn || '', q) ||
+      searchIncludes(r.areaPt || '', q) ||
       Boolean(
         parent &&
-          (parent.countryEn.toLowerCase().includes(q) ||
-            parent.countryPt.toLowerCase().includes(q) ||
-            parent.iso3.toLowerCase().includes(q) ||
-            parent.abbrevEn.toLowerCase().includes(q) ||
-            parent.abbrevPt.toLowerCase().includes(q)),
+          (searchIncludes(parent.countryEn, q) ||
+            searchIncludes(parent.countryPt, q) ||
+            searchIncludes(parent.iso3, q) ||
+            searchIncludes(parent.abbrevEn, q) ||
+            searchIncludes(parent.abbrevPt, q)),
       )
     )
   }
@@ -468,7 +469,7 @@ export default function App() {
   const filteredAreaRows = useMemo(() => {
     if (effectiveTableView !== 'areas') return []
     const rows = citySourceCountries.flatMap((c) => taggedAreaRows(c))
-    const q = deferredQuery.trim().toLowerCase()
+    const q = deferredQuery.trim()
     return rows.filter((r) => {
       const parent = countryById.get(r.countryId)
       if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
@@ -500,7 +501,7 @@ export default function App() {
     const rows = citySourceCountries.flatMap((c) =>
       c.domestic ? taggedBrazilCityRows(c) : taggedBreakdownRows(c),
     )
-    const q = deferredQuery.trim().toLowerCase()
+    const q = deferredQuery.trim()
     return rows.filter((r) => {
       const parent = countryById.get(r.countryId)
       if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
@@ -522,7 +523,7 @@ export default function App() {
     const rows = citySourceCountries
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
-    const q = deferredQuery.trim().toLowerCase()
+    const q = deferredQuery.trim()
     return rows.filter((r) => {
       const parent = countryById.get(r.countryId)
       if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false

@@ -1,3 +1,4 @@
+import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   useEffect,
   useId,
@@ -6,6 +7,7 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
+import { foldForSearch } from '../lib/searchText'
 
 export type MultiSelectOption = {
   value: string
@@ -28,10 +30,13 @@ type Props = {
   disabled?: boolean
 }
 
-function matchesQuery(option: MultiSelectOption, q: string): boolean {
-  if (!q) return true
-  const hay = `${option.label} ${option.searchText ?? ''}`.toLowerCase()
-  return hay.includes(q)
+const OPTION_ROW_PX = 34
+const VIRTUALIZE_AT = 60
+
+function matchesQuery(option: MultiSelectOption, qFolded: string): boolean {
+  if (!qFolded) return true
+  const hay = `${option.label} ${option.searchText ?? ''}`
+  return foldForSearch(hay).includes(qFolded)
 }
 
 /** Searchable multi-select dropdown for table filters. */
@@ -49,6 +54,7 @@ export function MultiSelectFilter({
   const listId = useId()
   const rootRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
 
@@ -59,20 +65,24 @@ export function MultiSelectFilter({
   )
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    const matched = options.filter((o) => matchesQuery(o, q))
+    const qFolded = foldForSearch(query.trim())
+    const matched = options.filter((o) => matchesQuery(o, qFolded))
     // Keep selected options visible even when they fall outside the search.
-    const selectedMissed = q
-      ? options.filter((o) => selected.has(o.value) && !matchesQuery(o, q))
-      : []
-    const merged = selectedMissed.length
-      ? [...selectedMissed, ...matched]
-      : matched
-    // Large lists (e.g. Brazilian municipalities) stay searchable without
-    // mounting thousands of checkbox rows at once.
-    const limit = q ? 200 : 120
-    return merged.length > limit ? merged.slice(0, limit) : merged
+    if (!qFolded) return matched
+    const selectedMissed = options.filter(
+      (o) => selected.has(o.value) && !matchesQuery(o, qFolded),
+    )
+    return selectedMissed.length ? [...selectedMissed, ...matched] : matched
   }, [options, query, selected])
+
+  const shouldVirtualize = filtered.length >= VIRTUALIZE_AT
+  const virtualizer = useVirtualizer({
+    count: filtered.length,
+    getScrollElement: () => listRef.current,
+    estimateSize: () => OPTION_ROW_PX,
+    overscan: 12,
+    enabled: open && shouldVirtualize,
+  })
 
   const summary = useMemo(() => {
     if (value.length === 0) return allLabel
@@ -111,6 +121,11 @@ export function MultiSelectFilter({
     }
   }, [open])
 
+  useEffect(() => {
+    if (!open || !listRef.current) return
+    listRef.current.scrollTop = 0
+  }, [open, query])
+
   function toggle(optionValue: string) {
     if (selected.has(optionValue)) {
       onChange(value.filter((v) => v !== optionValue))
@@ -129,6 +144,8 @@ export function MultiSelectFilter({
       if (!disabled) setOpen(true)
     }
   }
+
+  const virtualItems = shouldVirtualize ? virtualizer.getVirtualItems() : null
 
   return (
     <div className="filter-field text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]" ref={rootRef}>
@@ -174,21 +191,66 @@ export function MultiSelectFilter({
                 </button>
               ) : null}
             </div>
-            <ul
+            <div
               id={listId}
+              ref={listRef}
               className="multi-select-list"
               role="listbox"
               aria-multiselectable="true"
               aria-label={label}
             >
               {filtered.length === 0 ? (
-                <li className="multi-select-empty">{emptyLabel}</li>
+                <div className="multi-select-empty">{emptyLabel}</div>
+              ) : virtualItems ? (
+                <div
+                  className="multi-select-virtual"
+                  style={{ height: virtualizer.getTotalSize() }}
+                >
+                  {virtualItems.map((item) => {
+                    const option = filtered[item.index]!
+                    const checked = selected.has(option.value)
+                    const optionId = `${listId}-${option.value}`
+                    return (
+                      <div
+                        key={option.value}
+                        className="multi-select-virtual-row"
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: `${item.size}px`,
+                          transform: `translateY(${item.start}px)`,
+                        }}
+                        role="option"
+                        aria-selected={checked}
+                      >
+                        <label
+                          htmlFor={optionId}
+                          className="multi-select-option"
+                        >
+                          <input
+                            id={optionId}
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => toggle(option.value)}
+                          />
+                          <span className="truncate">{option.label}</span>
+                        </label>
+                      </div>
+                    )
+                  })}
+                </div>
               ) : (
                 filtered.map((option) => {
                   const checked = selected.has(option.value)
                   const optionId = `${listId}-${option.value}`
                   return (
-                    <li key={option.value} role="option" aria-selected={checked}>
+                    <div
+                      key={option.value}
+                      role="option"
+                      aria-selected={checked}
+                    >
                       <label
                         htmlFor={optionId}
                         className="multi-select-option"
@@ -201,11 +263,18 @@ export function MultiSelectFilter({
                         />
                         <span className="truncate">{option.label}</span>
                       </label>
-                    </li>
+                    </div>
                   )
                 })
               )}
-            </ul>
+            </div>
+            {filtered.length > 0 ? (
+              <p className="multi-select-count" aria-live="polite">
+                {filtered.length === options.length
+                  ? String(filtered.length)
+                  : `${filtered.length} / ${options.length}`}
+              </p>
+            ) : null}
           </div>
         ) : null}
       </div>
