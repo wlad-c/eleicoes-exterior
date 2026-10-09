@@ -23,7 +23,7 @@ import {
   type VoteLike,
 } from '../lib/format'
 import {
-  fetchBrazilUfCollection,
+  brazilUfCollection,
   fetchCityFeature,
   fetchUfMunicipalityCollection,
   suburbsForCity,
@@ -82,10 +82,7 @@ export function WorldMap({
   const wrapRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(960)
   const [tip, setTip] = useState<Tip | null>(null)
-  const [ufMesh, setUfMesh] = useState<FeatureCollection<
-    Geometry,
-    { uf: string; ibge: string }
-  > | null>(null)
+  const ufMesh = useMemo(() => brazilUfCollection(), [])
   const [munMesh, setMunMesh] = useState<FeatureCollection<
     Geometry,
     { id: string }
@@ -105,27 +102,6 @@ export function WorldMap({
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
-
-  useEffect(() => {
-    let cancelled = false
-    if (focus.level === 'world') {
-      setMunMesh(null)
-      setCityFeature(null)
-      return
-    }
-    if (!ufMesh) {
-      setGeoLoading(true)
-      void fetchBrazilUfCollection().then((fc) => {
-        if (!cancelled) {
-          setUfMesh(fc)
-          setGeoLoading(false)
-        }
-      })
-    }
-    return () => {
-      cancelled = true
-    }
-  }, [focus.level, ufMesh])
 
   useEffect(() => {
     let cancelled = false
@@ -413,6 +389,7 @@ export function WorldMap({
             return (
               <circle
                 key={f.id}
+                data-map-id={f.id}
                 cx={f.circle.cx}
                 cy={f.circle.cy}
                 r={f.circle.r}
@@ -453,6 +430,7 @@ export function WorldMap({
           return (
             <path
               key={f.id}
+              data-map-id={f.id}
               d={f.d}
               fill={fill}
               fillOpacity={f.id.startsWith('__outline-') ? 0.35 : 1}

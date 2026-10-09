@@ -1,5 +1,30 @@
-import type { Feature, FeatureCollection, Geometry } from 'geojson'
+import type { Feature, FeatureCollection, Geometry, Position } from 'geojson'
+import brazilUfs from '../data/brazil-ufs.json'
 import type { CityResult } from '../types'
+
+/**
+ * IBGE malhas often ship clockwise exterior rings. d3-geo treats those as the
+ * whole sphere (geodesic area ≈ 4π), which breaks fitSize / choropleths.
+ */
+function rewindRing(ring: Position[]): Position[] {
+  return ring.slice().reverse()
+}
+
+export function rewindGeometry(geometry: Geometry): Geometry {
+  if (geometry.type === 'Polygon') {
+    return {
+      type: 'Polygon',
+      coordinates: geometry.coordinates.map(rewindRing),
+    }
+  }
+  if (geometry.type === 'MultiPolygon') {
+    return {
+      type: 'MultiPolygon',
+      coordinates: geometry.coordinates.map((poly) => poly.map(rewindRing)),
+    }
+  }
+  return geometry
+}
 
 /** IBGE state code → UF abbreviation. */
 export const IBGE_TO_UF: Record<string, string> = {
@@ -85,10 +110,6 @@ function aliasKey(norm: string): string {
   return NAME_ALIASES[norm] ?? norm
 }
 
-function ufsUrl(): string {
-  return `${import.meta.env.BASE_URL}data/brazil-ufs.geojson`
-}
-
 function ibgeMunUrl(ufIbge: string): string {
   return `https://servicodados.ibge.gov.br/api/v3/malhas/estados/${ufIbge}?formato=application/vnd.geo%2Bjson&qualidade=minima&intrarregiao=municipio`
 }
@@ -97,17 +118,20 @@ function ibgeNamesUrl(ufIbge: string): string {
   return `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIbge}/municipios`
 }
 
-export async function fetchBrazilUfCollection(): Promise<FeatureCollection<Geometry, { uf: string; ibge: string }> | null> {
-  try {
-    const res = await fetch(ufsUrl(), { headers: { Accept: 'application/json' } })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    return (await res.json()) as FeatureCollection<
-      Geometry,
-      { uf: string; ibge: string }
-    >
-  } catch {
-    return null
-  }
+/** Bundled IBGE UF mesh (vendored); sync also keeps a public copy for Pages. */
+export function brazilUfCollection(): FeatureCollection<
+  Geometry,
+  { uf: string; ibge: string }
+> {
+  // Already rewound in the vendored file; keep a defensive pass for safety.
+  return brazilUfs as FeatureCollection<Geometry, { uf: string; ibge: string }>
+}
+
+export async function fetchBrazilUfCollection(): Promise<FeatureCollection<
+  Geometry,
+  { uf: string; ibge: string }
+> | null> {
+  return brazilUfCollection()
 }
 
 async function fetchIbgeNameMap(uf: string): Promise<Map<string, string> | null> {
@@ -185,7 +209,7 @@ export async function fetchUfMunicipalityCollection(
           type: 'Feature',
           id: cityCode,
           properties: { id: cityCode },
-          geometry: f.geometry,
+          geometry: rewindGeometry(f.geometry),
         })
       }
 

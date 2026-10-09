@@ -13,8 +13,8 @@ const citiesSrc = resolve(rootDir, 'src/data/brazil-cities.json')
 const citiesPublic = resolve(rootDir, 'public/data/brazil-cities.json')
 const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
 const suburbsPublic = resolve(rootDir, 'public/data/brazil-suburbs.json')
-const ufsSrc = resolve(rootDir, 'src/data/brazil-ufs.geojson')
-const ufsPublic = resolve(rootDir, 'public/data/brazil-ufs.geojson')
+const ufsSrc = resolve(rootDir, 'src/data/brazil-ufs.json')
+const ufsPublic = resolve(rootDir, 'public/data/brazil-ufs.json')
 
 /** Keep stable public URLs in sync with the editable source JSON. */
 function syncResultsJson(): Plugin {
