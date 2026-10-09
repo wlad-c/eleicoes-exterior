@@ -16,6 +16,9 @@ export const SWING_NEUTRAL = '#E8EDE8'
 /** Light end of the leader scale (just over 50%). */
 export const LULA_COLOR_LIGHT = '#F0B7B7'
 export const BOLSONARO_COLOR_LIGHT = '#B7D0F0'
+/** Absolute total-vote heatmap (light → dark purple). */
+export const VOTES_COLOR = '#6A1B9A'
+export const VOTES_COLOR_LIGHT = '#F3E5F5'
 
 /** Darkest diverging heatmap shade is reached at ±this many pp (outliers clamp). */
 export const DIVERGING_PP_CAP = 10
@@ -23,7 +26,12 @@ export const DIVERGING_PP_CAP = 10
 export const PENDING_FILL = 'var(--map-pending)'
 export const NO_DATA_FILL = 'var(--map-nodata)'
 
-type ScaleKind = 'divergingLB' | 'leader' | 'lulaSeq' | 'bolsoSeq'
+type ScaleKind =
+  | 'divergingLB'
+  | 'leader'
+  | 'lulaSeq'
+  | 'bolsoSeq'
+  | 'votesSeq'
 
 function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
@@ -39,10 +47,17 @@ function scaleKind(metric: MapMetric): ScaleKind {
       return 'divergingLB'
     case 'lulaPct2026':
     case 'lulaPct2022':
+    case 'lulaVotes2026':
+    case 'lulaVotes2022':
       return 'lulaSeq'
     case 'bolsonaroPct2026':
     case 'bolsonaroPct2022':
+    case 'bolsonaroVotes2026':
+    case 'bolsonaroVotes2022':
       return 'bolsoSeq'
+    case 'votes2026':
+    case 'votes2022':
+      return 'votesSeq'
   }
 }
 
@@ -94,9 +109,19 @@ function leaderColor(value: number): string {
   return lerpColor(BOLSONARO_COLOR_LIGHT, BOLSONARO_COLOR, t)
 }
 
-function sequentialScale(max: number, toward: 'lula' | 'bolso') {
-  const hi = toward === 'lula' ? LULA_COLOR : BOLSONARO_COLOR
-  const lo = toward === 'lula' ? '#F7F0F0' : '#EEF3F9'
+function sequentialScale(max: number, toward: 'lula' | 'bolso' | 'votes') {
+  const hi =
+    toward === 'lula'
+      ? LULA_COLOR
+      : toward === 'bolso'
+        ? BOLSONARO_COLOR
+        : VOTES_COLOR
+  const lo =
+    toward === 'lula'
+      ? '#F7F0F0'
+      : toward === 'bolso'
+        ? '#EEF3F9'
+        : VOTES_COLOR_LIGHT
   return scaleSequential<string>()
     .domain([0, Math.max(max, 1)])
     .interpolator((t) => lerpColor(lo, hi, t))
@@ -135,13 +160,41 @@ export function makeMetricColorizer(
     }
   }
 
+  // Absolute vote counts: log scale so one huge place (e.g. Brazil)
+  // does not flatten every other region to the light end.
+  const voteCountMetric =
+    metric === 'votes2026' ||
+    metric === 'votes2022' ||
+    metric === 'lulaVotes2026' ||
+    metric === 'lulaVotes2022' ||
+    metric === 'bolsonaroVotes2026' ||
+    metric === 'bolsonaroVotes2022'
+
   if (kind === 'lulaSeq') {
-    const scale = sequentialScale(Math.max(hi, 1), 'lula')
-    return (value) => (value == null ? PENDING_FILL : scale(value))
+    const scale = sequentialScale(
+      voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
+      'lula',
+    )
+    return (value) =>
+      value == null
+        ? PENDING_FILL
+        : scale(voteCountMetric ? Math.log1p(value) : value)
   }
 
-  const scale = sequentialScale(Math.max(hi, 1), 'bolso')
-  return (value) => (value == null ? PENDING_FILL : scale(value))
+  if (kind === 'votesSeq') {
+    const scale = sequentialScale(Math.log1p(Math.max(hi, 1)), 'votes')
+    return (value) =>
+      value == null ? PENDING_FILL : scale(Math.log1p(value))
+  }
+
+  const scale = sequentialScale(
+    voteCountMetric ? Math.log1p(Math.max(hi, 1)) : Math.max(hi, 1),
+    'bolso',
+  )
+  return (value) =>
+    value == null
+      ? PENDING_FILL
+      : scale(voteCountMetric ? Math.log1p(value) : value)
 }
 
 export function withAlpha(color: string, alpha: number): string {
@@ -155,12 +208,13 @@ export function withAlpha(color: string, alpha: number): string {
   return color
 }
 
-export type LegendMode = 'diverging' | 'leader' | 'lula' | 'bolso'
+export type LegendMode = 'diverging' | 'leader' | 'lula' | 'bolso' | 'votes'
 
 export function legendModeForMetric(metric: MapMetric): LegendMode {
   const kind = scaleKind(metric)
   if (kind === 'leader') return 'leader'
   if (kind === 'divergingLB') return 'diverging'
   if (kind === 'lulaSeq') return 'lula'
+  if (kind === 'votesSeq') return 'votes'
   return 'bolso'
 }
