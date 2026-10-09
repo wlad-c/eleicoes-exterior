@@ -176,10 +176,23 @@ export function makeMetricColorizer(
   }
 
   // Sequential metrics stretch across the visible min→max (not fixed 0→max).
+  // Absolute vote counts use log1p so a few large places don’t dominate.
   const toward =
     kind === 'lulaSeq' ? 'lula' : kind === 'votesSeq' ? 'votes' : 'bolso'
-  const scale = sequentialScale(lo, hi, toward)
-  return (value) => (value == null ? PENDING_FILL : scale(value))
+  const voteCount =
+    metric === 'votes2026' ||
+    metric === 'votes2022' ||
+    metric === 'lulaVotes2026' ||
+    metric === 'lulaVotes2022' ||
+    metric === 'bolsonaroVotes2026' ||
+    metric === 'bolsonaroVotes2022'
+  const domainLo = voteCount ? Math.log1p(Math.max(lo, 0)) : lo
+  const domainHi = voteCount ? Math.log1p(Math.max(hi, 0)) : hi
+  const scale = sequentialScale(domainLo, domainHi, toward)
+  return (value) => {
+    if (value == null) return PENDING_FILL
+    return scale(voteCount ? Math.log1p(Math.max(value, 0)) : value)
+  }
 }
 
 export function withAlpha(color: string, alpha: number): string {
