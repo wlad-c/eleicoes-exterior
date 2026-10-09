@@ -1,9 +1,20 @@
 import { collatorFor } from './collator'
 import { cityDisplayName, countryName } from './format'
-import type { CityResult, CountryResult, Lang, SortKey } from '../types'
+import { foldForSearch } from './searchText'
+import type {
+  CityResult,
+  CountryResult,
+  Coverage,
+  Lang,
+  SortKey,
+  Swing,
+  YearResult,
+} from '../types'
 
 export type CityTableRow = CityResult & {
   countryId: string
+  /** When set, this suburb row aggregates multiple electoral zones. */
+  groupedZoneCount?: number
 }
 
 function asTagged(row: CityResult, countryId: string): CityTableRow {
@@ -82,6 +93,134 @@ export function taggedSuburbRows(country: CountryResult): CityTableRow[] {
     return rows as CityTableRow[]
   }
   return rows.map((row) => asTagged(row, country.id))
+}
+
+/** Municipality key from suburb code `UF-IBGE-Zxxx` → `UF-IBGE`. */
+export function suburbMunicipalityKey(row: { code: string }): string {
+  const m = row.code.trim().toUpperCase().match(/^([A-Z]{2}-\d+)/)
+  return m ? m[1] : row.code.trim().toUpperCase()
+}
+
+function round1(n: number): number {
+  return Math.round(n * 10) / 10
+}
+
+function yearFromVotes(
+  lula: number,
+  bolsonaro: number,
+  totalValid: number,
+): YearResult {
+  return {
+    lula,
+    bolsonaro,
+    totalValid,
+    lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
+    bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
+  }
+}
+
+function swingFromYears(
+  y2026: YearResult,
+  y2022: YearResult | null | undefined,
+): Swing | null {
+  if (!y2022) return null
+  const lulaPp = round1(y2026.lulaPct - y2022.lulaPct)
+  const bolsonaroPp = round1(y2026.bolsonaroPct - y2022.bolsonaroPct)
+  return {
+    lulaPp,
+    bolsonaroPp,
+    marginPp: round1(lulaPp - bolsonaroPp),
+  }
+}
+
+function stripZoneFromParent(area: string): string {
+  return area.replace(/\s*·\s*(?:Zona|Zone)\s*\d+\s*$/i, '').trim()
+}
+
+function zoneCountLabel(count: number, lang: Lang): string {
+  if (lang === 'pt') {
+    return count === 1 ? '1 zona' : `${count} zonas`
+  }
+  return count === 1 ? '1 zone' : `${count} zones`
+}
+
+/**
+ * Merge Bairro rows that share the same neighborhood label inside the same
+ * municipality (e.g. several "Campo Grande" zones in Rio). Different cities
+ * or UFs stay separate.
+ */
+export function groupSuburbRowsByNeighborhood(
+  rows: CityTableRow[],
+  lang: Lang,
+): CityTableRow[] {
+  if (rows.length <= 1) return rows
+  const groups = new Map<string, CityTableRow[]>()
+  for (const row of rows) {
+    const key = `${row.countryId}::${suburbMunicipalityKey(row)}::${foldForSearch(row.name)}`
+    const list = groups.get(key)
+    if (list) list.push(row)
+    else groups.set(key, [row])
+  }
+
+  const out: CityTableRow[] = []
+  for (const members of groups.values()) {
+    if (members.length === 1) {
+      out.push(members[0]!)
+      continue
+    }
+    members.sort((a, b) => a.code.localeCompare(b.code))
+    const head = members[0]!
+    let lula = 0
+    let bolso = 0
+    let valid = 0
+    let lula22 = 0
+    let bolso22 = 0
+    let valid22 = 0
+    let has22 = false
+    let counted = 0
+    let total = 0
+    let hasCov = false
+    for (const m of members) {
+      lula += m.y2026.lula
+      bolso += m.y2026.bolsonaro
+      valid += m.y2026.totalValid
+      if (m.y2022) {
+        has22 = true
+        lula22 += m.y2022.lula
+        bolso22 += m.y2022.bolsonaro
+        valid22 += m.y2022.totalValid
+      }
+      if (m.coverage) {
+        hasCov = true
+        counted += m.coverage.counted
+        total += m.coverage.total
+      }
+    }
+    const y2026 = yearFromVotes(lula, bolso, valid)
+    const y2022 = has22 ? yearFromVotes(lula22, bolso22, valid22) : null
+    const coverage: Coverage | null = hasCov ? { counted, total } : null
+    const zoneLabel = zoneCountLabel(members.length, lang)
+    const areaBase = stripZoneFromParent(head.area || '')
+    const areaEnBase = stripZoneFromParent(head.areaEn || head.area || '')
+    const areaPtBase = stripZoneFromParent(head.areaPt || head.area || '')
+    out.push({
+      ...head,
+      code: `${suburbMunicipalityKey(head)}-${foldForSearch(head.name).replace(/\s+/g, '-')}`,
+      y2026,
+      y2022,
+      swing: swingFromYears(y2026, y2022),
+      coverage,
+      area: areaBase ? `${areaBase} · ${zoneLabel}` : zoneLabel,
+      areaEn: areaEnBase
+        ? `${areaEnBase} · ${zoneCountLabel(members.length, 'en')}`
+        : zoneCountLabel(members.length, 'en'),
+      areaPt: areaPtBase
+        ? `${areaPtBase} · ${zoneCountLabel(members.length, 'pt')}`
+        : zoneCountLabel(members.length, 'pt'),
+      groupedZoneCount: members.length,
+    })
+  }
+  return out
 }
 
 export function cityCountForCountry(country: CountryResult): number {

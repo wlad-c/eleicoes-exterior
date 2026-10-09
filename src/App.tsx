@@ -15,6 +15,7 @@ import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import {
   compareCityRows,
+  groupSuburbRowsByNeighborhood,
   taggedAreaRows,
   taggedBrazilCityRows,
   taggedBreakdownRows,
@@ -538,12 +539,15 @@ export default function App() {
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
     const q = deferredQuery.trim()
-    return rows.filter((r) => {
+    const filtered = rows.filter((r) => {
       const parent = countryById.get(r.countryId)
       if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
       if (!rowMatchesCityFilter(r, selectedCityKeys)) return false
       return matchesPlaceQuery(r, q)
     })
+    // Same bairro label in the same município (e.g. several Campo Grande
+    // zones in Rio) → one aggregated row.
+    return groupSuburbRowsByNeighborhood(filtered, lang)
   }, [
     citySourceCountries,
     deferredQuery,
@@ -551,6 +555,7 @@ export default function App() {
     effectiveTableView,
     selectedAreaKeys,
     selectedCityKeys,
+    lang,
   ])
 
   const sortedAreas = useMemo(() => {
