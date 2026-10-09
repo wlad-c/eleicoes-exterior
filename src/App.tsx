@@ -790,174 +790,57 @@ export default function App() {
           ref={tableChromeRef}
           className="sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 space-y-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5"
         >
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div
-              className="flex gap-1"
-              role="tablist"
-              aria-label={t('tableView', lang)}
+          <div
+            className="flex flex-wrap gap-1"
+            role="tablist"
+            aria-label={t('tableView', lang)}
+          >
+            <button
+              type="button"
+              role="tab"
+              className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-selected={effectiveTableView === 'countries'}
+              onClick={() => switchTableView('countries')}
             >
+              {t('tabCountries', lang)}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-selected={effectiveTableView === 'areas'}
+              title={t('areaTableHint', lang)}
+              onClick={() => switchTableView('areas')}
+            >
+              {t('tabAreas', lang)}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-selected={effectiveTableView === 'cities'}
+              title={t('cityTableHint', lang)}
+              onClick={() => switchTableView('cities')}
+            >
+              {t('tabCities', lang)}
+            </button>
+            {showSuburbTab ? (
               <button
                 type="button"
                 role="tab"
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={effectiveTableView === 'countries'}
-                onClick={() => switchTableView('countries')}
+                aria-selected={effectiveTableView === 'suburbs'}
+                title={t('suburbTableHint', lang)}
+                onMouseEnter={prefetchBrazilSuburbs}
+                onFocus={prefetchBrazilSuburbs}
+                onClick={() => switchTableView('suburbs')}
               >
-                {t('tabCountries', lang)}
+                {t('tabSuburbs', lang)}
               </button>
-              <button
-                type="button"
-                role="tab"
-                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={effectiveTableView === 'areas'}
-                title={t('areaTableHint', lang)}
-                onClick={() => switchTableView('areas')}
-              >
-                {t('tabAreas', lang)}
-              </button>
-              <button
-                type="button"
-                role="tab"
-                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-selected={effectiveTableView === 'cities'}
-                title={t('cityTableHint', lang)}
-                onClick={() => switchTableView('cities')}
-              >
-                {t('tabCities', lang)}
-              </button>
-              {showSuburbTab ? (
-                <button
-                  type="button"
-                  role="tab"
-                  className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-                  aria-selected={effectiveTableView === 'suburbs'}
-                  title={t('suburbTableHint', lang)}
-                  onMouseEnter={prefetchBrazilSuburbs}
-                  onFocus={prefetchBrazilSuburbs}
-                  onClick={() => switchTableView('suburbs')}
-                >
-                  {t('tabSuburbs', lang)}
-                </button>
-              ) : null}
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <label
-                className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
-                title={t('includeBrazilHint', lang)}
-                onMouseEnter={prefetchBrazilCities}
-                onFocus={prefetchBrazilCities}
-              >
-                <input
-                  type="checkbox"
-                  className="accent-[var(--accent)]"
-                  checked={includeBrazil}
-                  onChange={(e) => {
-                    const on = e.target.checked
-                    if (on) prefetchBrazilCities()
-                    startTransition(() => setIncludeBrazil(on))
-                    if (!on && highlightId === BRAZIL_ID) {
-                      setHighlightId(null)
-                    }
-                    if (!on && selectedCountryIds.includes(BRAZIL_ID)) {
-                      onCountryFilterChange(
-                        selectedCountryIds.filter((id) => id !== BRAZIL_ID),
-                      )
-                    }
-                  }}
-                />
-                {t('includeBrazil', lang)}
-              </label>
-              <TableColumnPicker
-                lang={lang}
-                visible={visibleCols}
-                columnOrder={columnOrder}
-                onChange={setVisibleColsPersist}
-                onReorder={reorderColumns}
-              />
-              <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-                {t('sortBy', lang)}
-                <select
-                  className="control"
-                  value={sortKey}
-                  onChange={(e) => {
-                    const key = e.target.value as SortKey
-                    setSortKey(key)
-                    setSortDir(
-                      key === 'country' || key === 'region' || key === 'city'
-                        ? 'asc'
-                        : 'desc',
-                    )
-                  }}
-                >
-                  {effectiveTableView === 'areas' ? (
-                    <option value="city">{t('area', lang)}</option>
-                  ) : null}
-                  {effectiveTableView === 'cities' ? (
-                    <option value="city">{t('city', lang)}</option>
-                  ) : null}
-                  {effectiveTableView === 'suburbs' ? (
-                    <option value="city">{t('suburb', lang)}</option>
-                  ) : null}
-                  <option value="votes2026">{t('votes2026', lang)}</option>
-                  <option value="votes2022">{t('votes2022', lang)}</option>
-                  <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
-                  <option value="bolsonaroPct2026">
-                    {t('bolsonaroPct2026', lang)}
-                  </option>
-                  <option value="lulaPct2022">{t('lulaPct2022', lang)}</option>
-                  <option value="bolsonaroPct2022">
-                    {t('bolsonaroPct2022', lang)}
-                  </option>
-                  <option value="lulaChange">{t('lulaChange', lang)}</option>
-                  <option value="bolsonaroChange">
-                    {t('bolsonaroChange', lang)}
-                  </option>
-                  <option value="swingToLula">{t('swingToLula', lang)}</option>
-                  <option value="swingToBolsonaro">
-                    {t('swingToBolsonaro', lang)}
-                  </option>
-                  <option value="sections">{t('notes', lang)}</option>
-                  <option value="country">{t('country', lang)}</option>
-                  <option value="region">{t('region', lang)}</option>
-                </select>
-              </label>
-            </div>
+            ) : null}
           </div>
 
-          <div className="filter-row filter-row--geo">
-            <MultiSelectFilter
-              label={t('filterCountry', lang)}
-              allLabel={t('allCountriesFilter', lang)}
-              selectedCountLabel={selectedCountLabel}
-              searchPlaceholder={t('filterSearchCountry', lang)}
-              emptyLabel={t('filterEmpty', lang)}
-              options={countryOptions}
-              value={selectedCountryIds}
-              onChange={onCountryFilterChange}
-            />
-            <MultiSelectFilter
-              label={t('filterArea', lang)}
-              allLabel={t('allAreasFilter', lang)}
-              selectedCountLabel={selectedCountLabel}
-              searchPlaceholder={t('filterSearchArea', lang)}
-              emptyLabel={t('filterEmpty', lang)}
-              options={areaOptions}
-              value={selectedAreaKeys}
-              onChange={onAreaFilterChange}
-            />
-            <MultiSelectFilter
-              label={t('filterCity', lang)}
-              allLabel={t('allCitiesFilter', lang)}
-              selectedCountLabel={selectedCountLabel}
-              searchPlaceholder={t('filterSearchCity', lang)}
-              emptyLabel={t('filterEmpty', lang)}
-              options={cityOptions}
-              value={selectedCityKeys}
-              onChange={setSelectedCityKeys}
-            />
-          </div>
-
-          <div className="filter-row">
+          <div className="filter-row filter-row--primary">
             <label className="filter-field filter-search text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
               <span className="filter-label">
                 {effectiveTableView === 'areas'
@@ -996,10 +879,123 @@ export default function App() {
                 ) : null}
               </span>
             </label>
-            <label className="filter-field filter-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              <span className="filter-label">{t('region', lang)}</span>
+            <MultiSelectFilter
+              label={t('filterCountry', lang)}
+              allLabel={t('allCountriesFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchCountry', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={countryOptions}
+              value={selectedCountryIds}
+              onChange={onCountryFilterChange}
+            />
+            <MultiSelectFilter
+              label={t('filterArea', lang)}
+              allLabel={t('allAreasFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchArea', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={areaOptions}
+              value={selectedAreaKeys}
+              onChange={onAreaFilterChange}
+            />
+            <MultiSelectFilter
+              label={t('filterCity', lang)}
+              allLabel={t('allCitiesFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchCity', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={cityOptions}
+              value={selectedCityKeys}
+              onChange={setSelectedCityKeys}
+            />
+          </div>
+
+          <div className="filter-row filter-row--tools">
+            <label
+              className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
+              title={t('includeBrazilHint', lang)}
+              onMouseEnter={prefetchBrazilCities}
+              onFocus={prefetchBrazilCities}
+            >
+              <input
+                type="checkbox"
+                className="accent-[var(--accent)]"
+                checked={includeBrazil}
+                onChange={(e) => {
+                  const on = e.target.checked
+                  if (on) prefetchBrazilCities()
+                  startTransition(() => setIncludeBrazil(on))
+                  if (!on && highlightId === BRAZIL_ID) {
+                    setHighlightId(null)
+                  }
+                  if (!on && selectedCountryIds.includes(BRAZIL_ID)) {
+                    onCountryFilterChange(
+                      selectedCountryIds.filter((id) => id !== BRAZIL_ID),
+                    )
+                  }
+                }}
+              />
+              {t('includeBrazil', lang)}
+            </label>
+            <TableColumnPicker
+              lang={lang}
+              visible={visibleCols}
+              columnOrder={columnOrder}
+              onChange={setVisibleColsPersist}
+              onReorder={reorderColumns}
+            />
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+              {t('sortBy', lang)}
               <select
-                className="control mt-1 w-full min-w-0"
+                className="control"
+                value={sortKey}
+                onChange={(e) => {
+                  const key = e.target.value as SortKey
+                  setSortKey(key)
+                  setSortDir(
+                    key === 'country' || key === 'region' || key === 'city'
+                      ? 'asc'
+                      : 'desc',
+                  )
+                }}
+              >
+                {effectiveTableView === 'areas' ? (
+                  <option value="city">{t('area', lang)}</option>
+                ) : null}
+                {effectiveTableView === 'cities' ? (
+                  <option value="city">{t('city', lang)}</option>
+                ) : null}
+                {effectiveTableView === 'suburbs' ? (
+                  <option value="city">{t('suburb', lang)}</option>
+                ) : null}
+                <option value="votes2026">{t('votes2026', lang)}</option>
+                <option value="votes2022">{t('votes2022', lang)}</option>
+                <option value="lulaPct2026">{t('lulaPct2026', lang)}</option>
+                <option value="bolsonaroPct2026">
+                  {t('bolsonaroPct2026', lang)}
+                </option>
+                <option value="lulaPct2022">{t('lulaPct2022', lang)}</option>
+                <option value="bolsonaroPct2022">
+                  {t('bolsonaroPct2022', lang)}
+                </option>
+                <option value="lulaChange">{t('lulaChange', lang)}</option>
+                <option value="bolsonaroChange">
+                  {t('bolsonaroChange', lang)}
+                </option>
+                <option value="swingToLula">{t('swingToLula', lang)}</option>
+                <option value="swingToBolsonaro">
+                  {t('swingToBolsonaro', lang)}
+                </option>
+                <option value="sections">{t('notes', lang)}</option>
+                <option value="country">{t('country', lang)}</option>
+                <option value="region">{t('region', lang)}</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+              {t('region', lang)}
+              <select
+                className="control"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
               >
@@ -1011,10 +1007,10 @@ export default function App() {
                 ))}
               </select>
             </label>
-            <label className="filter-field filter-pending text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
-              <span className="filter-label">{t('status', lang)}</span>
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+              {t('status', lang)}
               <select
-                className="control mt-1 w-full min-w-0"
+                className="control"
                 value={statusFilter}
                 onChange={(e) =>
                   setStatusFilter(e.target.value as 'reported' | 'all' | 'pending')
