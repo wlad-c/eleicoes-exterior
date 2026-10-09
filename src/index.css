@@ -953,6 +953,15 @@ html.dark .is-x-scrolled .sticky-col-city {
   white-space: normal;
 }
 
+/* Portaled map tip: fixed + multi-line (do not inherit name-tip nowrap/clip). */
+.app-tip--map.app-tip--fixed {
+  position: fixed;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  max-width: min(280px, calc(100vw - 16px));
+}
+
 /*
  * Tip chrome stays click-through so a touch mouseenter → tip render
  * cannot steal the following click (Brazil drill-in, etc.). Only the
