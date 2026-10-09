@@ -52,7 +52,14 @@ const dict = {
     en: 'Off by default — turn on or select Brazil on the map to show domestic rows in the tables',
     pt: 'Desligado por padrão — ligue ou selecione Brasil no mapa para ver linhas domésticas nas tabelas',
   },
-  allRegions: { en: 'All regions', pt: 'Todas as regiões' },
+  allRegions: {
+    en: 'All global regions',
+    pt: 'Todas as regiões globais',
+  },
+  filterGlobalRegions: {
+    en: 'Global regions',
+    pt: 'Regiões globais',
+  },
   status: { en: 'Status', pt: 'Status' },
   statusAll: { en: 'All countries', pt: 'Todos os países' },
   statusReported: { en: 'Reported only', pt: 'Só apurados' },
