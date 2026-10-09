@@ -19,10 +19,12 @@ import {
 import {
   areaDisplayName,
   cityDisplayName,
+  cityPlaceParentLabel,
   countryAbbrev,
   countryName,
   placeParentLabel,
   placeParentLabelCompact,
+  placeParentUf,
   fmtCoverage,
   fmtInt,
   fmtPp,
@@ -819,13 +821,31 @@ export function CityBreakdownTable({
               })
               const showingUf = visiblePlace !== fullPlace
               const parentPlaceFull =
-                placeKind === 'suburb' ? placeParentLabel(c, lang) : ''
+                placeKind === 'suburb'
+                  ? placeParentLabel(c, lang)
+                  : placeKind === 'city'
+                    ? cityPlaceParentLabel(c, lang, {
+                        domestic: parent?.domestic,
+                      })
+                    : ''
               const parentPlace =
                 placeKind === 'suburb'
                   ? areaUfCompact
                     ? placeParentLabelCompact(c, lang)
                     : parentPlaceFull
-                  : ''
+                  : parentPlaceFull
+              // Keep UF visible on Bairro rows even when the long parent line
+              // is compacted or truncated (prefix with UF · when missing).
+              const suburbUf =
+                placeKind === 'suburb' ? placeParentUf(c) : null
+              const parentPlaceShown =
+                placeKind === 'suburb' &&
+                suburbUf &&
+                parentPlace &&
+                !parentPlace.toUpperCase().startsWith(`${suburbUf} ·`) &&
+                parentPlace.toUpperCase() !== suburbUf
+                  ? `${suburbUf} · ${parentPlace}`
+                  : parentPlace
               const placeTip = parentPlaceFull
                 ? `${fullPlace} · ${parentPlaceFull}`
                 : fullPlace
@@ -860,13 +880,15 @@ export function CityBreakdownTable({
                   <td className="sticky-col sticky-col-city cell-truncate cell-truncate-city px-2 py-2.5">
                     <NameTip
                       label={placeTip}
-                      when={showingUf || parentPlace ? 'always' : 'truncate'}
+                      when={
+                        showingUf || parentPlaceShown ? 'always' : 'truncate'
+                      }
                     >
                       <span className="cell-truncate-text">
                         {visiblePlace}
-                        {parentPlace ? (
+                        {parentPlaceShown ? (
                           <span className="place-parent-line mt-0.5 text-[10px] font-normal text-[var(--ink-muted)]">
-                            {parentPlace}
+                            {parentPlaceShown}
                           </span>
                         ) : null}
                       </span>

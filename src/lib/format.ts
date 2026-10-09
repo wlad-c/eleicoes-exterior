@@ -141,6 +141,68 @@ export function placeParentLabel(
 }
 
 /**
+ * Secondary line under City-tab place names.
+ * Brazil municipalities → UF code (SP, RJ). Overseas voting cities → parent
+ * consular area when present (hidden for unsplit area rows like Miami).
+ */
+export function cityPlaceParentLabel(
+  place: {
+    code?: string
+    name: string
+    nameEn?: string
+    namePt?: string
+    area?: string
+    areaEn?: string
+    areaPt?: string
+  },
+  lang: Lang,
+  opts?: { domestic?: boolean },
+): string {
+  if (opts?.domestic) {
+    const fromArea = brazilUfAbbrev({
+      code: place.area,
+      name: place.area || '',
+    })
+    if (fromArea) return fromArea
+    const fromCode = (place.code || '').trim().toUpperCase().match(/^([A-Z]{2})-/)
+    if (fromCode) return fromCode[1]
+    return ''
+  }
+  if (!place.area && !place.areaEn && !place.areaPt) return ''
+  // Unsplit overseas area row (Miami with area MIAMI): no distinct parent.
+  if (
+    place.area &&
+    place.name &&
+    place.area.toUpperCase() === place.name.toUpperCase()
+  ) {
+    return ''
+  }
+  return areaDisplayName(
+    {
+      code: place.area,
+      name: place.area || '',
+      nameEn: place.areaEn,
+      namePt: place.areaPt,
+    },
+    lang,
+  )
+}
+
+/** Leading UF code from a Bairro parent label ("AC · Acrelândia · Zona 008"). */
+export function placeParentUf(
+  place: { code?: string; area?: string; areaEn?: string; areaPt?: string },
+): string | null {
+  const fromCode = (place.code || '').trim().toUpperCase().match(/^([A-Z]{2})-/)
+  if (fromCode) return fromCode[1]
+  for (const raw of [place.area, place.areaEn, place.areaPt]) {
+    if (!raw) continue
+    const m = raw.trim().match(/^([A-Za-z]{2})\b/)
+    if (m) return m[1].toUpperCase()
+  }
+  return null
+}
+
+/**
  * Compact parent for narrow screens: `SP · Zona 372` instead of
  * `SP · São Paulo · Zona 372` — drops the city so the place column can stay
  * dense (full string remains on the name tooltip).
