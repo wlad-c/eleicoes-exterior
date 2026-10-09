@@ -527,14 +527,25 @@ html.dark .is-x-scrolled .sticky-col-city {
 
 .filter-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.15fr);
   align-items: end;
   gap: clamp(0.35rem, 1.2vw, 0.75rem);
   width: 100%;
 }
 
-.filter-row--geo {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Search (left) then location filters least → most granular. */
+.filter-row--primary {
+  grid-template-columns:
+    minmax(10rem, 1.35fr)
+    minmax(7.5rem, 1fr)
+    minmax(7.5rem, 1fr)
+    minmax(7.5rem, 1fr);
+}
+
+.filter-row--tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
 }
 
 .filter-field {
@@ -723,12 +734,14 @@ html.dark .is-x-scrolled .sticky-col-city {
   letter-spacing: normal;
 }
 
-@media (max-width: 640px) {
-  .filter-row {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr) minmax(0, 0.95fr);
+@media (max-width: 900px) {
+  .filter-row--primary {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   }
+}
 
-  .filter-row--geo {
+@media (max-width: 640px) {
+  .filter-row--primary {
     grid-template-columns: 1fr;
   }
 
