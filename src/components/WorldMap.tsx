@@ -1,5 +1,12 @@
 import { geoNaturalEarth1, geoPath, geoCentroid } from 'd3-geo'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from 'react'
 import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
@@ -102,6 +109,62 @@ export function WorldMap({
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
+
+  // Drill / back leaves a hover tip stranded on touch (no mouseleave).
+  useEffect(() => {
+    setTip(null)
+  }, [focus])
+
+  useEffect(() => {
+    if (!tip) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (wrapRef.current?.contains(e.target as Node)) return
+      setTip(null)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setTip(null)
+    }
+    const onScroll = () => setTip(null)
+    document.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('keydown', onKeyDown)
+    // Capture: table/filter scrolls are often nested.
+    window.addEventListener('scroll', onScroll, true)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('scroll', onScroll, true)
+    }
+  }, [tip])
+
+  const showTipAt = useCallback(
+    (
+      e: { clientX: number; clientY: number },
+      title: string,
+      row: VoteLike,
+    ) => {
+      const rect = wrapRef.current?.getBoundingClientRect()
+      if (!rect) return
+      setTip({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        title,
+        row,
+      })
+    },
+    [],
+  )
+
+  const clearTip = useCallback(() => setTip(null), [])
+
+  /** Touch synthesizes mouseenter then never mouseleave — keep tip until dismiss. */
+  const handleFeatureClick = useCallback(
+    (e: ReactMouseEvent, f: DrawnFeature) => {
+      if (f.row) showTipAt(e, f.label, f.row)
+      else clearTip()
+      onPick(f.pick)
+    },
+    [showTipAt, clearTip, onPick],
+  )
 
   useEffect(() => {
     let cancelled = false
@@ -338,7 +401,10 @@ export function WorldMap({
           <button
             type="button"
             className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-            onClick={onBack}
+            onClick={() => {
+              clearTip()
+              onBack()
+            }}
           >
             ← {t('mapBack', lang)}
           </button>
@@ -353,9 +419,7 @@ export function WorldMap({
         role="img"
         aria-label={t('map', lang)}
         className="w-full overflow-visible"
-        onMouseLeave={() => {
-          setTip(null)
-        }}
+        onMouseLeave={clearTip}
       >
         <rect
           width={width}
@@ -364,7 +428,10 @@ export function WorldMap({
           className={
             canGoBack || highlightId ? 'cursor-pointer' : undefined
           }
-          onClick={() => onPick({ kind: 'background' })}
+          onClick={() => {
+            clearTip()
+            onPick({ kind: 'background' })
+          }}
         />
         {!fitReady && geoLoading ? (
           <text
@@ -399,30 +466,16 @@ export function WorldMap({
                 className="cursor-pointer transition-[stroke-width] duration-200"
                 onMouseEnter={(e) => {
                   if (!f.row) return
-                  const rect = wrapRef.current?.getBoundingClientRect()
-                  if (!rect) return
-                  setTip({
-                    x: e.clientX - rect.left,
-                    y: e.clientY - rect.top,
-                    title: f.label,
-                    row: f.row,
-                  })
+                  showTipAt(e, f.label, f.row)
                 }}
                 onMouseMove={(e) => {
                   if (!f.row) return
-                  const rect = wrapRef.current?.getBoundingClientRect()
-                  if (!rect) return
-                  setTip({
-                    x: e.clientX - rect.left,
-                    y: e.clientY - rect.top,
-                    title: f.label,
-                    row: f.row,
-                  })
+                  showTipAt(e, f.label, f.row)
                 }}
-                onMouseLeave={() => setTip(null)}
+                onMouseLeave={clearTip}
                 onClick={(e) => {
                   e.stopPropagation()
-                  onPick(f.pick)
+                  handleFeatureClick(e, f)
                 }}
               />
             )
@@ -443,30 +496,16 @@ export function WorldMap({
               }
               onMouseEnter={(e) => {
                 if (!f.row) return
-                const rect = wrapRef.current?.getBoundingClientRect()
-                if (!rect) return
-                setTip({
-                  x: e.clientX - rect.left,
-                  y: e.clientY - rect.top,
-                  title: f.label,
-                  row: f.row,
-                })
+                showTipAt(e, f.label, f.row)
               }}
               onMouseMove={(e) => {
                 if (!f.row) return
-                const rect = wrapRef.current?.getBoundingClientRect()
-                if (!rect) return
-                setTip({
-                  x: e.clientX - rect.left,
-                  y: e.clientY - rect.top,
-                  title: f.label,
-                  row: f.row,
-                })
+                showTipAt(e, f.label, f.row)
               }}
-              onMouseLeave={() => setTip(null)}
+              onMouseLeave={clearTip}
               onClick={(e) => {
                 e.stopPropagation()
-                onPick(f.pick)
+                handleFeatureClick(e, f)
               }}
             />
           )
@@ -479,33 +518,51 @@ export function WorldMap({
 
       {tip && (
         <div
-          className="app-tip app-tip--map"
+          className="app-tip app-tip--map app-tip--map-open"
+          role="status"
           style={{
             left: Math.min(tip.x + 12, width - 270),
             top: Math.max(8, tip.y - 8),
           }}
         >
-          <span className="app-tip-title">{tip.title}</span>
-          <span className="app-tip-meta">
-            {t(metric, lang)}:{' '}
-            {formatMetricValue(metricValue(tip.row, metric), metric, lang)}
-          </span>
-          {tip.row.y2026 && metric !== 'leader2022' ? (
-            <span className="app-tip-meta-muted">
-              {t('lula', lang)} {fmtPct(tip.row.y2026.lulaPct, lang)} ·{' '}
-              {t('fBolsonaro', lang)} {fmtPct(tip.row.y2026.bolsonaroPct, lang)}
+          <div className="app-tip-body">
+            <span className="app-tip-title">{tip.title}</span>
+            <span className="app-tip-meta">
+              {t(metric, lang)}:{' '}
+              {formatMetricValue(metricValue(tip.row, metric), metric, lang)}
             </span>
-          ) : tip.row.y2022 &&
-            (metric === 'leader2022' ||
-              metric === 'lulaPct2022' ||
-              metric === 'bolsonaroPct2022') ? (
-            <span className="app-tip-meta-muted">
-              {t('lula', lang)} {fmtPct(tip.row.y2022.lulaPct, lang)} ·{' '}
-              {t('jBolsonaro', lang)} {fmtPct(tip.row.y2022.bolsonaroPct, lang)}
-            </span>
-          ) : tip.row.status === 'pending' ? (
-            <span className="app-tip-meta-muted">{t('pendingHint', lang)}</span>
-          ) : null}
+            {tip.row.y2026 && metric !== 'leader2022' ? (
+              <span className="app-tip-meta-muted">
+                {t('lula', lang)} {fmtPct(tip.row.y2026.lulaPct, lang)} ·{' '}
+                {t('fBolsonaro', lang)}{' '}
+                {fmtPct(tip.row.y2026.bolsonaroPct, lang)}
+              </span>
+            ) : tip.row.y2022 &&
+              (metric === 'leader2022' ||
+                metric === 'lulaPct2022' ||
+                metric === 'bolsonaroPct2022') ? (
+              <span className="app-tip-meta-muted">
+                {t('lula', lang)} {fmtPct(tip.row.y2022.lulaPct, lang)} ·{' '}
+                {t('jBolsonaro', lang)}{' '}
+                {fmtPct(tip.row.y2022.bolsonaroPct, lang)}
+              </span>
+            ) : tip.row.status === 'pending' ? (
+              <span className="app-tip-meta-muted">
+                {t('pendingHint', lang)}
+              </span>
+            ) : null}
+          </div>
+          <button
+            type="button"
+            className="app-tip-close"
+            aria-label={t('mapTipClose', lang)}
+            onClick={(e) => {
+              e.stopPropagation()
+              clearTip()
+            }}
+          >
+            ×
+          </button>
         </div>
       )}
     </div>
