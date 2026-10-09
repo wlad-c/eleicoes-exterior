@@ -2,17 +2,14 @@ import { useEffect, useState } from 'react'
 import type { Lang, ResultsData } from '../types'
 import { fetchLiveTseZz } from './tseZzLive'
 
-/** Steady-state poll interval after the election-night fast window. */
+/** Poll interval once live refresh is allowed (runoff counting). */
 export const RESULTS_REFRESH_MS = 30 * 60 * 1000
 
-/** Election-night poll interval — short so the UI visibly keeps up. */
-export const FAST_RESULTS_REFRESH_MS = 2 * 60 * 1000
-
 /**
- * Until this UTC instant, open tabs refresh from TSE on the fast interval;
- * afterward they fall back to 30 minutes.
+ * First overseas booths close in New Zealand (17:00 NZDT on runoff Sunday).
+ * Until then, skip live TSE polling; afterward check every 30 minutes.
  */
-export const FAST_REFRESH_UNTIL_MS = Date.parse('2026-10-05T03:50:00.000Z')
+export const REFRESH_START_MS = Date.parse('2026-10-25T04:00:00.000Z')
 
 /** Ignore focus/visibility refetches that fire more often than this. */
 const MIN_FOCUS_REFRESH_MS = 20_000
@@ -29,29 +26,26 @@ function resultsEndpoint(): string {
   return `${import.meta.env.BASE_URL}data/results.json`
 }
 
-export function isFastRefreshWindow(now = Date.now()): boolean {
-  return now < FAST_REFRESH_UNTIL_MS
+export function isRefreshPaused(now = Date.now()): boolean {
+  return now < REFRESH_START_MS
 }
 
-export function defaultRefreshMs(now = Date.now()): number {
-  return isFastRefreshWindow(now) ? FAST_RESULTS_REFRESH_MS : RESULTS_REFRESH_MS
-}
-
-/** Default follows the fast/slow window; override with `?refreshMs=<ms>`. */
+/** Override with `?refreshMs=<ms>`; otherwise null while paused, else 30 min. */
 export function resolveRefreshMs(
   search = typeof window !== 'undefined' ? window.location.search : '',
   now = Date.now(),
-): number {
+): number | null {
   const raw = new URLSearchParams(search).get('refreshMs')
   if (raw && /^\d+$/.test(raw)) return Math.max(1_000, Number(raw))
-  return defaultRefreshMs(now)
+  if (isRefreshPaused(now)) return null
+  return RESULTS_REFRESH_MS
 }
 
 export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
-  if (isFastRefreshWindow(now)) {
+  if (isRefreshPaused(now)) {
     return lang === 'pt'
-      ? 'TSE ao vivo a cada 2 min'
-      : 'live TSE every 2 min'
+      ? 'atualização pausada até o 2º turno (NZ)'
+      : 'refresh paused until runoff (NZ)'
   }
   return lang === 'pt'
     ? 'atualiza a cada 30 min'
@@ -102,8 +96,8 @@ async function pullDeployedSeed(): Promise<ResultsData | null> {
 
 /**
  * Seed from bundled/Pages JSON once, then keep refreshing from official TSE
- * EA20 ZZ in the browser. After the first successful live pull, do NOT
- * re-apply a stale Pages seed (that was wiping live tallies).
+ * EA20 ZZ in the browser once NZ booths close for the runoff. After the first
+ * successful live pull, do NOT re-apply a stale Pages seed.
  */
 export function useResultsData(initial: ResultsData): ResultsDataState {
   const [data, setData] = useState(initial)
@@ -120,6 +114,8 @@ export function useResultsData(initial: ResultsData): ResultsDataState {
 
     async function pull(force = false) {
       if (cancelled) return
+      // While paused (no ?refreshMs override), do not hit live TSE.
+      if (resolveRefreshMs() == null) return
       if (
         !force &&
         lastPulledAt > 0 &&
@@ -169,13 +165,31 @@ export function useResultsData(initial: ResultsData): ResultsDataState {
     function scheduleNext() {
       if (cancelled) return
       const refreshMs = resolveRefreshMs()
+      const delay =
+        refreshMs != null
+          ? refreshMs
+          : Math.max(1_000, REFRESH_START_MS - Date.now())
       timer = window.setTimeout(() => {
         void pull(true).finally(scheduleNext)
-      }, refreshMs)
+      }, delay)
     }
 
-    // Chain: finish first pull, then start the interval (avoids overlap).
-    void pull(true).finally(scheduleNext)
+    async function boot() {
+      // While paused, only refresh the deployed seed once — no live TSE.
+      if (resolveRefreshMs() == null) {
+        const seed = await pullDeployedSeed()
+        if (!cancelled && seed) {
+          latest = seed
+          setData((prev) => (samePayload(prev, seed) ? prev : seed))
+          setSyncStatus('idle')
+        }
+        scheduleNext()
+        return
+      }
+      void pull(true).finally(scheduleNext)
+    }
+
+    void boot()
 
     const onVisible = () => {
       if (document.visibilityState !== 'visible') return

@@ -13,7 +13,7 @@ App runs at [http://localhost:4837/eleicoes-exterior/](http://localhost:4837/ele
 
 ## Update results
 
-The live page pulls overseas (ZZ) presidential tallies **directly from the TSE** in the browser on load, on focus, and every **2 minutes** (through `2026-10-05T03:50:00Z`, then every 30 minutes). Vote updates do not require a redeploy.
+Live TSE refresh is **paused until New Zealand booths close for the runoff** (`2026-10-25T04:00:00Z` = 17:00 NZDT). From then on, open tabs pull overseas (ZZ) tallies on load, on focus, and every **30 minutes**. Vote updates do not require a redeploy.
 
 Optional seed sync (cold load / SEO; also via GitHub Actions every 48 hours):
 
