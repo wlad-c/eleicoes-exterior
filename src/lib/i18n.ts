@@ -100,6 +100,14 @@ const dict = {
     en: 'Colors the map and the matching table column',
     pt: 'Colorize o mapa e a coluna correspondente na tabela',
   },
+  mapBack: {
+    en: 'Broader map',
+    pt: 'Mapa anterior',
+  },
+  mapLoading: {
+    en: 'Loading map…',
+    pt: 'Carregando mapa…',
+  },
   legendLow: { en: 'low', pt: 'baixo' },
   legendHigh: { en: 'high', pt: 'alto' },
   sortBy: { en: 'Sort', pt: 'Ordenar' },
