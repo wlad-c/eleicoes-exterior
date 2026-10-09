@@ -367,6 +367,25 @@ export function CityBreakdownTable({
     [rows.length, shouldVirtualize, loading],
   )
 
+  /** Folded display names that collide across Brazil municipalities in view. */
+  // Must run before loading/empty early returns — otherwise React #310 when
+  // Brazil cities finish loading and this hook suddenly appears.
+  const duplicateBrazilCityNames = useMemo(() => {
+    if (placeKind !== 'city') return new Set<string>()
+    const counts = new Map<string, number>()
+    for (const r of rows) {
+      const parent = countries.get(r.countryId)
+      if (!parent?.domestic) continue
+      const key = foldForSearch(cityDisplayName(r, lang))
+      counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+    const dups = new Set<string>()
+    for (const [key, n] of counts) {
+      if (n > 1) dups.add(key)
+    }
+    return dups
+  }, [rows, placeKind, countries, lang])
+
   if (loading) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
@@ -406,23 +425,6 @@ export function CityBreakdownTable({
       </p>
     )
   }
-
-  /** Folded display names that collide across Brazil municipalities in view. */
-  const duplicateBrazilCityNames = useMemo(() => {
-    if (placeKind !== 'city') return new Set<string>()
-    const counts = new Map<string, number>()
-    for (const r of rows) {
-      const parent = countries.get(r.countryId)
-      if (!parent?.domestic) continue
-      const key = foldForSearch(cityDisplayName(r, lang))
-      counts.set(key, (counts.get(key) ?? 0) + 1)
-    }
-    const dups = new Set<string>()
-    for (const [key, n] of counts) {
-      if (n > 1) dups.add(key)
-    }
-    return dups
-  }, [rows, placeKind, countries, lang])
 
   const placeLabel = t(
     placeKind === 'area' ? 'area' : placeKind === 'suburb' ? 'suburb' : 'city',
