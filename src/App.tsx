@@ -14,6 +14,12 @@ import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
 import {
+  parentFocus,
+  tableViewForFocus,
+  type MapFocus,
+  type MapPick,
+} from './lib/brazilGeo'
+import {
   compareCityRows,
   groupSuburbRowsByNeighborhood,
   taggedAreaRows,
@@ -27,6 +33,7 @@ import {
   countryFilterOptions,
   countryIdsFromPlaceKeys,
   parsePlaceFilterKey,
+  placeFilterKey,
   pruneCityKeysToAreas,
   prunePlaceKeysToCountries,
   rowMatchesAreaFilter,
@@ -110,16 +117,21 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  /** World → Brazil UFs → municipalities → neighborhoods. */
+  const [mapFocus, setMapFocus] = useState<MapFocus>({ level: 'world' })
   /** Domestic Brazil is hidden from tables until toggled or selected on the map. */
   const [includeBrazil, setIncludeBrazil] = useState(false)
   const [tableView, setTableView] = useState<TableView>('countries')
   const wantBrazil =
-    includeBrazil || highlightId === BRAZIL_ID
-  // Cities (municipalities) when Brazil is included; locals only on Suburb tab
-  // (that file is large — avoid downloading until needed).
+    includeBrazil ||
+    highlightId === BRAZIL_ID ||
+    mapFocus.level !== 'world'
+  // Cities (municipalities) when Brazil is included; locals on Suburb tab or
+  // when the map is drilled into a city (neighborhood markers).
   const brazilDomestic = useBrazilDomestic({
     wantCities: wantBrazil,
-    wantSuburbs: wantBrazil && tableView === 'suburbs',
+    wantSuburbs:
+      wantBrazil && (tableView === 'suburbs' || mapFocus.level === 'city'),
   })
 
   const data = useMemo(() => {
@@ -193,7 +205,8 @@ export default function App() {
     () => data.countries.find((c) => c.id === BRAZIL_ID) ?? null,
     [data.countries],
   )
-  const showBrazilInTables = includeBrazil || highlightId === BRAZIL_ID
+  const showBrazilInTables =
+    includeBrazil || highlightId === BRAZIL_ID || mapFocus.level !== 'world'
   const showSuburbTab = Boolean(
     showBrazilInTables &&
       (brazilHasSuburbData(brazilCountry) || brazilDomestic.suburbsLoading),
@@ -333,10 +346,48 @@ export default function App() {
     setSelectedCityKeys((prev) => pruneCityKeysToAreas(prev, next, countryById))
   }
 
-  function onSelect(id: string | null) {
-    setHighlightId(id)
-    if (!id) {
-      // Map click outside the selected country — back to Country table.
+  function syncTabToFocus(focus: MapFocus) {
+    const next = tableViewForFocus(focus)
+    setTableView(next)
+    if (next === 'countries' && sortKey === 'city') {
+      setSortKey('votes2026')
+      setSortDir('desc')
+    }
+  }
+
+  function mapBack() {
+    const next = parentFocus(mapFocus)
+    setMapFocus(next)
+    syncTabToFocus(next)
+    if (next.level === 'world') {
+      setHighlightId(null)
+      setQuery('')
+      clearGeoFilters()
+      return
+    }
+    if (next.level === 'brazil') {
+      setHighlightId(BRAZIL_ID)
+      applyCountryFilter(BRAZIL_ID)
+      setSelectedAreaKeys([])
+      setSelectedCityKeys([])
+      return
+    }
+    if (next.level === 'uf') {
+      setHighlightId(next.uf)
+      applyCountryFilter(BRAZIL_ID)
+      setSelectedAreaKeys([placeFilterKey(BRAZIL_ID, next.uf)])
+      setSelectedCityKeys([])
+    }
+  }
+
+  function onMapPick(pick: MapPick) {
+    if (pick.kind === 'background') {
+      if (mapFocus.level !== 'world') {
+        mapBack()
+        return
+      }
+      // Clear country focus on the world map.
+      setHighlightId(null)
       setQuery('')
       clearGeoFilters()
       setTableView('countries')
@@ -346,28 +397,105 @@ export default function App() {
       }
       return
     }
-    // Map / Country-tab selection drives the Country multi-select filter.
-    applyCountryFilter(id)
+
+    if (pick.kind === 'country') {
+      const country = data.countries.find((c) => c.id === pick.id)
+      if (country?.domestic) {
+        setIncludeBrazil(true)
+        prefetchBrazilCities()
+        setHighlightId(BRAZIL_ID)
+        applyCountryFilter(BRAZIL_ID)
+        const next: MapFocus = { level: 'brazil' }
+        setMapFocus(next)
+        // Area tab (UFs) — stay on the map; do not force-scroll to the table.
+        syncTabToFocus(next)
+        return
+      }
+      setHighlightId(pick.id)
+      applyCountryFilter(pick.id)
+      const hasBreakdown =
+        !!country &&
+        ((country.areas?.length ?? 0) > 0 || (country.cities?.length ?? 0) > 0)
+      if (hasBreakdown && country) {
+        setTableView('cities')
+        window.setTimeout(() => {
+          tableChromeRef.current?.scrollIntoView({
+            block: 'start',
+            behavior: 'smooth',
+          })
+        }, 0)
+        return
+      }
+      document.getElementById(`row-${pick.id}`)?.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+      })
+      return
+    }
+
+    if (pick.kind === 'uf') {
+      setIncludeBrazil(true)
+      prefetchBrazilCities()
+      setHighlightId(pick.uf)
+      applyCountryFilter(BRAZIL_ID)
+      setSelectedAreaKeys([placeFilterKey(BRAZIL_ID, pick.uf)])
+      setSelectedCityKeys([])
+      const next: MapFocus = { level: 'uf', uf: pick.uf }
+      setMapFocus(next)
+      syncTabToFocus(next)
+      return
+    }
+
+    if (pick.kind === 'city') {
+      setIncludeBrazil(true)
+      prefetchBrazilCities()
+      prefetchBrazilSuburbs()
+      setHighlightId(pick.cityCode)
+      applyCountryFilter(BRAZIL_ID)
+      setSelectedAreaKeys([placeFilterKey(BRAZIL_ID, pick.uf)])
+      setSelectedCityKeys([placeFilterKey(BRAZIL_ID, pick.cityCode)])
+      const next: MapFocus = {
+        level: 'city',
+        uf: pick.uf,
+        cityCode: pick.cityCode,
+      }
+      setMapFocus(next)
+      syncTabToFocus(next)
+      return
+    }
+
+    if (pick.kind === 'suburb') {
+      setHighlightId(pick.suburbCode)
+    }
+  }
+
+  /** Country-table row click (may still scroll to the table chrome). */
+  function onSelect(id: string | null) {
+    if (!id) {
+      setHighlightId(null)
+      setQuery('')
+      clearGeoFilters()
+      setMapFocus({ level: 'world' })
+      setTableView('countries')
+      if (sortKey === 'city') {
+        setSortKey('votes2026')
+        setSortDir('desc')
+      }
+      return
+    }
     const country = data.countries.find((c) => c.id === id)
     if (country?.domestic) {
       setIncludeBrazil(true)
       prefetchBrazilCities()
-      // Municipalities live on City; within-muni locals on Suburb.
-      setTableView(
-        brazilHasCityData(country) || brazilHasSuburbData(country)
-          ? 'cities'
-          : (country.areas?.length ?? 0) > 0
-            ? 'areas'
-            : 'countries',
-      )
-      window.setTimeout(() => {
-        tableChromeRef.current?.scrollIntoView({
-          block: 'start',
-          behavior: 'smooth',
-        })
-      }, 0)
+      setHighlightId(BRAZIL_ID)
+      applyCountryFilter(BRAZIL_ID)
+      const next: MapFocus = { level: 'brazil' }
+      setMapFocus(next)
+      syncTabToFocus(next)
       return
     }
+    setHighlightId(id)
+    applyCountryFilter(id)
     const hasBreakdown =
       !!country &&
       ((country.areas?.length ?? 0) > 0 || (country.cities?.length ?? 0) > 0)
@@ -609,12 +737,16 @@ export default function App() {
     effectiveTableView,
   ])
 
-  // Drop highlight if the selected country is hidden again
+  // Drop highlight if the selected country is hidden again (world map only).
   const highlightVisible =
+    mapFocus.level !== 'world' ||
     !highlightId ||
     mapCountries.some((c) => c.id === highlightId) ||
     filtered.some((c) => c.id === highlightId)
   const activeHighlight = highlightVisible ? highlightId : null
+  const brazilAreas = brazilCountry?.areas ?? []
+  const brazilCities = brazilCountry?.cities ?? []
+  const brazilSuburbs = brazilCountry?.suburbs ?? []
 
   const lulaShare = totals.valid ? (totals.lula / totals.valid) * 100 : 0
   const bolsoShare = totals.valid ? (totals.bolsonaro / totals.valid) * 100 : 0
@@ -798,10 +930,15 @@ export default function App() {
         </div>
         <WorldMap
           countries={mapCountries}
+          areas={brazilAreas}
+          cities={brazilCities}
+          suburbs={brazilSuburbs}
           metric={metric}
           lang={lang}
+          focus={mapFocus}
           highlightId={activeHighlight}
-          onSelect={onSelect}
+          onPick={onMapPick}
+          onBack={mapBack}
         />
       </section>
 
@@ -961,6 +1098,10 @@ export default function App() {
                   const on = e.target.checked
                   if (on) prefetchBrazilCities()
                   startTransition(() => setIncludeBrazil(on))
+                  if (!on && mapFocus.level !== 'world') {
+                    setMapFocus({ level: 'world' })
+                    setTableView('countries')
+                  }
                   if (!on && highlightId === BRAZIL_ID) {
                     setHighlightId(null)
                   }
@@ -1147,7 +1288,9 @@ export default function App() {
           {t('updated', lang)}: {updated}. {t('howToEdit', lang)}
         </p>
 
-        {activeHighlight && (
+        {activeHighlight &&
+          mapFocus.level === 'world' &&
+          data.countries.some((c) => c.id === activeHighlight) && (
           <p className="text-xs">
             → {countryName(data.countries.find((c) => c.id === activeHighlight)!, lang)}
           </p>

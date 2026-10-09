@@ -1,4 +1,19 @@
-import type { CountryResult, Lang, MapMetric } from '../types'
+import type {
+  CountryResult,
+  CountryStatus,
+  Lang,
+  MapMetric,
+  Swing,
+  YearResult,
+} from '../types'
+
+/** Minimal vote shape for map/table metrics (country or place rows). */
+export type VoteLike = {
+  status?: CountryStatus
+  y2026?: YearResult | null
+  y2022?: YearResult | null
+  swing?: Swing | null
+}
 
 export function fmtInt(n: number | null | undefined, lang: Lang): string {
   if (n == null || Number.isNaN(n)) return '—'
@@ -219,20 +234,29 @@ export function placeParentLabelCompact(
   return full
 }
 
+function isReported(c: VoteLike): boolean {
+  if (c.status === 'pending') return false
+  if (c.status === 'reported') return !!c.y2026
+  return !!c.y2026
+}
+
 /** Lula change = 2026% − 2022%. */
-export function lulaChange(c: CountryResult): number | null {
-  if (c.status !== 'reported' || !c.y2026) return null
+export function lulaChange(c: VoteLike): number | null {
+  if (c.swing != null) return c.swing.lulaPp
+  if (!isReported(c) || !c.y2026 || !c.y2022) return null
   return c.y2026.lulaPct - c.y2022.lulaPct
 }
 
 /** Bolsonaro change = 2026% − 2022%. */
-export function bolsonaroChange(c: CountryResult): number | null {
-  if (c.status !== 'reported' || !c.y2026) return null
+export function bolsonaroChange(c: VoteLike): number | null {
+  if (c.swing != null) return c.swing.bolsonaroPp
+  if (!isReported(c) || !c.y2026 || !c.y2022) return null
   return c.y2026.bolsonaroPct - c.y2022.bolsonaroPct
 }
 
 /** Swing to Lula = Lula change − Bolsonaro change. */
-export function swingToLula(c: CountryResult): number | null {
+export function swingToLula(c: VoteLike): number | null {
+  if (c.swing != null) return c.swing.lulaPp - c.swing.bolsonaroPp
   const l = lulaChange(c)
   const b = bolsonaroChange(c)
   if (l == null || b == null) return null
@@ -240,23 +264,25 @@ export function swingToLula(c: CountryResult): number | null {
 }
 
 /** Swing to Bolsonaro = Bolsonaro change − Lula change. */
-export function swingToBolsonaro(c: CountryResult): number | null {
+export function swingToBolsonaro(c: VoteLike): number | null {
+  if (c.swing != null) return c.swing.bolsonaroPp - c.swing.lulaPp
   const l = lulaChange(c)
   const b = bolsonaroChange(c)
   if (l == null || b == null) return null
   return b - l
 }
 
-export function metricValue(c: CountryResult, metric: MapMetric): number | null {
+export function metricValue(c: VoteLike, metric: MapMetric): number | null {
   switch (metric) {
     case 'leader2026': {
-      if (c.status !== 'reported' || !c.y2026) return null
+      if (!isReported(c) || !c.y2026) return null
       const { lulaPct, bolsonaroPct } = c.y2026
       if (lulaPct > bolsonaroPct) return lulaPct
       if (bolsonaroPct > lulaPct) return -bolsonaroPct
       return 0
     }
     case 'leader2022': {
+      if (!c.y2022) return null
       const { lulaPct, bolsonaroPct } = c.y2022
       if (lulaPct > bolsonaroPct) return lulaPct
       if (bolsonaroPct > lulaPct) return -bolsonaroPct
@@ -271,13 +297,13 @@ export function metricValue(c: CountryResult, metric: MapMetric): number | null 
     case 'swingToBolsonaro':
       return swingToBolsonaro(c)
     case 'lulaPct2026':
-      return c.status === 'reported' && c.y2026 ? c.y2026.lulaPct : null
+      return isReported(c) && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
-      return c.status === 'reported' && c.y2026 ? c.y2026.bolsonaroPct : null
+      return isReported(c) && c.y2026 ? c.y2026.bolsonaroPct : null
     case 'lulaPct2022':
-      return c.y2022.lulaPct
+      return c.y2022?.lulaPct ?? null
     case 'bolsonaroPct2022':
-      return c.y2022.bolsonaroPct
+      return c.y2022?.bolsonaroPct ?? null
   }
 }
 

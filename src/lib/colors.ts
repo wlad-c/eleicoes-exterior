@@ -1,6 +1,6 @@
 import { scaleDiverging, scaleSequential } from 'd3-scale'
-import { metricValue } from './format'
-import type { CountryResult, MapMetric } from '../types'
+import { metricValue, type VoteLike } from './format'
+import type { MapMetric } from '../types'
 
 /**
  * HARD RULE (do not invert):
@@ -103,11 +103,11 @@ function sequentialScale(max: number, toward: 'lula' | 'bolso') {
 }
 
 export function extentForMetric(
-  countries: CountryResult[],
+  rows: VoteLike[],
   metric: MapMetric,
 ): [number, number] {
   const vals: number[] = []
-  for (const c of countries) {
+  for (const c of rows) {
     const v = metricValue(c, metric)
     if (v != null && !Number.isNaN(v)) vals.push(v)
   }
@@ -117,9 +117,9 @@ export function extentForMetric(
 
 export function makeMetricColorizer(
   metric: MapMetric,
-  countries: CountryResult[],
+  rows: VoteLike[],
 ): (value: number | null) => string {
-  const [, hi] = extentForMetric(countries, metric)
+  const [, hi] = extentForMetric(rows, metric)
   const kind = scaleKind(metric)
   const invert = isInverted(metric)
 

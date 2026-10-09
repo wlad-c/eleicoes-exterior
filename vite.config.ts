@@ -13,6 +13,8 @@ const citiesSrc = resolve(rootDir, 'src/data/brazil-cities.json')
 const citiesPublic = resolve(rootDir, 'public/data/brazil-cities.json')
 const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
 const suburbsPublic = resolve(rootDir, 'public/data/brazil-suburbs.json')
+const ufsSrc = resolve(rootDir, 'src/data/brazil-ufs.json')
+const ufsPublic = resolve(rootDir, 'public/data/brazil-ufs.json')
 
 /** Keep stable public URLs in sync with the editable source JSON. */
 function syncResultsJson(): Plugin {
@@ -22,6 +24,7 @@ function syncResultsJson(): Plugin {
     for (const [src, dest] of [
       [citiesSrc, citiesPublic],
       [suburbsSrc, suburbsPublic],
+      [ufsSrc, ufsPublic],
     ] as const) {
       try {
         copyFileSync(src, dest)
@@ -41,9 +44,15 @@ function syncResultsJson(): Plugin {
       server.watcher.add(resultsSrc)
       server.watcher.add(citiesSrc)
       server.watcher.add(suburbsSrc)
+      server.watcher.add(ufsSrc)
       server.watcher.on('change', (path) => {
         const abs = resolve(path)
-        if (abs === resultsSrc || abs === citiesSrc || abs === suburbsSrc) {
+        if (
+          abs === resultsSrc ||
+          abs === citiesSrc ||
+          abs === suburbsSrc ||
+          abs === ufsSrc
+        ) {
           write()
         }
       })

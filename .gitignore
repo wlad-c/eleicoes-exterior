@@ -17,6 +17,7 @@ agent-tools
 public/data/results.json
 public/data/brazil-cities.json
 public/data/brazil-suburbs.json
+public/data/brazil-ufs.json
 
 # Editor directories and files
 .vscode/*
