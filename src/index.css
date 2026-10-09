@@ -765,7 +765,9 @@ html.dark .is-x-scrolled .sticky-col-city {
 .results-table--suburb .sticky-col-city.cell-truncate-city {
   width: auto;
   min-width: var(--table-col-place-min);
-  max-width: 12.75rem;
+  /* Keep modest so short names don’t sit in a wide empty cell; long
+     labels wrap (full text still visible). */
+  max-width: 10.5rem;
   overflow: hidden;
 }
 
