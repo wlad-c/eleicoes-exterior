@@ -39,6 +39,7 @@ import {
 } from '../lib/brazilGeo'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
+import { useMediaQuery } from '../lib/useMediaQuery'
 import type { CityResult, CountryResult, Lang, MapMetric } from '../types'
 
 type Props = {
@@ -89,6 +90,8 @@ export function WorldMap({
   const wrapRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(960)
   const [tip, setTip] = useState<Tip | null>(null)
+  /** Touch synthesizes mouseenter before click — skip hover tips there. */
+  const canHover = useMediaQuery('(hover: hover) and (pointer: fine)')
   const ufMesh = useMemo(() => brazilUfCollection(), [])
   const [munMesh, setMunMesh] = useState<FeatureCollection<
     Geometry,
@@ -470,11 +473,11 @@ export function WorldMap({
                 strokeWidth={isHi ? 2 : 0.8}
                 className="cursor-pointer transition-[stroke-width] duration-200"
                 onMouseEnter={(e) => {
-                  if (!f.row) return
+                  if (!canHover || !f.row) return
                   showTipAt(e, f.label, f.row)
                 }}
                 onMouseMove={(e) => {
-                  if (!f.row) return
+                  if (!canHover || !f.row) return
                   showTipAt(e, f.label, f.row)
                 }}
                 onClick={(e) => {
@@ -499,11 +502,11 @@ export function WorldMap({
                   : ''
               }
               onMouseEnter={(e) => {
-                if (!f.row) return
+                if (!canHover || !f.row) return
                 showTipAt(e, f.label, f.row)
               }}
               onMouseMove={(e) => {
-                if (!f.row) return
+                if (!canHover || !f.row) return
                 showTipAt(e, f.label, f.row)
               }}
               onClick={(e) => {

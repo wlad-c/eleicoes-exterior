@@ -953,9 +953,13 @@ html.dark .is-x-scrolled .sticky-col-city {
   white-space: normal;
 }
 
-/* Sticky after tap on touch — allow dismiss via close / tip press. */
+/*
+ * Tip chrome stays click-through so a touch mouseenter → tip render
+ * cannot steal the following click (Brazil drill-in, etc.). Only the
+ * × button receives pointer events.
+ */
 .app-tip--map-open {
-  pointer-events: auto;
+  pointer-events: none;
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
@@ -967,6 +971,7 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 .app-tip-close {
+  pointer-events: auto;
   flex: none;
   margin: -0.15rem -0.25rem -0.15rem 0;
   padding: 0.15rem 0.35rem;
