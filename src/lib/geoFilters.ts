@@ -49,9 +49,10 @@ export function areaFilterOptions(
   const options: { value: string; label: string; searchText: string }[] = []
   for (const c of countries) {
     for (const area of c.areas ?? []) {
+      // Full state / area names in the Area filter (not UF abbreviations).
       const label = areaDisplayName(area, lang, {
         domestic: c.domestic,
-        preferUf: true,
+        preferUf: false,
       })
       const country = countryName(c, lang)
       options.push({
@@ -62,6 +63,7 @@ export function areaFilterOptions(
           area.nameEn,
           area.namePt,
           area.code,
+          label,
           country,
           c.countryEn,
           c.countryPt,
