@@ -8,6 +8,7 @@ import {
 } from 'react'
 import raw from './data/results.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
+import { MultiSelectFilter } from './components/MultiSelectFilter'
 import { ResultsTable } from './components/ResultsTable'
 import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
@@ -19,6 +20,17 @@ import {
   taggedBreakdownRows,
   taggedSuburbRows,
 } from './lib/cityRows'
+import {
+  areaFilterOptions,
+  cityFilterOptions,
+  countryFilterOptions,
+  parsePlaceFilterKey,
+  pruneCityKeysToAreas,
+  prunePlaceKeysToCountries,
+  rowMatchesAreaFilter,
+  rowMatchesCityFilter,
+  rowMatchesCountryFilter,
+} from './lib/geoFilters'
 import { regionLabel, t } from './lib/i18n'
 import { collatorFor } from './lib/collator'
 import {
@@ -79,22 +91,6 @@ export default function App() {
     } catch {
       /* ignore */
     }
-    // Keep a country-driven search filter in the newly selected language.
-    if (highlightId) {
-      const country = data.countries.find((c) => c.id === highlightId)
-      if (country) {
-        setQuery((prev) => {
-          if (
-            prev === country.countryEn ||
-            prev === country.countryPt ||
-            prev === countryName(country, lang)
-          ) {
-            return countryName(country, next)
-          }
-          return prev
-        })
-      }
-    }
   }
   const [query, setQuery] = useState('')
   /** Keep typing snappy while large Brazil tables filter/sort. */
@@ -103,6 +99,10 @@ export default function App() {
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
     'reported',
   )
+  /** Multi-select geo filters above the table (cascading country → area → city). */
+  const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>([])
+  const [selectedAreaKeys, setSelectedAreaKeys] = useState<string[]>([])
+  const [selectedCityKeys, setSelectedCityKeys] = useState<string[]>([])
   const [metric, setMetric] = useState<MapMetric>('leader2026')
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
@@ -233,6 +233,7 @@ export default function App() {
       if (statusFilter === 'reported' && c.status !== 'reported') return false
       if (statusFilter === 'pending' && c.status !== 'pending') return false
       if (region !== 'all' && c.region !== region) return false
+      if (!rowMatchesCountryFilter(c.id, selectedCountryIds)) return false
       if (!q) return true
       return (
         c.countryEn.toLowerCase().includes(q) ||
@@ -242,7 +243,14 @@ export default function App() {
         c.abbrevPt.toLowerCase().includes(q)
       )
     })
-  }, [data.countries, deferredQuery, region, statusFilter, showBrazilInTables])
+  }, [
+    data.countries,
+    deferredQuery,
+    region,
+    statusFilter,
+    showBrazilInTables,
+    selectedCountryIds,
+  ])
 
   const sorted = useMemo(() => {
     const rows = [...filtered]
@@ -274,11 +282,47 @@ export default function App() {
     setHighlightId(null)
   }
 
+  function clearGeoFilters() {
+    setSelectedCountryIds([])
+    setSelectedAreaKeys([])
+    setSelectedCityKeys([])
+  }
+
+  function applyCountryFilter(id: string) {
+    setSelectedCountryIds([id])
+    setSelectedAreaKeys((prev) => prunePlaceKeysToCountries(prev, [id]))
+    setSelectedCityKeys((prev) => prunePlaceKeysToCountries(prev, [id]))
+  }
+
+  function onCountryFilterChange(next: string[]) {
+    setSelectedCountryIds(next)
+    setSelectedAreaKeys((prev) => prunePlaceKeysToCountries(prev, next))
+    setSelectedCityKeys((prev) => prunePlaceKeysToCountries(prev, next))
+    // Keep map highlight in sync when the country filter is a single country.
+    if (next.length === 1) {
+      setHighlightId(next[0])
+      if (next[0] === BRAZIL_ID) setIncludeBrazil(true)
+    } else if (highlightId && !next.includes(highlightId)) {
+      setHighlightId(null)
+    }
+  }
+
+  const countryById = useMemo(
+    () => new Map(data.countries.map((c) => [c.id, c])),
+    [data.countries],
+  )
+
+  function onAreaFilterChange(next: string[]) {
+    setSelectedAreaKeys(next)
+    setSelectedCityKeys((prev) => pruneCityKeysToAreas(prev, next, countryById))
+  }
+
   function onSelect(id: string | null) {
     setHighlightId(id)
     if (!id) {
       // Map click outside the selected country — back to Country table.
       setQuery('')
+      clearGeoFilters()
       setTableView('countries')
       if (sortKey === 'city') {
         setSortKey('votes2026')
@@ -286,11 +330,12 @@ export default function App() {
       }
       return
     }
+    // Map / Country-tab selection drives the Country multi-select filter.
+    applyCountryFilter(id)
     const country = data.countries.find((c) => c.id === id)
     if (country?.domestic) {
       setIncludeBrazil(true)
       prefetchBrazilCities()
-      setQuery(countryName(country, lang))
       // Municipalities live on City; within-muni locals on Suburb.
       setTableView(
         brazilHasCityData(country) || brazilHasSuburbData(country)
@@ -311,8 +356,6 @@ export default function App() {
       !!country &&
       ((country.areas?.length ?? 0) > 0 || (country.cities?.length ?? 0) > 0)
     if (hasBreakdown && country) {
-      // Drive the city table via the existing search filter (no extra banner).
-      setQuery(countryName(country, lang))
       setTableView('cities')
       window.setTimeout(() => {
         tableChromeRef.current?.scrollIntoView({
@@ -328,11 +371,6 @@ export default function App() {
     })
   }
 
-  const countryById = useMemo(
-    () => new Map(data.countries.map((c) => [c.id, c])),
-    [data.countries],
-  )
-
   const citySourceCountries = useMemo(() => {
     return data.countries.filter((c) => {
       if (c.domestic && !showBrazilInTables) return false
@@ -347,9 +385,50 @@ export default function App() {
       if (statusFilter === 'reported' && c.status !== 'reported') return false
       if (statusFilter === 'pending' && c.status !== 'pending') return false
       if (region !== 'all' && c.region !== region) return false
+      if (!rowMatchesCountryFilter(c.id, selectedCountryIds)) return false
+      return true
+    })
+  }, [
+    data.countries,
+    statusFilter,
+    region,
+    showBrazilInTables,
+    selectedCountryIds,
+  ])
+
+  /** Countries available in the Country filter (region/status/Brazil visibility). */
+  const filterableCountries = useMemo(() => {
+    return data.countries.filter((c) => {
+      if (c.domestic && !showBrazilInTables) return false
+      if (statusFilter === 'reported' && c.status !== 'reported') return false
+      if (statusFilter === 'pending' && c.status !== 'pending') return false
+      if (region !== 'all' && c.region !== region) return false
       return true
     })
   }, [data.countries, statusFilter, region, showBrazilInTables])
+
+  const countryOptions = useMemo(
+    () => countryFilterOptions(filterableCountries, lang),
+    [filterableCountries, lang],
+  )
+
+  const areaSourceCountries = useMemo(() => {
+    if (selectedCountryIds.length === 0) return filterableCountries
+    return filterableCountries.filter((c) => selectedCountryIds.includes(c.id))
+  }, [filterableCountries, selectedCountryIds])
+
+  const areaOptions = useMemo(
+    () => areaFilterOptions(areaSourceCountries, lang),
+    [areaSourceCountries, lang],
+  )
+
+  const cityOptions = useMemo(
+    () => cityFilterOptions(areaSourceCountries, lang, selectedAreaKeys),
+    [areaSourceCountries, lang, selectedAreaKeys],
+  )
+
+  const selectedCountLabel = (count: number) =>
+    `${count} ${t('filterSelected', lang)}`
 
   const matchesPlaceQuery = (
     r: {
@@ -390,8 +469,30 @@ export default function App() {
     if (effectiveTableView !== 'areas') return []
     const rows = citySourceCountries.flatMap((c) => taggedAreaRows(c))
     const q = deferredQuery.trim().toLowerCase()
-    return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
+    return rows.filter((r) => {
+      const parent = countryById.get(r.countryId)
+      if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
+      if (selectedCityKeys.length > 0) {
+        // Keep parent areas of any selected city.
+        const keepsArea = selectedCityKeys.some((key) => {
+          const parsed = parsePlaceFilterKey(key)
+          if (!parsed || parsed.countryId !== r.countryId) return false
+          return (
+            parsed.code === r.code || parsed.code.startsWith(`${r.code}-`)
+          )
+        })
+        if (!keepsArea) return false
+      }
+      return matchesPlaceQuery(r, q)
+    })
+  }, [
+    citySourceCountries,
+    deferredQuery,
+    countryById,
+    effectiveTableView,
+    selectedAreaKeys,
+    selectedCityKeys,
+  ])
 
   const filteredCityRows = useMemo(() => {
     if (effectiveTableView !== 'cities') return []
@@ -400,30 +501,20 @@ export default function App() {
       c.domestic ? taggedBrazilCityRows(c) : taggedBreakdownRows(c),
     )
     const q = deferredQuery.trim().toLowerCase()
-    if (!q) return rows
-    const countryOnly = citySourceCountries.some(
-      (c) =>
-        c.countryEn.toLowerCase() === q ||
-        c.countryPt.toLowerCase() === q ||
-        c.iso3.toLowerCase() === q ||
-        c.abbrevEn.toLowerCase() === q ||
-        c.abbrevPt.toLowerCase() === q,
-    )
-    if (countryOnly) {
-      return rows.filter((r) => {
-        const parent = countryById.get(r.countryId)
-        return (
-          parent &&
-          (parent.countryEn.toLowerCase() === q ||
-            parent.countryPt.toLowerCase() === q ||
-            parent.iso3.toLowerCase() === q ||
-            parent.abbrevEn.toLowerCase() === q ||
-            parent.abbrevPt.toLowerCase() === q)
-        )
-      })
-    }
-    return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
+    return rows.filter((r) => {
+      const parent = countryById.get(r.countryId)
+      if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
+      if (!rowMatchesCityFilter(r, selectedCityKeys)) return false
+      return matchesPlaceQuery(r, q)
+    })
+  }, [
+    citySourceCountries,
+    deferredQuery,
+    countryById,
+    effectiveTableView,
+    selectedAreaKeys,
+    selectedCityKeys,
+  ])
 
   const filteredSuburbRows = useMemo(() => {
     // Within-municipality voting locals — Brazil only.
@@ -432,19 +523,20 @@ export default function App() {
       .filter((c) => c.domestic)
       .flatMap((c) => taggedSuburbRows(c))
     const q = deferredQuery.trim().toLowerCase()
-    if (!q) return rows
-    const countryOnly = citySourceCountries.some(
-      (c) =>
-        c.domestic &&
-        (c.countryEn.toLowerCase() === q ||
-          c.countryPt.toLowerCase() === q ||
-          c.iso3.toLowerCase() === q ||
-          c.abbrevEn.toLowerCase() === q ||
-          c.abbrevPt.toLowerCase() === q),
-    )
-    if (countryOnly) return rows
-    return rows.filter((r) => matchesPlaceQuery(r, q))
-  }, [citySourceCountries, deferredQuery, countryById, effectiveTableView])
+    return rows.filter((r) => {
+      const parent = countryById.get(r.countryId)
+      if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
+      if (!rowMatchesCityFilter(r, selectedCityKeys)) return false
+      return matchesPlaceQuery(r, q)
+    })
+  }, [
+    citySourceCountries,
+    deferredQuery,
+    countryById,
+    effectiveTableView,
+    selectedAreaKeys,
+    selectedCityKeys,
+  ])
 
   const sortedAreas = useMemo(() => {
     if (effectiveTableView !== 'areas') return []
@@ -765,13 +857,11 @@ export default function App() {
                     startTransition(() => setIncludeBrazil(on))
                     if (!on && highlightId === BRAZIL_ID) {
                       setHighlightId(null)
-                      if (
-                        query === countryName(brazilCountry!, lang) ||
-                        query === brazilCountry?.countryEn ||
-                        query === brazilCountry?.countryPt
-                      ) {
-                        setQuery('')
-                      }
+                    }
+                    if (!on && selectedCountryIds.includes(BRAZIL_ID)) {
+                      onCountryFilterChange(
+                        selectedCountryIds.filter((id) => id !== BRAZIL_ID),
+                      )
                     }
                   }}
                 />
@@ -832,6 +922,39 @@ export default function App() {
                 </select>
               </label>
             </div>
+          </div>
+
+          <div className="filter-row filter-row--geo">
+            <MultiSelectFilter
+              label={t('filterCountry', lang)}
+              allLabel={t('allCountriesFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchCountry', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={countryOptions}
+              value={selectedCountryIds}
+              onChange={onCountryFilterChange}
+            />
+            <MultiSelectFilter
+              label={t('filterArea', lang)}
+              allLabel={t('allAreasFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchArea', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={areaOptions}
+              value={selectedAreaKeys}
+              onChange={onAreaFilterChange}
+            />
+            <MultiSelectFilter
+              label={t('filterCity', lang)}
+              allLabel={t('allCitiesFilter', lang)}
+              selectedCountLabel={selectedCountLabel}
+              searchPlaceholder={t('filterSearchCity', lang)}
+              emptyLabel={t('filterEmpty', lang)}
+              options={cityOptions}
+              value={selectedCityKeys}
+              onChange={setSelectedCityKeys}
+            />
           </div>
 
           <div className="filter-row">
