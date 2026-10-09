@@ -24,6 +24,7 @@ import {
   areaFilterOptions,
   cityFilterOptions,
   countryFilterOptions,
+  countryIdsFromPlaceKeys,
   parsePlaceFilterKey,
   pruneCityKeysToAreas,
   prunePlaceKeysToCountries,
@@ -229,12 +230,23 @@ export default function App() {
 
   const filtered = useMemo(() => {
     const q = deferredQuery.trim()
+    // Area/city picks also constrain the Country tab to matching countries.
+    const placeCountryIds = countryIdsFromPlaceKeys([
+      ...selectedAreaKeys,
+      ...selectedCityKeys,
+    ])
     return data.countries.filter((c) => {
       if (c.domestic && !showBrazilInTables) return false
       if (statusFilter === 'reported' && c.status !== 'reported') return false
       if (statusFilter === 'pending' && c.status !== 'pending') return false
       if (region !== 'all' && c.region !== region) return false
       if (!rowMatchesCountryFilter(c.id, selectedCountryIds)) return false
+      if (
+        placeCountryIds.length > 0 &&
+        !placeCountryIds.includes(c.id)
+      ) {
+        return false
+      }
       if (!q) return true
       return (
         searchIncludes(c.countryEn, q) ||
@@ -251,6 +263,8 @@ export default function App() {
     statusFilter,
     showBrazilInTables,
     selectedCountryIds,
+    selectedAreaKeys,
+    selectedCityKeys,
   ])
 
   const sorted = useMemo(() => {

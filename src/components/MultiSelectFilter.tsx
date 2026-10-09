@@ -83,6 +83,11 @@ export function MultiSelectFilter({
     overscan: 12,
     enabled: open && shouldVirtualize,
   })
+  const virtualItems = shouldVirtualize ? virtualizer.getVirtualItems() : null
+  // Empty getVirtualItems() is truthy as [] — don't render a blank list while
+  // the scroll element is still measuring after open / query changes.
+  const renderVirtual =
+    shouldVirtualize && virtualItems != null && virtualItems.length > 0
 
   const summary = useMemo(() => {
     if (value.length === 0) return allLabel
@@ -124,7 +129,12 @@ export function MultiSelectFilter({
   useEffect(() => {
     if (!open || !listRef.current) return
     listRef.current.scrollTop = 0
-  }, [open, query])
+    if (shouldVirtualize) {
+      // Remeasure after the filtered set changes so rows stay in sync.
+      requestAnimationFrame(() => virtualizer.measure())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- measure on query/open only
+  }, [open, query, filtered.length, shouldVirtualize])
 
   function toggle(optionValue: string) {
     if (selected.has(optionValue)) {
@@ -144,8 +154,6 @@ export function MultiSelectFilter({
       if (!disabled) setOpen(true)
     }
   }
-
-  const virtualItems = shouldVirtualize ? virtualizer.getVirtualItems() : null
 
   return (
     <div className="filter-field text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]" ref={rootRef}>
@@ -201,12 +209,12 @@ export function MultiSelectFilter({
             >
               {filtered.length === 0 ? (
                 <div className="multi-select-empty">{emptyLabel}</div>
-              ) : virtualItems ? (
+              ) : renderVirtual ? (
                 <div
                   className="multi-select-virtual"
                   style={{ height: virtualizer.getTotalSize() }}
                 >
-                  {virtualItems.map((item) => {
+                  {virtualItems!.map((item) => {
                     const option = filtered[item.index]!
                     const checked = selected.has(option.value)
                     const optionId = `${listId}-${option.value}`
