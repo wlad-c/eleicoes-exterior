@@ -108,6 +108,18 @@ export function CityBreakdownTable({
   const countryColClass = flagOnlyLabels
     ? 'cell-truncate-flag'
     : 'cell-truncate-abbr'
+  /**
+   * Floor for the place column from the longest name in the full row set
+   * (virtualization only mounts a window — without this, long names clip).
+   */
+  /**
+   * Soft floor only — long names wrap inside max-width instead of forcing
+   * a 40ch column that leaves empty space after short names like “Grajaú”.
+   */
+  const placeColStyle = useMemo(() => {
+    const ch = placeKind === 'suburb' ? (areaUfCompact ? 16 : 18) : 14
+    return { ['--table-col-place' as string]: `${ch}ch` }
+  }, [placeKind, areaUfCompact])
   const metricCols = useMemo(
     () => orderedVisibleCols(columnOrder, visibleCols),
     [columnOrder, visibleCols],
@@ -123,12 +135,16 @@ export function CityBreakdownTable({
    * Safari when sticky columns are present.
    */
   const rowEstimatePx =
-    placeKind === 'suburb' ? ROW_ESTIMATE_PX + 14 : ROW_ESTIMATE_PX
+    placeKind === 'suburb' ? ROW_ESTIMATE_PX + 28 : ROW_ESTIMATE_PX + 4
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () =>
       shouldVirtualize ? bodyYScrollRef.current : bodyScrollRef.current,
     estimateSize: () => rowEstimatePx,
+    measureElement:
+      typeof window !== 'undefined'
+        ? (el) => el.getBoundingClientRect().height
+        : undefined,
     overscan: 24,
     enabled: shouldVirtualize,
   })
@@ -752,6 +768,7 @@ export function CityBreakdownTable({
             <table
               ref={headTableRef}
               className={`results-table results-table--head results-table--cities ${tableKindClass} text-left text-sm`}
+              style={placeColStyle}
             >
               <thead>{headerRow}</thead>
             </table>
@@ -774,6 +791,7 @@ export function CityBreakdownTable({
           <table
             ref={tableRef}
             className={`results-table results-table--cities ${tableKindClass} text-left text-sm`}
+            style={placeColStyle}
           >
             <thead aria-hidden="true" className="results-table-width-head">
               {headerRow}
@@ -823,6 +841,9 @@ export function CityBreakdownTable({
                 <tr
                   key={key}
                   data-index={index}
+                  ref={
+                    shouldVirtualize ? virtualizer.measureElement : undefined
+                  }
                   className="border-b border-[var(--line-soft)] hover:bg-[var(--chip-soft)]"
                 >
                   <td className="sticky-col sticky-col-rank px-2 py-2.5 text-right tabular-nums">
@@ -852,7 +873,7 @@ export function CityBreakdownTable({
                       <span className="cell-truncate-text">
                         {visiblePlace}
                         {parentPlace ? (
-                          <span className="mt-0.5 block truncate text-[10px] font-normal text-[var(--ink-muted)]">
+                          <span className="place-parent-line mt-0.5 text-[10px] font-normal text-[var(--ink-muted)]">
                             {parentPlace}
                           </span>
                         ) : null}
@@ -1020,6 +1041,7 @@ export function CityBreakdownTable({
           <table
             ref={footTableRef}
             className={`results-table results-table--foot results-table--cities ${tableKindClass} text-left text-sm`}
+            style={placeColStyle}
           >
             <tbody>
               <tr className="text-sm font-semibold">{totalCells}</tr>

@@ -160,25 +160,38 @@ html.dark .sticky-table-chrome {
   white-space: nowrap;
 }
 
-.results-table th .th-hint {
-  white-space: nowrap;
-}
-
 /*
  * Dense tables: metric columns hug content (width: 1% + nowrap).
- * Label columns keep an explicit width so leftover viewport width does
- * not open empty gutters between % / vote figures while names truncate.
+ * Name/place columns size to their text — never a fixed cap that
+ * truncates “Plano Diretor Sul” while metrics sit in empty gutters.
  */
 .results-table th,
 .results-table td {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
 }
 
 .results-table th:not(.sticky-col),
 .results-table td:not(.sticky-col) {
   width: 1%;
   white-space: nowrap;
+}
+
+/*
+ * Metric headers must not outgrow the numbers beneath them.
+ * Hints (“total votes”, “% of valid…”) inflated every desktop column —
+ * hide them; titles stay ellipsized to a number-sized width.
+ */
+.results-table th:not(.sticky-col) .th-title {
+  display: block;
+  max-width: 6.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-table th .th-hint {
+  display: none;
 }
 
 /* Body rows share one type treatment; thead + Total row stay distinct */
@@ -374,33 +387,20 @@ html.dark .is-x-scrolled .sticky-col-city {
   background: var(--paper);
 }
 
-/* Header subtitles ("total de votos", …) inflate every metric column */
-@media (max-width: 1100px) {
-  .th-hint {
-    display: none;
-  }
-
-  /* Drag handles add ~1rem per metric header — hide until there is room */
+/* Drag handles add ~1rem per metric header — only on roomy desktops */
+@media (max-width: 1200px) {
   .col-drag-handle {
     display: none;
   }
 
-  /*
-   * Cap metric header titles so long labels (F Bolsonaro 2026, Variação…)
-   * do not force empty space wider than the numbers beneath them.
-   */
   .results-table th:not(.sticky-col) .th-title {
-    display: block;
-    max-width: 5.75rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 5.5rem;
   }
 }
 
 @media (max-width: 900px) {
   .results-table th:not(.sticky-col) .th-title {
-    max-width: 4.75rem;
+    max-width: 4.5rem;
   }
 }
 
@@ -701,8 +701,8 @@ html.dark .is-x-scrolled .sticky-col-city {
   opacity: 0.8;
 }
 
-/* Name-like table cells: ellipsis instead of wrapping */
-.cell-truncate {
+/* Name-like table cells: ellipsis instead of wrapping (not place/city names) */
+.cell-truncate:not(.cell-truncate-city) {
   max-width: 11rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -718,38 +718,31 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Label column widths — Country full name = Area/City (abbr + place)
- * so the first metric column starts at the same offset on every tab.
- * Place width is intentionally generous so names (Piraporinha, …) are
- * readable; metrics stay content-sized and must not steal that space.
+ * Label column widths — rank / country abbr stay fixed; place/name
+ * columns size to content (see .cell-truncate-city below).
  */
 :root {
   --table-col-rank: 2.35rem;
   --table-col-abbr: 4.25rem;
   /* Flag-only country column on very small screens */
   --table-col-flag: 2.25rem;
-  /* Area/City/Bairro place column */
-  --table-col-place: 8.5rem;
-  --table-col-country-full: calc(
-    var(--table-col-abbr) + var(--table-col-place)
-  );
+  /* Soft floor only — place columns grow with the longest name */
+  --table-col-place-min: 6rem;
+  --table-col-country-full: 12rem;
 }
 
-/* Columns fit on mid/large screens — room for full country names without ellipsis */
 @media (min-width: 1100px) {
   :root {
     /* Fits longest names (e.g. Emirados Árabes Unidos) + flag */
-    --table-col-country-full: 14.5rem;
-    --table-col-place: 9.5rem;
+    --table-col-country-full: 16rem;
   }
 }
 
 @media (max-width: 900px) {
   :root {
-    /* Must follow the base :root above or desktop vars win on mobile */
     --table-col-rank: 1.6rem;
-    --table-col-abbr: 3.5rem; /* flag + 3-letter code, tighter */
-    --table-col-place: 7.75rem; /* was 4.75 — names were clipping first */
+    --table-col-abbr: 3.5rem;
+    --table-col-place-min: 5.5rem;
   }
 }
 
@@ -758,40 +751,41 @@ html.dark .is-x-scrolled .sticky-col-city {
     --table-col-rank: 1.4rem;
     --table-col-flag: 2rem;
     --table-col-abbr: 3.35rem;
-    --table-col-place: 7.25rem;
+    --table-col-place-min: 5rem;
   }
 }
 
 /*
- * Bairro tab: name + compact parent (`SP · Zona 372` below 1100px).
- * Sized for the name; parent is secondary and may ellipsis.
+ * Place / neighborhood / city name: readable width, wrap long dual-bairro
+ * labels instead of ellipsis — and instead of a 40ch column that parks
+ * empty space between “Grajaú” and the vote figures.
  */
+.cell-truncate-city,
+.sticky-col-city.cell-truncate-city,
 .results-table--suburb .sticky-col-city.cell-truncate-city {
-  width: 8.25rem;
-  min-width: 8.25rem;
-  max-width: 8.25rem;
+  width: max(var(--table-col-place-min), var(--table-col-place, 16ch));
+  min-width: max(var(--table-col-place-min), var(--table-col-place, 16ch));
+  max-width: 15.5rem;
+  overflow: hidden;
 }
 
-@media (max-width: 1100px) {
-  .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 7rem;
-    min-width: 7rem;
-    max-width: 7rem;
-  }
+.sticky-col-city.cell-truncate-city .cell-truncate-text {
+  display: block;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
 }
 
-@media (max-width: 640px) {
-  .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 6.5rem;
-    min-width: 6.5rem;
-    max-width: 6.5rem;
-  }
-}
-
-.cell-truncate-city {
-  width: var(--table-col-place);
-  min-width: var(--table-col-place);
-  max-width: var(--table-col-place);
+/* Secondary parent line — single line, may ellipsis */
+.sticky-col-city .place-parent-line {
+  display: block;
+  margin-top: 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .cell-truncate-abbr {
@@ -883,12 +877,6 @@ html.dark .is-x-scrolled .sticky-col-city {
     overflow: visible;
     text-overflow: clip;
   }
-}
-
-.sticky-col-city.cell-truncate-city {
-  width: var(--table-col-place);
-  min-width: var(--table-col-place);
-  max-width: var(--table-col-place);
 }
 
 .table-col-picker summary::-webkit-details-marker {
