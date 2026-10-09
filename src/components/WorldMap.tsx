@@ -7,6 +7,7 @@ import {
   useState,
   type MouseEvent as ReactMouseEvent,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
@@ -40,7 +41,6 @@ import {
 } from '../lib/brazilGeo'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
-import { useMediaQuery } from '../lib/useMediaQuery'
 import type { CityResult, CountryResult, Lang, MapMetric } from '../types'
 
 type Props = {
@@ -97,10 +97,9 @@ export function WorldMap({
   onBack,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null)
+  const tipRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(960)
   const [tip, setTip] = useState<Tip | null>(null)
-  /** Touch synthesizes mouseenter before click — skip hover tips there. */
-  const canHover = useMediaQuery('(hover: hover) and (pointer: fine)')
   const ufMesh = useMemo(() => brazilUfCollection(), [])
   const [munMesh, setMunMesh] = useState<FeatureCollection<
     Geometry,
@@ -130,21 +129,23 @@ export function WorldMap({
   useEffect(() => {
     if (!tip) return
     const onPointerDown = (e: PointerEvent) => {
-      if (wrapRef.current?.contains(e.target as Node)) return
+      const node = e.target as Node
+      if (wrapRef.current?.contains(node)) return
+      if (tipRef.current?.contains(node)) return
       setTip(null)
     }
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setTip(null)
     }
+    // Bubble only — capture scroll clears tips on iPad nested/rubber-band noise.
     const onScroll = () => setTip(null)
     document.addEventListener('pointerdown', onPointerDown)
     window.addEventListener('keydown', onKeyDown)
-    // Capture: table/filter scrolls are often nested.
-    window.addEventListener('scroll', onScroll, true)
+    window.addEventListener('scroll', onScroll)
     return () => {
       document.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('keydown', onKeyDown)
-      window.removeEventListener('scroll', onScroll, true)
+      window.removeEventListener('scroll', onScroll)
     }
   }, [tip])
 
@@ -154,11 +155,20 @@ export function WorldMap({
       title: string,
       row: VoteLike,
     ) => {
-      const rect = wrapRef.current?.getBoundingClientRect()
-      if (!rect) return
+      // Viewport coords — tip is portaled fixed so html overflow-x:clip
+      // and panel edges cannot hide the metric lines on iPad.
+      const tipW = Math.min(280, window.innerWidth - 16)
+      const left = Math.min(
+        Math.max(8, e.clientX + 12),
+        window.innerWidth - tipW - 8,
+      )
+      const top = Math.min(
+        Math.max(8, e.clientY - 8),
+        window.innerHeight - 120,
+      )
       setTip({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: left,
+        y: top,
         title,
         row,
       })
@@ -167,6 +177,20 @@ export function WorldMap({
   )
 
   const clearTip = useCallback(() => setTip(null), [])
+
+  const onMapMouseLeave = useCallback(
+    (e: ReactMouseEvent<HTMLDivElement>) => {
+      // Tip is portaled outside wrap — keep it when moving onto the ×.
+      if (
+        e.relatedTarget instanceof Node &&
+        tipRef.current?.contains(e.relatedTarget)
+      ) {
+        return
+      }
+      clearTip()
+    },
+    [clearTip],
+  )
 
   /** Touch synthesizes mouseenter then never mouseleave — keep tip until dismiss. */
   const handleFeatureClick = useCallback(
@@ -518,9 +542,9 @@ export function WorldMap({
     <div
       ref={wrapRef}
       className="map-wrap relative w-full"
-      // Clear when the pointer leaves the whole map chrome (incl. tip).
-      // Per-path mouseleave would dismiss before the tip × can be pressed.
-      onMouseLeave={clearTip}
+      // Clear when leaving the map; tip is portaled, so relatedTarget check
+      // keeps the × reachable.
+      onMouseLeave={onMapMouseLeave}
     >
       {canGoBack ? (
         <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -591,11 +615,11 @@ export function WorldMap({
                 strokeWidth={isHi ? 2.25 : 1}
                 className="cursor-pointer transition-[stroke-width] duration-200"
                 onMouseEnter={(e) => {
-                  if (!canHover || !f.row) return
+                  if (!f.row) return
                   showTipAt(e, f.label, f.row)
                 }}
                 onMouseMove={(e) => {
-                  if (!canHover || !f.row) return
+                  if (!f.row) return
                   showTipAt(e, f.label, f.row)
                 }}
                 onClick={(e) => {
@@ -648,11 +672,11 @@ export function WorldMap({
                   : ''
               }
               onMouseEnter={(e) => {
-                if (!canHover || !f.row) return
+                if (!f.row) return
                 showTipAt(e, f.label, f.row)
               }}
               onMouseMove={(e) => {
-                if (!canHover || !f.row) return
+                if (!f.row) return
                 showTipAt(e, f.label, f.row)
               }}
               onClick={(e) => {
@@ -668,55 +692,69 @@ export function WorldMap({
         <Legend metric={metric} mode={legendMode} lang={lang} />
       </div>
 
-      {tip && (
-        <div
-          className="app-tip app-tip--map app-tip--map-open"
-          role="status"
-          style={{
-            left: Math.min(tip.x + 12, width - 270),
-            top: Math.max(8, tip.y - 8),
-          }}
-        >
-          <div className="app-tip-body">
-            <span className="app-tip-title">{tip.title}</span>
-            <span className="app-tip-meta">
-              {t(metric, lang)}:{' '}
-              {formatMetricValue(metricValue(tip.row, metric), metric, lang)}
-            </span>
-            {tip.row.y2026 && metric !== 'leader2022' ? (
-              <span className="app-tip-meta-muted">
-                {t('lula', lang)} {fmtPct(tip.row.y2026.lulaPct, lang)} ·{' '}
-                {t('fBolsonaro', lang)}{' '}
-                {fmtPct(tip.row.y2026.bolsonaroPct, lang)}
-              </span>
-            ) : tip.row.y2022 &&
-              (metric === 'leader2022' ||
-                metric === 'lulaPct2022' ||
-                metric === 'bolsonaroPct2022') ? (
-              <span className="app-tip-meta-muted">
-                {t('lula', lang)} {fmtPct(tip.row.y2022.lulaPct, lang)} ·{' '}
-                {t('jBolsonaro', lang)}{' '}
-                {fmtPct(tip.row.y2022.bolsonaroPct, lang)}
-              </span>
-            ) : tip.row.status === 'pending' ? (
-              <span className="app-tip-meta-muted">
-                {t('pendingHint', lang)}
-              </span>
-            ) : null}
-          </div>
-          <button
-            type="button"
-            className="app-tip-close"
-            aria-label={t('mapTipClose', lang)}
-            onClick={(e) => {
-              e.stopPropagation()
-              clearTip()
-            }}
-          >
-            ×
-          </button>
-        </div>
-      )}
+      {tip
+        ? createPortal(
+            <div
+              ref={tipRef}
+              className="app-tip app-tip--fixed app-tip--map app-tip--map-open"
+              role="status"
+              style={{ left: tip.x, top: tip.y }}
+              onMouseLeave={(e) => {
+                if (
+                  e.relatedTarget instanceof Node &&
+                  wrapRef.current?.contains(e.relatedTarget)
+                ) {
+                  return
+                }
+                clearTip()
+              }}
+            >
+              <div className="app-tip-body">
+                <span className="app-tip-title">{tip.title}</span>
+                <span className="app-tip-meta">
+                  {t(metric, lang)}:{' '}
+                  {formatMetricValue(
+                    metricValue(tip.row, metric),
+                    metric,
+                    lang,
+                  )}
+                </span>
+                {tip.row.y2026 && metric !== 'leader2022' ? (
+                  <span className="app-tip-meta-muted">
+                    {t('lula', lang)} {fmtPct(tip.row.y2026.lulaPct, lang)} ·{' '}
+                    {t('fBolsonaro', lang)}{' '}
+                    {fmtPct(tip.row.y2026.bolsonaroPct, lang)}
+                  </span>
+                ) : tip.row.y2022 &&
+                  (metric === 'leader2022' ||
+                    metric === 'lulaPct2022' ||
+                    metric === 'bolsonaroPct2022') ? (
+                  <span className="app-tip-meta-muted">
+                    {t('lula', lang)} {fmtPct(tip.row.y2022.lulaPct, lang)} ·{' '}
+                    {t('jBolsonaro', lang)}{' '}
+                    {fmtPct(tip.row.y2022.bolsonaroPct, lang)}
+                  </span>
+                ) : tip.row.status === 'pending' ? (
+                  <span className="app-tip-meta-muted">
+                    {t('pendingHint', lang)}
+                  </span>
+                ) : null}
+              </div>
+              <button
+                type="button"
+                className="app-tip-close"
+                aria-label={t('mapTipClose', lang)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  clearTip()
+                }}
+              >
+                ×
+              </button>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   )
 }
