@@ -3,7 +3,11 @@ import {
   cityDisplayName,
   countryName,
 } from './format'
-import type { CityTableRow } from './cityRows'
+import {
+  breakdownRowsForCountry,
+  brazilCityRowsForCountry,
+  type CityTableRow,
+} from './cityRows'
 import type { CountryResult, Lang } from '../types'
 
 /** Stable key for an area or city option scoped to its country. */
@@ -80,9 +84,11 @@ export function cityFilterOptions(
   const areaSet = new Set(selectedAreaKeys)
   const options: { value: string; label: string; searchText: string }[] = []
   for (const c of countries) {
+    // Same place set as the City tab: overseas breakdown (cities + unsplit
+    // areas like Miami), Brazil municipalities.
     const cities = c.domestic
-      ? (c.cities ?? [])
-      : (c.cities?.length ? c.cities : [])
+      ? brazilCityRowsForCountry(c)
+      : breakdownRowsForCountry(c)
     for (const city of cities) {
       if (areaSet.size > 0 && !cityMatchesAreaKeys(city, c, areaSet)) continue
       const label = cityDisplayName(city, lang)
@@ -100,20 +106,22 @@ export function cityFilterOptions(
               { domestic: c.domestic, preferUf: true },
             )
           : ''
+      // Search text = place identity only (not country names). Matching the
+      // parent country here made queries like "mi" hit "Emirates" and hide
+      // real cities; country filtering belongs on the Country control.
+      const parentSearch = c.domestic
+        ? [city.area, parent].filter(Boolean) // UF code / short label only
+        : [city.area, city.areaEn, city.areaPt, parent].filter(Boolean)
       options.push({
         value: placeFilterKey(c.id, city.code),
         label: parent ? `${label} · ${parent}` : `${label} · ${country}`,
         searchText: [
+          label,
           city.name,
           city.nameEn,
           city.namePt,
           city.code,
-          city.area,
-          city.areaEn,
-          city.areaPt,
-          country,
-          c.countryEn,
-          c.countryPt,
+          ...parentSearch,
         ]
           .filter(Boolean)
           .join(' '),
@@ -166,6 +174,16 @@ export function rowMatchesCountryFilter(
   selectedCountryIds: string[],
 ): boolean {
   return selectedCountryIds.length === 0 || selectedCountryIds.includes(countryId)
+}
+
+/** Country ids implied by selected area/city place keys. */
+export function countryIdsFromPlaceKeys(keys: string[]): string[] {
+  const ids = new Set<string>()
+  for (const key of keys) {
+    const parsed = parsePlaceFilterKey(key)
+    if (parsed) ids.add(parsed.countryId)
+  }
+  return [...ids]
 }
 
 export function rowMatchesAreaFilter(
@@ -224,9 +242,10 @@ export function pruneCityKeysToAreas(
     if (!parsed) return false
     const country = countries.get(parsed.countryId)
     if (!country) return false
-    const city =
-      (country.cities ?? []).find((c) => c.code === parsed.code) ??
-      (country.areas ?? []).find((c) => c.code === parsed.code)
+    const places = country.domestic
+      ? brazilCityRowsForCountry(country)
+      : breakdownRowsForCountry(country)
+    const city = places.find((c) => c.code === parsed.code)
     if (!city) return false
     return cityMatchesAreaKeys(city, country, areaSet)
   })
