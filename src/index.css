@@ -953,6 +953,42 @@ html.dark .is-x-scrolled .sticky-col-city {
   white-space: normal;
 }
 
+/* Sticky after tap on touch — allow dismiss via close / tip press. */
+.app-tip--map-open {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.app-tip-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.app-tip-close {
+  flex: none;
+  margin: -0.15rem -0.25rem -0.15rem 0;
+  padding: 0.15rem 0.35rem;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.app-tip-close:hover,
+.app-tip-close:focus-visible {
+  opacity: 1;
+  outline: 1px solid color-mix(in srgb, var(--tip-fg) 35%, transparent);
+  outline-offset: 1px;
+}
+
 .app-tip-title {
   display: block;
   font-weight: 600;

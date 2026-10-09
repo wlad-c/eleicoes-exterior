@@ -108,6 +108,10 @@ const dict = {
     en: 'Loading map…',
     pt: 'Carregando mapa…',
   },
+  mapTipClose: {
+    en: 'Dismiss map tip',
+    pt: 'Fechar dica do mapa',
+  },
   legendLow: { en: 'low', pt: 'baixo' },
   legendHigh: { en: 'high', pt: 'alto' },
   sortBy: { en: 'Sort', pt: 'Ordenar' },
