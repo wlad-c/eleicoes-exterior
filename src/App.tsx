@@ -879,6 +879,21 @@ export default function App() {
                 ) : null}
               </span>
             </label>
+            <label className="filter-field filter-global-region text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
+              <span className="filter-label">{t('filterGlobalRegions', lang)}</span>
+              <select
+                className="control mt-1 w-full min-w-0"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
+                <option value="all">{t('allRegions', lang)}</option>
+                {regions.map((r) => (
+                  <option key={r} value={r}>
+                    {regionLabel(r, lang)}
+                  </option>
+                ))}
+              </select>
+            </label>
             <MultiSelectFilter
               label={t('filterCountry', lang)}
               allLabel={t('allCountriesFilter', lang)}
@@ -990,21 +1005,6 @@ export default function App() {
                 <option value="sections">{t('notes', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
                 <option value="region">{t('region', lang)}</option>
-              </select>
-            </label>
-            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-              {t('region', lang)}
-              <select
-                className="control"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-              >
-                <option value="all">{t('allRegions', lang)}</option>
-                {regions.map((r) => (
-                  <option key={r} value={r}>
-                    {regionLabel(r, lang)}
-                  </option>
-                ))}
               </select>
             </label>
             <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
