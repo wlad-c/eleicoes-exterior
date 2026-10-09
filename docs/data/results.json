@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-08T16:50:34.605581Z",
+    "updatedAt": "2026-10-09T05:23:41.097Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -116,7 +116,7 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-07T05:08:04.519Z",
+      "fetchedAt": "2026-10-09T05:21:21.917Z",
       "sectionsCounted": 1351,
       "sectionsTotal": 1351,
       "sectionsPct": 100,
@@ -175,8 +175,8 @@
         {
           "code": "AC",
           "name": "AC",
-          "nameEn": "Acre",
-          "namePt": "Acre",
+          "nameEn": "Ac",
+          "namePt": "Ac",
           "level": "area",
           "y2026": {
             "lula": 134770,
@@ -205,8 +205,8 @@
         {
           "code": "AL",
           "name": "AL",
-          "nameEn": "Alagoas",
-          "namePt": "Alagoas",
+          "nameEn": "Al",
+          "namePt": "Al",
           "level": "area",
           "y2026": {
             "lula": 995459,
@@ -235,8 +235,8 @@
         {
           "code": "AP",
           "name": "AP",
-          "nameEn": "Amapá",
-          "namePt": "Amapá",
+          "nameEn": "Ap",
+          "namePt": "Ap",
           "level": "area",
           "y2026": {
             "lula": 212503,
@@ -265,8 +265,8 @@
         {
           "code": "AM",
           "name": "AM",
-          "nameEn": "Amazonas",
-          "namePt": "Amazonas",
+          "nameEn": "Am",
+          "namePt": "Am",
           "level": "area",
           "y2026": {
             "lula": 1046996,
@@ -295,8 +295,8 @@
         {
           "code": "BA",
           "name": "BA",
-          "nameEn": "Bahia",
-          "namePt": "Bahia",
+          "nameEn": "Ba",
+          "namePt": "Ba",
           "level": "area",
           "y2026": {
             "lula": 5664771,
@@ -325,8 +325,8 @@
         {
           "code": "CE",
           "name": "CE",
-          "nameEn": "Ceará",
-          "namePt": "Ceará",
+          "nameEn": "Ce",
+          "namePt": "Ce",
           "level": "area",
           "y2026": {
             "lula": 3555263,
@@ -355,8 +355,8 @@
         {
           "code": "DF",
           "name": "DF",
-          "nameEn": "Federal District",
-          "namePt": "Distrito Federal",
+          "nameEn": "Df",
+          "namePt": "Df",
           "level": "area",
           "y2026": {
             "lula": 675627,
@@ -385,8 +385,8 @@
         {
           "code": "ES",
           "name": "ES",
-          "nameEn": "Espírito Santo",
-          "namePt": "Espírito Santo",
+          "nameEn": "Es",
+          "namePt": "Es",
           "level": "area",
           "y2026": {
             "lula": 850028,
@@ -415,8 +415,8 @@
         {
           "code": "GO",
           "name": "GO",
-          "nameEn": "Goiás",
-          "namePt": "Goiás",
+          "nameEn": "Go",
+          "namePt": "Go",
           "level": "area",
           "y2026": {
             "lula": 1188880,
@@ -445,8 +445,8 @@
         {
           "code": "MA",
           "name": "MA",
-          "nameEn": "Maranhão",
-          "namePt": "Maranhão",
+          "nameEn": "Ma",
+          "namePt": "Ma",
           "level": "area",
           "y2026": {
             "lula": 2566301,
@@ -475,8 +475,8 @@
         {
           "code": "MT",
           "name": "MT",
-          "nameEn": "Mato Grosso",
-          "namePt": "Mato Grosso",
+          "nameEn": "Mt",
+          "namePt": "Mt",
           "level": "area",
           "y2026": {
             "lula": 581681,
@@ -505,8 +505,8 @@
         {
           "code": "MS",
           "name": "MS",
-          "nameEn": "Mato Grosso do Sul",
-          "namePt": "Mato Grosso do Sul",
+          "nameEn": "Ms",
+          "namePt": "Ms",
           "level": "area",
           "y2026": {
             "lula": 516855,
@@ -535,8 +535,8 @@
         {
           "code": "MG",
           "name": "MG",
-          "nameEn": "Minas Gerais",
-          "namePt": "Minas Gerais",
+          "nameEn": "Mg",
+          "namePt": "Mg",
           "level": "area",
           "y2026": {
             "lula": 5188936,
@@ -565,8 +565,8 @@
         {
           "code": "PA",
           "name": "PA",
-          "nameEn": "Pará",
-          "namePt": "Pará",
+          "nameEn": "Pa",
+          "namePt": "Pa",
           "level": "area",
           "y2026": {
             "lula": 2427237,
@@ -595,8 +595,8 @@
         {
           "code": "PB",
           "name": "PB",
-          "nameEn": "Paraíba",
-          "namePt": "Paraíba",
+          "nameEn": "Pb",
+          "namePt": "Pb",
           "level": "area",
           "y2026": {
             "lula": 1541127,
@@ -625,8 +625,8 @@
         {
           "code": "PR",
           "name": "PR",
-          "nameEn": "Paraná",
-          "namePt": "Paraná",
+          "nameEn": "Pr",
+          "namePt": "Pr",
           "level": "area",
           "y2026": {
             "lula": 2054597,
@@ -655,8 +655,8 @@
         {
           "code": "PE",
           "name": "PE",
-          "nameEn": "Pernambuco",
-          "namePt": "Pernambuco",
+          "nameEn": "Pe",
+          "namePt": "Pe",
           "level": "area",
           "y2026": {
             "lula": 3553971,
@@ -685,8 +685,8 @@
         {
           "code": "PI",
           "name": "PI",
-          "nameEn": "Piauí",
-          "namePt": "Piauí",
+          "nameEn": "Pi",
+          "namePt": "Pi",
           "level": "area",
           "y2026": {
             "lula": 1523710,
@@ -715,8 +715,8 @@
         {
           "code": "RJ",
           "name": "RJ",
-          "nameEn": "Rio de Janeiro",
-          "namePt": "Rio de Janeiro",
+          "nameEn": "Rj",
+          "namePt": "Rj",
           "level": "area",
           "y2026": {
             "lula": 3693021,
@@ -745,8 +745,8 @@
         {
           "code": "RN",
           "name": "RN",
-          "nameEn": "Rio Grande do Norte",
-          "namePt": "Rio Grande do Norte",
+          "nameEn": "Rn",
+          "namePt": "Rn",
           "level": "area",
           "y2026": {
             "lula": 1237963,
@@ -775,8 +775,8 @@
         {
           "code": "RS",
           "name": "RS",
-          "nameEn": "Rio Grande do Sul",
-          "namePt": "Rio Grande do Sul",
+          "nameEn": "Rs",
+          "namePt": "Rs",
           "level": "area",
           "y2026": {
             "lula": 2294759,
@@ -805,8 +805,8 @@
         {
           "code": "RO",
           "name": "RO",
-          "nameEn": "Rondônia",
-          "namePt": "Rondônia",
+          "nameEn": "Ro",
+          "namePt": "Ro",
           "level": "area",
           "y2026": {
             "lula": 250667,
@@ -835,8 +835,8 @@
         {
           "code": "RR",
           "name": "RR",
-          "nameEn": "Roraima",
-          "namePt": "Roraima",
+          "nameEn": "Rr",
+          "namePt": "Rr",
           "level": "area",
           "y2026": {
             "lula": 74420,
@@ -865,8 +865,8 @@
         {
           "code": "SC",
           "name": "SC",
-          "nameEn": "Santa Catarina",
-          "namePt": "Santa Catarina",
+          "nameEn": "Sc",
+          "namePt": "Sc",
           "level": "area",
           "y2026": {
             "lula": 1127168,
@@ -895,8 +895,8 @@
         {
           "code": "SP",
           "name": "SP",
-          "nameEn": "São Paulo",
-          "namePt": "São Paulo",
+          "nameEn": "Sp",
+          "namePt": "Sp",
           "level": "area",
           "y2026": {
             "lula": 9505413,
@@ -925,8 +925,8 @@
         {
           "code": "SE",
           "name": "SE",
-          "nameEn": "Sergipe",
-          "namePt": "Sergipe",
+          "nameEn": "Se",
+          "namePt": "Se",
           "level": "area",
           "y2026": {
             "lula": 856019,
@@ -955,8 +955,8 @@
         {
           "code": "TO",
           "name": "TO",
-          "nameEn": "Tocantins",
-          "namePt": "Tocantins",
+          "nameEn": "To",
+          "namePt": "To",
           "level": "area",
           "y2026": {
             "lula": 404009,
