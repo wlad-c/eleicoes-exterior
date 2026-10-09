@@ -636,7 +636,7 @@ export default function App() {
             : 'local seed'
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6 xl:max-w-7xl 2xl:max-w-[96rem]">
+    <div className="mx-auto w-full max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6 lg:max-w-7xl xl:max-w-[90rem] 2xl:max-w-[100rem]">
       <header className="animate-rise mb-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p className="brand text-3xl font-extrabold text-[var(--ink)] sm:text-4xl">

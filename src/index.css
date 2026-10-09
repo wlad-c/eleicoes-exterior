@@ -368,9 +368,10 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Fill the pane. Metrics hug (width:1%); place/country columns size to
- * their text; a trailing .table-col-spacer (width:100%) absorbs leftover
- * so spare space sits after the last metric — never between columns.
+ * Fill the pane. On narrow/medium viewports, metrics hug content and a
+ * trailing spacer can absorb leftover width. From ~1100px up we collapse
+ * the spacer and let place + metric columns expand across the full pane
+ * (see the min-width: 1100px block below).
  */
 .results-table--cities,
 .results-table--body,
@@ -380,7 +381,7 @@ html.dark .is-x-scrolled .sticky-col-city {
   min-width: 100%;
 }
 
-/* Absorbs leftover pane width so name + metric columns stay dense */
+/* Absorbs leftover pane width on compact layouts only */
 .results-table th.table-col-spacer,
 .results-table td.table-col-spacer {
   width: 100%;
@@ -390,6 +391,70 @@ html.dark .is-x-scrolled .sticky-col-city {
   border: none;
   pointer-events: none;
   white-space: normal;
+}
+
+/*
+ * Large screens: use the full table width for data.
+ * - Collapse the empty trailing spacer
+ * - Let place/name + metric columns grow and breathe
+ * - Stop ellipsizing metric headers mid-word
+ */
+@media (min-width: 1100px) {
+  .results-table th.table-col-spacer,
+  .results-table td.table-col-spacer {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .results-table th:not(.sticky-col):not(.table-col-spacer),
+  .results-table td:not(.sticky-col):not(.table-col-spacer) {
+    width: auto;
+    min-width: 7.25rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .results-table th:not(.sticky-col) .th-title {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .cell-truncate-city,
+  .sticky-col-city.cell-truncate-city,
+  .results-table--suburb .sticky-col-city.cell-truncate-city {
+    width: 22%;
+    min-width: 12rem;
+    max-width: 28rem;
+  }
+
+  .results-table--body .sticky-col-country.cell-truncate-country,
+  .results-table--head:not(.results-table--cities)
+    .sticky-col-country.cell-truncate-country,
+  .results-table--foot .sticky-col-country.cell-truncate-country {
+    width: 18%;
+    min-width: 14rem;
+    max-width: 24rem;
+  }
+}
+
+@media (min-width: 1500px) {
+  .results-table th:not(.sticky-col):not(.table-col-spacer),
+  .results-table td:not(.sticky-col):not(.table-col-spacer) {
+    min-width: 8.5rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .cell-truncate-city,
+  .sticky-col-city.cell-truncate-city,
+  .results-table--suburb .sticky-col-city.cell-truncate-city {
+    width: 24%;
+    min-width: 14rem;
+    max-width: 32rem;
+  }
 }
 
 /* No overflow/filter containment — sticky binds to the page scroll */
