@@ -14,6 +14,8 @@ import {
   aggregateRows,
   bolsonaroVotesDelta,
   countryName,
+  difference2022,
+  difference2026,
   fmtCoverage,
   fmtInt,
   fmtPp,
@@ -23,6 +25,7 @@ import {
   metricValue,
   otherPct,
   otherVotes,
+  swing,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
 import {
@@ -423,6 +426,34 @@ export function ResultsTable({
                 {arrow('abstentions2022')}
               </SortableTh>
             )
+          case 'difference2026':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('difference2026')}
+                align="right"
+                heated={heatCol === 'difference2026'}
+                hint={t('hintDifference2026', lang)}
+                {...drag}
+              >
+                {t('colDifference2026', lang)}
+                {arrow('difference2026')}
+              </SortableTh>
+            )
+          case 'difference2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('difference2022')}
+                align="right"
+                heated={heatCol === 'difference2022'}
+                hint={t('hintDifference2022', lang)}
+                {...drag}
+              >
+                {t('colDifference2022', lang)}
+                {arrow('difference2022')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -451,32 +482,18 @@ export function ResultsTable({
                 {arrow('bolsonaroChange')}
               </SortableTh>
             )
-          case 'swingToLula':
+          case 'swing':
             return (
               <SortableTh
                 key={col}
-                onClick={() => onSort('swingToLula')}
+                onClick={() => onSort('swing')}
                 align="right"
-                heated={heatCol === 'swingToLula'}
-                hint={t('hintSwingToLula', lang)}
+                heated={heatCol === 'swing'}
+                hint={t('hintSwing', lang)}
                 {...drag}
               >
-                {t('swingToLula', lang)}
-                {arrow('swingToLula')}
-              </SortableTh>
-            )
-          case 'swingToBolsonaro':
-            return (
-              <SortableTh
-                key={col}
-                onClick={() => onSort('swingToBolsonaro')}
-                align="right"
-                heated={heatCol === 'swingToBolsonaro'}
-                hint={t('hintSwingToBolsonaro', lang)}
-                {...drag}
-              >
-                {t('swingToBolsonaro', lang)}
-                {arrow('swingToBolsonaro')}
+                {t('colSwing', lang)}
+                {arrow('swing')}
               </SortableTh>
             )
           case 'sections':
@@ -621,6 +638,21 @@ export function ResultsTable({
                 {fmtInt(totals.abstentions2022, lang)}
               </td>
             )
+          case 'difference2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.difference2026, lang)}
+              </td>
+            )
+          case 'difference2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtPp(totals.difference2022, lang)}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -633,16 +665,10 @@ export function ResultsTable({
                 {fmtPpWithVotes(totals.bolsonaroChange, totals.bolsonaroVotesDelta, lang, shareOpts)}
               </td>
             )
-          case 'swingToLula':
+          case 'swing':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.swingToLula, lang)}
-              </td>
-            )
-          case 'swingToBolsonaro':
-            return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.swingToBolsonaro, lang)}
+                {fmtPp(totals.swing, lang)}
               </td>
             )
           case 'sections':
@@ -908,6 +934,28 @@ export function ResultsTable({
                               {fmtInt(c.y2022.abstentions, lang)}
                             </HeatTd>
                           )
+                        case 'difference2026':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="difference2026"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(difference2026(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'difference2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="difference2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(difference2022(c), lang)}
+                            </HeatTd>
+                          )
                         case 'lulaChange':
                           return (
                             <HeatTd
@@ -930,36 +978,15 @@ export function ResultsTable({
                               {fmtPpWithVotes(c.swing?.bolsonaroPp, bolsonaroVotesDelta(c), lang, shareOpts)}
                             </HeatTd>
                           )
-                        case 'swingToLula':
+                        case 'swing':
                           return (
                             <HeatTd
                               key={col}
-                              col="swingToLula"
+                              col="swing"
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtPp(
-                                c.swing != null
-                                  ? c.swing.lulaPp - c.swing.bolsonaroPp
-                                  : null,
-                                lang,
-                              )}
-                            </HeatTd>
-                          )
-                        case 'swingToBolsonaro':
-                          return (
-                            <HeatTd
-                              key={col}
-                              col="swingToBolsonaro"
-                              heatCol={heatCol}
-                              heat={heat}
-                            >
-                              {fmtPp(
-                                c.swing != null
-                                  ? c.swing.bolsonaroPp - c.swing.lulaPp
-                                  : null,
-                                lang,
-                              )}
+                              {fmtPp(swing(c), lang)}
                             </HeatTd>
                           )
                         case 'sections':

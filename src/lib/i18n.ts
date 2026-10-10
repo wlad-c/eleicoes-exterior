@@ -67,8 +67,27 @@ const dict = {
   mapMetric: { en: 'Heatmap metric', pt: 'Métrica do mapa de calor' },
   lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
   bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
-  swingToLula: { en: 'Swing to Lula', pt: 'Swing para Lula' },
-  swingToBolsonaro: { en: 'Swing to Bolsonaro', pt: 'Swing para Bolsonaro' },
+  swing: {
+    en: 'Swing (Lula − Bolsonaro Δ)',
+    pt: 'Swing (Lula − Bolsonaro Δ)',
+  },
+  difference2026: {
+    en: '2026 difference (Lula − Bolsonaro)',
+    pt: 'Diferença 2026 (Lula − Bolsonaro)',
+  },
+  difference2022: {
+    en: '2022 difference (Lula − Bolsonaro)',
+    pt: 'Diferença 2022 (Lula − Bolsonaro)',
+  },
+  colDifference2026: {
+    en: 'Difference 2026',
+    pt: 'Diferença 2026',
+  },
+  colDifference2022: {
+    en: 'Difference 2022',
+    pt: 'Diferença 2022',
+  },
+  colSwing: { en: 'Swing', pt: 'Swing' },
   leader2026: {
     en: '2026 leader (who has more votes)',
     pt: 'Líder 2026 (quem tem mais votos)',
@@ -308,13 +327,17 @@ const dict = {
     en: 'pp vs 2022 (Δ votes)',
     pt: 'pp vs 2022 (Δ votos)',
   },
-  hintSwingToLula: {
-    en: 'Lula Δ − Bolso Δ',
-    pt: 'Lula Δ − Bolso Δ',
+  hintDifference2026: {
+    en: 'Lula % − Bolsonaro % (2026)',
+    pt: 'Lula % − Bolsonaro % (2026)',
   },
-  hintSwingToBolsonaro: {
-    en: 'Bolso Δ − Lula Δ',
-    pt: 'Bolso Δ − Lula Δ',
+  hintDifference2022: {
+    en: 'Lula % − Bolsonaro % (2022)',
+    pt: 'Lula % − Bolsonaro % (2022)',
+  },
+  hintSwing: {
+    en: 'Lula Δ − Bolso Δ · red → Lula, blue → Bolsonaro',
+    pt: 'Lula Δ − Bolso Δ · vermelho → Lula, azul → Bolsonaro',
   },
   hintSections: {
     en: 'counted / total',
@@ -331,8 +354,8 @@ const dict = {
     pt: 'Quando o TSE publica totais do exterior (ZZ), esses números oficiais são usados. Onde ainda faltar dado do TSE para um país, os valores podem vir de boletins de urna (BU) e levantamentos da imprensa, e mudar conforme novas seções forem totalizadas.',
   },
   disclaimerCompare: {
-    en: 'Comparisons treat Flávio Bolsonaro (2026) against Jair Bolsonaro (2022) for continuity of the Bolsonaro ticket abroad. They are not the same candidate. Percentages use valid votes; swing to Lula is Lula change minus Bolsonaro change (percentage points).',
-    pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing para Lula é a variação de Lula menos a de Bolsonaro (pontos percentuais).',
+    en: 'Comparisons treat Flávio Bolsonaro (2026) against Jair Bolsonaro (2022) for continuity of the Bolsonaro ticket abroad. They are not the same candidate. Percentages use valid votes; swing is Lula change minus Bolsonaro change (percentage points; positive toward Lula, negative toward Bolsonaro).',
+    pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing é a variação de Lula menos a de Bolsonaro (pontos percentuais; positivo para Lula, negativo para Bolsonaro).',
   },
   disclaimerScope: {
     en: 'Default scope is overseas 1st-round presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas running total.',

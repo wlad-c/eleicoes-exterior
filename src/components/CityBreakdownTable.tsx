@@ -16,10 +16,11 @@ const ROW_ESTIMATE_PX = 42
 import {
   cityBolsonaroChange,
   cityBolsonaroVotesDelta,
+  cityDifference2022,
+  cityDifference2026,
   cityLulaChange,
   cityLulaVotesDelta,
-  citySwingToBolsonaro,
-  citySwingToLula,
+  citySwing,
   type CityTableRow,
 } from '../lib/cityRows'
 import {
@@ -233,13 +234,15 @@ export function CityBreakdownTable({
       lulaPct != null && lulaPct2022 != null ? lulaPct - lulaPct2022 : null
     const bolsonaroChange =
       bolsoPct != null && bolsoPct2022 != null ? bolsoPct - bolsoPct2022 : null
-    const swingToLula =
+    const swing =
       lulaChange != null && bolsonaroChange != null
         ? lulaChange - bolsonaroChange
         : null
-    const swingToBolsonaro =
-      lulaChange != null && bolsonaroChange != null
-        ? bolsonaroChange - lulaChange
+    const difference2026 =
+      lulaPct != null && bolsoPct != null ? lulaPct - bolsoPct : null
+    const difference2022 =
+      lulaPct2022 != null && bolsoPct2022 != null
+        ? lulaPct2022 - bolsoPct2022
         : null
     return {
       lula,
@@ -260,10 +263,11 @@ export function CityBreakdownTable({
       abstentionPct2026,
       abstentions2022: hasAbstention2022 ? abstentions2022 : null,
       abstentionPct2022,
+      difference2026,
+      difference2022,
       lulaChange,
       bolsonaroChange,
-      swingToLula,
-      swingToBolsonaro,
+      swing,
       lulaVotesDelta: has2022
         ? lula2026Comparable - lula2022Comparable
         : null,
@@ -646,6 +650,21 @@ export function CityBreakdownTable({
                 {fmtInt(totals.abstentions2022, lang)}
               </td>
             )
+          case 'difference2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.difference2026, lang)}
+              </td>
+            )
+          case 'difference2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtPp(totals.difference2022, lang)}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -658,16 +677,10 @@ export function CityBreakdownTable({
                 {fmtPpWithVotes(totals.bolsonaroChange, totals.bolsonaroVotesDelta, lang, shareOpts)}
               </td>
             )
-          case 'swingToLula':
+          case 'swing':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.swingToLula, lang)}
-              </td>
-            )
-          case 'swingToBolsonaro':
-            return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.swingToBolsonaro, lang)}
+                {fmtPp(totals.swing, lang)}
               </td>
             )
           case 'sections':
@@ -881,6 +894,32 @@ export function CityBreakdownTable({
                 {arrow('abstentions2022')}
               </SortableTh>
             )
+          case 'difference2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintDifference2026', lang)}
+                onClick={() => onSort('difference2026')}
+                {...drag}
+              >
+                {t('colDifference2026', lang)}
+                {arrow('difference2026')}
+              </SortableTh>
+            )
+          case 'difference2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintDifference2022', lang)}
+                onClick={() => onSort('difference2022')}
+                {...drag}
+              >
+                {t('colDifference2022', lang)}
+                {arrow('difference2022')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -907,30 +946,17 @@ export function CityBreakdownTable({
                 {arrow('bolsonaroChange')}
               </SortableTh>
             )
-          case 'swingToLula':
+          case 'swing':
             return (
               <SortableTh
                 key={col}
                 align="right"
-                hint={t('hintSwingToLula', lang)}
-                onClick={() => onSort('swingToLula')}
+                hint={t('hintSwing', lang)}
+                onClick={() => onSort('swing')}
                 {...drag}
               >
-                {t('swingToLula', lang)}
-                {arrow('swingToLula')}
-              </SortableTh>
-            )
-          case 'swingToBolsonaro':
-            return (
-              <SortableTh
-                key={col}
-                align="right"
-                hint={t('hintSwingToBolsonaro', lang)}
-                onClick={() => onSort('swingToBolsonaro')}
-                {...drag}
-              >
-                {t('swingToBolsonaro', lang)}
-                {arrow('swingToBolsonaro')}
+                {t('colSwing', lang)}
+                {arrow('swing')}
               </SortableTh>
             )
           case 'sections':
@@ -1269,6 +1295,24 @@ export function CityBreakdownTable({
                             {fmtInt(c.y2022?.abstentions, lang)}
                           </td>
                         )
+                      case 'difference2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(cityDifference2026(c), lang)}
+                          </td>
+                        )
+                      case 'difference2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(cityDifference2022(c), lang)}
+                          </td>
+                        )
                       case 'lulaChange':
                         return (
                           <td
@@ -1287,22 +1331,13 @@ export function CityBreakdownTable({
                             {fmtPpWithVotes(cityBolsonaroChange(c), cityBolsonaroVotesDelta(c), lang, shareOpts)}
                           </td>
                         )
-                      case 'swingToLula':
+                      case 'swing':
                         return (
                           <td
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPp(citySwingToLula(c), lang)}
-                          </td>
-                        )
-                      case 'swingToBolsonaro':
-                        return (
-                          <td
-                            key={col}
-                            className="px-2 py-2.5 text-right tabular-nums"
-                          >
-                            {fmtPp(citySwingToBolsonaro(c), lang)}
+                            {fmtPp(citySwing(c), lang)}
                           </td>
                         )
                       case 'sections':

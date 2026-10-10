@@ -9,6 +9,8 @@ export type TableMetricCol =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'difference2026'
+  | 'difference2022'
   | 'otherPct2026'
   | 'otherPct2022'
   | 'abstentionPct2026'
@@ -17,8 +19,7 @@ export type TableMetricCol =
   | 'abstentions2022'
   | 'lulaChange'
   | 'bolsonaroChange'
-  | 'swingToLula'
-  | 'swingToBolsonaro'
+  | 'swing'
   | 'sections'
 
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
@@ -29,6 +30,8 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'difference2026',
+  'difference2022',
   'otherPct2026',
   'otherPct2022',
   'abstentionPct2026',
@@ -37,22 +40,22 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'abstentions2022',
   'lulaChange',
   'bolsonaroChange',
-  'swingToLula',
-  'swingToBolsonaro',
+  'swing',
   'sections',
 ]
 
 /**
- * Default: hide region, 2022 vote/share columns, other/abstention shares
- * and volumes, swing to Bolsonaro, and sections.
+ * Default: hide region, 2022 vote/share/difference columns, other/abstention
+ * shares and volumes, and sections.
  */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
   'lulaPct2026',
   'bolsonaroPct2026',
+  'difference2026',
   'lulaChange',
   'bolsonaroChange',
-  'swingToLula',
+  'swing',
 ]
 
 export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
@@ -63,6 +66,8 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   bolsonaroPct2026: 'colFBolsonaro2026',
   lulaPct2022: 'colLula2022',
   bolsonaroPct2022: 'colJBolsonaro2022',
+  difference2026: 'colDifference2026',
+  difference2022: 'colDifference2022',
   otherPct2026: 'otherPct2026',
   otherPct2022: 'otherPct2022',
   abstentionPct2026: 'abstentionPct2026',
@@ -71,17 +76,23 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   abstentions2022: 'abstentions2022',
   lulaChange: 'lulaChange',
   bolsonaroChange: 'bolsonaroChange',
-  swingToLula: 'swingToLula',
-  swingToBolsonaro: 'swingToBolsonaro',
+  swing: 'colSwing',
   sections: 'notes',
 }
 
 /** Bump when default visibility changes so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v4'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v1'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v5'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v2'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
+}
+
+/** Map legacy column ids onto the current set. */
+function migrateLegacyCol(c: string): TableMetricCol | null {
+  if (c === 'swingToLula' || c === 'swingToBolsonaro') return 'swing'
+  if (isTableMetricCol(c)) return c
+  return null
 }
 
 /** Normalize a partial/legacy order into a full permutation of all metric cols. */
@@ -91,9 +102,10 @@ export function normalizeColumnOrder(
   const seen = new Set<TableMetricCol>()
   const next: TableMetricCol[] = []
   for (const c of order ?? []) {
-    if (isTableMetricCol(c) && !seen.has(c)) {
-      seen.add(c)
-      next.push(c)
+    const col = migrateLegacyCol(c)
+    if (col && !seen.has(col)) {
+      seen.add(col)
+      next.push(col)
     }
   }
   for (const c of ALL_TABLE_METRIC_COLS) {
@@ -131,9 +143,16 @@ export function readStoredTableCols(): TableMetricCol[] {
     if (!raw) return DEFAULT_TABLE_METRIC_COLS
     const parsed = JSON.parse(raw) as unknown
     if (!Array.isArray(parsed)) return DEFAULT_TABLE_METRIC_COLS
-    const cols = parsed.filter(
-      (c): c is TableMetricCol => typeof c === 'string' && isTableMetricCol(c),
-    )
+    const seen = new Set<TableMetricCol>()
+    const cols: TableMetricCol[] = []
+    for (const c of parsed) {
+      if (typeof c !== 'string') continue
+      const col = migrateLegacyCol(c)
+      if (col && !seen.has(col)) {
+        seen.add(col)
+        cols.push(col)
+      }
+    }
     return cols.length > 0 ? cols : DEFAULT_TABLE_METRIC_COLS
   } catch {
     return DEFAULT_TABLE_METRIC_COLS

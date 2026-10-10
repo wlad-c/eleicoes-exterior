@@ -986,7 +986,7 @@ export default function App() {
             tone="bolso"
             lang={lang}
           />
-          <SwingCard swing={reportedAgg.swingToLula} lang={lang} />
+          <SwingCard swing={reportedAgg.swing} lang={lang} />
         </div>
       </section>
 
@@ -1255,6 +1255,12 @@ export default function App() {
                 <option value="bolsonaroPct2022">
                   {t('bolsonaroPct2022', lang)}
                 </option>
+                <option value="difference2026">
+                  {t('difference2026', lang)}
+                </option>
+                <option value="difference2022">
+                  {t('difference2022', lang)}
+                </option>
                 <option value="otherPct2026">{t('otherPct2026', lang)}</option>
                 <option value="otherPct2022">{t('otherPct2022', lang)}</option>
                 <option value="abstentionPct2026">
@@ -1273,10 +1279,7 @@ export default function App() {
                 <option value="bolsonaroChange">
                   {t('bolsonaroChange', lang)}
                 </option>
-                <option value="swingToLula">{t('swingToLula', lang)}</option>
-                <option value="swingToBolsonaro">
-                  {t('swingToBolsonaro', lang)}
-                </option>
+                <option value="swing">{t('swing', lang)}</option>
                 <option value="sections">{t('notes', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
                 <option value="region">{t('region', lang)}</option>
@@ -1455,7 +1458,7 @@ function SwingCard({
   return (
     <div>
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-semibold">{t('swingToLula', lang)}</span>
+        <span className="font-semibold">{t('swing', lang)}</span>
         <span
           className={`tabular-nums text-lg font-bold ${
             towardLula ? 'text-[var(--lula)]' : 'text-[var(--bolso)]'
@@ -1473,7 +1476,7 @@ function SwingCard({
         />
       </div>
       <p className="mt-1 text-xs text-[var(--ink-muted)]">
-        {t('hintSwingToLula', lang)}
+        {t('hintSwing', lang)}
       </p>
     </div>
   )
@@ -1529,17 +1532,19 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return abstentionVotes(c.y2026) ?? Number.NaN
     case 'abstentions2022':
       return abstentionVotes(c.y2022) ?? Number.NaN
+    case 'difference2026':
+      return c.y2026 != null
+        ? c.y2026.lulaPct - c.y2026.bolsonaroPct
+        : Number.NaN
+    case 'difference2022':
+      return c.y2022.lulaPct - c.y2022.bolsonaroPct
     case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
     case 'bolsonaroChange':
       return c.swing?.bolsonaroPp ?? Number.NaN
-    case 'swingToLula':
+    case 'swing':
       return c.swing != null
         ? c.swing.lulaPp - c.swing.bolsonaroPp
-        : Number.NaN
-    case 'swingToBolsonaro':
-      return c.swing != null
-        ? c.swing.bolsonaroPp - c.swing.lulaPp
         : Number.NaN
     case 'sections':
       return c.coverage && c.coverage.total > 0
