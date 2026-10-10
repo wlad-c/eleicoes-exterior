@@ -15,7 +15,10 @@ type City2022Map = Record<
     bolsonaroPct: number
     registered?: number
     abstentions?: number
-    abstentionPct?: number
+    blank?: number
+    nullVotes?: number
+    noValidVote?: number
+    noValidVotePct?: number
   }
 >
 
@@ -62,6 +65,8 @@ function yearResult(
   totalValid: number,
   registered?: number | null,
   abstentions?: number | null,
+  blank?: number | null,
+  nullVotes?: number | null,
 ): YearResult {
   return withElectorate(
     {
@@ -73,6 +78,8 @@ function yearResult(
     },
     registered,
     abstentions,
+    blank,
+    nullVotes,
   )
 }
 
@@ -96,6 +103,8 @@ function cityY2022(code: string): YearResult | null {
     raw.totalValid,
     raw.registered,
     raw.abstentions,
+    raw.blank,
+    raw.nullVotes,
   )
 }
 
@@ -116,7 +125,7 @@ function ea20Url(base: string, municipioCode = ''): string {
 
 type Ea20Doc = {
   s?: { st?: string; ts?: string; pst?: string }
-  v?: { vv?: string; vvc?: string }
+  v?: { vv?: string; vvc?: string; vb?: string; tvn?: string }
   e?: { te?: string; a?: string; pa?: string }
   carg?: Array<{
     cd?: string
@@ -126,13 +135,22 @@ type Ea20Doc = {
   }>
 }
 
-function extractElectorate(
-  doc: Ea20Doc,
-): { registered: number; abstentions: number } | null {
+type Electorate = {
+  registered: number
+  abstentions: number
+  blank: number
+  nullVotes: number
+}
+
+function extractElectorate(doc: Ea20Doc): Electorate | null {
   const registered = parseIntPT(doc.e?.te)
-  const abstentions = parseIntPT(doc.e?.a)
   if (registered <= 0) return null
-  return { registered, abstentions }
+  return {
+    registered,
+    abstentions: parseIntPT(doc.e?.a),
+    blank: parseIntPT(doc.v?.vb),
+    nullVotes: parseIntPT(doc.v?.tvn),
+  }
 }
 
 function extractCandidates(doc: Ea20Doc): { lula: number; bolsonaro: number } {
@@ -183,6 +201,8 @@ type MunVotes = {
   total: number
   registered: number | null
   abstentions: number | null
+  blank: number | null
+  nullVotes: number | null
 }
 
 type Agg = {
@@ -193,6 +213,8 @@ type Agg = {
   total: number
   registered: number
   abstentions: number
+  blank: number
+  nullVotes: number
   hasElectorate: boolean
   areas: CityResult[]
 }
@@ -264,6 +286,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
         total,
         registered: electorate?.registered ?? null,
         abstentions: electorate?.abstentions ?? null,
+        blank: electorate?.blank ?? null,
+        nullVotes: electorate?.nullVotes ?? null,
       }
     } catch {
       return null
@@ -281,6 +305,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       total: 0,
       registered: 0,
       abstentions: 0,
+      blank: 0,
+      nullVotes: 0,
       hasElectorate: false,
       areas: [],
     }
@@ -289,10 +315,17 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.totalValid += row.totalValid
     agg.counted += row.counted
     agg.total += row.total
-    if (row.registered != null && row.abstentions != null) {
+    if (
+      row.registered != null &&
+      row.abstentions != null &&
+      row.blank != null &&
+      row.nullVotes != null
+    ) {
       agg.hasElectorate = true
       agg.registered += row.registered
       agg.abstentions += row.abstentions
+      agg.blank += row.blank
+      agg.nullVotes += row.nullVotes
     }
     const y2026 = yearResult(
       row.lula,
@@ -300,6 +333,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       row.totalValid,
       row.registered,
       row.abstentions,
+      row.blank,
+      row.nullVotes,
     )
     const y2022 = cityY2022(row.code)
     agg.areas.push(
@@ -329,6 +364,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       agg.totalValid,
       agg.hasElectorate ? agg.registered : null,
       agg.hasElectorate ? agg.abstentions : null,
+      agg.hasElectorate ? agg.blank : null,
+      agg.hasElectorate ? agg.nullVotes : null,
     )
     const partial = agg.counted < agg.total
     const areaNotes = agg.areas

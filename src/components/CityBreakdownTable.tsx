@@ -24,7 +24,8 @@ import {
   type CityTableRow,
 } from '../lib/cityRows'
 import {
-  abstentionPct,
+  noValidVotePct,
+  noValidVotes,
   areaDisplayName,
   cityDisplayName,
   cityPlaceParentLabel,
@@ -175,10 +176,10 @@ export function CityBreakdownTable({
     let lula2026Comparable = 0
     let bolso2026Comparable = 0
     let registered2026 = 0
-    let abstentions2026 = 0
+    let noValidVotes2026 = 0
     let hasAbstention2026 = false
     let registered2022 = 0
-    let abstentions2022 = 0
+    let noValidVotes2022 = 0
     let hasAbstention2022 = false
     let has2022 = false
     let counted = 0
@@ -189,10 +190,13 @@ export function CityBreakdownTable({
       valid += c.y2026.totalValid
       counted += c.coverage?.counted ?? 0
       total += c.coverage?.total ?? 0
-      if (c.y2026.registered != null && c.y2026.abstentions != null) {
-        hasAbstention2026 = true
-        registered2026 += c.y2026.registered
-        abstentions2026 += c.y2026.abstentions
+      {
+        const nv = noValidVotes(c.y2026)
+        if (c.y2026.registered != null && nv != null) {
+          hasAbstention2026 = true
+          registered2026 += c.y2026.registered
+          noValidVotes2026 += nv
+        }
       }
       if (c.y2022) {
         has2022 = true
@@ -203,10 +207,11 @@ export function CityBreakdownTable({
         bolso2022Comparable += c.y2022.bolsonaro
         lula2026Comparable += c.y2026.lula
         bolso2026Comparable += c.y2026.bolsonaro
-        if (c.y2022.registered != null && c.y2022.abstentions != null) {
+        const nv = noValidVotes(c.y2022)
+        if (c.y2022.registered != null && nv != null) {
           hasAbstention2022 = true
           registered2022 += c.y2022.registered
-          abstentions2022 += c.y2022.abstentions
+          noValidVotes2022 += nv
         }
       }
     }
@@ -222,13 +227,13 @@ export function CityBreakdownTable({
       has2022 && valid2022 ? (bolso2022 / valid2022) * 100 : null
     const otherPct2022 =
       other2022 != null && valid2022 ? (other2022 / valid2022) * 100 : null
-    const abstentionPct2026 =
+    const noValidVotePct2026 =
       hasAbstention2026 && registered2026 > 0
-        ? (abstentions2026 / registered2026) * 100
+        ? (noValidVotes2026 / registered2026) * 100
         : null
-    const abstentionPct2022 =
+    const noValidVotePct2022 =
       hasAbstention2022 && registered2022 > 0
-        ? (abstentions2022 / registered2022) * 100
+        ? (noValidVotes2022 / registered2022) * 100
         : null
     const lulaChange =
       lulaPct != null && lulaPct2022 != null ? lulaPct - lulaPct2022 : null
@@ -259,10 +264,10 @@ export function CityBreakdownTable({
       otherPct2022,
       lulaPct2022,
       bolsoPct2022,
-      abstentions2026: hasAbstention2026 ? abstentions2026 : null,
-      abstentionPct2026,
-      abstentions2022: hasAbstention2022 ? abstentions2022 : null,
-      abstentionPct2022,
+      noValidVotes2026: hasAbstention2026 ? noValidVotes2026 : null,
+      noValidVotePct2026,
+      noValidVotes2022: hasAbstention2022 ? noValidVotes2022 : null,
+      noValidVotePct2022,
       difference2026,
       difference2022,
       lulaChange,
@@ -610,44 +615,44 @@ export function CityBreakdownTable({
                 {fmtShare(totals.otherPct2022, totals.other2022, lang, shareOpts)}
               </td>
             )
-          case 'abstentionPct2026':
+          case 'noValidVotePct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtShare(
-                  totals.abstentionPct2026,
-                  totals.abstentions2026,
+                  totals.noValidVotePct2026,
+                  totals.noValidVotes2026,
                   lang,
                   shareOpts,
                 )}
               </td>
             )
-          case 'abstentionPct2022':
+          case 'noValidVotePct2022':
             return (
               <td
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
               >
                 {fmtShare(
-                  totals.abstentionPct2022,
-                  totals.abstentions2022,
+                  totals.noValidVotePct2022,
+                  totals.noValidVotes2022,
                   lang,
                   shareOpts,
                 )}
               </td>
             )
-          case 'abstentions2026':
+          case 'noValidVotes2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtInt(totals.abstentions2026, lang)}
+                {fmtInt(totals.noValidVotes2026, lang)}
               </td>
             )
-          case 'abstentions2022':
+          case 'noValidVotes2022':
             return (
               <td
                 key={col}
                 className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
               >
-                {fmtInt(totals.abstentions2022, lang)}
+                {fmtInt(totals.noValidVotes2022, lang)}
               </td>
             )
           case 'difference2026':
@@ -842,56 +847,56 @@ export function CityBreakdownTable({
                 {arrow('otherPct2022')}
               </SortableTh>
             )
-          case 'abstentionPct2026':
+          case 'noValidVotePct2026':
             return (
               <SortableTh
                 key={col}
                 align="right"
-                hint={t('hintAbstention2026', lang)}
-                onClick={() => onSort('abstentionPct2026')}
+                hint={t('hintNoValidVotePct2026', lang)}
+                onClick={() => onSort('noValidVotePct2026')}
                 {...drag}
               >
-                {t('abstentionPct2026', lang)}
-                {arrow('abstentionPct2026')}
+                {t('noValidVotePct2026', lang)}
+                {arrow('noValidVotePct2026')}
               </SortableTh>
             )
-          case 'abstentionPct2022':
+          case 'noValidVotePct2022':
             return (
               <SortableTh
                 key={col}
                 align="right"
-                hint={t('hintAbstention2022', lang)}
-                onClick={() => onSort('abstentionPct2022')}
+                hint={t('hintNoValidVotePct2022', lang)}
+                onClick={() => onSort('noValidVotePct2022')}
                 {...drag}
               >
-                {t('abstentionPct2022', lang)}
-                {arrow('abstentionPct2022')}
+                {t('noValidVotePct2022', lang)}
+                {arrow('noValidVotePct2022')}
               </SortableTh>
             )
-          case 'abstentions2026':
+          case 'noValidVotes2026':
             return (
               <SortableTh
                 key={col}
                 align="right"
-                hint={t('hintAbstentionVotes2026', lang)}
-                onClick={() => onSort('abstentions2026')}
+                hint={t('hintNoValidVotes2026', lang)}
+                onClick={() => onSort('noValidVotes2026')}
                 {...drag}
               >
-                {t('abstentions2026', lang)}
-                {arrow('abstentions2026')}
+                {t('noValidVotes2026', lang)}
+                {arrow('noValidVotes2026')}
               </SortableTh>
             )
-          case 'abstentions2022':
+          case 'noValidVotes2022':
             return (
               <SortableTh
                 key={col}
                 align="right"
-                hint={t('hintAbstentionVotes2022', lang)}
-                onClick={() => onSort('abstentions2022')}
+                hint={t('hintNoValidVotes2022', lang)}
+                onClick={() => onSort('noValidVotes2022')}
                 {...drag}
               >
-                {t('abstentions2022', lang)}
-                {arrow('abstentions2022')}
+                {t('noValidVotes2022', lang)}
+                {arrow('noValidVotes2022')}
               </SortableTh>
             )
           case 'difference2026':
@@ -1249,50 +1254,50 @@ export function CityBreakdownTable({
                             )}
                           </td>
                         )
-                      case 'abstentionPct2026':
+                      case 'noValidVotePct2026':
                         return (
                           <td
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(
-                              abstentionPct(c.y2026),
-                              c.y2026.abstentions,
+                              noValidVotePct(c.y2026),
+                              noValidVotes(c.y2026),
                               lang,
                               shareOpts,
                             )}
                           </td>
                         )
-                      case 'abstentionPct2022':
+                      case 'noValidVotePct2022':
                         return (
                           <td
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(
-                              abstentionPct(c.y2022),
-                              c.y2022?.abstentions,
+                              noValidVotePct(c.y2022),
+                              noValidVotes(c.y2022),
                               lang,
                               shareOpts,
                             )}
                           </td>
                         )
-                      case 'abstentions2026':
+                      case 'noValidVotes2026':
                         return (
                           <td
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtInt(c.y2026.abstentions, lang)}
+                            {fmtInt(noValidVotes(c.y2026), lang)}
                           </td>
                         )
-                      case 'abstentions2022':
+                      case 'noValidVotes2022':
                         return (
                           <td
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtInt(c.y2022?.abstentions, lang)}
+                            {fmtInt(noValidVotes(c.y2022), lang)}
                           </td>
                         )
                       case 'difference2026':

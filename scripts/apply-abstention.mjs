@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Attach registered / abstention fields to YearResult payloads:
- *   - 2022 ZZ areas + countries from detalhe_votacao_munzona (QT_APTOS / QT_ABSTENCOES)
- *   - 2026 ZZ areas + countries from TSE EA20 `e.te` / `e.a`
+ * Attach registered / no-valid-vote fields to YearResult payloads:
+ *   - 2022 ZZ areas + countries from detalhe_votacao_munzona
+ *     (QT_APTOS / QT_ABSTENCOES / QT_VOTOS_BRANCOS / QT_TOTAL_VOTOS_NULOS)
+ *   - 2026 ZZ areas + countries from TSE EA20 `e.te` / `e.a` / `v.vb` / `v.tvn`
  *   - Brazil national + UF areas (2022 munzona + 2026 EA20)
  *   - Brazil municipalities (brazil-cities.json) + zonas (brazil-suburbs.json)
  *     from detalhe_votacao_munzona 2022 + 2026 (zone grain; cities = sum of zones)
  *
+ * noValidVote = abstentions + blank + null (= aptos − válidos).
  * Does not rebuild vote totals — only electorate overlays.
  *
  * Usage: node scripts/apply-abstention.mjs
@@ -34,7 +36,7 @@ const AMBIENTE = 'oficial'
 const CICLO = 'ele2026'
 const ELEICAO = '6257'
 const CARGO = '1'
-const UA = 'eleicoes-exterior/1.0 (+abstention overlay)'
+const UA = 'eleicoes-exterior/1.0 (+no-valid-vote overlay)'
 const CDN = 'https://cdn.tse.jus.br'
 const MUNZONA_ZIP = (year) =>
   `${CDN}/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_${year}.zip`
@@ -57,14 +59,49 @@ function parseIntPT(v) {
   return Number.parseInt(String(v).replace(/\./g, ''), 10) || 0
 }
 
-function withElectorate(y, registered, abstentions) {
-  if (!y || registered == null || registered <= 0 || abstentions == null) return y
-  return {
-    ...y,
-    registered,
-    abstentions,
-    abstentionPct: round1((abstentions / registered) * 100),
+function emptyEl() {
+  return { registered: 0, abstentions: 0, blank: 0, nullVotes: 0 }
+}
+
+function addEl(agg, el) {
+  agg.registered += el.registered
+  agg.abstentions += el.abstentions
+  agg.blank += el.blank
+  agg.nullVotes += el.nullVotes
+}
+
+/**
+ * Attach electorate extras. noValidVote = abs + blank + null
+ * (fallback: registered − totalValid).
+ */
+function withElectorate(y, registered, abstentions, blank, nullVotes) {
+  if (!y || registered == null || registered <= 0) return y
+  const out = { ...y, registered }
+  delete out.abstentionPct
+  if (abstentions != null) out.abstentions = abstentions
+  if (blank != null) out.blank = blank
+  if (nullVotes != null) out.nullVotes = nullVotes
+
+  let noValid
+  if (abstentions != null && blank != null && nullVotes != null) {
+    noValid = abstentions + blank + nullVotes
+  } else {
+    noValid = Math.max(0, registered - (y.totalValid || 0))
   }
+  out.noValidVote = noValid
+  out.noValidVotePct = round1((noValid / registered) * 100)
+  return out
+}
+
+function applyEl(y, el) {
+  if (!el) return y
+  return withElectorate(
+    y,
+    el.registered,
+    el.abstentions,
+    el.blank,
+    el.nullVotes,
+  )
 }
 
 function parseCsvLine(line) {
@@ -117,9 +154,13 @@ function ea20Url(abr, municipioCode = '') {
 
 function electorateOf(doc) {
   const registered = parseIntPT(doc?.e?.te)
-  const abstentions = parseIntPT(doc?.e?.a)
   if (registered <= 0) return null
-  return { registered, abstentions }
+  return {
+    registered,
+    abstentions: parseIntPT(doc?.e?.a),
+    blank: parseIntPT(doc?.v?.vb),
+    nullVotes: parseIntPT(doc?.v?.tvn),
+  }
 }
 
 /**
@@ -166,36 +207,36 @@ async function loadMunzonaElectorate(year) {
     const uf = cols[idx.SG_UF]
     const registered = Number.parseInt(cols[idx.QT_APTOS] || '0', 10) || 0
     const abstentions = Number.parseInt(cols[idx.QT_ABSTENCOES] || '0', 10) || 0
+    const blank = Number.parseInt(cols[idx.QT_VOTOS_BRANCOS] || '0', 10) || 0
+    const nullVotes =
+      Number.parseInt(cols[idx.QT_TOTAL_VOTOS_NULOS] || '0', 10) || 0
     const mun = pad(cols[idx.CD_MUNICIPIO] || '', 5)
     const zonaRaw = String(cols[idx.NR_ZONA] || '').trim()
     const zona = zonaRaw ? pad(zonaRaw, 3) : ''
+    const el = { registered, abstentions, blank, nullVotes }
 
     if (uf === 'ZZ') {
       if (!mun || mun === '00000') continue
-      const agg = zz.get(mun) || { registered: 0, abstentions: 0 }
-      agg.registered += registered
-      agg.abstentions += abstentions
+      const agg = zz.get(mun) || emptyEl()
+      addEl(agg, el)
       zz.set(mun, agg)
       continue
     }
     if (!UFS.includes(uf) || !mun || mun === '00000') continue
 
     const cityKey = `${uf}|${mun}`
-    const cityAgg = cities.get(cityKey) || { registered: 0, abstentions: 0 }
-    cityAgg.registered += registered
-    cityAgg.abstentions += abstentions
+    const cityAgg = cities.get(cityKey) || emptyEl()
+    addEl(cityAgg, el)
     cities.set(cityKey, cityAgg)
 
-    const ufAgg = ufs.get(uf) || { registered: 0, abstentions: 0 }
-    ufAgg.registered += registered
-    ufAgg.abstentions += abstentions
+    const ufAgg = ufs.get(uf) || emptyEl()
+    addEl(ufAgg, el)
     ufs.set(uf, ufAgg)
 
     if (zona) {
       const zoneKey = `${uf}|${mun}|${zona}`
-      const zoneAgg = zones.get(zoneKey) || { registered: 0, abstentions: 0 }
-      zoneAgg.registered += registered
-      zoneAgg.abstentions += abstentions
+      const zoneAgg = zones.get(zoneKey) || emptyEl()
+      addEl(zoneAgg, el)
       zones.set(zoneKey, zoneAgg)
     }
   }
@@ -207,7 +248,7 @@ async function loadMunzonaElectorate(year) {
 
 function patchYearResult(row, yearKey, el) {
   if (!el || !row?.[yearKey]) return false
-  row[yearKey] = withElectorate(row[yearKey], el.registered, el.abstentions)
+  row[yearKey] = applyEl(row[yearKey], el)
   return true
 }
 
@@ -274,7 +315,7 @@ async function main() {
   for (const [code, el] of zz2022) {
     const row = city2022[code]
     if (!row) continue
-    city2022[code] = withElectorate(row, el.registered, el.abstentions)
+    city2022[code] = applyEl(row, el)
     patchedCity2022++
   }
   writeFileSync(CITY_2022_PATH, JSON.stringify(city2022, null, 2) + '\n')
@@ -285,9 +326,8 @@ async function main() {
   for (const [code, el] of zz2022) {
     const countryId = cityMap[code]
     if (!countryId) continue
-    const agg = country2022.get(countryId) || { registered: 0, abstentions: 0 }
-    agg.registered += el.registered
-    agg.abstentions += el.abstentions
+    const agg = country2022.get(countryId) || emptyEl()
+    addEl(agg, el)
     country2022.set(countryId, agg)
   }
 
@@ -298,13 +338,18 @@ async function main() {
     if (country.domestic) continue
     const el = country2022.get(country.id)
     if (el && country.y2022) {
-      country.y2022 = withElectorate(country.y2022, el.registered, el.abstentions)
+      country.y2022 = applyEl(country.y2022, el)
       countryY2022++
     }
     for (const area of country.areas || []) {
       const raw = city2022[area.code]
       if (!raw || !area.y2022) continue
-      area.y2022 = withElectorate(area.y2022, raw.registered, raw.abstentions)
+      area.y2022 = applyEl(area.y2022, {
+        registered: raw.registered,
+        abstentions: raw.abstentions,
+        blank: raw.blank,
+        nullVotes: raw.nullVotes,
+      })
       areaY2022++
     }
   }
@@ -327,35 +372,30 @@ async function main() {
   }
   console.log(`2026 ZZ electorate: ${munElectorate.size} municipalities`)
 
-  const country2026 = new Map()
   let areaY2026 = 0
   let countryY2026 = 0
   for (const country of results.countries) {
     if (country.domestic) continue
-    let registered = 0
-    let abstentions = 0
+    const agg = emptyEl()
     let has = false
     for (const area of country.areas || []) {
       const el = munElectorate.get(area.code)
       if (!el || !area.y2026) continue
-      area.y2026 = withElectorate(area.y2026, el.registered, el.abstentions)
+      area.y2026 = applyEl(area.y2026, el)
       areaY2026++
       has = true
-      registered += el.registered
-      abstentions += el.abstentions
+      addEl(agg, el)
     }
     // Prefer sum of areas; fall back to country-level map of known muns.
     if (!has) {
       for (const [code, el] of munElectorate) {
         if (cityMap[code] !== country.id) continue
         has = true
-        registered += el.registered
-        abstentions += el.abstentions
+        addEl(agg, el)
       }
     }
     if (has && country.y2026) {
-      country.y2026 = withElectorate(country.y2026, registered, abstentions)
-      country2026.set(country.id, { registered, abstentions })
+      country.y2026 = applyEl(country.y2026, agg)
       countryY2026++
     }
   }
@@ -376,33 +416,29 @@ async function main() {
 
   const brazil = results.countries.find((c) => c.domestic)
   if (brazil) {
-    let reg22 = 0
-    let abs22 = 0
+    const agg22 = emptyEl()
+    const agg26 = emptyEl()
     let has22 = false
-    let reg26 = 0
-    let abs26 = 0
     let has26 = false
     for (const area of brazil.areas || []) {
       const el22 = uf2022.get(area.code)
       if (el22 && area.y2022) {
-        area.y2022 = withElectorate(area.y2022, el22.registered, el22.abstentions)
+        area.y2022 = applyEl(area.y2022, el22)
         has22 = true
-        reg22 += el22.registered
-        abs22 += el22.abstentions
+        addEl(agg22, el22)
       }
       const el26 = uf2026.get(area.code)
       if (el26 && area.y2026) {
-        area.y2026 = withElectorate(area.y2026, el26.registered, el26.abstentions)
+        area.y2026 = applyEl(area.y2026, el26)
         has26 = true
-        reg26 += el26.registered
-        abs26 += el26.abstentions
+        addEl(agg26, el26)
       }
     }
     if (has22 && brazil.y2022) {
-      brazil.y2022 = withElectorate(brazil.y2022, reg22, abs22)
+      brazil.y2022 = applyEl(brazil.y2022, agg22)
     }
     if (has26 && brazil.y2026) {
-      brazil.y2026 = withElectorate(brazil.y2026, reg26, abs26)
+      brazil.y2026 = applyEl(brazil.y2026, agg26)
     }
     console.log(
       `Patched Brazil domestic electorate (2022=${has22}, 2026=${has26})`,

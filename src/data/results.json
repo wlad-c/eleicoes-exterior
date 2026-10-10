@@ -156,7 +156,10 @@
         "bolsonaroPct": 43.2,
         "registered": 155758656,
         "abstentions": 32380232,
-        "abstentionPct": 20.79
+        "blank": 1959922,
+        "nullVotes": 3483224,
+        "noValidVote": 37823378,
+        "noValidVotePct": 24.28
       },
       "y2026": {
         "lula": 53722151,
@@ -166,7 +169,10 @@
         "bolsonaroPct": 47.04,
         "registered": 157828968,
         "abstentions": 32894899,
-        "abstentionPct": 20.84
+        "blank": 2294982,
+        "nullVotes": 3669181,
+        "noValidVote": 38859062,
+        "noValidVotePct": 24.62
       },
       "swing": {
         "lulaPp": -3.27,
@@ -192,7 +198,10 @@
             "bolsonaroPct": 64.56,
             "registered": 613742,
             "abstentions": 125412,
-            "abstentionPct": 20.43
+            "blank": 5579,
+            "nullVotes": 13685,
+            "noValidVote": 144676,
+            "noValidVotePct": 23.57
           },
           "y2022": {
             "lula": 129022,
@@ -202,7 +211,10 @@
             "bolsonaroPct": 62.5,
             "registered": 587738,
             "abstentions": 131835,
-            "abstentionPct": 22.43
+            "blank": 4664,
+            "nullVotes": 10322,
+            "noValidVote": 146821,
+            "noValidVotePct": 24.98
           },
           "swing": {
             "lulaPp": -0.53,
@@ -228,7 +240,10 @@
             "bolsonaroPct": 40.45,
             "registered": 2442126,
             "abstentions": 503698,
-            "abstentionPct": 20.63
+            "blank": 33712,
+            "nullVotes": 85860,
+            "noValidVote": 623270,
+            "noValidVotePct": 25.52
           },
           "y2022": {
             "lula": 974156,
@@ -238,7 +253,10 @@
             "bolsonaroPct": 36.05,
             "registered": 2326491,
             "abstentions": 520520,
-            "abstentionPct": 22.37
+            "blank": 28792,
+            "nullVotes": 52962,
+            "noValidVote": 602274,
+            "noValidVotePct": 25.89
           },
           "swing": {
             "lulaPp": -1.77,
@@ -264,7 +282,10 @@
             "bolsonaroPct": 45.67,
             "registered": 576988,
             "abstentions": 100426,
-            "abstentionPct": 17.41
+            "blank": 4415,
+            "nullVotes": 7289,
+            "noValidVote": 112130,
+            "noValidVotePct": 19.43
           },
           "y2022": {
             "lula": 197382,
@@ -274,7 +295,10 @@
             "bolsonaroPct": 43.41,
             "registered": 550165,
             "abstentions": 107323,
-            "abstentionPct": 19.51
+            "blank": 3289,
+            "nullVotes": 7392,
+            "noValidVote": 118004,
+            "noValidVotePct": 21.45
           },
           "swing": {
             "lulaPp": 0.04,
@@ -300,7 +324,10 @@
             "bolsonaroPct": 45,
             "registered": 2798611,
             "abstentions": 564062,
-            "abstentionPct": 20.16
+            "blank": 24402,
+            "nullVotes": 39384,
+            "noValidVote": 627848,
+            "noValidVotePct": 22.43
           },
           "y2022": {
             "lula": 1019684,
@@ -310,7 +337,10 @@
             "bolsonaroPct": 42.8,
             "registered": 2646924,
             "abstentions": 533069,
-            "abstentionPct": 20.14
+            "blank": 19570,
+            "nullVotes": 37525,
+            "noValidVote": 590164,
+            "noValidVotePct": 22.3
           },
           "swing": {
             "lulaPp": -1.35,
@@ -336,7 +366,10 @@
             "bolsonaroPct": 28.53,
             "registered": 11312752,
             "abstentions": 2259151,
-            "abstentionPct": 19.97
+            "blank": 154936,
+            "nullVotes": 338374,
+            "noValidVote": 2752461,
+            "noValidVotePct": 24.33
           },
           "y2022": {
             "lula": 5873081,
@@ -346,7 +379,10 @@
             "bolsonaroPct": 24.31,
             "registered": 11283405,
             "abstentions": 2408564,
-            "abstentionPct": 21.35
+            "blank": 123450,
+            "nullVotes": 328383,
+            "noValidVote": 2860397,
+            "noValidVotePct": 25.35
           },
           "swing": {
             "lulaPp": -3.56,
@@ -372,7 +408,10 @@
             "bolsonaroPct": 31.27,
             "registered": 6996545,
             "abstentions": 1086074,
-            "abstentionPct": 15.52
+            "blank": 103295,
+            "nullVotes": 189362,
+            "noValidVote": 1378731,
+            "noValidVotePct": 19.71
           },
           "y2022": {
             "lula": 3578355,
@@ -382,7 +421,10 @@
             "bolsonaroPct": 25.38,
             "registered": 6818732,
             "abstentions": 1190122,
-            "abstentionPct": 17.45
+            "blank": 72246,
+            "nullVotes": 127100,
+            "noValidVote": 1389468,
+            "noValidVotePct": 20.38
           },
           "swing": {
             "lulaPp": -2.62,
@@ -408,7 +450,10 @@
             "bolsonaroPct": 51.31,
             "registered": 2258320,
             "abstentions": 426924,
-            "abstentionPct": 18.9
+            "blank": 25362,
+            "nullVotes": 33226,
+            "noValidVote": 485512,
+            "noValidVotePct": 21.5
           },
           "y2022": {
             "lula": 649534,
@@ -418,7 +463,10 @@
             "bolsonaroPct": 51.65,
             "registered": 2206996,
             "abstentions": 387096,
-            "abstentionPct": 17.54
+            "blank": 25162,
+            "nullVotes": 32163,
+            "noValidVote": 444421,
+            "noValidVotePct": 20.14
           },
           "swing": {
             "lulaPp": 1.26,
@@ -444,7 +492,10 @@
             "bolsonaroPct": 54.78,
             "registered": 2991650,
             "abstentions": 639368,
-            "abstentionPct": 21.37
+            "blank": 43211,
+            "nullVotes": 57993,
+            "noValidVote": 740572,
+            "noValidVotePct": 24.75
           },
           "y2022": {
             "lula": 897348,
@@ -454,7 +505,10 @@
             "bolsonaroPct": 52.23,
             "registered": 2922379,
             "abstentions": 606490,
-            "abstentionPct": 20.75
+            "blank": 39541,
+            "nullVotes": 55218,
+            "noValidVote": 701249,
+            "noValidVotePct": 24
           },
           "swing": {
             "lulaPp": -2.64,
@@ -480,7 +534,10 @@
             "bolsonaroPct": 53.6,
             "registered": 5080590,
             "abstentions": 1109003,
-            "abstentionPct": 21.83
+            "blank": 45643,
+            "nullVotes": 98121,
+            "noValidVote": 1252767,
+            "noValidVotePct": 24.66
           },
           "y2022": {
             "lula": 1454723,
@@ -490,7 +547,10 @@
             "bolsonaroPct": 52.16,
             "registered": 4870292,
             "abstentions": 1057695,
-            "abstentionPct": 21.72
+            "blank": 48539,
+            "nullVotes": 82589,
+            "noValidVote": 1188823,
+            "noValidVotePct": 24.41
           },
           "swing": {
             "lulaPp": -8.45,
@@ -516,7 +576,10 @@
             "bolsonaroPct": 30.9,
             "registered": 5183115,
             "abstentions": 1022772,
-            "abstentionPct": 19.73
+            "blank": 46315,
+            "nullVotes": 103589,
+            "noValidVote": 1172676,
+            "noValidVotePct": 22.62
           },
           "y2022": {
             "lula": 2603454,
@@ -526,7 +589,10 @@
             "bolsonaroPct": 26.02,
             "registered": 5039287,
             "abstentions": 1118852,
-            "abstentionPct": 22.2
+            "blank": 35605,
+            "nullVotes": 103185,
+            "noValidVote": 1257642,
+            "noValidVotePct": 24.96
           },
           "swing": {
             "lulaPp": -4.85,
@@ -552,7 +618,10 @@
             "bolsonaroPct": 65.15,
             "registered": 2637801,
             "abstentions": 585668,
-            "abstentionPct": 22.2
+            "blank": 20756,
+            "nullVotes": 38089,
+            "noValidVote": 644513,
+            "noValidVotePct": 24.43
           },
           "y2022": {
             "lula": 633748,
@@ -562,7 +631,10 @@
             "bolsonaroPct": 59.84,
             "registered": 2469604,
             "abstentions": 577424,
-            "abstentionPct": 23.38
+            "blank": 18680,
+            "nullVotes": 30612,
+            "noValidVote": 626716,
+            "noValidVotePct": 25.38
           },
           "swing": {
             "lulaPp": -5.21,
@@ -588,7 +660,10 @@
             "bolsonaroPct": 58.6,
             "registered": 2024430,
             "abstentions": 483210,
-            "abstentionPct": 23.87
+            "blank": 21270,
+            "nullVotes": 29672,
+            "noValidVote": 534152,
+            "noValidVotePct": 26.39
           },
           "y2022": {
             "lula": 588323,
@@ -598,7 +673,10 @@
             "bolsonaroPct": 52.7,
             "registered": 1995932,
             "abstentions": 440783,
-            "abstentionPct": 22.08
+            "blank": 17651,
+            "nullVotes": 30509,
+            "noValidVote": 488943,
+            "noValidVotePct": 24.5
           },
           "swing": {
             "lulaPp": -4.36,
@@ -624,7 +702,10 @@
             "bolsonaroPct": 48.24,
             "registered": 16372372,
             "abstentions": 3735098,
-            "abstentionPct": 22.81
+            "blank": 268302,
+            "nullVotes": 392737,
+            "noValidVote": 4396137,
+            "noValidVotePct": 26.85
           },
           "y2022": {
             "lula": 5802571,
@@ -634,7 +715,10 @@
             "bolsonaroPct": 43.6,
             "registered": 16283828,
             "abstentions": 3628600,
-            "abstentionPct": 22.28
+            "blank": 229425,
+            "nullVotes": 409170,
+            "noValidVote": 4267195,
+            "noValidVotePct": 26.21
           },
           "swing": {
             "lulaPp": -4.96,
@@ -660,7 +744,10 @@
             "bolsonaroPct": 44.5,
             "registered": 6262397,
             "abstentions": 1195893,
-            "abstentionPct": 19.1
+            "blank": 54203,
+            "nullVotes": 149129,
+            "noValidVote": 1399225,
+            "noValidVotePct": 22.34
           },
           "y2022": {
             "lula": 2443730,
@@ -670,7 +757,10 @@
             "bolsonaroPct": 40.27,
             "registered": 6079280,
             "abstentions": 1289969,
-            "abstentionPct": 21.22
+            "blank": 40902,
+            "nullVotes": 68473,
+            "noValidVote": 1399344,
+            "noValidVotePct": 23.02
           },
           "swing": {
             "lulaPp": -2.31,
@@ -696,7 +786,10 @@
             "bolsonaroPct": 33.07,
             "registered": 3248531,
             "abstentions": 564543,
-            "abstentionPct": 17.38
+            "blank": 52297,
+            "nullVotes": 117944,
+            "noValidVote": 734784,
+            "noValidVotePct": 22.62
           },
           "y2022": {
             "lula": 1554868,
@@ -706,7 +799,10 @@
             "bolsonaroPct": 29.62,
             "registered": 3092053,
             "abstentions": 534574,
-            "abstentionPct": 17.29
+            "blank": 41922,
+            "nullVotes": 93869,
+            "noValidVote": 670365,
+            "noValidVotePct": 21.68
           },
           "swing": {
             "lulaPp": -2.9,
@@ -732,7 +828,10 @@
             "bolsonaroPct": 59.91,
             "registered": 8613657,
             "abstentions": 1772200,
-            "abstentionPct": 20.57
+            "blank": 122499,
+            "nullVotes": 133715,
+            "noValidVote": 2028414,
+            "noValidVotePct": 23.55
           },
           "y2022": {
             "lula": 2363492,
@@ -742,7 +841,10 @@
             "bolsonaroPct": 55.26,
             "registered": 8480435,
             "abstentions": 1651892,
-            "abstentionPct": 19.48
+            "blank": 108894,
+            "nullVotes": 152885,
+            "noValidVote": 1913671,
+            "noValidVotePct": 22.57
           },
           "swing": {
             "lulaPp": -4.79,
@@ -768,7 +870,10 @@
             "bolsonaroPct": 31.03,
             "registered": 7223450,
             "abstentions": 1312388,
-            "abstentionPct": 18.17
+            "blank": 109491,
+            "nullVotes": 200554,
+            "noValidVote": 1622433,
+            "noValidVotePct": 22.46
           },
           "y2022": {
             "lula": 3558322,
@@ -778,7 +883,10 @@
             "bolsonaroPct": 29.91,
             "registered": 7015421,
             "abstentions": 1277050,
-            "abstentionPct": 18.2
+            "blank": 90092,
+            "nullVotes": 196270,
+            "noValidVote": 1563412,
+            "noValidVotePct": 22.29
           },
           "swing": {
             "lulaPp": -1.82,
@@ -804,7 +912,10 @@
             "bolsonaroPct": 24.09,
             "registered": 2704758,
             "abstentions": 463875,
-            "abstentionPct": 17.15
+            "blank": 28329,
+            "nullVotes": 66160,
+            "noValidVote": 558364,
+            "noValidVotePct": 20.64
           },
           "y2022": {
             "lula": 1518008,
@@ -814,7 +925,10 @@
             "bolsonaroPct": 19.9,
             "registered": 2570433,
             "abstentions": 454788,
-            "abstentionPct": 17.69
+            "blank": 19477,
+            "nullVotes": 51782,
+            "noValidVote": 526047,
+            "noValidVotePct": 20.47
           },
           "swing": {
             "lulaPp": -3.26,
@@ -840,7 +954,10 @@
             "bolsonaroPct": 53.01,
             "registered": 12857648,
             "abstentions": 2997846,
-            "abstentionPct": 23.32
+            "blank": 201979,
+            "nullVotes": 288123,
+            "noValidVote": 3487948,
+            "noValidVotePct": 27.13
           },
           "y2022": {
             "lula": 3847143,
@@ -850,7 +967,10 @@
             "bolsonaroPct": 51.09,
             "registered": 12826356,
             "abstentions": 2916893,
-            "abstentionPct": 22.74
+            "blank": 159773,
+            "nullVotes": 293013,
+            "noValidVote": 3369679,
+            "noValidVotePct": 26.27
           },
           "swing": {
             "lulaPp": -1.27,
@@ -876,7 +996,10 @@
             "bolsonaroPct": 34.77,
             "registered": 2659825,
             "abstentions": 488812,
-            "abstentionPct": 18.38
+            "blank": 33172,
+            "nullVotes": 65943,
+            "noValidVote": 587927,
+            "noValidVotePct": 22.1
           },
           "y2022": {
             "lula": 1264179,
@@ -886,7 +1009,10 @@
             "bolsonaroPct": 31.02,
             "registered": 2554716,
             "abstentions": 464112,
-            "abstentionPct": 18.17
+            "blank": 26151,
+            "nullVotes": 57189,
+            "noValidVote": 547452,
+            "noValidVotePct": 21.43
           },
           "swing": {
             "lulaPp": -3.23,
@@ -912,7 +1038,10 @@
             "bolsonaroPct": 55.64,
             "registered": 8522545,
             "abstentions": 1819642,
-            "abstentionPct": 21.35
+            "blank": 148339,
+            "nullVotes": 131518,
+            "noValidVote": 2099499,
+            "noValidVotePct": 24.63
           },
           "y2022": {
             "lula": 2806672,
@@ -922,7 +1051,10 @@
             "bolsonaroPct": 48.89,
             "registered": 8589432,
             "abstentions": 1699416,
-            "abstentionPct": 19.78
+            "blank": 129345,
+            "nullVotes": 122919,
+            "noValidVote": 1951680,
+            "noValidVotePct": 22.72
           },
           "swing": {
             "lulaPp": -6.55,
@@ -948,7 +1080,10 @@
             "bolsonaroPct": 67.45,
             "registered": 1265893,
             "abstentions": 274813,
-            "abstentionPct": 21.71
+            "blank": 9846,
+            "nullVotes": 13175,
+            "noValidVote": 297834,
+            "noValidVotePct": 23.53
           },
           "y2022": {
             "lula": 261749,
@@ -958,7 +1093,10 @@
             "bolsonaroPct": 64.36,
             "registered": 1229998,
             "abstentions": 303171,
-            "abstentionPct": 24.65
+            "blank": 9350,
+            "nullVotes": 14242,
+            "noValidVote": 326763,
+            "noValidVotePct": 26.57
           },
           "swing": {
             "lulaPp": -3.09,
@@ -984,7 +1122,10 @@
             "bolsonaroPct": 71.06,
             "registered": 401521,
             "abstentions": 68749,
-            "abstentionPct": 17.12
+            "blank": 2618,
+            "nullVotes": 4609,
+            "noValidVote": 75976,
+            "noValidVotePct": 18.92
           },
           "y2022": {
             "lula": 68760,
@@ -994,7 +1135,10 @@
             "bolsonaroPct": 69.57,
             "registered": 366632,
             "abstentions": 61228,
-            "abstentionPct": 16.7
+            "blank": 2255,
+            "nullVotes": 4780,
+            "noValidVote": 68263,
+            "noValidVotePct": 18.62
           },
           "swing": {
             "lulaPp": -0.19,
@@ -1020,7 +1164,10 @@
             "bolsonaroPct": 66.65,
             "registered": 5734651,
             "abstentions": 1086492,
-            "abstentionPct": 18.95
+            "blank": 69007,
+            "nullVotes": 78255,
+            "noValidVote": 1233754,
+            "noValidVotePct": 21.51
           },
           "y2022": {
             "lula": 1279216,
@@ -1030,7 +1177,10 @@
             "bolsonaroPct": 62.21,
             "registered": 5501478,
             "abstentions": 1014004,
-            "abstentionPct": 18.43
+            "blank": 66871,
+            "nullVotes": 89619,
+            "noValidVote": 1170494,
+            "noValidVotePct": 21.28
           },
           "swing": {
             "lulaPp": -4.5,
@@ -1056,7 +1206,10 @@
             "bolsonaroPct": 51.93,
             "registered": 34122892,
             "abstentions": 7690900,
-            "abstentionPct": 22.54
+            "blank": 632801,
+            "nullVotes": 916243,
+            "noValidVote": 9239944,
+            "noValidVotePct": 27.08
           },
           "y2022": {
             "lula": 10490032,
@@ -1066,7 +1219,10 @@
             "bolsonaroPct": 47.71,
             "registered": 34684927,
             "abstentions": 7495213,
-            "abstentionPct": 21.61
+            "blank": 571257,
+            "nullVotes": 962123,
+            "noValidVote": 9028593,
+            "noValidVotePct": 26.03
           },
           "swing": {
             "lulaPp": -2.69,
@@ -1092,7 +1248,10 @@
             "bolsonaroPct": 30.63,
             "registered": 1740135,
             "abstentions": 301053,
-            "abstentionPct": 17.3
+            "blank": 24859,
+            "nullVotes": 50027,
+            "noValidVote": 375939,
+            "noValidVotePct": 21.6
           },
           "y2022": {
             "lula": 828716,
@@ -1102,7 +1261,10 @@
             "bolsonaroPct": 29.16,
             "registered": 1671376,
             "abstentions": 306652,
-            "abstentionPct": 18.35
+            "blank": 20224,
+            "nullVotes": 46068,
+            "noValidVote": 372944,
+            "noValidVotePct": 22.31
           },
           "swing": {
             "lulaPp": -1.07,
@@ -1128,7 +1290,10 @@
             "bolsonaroPct": 50.44,
             "registered": 1182023,
             "abstentions": 216827,
-            "abstentionPct": 18.34
+            "blank": 8344,
+            "nullVotes": 26405,
+            "noValidVote": 251576,
+            "noValidVotePct": 21.28
           },
           "y2022": {
             "lula": 434303,
@@ -1138,7 +1303,10 @@
             "bolsonaroPct": 44,
             "registered": 1094346,
             "abstentions": 202897,
-            "abstentionPct": 18.54
+            "blank": 6795,
+            "nullVotes": 22862,
+            "noValidVote": 232554,
+            "noValidVotePct": 21.25
           },
           "swing": {
             "lulaPp": -6.98,
@@ -1174,7 +1342,10 @@
         "bolsonaroPct": 72.21,
         "registered": 76443,
         "abstentions": 42363,
-        "abstentionPct": 55.42
+        "blank": 1372,
+        "nullVotes": 848,
+        "noValidVote": 44583,
+        "noValidVotePct": 58.32
       },
       "y2026": {
         "lula": 5234,
@@ -1184,7 +1355,10 @@
         "bolsonaroPct": 71.76,
         "registered": 88293,
         "abstentions": 51666,
-        "abstentionPct": 58.52
+        "blank": 1441,
+        "nullVotes": 905,
+        "noValidVote": 54012,
+        "noValidVotePct": 61.17
       },
       "swing": {
         "lulaPp": 1.78,
@@ -1210,7 +1384,10 @@
             "bolsonaroPct": 74.52,
             "registered": 44536,
             "abstentions": 28219,
-            "abstentionPct": 63.36
+            "blank": 528,
+            "nullVotes": 383,
+            "noValidVote": 29130,
+            "noValidVotePct": 65.41
           },
           "y2022": {
             "lula": 1682,
@@ -1220,7 +1397,10 @@
             "bolsonaroPct": 75.47,
             "registered": 35578,
             "abstentions": 20498,
-            "abstentionPct": 57.61
+            "blank": 569,
+            "nullVotes": 355,
+            "noValidVote": 21422,
+            "noValidVotePct": 60.21
           },
           "swing": {
             "lulaPp": 1.24,
@@ -1246,7 +1426,10 @@
             "bolsonaroPct": 67.93,
             "registered": 30028,
             "abstentions": 16636,
-            "abstentionPct": 55.4
+            "blank": 642,
+            "nullVotes": 350,
+            "noValidVote": 17628,
+            "noValidVotePct": 58.71
           },
           "y2022": {
             "lula": 1966,
@@ -1256,7 +1439,10 @@
             "bolsonaroPct": 66.94,
             "registered": 28688,
             "abstentions": 15663,
-            "abstentionPct": 54.6
+            "blank": 584,
+            "nullVotes": 336,
+            "noValidVote": 16583,
+            "noValidVotePct": 57.8
           },
           "swing": {
             "lulaPp": 2.53,
@@ -1282,7 +1468,10 @@
             "bolsonaroPct": 72.56,
             "registered": 13729,
             "abstentions": 6811,
-            "abstentionPct": 49.61
+            "blank": 271,
+            "nullVotes": 172,
+            "noValidVote": 7254,
+            "noValidVotePct": 52.84
           },
           "y2022": {
             "lula": 649,
@@ -1292,7 +1481,10 @@
             "bolsonaroPct": 75.37,
             "registered": 12177,
             "abstentions": 6202,
-            "abstentionPct": 50.93
+            "blank": 219,
+            "nullVotes": 157,
+            "noValidVote": 6578,
+            "noValidVotePct": 54.02
           },
           "swing": {
             "lulaPp": 2.06,
@@ -1557,7 +1749,10 @@
         "bolsonaroPct": 28.75,
         "registered": 15356,
         "abstentions": 8762,
-        "abstentionPct": 57.06
+        "blank": 130,
+        "nullVotes": 112,
+        "noValidVote": 9004,
+        "noValidVotePct": 58.64
       },
       "y2026": {
         "lula": 4562,
@@ -1567,7 +1762,10 @@
         "bolsonaroPct": 31.73,
         "registered": 20274,
         "abstentions": 11875,
-        "abstentionPct": 58.57
+        "blank": 121,
+        "nullVotes": 149,
+        "noValidVote": 12145,
+        "noValidVotePct": 59.9
       },
       "swing": {
         "lulaPp": 1.26,
@@ -1593,7 +1791,10 @@
             "bolsonaroPct": 32.04,
             "registered": 14031,
             "abstentions": 8337,
-            "abstentionPct": 59.42
+            "blank": 71,
+            "nullVotes": 87,
+            "noValidVote": 8495,
+            "noValidVotePct": 60.54
           },
           "y2022": {
             "lula": 2385,
@@ -1603,7 +1804,10 @@
             "bolsonaroPct": 29.42,
             "registered": 10749,
             "abstentions": 6201,
-            "abstentionPct": 57.69
+            "blank": 88,
+            "nullVotes": 72,
+            "noValidVote": 6361,
+            "noValidVotePct": 59.18
           },
           "swing": {
             "lulaPp": 1.36,
@@ -1629,7 +1833,10 @@
             "bolsonaroPct": 31.05,
             "registered": 6243,
             "abstentions": 3538,
-            "abstentionPct": 56.67
+            "blank": 50,
+            "nullVotes": 62,
+            "noValidVote": 3650,
+            "noValidVotePct": 58.47
           },
           "y2022": {
             "lula": 1100,
@@ -1639,7 +1846,10 @@
             "bolsonaroPct": 27.24,
             "registered": 4607,
             "abstentions": 2561,
-            "abstentionPct": 55.59
+            "blank": 42,
+            "nullVotes": 40,
+            "noValidVote": 2643,
+            "noValidVotePct": 57.37
           },
           "swing": {
             "lulaPp": 0.99,
@@ -1838,7 +2048,10 @@
         "bolsonaroPct": 35.38,
         "registered": 1355,
         "abstentions": 979,
-        "abstentionPct": 72.25
+        "blank": 13,
+        "nullVotes": 21,
+        "noValidVote": 1013,
+        "noValidVotePct": 74.76
       },
       "y2026": {
         "lula": 268,
@@ -1848,7 +2061,10 @@
         "bolsonaroPct": 24.08,
         "registered": 1500,
         "abstentions": 1068,
-        "abstentionPct": 71.2
+        "blank": 5,
+        "nullVotes": 20,
+        "noValidVote": 1093,
+        "noValidVotePct": 72.87
       },
       "swing": {
         "lulaPp": 17.31,
@@ -1874,7 +2090,10 @@
             "bolsonaroPct": 22.65,
             "registered": 739,
             "abstentions": 542,
-            "abstentionPct": 73.34
+            "blank": 3,
+            "nullVotes": 13,
+            "noValidVote": 558,
+            "noValidVotePct": 75.51
           },
           "y2022": {
             "lula": 93,
@@ -1884,7 +2103,10 @@
             "bolsonaroPct": 26.82,
             "registered": 695,
             "abstentions": 495,
-            "abstentionPct": 71.22
+            "blank": 6,
+            "nullVotes": 15,
+            "noValidVote": 516,
+            "noValidVotePct": 74.24
           },
           "swing": {
             "lulaPp": 12.13,
@@ -1910,7 +2132,10 @@
             "bolsonaroPct": 16.42,
             "registered": 342,
             "abstentions": 206,
-            "abstentionPct": 60.23
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 208,
+            "noValidVotePct": 60.82
           },
           "y2022": {
             "lula": 48,
@@ -1920,7 +2145,10 @@
             "bolsonaroPct": 25,
             "registered": 280,
             "abstentions": 199,
-            "abstentionPct": 71.07
+            "blank": 4,
+            "nullVotes": 1,
+            "noValidVote": 204,
+            "noValidVotePct": 72.86
           },
           "swing": {
             "lulaPp": 14.45,
@@ -1946,7 +2174,10 @@
             "bolsonaroPct": 38.04,
             "registered": 419,
             "abstentions": 320,
-            "abstentionPct": 76.37
+            "blank": 2,
+            "nullVotes": 5,
+            "noValidVote": 327,
+            "noValidVotePct": 78.04
           },
           "y2022": {
             "lula": 25,
@@ -1956,7 +2187,10 @@
             "bolsonaroPct": 62.07,
             "registered": 380,
             "abstentions": 285,
-            "abstentionPct": 75
+            "blank": 3,
+            "nullVotes": 5,
+            "noValidVote": 293,
+            "noValidVotePct": 77.11
           },
           "swing": {
             "lulaPp": 23.43,
@@ -1988,7 +2222,10 @@
         "bolsonaroPct": 15.74,
         "registered": 2943,
         "abstentions": 2485,
-        "abstentionPct": 84.44
+        "blank": 3,
+        "nullVotes": 4,
+        "noValidVote": 2492,
+        "noValidVotePct": 84.68
       },
       "y2026": {
         "lula": 234,
@@ -1998,7 +2235,10 @@
         "bolsonaroPct": 19.28,
         "registered": 3118,
         "abstentions": 2779,
-        "abstentionPct": 89.13
+        "blank": 4,
+        "nullVotes": 3,
+        "noValidVote": 2786,
+        "noValidVotePct": 89.35
       },
       "swing": {
         "lulaPp": -2.47,
@@ -2024,7 +2264,10 @@
             "bolsonaroPct": 19.28,
             "registered": 3118,
             "abstentions": 2779,
-            "abstentionPct": 89.13
+            "blank": 4,
+            "nullVotes": 3,
+            "noValidVote": 2786,
+            "noValidVotePct": 89.35
           },
           "y2022": {
             "lula": 329,
@@ -2034,7 +2277,10 @@
             "bolsonaroPct": 15.74,
             "registered": 2943,
             "abstentions": 2485,
-            "abstentionPct": 84.44
+            "blank": 3,
+            "nullVotes": 4,
+            "noValidVote": 2492,
+            "noValidVotePct": 84.68
           },
           "swing": {
             "lulaPp": -2.47,
@@ -2066,7 +2312,10 @@
         "bolsonaroPct": 24.87,
         "registered": 808,
         "abstentions": 400,
-        "abstentionPct": 49.5
+        "blank": 12,
+        "nullVotes": 6,
+        "noValidVote": 418,
+        "noValidVotePct": 51.73
       },
       "y2026": {
         "lula": 190,
@@ -2076,7 +2325,10 @@
         "bolsonaroPct": 26.44,
         "registered": 864,
         "abstentions": 500,
-        "abstentionPct": 57.87
+        "blank": 8,
+        "nullVotes": 8,
+        "noValidVote": 516,
+        "noValidVotePct": 59.72
       },
       "swing": {
         "lulaPp": 7.93,
@@ -2102,7 +2354,10 @@
             "bolsonaroPct": 26.44,
             "registered": 864,
             "abstentions": 500,
-            "abstentionPct": 57.87
+            "blank": 8,
+            "nullVotes": 8,
+            "noValidVote": 516,
+            "noValidVotePct": 59.72
           },
           "y2022": {
             "lula": 182,
@@ -2112,7 +2367,10 @@
             "bolsonaroPct": 24.87,
             "registered": 808,
             "abstentions": 400,
-            "abstentionPct": 49.5
+            "blank": 12,
+            "nullVotes": 6,
+            "noValidVote": 418,
+            "noValidVotePct": 51.73
           },
           "swing": {
             "lulaPp": 7.93,
@@ -2144,7 +2402,10 @@
         "bolsonaroPct": 48.31,
         "registered": 595,
         "abstentions": 402,
-        "abstentionPct": 67.56
+        "blank": 10,
+        "nullVotes": 5,
+        "noValidVote": 417,
+        "noValidVotePct": 70.08
       },
       "y2026": {
         "lula": 99,
@@ -2154,7 +2415,10 @@
         "bolsonaroPct": 43.03,
         "registered": 668,
         "abstentions": 404,
-        "abstentionPct": 60.48
+        "blank": 10,
+        "nullVotes": 10,
+        "noValidVote": 424,
+        "noValidVotePct": 63.47
       },
       "swing": {
         "lulaPp": 9.67,
@@ -2180,7 +2444,10 @@
             "bolsonaroPct": 43.03,
             "registered": 668,
             "abstentions": 404,
-            "abstentionPct": 60.48
+            "blank": 10,
+            "nullVotes": 10,
+            "noValidVote": 424,
+            "noValidVotePct": 63.47
           },
           "y2022": {
             "lula": 55,
@@ -2190,7 +2457,10 @@
             "bolsonaroPct": 48.31,
             "registered": 595,
             "abstentions": 402,
-            "abstentionPct": 67.56
+            "blank": 10,
+            "nullVotes": 5,
+            "noValidVote": 417,
+            "noValidVotePct": 70.08
           },
           "swing": {
             "lulaPp": 9.67,
@@ -2222,7 +2492,10 @@
         "bolsonaroPct": 25.6,
         "registered": 376,
         "abstentions": 160,
-        "abstentionPct": 42.55
+        "blank": 6,
+        "nullVotes": 3,
+        "noValidVote": 169,
+        "noValidVotePct": 44.95
       },
       "y2026": {
         "lula": 123,
@@ -2232,7 +2505,10 @@
         "bolsonaroPct": 33.33,
         "registered": 485,
         "abstentions": 259,
-        "abstentionPct": 53.4
+        "blank": 6,
+        "nullVotes": 4,
+        "noValidVote": 269,
+        "noValidVotePct": 55.46
       },
       "swing": {
         "lulaPp": -5.86,
@@ -2258,7 +2534,10 @@
             "bolsonaroPct": 33.33,
             "registered": 485,
             "abstentions": 259,
-            "abstentionPct": 53.4
+            "blank": 6,
+            "nullVotes": 4,
+            "noValidVote": 269,
+            "noValidVotePct": 55.46
           },
           "y2022": {
             "lula": 130,
@@ -2268,7 +2547,10 @@
             "bolsonaroPct": 25.6,
             "registered": 376,
             "abstentions": 160,
-            "abstentionPct": 42.55
+            "blank": 6,
+            "nullVotes": 3,
+            "noValidVote": 169,
+            "noValidVotePct": 44.95
           },
           "swing": {
             "lulaPp": -5.86,
@@ -2300,7 +2582,10 @@
         "bolsonaroPct": 40,
         "registered": 220,
         "abstentions": 111,
-        "abstentionPct": 50.45
+        "blank": 2,
+        "nullVotes": 2,
+        "noValidVote": 115,
+        "noValidVotePct": 52.27
       },
       "y2026": {
         "lula": 40,
@@ -2310,7 +2595,10 @@
         "bolsonaroPct": 51.52,
         "registered": 310,
         "abstentions": 208,
-        "abstentionPct": 67.1
+        "blank": 3,
+        "nullVotes": 0,
+        "noValidVote": 211,
+        "noValidVotePct": 68.06
       },
       "swing": {
         "lulaPp": -3.41,
@@ -2336,7 +2624,10 @@
             "bolsonaroPct": 51.52,
             "registered": 310,
             "abstentions": 208,
-            "abstentionPct": 67.1
+            "blank": 3,
+            "nullVotes": 0,
+            "noValidVote": 211,
+            "noValidVotePct": 68.06
           },
           "y2022": {
             "lula": 46,
@@ -2346,7 +2637,10 @@
             "bolsonaroPct": 40,
             "registered": 220,
             "abstentions": 111,
-            "abstentionPct": 50.45
+            "blank": 2,
+            "nullVotes": 2,
+            "noValidVote": 115,
+            "noValidVotePct": 52.27
           },
           "swing": {
             "lulaPp": -3.41,
@@ -2378,7 +2672,10 @@
         "bolsonaroPct": 42.11,
         "registered": 119,
         "abstentions": 61,
-        "abstentionPct": 51.26
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 62,
+        "noValidVotePct": 52.1
       },
       "y2026": {
         "lula": 44,
@@ -2388,7 +2685,10 @@
         "bolsonaroPct": 32.93,
         "registered": 170,
         "abstentions": 87,
-        "abstentionPct": 51.18
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 88,
+        "noValidVotePct": 51.76
       },
       "swing": {
         "lulaPp": 6.29,
@@ -2414,7 +2714,10 @@
             "bolsonaroPct": 32.93,
             "registered": 170,
             "abstentions": 87,
-            "abstentionPct": 51.18
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 88,
+            "noValidVotePct": 51.76
           },
           "y2022": {
             "lula": 27,
@@ -2424,7 +2727,10 @@
             "bolsonaroPct": 42.11,
             "registered": 119,
             "abstentions": 61,
-            "abstentionPct": 51.26
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 62,
+            "noValidVotePct": 52.1
           },
           "swing": {
             "lulaPp": 6.29,
@@ -2456,7 +2762,10 @@
         "bolsonaroPct": 55.56,
         "registered": 192,
         "abstentions": 129,
-        "abstentionPct": 67.19
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 129,
+        "noValidVotePct": 67.19
       },
       "y2026": {
         "lula": 26,
@@ -2466,7 +2775,10 @@
         "bolsonaroPct": 53.23,
         "registered": 229,
         "abstentions": 166,
-        "abstentionPct": 72.49
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 167,
+        "noValidVotePct": 72.93
       },
       "swing": {
         "lulaPp": 10.19,
@@ -2492,7 +2804,10 @@
             "bolsonaroPct": 53.23,
             "registered": 229,
             "abstentions": 166,
-            "abstentionPct": 72.49
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 167,
+            "noValidVotePct": 72.93
           },
           "y2022": {
             "lula": 20,
@@ -2502,7 +2817,10 @@
             "bolsonaroPct": 55.56,
             "registered": 192,
             "abstentions": 129,
-            "abstentionPct": 67.19
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 129,
+            "noValidVotePct": 67.19
           },
           "swing": {
             "lulaPp": 10.19,
@@ -2534,7 +2852,10 @@
         "bolsonaroPct": 57.93,
         "registered": 182619,
         "abstentions": 115709,
-        "abstentionPct": 63.36
+        "blank": 672,
+        "nullVotes": 899,
+        "noValidVote": 117280,
+        "noValidVotePct": 64.22
       },
       "y2026": {
         "lula": 23335,
@@ -2544,7 +2865,10 @@
         "bolsonaroPct": 61.1,
         "registered": 265022,
         "abstentions": 189633,
-        "abstentionPct": 71.55
+        "blank": 895,
+        "nullVotes": 833,
+        "noValidVote": 191361,
+        "noValidVotePct": 72.21
       },
       "swing": {
         "lulaPp": 0.24,
@@ -2570,7 +2894,10 @@
             "bolsonaroPct": 69.77,
             "registered": 53358,
             "abstentions": 36968,
-            "abstentionPct": 69.28
+            "blank": 175,
+            "nullVotes": 123,
+            "noValidVote": 37266,
+            "noValidVotePct": 69.84
           },
           "y2022": {
             "lula": 2982,
@@ -2580,7 +2907,10 @@
             "bolsonaroPct": 69.89,
             "registered": 37105,
             "abstentions": 23649,
-            "abstentionPct": 63.74
+            "blank": 129,
+            "nullVotes": 384,
+            "noValidVote": 24162,
+            "noValidVotePct": 65.12
           },
           "swing": {
             "lulaPp": 1.31,
@@ -2606,7 +2936,10 @@
             "bolsonaroPct": 74.18,
             "registered": 40053,
             "abstentions": 27775,
-            "abstentionPct": 69.35
+            "blank": 122,
+            "nullVotes": 139,
+            "noValidVote": 28036,
+            "noValidVotePct": 70
           },
           "y2022": {
             "lula": 2548,
@@ -2616,7 +2949,10 @@
             "bolsonaroPct": 74.26,
             "registered": 40095,
             "abstentions": 24117,
-            "abstentionPct": 60.15
+            "blank": 120,
+            "nullVotes": 126,
+            "noValidVote": 24363,
+            "noValidVotePct": 60.76
           },
           "swing": {
             "lulaPp": 2.61,
@@ -2642,7 +2978,10 @@
             "bolsonaroPct": 47.36,
             "registered": 38953,
             "abstentions": 28819,
-            "abstentionPct": 73.98
+            "blank": 132,
+            "nullVotes": 111,
+            "noValidVote": 29062,
+            "noValidVotePct": 74.61
           },
           "y2022": {
             "lula": 4716,
@@ -2652,7 +2991,10 @@
             "bolsonaroPct": 46.27,
             "registered": 27870,
             "abstentions": 16580,
-            "abstentionPct": 59.49
+            "blank": 154,
+            "nullVotes": 139,
+            "noValidVote": 16873,
+            "noValidVotePct": 60.54
           },
           "swing": {
             "lulaPp": 3.32,
@@ -2678,7 +3020,10 @@
             "bolsonaroPct": 78.72,
             "registered": 26386,
             "abstentions": 17392,
-            "abstentionPct": 65.91
+            "blank": 60,
+            "nullVotes": 66,
+            "noValidVote": 17518,
+            "noValidVotePct": 66.39
           },
           "y2022": null,
           "swing": null,
@@ -2701,7 +3046,10 @@
             "bolsonaroPct": 66.82,
             "registered": 16301,
             "abstentions": 11279,
-            "abstentionPct": 69.19
+            "blank": 57,
+            "nullVotes": 62,
+            "noValidVote": 11398,
+            "noValidVotePct": 69.92
           },
           "y2022": {
             "lula": 973,
@@ -2711,7 +3059,10 @@
             "bolsonaroPct": 66.64,
             "registered": 12580,
             "abstentions": 8193,
-            "abstentionPct": 65.13
+            "blank": 33,
+            "nullVotes": 34,
+            "noValidVote": 8260,
+            "noValidVotePct": 65.66
           },
           "swing": {
             "lulaPp": 2.38,
@@ -2737,7 +3088,10 @@
             "bolsonaroPct": 39.48,
             "registered": 18146,
             "abstentions": 13310,
-            "abstentionPct": 73.35
+            "blank": 72,
+            "nullVotes": 58,
+            "noValidVote": 13440,
+            "noValidVotePct": 74.07
           },
           "y2022": {
             "lula": 2271,
@@ -2747,7 +3101,10 @@
             "bolsonaroPct": 41.7,
             "registered": 14038,
             "abstentions": 8923,
-            "abstentionPct": 63.56
+            "blank": 57,
+            "nullVotes": 48,
+            "noValidVote": 9028,
+            "noValidVotePct": 64.31
           },
           "swing": {
             "lulaPp": 6.07,
@@ -2773,7 +3130,10 @@
             "bolsonaroPct": 44.39,
             "registered": 18262,
             "abstentions": 13653,
-            "abstentionPct": 74.76
+            "blank": 58,
+            "nullVotes": 59,
+            "noValidVote": 13770,
+            "noValidVotePct": 75.4
           },
           "y2022": {
             "lula": 1793,
@@ -2783,7 +3143,10 @@
             "bolsonaroPct": 42.43,
             "registered": 11172,
             "abstentions": 7146,
-            "abstentionPct": 63.96
+            "blank": 43,
+            "nullVotes": 45,
+            "noValidVote": 7234,
+            "noValidVotePct": 64.75
           },
           "swing": {
             "lulaPp": 1.91,
@@ -2809,7 +3172,10 @@
             "bolsonaroPct": 59.85,
             "registered": 16438,
             "abstentions": 11938,
-            "abstentionPct": 72.62
+            "blank": 89,
+            "nullVotes": 90,
+            "noValidVote": 12117,
+            "noValidVotePct": 73.71
           },
           "y2022": {
             "lula": 1195,
@@ -2819,7 +3185,10 @@
             "bolsonaroPct": 55.29,
             "registered": 13775,
             "abstentions": 9559,
-            "abstentionPct": 69.39
+            "blank": 49,
+            "nullVotes": 40,
+            "noValidVote": 9648,
+            "noValidVotePct": 70.04
           },
           "swing": {
             "lulaPp": 0.32,
@@ -2845,7 +3214,10 @@
             "bolsonaroPct": 34.98,
             "registered": 15492,
             "abstentions": 11596,
-            "abstentionPct": 74.85
+            "blank": 59,
+            "nullVotes": 55,
+            "noValidVote": 11710,
+            "noValidVotePct": 75.59
           },
           "y2022": {
             "lula": 2174,
@@ -2855,7 +3227,10 @@
             "bolsonaroPct": 33.35,
             "registered": 11678,
             "abstentions": 7575,
-            "abstentionPct": 64.87
+            "blank": 42,
+            "nullVotes": 31,
+            "noValidVote": 7648,
+            "noValidVotePct": 65.49
           },
           "swing": {
             "lulaPp": 3.59,
@@ -2881,7 +3256,10 @@
             "bolsonaroPct": 35.37,
             "registered": 12452,
             "abstentions": 9673,
-            "abstentionPct": 77.68
+            "blank": 42,
+            "nullVotes": 43,
+            "noValidVote": 9758,
+            "noValidVotePct": 78.36
           },
           "y2022": {
             "lula": 1446,
@@ -2891,7 +3269,10 @@
             "bolsonaroPct": 33.69,
             "registered": 10285,
             "abstentions": 7401,
-            "abstentionPct": 71.96
+            "blank": 31,
+            "nullVotes": 42,
+            "noValidVote": 7474,
+            "noValidVotePct": 72.67
           },
           "swing": {
             "lulaPp": 3.68,
@@ -2917,7 +3298,10 @@
             "bolsonaroPct": 63.69,
             "registered": 9181,
             "abstentions": 7230,
-            "abstentionPct": 78.75
+            "blank": 29,
+            "nullVotes": 27,
+            "noValidVote": 7286,
+            "noValidVotePct": 79.36
           },
           "y2022": {
             "lula": 443,
@@ -2927,7 +3311,10 @@
             "bolsonaroPct": 57.3,
             "registered": 4021,
             "abstentions": 2566,
-            "abstentionPct": 63.81
+            "blank": 14,
+            "nullVotes": 10,
+            "noValidVote": 2590,
+            "noValidVotePct": 64.41
           },
           "swing": {
             "lulaPp": -1.57,
@@ -3172,7 +3559,10 @@
         "bolsonaroPct": 31.02,
         "registered": 80692,
         "abstentions": 43575,
-        "abstentionPct": 54
+        "blank": 488,
+        "nullVotes": 464,
+        "noValidVote": 44527,
+        "noValidVotePct": 55.18
       },
       "y2026": {
         "lula": 26401,
@@ -3182,7 +3572,10 @@
         "bolsonaroPct": 38.57,
         "registered": 134374,
         "abstentions": 82691,
-        "abstentionPct": 61.54
+        "blank": 761,
+        "nullVotes": 588,
+        "noValidVote": 84040,
+        "noValidVotePct": 62.54
       },
       "swing": {
         "lulaPp": -7.94,
@@ -3208,7 +3601,10 @@
             "bolsonaroPct": 37.76,
             "registered": 78607,
             "abstentions": 49964,
-            "abstentionPct": 63.56
+            "blank": 387,
+            "nullVotes": 320,
+            "noValidVote": 50671,
+            "noValidVotePct": 64.46
           },
           "y2022": {
             "lula": 12153,
@@ -3218,7 +3614,10 @@
             "bolsonaroPct": 30.69,
             "registered": 45162,
             "abstentions": 24896,
-            "abstentionPct": 55.13
+            "blank": 246,
+            "nullVotes": 250,
+            "noValidVote": 25392,
+            "noValidVotePct": 56.22
           },
           "swing": {
             "lulaPp": -7.96,
@@ -3244,7 +3643,10 @@
             "bolsonaroPct": 38.32,
             "registered": 47496,
             "abstentions": 27217,
-            "abstentionPct": 57.3
+            "blank": 324,
+            "nullVotes": 227,
+            "noValidVote": 27768,
+            "noValidVotePct": 58.46
           },
           "y2022": {
             "lula": 8813,
@@ -3254,7 +3656,10 @@
             "bolsonaroPct": 30.24,
             "registered": 30014,
             "abstentions": 14985,
-            "abstentionPct": 49.93
+            "blank": 223,
+            "nullVotes": 188,
+            "noValidVote": 15396,
+            "noValidVotePct": 51.3
           },
           "swing": {
             "lulaPp": -7.8,
@@ -3280,7 +3685,10 @@
             "bolsonaroPct": 48.88,
             "registered": 8271,
             "abstentions": 5510,
-            "abstentionPct": 66.62
+            "blank": 50,
+            "nullVotes": 41,
+            "noValidVote": 5601,
+            "noValidVotePct": 67.72
           },
           "y2022": {
             "lula": 873,
@@ -3290,7 +3698,10 @@
             "bolsonaroPct": 41.08,
             "registered": 5516,
             "abstentions": 3694,
-            "abstentionPct": 66.97
+            "blank": 19,
+            "nullVotes": 26,
+            "noValidVote": 3739,
+            "noValidVotePct": 67.78
           },
           "swing": {
             "lulaPp": -8.04,
@@ -3322,7 +3733,10 @@
         "bolsonaroPct": 31.62,
         "registered": 38970,
         "abstentions": 16551,
-        "abstentionPct": 42.47
+        "blank": 298,
+        "nullVotes": 427,
+        "noValidVote": 17276,
+        "noValidVotePct": 44.33
       },
       "y2026": {
         "lula": 12508,
@@ -3332,7 +3746,10 @@
         "bolsonaroPct": 32.52,
         "registered": 46345,
         "abstentions": 23899,
-        "abstentionPct": 51.57
+        "blank": 356,
+        "nullVotes": 432,
+        "noValidVote": 24687,
+        "noValidVotePct": 53.27
       },
       "swing": {
         "lulaPp": 3.26,
@@ -3358,7 +3775,10 @@
             "bolsonaroPct": 38.16,
             "registered": 20953,
             "abstentions": 11954,
-            "abstentionPct": 57.05
+            "blank": 129,
+            "nullVotes": 173,
+            "noValidVote": 12256,
+            "noValidVotePct": 58.49
           },
           "y2022": {
             "lula": 4663,
@@ -3368,7 +3788,10 @@
             "bolsonaroPct": 37.14,
             "registered": 17712,
             "abstentions": 8243,
-            "abstentionPct": 46.54
+            "blank": 93,
+            "nullVotes": 154,
+            "noValidVote": 8490,
+            "noValidVotePct": 47.93
           },
           "swing": {
             "lulaPp": 3.14,
@@ -3394,7 +3817,10 @@
             "bolsonaroPct": 24.72,
             "registered": 10953,
             "abstentions": 4852,
-            "abstentionPct": 44.3
+            "blank": 104,
+            "nullVotes": 108,
+            "noValidVote": 5064,
+            "noValidVotePct": 46.23
           },
           "y2022": {
             "lula": 3475,
@@ -3404,7 +3830,10 @@
             "bolsonaroPct": 24.54,
             "registered": 9438,
             "abstentions": 3512,
-            "abstentionPct": 37.21
+            "blank": 82,
+            "nullVotes": 122,
+            "noValidVote": 3716,
+            "noValidVotePct": 39.37
           },
           "swing": {
             "lulaPp": 4.19,
@@ -3430,7 +3859,10 @@
             "bolsonaroPct": 32.8,
             "registered": 12082,
             "abstentions": 6170,
-            "abstentionPct": 51.07
+            "blank": 93,
+            "nullVotes": 108,
+            "noValidVote": 6371,
+            "noValidVotePct": 52.73
           },
           "y2022": {
             "lula": 3119,
@@ -3440,7 +3872,10 @@
             "bolsonaroPct": 30.35,
             "registered": 9970,
             "abstentions": 4107,
-            "abstentionPct": 41.19
+            "blank": 99,
+            "nullVotes": 123,
+            "noValidVote": 4329,
+            "noValidVotePct": 43.42
           },
           "swing": {
             "lulaPp": 1.11,
@@ -3466,7 +3901,10 @@
             "bolsonaroPct": 29.02,
             "registered": 2357,
             "abstentions": 923,
-            "abstentionPct": 39.16
+            "blank": 30,
+            "nullVotes": 43,
+            "noValidVote": 996,
+            "noValidVotePct": 42.26
           },
           "y2022": {
             "lula": 564,
@@ -3476,7 +3914,10 @@
             "bolsonaroPct": 28.67,
             "registered": 1850,
             "abstentions": 689,
-            "abstentionPct": 37.24
+            "blank": 24,
+            "nullVotes": 28,
+            "noValidVote": 741,
+            "noValidVotePct": 40.05
           },
           "swing": {
             "lulaPp": 7.48,
@@ -3642,7 +4083,10 @@
         "bolsonaroPct": 18.54,
         "registered": 35980,
         "abstentions": 18474,
-        "abstentionPct": 51.35
+        "blank": 174,
+        "nullVotes": 231,
+        "noValidVote": 18879,
+        "noValidVotePct": 52.47
       },
       "y2026": {
         "lula": 13525,
@@ -3652,7 +4096,10 @@
         "bolsonaroPct": 18.79,
         "registered": 41401,
         "abstentions": 22155,
-        "abstentionPct": 53.51
+        "blank": 197,
+        "nullVotes": 247,
+        "noValidVote": 22599,
+        "noValidVotePct": 54.59
       },
       "swing": {
         "lulaPp": 2.49,
@@ -3678,7 +4125,10 @@
             "bolsonaroPct": 11.54,
             "registered": 15066,
             "abstentions": 6862,
-            "abstentionPct": 45.55
+            "blank": 68,
+            "nullVotes": 117,
+            "noValidVote": 7047,
+            "noValidVotePct": 46.77
           },
           "y2022": {
             "lula": 5713,
@@ -3688,7 +4138,10 @@
             "bolsonaroPct": 11.27,
             "registered": 12621,
             "abstentions": 5315,
-            "abstentionPct": 42.11
+            "blank": 45,
+            "nullVotes": 82,
+            "noValidVote": 5442,
+            "noValidVotePct": 43.12
           },
           "swing": {
             "lulaPp": 1.53,
@@ -3714,7 +4167,10 @@
             "bolsonaroPct": 24.02,
             "registered": 12961,
             "abstentions": 7342,
-            "abstentionPct": 56.65
+            "blank": 64,
+            "nullVotes": 60,
+            "noValidVote": 7466,
+            "noValidVotePct": 57.6
           },
           "y2022": {
             "lula": 3143,
@@ -3724,7 +4180,10 @@
             "bolsonaroPct": 22.84,
             "registered": 11523,
             "abstentions": 6472,
-            "abstentionPct": 56.17
+            "blank": 77,
+            "nullVotes": 70,
+            "noValidVote": 6619,
+            "noValidVotePct": 57.44
           },
           "swing": {
             "lulaPp": 2.46,
@@ -3750,7 +4209,10 @@
             "bolsonaroPct": 24.34,
             "registered": 13374,
             "abstentions": 7951,
-            "abstentionPct": 59.45
+            "blank": 65,
+            "nullVotes": 70,
+            "noValidVote": 8086,
+            "noValidVotePct": 60.46
           },
           "y2022": {
             "lula": 3019,
@@ -3760,7 +4222,10 @@
             "bolsonaroPct": 24.73,
             "registered": 11836,
             "abstentions": 6687,
-            "abstentionPct": 56.5
+            "blank": 52,
+            "nullVotes": 79,
+            "noValidVote": 6818,
+            "noValidVotePct": 57.6
           },
           "swing": {
             "lulaPp": 3.46,
@@ -3926,7 +4391,10 @@
         "bolsonaroPct": 34.94,
         "registered": 34407,
         "abstentions": 19304,
-        "abstentionPct": 56.1
+        "blank": 143,
+        "nullVotes": 164,
+        "noValidVote": 19611,
+        "noValidVotePct": 57
       },
       "y2026": {
         "lula": 8640,
@@ -3936,7 +4404,10 @@
         "bolsonaroPct": 35.42,
         "registered": 41895,
         "abstentions": 26404,
-        "abstentionPct": 63.02
+        "blank": 169,
+        "nullVotes": 173,
+        "noValidVote": 26746,
+        "noValidVotePct": 63.84
       },
       "swing": {
         "lulaPp": 1.85,
@@ -3962,7 +4433,10 @@
             "bolsonaroPct": 36.12,
             "registered": 37448,
             "abstentions": 22651,
-            "abstentionPct": 60.49
+            "blank": 161,
+            "nullVotes": 164,
+            "noValidVote": 22976,
+            "noValidVotePct": 61.35
           },
           "y2022": {
             "lula": 8165,
@@ -3972,7 +4446,10 @@
             "bolsonaroPct": 34.94,
             "registered": 34407,
             "abstentions": 19304,
-            "abstentionPct": 56.1
+            "blank": 143,
+            "nullVotes": 164,
+            "noValidVote": 19611,
+            "noValidVotePct": 57
           },
           "swing": {
             "lulaPp": 1.15,
@@ -3998,7 +4475,10 @@
             "bolsonaroPct": 20.53,
             "registered": 4447,
             "abstentions": 3753,
-            "abstentionPct": 84.39
+            "blank": 8,
+            "nullVotes": 9,
+            "noValidVote": 3770,
+            "noValidVotePct": 84.78
           },
           "y2022": null,
           "swing": null,
@@ -4075,7 +4555,10 @@
         "bolsonaroPct": 37.29,
         "registered": 32958,
         "abstentions": 22214,
-        "abstentionPct": 67.4
+        "blank": 174,
+        "nullVotes": 155,
+        "noValidVote": 22543,
+        "noValidVotePct": 68.4
       },
       "y2026": {
         "lula": 6148,
@@ -4085,7 +4568,10 @@
         "bolsonaroPct": 37.83,
         "registered": 38747,
         "abstentions": 26676,
-        "abstentionPct": 68.85
+        "blank": 239,
+        "nullVotes": 237,
+        "noValidVote": 27152,
+        "noValidVotePct": 70.08
       },
       "swing": {
         "lulaPp": 1,
@@ -4111,7 +4597,10 @@
             "bolsonaroPct": 40.6,
             "registered": 24594,
             "abstentions": 17139,
-            "abstentionPct": 69.69
+            "blank": 157,
+            "nullVotes": 135,
+            "noValidVote": 17431,
+            "noValidVotePct": 70.88
           },
           "y2022": {
             "lula": 3124,
@@ -4121,7 +4610,10 @@
             "bolsonaroPct": 39.88,
             "registered": 20013,
             "abstentions": 13586,
-            "abstentionPct": 67.89
+            "blank": 105,
+            "nullVotes": 96,
+            "noValidVote": 13787,
+            "noValidVotePct": 68.89
           },
           "swing": {
             "lulaPp": -0.02,
@@ -4147,7 +4639,10 @@
             "bolsonaroPct": 33.35,
             "registered": 14153,
             "abstentions": 9537,
-            "abstentionPct": 67.39
+            "blank": 82,
+            "nullVotes": 102,
+            "noValidVote": 9721,
+            "noValidVotePct": 68.69
           },
           "y2022": {
             "lula": 2294,
@@ -4157,7 +4652,10 @@
             "bolsonaroPct": 33.44,
             "registered": 12945,
             "abstentions": 8628,
-            "abstentionPct": 66.65
+            "blank": 69,
+            "nullVotes": 59,
+            "noValidVote": 8756,
+            "noValidVotePct": 67.64
           },
           "swing": {
             "lulaPp": 2.89,
@@ -4189,7 +4687,10 @@
         "bolsonaroPct": 40.98,
         "registered": 24235,
         "abstentions": 13627,
-        "abstentionPct": 56.23
+        "blank": 228,
+        "nullVotes": 197,
+        "noValidVote": 14052,
+        "noValidVotePct": 57.98
       },
       "y2026": {
         "lula": 5194,
@@ -4199,7 +4700,10 @@
         "bolsonaroPct": 41.69,
         "registered": 26982,
         "abstentions": 15744,
-        "abstentionPct": 58.35
+        "blank": 221,
+        "nullVotes": 164,
+        "noValidVote": 16129,
+        "noValidVotePct": 59.78
       },
       "swing": {
         "lulaPp": 2.06,
@@ -4225,7 +4729,10 @@
             "bolsonaroPct": 39.71,
             "registered": 15099,
             "abstentions": 9098,
-            "abstentionPct": 60.26
+            "blank": 124,
+            "nullVotes": 87,
+            "noValidVote": 9309,
+            "noValidVotePct": 61.65
           },
           "y2022": {
             "lula": 2683,
@@ -4235,7 +4742,10 @@
             "bolsonaroPct": 39.42,
             "registered": 13718,
             "abstentions": 7753,
-            "abstentionPct": 56.52
+            "blank": 142,
+            "nullVotes": 133,
+            "noValidVote": 8028,
+            "noValidVotePct": 58.52
           },
           "swing": {
             "lulaPp": 2.87,
@@ -4261,7 +4771,10 @@
             "bolsonaroPct": 43.97,
             "registered": 11883,
             "abstentions": 6646,
-            "abstentionPct": 55.93
+            "blank": 97,
+            "nullVotes": 77,
+            "noValidVote": 6820,
+            "noValidVotePct": 57.39
           },
           "y2022": {
             "lula": 1981,
@@ -4271,7 +4784,10 @@
             "bolsonaroPct": 42.96,
             "registered": 10517,
             "abstentions": 5874,
-            "abstentionPct": 55.85
+            "blank": 86,
+            "nullVotes": 64,
+            "noValidVote": 6024,
+            "noValidVotePct": 57.28
           },
           "swing": {
             "lulaPp": 1.3,
@@ -4303,7 +4819,10 @@
         "bolsonaroPct": 13.75,
         "registered": 22562,
         "abstentions": 12333,
-        "abstentionPct": 54.66
+        "blank": 95,
+        "nullVotes": 71,
+        "noValidVote": 12499,
+        "noValidVotePct": 55.4
       },
       "y2026": {
         "lula": 8769,
@@ -4313,7 +4832,10 @@
         "bolsonaroPct": 15.68,
         "registered": 29617,
         "abstentions": 18202,
-        "abstentionPct": 61.46
+        "blank": 119,
+        "nullVotes": 87,
+        "noValidVote": 18408,
+        "noValidVotePct": 62.15
       },
       "swing": {
         "lulaPp": 0.63,
@@ -4339,7 +4861,10 @@
             "bolsonaroPct": 15.99,
             "registered": 26957,
             "abstentions": 16417,
-            "abstentionPct": 60.9
+            "blank": 115,
+            "nullVotes": 84,
+            "noValidVote": 16616,
+            "noValidVotePct": 61.64
           },
           "y2022": {
             "lula": 7809,
@@ -4349,7 +4874,10 @@
             "bolsonaroPct": 13.75,
             "registered": 22562,
             "abstentions": 12333,
-            "abstentionPct": 54.66
+            "blank": 95,
+            "nullVotes": 71,
+            "noValidVote": 12499,
+            "noValidVotePct": 55.4
           },
           "swing": {
             "lulaPp": 0.28,
@@ -4375,7 +4903,10 @@
             "bolsonaroPct": 11.98,
             "registered": 2660,
             "abstentions": 1785,
-            "abstentionPct": 67.11
+            "blank": 4,
+            "nullVotes": 3,
+            "noValidVote": 1792,
+            "noValidVotePct": 67.37
           },
           "y2022": null,
           "swing": null,
@@ -4404,7 +4935,10 @@
         "bolsonaroPct": 29.61,
         "registered": 30706,
         "abstentions": 20498,
-        "abstentionPct": 66.76
+        "blank": 201,
+        "nullVotes": 197,
+        "noValidVote": 20896,
+        "noValidVotePct": 68.05
       },
       "y2026": {
         "lula": 7263,
@@ -4414,7 +4948,10 @@
         "bolsonaroPct": 28.78,
         "registered": 40718,
         "abstentions": 28700,
-        "abstentionPct": 70.48
+        "blank": 234,
+        "nullVotes": 187,
+        "noValidVote": 29121,
+        "noValidVotePct": 71.52
       },
       "swing": {
         "lulaPp": 2.36,
@@ -4440,7 +4977,10 @@
             "bolsonaroPct": 35.75,
             "registered": 23464,
             "abstentions": 16631,
-            "abstentionPct": 70.88
+            "blank": 159,
+            "nullVotes": 120,
+            "noValidVote": 16910,
+            "noValidVotePct": 72.07
           },
           "y2022": {
             "lula": 2842,
@@ -4450,7 +4990,10 @@
             "bolsonaroPct": 36.86,
             "registered": 19827,
             "abstentions": 14119,
-            "abstentionPct": 71.21
+            "blank": 129,
+            "nullVotes": 142,
+            "noValidVote": 14390,
+            "noValidVotePct": 72.58
           },
           "swing": {
             "lulaPp": 2.22,
@@ -4476,7 +5019,10 @@
             "bolsonaroPct": 19.73,
             "registered": 17254,
             "abstentions": 12069,
-            "abstentionPct": 69.95
+            "blank": 75,
+            "nullVotes": 67,
+            "noValidVote": 12211,
+            "noValidVotePct": 70.77
           },
           "y2022": {
             "lula": 3070,
@@ -4486,7 +5032,10 @@
             "bolsonaroPct": 20.6,
             "registered": 10879,
             "abstentions": 6379,
-            "abstentionPct": 58.64
+            "blank": 72,
+            "nullVotes": 55,
+            "noValidVote": 6506,
+            "noValidVotePct": 59.8
           },
           "swing": {
             "lulaPp": 3.01,
@@ -4518,7 +5067,10 @@
         "bolsonaroPct": 13.67,
         "registered": 11930,
         "abstentions": 4257,
-        "abstentionPct": 35.68
+        "blank": 25,
+        "nullVotes": 54,
+        "noValidVote": 4336,
+        "noValidVotePct": 36.35
       },
       "y2026": {
         "lula": 6025,
@@ -4528,7 +5080,10 @@
         "bolsonaroPct": 18.79,
         "registered": 16720,
         "abstentions": 8303,
-        "abstentionPct": 49.66
+        "blank": 47,
+        "nullVotes": 71,
+        "noValidVote": 8421,
+        "noValidVotePct": 50.36
       },
       "swing": {
         "lulaPp": -5.76,
@@ -4554,7 +5109,10 @@
             "bolsonaroPct": 18.79,
             "registered": 16720,
             "abstentions": 8303,
-            "abstentionPct": 49.66
+            "blank": 47,
+            "nullVotes": 71,
+            "noValidVote": 8421,
+            "noValidVotePct": 50.36
           },
           "y2022": {
             "lula": 5951,
@@ -4564,7 +5122,10 @@
             "bolsonaroPct": 13.67,
             "registered": 11930,
             "abstentions": 4257,
-            "abstentionPct": 35.68
+            "blank": 25,
+            "nullVotes": 54,
+            "noValidVote": 4336,
+            "noValidVotePct": 36.35
           },
           "swing": {
             "lulaPp": -5.76,
@@ -4596,7 +5157,10 @@
         "bolsonaroPct": 29.14,
         "registered": 12684,
         "abstentions": 5222,
-        "abstentionPct": 41.17
+        "blank": 78,
+        "nullVotes": 73,
+        "noValidVote": 5373,
+        "noValidVotePct": 42.36
       },
       "y2026": {
         "lula": 3747,
@@ -4606,7 +5170,10 @@
         "bolsonaroPct": 28.91,
         "registered": 13004,
         "abstentions": 7050,
-        "abstentionPct": 54.21
+        "blank": 81,
+        "nullVotes": 58,
+        "noValidVote": 7189,
+        "noValidVotePct": 55.28
       },
       "swing": {
         "lulaPp": 0.9,
@@ -4632,7 +5199,10 @@
             "bolsonaroPct": 27.29,
             "registered": 11748,
             "abstentions": 6313,
-            "abstentionPct": 53.74
+            "blank": 74,
+            "nullVotes": 52,
+            "noValidVote": 6439,
+            "noValidVotePct": 54.81
           },
           "y2022": {
             "lula": 4406,
@@ -4642,7 +5212,10 @@
             "bolsonaroPct": 28.04,
             "registered": 11515,
             "abstentions": 4569,
-            "abstentionPct": 39.68
+            "blank": 71,
+            "nullVotes": 63,
+            "noValidVote": 4703,
+            "noValidVotePct": 40.84
           },
           "swing": {
             "lulaPp": 1.38,
@@ -4668,7 +5241,10 @@
             "bolsonaroPct": 43.32,
             "registered": 918,
             "abstentions": 542,
-            "abstentionPct": 59.04
+            "blank": 5,
+            "nullVotes": 4,
+            "noValidVote": 551,
+            "noValidVotePct": 60.02
           },
           "y2022": {
             "lula": 172,
@@ -4678,7 +5254,10 @@
             "bolsonaroPct": 40.83,
             "registered": 883,
             "abstentions": 533,
-            "abstentionPct": 60.36
+            "blank": 5,
+            "nullVotes": 7,
+            "noValidVote": 545,
+            "noValidVotePct": 61.72
           },
           "swing": {
             "lulaPp": -1.3,
@@ -4704,7 +5283,10 @@
             "bolsonaroPct": 49.11,
             "registered": 235,
             "abstentions": 119,
-            "abstentionPct": 50.64
+            "blank": 2,
+            "nullVotes": 2,
+            "noValidVote": 123,
+            "noValidVotePct": 52.34
           },
           "y2022": {
             "lula": 52,
@@ -4714,7 +5296,10 @@
             "bolsonaroPct": 55.4,
             "registered": 238,
             "abstentions": 94,
-            "abstentionPct": 39.5
+            "blank": 2,
+            "nullVotes": 3,
+            "noValidVote": 99,
+            "noValidVotePct": 41.6
           },
           "swing": {
             "lulaPp": 6.34,
@@ -4740,7 +5325,10 @@
             "bolsonaroPct": 68.18,
             "registered": 62,
             "abstentions": 40,
-            "abstentionPct": 64.52
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 40,
+            "noValidVotePct": 64.52
           },
           "y2022": {
             "lula": 4,
@@ -4750,7 +5338,10 @@
             "bolsonaroPct": 0,
             "registered": 30,
             "abstentions": 26,
-            "abstentionPct": 86.67
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 26,
+            "noValidVotePct": 86.67
           },
           "swing": {
             "lulaPp": -68.18,
@@ -4776,7 +5367,10 @@
             "bolsonaroPct": 60,
             "registered": 41,
             "abstentions": 36,
-            "abstentionPct": 87.8
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 36,
+            "noValidVotePct": 87.8
           },
           "y2022": null,
           "swing": null,
@@ -4805,7 +5399,10 @@
         "bolsonaroPct": 16.66,
         "registered": 10044,
         "abstentions": 4165,
-        "abstentionPct": 41.47
+        "blank": 45,
+        "nullVotes": 64,
+        "noValidVote": 4274,
+        "noValidVotePct": 42.55
       },
       "y2026": {
         "lula": 4624,
@@ -4815,7 +5412,10 @@
         "bolsonaroPct": 17.23,
         "registered": 12752,
         "abstentions": 6302,
-        "abstentionPct": 49.42
+        "blank": 93,
+        "nullVotes": 83,
+        "noValidVote": 6478,
+        "noValidVotePct": 50.8
       },
       "swing": {
         "lulaPp": 2.75,
@@ -4841,7 +5441,10 @@
             "bolsonaroPct": 17.23,
             "registered": 12752,
             "abstentions": 6302,
-            "abstentionPct": 49.42
+            "blank": 93,
+            "nullVotes": 83,
+            "noValidVote": 6478,
+            "noValidVotePct": 50.8
           },
           "y2022": {
             "lula": 4094,
@@ -4851,7 +5454,10 @@
             "bolsonaroPct": 16.66,
             "registered": 10044,
             "abstentions": 4165,
-            "abstentionPct": 41.47
+            "blank": 45,
+            "nullVotes": 64,
+            "noValidVote": 4274,
+            "noValidVotePct": 42.55
           },
           "swing": {
             "lulaPp": 2.75,
@@ -4883,7 +5489,10 @@
         "bolsonaroPct": 83.02,
         "registered": 8500,
         "abstentions": 3294,
-        "abstentionPct": 38.75
+        "blank": 72,
+        "nullVotes": 60,
+        "noValidVote": 3426,
+        "noValidVotePct": 40.31
       },
       "y2026": {
         "lula": 544,
@@ -4893,7 +5502,10 @@
         "bolsonaroPct": 84.33,
         "registered": 9129,
         "abstentions": 4383,
-        "abstentionPct": 48.01
+        "blank": 148,
+        "nullVotes": 73,
+        "noValidVote": 4604,
+        "noValidVotePct": 50.43
       },
       "swing": {
         "lulaPp": -0.38,
@@ -4919,7 +5531,10 @@
             "bolsonaroPct": 89.45,
             "registered": 5094,
             "abstentions": 2508,
-            "abstentionPct": 49.23
+            "blank": 57,
+            "nullVotes": 26,
+            "noValidVote": 2591,
+            "noValidVotePct": 50.86
           },
           "y2022": {
             "lula": 240,
@@ -4929,7 +5544,10 @@
             "bolsonaroPct": 89.08,
             "registered": 4622,
             "abstentions": 1691,
-            "abstentionPct": 36.59
+            "blank": 25,
+            "nullVotes": 31,
+            "noValidVote": 1747,
+            "noValidVotePct": 37.8
           },
           "swing": {
             "lulaPp": -0.28,
@@ -4955,7 +5573,10 @@
             "bolsonaroPct": 69.75,
             "registered": 2205,
             "abstentions": 1054,
-            "abstentionPct": 47.8
+            "blank": 59,
+            "nullVotes": 31,
+            "noValidVote": 1144,
+            "noValidVotePct": 51.88
           },
           "y2022": {
             "lula": 256,
@@ -4965,7 +5586,10 @@
             "bolsonaroPct": 67.54,
             "registered": 2241,
             "abstentions": 1053,
-            "abstentionPct": 46.99
+            "blank": 29,
+            "nullVotes": 16,
+            "noValidVote": 1098,
+            "noValidVotePct": 49
           },
           "swing": {
             "lulaPp": 1.16,
@@ -4991,7 +5615,10 @@
             "bolsonaroPct": 94.48,
             "registered": 899,
             "abstentions": 362,
-            "abstentionPct": 40.27
+            "blank": 8,
+            "nullVotes": 4,
+            "noValidVote": 374,
+            "noValidVotePct": 41.6
           },
           "y2022": {
             "lula": 29,
@@ -5001,7 +5628,10 @@
             "bolsonaroPct": 93.04,
             "registered": 777,
             "abstentions": 198,
-            "abstentionPct": 25.48
+            "blank": 3,
+            "nullVotes": 1,
+            "noValidVote": 202,
+            "noValidVotePct": 26
           },
           "swing": {
             "lulaPp": -1.42,
@@ -5027,7 +5657,10 @@
             "bolsonaroPct": 74.24,
             "registered": 650,
             "abstentions": 327,
-            "abstentionPct": 50.31
+            "blank": 18,
+            "nullVotes": 10,
+            "noValidVote": 355,
+            "noValidVotePct": 54.62
           },
           "y2022": {
             "lula": 92,
@@ -5037,7 +5670,10 @@
             "bolsonaroPct": 65.71,
             "registered": 625,
             "abstentions": 249,
-            "abstentionPct": 39.84
+            "blank": 14,
+            "nullVotes": 12,
+            "noValidVote": 275,
+            "noValidVotePct": 44
           },
           "swing": {
             "lulaPp": -6.29,
@@ -5063,7 +5699,10 @@
             "bolsonaroPct": 86.52,
             "registered": 281,
             "abstentions": 132,
-            "abstentionPct": 46.98
+            "blank": 6,
+            "nullVotes": 2,
+            "noValidVote": 140,
+            "noValidVotePct": 49.82
           },
           "y2022": {
             "lula": 15,
@@ -5073,7 +5712,10 @@
             "bolsonaroPct": 84.73,
             "registered": 235,
             "abstentions": 103,
-            "abstentionPct": 43.83
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 104,
+            "noValidVotePct": 44.26
           },
           "swing": {
             "lulaPp": -1.52,
@@ -5105,7 +5747,10 @@
         "bolsonaroPct": 34.86,
         "registered": 6422,
         "abstentions": 2658,
-        "abstentionPct": 41.39
+        "blank": 63,
+        "nullVotes": 55,
+        "noValidVote": 2776,
+        "noValidVotePct": 43.23
       },
       "y2026": {
         "lula": 2516,
@@ -5115,7 +5760,10 @@
         "bolsonaroPct": 39.38,
         "registered": 10073,
         "abstentions": 4982,
-        "abstentionPct": 49.46
+        "blank": 63,
+        "nullVotes": 53,
+        "noValidVote": 5098,
+        "noValidVotePct": 50.61
       },
       "swing": {
         "lulaPp": -3.85,
@@ -5141,7 +5789,10 @@
             "bolsonaroPct": 39.38,
             "registered": 10073,
             "abstentions": 4982,
-            "abstentionPct": 49.46
+            "blank": 63,
+            "nullVotes": 53,
+            "noValidVote": 5098,
+            "noValidVotePct": 50.61
           },
           "y2022": {
             "lula": 1984,
@@ -5151,7 +5802,10 @@
             "bolsonaroPct": 34.86,
             "registered": 6422,
             "abstentions": 2658,
-            "abstentionPct": 41.39
+            "blank": 63,
+            "nullVotes": 55,
+            "noValidVote": 2776,
+            "noValidVotePct": 43.23
           },
           "swing": {
             "lulaPp": -3.85,
@@ -5241,7 +5895,10 @@
         "bolsonaroPct": 33.23,
         "registered": 6340,
         "abstentions": 3372,
-        "abstentionPct": 53.19
+        "blank": 64,
+        "nullVotes": 54,
+        "noValidVote": 3490,
+        "noValidVotePct": 55.05
       },
       "y2026": {
         "lula": 2538,
@@ -5251,7 +5908,10 @@
         "bolsonaroPct": 29.31,
         "registered": 8919,
         "abstentions": 4822,
-        "abstentionPct": 54.06
+        "blank": 91,
+        "nullVotes": 123,
+        "noValidVote": 5036,
+        "noValidVotePct": 56.46
       },
       "swing": {
         "lulaPp": 9.18,
@@ -5277,7 +5937,10 @@
             "bolsonaroPct": 29.31,
             "registered": 8919,
             "abstentions": 4822,
-            "abstentionPct": 54.06
+            "blank": 91,
+            "nullVotes": 123,
+            "noValidVote": 5036,
+            "noValidVotePct": 56.46
           },
           "y2022": {
             "lula": 1601,
@@ -5287,7 +5950,10 @@
             "bolsonaroPct": 33.23,
             "registered": 6340,
             "abstentions": 3372,
-            "abstentionPct": 53.19
+            "blank": 64,
+            "nullVotes": 54,
+            "noValidVote": 3490,
+            "noValidVotePct": 55.05
           },
           "swing": {
             "lulaPp": 9.18,
@@ -5387,7 +6053,10 @@
         "bolsonaroPct": 17.3,
         "registered": 4322,
         "abstentions": 1826,
-        "abstentionPct": 42.25
+        "blank": 40,
+        "nullVotes": 23,
+        "noValidVote": 1889,
+        "noValidVotePct": 43.71
       },
       "y2026": {
         "lula": 1770,
@@ -5397,7 +6066,10 @@
         "bolsonaroPct": 19.88,
         "registered": 4866,
         "abstentions": 2259,
-        "abstentionPct": 46.42
+        "blank": 31,
+        "nullVotes": 36,
+        "noValidVote": 2326,
+        "noValidVotePct": 47.8
       },
       "swing": {
         "lulaPp": 2.61,
@@ -5423,7 +6095,10 @@
             "bolsonaroPct": 19.88,
             "registered": 4866,
             "abstentions": 2259,
-            "abstentionPct": 46.42
+            "blank": 31,
+            "nullVotes": 36,
+            "noValidVote": 2326,
+            "noValidVotePct": 47.8
           },
           "y2022": {
             "lula": 1632,
@@ -5433,7 +6108,10 @@
             "bolsonaroPct": 17.3,
             "registered": 4322,
             "abstentions": 1826,
-            "abstentionPct": 42.25
+            "blank": 40,
+            "nullVotes": 23,
+            "noValidVote": 1889,
+            "noValidVotePct": 43.71
           },
           "swing": {
             "lulaPp": 2.61,
@@ -5533,7 +6211,10 @@
         "bolsonaroPct": 41.09,
         "registered": 3280,
         "abstentions": 1241,
-        "abstentionPct": 37.84
+        "blank": 43,
+        "nullVotes": 59,
+        "noValidVote": 1343,
+        "noValidVotePct": 40.95
       },
       "y2026": {
         "lula": 928,
@@ -5543,7 +6224,10 @@
         "bolsonaroPct": 41.05,
         "registered": 3551,
         "abstentions": 1482,
-        "abstentionPct": 41.73
+        "blank": 44,
+        "nullVotes": 54,
+        "noValidVote": 1580,
+        "noValidVotePct": 44.49
       },
       "swing": {
         "lulaPp": 2.22,
@@ -5569,7 +6253,10 @@
             "bolsonaroPct": 41.05,
             "registered": 3551,
             "abstentions": 1482,
-            "abstentionPct": 41.73
+            "blank": 44,
+            "nullVotes": 54,
+            "noValidVote": 1580,
+            "noValidVotePct": 44.49
           },
           "y2022": {
             "lula": 869,
@@ -5579,7 +6266,10 @@
             "bolsonaroPct": 41.09,
             "registered": 3280,
             "abstentions": 1241,
-            "abstentionPct": 37.84
+            "blank": 43,
+            "nullVotes": 59,
+            "noValidVote": 1343,
+            "noValidVotePct": 40.95
           },
           "swing": {
             "lulaPp": 2.22,
@@ -5611,7 +6301,10 @@
         "bolsonaroPct": 73.77,
         "registered": 3141,
         "abstentions": 1359,
-        "abstentionPct": 43.27
+        "blank": 16,
+        "nullVotes": 26,
+        "noValidVote": 1401,
+        "noValidVotePct": 44.6
       },
       "y2026": {
         "lula": 349,
@@ -5621,7 +6314,10 @@
         "bolsonaroPct": 75.5,
         "registered": 3604,
         "abstentions": 1684,
-        "abstentionPct": 46.73
+        "blank": 37,
+        "nullVotes": 37,
+        "noValidVote": 1758,
+        "noValidVotePct": 48.78
       },
       "swing": {
         "lulaPp": -1.05,
@@ -5647,7 +6343,10 @@
             "bolsonaroPct": 81.37,
             "registered": 2765,
             "abstentions": 1292,
-            "abstentionPct": 46.73
+            "blank": 21,
+            "nullVotes": 24,
+            "noValidVote": 1337,
+            "noValidVotePct": 48.35
           },
           "y2022": {
             "lula": 191,
@@ -5657,7 +6356,10 @@
             "bolsonaroPct": 79.84,
             "registered": 2324,
             "abstentions": 1030,
-            "abstentionPct": 44.32
+            "blank": 8,
+            "nullVotes": 16,
+            "noValidVote": 1054,
+            "noValidVotePct": 45.35
           },
           "swing": {
             "lulaPp": -1.45,
@@ -5683,7 +6385,10 @@
             "bolsonaroPct": 47.32,
             "registered": 418,
             "abstentions": 167,
-            "abstentionPct": 39.95
+            "blank": 16,
+            "nullVotes": 11,
+            "noValidVote": 194,
+            "noValidVotePct": 46.41
           },
           "y2022": {
             "lula": 63,
@@ -5693,7 +6398,10 @@
             "bolsonaroPct": 56.65,
             "registered": 390,
             "abstentions": 172,
-            "abstentionPct": 44.1
+            "blank": 7,
+            "nullVotes": 8,
+            "noValidVote": 187,
+            "noValidVotePct": 47.95
           },
           "swing": {
             "lulaPp": 12.72,
@@ -5719,7 +6427,10 @@
             "bolsonaroPct": 64.32,
             "registered": 412,
             "abstentions": 225,
-            "abstentionPct": 54.61
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 227,
+            "noValidVotePct": 55.1
           },
           "y2022": {
             "lula": 93,
@@ -5729,7 +6440,10 @@
             "bolsonaroPct": 57.36,
             "registered": 418,
             "abstentions": 157,
-            "abstentionPct": 37.56
+            "blank": 1,
+            "nullVotes": 2,
+            "noValidVote": 160,
+            "noValidVotePct": 38.28
           },
           "swing": {
             "lulaPp": -5.24,
@@ -5755,7 +6469,10 @@
             "bolsonaroPct": 0,
             "registered": 1,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -5778,7 +6495,10 @@
             "bolsonaroPct": 0,
             "registered": 8,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -5807,7 +6527,10 @@
         "bolsonaroPct": 39.77,
         "registered": 3114,
         "abstentions": 1253,
-        "abstentionPct": 40.24
+        "blank": 84,
+        "nullVotes": 38,
+        "noValidVote": 1375,
+        "noValidVotePct": 44.16
       },
       "y2026": {
         "lula": 790,
@@ -5817,7 +6540,10 @@
         "bolsonaroPct": 42.45,
         "registered": 3105,
         "abstentions": 1331,
-        "abstentionPct": 42.87
+        "blank": 55,
+        "nullVotes": 43,
+        "noValidVote": 1429,
+        "noValidVotePct": 46.02
       },
       "swing": {
         "lulaPp": 1.34,
@@ -5843,7 +6569,10 @@
             "bolsonaroPct": 36.82,
             "registered": 2448,
             "abstentions": 1105,
-            "abstentionPct": 45.14
+            "blank": 47,
+            "nullVotes": 33,
+            "noValidVote": 1185,
+            "noValidVotePct": 48.41
           },
           "y2022": {
             "lula": 687,
@@ -5853,7 +6582,10 @@
             "bolsonaroPct": 33.64,
             "registered": 2391,
             "abstentions": 992,
-            "abstentionPct": 41.49
+            "blank": 75,
+            "nullVotes": 34,
+            "noValidVote": 1101,
+            "noValidVotePct": 46.05
           },
           "swing": {
             "lulaPp": 1.06,
@@ -5879,7 +6611,10 @@
             "bolsonaroPct": 61.85,
             "registered": 611,
             "abstentions": 226,
-            "abstentionPct": 36.99
+            "blank": 8,
+            "nullVotes": 10,
+            "noValidVote": 244,
+            "noValidVotePct": 39.93
           },
           "y2022": {
             "lula": 116,
@@ -5889,7 +6624,10 @@
             "bolsonaroPct": 59.47,
             "registered": 686,
             "abstentions": 261,
-            "abstentionPct": 38.05
+            "blank": 9,
+            "nullVotes": 4,
+            "noValidVote": 274,
+            "noValidVotePct": 39.94
           },
           "swing": {
             "lulaPp": 0.18,
@@ -5915,7 +6653,10 @@
             "bolsonaroPct": 0,
             "registered": 27,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -5938,7 +6679,10 @@
             "bolsonaroPct": 0,
             "registered": 19,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -5967,7 +6711,10 @@
         "bolsonaroPct": 42.84,
         "registered": 3939,
         "abstentions": 2515,
-        "abstentionPct": 63.85
+        "blank": 14,
+        "nullVotes": 21,
+        "noValidVote": 2550,
+        "noValidVotePct": 64.74
       },
       "y2026": {
         "lula": 585,
@@ -5977,7 +6724,10 @@
         "bolsonaroPct": 45.84,
         "registered": 3958,
         "abstentions": 2643,
-        "abstentionPct": 66.78
+        "blank": 10,
+        "nullVotes": 20,
+        "noValidVote": 2673,
+        "noValidVotePct": 67.53
       },
       "swing": {
         "lulaPp": 1.33,
@@ -6003,7 +6753,10 @@
             "bolsonaroPct": 45.84,
             "registered": 3958,
             "abstentions": 2643,
-            "abstentionPct": 66.78
+            "blank": 10,
+            "nullVotes": 20,
+            "noValidVote": 2673,
+            "noValidVotePct": 67.53
           },
           "y2022": {
             "lula": 614,
@@ -6013,7 +6766,10 @@
             "bolsonaroPct": 42.84,
             "registered": 3939,
             "abstentions": 2515,
-            "abstentionPct": 63.85
+            "blank": 14,
+            "nullVotes": 21,
+            "noValidVote": 2550,
+            "noValidVotePct": 64.74
           },
           "swing": {
             "lulaPp": 1.33,
@@ -6045,7 +6801,10 @@
         "bolsonaroPct": 22.58,
         "registered": 2912,
         "abstentions": 1467,
-        "abstentionPct": 50.38
+        "blank": 17,
+        "nullVotes": 42,
+        "noValidVote": 1526,
+        "noValidVotePct": 52.4
       },
       "y2026": {
         "lula": 979,
@@ -6055,7 +6814,10 @@
         "bolsonaroPct": 21.14,
         "registered": 3134,
         "abstentions": 1612,
-        "abstentionPct": 51.44
+        "blank": 26,
+        "nullVotes": 25,
+        "noValidVote": 1663,
+        "noValidVotePct": 53.06
       },
       "swing": {
         "lulaPp": 4.21,
@@ -6081,7 +6843,10 @@
             "bolsonaroPct": 21.14,
             "registered": 3134,
             "abstentions": 1612,
-            "abstentionPct": 51.44
+            "blank": 26,
+            "nullVotes": 25,
+            "noValidVote": 1663,
+            "noValidVotePct": 53.06
           },
           "y2022": {
             "lula": 864,
@@ -6091,7 +6856,10 @@
             "bolsonaroPct": 22.58,
             "registered": 2912,
             "abstentions": 1467,
-            "abstentionPct": 50.38
+            "blank": 17,
+            "nullVotes": 42,
+            "noValidVote": 1526,
+            "noValidVotePct": 52.4
           },
           "swing": {
             "lulaPp": 4.21,
@@ -6123,7 +6891,10 @@
         "bolsonaroPct": 48.58,
         "registered": 3492,
         "abstentions": 2038,
-        "abstentionPct": 58.36
+        "blank": 38,
+        "nullVotes": 34,
+        "noValidVote": 2110,
+        "noValidVotePct": 60.42
       },
       "y2026": {
         "lula": 484,
@@ -6133,7 +6904,10 @@
         "bolsonaroPct": 47.79,
         "registered": 3127,
         "abstentions": 1965,
-        "abstentionPct": 62.84
+        "blank": 42,
+        "nullVotes": 26,
+        "noValidVote": 2033,
+        "noValidVotePct": 65.01
       },
       "swing": {
         "lulaPp": 2.05,
@@ -6159,7 +6933,10 @@
             "bolsonaroPct": 47.79,
             "registered": 3117,
             "abstentions": 1965,
-            "abstentionPct": 63.04
+            "blank": 42,
+            "nullVotes": 26,
+            "noValidVote": 2033,
+            "noValidVotePct": 65.22
           },
           "y2022": {
             "lula": 584,
@@ -6169,7 +6946,10 @@
             "bolsonaroPct": 48.58,
             "registered": 3481,
             "abstentions": 2038,
-            "abstentionPct": 58.55
+            "blank": 38,
+            "nullVotes": 34,
+            "noValidVote": 2110,
+            "noValidVotePct": 60.61
           },
           "swing": {
             "lulaPp": 2.05,
@@ -6195,7 +6975,10 @@
             "bolsonaroPct": 0,
             "registered": 10,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -6224,7 +7007,10 @@
         "bolsonaroPct": 12.03,
         "registered": 2299,
         "abstentions": 1044,
-        "abstentionPct": 45.41
+        "blank": 16,
+        "nullVotes": 17,
+        "noValidVote": 1077,
+        "noValidVotePct": 46.85
       },
       "y2026": {
         "lula": 1166,
@@ -6234,7 +7020,10 @@
         "bolsonaroPct": 13.21,
         "registered": 2856,
         "abstentions": 1334,
-        "abstentionPct": 46.71
+        "blank": 23,
+        "nullVotes": 23,
+        "noValidVote": 1380,
+        "noValidVotePct": 48.32
       },
       "swing": {
         "lulaPp": 2.4,
@@ -6260,7 +7049,10 @@
             "bolsonaroPct": 13.21,
             "registered": 2856,
             "abstentions": 1334,
-            "abstentionPct": 46.71
+            "blank": 23,
+            "nullVotes": 23,
+            "noValidVote": 1380,
+            "noValidVotePct": 48.32
           },
           "y2022": {
             "lula": 936,
@@ -6270,7 +7062,10 @@
             "bolsonaroPct": 12.03,
             "registered": 2299,
             "abstentions": 1044,
-            "abstentionPct": 45.41
+            "blank": 16,
+            "nullVotes": 17,
+            "noValidVote": 1077,
+            "noValidVotePct": 46.85
           },
           "swing": {
             "lulaPp": 2.4,
@@ -6302,7 +7097,10 @@
         "bolsonaroPct": 48.59,
         "registered": 2248,
         "abstentions": 1269,
-        "abstentionPct": 56.45
+        "blank": 12,
+        "nullVotes": 12,
+        "noValidVote": 1293,
+        "noValidVotePct": 57.52
       },
       "y2026": {
         "lula": 512,
@@ -6312,7 +7110,10 @@
         "bolsonaroPct": 48.63,
         "registered": 2988,
         "abstentions": 1592,
-        "abstentionPct": 53.28
+        "blank": 13,
+        "nullVotes": 28,
+        "noValidVote": 1633,
+        "noValidVotePct": 54.65
       },
       "swing": {
         "lulaPp": 0.93,
@@ -6338,7 +7139,10 @@
             "bolsonaroPct": 48.63,
             "registered": 2988,
             "abstentions": 1592,
-            "abstentionPct": 53.28
+            "blank": 13,
+            "nullVotes": 28,
+            "noValidVote": 1633,
+            "noValidVotePct": 54.65
           },
           "y2022": {
             "lula": 352,
@@ -6348,7 +7152,10 @@
             "bolsonaroPct": 48.59,
             "registered": 2248,
             "abstentions": 1269,
-            "abstentionPct": 56.45
+            "blank": 12,
+            "nullVotes": 12,
+            "noValidVote": 1293,
+            "noValidVotePct": 57.52
           },
           "swing": {
             "lulaPp": 0.93,
@@ -6448,7 +7255,10 @@
         "bolsonaroPct": 19.4,
         "registered": 1732,
         "abstentions": 881,
-        "abstentionPct": 50.87
+        "blank": 9,
+        "nullVotes": 12,
+        "noValidVote": 902,
+        "noValidVotePct": 52.08
       },
       "y2026": {
         "lula": 592,
@@ -6458,7 +7268,10 @@
         "bolsonaroPct": 22.4,
         "registered": 2185,
         "abstentions": 1276,
-        "abstentionPct": 58.4
+        "blank": 9,
+        "nullVotes": 16,
+        "noValidVote": 1301,
+        "noValidVotePct": 59.54
       },
       "swing": {
         "lulaPp": 0.83,
@@ -6484,7 +7297,10 @@
             "bolsonaroPct": 22.4,
             "registered": 2185,
             "abstentions": 1276,
-            "abstentionPct": 58.4
+            "blank": 9,
+            "nullVotes": 16,
+            "noValidVote": 1301,
+            "noValidVotePct": 59.54
           },
           "y2022": {
             "lula": 549,
@@ -6494,7 +7310,10 @@
             "bolsonaroPct": 19.4,
             "registered": 1732,
             "abstentions": 881,
-            "abstentionPct": 50.87
+            "blank": 9,
+            "nullVotes": 12,
+            "noValidVote": 902,
+            "noValidVotePct": 52.08
           },
           "swing": {
             "lulaPp": 0.83,
@@ -6526,7 +7345,10 @@
         "bolsonaroPct": 48.73,
         "registered": 1550,
         "abstentions": 726,
-        "abstentionPct": 46.84
+        "blank": 5,
+        "nullVotes": 14,
+        "noValidVote": 745,
+        "noValidVotePct": 48.06
       },
       "y2026": {
         "lula": 248,
@@ -6536,7 +7358,10 @@
         "bolsonaroPct": 52.05,
         "registered": 1633,
         "abstentions": 856,
-        "abstentionPct": 52.42
+        "blank": 18,
+        "nullVotes": 12,
+        "noValidVote": 886,
+        "noValidVotePct": 54.26
       },
       "swing": {
         "lulaPp": -0.67,
@@ -6562,7 +7387,10 @@
             "bolsonaroPct": 52.05,
             "registered": 1616,
             "abstentions": 856,
-            "abstentionPct": 52.97
+            "blank": 18,
+            "nullVotes": 12,
+            "noValidVote": 886,
+            "noValidVotePct": 54.83
           },
           "y2022": {
             "lula": 273,
@@ -6572,7 +7400,10 @@
             "bolsonaroPct": 48.73,
             "registered": 1533,
             "abstentions": 726,
-            "abstentionPct": 47.36
+            "blank": 5,
+            "nullVotes": 14,
+            "noValidVote": 745,
+            "noValidVotePct": 48.6
           },
           "swing": {
             "lulaPp": -0.67,
@@ -6598,7 +7429,10 @@
             "bolsonaroPct": 0,
             "registered": 17,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -6627,7 +7461,10 @@
         "bolsonaroPct": 7.45,
         "registered": 1419,
         "abstentions": 703,
-        "abstentionPct": 49.54
+        "blank": 8,
+        "nullVotes": 10,
+        "noValidVote": 721,
+        "noValidVotePct": 50.81
       },
       "y2026": {
         "lula": 1078,
@@ -6637,7 +7474,10 @@
         "bolsonaroPct": 3.98,
         "registered": 2135,
         "abstentions": 933,
-        "abstentionPct": 43.7
+        "blank": 16,
+        "nullVotes": 29,
+        "noValidVote": 978,
+        "noValidVotePct": 45.81
       },
       "swing": {
         "lulaPp": 8.36,
@@ -6663,7 +7503,10 @@
             "bolsonaroPct": 3.98,
             "registered": 2135,
             "abstentions": 933,
-            "abstentionPct": 43.7
+            "blank": 16,
+            "nullVotes": 29,
+            "noValidVote": 978,
+            "noValidVotePct": 45.81
           },
           "y2022": {
             "lula": 592,
@@ -6673,7 +7516,10 @@
             "bolsonaroPct": 7.45,
             "registered": 1419,
             "abstentions": 703,
-            "abstentionPct": 49.54
+            "blank": 8,
+            "nullVotes": 10,
+            "noValidVote": 721,
+            "noValidVotePct": 50.81
           },
           "swing": {
             "lulaPp": 8.36,
@@ -6705,7 +7551,10 @@
         "bolsonaroPct": 0,
         "registered": 200,
         "abstentions": 0,
-        "abstentionPct": 0
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 0,
+        "noValidVotePct": 0
       },
       "y2026": {
         "lula": 97,
@@ -6715,7 +7564,10 @@
         "bolsonaroPct": 6.48,
         "registered": 775,
         "abstentions": 657,
-        "abstentionPct": 84.77
+        "blank": 1,
+        "nullVotes": 9,
+        "noValidVote": 667,
+        "noValidVotePct": 86.06
       },
       "swing": {
         "lulaPp": 89.81,
@@ -6741,7 +7593,10 @@
             "bolsonaroPct": 6.48,
             "registered": 775,
             "abstentions": 657,
-            "abstentionPct": 84.77
+            "blank": 1,
+            "nullVotes": 9,
+            "noValidVote": 667,
+            "noValidVotePct": 86.06
           },
           "y2022": null,
           "swing": null,
@@ -6770,7 +7625,10 @@
         "bolsonaroPct": 45.98,
         "registered": 2852,
         "abstentions": 2123,
-        "abstentionPct": 74.44
+        "blank": 16,
+        "nullVotes": 17,
+        "noValidVote": 2156,
+        "noValidVotePct": 75.6
       },
       "y2026": {
         "lula": 92,
@@ -6780,7 +7638,10 @@
         "bolsonaroPct": 74.29,
         "registered": 3442,
         "abstentions": 2712,
-        "abstentionPct": 78.79
+        "blank": 14,
+        "nullVotes": 12,
+        "noValidVote": 2738,
+        "noValidVotePct": 79.55
       },
       "swing": {
         "lulaPp": -26.3,
@@ -6806,7 +7667,10 @@
             "bolsonaroPct": 74.29,
             "registered": 3442,
             "abstentions": 2712,
-            "abstentionPct": 78.79
+            "blank": 14,
+            "nullVotes": 12,
+            "noValidVote": 2738,
+            "noValidVotePct": 79.55
           },
           "y2022": {
             "lula": 274,
@@ -6816,7 +7680,10 @@
             "bolsonaroPct": 45.98,
             "registered": 2852,
             "abstentions": 2123,
-            "abstentionPct": 74.44
+            "blank": 16,
+            "nullVotes": 17,
+            "noValidVote": 2156,
+            "noValidVotePct": 75.6
           },
           "swing": {
             "lulaPp": -26.3,
@@ -6848,7 +7715,10 @@
         "bolsonaroPct": 35.02,
         "registered": 1562,
         "abstentions": 839,
-        "abstentionPct": 53.71
+        "blank": 28,
+        "nullVotes": 4,
+        "noValidVote": 871,
+        "noValidVotePct": 55.76
       },
       "y2026": {
         "lula": 245,
@@ -6858,7 +7728,10 @@
         "bolsonaroPct": 47.82,
         "registered": 1499,
         "abstentions": 943,
-        "abstentionPct": 62.91
+        "blank": 23,
+        "nullVotes": 6,
+        "noValidVote": 972,
+        "noValidVotePct": 64.84
       },
       "swing": {
         "lulaPp": -6.33,
@@ -6884,7 +7757,10 @@
             "bolsonaroPct": 47.82,
             "registered": 1499,
             "abstentions": 943,
-            "abstentionPct": 62.91
+            "blank": 23,
+            "nullVotes": 6,
+            "noValidVote": 972,
+            "noValidVotePct": 64.84
           },
           "y2022": {
             "lula": 365,
@@ -6894,7 +7770,10 @@
             "bolsonaroPct": 35.02,
             "registered": 1562,
             "abstentions": 839,
-            "abstentionPct": 53.71
+            "blank": 28,
+            "nullVotes": 4,
+            "noValidVote": 871,
+            "noValidVotePct": 55.76
           },
           "swing": {
             "lulaPp": -6.33,
@@ -6926,7 +7805,10 @@
         "bolsonaroPct": 51.47,
         "registered": 1320,
         "abstentions": 624,
-        "abstentionPct": 47.27
+        "blank": 11,
+        "nullVotes": 7,
+        "noValidVote": 642,
+        "noValidVotePct": 48.64
       },
       "y2026": {
         "lula": 236,
@@ -6936,7 +7818,10 @@
         "bolsonaroPct": 51.06,
         "registered": 1399,
         "abstentions": 722,
-        "abstentionPct": 51.61
+        "blank": 10,
+        "nullVotes": 9,
+        "noValidVote": 741,
+        "noValidVotePct": 52.97
       },
       "swing": {
         "lulaPp": 4.31,
@@ -6962,7 +7847,10 @@
             "bolsonaroPct": 51.06,
             "registered": 1399,
             "abstentions": 722,
-            "abstentionPct": 51.61
+            "blank": 10,
+            "nullVotes": 9,
+            "noValidVote": 741,
+            "noValidVotePct": 52.97
           },
           "y2022": {
             "lula": 214,
@@ -6972,7 +7860,10 @@
             "bolsonaroPct": 51.47,
             "registered": 1320,
             "abstentions": 624,
-            "abstentionPct": 47.27
+            "blank": 11,
+            "nullVotes": 7,
+            "noValidVote": 642,
+            "noValidVotePct": 48.64
           },
           "swing": {
             "lulaPp": 4.31,
@@ -7004,7 +7895,10 @@
         "bolsonaroPct": 20.32,
         "registered": 1016,
         "abstentions": 366,
-        "abstentionPct": 36.02
+        "blank": 19,
+        "nullVotes": 6,
+        "noValidVote": 391,
+        "noValidVotePct": 38.48
       },
       "y2026": {
         "lula": 475,
@@ -7014,7 +7908,10 @@
         "bolsonaroPct": 22.37,
         "registered": 1278,
         "abstentions": 560,
-        "abstentionPct": 43.82
+        "blank": 14,
+        "nullVotes": 11,
+        "noValidVote": 585,
+        "noValidVotePct": 45.77
       },
       "swing": {
         "lulaPp": 6.14,
@@ -7040,7 +7937,10 @@
             "bolsonaroPct": 22.37,
             "registered": 1278,
             "abstentions": 560,
-            "abstentionPct": 43.82
+            "blank": 14,
+            "nullVotes": 11,
+            "noValidVote": 585,
+            "noValidVotePct": 45.77
           },
           "y2022": {
             "lula": 390,
@@ -7050,7 +7950,10 @@
             "bolsonaroPct": 20.32,
             "registered": 1016,
             "abstentions": 366,
-            "abstentionPct": 36.02
+            "blank": 19,
+            "nullVotes": 6,
+            "noValidVote": 391,
+            "noValidVotePct": 38.48
           },
           "swing": {
             "lulaPp": 6.14,
@@ -7082,7 +7985,10 @@
         "bolsonaroPct": 11.86,
         "registered": 813,
         "abstentions": 195,
-        "abstentionPct": 23.99
+        "blank": 4,
+        "nullVotes": 7,
+        "noValidVote": 206,
+        "noValidVotePct": 25.34
       },
       "y2026": {
         "lula": 331,
@@ -7092,7 +7998,10 @@
         "bolsonaroPct": 20.04,
         "registered": 810,
         "abstentions": 339,
-        "abstentionPct": 41.85
+        "blank": 5,
+        "nullVotes": 2,
+        "noValidVote": 346,
+        "noValidVotePct": 42.72
       },
       "swing": {
         "lulaPp": -9.55,
@@ -7118,7 +8027,10 @@
             "bolsonaroPct": 20.04,
             "registered": 810,
             "abstentions": 339,
-            "abstentionPct": 41.85
+            "blank": 5,
+            "nullVotes": 2,
+            "noValidVote": 346,
+            "noValidVotePct": 42.72
           },
           "y2022": {
             "lula": 491,
@@ -7128,7 +8040,10 @@
             "bolsonaroPct": 11.86,
             "registered": 813,
             "abstentions": 195,
-            "abstentionPct": 23.99
+            "blank": 4,
+            "nullVotes": 7,
+            "noValidVote": 206,
+            "noValidVotePct": 25.34
           },
           "swing": {
             "lulaPp": -9.55,
@@ -7160,7 +8075,10 @@
         "bolsonaroPct": 19.38,
         "registered": 1036,
         "abstentions": 454,
-        "abstentionPct": 43.82
+        "blank": 16,
+        "nullVotes": 14,
+        "noValidVote": 484,
+        "noValidVotePct": 46.72
       },
       "y2026": {
         "lula": 675,
@@ -7170,7 +8088,10 @@
         "bolsonaroPct": 7.54,
         "registered": 1489,
         "abstentions": 656,
-        "abstentionPct": 44.06
+        "blank": 19,
+        "nullVotes": 31,
+        "noValidVote": 706,
+        "noValidVotePct": 47.41
       },
       "swing": {
         "lulaPp": 24.98,
@@ -7196,7 +8117,10 @@
             "bolsonaroPct": 7.54,
             "registered": 1489,
             "abstentions": 656,
-            "abstentionPct": 44.06
+            "blank": 19,
+            "nullVotes": 31,
+            "noValidVote": 706,
+            "noValidVotePct": 47.41
           },
           "y2022": {
             "lula": 338,
@@ -7206,7 +8130,10 @@
             "bolsonaroPct": 19.38,
             "registered": 1036,
             "abstentions": 454,
-            "abstentionPct": 43.82
+            "blank": 16,
+            "nullVotes": 14,
+            "noValidVote": 484,
+            "noValidVotePct": 46.72
           },
           "swing": {
             "lulaPp": 24.98,
@@ -7238,7 +8165,10 @@
         "bolsonaroPct": 66.03,
         "registered": 1302,
         "abstentions": 811,
-        "abstentionPct": 62.29
+        "blank": 11,
+        "nullVotes": 9,
+        "noValidVote": 831,
+        "noValidVotePct": 63.82
       },
       "y2026": {
         "lula": 121,
@@ -7248,7 +8178,10 @@
         "bolsonaroPct": 67.78,
         "registered": 1430,
         "abstentions": 870,
-        "abstentionPct": 60.84
+        "blank": 12,
+        "nullVotes": 8,
+        "noValidVote": 890,
+        "noValidVotePct": 62.24
       },
       "swing": {
         "lulaPp": -4.13,
@@ -7274,7 +8207,10 @@
             "bolsonaroPct": 67.78,
             "registered": 1430,
             "abstentions": 870,
-            "abstentionPct": 60.84
+            "blank": 12,
+            "nullVotes": 8,
+            "noValidVote": 890,
+            "noValidVotePct": 62.24
           },
           "y2022": {
             "lula": 125,
@@ -7284,7 +8220,10 @@
             "bolsonaroPct": 66.03,
             "registered": 1302,
             "abstentions": 811,
-            "abstentionPct": 62.29
+            "blank": 11,
+            "nullVotes": 9,
+            "noValidVote": 831,
+            "noValidVotePct": 63.82
           },
           "swing": {
             "lulaPp": -4.13,
@@ -7316,7 +8255,10 @@
         "bolsonaroPct": 52.84,
         "registered": 1013,
         "abstentions": 535,
-        "abstentionPct": 52.81
+        "blank": 11,
+        "nullVotes": 9,
+        "noValidVote": 555,
+        "noValidVotePct": 54.79
       },
       "y2026": {
         "lula": 152,
@@ -7326,7 +8268,10 @@
         "bolsonaroPct": 54.89,
         "registered": 1012,
         "abstentions": 577,
-        "abstentionPct": 57.02
+        "blank": 6,
+        "nullVotes": 10,
+        "noValidVote": 593,
+        "noValidVotePct": 58.6
       },
       "swing": {
         "lulaPp": 2.44,
@@ -7352,7 +8297,10 @@
             "bolsonaroPct": 66.41,
             "registered": 657,
             "abstentions": 392,
-            "abstentionPct": 59.67
+            "blank": 3,
+            "nullVotes": 3,
+            "noValidVote": 398,
+            "noValidVotePct": 60.58
           },
           "y2022": {
             "lula": 73,
@@ -7362,7 +8310,10 @@
             "bolsonaroPct": 63.7,
             "registered": 710,
             "abstentions": 399,
-            "abstentionPct": 56.2
+            "blank": 4,
+            "nullVotes": 4,
+            "noValidVote": 407,
+            "noValidVotePct": 57.32
           },
           "swing": {
             "lulaPp": -0.15,
@@ -7388,7 +8339,10 @@
             "bolsonaroPct": 36.25,
             "registered": 355,
             "abstentions": 185,
-            "abstentionPct": 52.11
+            "blank": 3,
+            "nullVotes": 7,
+            "noValidVote": 195,
+            "noValidVotePct": 54.93
           },
           "y2022": {
             "lula": 82,
@@ -7398,7 +8352,10 @@
             "bolsonaroPct": 31.61,
             "registered": 303,
             "abstentions": 136,
-            "abstentionPct": 44.88
+            "blank": 7,
+            "nullVotes": 5,
+            "noValidVote": 148,
+            "noValidVotePct": 48.84
           },
           "swing": {
             "lulaPp": 3.35,
@@ -7430,7 +8387,10 @@
         "bolsonaroPct": 46.91,
         "registered": 1063,
         "abstentions": 615,
-        "abstentionPct": 57.86
+        "blank": 6,
+        "nullVotes": 5,
+        "noValidVote": 626,
+        "noValidVotePct": 58.89
       },
       "y2026": {
         "lula": 196,
@@ -7440,7 +8400,10 @@
         "bolsonaroPct": 46.56,
         "registered": 1211,
         "abstentions": 703,
-        "abstentionPct": 58.05
+        "blank": 8,
+        "nullVotes": 6,
+        "noValidVote": 717,
+        "noValidVotePct": 59.21
       },
       "swing": {
         "lulaPp": 2.15,
@@ -7466,7 +8429,10 @@
             "bolsonaroPct": 46.56,
             "registered": 1211,
             "abstentions": 703,
-            "abstentionPct": 58.05
+            "blank": 8,
+            "nullVotes": 6,
+            "noValidVote": 717,
+            "noValidVotePct": 59.21
           },
           "y2022": {
             "lula": 164,
@@ -7476,7 +8442,10 @@
             "bolsonaroPct": 46.91,
             "registered": 1063,
             "abstentions": 615,
-            "abstentionPct": 57.86
+            "blank": 6,
+            "nullVotes": 5,
+            "noValidVote": 626,
+            "noValidVotePct": 58.89
           },
           "swing": {
             "lulaPp": 2.15,
@@ -7508,7 +8477,10 @@
         "bolsonaroPct": 60.31,
         "registered": 1005,
         "abstentions": 612,
-        "abstentionPct": 60.9
+        "blank": 4,
+        "nullVotes": 6,
+        "noValidVote": 622,
+        "noValidVotePct": 61.89
       },
       "y2026": {
         "lula": 130,
@@ -7518,7 +8490,10 @@
         "bolsonaroPct": 52.13,
         "registered": 993,
         "abstentions": 650,
-        "abstentionPct": 65.46
+        "blank": 6,
+        "nullVotes": 9,
+        "noValidVote": 665,
+        "noValidVotePct": 66.97
       },
       "swing": {
         "lulaPp": 10.91,
@@ -7544,7 +8519,10 @@
             "bolsonaroPct": 52.13,
             "registered": 993,
             "abstentions": 650,
-            "abstentionPct": 65.46
+            "blank": 6,
+            "nullVotes": 9,
+            "noValidVote": 665,
+            "noValidVotePct": 66.97
           },
           "y2022": {
             "lula": 110,
@@ -7554,7 +8532,10 @@
             "bolsonaroPct": 60.31,
             "registered": 1005,
             "abstentions": 612,
-            "abstentionPct": 60.9
+            "blank": 4,
+            "nullVotes": 6,
+            "noValidVote": 622,
+            "noValidVotePct": 61.89
           },
           "swing": {
             "lulaPp": 10.91,
@@ -7586,7 +8567,10 @@
         "bolsonaroPct": 15.8,
         "registered": 572,
         "abstentions": 190,
-        "abstentionPct": 33.22
+        "blank": 7,
+        "nullVotes": 8,
+        "noValidVote": 205,
+        "noValidVotePct": 35.84
       },
       "y2026": {
         "lula": 279,
@@ -7596,7 +8580,10 @@
         "bolsonaroPct": 17.63,
         "registered": 690,
         "abstentions": 279,
-        "abstentionPct": 40.43
+        "blank": 7,
+        "nullVotes": 7,
+        "noValidVote": 293,
+        "noValidVotePct": 42.46
       },
       "swing": {
         "lulaPp": 1.34,
@@ -7622,7 +8609,10 @@
             "bolsonaroPct": 17.63,
             "registered": 690,
             "abstentions": 279,
-            "abstentionPct": 40.43
+            "blank": 7,
+            "nullVotes": 7,
+            "noValidVote": 293,
+            "noValidVotePct": 42.46
           },
           "y2022": {
             "lula": 253,
@@ -7632,7 +8622,10 @@
             "bolsonaroPct": 15.8,
             "registered": 572,
             "abstentions": 190,
-            "abstentionPct": 33.22
+            "blank": 7,
+            "nullVotes": 8,
+            "noValidVote": 205,
+            "noValidVotePct": 35.84
           },
           "swing": {
             "lulaPp": 1.34,
@@ -7664,7 +8657,10 @@
         "bolsonaroPct": 46.05,
         "registered": 654,
         "abstentions": 274,
-        "abstentionPct": 41.9
+        "blank": 7,
+        "nullVotes": 6,
+        "noValidVote": 287,
+        "noValidVotePct": 43.88
       },
       "y2026": {
         "lula": 173,
@@ -7674,7 +8670,10 @@
         "bolsonaroPct": 42.97,
         "registered": 714,
         "abstentions": 338,
-        "abstentionPct": 47.34
+        "blank": 4,
+        "nullVotes": 2,
+        "noValidVote": 344,
+        "noValidVotePct": 48.18
       },
       "swing": {
         "lulaPp": 9.7,
@@ -7700,7 +8699,10 @@
             "bolsonaroPct": 42.97,
             "registered": 714,
             "abstentions": 338,
-            "abstentionPct": 47.34
+            "blank": 4,
+            "nullVotes": 2,
+            "noValidVote": 344,
+            "noValidVotePct": 48.18
           },
           "y2022": {
             "lula": 136,
@@ -7710,7 +8712,10 @@
             "bolsonaroPct": 46.05,
             "registered": 654,
             "abstentions": 274,
-            "abstentionPct": 41.9
+            "blank": 7,
+            "nullVotes": 6,
+            "noValidVote": 287,
+            "noValidVotePct": 43.88
           },
           "swing": {
             "lulaPp": 9.7,
@@ -7742,7 +8747,10 @@
         "bolsonaroPct": 53.33,
         "registered": 665,
         "abstentions": 294,
-        "abstentionPct": 44.21
+        "blank": 5,
+        "nullVotes": 6,
+        "noValidVote": 305,
+        "noValidVotePct": 45.86
       },
       "y2026": {
         "lula": 147,
@@ -7752,7 +8760,10 @@
         "bolsonaroPct": 48.46,
         "registered": 758,
         "abstentions": 394,
-        "abstentionPct": 51.98
+        "blank": 4,
+        "nullVotes": 3,
+        "noValidVote": 401,
+        "noValidVotePct": 52.9
       },
       "swing": {
         "lulaPp": 4.51,
@@ -7778,7 +8789,10 @@
             "bolsonaroPct": 48.46,
             "registered": 758,
             "abstentions": 394,
-            "abstentionPct": 51.98
+            "blank": 4,
+            "nullVotes": 3,
+            "noValidVote": 401,
+            "noValidVotePct": 52.9
           },
           "y2022": {
             "lula": 132,
@@ -7788,7 +8802,10 @@
             "bolsonaroPct": 53.33,
             "registered": 665,
             "abstentions": 294,
-            "abstentionPct": 44.21
+            "blank": 5,
+            "nullVotes": 6,
+            "noValidVote": 305,
+            "noValidVotePct": 45.86
           },
           "swing": {
             "lulaPp": 4.51,
@@ -7820,7 +8837,10 @@
         "bolsonaroPct": 17.68,
         "registered": 580,
         "abstentions": 267,
-        "abstentionPct": 46.03
+        "blank": 2,
+        "nullVotes": 0,
+        "noValidVote": 269,
+        "noValidVotePct": 46.38
       },
       "y2026": {
         "lula": 183,
@@ -7830,7 +8850,10 @@
         "bolsonaroPct": 23.05,
         "registered": 748,
         "abstentions": 457,
-        "abstentionPct": 61.1
+        "blank": 2,
+        "nullVotes": 7,
+        "noValidVote": 466,
+        "noValidVotePct": 62.3
       },
       "swing": {
         "lulaPp": -3.6,
@@ -7856,7 +8879,10 @@
             "bolsonaroPct": 23.05,
             "registered": 748,
             "abstentions": 457,
-            "abstentionPct": 61.1
+            "blank": 2,
+            "nullVotes": 7,
+            "noValidVote": 466,
+            "noValidVotePct": 62.3
           },
           "y2022": {
             "lula": 213,
@@ -7866,7 +8892,10 @@
             "bolsonaroPct": 17.68,
             "registered": 580,
             "abstentions": 267,
-            "abstentionPct": 46.03
+            "blank": 2,
+            "nullVotes": 0,
+            "noValidVote": 269,
+            "noValidVotePct": 46.38
           },
           "swing": {
             "lulaPp": -3.6,
@@ -7898,7 +8927,10 @@
         "bolsonaroPct": 51.55,
         "registered": 665,
         "abstentions": 356,
-        "abstentionPct": 53.53
+        "blank": 9,
+        "nullVotes": 9,
+        "noValidVote": 374,
+        "noValidVotePct": 56.24
       },
       "y2026": {
         "lula": 89,
@@ -7908,7 +8940,10 @@
         "bolsonaroPct": 52.8,
         "registered": 557,
         "abstentions": 329,
-        "abstentionPct": 59.07
+        "blank": 2,
+        "nullVotes": 12,
+        "noValidVote": 343,
+        "noValidVotePct": 61.58
       },
       "swing": {
         "lulaPp": 1.38,
@@ -7934,7 +8969,10 @@
             "bolsonaroPct": 52.8,
             "registered": 557,
             "abstentions": 329,
-            "abstentionPct": 59.07
+            "blank": 2,
+            "nullVotes": 12,
+            "noValidVote": 343,
+            "noValidVotePct": 61.58
           },
           "y2022": {
             "lula": 117,
@@ -7944,7 +8982,10 @@
             "bolsonaroPct": 51.55,
             "registered": 665,
             "abstentions": 356,
-            "abstentionPct": 53.53
+            "blank": 9,
+            "nullVotes": 9,
+            "noValidVote": 374,
+            "noValidVotePct": 56.24
           },
           "swing": {
             "lulaPp": 1.38,
@@ -7976,7 +9017,10 @@
         "bolsonaroPct": 39.41,
         "registered": 575,
         "abstentions": 329,
-        "abstentionPct": 57.22
+        "blank": 1,
+        "nullVotes": 9,
+        "noValidVote": 339,
+        "noValidVotePct": 58.96
       },
       "y2026": {
         "lula": 147,
@@ -7986,7 +9030,10 @@
         "bolsonaroPct": 38.26,
         "registered": 716,
         "abstentions": 446,
-        "abstentionPct": 62.29
+        "blank": 2,
+        "nullVotes": 4,
+        "noValidVote": 452,
+        "noValidVotePct": 63.13
       },
       "swing": {
         "lulaPp": 3.14,
@@ -8012,7 +9059,10 @@
             "bolsonaroPct": 38.26,
             "registered": 716,
             "abstentions": 446,
-            "abstentionPct": 62.29
+            "blank": 2,
+            "nullVotes": 4,
+            "noValidVote": 452,
+            "noValidVotePct": 63.13
           },
           "y2022": {
             "lula": 124,
@@ -8022,7 +9072,10 @@
             "bolsonaroPct": 39.41,
             "registered": 575,
             "abstentions": 329,
-            "abstentionPct": 57.22
+            "blank": 1,
+            "nullVotes": 9,
+            "noValidVote": 339,
+            "noValidVotePct": 58.96
           },
           "swing": {
             "lulaPp": 3.14,
@@ -8054,7 +9107,10 @@
         "bolsonaroPct": 44.84,
         "registered": 607,
         "abstentions": 369,
-        "abstentionPct": 60.79
+        "blank": 7,
+        "nullVotes": 8,
+        "noValidVote": 384,
+        "noValidVotePct": 63.26
       },
       "y2026": {
         "lula": 77,
@@ -8064,7 +9120,10 @@
         "bolsonaroPct": 49.08,
         "registered": 622,
         "abstentions": 391,
-        "abstentionPct": 62.86
+        "blank": 6,
+        "nullVotes": 7,
+        "noValidVote": 404,
+        "noValidVotePct": 64.95
       },
       "swing": {
         "lulaPp": -0.11,
@@ -8090,7 +9149,10 @@
             "bolsonaroPct": 49.08,
             "registered": 622,
             "abstentions": 391,
-            "abstentionPct": 62.86
+            "blank": 6,
+            "nullVotes": 7,
+            "noValidVote": 404,
+            "noValidVotePct": 64.95
           },
           "y2022": {
             "lula": 79,
@@ -8100,7 +9162,10 @@
             "bolsonaroPct": 44.84,
             "registered": 607,
             "abstentions": 369,
-            "abstentionPct": 60.79
+            "blank": 7,
+            "nullVotes": 8,
+            "noValidVote": 384,
+            "noValidVotePct": 63.26
           },
           "swing": {
             "lulaPp": -0.11,
@@ -8132,7 +9197,10 @@
         "bolsonaroPct": 55.98,
         "registered": 410,
         "abstentions": 196,
-        "abstentionPct": 47.8
+        "blank": 3,
+        "nullVotes": 2,
+        "noValidVote": 201,
+        "noValidVotePct": 49.02
       },
       "y2026": {
         "lula": 65,
@@ -8142,7 +9210,10 @@
         "bolsonaroPct": 56.38,
         "registered": 415,
         "abstentions": 218,
-        "abstentionPct": 52.53
+        "blank": 2,
+        "nullVotes": 7,
+        "noValidVote": 227,
+        "noValidVotePct": 54.7
       },
       "swing": {
         "lulaPp": 3.47,
@@ -8168,7 +9239,10 @@
             "bolsonaroPct": 56.38,
             "registered": 415,
             "abstentions": 218,
-            "abstentionPct": 52.53
+            "blank": 2,
+            "nullVotes": 7,
+            "noValidVote": 227,
+            "noValidVotePct": 54.7
           },
           "y2022": {
             "lula": 65,
@@ -8178,7 +9252,10 @@
             "bolsonaroPct": 55.98,
             "registered": 410,
             "abstentions": 196,
-            "abstentionPct": 47.8
+            "blank": 3,
+            "nullVotes": 2,
+            "noValidVote": 201,
+            "noValidVotePct": 49.02
           },
           "swing": {
             "lulaPp": 3.47,
@@ -8210,7 +9287,10 @@
         "bolsonaroPct": 8.6,
         "registered": 250,
         "abstentions": 60,
-        "abstentionPct": 24
+        "blank": 0,
+        "nullVotes": 4,
+        "noValidVote": 64,
+        "noValidVotePct": 25.6
       },
       "y2026": {
         "lula": 142,
@@ -8220,7 +9300,10 @@
         "bolsonaroPct": 10,
         "registered": 320,
         "abstentions": 123,
-        "abstentionPct": 38.44
+        "blank": 3,
+        "nullVotes": 4,
+        "noValidVote": 130,
+        "noValidVotePct": 40.63
       },
       "swing": {
         "lulaPp": -4.83,
@@ -8246,7 +9329,10 @@
             "bolsonaroPct": 10,
             "registered": 320,
             "abstentions": 123,
-            "abstentionPct": 38.44
+            "blank": 3,
+            "nullVotes": 4,
+            "noValidVote": 130,
+            "noValidVotePct": 40.63
           },
           "y2022": {
             "lula": 148,
@@ -8256,7 +9342,10 @@
             "bolsonaroPct": 8.6,
             "registered": 250,
             "abstentions": 60,
-            "abstentionPct": 24
+            "blank": 0,
+            "nullVotes": 4,
+            "noValidVote": 64,
+            "noValidVotePct": 25.6
           },
           "swing": {
             "lulaPp": -4.83,
@@ -8288,7 +9377,10 @@
         "bolsonaroPct": 33.33,
         "registered": 246,
         "abstentions": 116,
-        "abstentionPct": 47.15
+        "blank": 0,
+        "nullVotes": 4,
+        "noValidVote": 120,
+        "noValidVotePct": 48.78
       },
       "y2026": {
         "lula": 90,
@@ -8298,7 +9390,10 @@
         "bolsonaroPct": 23.62,
         "registered": 327,
         "abstentions": 198,
-        "abstentionPct": 60.55
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 200,
+        "noValidVotePct": 61.16
       },
       "swing": {
         "lulaPp": 11.39,
@@ -8324,7 +9419,10 @@
             "bolsonaroPct": 23.62,
             "registered": 327,
             "abstentions": 198,
-            "abstentionPct": 60.55
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 200,
+            "noValidVotePct": 61.16
           },
           "y2022": {
             "lula": 72,
@@ -8334,7 +9432,10 @@
             "bolsonaroPct": 34.92,
             "registered": 246,
             "abstentions": 116,
-            "abstentionPct": 47.15
+            "blank": 0,
+            "nullVotes": 4,
+            "noValidVote": 120,
+            "noValidVotePct": 48.78
           },
           "swing": {
             "lulaPp": 13.73,
@@ -8366,7 +9467,10 @@
         "bolsonaroPct": 61.22,
         "registered": 289,
         "abstentions": 142,
-        "abstentionPct": 49.13
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 142,
+        "noValidVotePct": 49.13
       },
       "y2026": {
         "lula": 33,
@@ -8376,7 +9480,10 @@
         "bolsonaroPct": 56.78,
         "registered": 284,
         "abstentions": 164,
-        "abstentionPct": 57.75
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 166,
+        "noValidVotePct": 58.45
       },
       "swing": {
         "lulaPp": 6.2,
@@ -8402,7 +9509,10 @@
             "bolsonaroPct": 56.78,
             "registered": 284,
             "abstentions": 164,
-            "abstentionPct": 57.75
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 166,
+            "noValidVotePct": 58.45
           },
           "y2022": {
             "lula": 32,
@@ -8412,7 +9522,10 @@
             "bolsonaroPct": 61.22,
             "registered": 289,
             "abstentions": 142,
-            "abstentionPct": 49.13
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 142,
+            "noValidVotePct": 49.13
           },
           "swing": {
             "lulaPp": 6.2,
@@ -8444,7 +9557,10 @@
         "bolsonaroPct": 53.41,
         "registered": 196,
         "abstentions": 107,
-        "abstentionPct": 54.59
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 108,
+        "noValidVotePct": 55.1
       },
       "y2026": {
         "lula": 17,
@@ -8454,7 +9570,10 @@
         "bolsonaroPct": 57.63,
         "registered": 152,
         "abstentions": 93,
-        "abstentionPct": 61.18
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 93,
+        "noValidVotePct": 61.18
       },
       "swing": {
         "lulaPp": -10.96,
@@ -8480,7 +9599,10 @@
             "bolsonaroPct": 57.63,
             "registered": 152,
             "abstentions": 93,
-            "abstentionPct": 61.18
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 93,
+            "noValidVotePct": 61.18
           },
           "y2022": {
             "lula": 35,
@@ -8490,7 +9612,10 @@
             "bolsonaroPct": 53.41,
             "registered": 196,
             "abstentions": 107,
-            "abstentionPct": 54.59
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 108,
+            "noValidVotePct": 55.1
           },
           "swing": {
             "lulaPp": -10.96,
@@ -8522,7 +9647,10 @@
         "bolsonaroPct": 33.33,
         "registered": 221,
         "abstentions": 136,
-        "abstentionPct": 61.54
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 137,
+        "noValidVotePct": 61.99
       },
       "y2026": {
         "lula": 49,
@@ -8532,7 +9660,10 @@
         "bolsonaroPct": 30.86,
         "registered": 252,
         "abstentions": 167,
-        "abstentionPct": 66.27
+        "blank": 0,
+        "nullVotes": 4,
+        "noValidVote": 171,
+        "noValidVotePct": 67.86
       },
       "swing": {
         "lulaPp": 6.92,
@@ -8558,7 +9689,10 @@
             "bolsonaroPct": 30.86,
             "registered": 252,
             "abstentions": 167,
-            "abstentionPct": 66.27
+            "blank": 0,
+            "nullVotes": 4,
+            "noValidVote": 171,
+            "noValidVotePct": 67.86
           },
           "y2022": {
             "lula": 45,
@@ -8568,7 +9702,10 @@
             "bolsonaroPct": 33.33,
             "registered": 221,
             "abstentions": 136,
-            "abstentionPct": 61.54
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 137,
+            "noValidVotePct": 61.99
           },
           "swing": {
             "lulaPp": 6.92,
@@ -8600,7 +9737,10 @@
         "bolsonaroPct": 40.51,
         "registered": 132,
         "abstentions": 46,
-        "abstentionPct": 34.85
+        "blank": 3,
+        "nullVotes": 4,
+        "noValidVote": 53,
+        "noValidVotePct": 40.15
       },
       "y2026": {
         "lula": 33,
@@ -8610,7 +9750,10 @@
         "bolsonaroPct": 50.72,
         "registered": 134,
         "abstentions": 59,
-        "abstentionPct": 44.03
+        "blank": 2,
+        "nullVotes": 4,
+        "noValidVote": 65,
+        "noValidVotePct": 48.51
       },
       "swing": {
         "lulaPp": 4.79,
@@ -8636,7 +9779,10 @@
             "bolsonaroPct": 50.72,
             "registered": 134,
             "abstentions": 59,
-            "abstentionPct": 44.03
+            "blank": 2,
+            "nullVotes": 4,
+            "noValidVote": 65,
+            "noValidVotePct": 48.51
           },
           "y2022": {
             "lula": 34,
@@ -8646,7 +9792,10 @@
             "bolsonaroPct": 40.51,
             "registered": 132,
             "abstentions": 46,
-            "abstentionPct": 34.85
+            "blank": 3,
+            "nullVotes": 4,
+            "noValidVote": 53,
+            "noValidVotePct": 40.15
           },
           "swing": {
             "lulaPp": 4.79,
@@ -8678,7 +9827,10 @@
         "bolsonaroPct": 19.74,
         "registered": 122,
         "abstentions": 41,
-        "abstentionPct": 33.61
+        "blank": 2,
+        "nullVotes": 3,
+        "noValidVote": 46,
+        "noValidVotePct": 37.7
       },
       "y2026": {
         "lula": 61,
@@ -8688,7 +9840,10 @@
         "bolsonaroPct": 25.51,
         "registered": 162,
         "abstentions": 59,
-        "abstentionPct": 36.42
+        "blank": 2,
+        "nullVotes": 3,
+        "noValidVote": 64,
+        "noValidVotePct": 39.51
       },
       "swing": {
         "lulaPp": -3.55,
@@ -8714,7 +9869,10 @@
             "bolsonaroPct": 25.51,
             "registered": 162,
             "abstentions": 59,
-            "abstentionPct": 36.42
+            "blank": 2,
+            "nullVotes": 3,
+            "noValidVote": 64,
+            "noValidVotePct": 39.51
           },
           "y2022": {
             "lula": 50,
@@ -8724,7 +9882,10 @@
             "bolsonaroPct": 19.74,
             "registered": 122,
             "abstentions": 41,
-            "abstentionPct": 33.61
+            "blank": 2,
+            "nullVotes": 3,
+            "noValidVote": 46,
+            "noValidVotePct": 37.7
           },
           "swing": {
             "lulaPp": -3.55,
@@ -8756,7 +9917,10 @@
         "bolsonaroPct": 55.41,
         "registered": 142,
         "abstentions": 65,
-        "abstentionPct": 45.77
+        "blank": 1,
+        "nullVotes": 2,
+        "noValidVote": 68,
+        "noValidVotePct": 47.89
       },
       "y2026": {
         "lula": 23,
@@ -8766,7 +9930,10 @@
         "bolsonaroPct": 62.34,
         "registered": 161,
         "abstentions": 77,
-        "abstentionPct": 47.83
+        "blank": 2,
+        "nullVotes": 5,
+        "noValidVote": 84,
+        "noValidVotePct": 52.17
       },
       "swing": {
         "lulaPp": 0.14,
@@ -8792,7 +9959,10 @@
             "bolsonaroPct": 62.34,
             "registered": 161,
             "abstentions": 77,
-            "abstentionPct": 47.83
+            "blank": 2,
+            "nullVotes": 5,
+            "noValidVote": 84,
+            "noValidVotePct": 52.17
           },
           "y2022": {
             "lula": 22,
@@ -8802,7 +9972,10 @@
             "bolsonaroPct": 55.41,
             "registered": 142,
             "abstentions": 65,
-            "abstentionPct": 45.77
+            "blank": 1,
+            "nullVotes": 2,
+            "noValidVote": 68,
+            "noValidVotePct": 47.89
           },
           "swing": {
             "lulaPp": 0.14,
@@ -8834,7 +10007,10 @@
         "bolsonaroPct": 30,
         "registered": 152,
         "abstentions": 79,
-        "abstentionPct": 51.97
+        "blank": 0,
+        "nullVotes": 3,
+        "noValidVote": 82,
+        "noValidVotePct": 53.95
       },
       "y2026": {
         "lula": 46,
@@ -8844,7 +10020,10 @@
         "bolsonaroPct": 18.75,
         "registered": 203,
         "abstentions": 134,
-        "abstentionPct": 66.01
+        "blank": 2,
+        "nullVotes": 3,
+        "noValidVote": 139,
+        "noValidVotePct": 68.47
       },
       "swing": {
         "lulaPp": 11.88,
@@ -8870,7 +10049,10 @@
             "bolsonaroPct": 18.75,
             "registered": 203,
             "abstentions": 134,
-            "abstentionPct": 66.01
+            "blank": 2,
+            "nullVotes": 3,
+            "noValidVote": 139,
+            "noValidVotePct": 68.47
           },
           "y2022": {
             "lula": 42,
@@ -8880,7 +10062,10 @@
             "bolsonaroPct": 30,
             "registered": 152,
             "abstentions": 79,
-            "abstentionPct": 51.97
+            "blank": 0,
+            "nullVotes": 3,
+            "noValidVote": 82,
+            "noValidVotePct": 53.95
           },
           "swing": {
             "lulaPp": 11.88,
@@ -8912,7 +10097,10 @@
         "bolsonaroPct": 78.57,
         "registered": 217,
         "abstentions": 144,
-        "abstentionPct": 66.36
+        "blank": 3,
+        "nullVotes": 0,
+        "noValidVote": 147,
+        "noValidVotePct": 67.74
       },
       "y2026": {
         "lula": 7,
@@ -8922,7 +10110,10 @@
         "bolsonaroPct": 81.13,
         "registered": 178,
         "abstentions": 125,
-        "abstentionPct": 70.22
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 125,
+        "noValidVotePct": 70.22
       },
       "swing": {
         "lulaPp": 3.21,
@@ -8948,7 +10139,10 @@
             "bolsonaroPct": 81.13,
             "registered": 178,
             "abstentions": 125,
-            "abstentionPct": 70.22
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 125,
+            "noValidVotePct": 70.22
           },
           "y2022": {
             "lula": 7,
@@ -8958,7 +10152,10 @@
             "bolsonaroPct": 78.57,
             "registered": 217,
             "abstentions": 144,
-            "abstentionPct": 66.36
+            "blank": 3,
+            "nullVotes": 0,
+            "noValidVote": 147,
+            "noValidVotePct": 67.74
           },
           "swing": {
             "lulaPp": 3.21,
@@ -8990,7 +10187,10 @@
         "bolsonaroPct": 21.21,
         "registered": 115,
         "abstentions": 45,
-        "abstentionPct": 39.13
+        "blank": 1,
+        "nullVotes": 3,
+        "noValidVote": 49,
+        "noValidVotePct": 42.61
       },
       "y2026": {
         "lula": 35,
@@ -9000,7 +10200,10 @@
         "bolsonaroPct": 22.41,
         "registered": 129,
         "abstentions": 68,
-        "abstentionPct": 52.71
+        "blank": 2,
+        "nullVotes": 1,
+        "noValidVote": 71,
+        "noValidVotePct": 55.04
       },
       "swing": {
         "lulaPp": 23.98,
@@ -9026,7 +10229,10 @@
             "bolsonaroPct": 22.41,
             "registered": 129,
             "abstentions": 68,
-            "abstentionPct": 52.71
+            "blank": 2,
+            "nullVotes": 1,
+            "noValidVote": 71,
+            "noValidVotePct": 55.04
           },
           "y2022": {
             "lula": 24,
@@ -9036,7 +10242,10 @@
             "bolsonaroPct": 21.21,
             "registered": 115,
             "abstentions": 45,
-            "abstentionPct": 39.13
+            "blank": 1,
+            "nullVotes": 3,
+            "noValidVote": 49,
+            "noValidVotePct": 42.61
           },
           "swing": {
             "lulaPp": 23.98,
@@ -9068,7 +10277,10 @@
         "bolsonaroPct": 33.85,
         "registered": 103,
         "abstentions": 36,
-        "abstentionPct": 34.95
+        "blank": 1,
+        "nullVotes": 1,
+        "noValidVote": 38,
+        "noValidVotePct": 36.89
       },
       "y2026": {
         "lula": 39,
@@ -9078,7 +10290,10 @@
         "bolsonaroPct": 28.57,
         "registered": 146,
         "abstentions": 72,
-        "abstentionPct": 49.32
+        "blank": 3,
+        "nullVotes": 1,
+        "noValidVote": 76,
+        "noValidVotePct": 52.05
       },
       "swing": {
         "lulaPp": -2.75,
@@ -9104,7 +10319,10 @@
             "bolsonaroPct": 28.57,
             "registered": 146,
             "abstentions": 72,
-            "abstentionPct": 49.32
+            "blank": 3,
+            "nullVotes": 1,
+            "noValidVote": 76,
+            "noValidVotePct": 52.05
           },
           "y2022": {
             "lula": 38,
@@ -9114,7 +10332,10 @@
             "bolsonaroPct": 33.85,
             "registered": 103,
             "abstentions": 36,
-            "abstentionPct": 34.95
+            "blank": 1,
+            "nullVotes": 1,
+            "noValidVote": 38,
+            "noValidVotePct": 36.89
           },
           "swing": {
             "lulaPp": -2.75,
@@ -9146,7 +10367,10 @@
         "bolsonaroPct": 56.92,
         "registered": 90,
         "abstentions": 25,
-        "abstentionPct": 27.78
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 25,
+        "noValidVotePct": 27.78
       },
       "y2026": {
         "lula": 16,
@@ -9156,7 +10380,10 @@
         "bolsonaroPct": 58.7,
         "registered": 89,
         "abstentions": 42,
-        "abstentionPct": 47.19
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 43,
+        "noValidVotePct": 48.31
       },
       "swing": {
         "lulaPp": 7.09,
@@ -9182,7 +10409,10 @@
             "bolsonaroPct": 58.7,
             "registered": 89,
             "abstentions": 42,
-            "abstentionPct": 47.19
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 43,
+            "noValidVotePct": 48.31
           },
           "y2022": {
             "lula": 18,
@@ -9192,7 +10422,10 @@
             "bolsonaroPct": 56.92,
             "registered": 90,
             "abstentions": 25,
-            "abstentionPct": 27.78
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 25,
+            "noValidVotePct": 27.78
           },
           "swing": {
             "lulaPp": 7.09,
@@ -9224,7 +10457,10 @@
         "bolsonaroPct": 41.82,
         "registered": 105,
         "abstentions": 50,
-        "abstentionPct": 47.62
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 50,
+        "noValidVotePct": 47.62
       },
       "y2026": {
         "lula": 51,
@@ -9234,7 +10470,10 @@
         "bolsonaroPct": 30.38,
         "registered": 132,
         "abstentions": 52,
-        "abstentionPct": 39.39
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 53,
+        "noValidVotePct": 40.15
       },
       "swing": {
         "lulaPp": 17.29,
@@ -9260,7 +10499,10 @@
             "bolsonaroPct": 30.38,
             "registered": 132,
             "abstentions": 52,
-            "abstentionPct": 39.39
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 53,
+            "noValidVotePct": 40.15
           },
           "y2022": {
             "lula": 26,
@@ -9270,7 +10512,10 @@
             "bolsonaroPct": 41.82,
             "registered": 105,
             "abstentions": 50,
-            "abstentionPct": 47.62
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 50,
+            "noValidVotePct": 47.62
           },
           "swing": {
             "lulaPp": 17.29,
@@ -9302,7 +10547,10 @@
         "bolsonaroPct": 22.22,
         "registered": 108,
         "abstentions": 53,
-        "abstentionPct": 49.07
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 54,
+        "noValidVotePct": 50
       },
       "y2026": {
         "lula": 31,
@@ -9312,7 +10560,10 @@
         "bolsonaroPct": 35.48,
         "registered": 130,
         "abstentions": 68,
-        "abstentionPct": 52.31
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 68,
+        "noValidVotePct": 52.31
       },
       "swing": {
         "lulaPp": -3.7,
@@ -9338,7 +10589,10 @@
             "bolsonaroPct": 35.48,
             "registered": 130,
             "abstentions": 68,
-            "abstentionPct": 52.31
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 68,
+            "noValidVotePct": 52.31
           },
           "y2022": {
             "lula": 29,
@@ -9348,7 +10602,10 @@
             "bolsonaroPct": 22.22,
             "registered": 108,
             "abstentions": 53,
-            "abstentionPct": 49.07
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 54,
+            "noValidVotePct": 50
           },
           "swing": {
             "lulaPp": -3.7,
@@ -9380,7 +10637,10 @@
         "bolsonaroPct": 33.33,
         "registered": 181,
         "abstentions": 126,
-        "abstentionPct": 69.61
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 127,
+        "noValidVotePct": 70.17
       },
       "y2026": {
         "lula": 52,
@@ -9390,7 +10650,10 @@
         "bolsonaroPct": 26.51,
         "registered": 311,
         "abstentions": 227,
-        "abstentionPct": 72.99
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 228,
+        "noValidVotePct": 73.31
       },
       "swing": {
         "lulaPp": 14.5,
@@ -9416,7 +10679,10 @@
             "bolsonaroPct": 26.51,
             "registered": 311,
             "abstentions": 227,
-            "abstentionPct": 72.99
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 228,
+            "noValidVotePct": 73.31
           },
           "y2022": {
             "lula": 26,
@@ -9426,7 +10692,10 @@
             "bolsonaroPct": 33.33,
             "registered": 181,
             "abstentions": 126,
-            "abstentionPct": 69.61
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 127,
+            "noValidVotePct": 70.17
           },
           "swing": {
             "lulaPp": 14.5,
@@ -9458,7 +10727,10 @@
         "bolsonaroPct": 26.42,
         "registered": 157,
         "abstentions": 102,
-        "abstentionPct": 64.97
+        "blank": 2,
+        "nullVotes": 0,
+        "noValidVote": 104,
+        "noValidVotePct": 66.24
       },
       "y2026": {
         "lula": 29,
@@ -9468,7 +10740,10 @@
         "bolsonaroPct": 44.26,
         "registered": 196,
         "abstentions": 135,
-        "abstentionPct": 68.88
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 135,
+        "noValidVotePct": 68.88
       },
       "swing": {
         "lulaPp": -20.38,
@@ -9494,7 +10769,10 @@
             "bolsonaroPct": 52,
             "registered": 141,
             "abstentions": 91,
-            "abstentionPct": 64.54
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 91,
+            "noValidVotePct": 64.54
           },
           "y2022": {
             "lula": 27,
@@ -9504,7 +10782,10 @@
             "bolsonaroPct": 29.27,
             "registered": 102,
             "abstentions": 61,
-            "abstentionPct": 59.8
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 61,
+            "noValidVotePct": 59.8
           },
           "swing": {
             "lulaPp": -17.85,
@@ -9530,7 +10811,10 @@
             "bolsonaroPct": 9.09,
             "registered": 55,
             "abstentions": 44,
-            "abstentionPct": 80
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 44,
+            "noValidVotePct": 80
           },
           "y2022": {
             "lula": 9,
@@ -9540,7 +10824,10 @@
             "bolsonaroPct": 16.67,
             "registered": 55,
             "abstentions": 41,
-            "abstentionPct": 74.55
+            "blank": 2,
+            "nullVotes": 0,
+            "noValidVote": 43,
+            "noValidVotePct": 78.18
           },
           "swing": {
             "lulaPp": -29.55,
@@ -9572,7 +10859,10 @@
         "bolsonaroPct": 15.09,
         "registered": 102,
         "abstentions": 49,
-        "abstentionPct": 48.04
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 49,
+        "noValidVotePct": 48.04
       },
       "y2026": {
         "lula": 30,
@@ -9582,7 +10872,10 @@
         "bolsonaroPct": 14.29,
         "registered": 117,
         "abstentions": 70,
-        "abstentionPct": 59.83
+        "blank": 3,
+        "nullVotes": 2,
+        "noValidVote": 75,
+        "noValidVotePct": 64.1
       },
       "swing": {
         "lulaPp": 7.28,
@@ -9608,7 +10901,10 @@
             "bolsonaroPct": 14.29,
             "registered": 117,
             "abstentions": 70,
-            "abstentionPct": 59.83
+            "blank": 3,
+            "nullVotes": 2,
+            "noValidVote": 75,
+            "noValidVotePct": 64.1
           },
           "y2022": {
             "lula": 34,
@@ -9618,7 +10914,10 @@
             "bolsonaroPct": 15.09,
             "registered": 102,
             "abstentions": 49,
-            "abstentionPct": 48.04
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 49,
+            "noValidVotePct": 48.04
           },
           "swing": {
             "lulaPp": 7.28,
@@ -9650,7 +10949,10 @@
         "bolsonaroPct": 45.1,
         "registered": 108,
         "abstentions": 57,
-        "abstentionPct": 52.78
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 57,
+        "noValidVotePct": 52.78
       },
       "y2026": {
         "lula": 26,
@@ -9660,7 +10962,10 @@
         "bolsonaroPct": 36.96,
         "registered": 112,
         "abstentions": 65,
-        "abstentionPct": 58.04
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 66,
+        "noValidVotePct": 58.93
       },
       "swing": {
         "lulaPp": 7.5,
@@ -9686,7 +10991,10 @@
             "bolsonaroPct": 36.96,
             "registered": 112,
             "abstentions": 65,
-            "abstentionPct": 58.04
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 66,
+            "noValidVotePct": 58.93
           },
           "y2022": {
             "lula": 25,
@@ -9696,7 +11004,10 @@
             "bolsonaroPct": 45.1,
             "registered": 108,
             "abstentions": 57,
-            "abstentionPct": 52.78
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 57,
+            "noValidVotePct": 52.78
           },
           "swing": {
             "lulaPp": 7.5,
@@ -9728,7 +11039,10 @@
         "bolsonaroPct": 60,
         "registered": 157,
         "abstentions": 107,
-        "abstentionPct": 68.15
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 107,
+        "noValidVotePct": 68.15
       },
       "y2026": {
         "lula": 8,
@@ -9738,7 +11052,10 @@
         "bolsonaroPct": 61.29,
         "registered": 172,
         "abstentions": 141,
-        "abstentionPct": 81.98
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 141,
+        "noValidVotePct": 81.98
       },
       "swing": {
         "lulaPp": -6.19,
@@ -9764,7 +11081,10 @@
             "bolsonaroPct": 61.29,
             "registered": 172,
             "abstentions": 141,
-            "abstentionPct": 81.98
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 141,
+            "noValidVotePct": 81.98
           },
           "y2022": {
             "lula": 16,
@@ -9774,7 +11094,10 @@
             "bolsonaroPct": 60,
             "registered": 157,
             "abstentions": 107,
-            "abstentionPct": 68.15
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 107,
+            "noValidVotePct": 68.15
           },
           "swing": {
             "lulaPp": -6.19,
@@ -9806,7 +11129,10 @@
         "bolsonaroPct": 16.33,
         "registered": 98,
         "abstentions": 47,
-        "abstentionPct": 47.96
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 49,
+        "noValidVotePct": 50
       },
       "y2026": {
         "lula": 30,
@@ -9816,7 +11142,10 @@
         "bolsonaroPct": 27.08,
         "registered": 115,
         "abstentions": 67,
-        "abstentionPct": 58.26
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 67,
+        "noValidVotePct": 58.26
       },
       "swing": {
         "lulaPp": 1.28,
@@ -9842,7 +11171,10 @@
             "bolsonaroPct": 27.08,
             "registered": 115,
             "abstentions": 67,
-            "abstentionPct": 58.26
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 67,
+            "noValidVotePct": 58.26
           },
           "y2022": {
             "lula": 30,
@@ -9852,7 +11184,10 @@
             "bolsonaroPct": 16.33,
             "registered": 98,
             "abstentions": 47,
-            "abstentionPct": 47.96
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 49,
+            "noValidVotePct": 50
           },
           "swing": {
             "lulaPp": 1.28,
@@ -9884,7 +11219,10 @@
         "bolsonaroPct": 39.13,
         "registered": 77,
         "abstentions": 30,
-        "abstentionPct": 38.96
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 31,
+        "noValidVotePct": 40.26
       },
       "y2026": {
         "lula": 24,
@@ -9894,7 +11232,10 @@
         "bolsonaroPct": 29.55,
         "registered": 91,
         "abstentions": 47,
-        "abstentionPct": 51.65
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 47,
+        "noValidVotePct": 51.65
       },
       "swing": {
         "lulaPp": 8.9,
@@ -9920,7 +11261,10 @@
             "bolsonaroPct": 29.55,
             "registered": 91,
             "abstentions": 47,
-            "abstentionPct": 51.65
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 47,
+            "noValidVotePct": 51.65
           },
           "y2022": {
             "lula": 21,
@@ -9930,7 +11274,10 @@
             "bolsonaroPct": 39.13,
             "registered": 77,
             "abstentions": 30,
-            "abstentionPct": 38.96
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 31,
+            "noValidVotePct": 40.26
           },
           "swing": {
             "lulaPp": 8.9,
@@ -9962,7 +11309,10 @@
         "bolsonaroPct": 30.43,
         "registered": 98,
         "abstentions": 52,
-        "abstentionPct": 53.06
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 52,
+        "noValidVotePct": 53.06
       },
       "y2026": {
         "lula": 29,
@@ -9972,7 +11322,10 @@
         "bolsonaroPct": 35.42,
         "registered": 136,
         "abstentions": 84,
-        "abstentionPct": 61.76
+        "blank": 1,
+        "nullVotes": 3,
+        "noValidVote": 88,
+        "noValidVotePct": 64.71
       },
       "swing": {
         "lulaPp": 6.07,
@@ -9998,7 +11351,10 @@
             "bolsonaroPct": 35.42,
             "registered": 136,
             "abstentions": 84,
-            "abstentionPct": 61.76
+            "blank": 1,
+            "nullVotes": 3,
+            "noValidVote": 88,
+            "noValidVotePct": 64.71
           },
           "y2022": {
             "lula": 25,
@@ -10008,7 +11364,10 @@
             "bolsonaroPct": 30.43,
             "registered": 98,
             "abstentions": 52,
-            "abstentionPct": 53.06
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 52,
+            "noValidVotePct": 53.06
           },
           "swing": {
             "lulaPp": 6.07,
@@ -10040,7 +11399,10 @@
         "bolsonaroPct": 47.73,
         "registered": 78,
         "abstentions": 34,
-        "abstentionPct": 43.59
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 34,
+        "noValidVotePct": 43.59
       },
       "y2026": {
         "lula": 17,
@@ -10050,7 +11412,10 @@
         "bolsonaroPct": 45.95,
         "registered": 88,
         "abstentions": 51,
-        "abstentionPct": 57.95
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 51,
+        "noValidVotePct": 57.95
       },
       "swing": {
         "lulaPp": -6.32,
@@ -10076,7 +11441,10 @@
             "bolsonaroPct": 45.95,
             "registered": 88,
             "abstentions": 51,
-            "abstentionPct": 57.95
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 51,
+            "noValidVotePct": 57.95
           },
           "y2022": {
             "lula": 23,
@@ -10086,7 +11454,10 @@
             "bolsonaroPct": 47.73,
             "registered": 78,
             "abstentions": 34,
-            "abstentionPct": 43.59
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 34,
+            "noValidVotePct": 43.59
           },
           "swing": {
             "lulaPp": -6.32,
@@ -10118,7 +11489,10 @@
         "bolsonaroPct": 62.79,
         "registered": 82,
         "abstentions": 37,
-        "abstentionPct": 45.12
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 39,
+        "noValidVotePct": 47.56
       },
       "y2026": {
         "lula": 54,
@@ -10128,7 +11502,10 @@
         "bolsonaroPct": 16.44,
         "registered": 138,
         "abstentions": 61,
-        "abstentionPct": 44.2
+        "blank": 1,
+        "nullVotes": 3,
+        "noValidVote": 65,
+        "noValidVotePct": 47.1
       },
       "swing": {
         "lulaPp": 53.04,
@@ -10154,7 +11531,10 @@
             "bolsonaroPct": 16.44,
             "registered": 138,
             "abstentions": 61,
-            "abstentionPct": 44.2
+            "blank": 1,
+            "nullVotes": 3,
+            "noValidVote": 65,
+            "noValidVotePct": 47.1
           },
           "y2022": {
             "lula": 9,
@@ -10164,7 +11544,10 @@
             "bolsonaroPct": 62.79,
             "registered": 82,
             "abstentions": 37,
-            "abstentionPct": 45.12
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 39,
+            "noValidVotePct": 47.56
           },
           "swing": {
             "lulaPp": 53.04,
@@ -10196,7 +11579,10 @@
         "bolsonaroPct": 60.98,
         "registered": 95,
         "abstentions": 54,
-        "abstentionPct": 56.84
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 54,
+        "noValidVotePct": 56.84
       },
       "y2026": {
         "lula": 12,
@@ -10206,7 +11592,10 @@
         "bolsonaroPct": 55.56,
         "registered": 97,
         "abstentions": 59,
-        "abstentionPct": 60.82
+        "blank": 1,
+        "nullVotes": 1,
+        "noValidVote": 61,
+        "noValidVotePct": 62.89
       },
       "swing": {
         "lulaPp": 6.5,
@@ -10232,7 +11621,10 @@
             "bolsonaroPct": 55.56,
             "registered": 97,
             "abstentions": 59,
-            "abstentionPct": 60.82
+            "blank": 1,
+            "nullVotes": 1,
+            "noValidVote": 61,
+            "noValidVotePct": 62.89
           },
           "y2022": {
             "lula": 11,
@@ -10242,7 +11634,10 @@
             "bolsonaroPct": 60.98,
             "registered": 95,
             "abstentions": 54,
-            "abstentionPct": 56.84
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 54,
+            "noValidVotePct": 56.84
           },
           "swing": {
             "lulaPp": 6.5,
@@ -10274,7 +11669,10 @@
         "bolsonaroPct": 84.62,
         "registered": 71,
         "abstentions": 31,
-        "abstentionPct": 43.66
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 32,
+        "noValidVotePct": 45.07
       },
       "y2026": {
         "lula": 6,
@@ -10284,7 +11682,10 @@
         "bolsonaroPct": 38.46,
         "registered": 37,
         "abstentions": 24,
-        "abstentionPct": 64.86
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 24,
+        "noValidVotePct": 64.86
       },
       "swing": {
         "lulaPp": 35.89,
@@ -10310,7 +11711,10 @@
             "bolsonaroPct": 38.46,
             "registered": 37,
             "abstentions": 24,
-            "abstentionPct": 64.86
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 24,
+            "noValidVotePct": 64.86
           },
           "y2022": {
             "lula": 4,
@@ -10320,7 +11724,10 @@
             "bolsonaroPct": 84.62,
             "registered": 71,
             "abstentions": 31,
-            "abstentionPct": 43.66
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 32,
+            "noValidVotePct": 45.07
           },
           "swing": {
             "lulaPp": 35.89,
@@ -10352,7 +11759,10 @@
         "bolsonaroPct": 57.89,
         "registered": 50,
         "abstentions": 12,
-        "abstentionPct": 24
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 12,
+        "noValidVotePct": 24
       },
       "y2026": {
         "lula": 17,
@@ -10362,7 +11772,10 @@
         "bolsonaroPct": 57.45,
         "registered": 69,
         "abstentions": 20,
-        "abstentionPct": 28.99
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 22,
+        "noValidVotePct": 31.88
       },
       "swing": {
         "lulaPp": 9.85,
@@ -10388,7 +11801,10 @@
             "bolsonaroPct": 57.45,
             "registered": 69,
             "abstentions": 20,
-            "abstentionPct": 28.99
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 22,
+            "noValidVotePct": 31.88
           },
           "y2022": {
             "lula": 10,
@@ -10398,7 +11814,10 @@
             "bolsonaroPct": 57.89,
             "registered": 50,
             "abstentions": 12,
-            "abstentionPct": 24
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 12,
+            "noValidVotePct": 24
           },
           "swing": {
             "lulaPp": 9.85,
@@ -10430,7 +11849,10 @@
         "bolsonaroPct": 47.06,
         "registered": 116,
         "abstentions": 81,
-        "abstentionPct": 69.83
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 82,
+        "noValidVotePct": 70.69
       },
       "y2026": {
         "lula": 4,
@@ -10440,7 +11862,10 @@
         "bolsonaroPct": 52.63,
         "registered": 87,
         "abstentions": 68,
-        "abstentionPct": 78.16
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 68,
+        "noValidVotePct": 78.16
       },
       "swing": {
         "lulaPp": -28.95,
@@ -10466,7 +11891,10 @@
             "bolsonaroPct": 52.63,
             "registered": 87,
             "abstentions": 68,
-            "abstentionPct": 78.16
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 68,
+            "noValidVotePct": 78.16
           },
           "y2022": {
             "lula": 17,
@@ -10476,7 +11904,10 @@
             "bolsonaroPct": 47.06,
             "registered": 116,
             "abstentions": 81,
-            "abstentionPct": 69.83
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 82,
+            "noValidVotePct": 70.69
           },
           "swing": {
             "lulaPp": -28.95,
@@ -10508,7 +11939,10 @@
         "bolsonaroPct": 18.18,
         "registered": 55,
         "abstentions": 20,
-        "abstentionPct": 36.36
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 22,
+        "noValidVotePct": 40
       },
       "y2026": {
         "lula": 34,
@@ -10518,7 +11952,10 @@
         "bolsonaroPct": 17.02,
         "registered": 98,
         "abstentions": 49,
-        "abstentionPct": 50
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 51,
+        "noValidVotePct": 52.04
       },
       "swing": {
         "lulaPp": 5.67,
@@ -10544,7 +11981,10 @@
             "bolsonaroPct": 17.02,
             "registered": 98,
             "abstentions": 49,
-            "abstentionPct": 50
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 51,
+            "noValidVotePct": 52.04
           },
           "y2022": {
             "lula": 22,
@@ -10554,7 +11994,10 @@
             "bolsonaroPct": 18.18,
             "registered": 55,
             "abstentions": 20,
-            "abstentionPct": 36.36
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 22,
+            "noValidVotePct": 40
           },
           "swing": {
             "lulaPp": 5.67,
@@ -10586,7 +12029,10 @@
         "bolsonaroPct": 3.23,
         "registered": 87,
         "abstentions": 56,
-        "abstentionPct": 64.37
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 56,
+        "noValidVotePct": 64.37
       },
       "y2026": {
         "lula": 36,
@@ -10596,7 +12042,10 @@
         "bolsonaroPct": 2.63,
         "registered": 92,
         "abstentions": 52,
-        "abstentionPct": 56.52
+        "blank": 1,
+        "nullVotes": 1,
+        "noValidVote": 54,
+        "noValidVotePct": 58.7
       },
       "swing": {
         "lulaPp": 4.42,
@@ -10622,7 +12071,10 @@
             "bolsonaroPct": 2.63,
             "registered": 92,
             "abstentions": 52,
-            "abstentionPct": 56.52
+            "blank": 1,
+            "nullVotes": 1,
+            "noValidVote": 54,
+            "noValidVotePct": 58.7
           },
           "y2022": {
             "lula": 28,
@@ -10632,7 +12084,10 @@
             "bolsonaroPct": 3.23,
             "registered": 87,
             "abstentions": 56,
-            "abstentionPct": 64.37
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 56,
+            "noValidVotePct": 64.37
           },
           "swing": {
             "lulaPp": 4.42,
@@ -10664,7 +12119,10 @@
         "bolsonaroPct": 25,
         "registered": 71,
         "abstentions": 42,
-        "abstentionPct": 59.15
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 42,
+        "noValidVotePct": 59.15
       },
       "y2026": {
         "lula": 26,
@@ -10674,7 +12132,10 @@
         "bolsonaroPct": 18.75,
         "registered": 85,
         "abstentions": 49,
-        "abstentionPct": 57.65
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 50,
+        "noValidVotePct": 58.82
       },
       "swing": {
         "lulaPp": 24.11,
@@ -10700,7 +12161,10 @@
             "bolsonaroPct": 18.75,
             "registered": 82,
             "abstentions": 49,
-            "abstentionPct": 59.76
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 50,
+            "noValidVotePct": 60.98
           },
           "y2022": {
             "lula": 16,
@@ -10710,7 +12174,10 @@
             "bolsonaroPct": 25,
             "registered": 70,
             "abstentions": 42,
-            "abstentionPct": 60
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 42,
+            "noValidVotePct": 60
           },
           "swing": {
             "lulaPp": 24.11,
@@ -10736,7 +12203,10 @@
             "bolsonaroPct": 0,
             "registered": 3,
             "abstentions": 0,
-            "abstentionPct": 0
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 0,
+            "noValidVotePct": 0
           },
           "y2022": null,
           "swing": null,
@@ -10765,7 +12235,10 @@
         "bolsonaroPct": 28,
         "registered": 72,
         "abstentions": 44,
-        "abstentionPct": 61.11
+        "blank": 1,
+        "nullVotes": 2,
+        "noValidVote": 47,
+        "noValidVotePct": 65.28
       },
       "y2026": {
         "lula": 24,
@@ -10775,7 +12248,10 @@
         "bolsonaroPct": 35.09,
         "registered": 137,
         "abstentions": 79,
-        "abstentionPct": 57.66
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 80,
+        "noValidVotePct": 58.39
       },
       "swing": {
         "lulaPp": -9.89,
@@ -10801,7 +12277,10 @@
             "bolsonaroPct": 35.09,
             "registered": 137,
             "abstentions": 79,
-            "abstentionPct": 57.66
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 80,
+            "noValidVotePct": 58.39
           },
           "y2022": {
             "lula": 13,
@@ -10811,7 +12290,10 @@
             "bolsonaroPct": 28,
             "registered": 72,
             "abstentions": 44,
-            "abstentionPct": 61.11
+            "blank": 1,
+            "nullVotes": 2,
+            "noValidVote": 47,
+            "noValidVotePct": 65.28
           },
           "swing": {
             "lulaPp": -9.89,
@@ -10843,7 +12325,10 @@
         "bolsonaroPct": 60,
         "registered": 65,
         "abstentions": 39,
-        "abstentionPct": 60
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 40,
+        "noValidVotePct": 61.54
       },
       "y2026": {
         "lula": 6,
@@ -10853,7 +12338,10 @@
         "bolsonaroPct": 52.63,
         "registered": 69,
         "abstentions": 50,
-        "abstentionPct": 72.46
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 50,
+        "noValidVotePct": 72.46
       },
       "swing": {
         "lulaPp": -0.42,
@@ -10879,7 +12367,10 @@
             "bolsonaroPct": 52.63,
             "registered": 69,
             "abstentions": 50,
-            "abstentionPct": 72.46
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 50,
+            "noValidVotePct": 72.46
           },
           "y2022": {
             "lula": 8,
@@ -10889,7 +12380,10 @@
             "bolsonaroPct": 60,
             "registered": 65,
             "abstentions": 39,
-            "abstentionPct": 60
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 40,
+            "noValidVotePct": 61.54
           },
           "swing": {
             "lulaPp": -0.42,
@@ -10921,7 +12415,10 @@
         "bolsonaroPct": 40.91,
         "registered": 53,
         "abstentions": 31,
-        "abstentionPct": 58.49
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 31,
+        "noValidVotePct": 58.49
       },
       "y2026": {
         "lula": 8,
@@ -10931,7 +12428,10 @@
         "bolsonaroPct": 15.38,
         "registered": 43,
         "abstentions": 30,
-        "abstentionPct": 69.77
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 30,
+        "noValidVotePct": 69.77
       },
       "swing": {
         "lulaPp": 6.99,
@@ -10957,7 +12457,10 @@
             "bolsonaroPct": 15.38,
             "registered": 43,
             "abstentions": 30,
-            "abstentionPct": 69.77
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 30,
+            "noValidVotePct": 69.77
           },
           "y2022": {
             "lula": 12,
@@ -10967,7 +12470,10 @@
             "bolsonaroPct": 40.91,
             "registered": 53,
             "abstentions": 31,
-            "abstentionPct": 58.49
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 31,
+            "noValidVotePct": 58.49
           },
           "swing": {
             "lulaPp": 6.99,
@@ -10999,7 +12505,10 @@
         "bolsonaroPct": 20,
         "registered": 50,
         "abstentions": 30,
-        "abstentionPct": 60
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 30,
+        "noValidVotePct": 60
       },
       "y2026": {
         "lula": 13,
@@ -11009,7 +12518,10 @@
         "bolsonaroPct": 48.28,
         "registered": 82,
         "abstentions": 50,
-        "abstentionPct": 60.98
+        "blank": 1,
+        "nullVotes": 2,
+        "noValidVote": 53,
+        "noValidVotePct": 64.63
       },
       "swing": {
         "lulaPp": -20.17,
@@ -11035,7 +12547,10 @@
             "bolsonaroPct": 48.28,
             "registered": 82,
             "abstentions": 50,
-            "abstentionPct": 60.98
+            "blank": 1,
+            "nullVotes": 2,
+            "noValidVote": 53,
+            "noValidVotePct": 64.63
           },
           "y2022": {
             "lula": 13,
@@ -11045,7 +12560,10 @@
             "bolsonaroPct": 20,
             "registered": 50,
             "abstentions": 30,
-            "abstentionPct": 60
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 30,
+            "noValidVotePct": 60
           },
           "swing": {
             "lulaPp": -20.17,
@@ -11077,7 +12595,10 @@
         "bolsonaroPct": 52.94,
         "registered": 39,
         "abstentions": 21,
-        "abstentionPct": 53.85
+        "blank": 0,
+        "nullVotes": 1,
+        "noValidVote": 22,
+        "noValidVotePct": 56.41
       },
       "y2026": {
         "lula": 14,
@@ -11087,7 +12608,10 @@
         "bolsonaroPct": 44,
         "registered": 45,
         "abstentions": 20,
-        "abstentionPct": 44.44
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 20,
+        "noValidVotePct": 44.44
       },
       "swing": {
         "lulaPp": 14.82,
@@ -11113,7 +12637,10 @@
             "bolsonaroPct": 44,
             "registered": 45,
             "abstentions": 20,
-            "abstentionPct": 44.44
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 20,
+            "noValidVotePct": 44.44
           },
           "y2022": {
             "lula": 7,
@@ -11123,7 +12650,10 @@
             "bolsonaroPct": 52.94,
             "registered": 39,
             "abstentions": 21,
-            "abstentionPct": 53.85
+            "blank": 0,
+            "nullVotes": 1,
+            "noValidVote": 22,
+            "noValidVotePct": 56.41
           },
           "swing": {
             "lulaPp": 14.82,
@@ -11155,7 +12685,10 @@
         "bolsonaroPct": 82.35,
         "registered": 33,
         "abstentions": 16,
-        "abstentionPct": 48.48
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 16,
+        "noValidVotePct": 48.48
       },
       "y2026": null,
       "swing": null,
@@ -11179,7 +12712,10 @@
         "bolsonaroPct": 93.33,
         "registered": 33,
         "abstentions": 18,
-        "abstentionPct": 54.55
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 18,
+        "noValidVotePct": 54.55
       },
       "y2026": {
         "lula": 1,
@@ -11189,7 +12725,10 @@
         "bolsonaroPct": 84.62,
         "registered": 32,
         "abstentions": 19,
-        "abstentionPct": 59.38
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 19,
+        "noValidVotePct": 59.38
       },
       "swing": {
         "lulaPp": 1.02,
@@ -11215,7 +12754,10 @@
             "bolsonaroPct": 84.62,
             "registered": 32,
             "abstentions": 19,
-            "abstentionPct": 59.38
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 19,
+            "noValidVotePct": 59.38
           },
           "y2022": {
             "lula": 1,
@@ -11225,7 +12767,10 @@
             "bolsonaroPct": 93.33,
             "registered": 33,
             "abstentions": 18,
-            "abstentionPct": 54.55
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 18,
+            "noValidVotePct": 54.55
           },
           "swing": {
             "lulaPp": 1.02,
@@ -11257,7 +12802,10 @@
         "bolsonaroPct": 42.86,
         "registered": 34,
         "abstentions": 20,
-        "abstentionPct": 58.82
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 20,
+        "noValidVotePct": 58.82
       },
       "y2026": {
         "lula": 12,
@@ -11267,7 +12815,10 @@
         "bolsonaroPct": 40.91,
         "registered": 47,
         "abstentions": 25,
-        "abstentionPct": 53.19
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 25,
+        "noValidVotePct": 53.19
       },
       "swing": {
         "lulaPp": -2.59,
@@ -11293,7 +12844,10 @@
             "bolsonaroPct": 40.91,
             "registered": 47,
             "abstentions": 25,
-            "abstentionPct": 53.19
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 25,
+            "noValidVotePct": 53.19
           },
           "y2022": {
             "lula": 8,
@@ -11303,7 +12857,10 @@
             "bolsonaroPct": 42.86,
             "registered": 34,
             "abstentions": 20,
-            "abstentionPct": 58.82
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 20,
+            "noValidVotePct": 58.82
           },
           "swing": {
             "lulaPp": -2.59,
@@ -11335,7 +12892,10 @@
         "bolsonaroPct": 14.29,
         "registered": 34,
         "abstentions": 20,
-        "abstentionPct": 58.82
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 20,
+        "noValidVotePct": 58.82
       },
       "y2026": null,
       "swing": null,
@@ -11359,7 +12919,10 @@
         "bolsonaroPct": 46.15,
         "registered": 107,
         "abstentions": 94,
-        "abstentionPct": 87.85
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 94,
+        "noValidVotePct": 87.85
       },
       "y2026": {
         "lula": 4,
@@ -11369,7 +12932,10 @@
         "bolsonaroPct": 73.68,
         "registered": 103,
         "abstentions": 84,
-        "abstentionPct": 81.55
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 84,
+        "noValidVotePct": 81.55
       },
       "swing": {
         "lulaPp": -32.8,
@@ -11395,7 +12961,10 @@
             "bolsonaroPct": 73.68,
             "registered": 103,
             "abstentions": 84,
-            "abstentionPct": 81.55
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 84,
+            "noValidVotePct": 81.55
           },
           "y2022": {
             "lula": 7,
@@ -11405,7 +12974,10 @@
             "bolsonaroPct": 46.15,
             "registered": 107,
             "abstentions": 94,
-            "abstentionPct": 87.85
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 94,
+            "noValidVotePct": 87.85
           },
           "swing": {
             "lulaPp": -32.8,
@@ -11437,7 +13009,10 @@
         "bolsonaroPct": 25,
         "registered": 34,
         "abstentions": 26,
-        "abstentionPct": 76.47
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 26,
+        "noValidVotePct": 76.47
       },
       "y2026": {
         "lula": 11,
@@ -11447,7 +13022,10 @@
         "bolsonaroPct": 31.25,
         "registered": 34,
         "abstentions": 18,
-        "abstentionPct": 52.94
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 18,
+        "noValidVotePct": 52.94
       },
       "swing": {
         "lulaPp": -6.25,
@@ -11473,7 +13051,10 @@
             "bolsonaroPct": 31.25,
             "registered": 34,
             "abstentions": 18,
-            "abstentionPct": 52.94
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 18,
+            "noValidVotePct": 52.94
           },
           "y2022": {
             "lula": 6,
@@ -11483,7 +13064,10 @@
             "bolsonaroPct": 25,
             "registered": 34,
             "abstentions": 26,
-            "abstentionPct": 76.47
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 26,
+            "noValidVotePct": 76.47
           },
           "swing": {
             "lulaPp": -6.25,
@@ -11515,7 +13099,10 @@
         "bolsonaroPct": 57.14,
         "registered": 44,
         "abstentions": 37,
-        "abstentionPct": 84.09
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 37,
+        "noValidVotePct": 84.09
       },
       "y2026": {
         "lula": 5,
@@ -11525,7 +13112,10 @@
         "bolsonaroPct": 0,
         "registered": 33,
         "abstentions": 28,
-        "abstentionPct": 84.85
+        "blank": 0,
+        "nullVotes": 0,
+        "noValidVote": 28,
+        "noValidVotePct": 84.85
       },
       "swing": {
         "lulaPp": 71.43,
@@ -11551,7 +13141,10 @@
             "bolsonaroPct": 0,
             "registered": 33,
             "abstentions": 28,
-            "abstentionPct": 84.85
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 28,
+            "noValidVotePct": 84.85
           },
           "y2022": {
             "lula": 2,
@@ -11561,7 +13154,10 @@
             "bolsonaroPct": 57.14,
             "registered": 44,
             "abstentions": 37,
-            "abstentionPct": 84.09
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 37,
+            "noValidVotePct": 84.09
           },
           "swing": {
             "lulaPp": 71.43,

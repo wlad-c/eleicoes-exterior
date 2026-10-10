@@ -89,7 +89,15 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+function yearResult(
+  lula,
+  bolsonaro,
+  totalValid,
+  registered,
+  abstentions,
+  blank,
+  nullVotes,
+) {
   const y = {
     lula,
     bolsonaro,
@@ -97,19 +105,31 @@ function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
-  if (registered != null && registered > 0 && abstentions != null) {
-    y.registered = registered
-    y.abstentions = abstentions
-    y.abstentionPct = round1((abstentions / registered) * 100)
+  if (registered == null || registered <= 0) return y
+  y.registered = registered
+  if (abstentions != null) y.abstentions = abstentions
+  if (blank != null) y.blank = blank
+  if (nullVotes != null) y.nullVotes = nullVotes
+  let noValid
+  if (abstentions != null && blank != null && nullVotes != null) {
+    noValid = abstentions + blank + nullVotes
+  } else {
+    noValid = Math.max(0, registered - totalValid)
   }
+  y.noValidVote = noValid
+  y.noValidVotePct = round1((noValid / registered) * 100)
   return y
 }
 
 function electorateOf(doc) {
   const registered = parseIntPT(doc?.e?.te)
-  const abstentions = parseIntPT(doc?.e?.a)
   if (registered <= 0) return null
-  return { registered, abstentions }
+  return {
+    registered,
+    abstentions: parseIntPT(doc?.e?.a),
+    blank: parseIntPT(doc?.v?.vb),
+    nullVotes: parseIntPT(doc?.v?.tvn),
+  }
 }
 
 function swingOf(y2022, y2026) {
@@ -206,6 +226,8 @@ async function main() {
       total: 0,
       registered: 0,
       abstentions: 0,
+      blank: 0,
+      nullVotes: 0,
       hasElectorate: false,
       areas: [],
     }
@@ -218,6 +240,8 @@ async function main() {
       agg.hasElectorate = true
       agg.registered += electorate.registered
       agg.abstentions += electorate.abstentions
+      agg.blank += electorate.blank
+      agg.nullVotes += electorate.nullVotes
     }
     const y2026 = yearResult(
       lula,
@@ -225,6 +249,8 @@ async function main() {
       totalValid,
       electorate?.registered,
       electorate?.abstentions,
+      electorate?.blank,
+      electorate?.nullVotes,
     )
     const y2022Raw = CITY_2022[code]
     const y2022 = y2022Raw
@@ -234,6 +260,8 @@ async function main() {
           y2022Raw.totalValid,
           y2022Raw.registered,
           y2022Raw.abstentions,
+          y2022Raw.blank,
+          y2022Raw.nullVotes,
         )
       : null
     agg.areas.push({
@@ -278,6 +306,8 @@ async function main() {
       agg.totalValid,
       agg.hasElectorate ? agg.registered : null,
       agg.hasElectorate ? agg.abstentions : null,
+      agg.hasElectorate ? agg.blank : null,
+      agg.hasElectorate ? agg.nullVotes : null,
     )
     country.y2026 = y2026
     country.swing = swingOf(country.y2022, y2026)

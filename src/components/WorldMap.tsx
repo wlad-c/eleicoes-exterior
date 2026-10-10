@@ -14,8 +14,8 @@ import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
 import worldAtlas from 'world-atlas/countries-110m.json'
 import {
-  ABSTENTION_COLOR,
-  ABSTENTION_COLOR_LIGHT,
+  NO_VALID_VOTE_COLOR,
+  NO_VALID_VOTE_COLOR_LIGHT,
   BOLSONARO_COLOR,
   BOLSONARO_COLOR_LIGHT,
   LULA_COLOR,
@@ -1098,8 +1098,8 @@ function Legend({
         ? VOTES_COLOR_LIGHT
         : mode === 'other'
           ? OTHER_COLOR_LIGHT
-          : mode === 'abstention'
-            ? ABSTENTION_COLOR_LIGHT
+          : mode === 'noValid'
+            ? NO_VALID_VOTE_COLOR_LIGHT
             : '#EEF3F9'
   const to =
     mode === 'lula'
@@ -1108,8 +1108,8 @@ function Legend({
         ? VOTES_COLOR
         : mode === 'other'
           ? OTHER_COLOR
-          : mode === 'abstention'
-            ? ABSTENTION_COLOR
+          : mode === 'noValid'
+            ? NO_VALID_VOTE_COLOR
             : BOLSONARO_COLOR
   const [lo, hi] = extent
 

@@ -8,15 +8,21 @@ export type YearResult = {
   totalValid: number
   lulaPct: number
   bolsonaroPct: number
-  /**
-   * Registered voters (aptos) when known (TSE EA20 `e.te` / open-data QT_APTOS).
-   * Used with `abstentions` for abstention %.
-   */
+  /** Registered voters (aptos) when known. */
   registered?: number
-  /** Non-voters (abstenções) when known. */
+  /** Non-voters who did not turn out (abstenções). */
   abstentions?: number
-  /** Abstention share of registered voters (0–100). */
-  abstentionPct?: number
+  /** Blank votes (brancos). */
+  blank?: number
+  /** Null votes (nulos). */
+  nullVotes?: number
+  /**
+   * Registered voters who did not cast a valid vote:
+   * abstentions + blank + null (= aptos − válidos when components match).
+   */
+  noValidVote?: number
+  /** Share of registered voters with no valid vote (0–100). */
+  noValidVotePct?: number
 }
 
 export type Swing = {
@@ -161,10 +167,10 @@ export type MapMetric =
   | 'bolsonaroPct2022'
   | 'otherPct2026'
   | 'otherPct2022'
-  | 'abstentionPct2026'
-  | 'abstentionPct2022'
-  | 'abstentions2026'
-  | 'abstentions2022'
+  | 'noValidVotePct2026'
+  | 'noValidVotePct2022'
+  | 'noValidVotes2026'
+  | 'noValidVotes2022'
   | 'votes2026'
   | 'votes2022'
   | 'lulaVotes2026'
@@ -186,10 +192,10 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'bolsonaroPct2022',
   'otherPct2026',
   'otherPct2022',
-  'abstentionPct2026',
-  'abstentionPct2022',
-  'abstentions2026',
-  'abstentions2022',
+  'noValidVotePct2026',
+  'noValidVotePct2022',
+  'noValidVotes2026',
+  'noValidVotes2022',
   'votes2026',
   'votes2022',
   'lulaVotes2026',
@@ -209,10 +215,10 @@ export type SortKey =
   | 'difference2022'
   | 'otherPct2026'
   | 'otherPct2022'
-  | 'abstentionPct2026'
-  | 'abstentionPct2022'
-  | 'abstentions2026'
-  | 'abstentions2022'
+  | 'noValidVotePct2026'
+  | 'noValidVotePct2022'
+  | 'noValidVotes2026'
+  | 'noValidVotes2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
@@ -230,8 +236,8 @@ export type HeatColumn =
   | 'difference2022'
   | 'other2026'
   | 'other2022'
-  | 'abstention2026'
-  | 'abstention2022'
+  | 'noValidVote2026'
+  | 'noValidVote2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
@@ -268,12 +274,12 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'other2026'
     case 'otherPct2022':
       return 'other2022'
-    case 'abstentionPct2026':
-    case 'abstentions2026':
-      return 'abstention2026'
-    case 'abstentionPct2022':
-    case 'abstentions2022':
-      return 'abstention2022'
+    case 'noValidVotePct2026':
+    case 'noValidVotes2026':
+      return 'noValidVote2026'
+    case 'noValidVotePct2022':
+    case 'noValidVotes2022':
+      return 'noValidVote2022'
     case 'votes2026':
     case 'votes2022':
       return 'none'

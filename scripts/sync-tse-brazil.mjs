@@ -94,7 +94,15 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+function yearResult(
+  lula,
+  bolsonaro,
+  totalValid,
+  registered,
+  abstentions,
+  blank,
+  nullVotes,
+) {
   const y = {
     lula,
     bolsonaro,
@@ -102,19 +110,31 @@ function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
-  if (registered != null && registered > 0 && abstentions != null) {
-    y.registered = registered
-    y.abstentions = abstentions
-    y.abstentionPct = round1((abstentions / registered) * 100)
+  if (registered == null || registered <= 0) return y
+  y.registered = registered
+  if (abstentions != null) y.abstentions = abstentions
+  if (blank != null) y.blank = blank
+  if (nullVotes != null) y.nullVotes = nullVotes
+  let noValid
+  if (abstentions != null && blank != null && nullVotes != null) {
+    noValid = abstentions + blank + nullVotes
+  } else {
+    noValid = Math.max(0, registered - totalValid)
   }
+  y.noValidVote = noValid
+  y.noValidVotePct = round1((noValid / registered) * 100)
   return y
 }
 
 function electorateOf(doc) {
   const registered = parseIntPT(doc?.e?.te)
-  const abstentions = parseIntPT(doc?.e?.a)
   if (registered <= 0) return null
-  return { registered, abstentions }
+  return {
+    registered,
+    abstentions: parseIntPT(doc?.e?.a),
+    blank: parseIntPT(doc?.v?.vb),
+    nullVotes: parseIntPT(doc?.v?.tvn),
+  }
 }
 
 function swingOf(y2022, y2026) {
@@ -398,6 +418,8 @@ async function main() {
   let natValid = 0
   let natRegistered = 0
   let natAbstentions = 0
+  let natBlank = 0
+  let natNullVotes = 0
   let natHasElectorate = false
   let natCounted = 0
   let natTotal = 0
@@ -411,6 +433,8 @@ async function main() {
       valid,
       electorate?.registered,
       electorate?.abstentions,
+      electorate?.blank,
+      electorate?.nullVotes,
     )
     const prevRaw = y2022.ufs[uf] || null
     const prev = prevRaw
@@ -420,6 +444,8 @@ async function main() {
           prevRaw.totalValid,
           prevRaw.registered,
           prevRaw.abstentions,
+          prevRaw.blank,
+          prevRaw.nullVotes,
         )
       : null
     const meta = UF_META[uf]
@@ -431,6 +457,8 @@ async function main() {
       natHasElectorate = true
       natRegistered += electorate.registered
       natAbstentions += electorate.abstentions
+      natBlank += electorate.blank
+      natNullVotes += electorate.nullVotes
     }
     if (cov) {
       natCounted += cov.counted
@@ -455,6 +483,8 @@ async function main() {
     natValid,
     natHasElectorate ? natRegistered : null,
     natHasElectorate ? natAbstentions : null,
+    natHasElectorate ? natBlank : null,
+    natHasElectorate ? natNullVotes : null,
   )
   const brCoverage =
     natTotal > 0 ? { counted: natCounted, total: natTotal } : null
@@ -493,6 +523,8 @@ async function main() {
           valid,
           electorate?.registered,
           electorate?.abstentions,
+          electorate?.blank,
+          electorate?.nullVotes,
         ),
         coverage: coverageOf(doc),
       }
@@ -517,6 +549,8 @@ async function main() {
           prevRaw.totalValid,
           prevRaw.registered,
           prevRaw.abstentions,
+          prevRaw.blank,
+          prevRaw.nullVotes,
         )
       : null
     const pretty = titleCasePt(m.name)
