@@ -143,17 +143,18 @@ export type ResultsData = {
 /**
  * Heatmap / map coloring metrics.
  * Leader: who has more valid votes (share intensity from 50%→100%).
+ * Difference: Lula % − Bolsonaro % within the same year (signed pp).
  * Changes: 2026% − 2022%.
- * Swing to Lula: Lula change − Bolsonaro change.
- * Swing to Bolsonaro: Bolsonaro change − Lula change.
+ * Swing: Lula change − Bolsonaro change (red toward Lula, blue toward Bolsonaro).
  */
 export type MapMetric =
   | 'leader2026'
   | 'leader2022'
+  | 'difference2026'
+  | 'difference2022'
   | 'lulaChange'
   | 'bolsonaroChange'
-  | 'swingToLula'
-  | 'swingToBolsonaro'
+  | 'swing'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
@@ -174,10 +175,11 @@ export type MapMetric =
 export const HEATMAP_METRICS: MapMetric[] = [
   'leader2026',
   'leader2022',
+  'difference2026',
+  'difference2022',
   'lulaChange',
   'bolsonaroChange',
-  'swingToLula',
-  'swingToBolsonaro',
+  'swing',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
@@ -203,6 +205,8 @@ export type SortKey =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'difference2026'
+  | 'difference2022'
   | 'otherPct2026'
   | 'otherPct2022'
   | 'abstentionPct2026'
@@ -211,8 +215,7 @@ export type SortKey =
   | 'abstentions2022'
   | 'lulaChange'
   | 'bolsonaroChange'
-  | 'swingToLula'
-  | 'swingToBolsonaro'
+  | 'swing'
   | 'sections'
   | 'country'
   | 'region'
@@ -223,14 +226,15 @@ export type HeatColumn =
   | 'bolso2026'
   | 'lula2022'
   | 'bolso2022'
+  | 'difference2026'
+  | 'difference2022'
   | 'other2026'
   | 'other2022'
   | 'abstention2026'
   | 'abstention2022'
   | 'lulaChange'
   | 'bolsonaroChange'
-  | 'swingToLula'
-  | 'swingToBolsonaro'
+  | 'swing'
   | 'none'
 
 export function heatColumnForMetric(metric: MapMetric): HeatColumn {
@@ -238,14 +242,16 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'leader2026':
     case 'leader2022':
       return 'none'
+    case 'difference2026':
+      return 'difference2026'
+    case 'difference2022':
+      return 'difference2022'
     case 'lulaChange':
       return 'lulaChange'
     case 'bolsonaroChange':
       return 'bolsonaroChange'
-    case 'swingToLula':
-      return 'swingToLula'
-    case 'swingToBolsonaro':
-      return 'swingToBolsonaro'
+    case 'swing':
+      return 'swing'
     case 'lulaPct2026':
     case 'lulaVotes2026':
       return 'lula2026'

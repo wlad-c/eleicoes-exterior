@@ -303,22 +303,28 @@ export function bolsonaroChange(c: VoteLike): number | null {
   return c.y2026.bolsonaroPct - c.y2022.bolsonaroPct
 }
 
-/** Swing to Lula = Lula change − Bolsonaro change. */
-export function swingToLula(c: VoteLike): number | null {
+/** Same-year margin: Lula % − Bolsonaro % (positive → Lula ahead). */
+export function difference2026(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026) return null
+  return c.y2026.lulaPct - c.y2026.bolsonaroPct
+}
+
+/** Same-year margin: Lula % − Bolsonaro % (positive → Lula ahead). */
+export function difference2022(c: VoteLike): number | null {
+  if (!c.y2022) return null
+  return c.y2022.lulaPct - c.y2022.bolsonaroPct
+}
+
+/**
+ * Swing = Lula change − Bolsonaro change.
+ * Positive → swing toward Lula (red); negative → toward Bolsonaro (blue).
+ */
+export function swing(c: VoteLike): number | null {
   if (c.swing != null) return c.swing.lulaPp - c.swing.bolsonaroPp
   const l = lulaChange(c)
   const b = bolsonaroChange(c)
   if (l == null || b == null) return null
   return l - b
-}
-
-/** Swing to Bolsonaro = Bolsonaro change − Lula change. */
-export function swingToBolsonaro(c: VoteLike): number | null {
-  if (c.swing != null) return c.swing.bolsonaroPp - c.swing.lulaPp
-  const l = lulaChange(c)
-  const b = bolsonaroChange(c)
-  if (l == null || b == null) return null
-  return b - l
 }
 
 export function metricValue(c: VoteLike, metric: MapMetric): number | null {
@@ -337,14 +343,16 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       if (bolsonaroPct > lulaPct) return -bolsonaroPct
       return 0
     }
+    case 'difference2026':
+      return difference2026(c)
+    case 'difference2022':
+      return difference2022(c)
     case 'lulaChange':
       return lulaChange(c)
     case 'bolsonaroChange':
       return bolsonaroChange(c)
-    case 'swingToLula':
-      return swingToLula(c)
-    case 'swingToBolsonaro':
-      return swingToBolsonaro(c)
+    case 'swing':
+      return swing(c)
     case 'lulaPct2026':
       return isReported(c) && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
@@ -400,10 +408,11 @@ export function formatMetricValue(
             : 'Bolsonaro'
       return `${who} ${fmtPct(Math.abs(value), lang)}`
     }
+    case 'difference2026':
+    case 'difference2022':
     case 'lulaChange':
     case 'bolsonaroChange':
-    case 'swingToLula':
-    case 'swingToBolsonaro':
+    case 'swing':
       return fmtPp(value, lang)
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
@@ -465,10 +474,11 @@ export type RowTotals = {
   valid2022: number
   lulaPct2022: number
   bolsoPct2022: number
+  difference2026: number | null
+  difference2022: number
   lulaChange: number | null
   bolsonaroChange: number | null
-  swingToLula: number | null
-  swingToBolsonaro: number | null
+  swing: number | null
   lulaVotesDelta: number | null
   bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
@@ -558,14 +568,15 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     bolsoPct2026 != null && bolsoPct2022Comparable != null
       ? bolsoPct2026 - bolsoPct2022Comparable
       : null
-  const swingToLula =
+  const swing =
     lulaChange != null && bolsonaroChange != null
       ? lulaChange - bolsonaroChange
       : null
-  const swingToBolsonaro =
-    lulaChange != null && bolsonaroChange != null
-      ? bolsonaroChange - lulaChange
+  const difference2026 =
+    lulaPct2026 != null && bolsoPct2026 != null
+      ? lulaPct2026 - bolsoPct2026
       : null
+  const difference2022 = lulaPct2022 - bolsoPct2022
 
   return {
     countries: rows.length,
@@ -589,10 +600,11 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     valid2022,
     lulaPct2022,
     bolsoPct2022,
+    difference2026,
+    difference2022,
     lulaChange,
     bolsonaroChange,
-    swingToLula,
-    swingToBolsonaro,
+    swing,
     lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
     bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,

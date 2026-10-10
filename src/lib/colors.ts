@@ -46,12 +46,13 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'leader2026':
     case 'leader2022':
       return 'leader'
+    case 'difference2026':
+    case 'difference2022':
     case 'lulaChange':
-    case 'swingToLula':
+    case 'swing':
       return 'divergingLB'
     case 'bolsonaroChange':
-    case 'swingToBolsonaro':
-      // positive Bolsonaro metrics → blue (inverted below)
+      // positive Bolsonaro change → blue (inverted below)
       return 'divergingLB'
     case 'lulaPct2026':
     case 'lulaPct2022':
@@ -78,7 +79,11 @@ function scaleKind(metric: MapMetric): ScaleKind {
 }
 
 function isInverted(metric: MapMetric): boolean {
-  return metric === 'bolsonaroChange' || metric === 'swingToBolsonaro'
+  return metric === 'bolsonaroChange'
+}
+
+function isDifferenceMetric(metric: MapMetric): boolean {
+  return metric === 'difference2026' || metric === 'difference2022'
 }
 
 function lerpColor(a: string, b: string, t: number): string {
@@ -192,7 +197,17 @@ export function makeMetricColorizer(
   }
 
   if (kind === 'divergingLB') {
-    const scale = divergingScale()
+    // Same-year margins are often >> ±10pp; stretch the scale to the visible extent.
+    const scale = isDifferenceMetric(metric)
+      ? scaleDiverging<string>()
+          .domain([
+            -Math.max(Math.abs(lo), Math.abs(hi), 1),
+            0,
+            Math.max(Math.abs(lo), Math.abs(hi), 1),
+          ])
+          .clamp(true)
+          .interpolator(divergingScale().interpolator())
+      : divergingScale()
     return (value) => {
       if (value == null) return PENDING_FILL
       return scale(invert ? -value : value)

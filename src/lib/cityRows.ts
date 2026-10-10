@@ -297,20 +297,23 @@ export function cityBolsonaroVotesDelta(c: CityResult): number | null {
   return c.y2026.bolsonaro - c.y2022.bolsonaro
 }
 
-export function citySwingToLula(c: CityResult): number | null {
+export function cityDifference2026(c: CityResult): number | null {
+  if (!c.y2026) return null
+  return c.y2026.lulaPct - c.y2026.bolsonaroPct
+}
+
+export function cityDifference2022(c: CityResult): number | null {
+  if (!c.y2022) return null
+  return c.y2022.lulaPct - c.y2022.bolsonaroPct
+}
+
+/** Swing = Lula Δ − Bolsonaro Δ (positive toward Lula). */
+export function citySwing(c: CityResult): number | null {
   if (c.swing != null) return c.swing.lulaPp - c.swing.bolsonaroPp
   const lula = cityLulaChange(c)
   const bolso = cityBolsonaroChange(c)
   if (lula == null || bolso == null) return null
   return lula - bolso
-}
-
-export function citySwingToBolsonaro(c: CityResult): number | null {
-  if (c.swing != null) return c.swing.bolsonaroPp - c.swing.lulaPp
-  const lula = cityLulaChange(c)
-  const bolso = cityBolsonaroChange(c)
-  if (lula == null || bolso == null) return null
-  return bolso - lula
 }
 
 function citySortValue(
@@ -350,14 +353,16 @@ function citySortValue(
       return abstentionVotes(row.y2026) ?? Number.NaN
     case 'abstentions2022':
       return abstentionVotes(row.y2022) ?? Number.NaN
+    case 'difference2026':
+      return cityDifference2026(row) ?? Number.NaN
+    case 'difference2022':
+      return cityDifference2022(row) ?? Number.NaN
     case 'lulaChange':
       return cityLulaChange(row) ?? Number.NaN
     case 'bolsonaroChange':
       return cityBolsonaroChange(row) ?? Number.NaN
-    case 'swingToLula':
-      return citySwingToLula(row) ?? Number.NaN
-    case 'swingToBolsonaro':
-      return citySwingToBolsonaro(row) ?? Number.NaN
+    case 'swing':
+      return citySwing(row) ?? Number.NaN
     case 'sections':
       return row.coverage && row.coverage.total > 0
         ? row.coverage.counted / row.coverage.total
