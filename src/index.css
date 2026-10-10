@@ -124,6 +124,37 @@ html.dark .sticky-table-chrome {
   background: var(--paper);
 }
 
+/* Mobile: collapse sticky filter height on scroll-down so rows reclaim space */
+@media (max-width: 640px) {
+  .sticky-table-chrome {
+    overflow: hidden;
+    overflow-anchor: none;
+    max-height: var(--sticky-chrome-height, 2000px);
+    transition:
+      max-height 0.22s ease,
+      opacity 0.18s ease,
+      padding 0.22s ease,
+      margin 0.22s ease,
+      border-bottom-width 0.22s ease;
+  }
+
+  .sticky-table-chrome.is-scroll-collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom-width: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-table-chrome {
+      transition: none;
+    }
+  }
+}
+
 /* Sticky header strip sticks under filter chrome (outside body x-scroller) */
 .table-head-sticky {
   position: -webkit-sticky;

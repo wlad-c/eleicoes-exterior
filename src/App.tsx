@@ -70,6 +70,7 @@ import {
   type TableMetricCol,
 } from './lib/tableColumns'
 import { useTheme } from './lib/theme'
+import { useMobileScrollCollapse } from './lib/useMobileScrollCollapse'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
 import { HEATMAP_METRICS } from './types'
@@ -174,6 +175,7 @@ export default function App() {
     readStoredColumnOrder(),
   )
   const tableChromeRef = useRef<HTMLDivElement>(null)
+  const chromeCollapsed = useMobileScrollCollapse(tableChromeRef)
 
   function setVisibleColsPersist(next: TableMetricCol[]) {
     setVisibleCols(next)
@@ -196,20 +198,31 @@ export default function App() {
     const el = tableChromeRef.current
     if (!el) return
     const syncHeadOffset = () => {
-      document.documentElement.style.setProperty(
-        '--sticky-table-head-top',
-        `${Math.ceil(el.getBoundingClientRect().height)}px`,
-      )
+      if (!chromeCollapsed) {
+        const height = Math.ceil(el.scrollHeight)
+        el.style.setProperty('--sticky-chrome-height', `${height}px`)
+        document.documentElement.style.setProperty(
+          '--sticky-table-head-top',
+          `${height}px`,
+        )
+      } else {
+        document.documentElement.style.setProperty(
+          '--sticky-table-head-top',
+          '0px',
+        )
+      }
     }
     syncHeadOffset()
     const ro = new ResizeObserver(syncHeadOffset)
     ro.observe(el)
+    const inner = el.querySelector('.sticky-table-chrome-inner')
+    if (inner) ro.observe(inner)
     window.addEventListener('resize', syncHeadOffset)
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', syncHeadOffset)
     }
-  }, [])
+  }, [chromeCollapsed])
 
   const brazilCountry = useMemo(
     () => data.countries.find((c) => c.id === BRAZIL_ID) ?? null,
@@ -1016,8 +1029,11 @@ export default function App() {
       <section className="panel panel-results mb-4 rounded-xl px-2 py-4 sm:p-5">
         <div
           ref={tableChromeRef}
-          className="sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 space-y-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5"
+          className={`sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5${
+            chromeCollapsed ? ' is-scroll-collapsed' : ''
+          }`}
         >
+          <div className="sticky-table-chrome-inner space-y-3">
           <div
             className="flex flex-wrap gap-1"
             role="tablist"
@@ -1261,6 +1277,7 @@ export default function App() {
                 <option value="pending">{t('statusPending', lang)}</option>
               </select>
             </label>
+          </div>
           </div>
         </div>
 
