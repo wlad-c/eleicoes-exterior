@@ -199,13 +199,25 @@ export default function App() {
     if (!el) return
     const syncHeadOffset = () => {
       if (!chromeCollapsed) {
-        const height = Math.ceil(el.scrollHeight)
-        el.style.setProperty('--sticky-chrome-height', `${height}px`)
+        // Measure the open size before/while expanded so max-height
+        // transitions from a real pixel value (smooth) rather than 2000px.
+        const height = Math.ceil(
+          (el.querySelector('.sticky-table-chrome-inner') as HTMLElement | null)
+            ?.scrollHeight ?? el.scrollHeight,
+        )
+        // Include outer vertical padding so expand doesn’t clip labels.
+        const style = getComputedStyle(el)
+        const padY =
+          (parseFloat(style.paddingTop) || 0) +
+          (parseFloat(style.paddingBottom) || 0)
+        const full = Math.ceil(height + padY)
+        el.style.setProperty('--sticky-chrome-height', `${full}px`)
         document.documentElement.style.setProperty(
           '--sticky-table-head-top',
-          `${height}px`,
+          `${full}px`,
         )
       } else {
+        // top transitions via CSS on .table-head-sticky
         document.documentElement.style.setProperty(
           '--sticky-table-head-top',
           '0px',
