@@ -207,8 +207,14 @@ html.dark .sticky-table-chrome {
 .results-table {
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
   width: 100%;
-  min-width: 100%;
+  /*
+   * Fill the pane when few columns are visible; grow past it (and pan)
+   * when many metrics need room. --results-table-min-width is set from JS
+   * with the visible metric count baked into the calc.
+   */
+  min-width: max(100%, var(--results-table-min-width, 100%));
 }
 
 .results-table th,
@@ -217,9 +223,9 @@ html.dark .sticky-table-chrome {
 }
 
 /*
- * Dense tables: metric columns hug content (width: 1% + nowrap).
- * Name/place columns size to their text — never a fixed cap that
- * truncates “Plano Diretor Sul” while metrics sit in empty gutters.
+ * Metric columns share leftover pane width (width: auto + nowrap).
+ * Name/place columns size to their text; the trailing spacer stays
+ * collapsed so spare space lands in data columns — not an empty gutter.
  */
 .results-table th,
 .results-table td {
@@ -227,22 +233,27 @@ html.dark .sticky-table-chrome {
   padding-right: 0.35rem;
 }
 
+/*
+ * Fixed table layout: sticky label cols take their set width; remaining
+ * pane width is shared evenly across metric columns.
+ */
 .results-table th:not(.sticky-col):not(.table-col-spacer),
 .results-table td:not(.sticky-col):not(.table-col-spacer) {
-  width: 1%;
+  min-width: 0;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*
- * Metric headers must not outgrow the numbers beneath them.
- * Hints (“total votes”, “% of valid…”) inflated every desktop column —
- * hide them; titles stay ellipsized to a number-sized width.
+ * Hints (“total votes”, “% of valid…”) stay hidden; titles grow with
+ * the column so headers aren’t mid-word ellipsized while the pane is roomy.
  */
 .results-table th:not(.sticky-col) .th-title {
   display: block;
-  max-width: 6.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
@@ -424,58 +435,37 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Fill the pane. On narrow/medium viewports, metrics hug content and a
- * trailing spacer can absorb leftover width. From ~1100px up we collapse
- * the spacer and let place + metric columns expand across the full pane
- * (see the min-width: 1100px block below).
+ * Fill the pane. Metric + name columns expand into leftover width; the
+ * trailing spacer stays collapsed so it never reads as an empty gutter.
  */
 .results-table--cities,
 .results-table--body,
 .results-table--head:not(.results-table--cities),
 .results-table--foot {
   width: 100%;
-  min-width: 100%;
+  min-width: max(100%, var(--results-table-min-width, 100%));
 }
 
-/* Absorbs leftover pane width on compact layouts only */
+/* Keep the cell for column-count sync, but never claim visual width */
 .results-table th.table-col-spacer,
 .results-table td.table-col-spacer {
-  width: 100%;
-  min-width: 0;
-  max-width: none;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden;
   padding: 0 !important;
   border: none;
   pointer-events: none;
   white-space: normal;
 }
 
-/*
- * Large screens: use the full table width for data.
- * - Collapse the empty trailing spacer
- * - Let place/name + metric columns grow and breathe
- * - Stop ellipsizing metric headers mid-word
- */
+/* Roomy desktops: more padding and a larger share for place/name */
 @media (min-width: 1100px) {
-  .results-table th.table-col-spacer,
-  .results-table td.table-col-spacer {
-    width: 0 !important;
-    min-width: 0 !important;
-    max-width: 0 !important;
-    overflow: hidden;
-  }
-
   .results-table th:not(.sticky-col):not(.table-col-spacer),
   .results-table td:not(.sticky-col):not(.table-col-spacer) {
-    width: auto;
     min-width: 7.25rem;
     padding-left: 0.65rem;
     padding-right: 0.65rem;
-  }
-
-  .results-table th:not(.sticky-col) .th-title {
-    max-width: none;
-    overflow: visible;
-    text-overflow: clip;
   }
 
   .cell-truncate-city,
@@ -492,7 +482,7 @@ html.dark .is-x-scrolled .sticky-col-city {
   .results-table--foot .sticky-col-country.cell-truncate-country {
     width: 18%;
     min-width: 14rem;
-    max-width: 24rem;
+    max-width: 18%;
   }
 }
 
@@ -525,15 +515,14 @@ html.dark .is-x-scrolled .sticky-col-city {
   .col-drag-handle {
     display: none;
   }
-
-  .results-table th:not(.sticky-col) .th-title {
-    max-width: 5.5rem;
-  }
 }
 
-@media (max-width: 900px) {
+/* Only ellipsize metric headers when the pane is truly tight */
+@media (max-width: 640px) {
   .results-table th:not(.sticky-col) .th-title {
     max-width: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -551,21 +540,12 @@ html.dark .is-x-scrolled .sticky-col-city {
   }
 
   .results-table {
-    /* Content-sized — fixed min-width was inventing empty gutters */
-    min-width: 0;
-    width: max-content;
     font-size: 0.8125rem;
+    --metric-col-min: 4.75rem;
   }
 
-  /*
-   * Metrics hug content. Former 7.25rem min-width forced empty space
-   * between columns while BAIRRO/city names stayed truncated.
-   * Spacer keeps width:100% (see base rule) — exclude it here.
-   */
   .results-table th:not(.sticky-col):not(.table-col-spacer),
   .results-table td:not(.sticky-col):not(.table-col-spacer) {
-    min-width: 0;
-    width: 1%;
     padding-left: 0.28rem;
     padding-right: 0.28rem;
   }
@@ -1201,27 +1181,27 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Place / neighborhood / city name: size to the full label (no ellipsis,
- * no max-width cap). Leftover pane width goes to .table-col-spacer.
+ * Place / neighborhood / city name: reserved share under fixed layout.
+ * Leftover pane width is shared across metric columns.
  */
 .cell-truncate-city,
 .sticky-col-city.cell-truncate-city,
 .results-table--suburb .sticky-col-city.cell-truncate-city {
-  width: auto;
+  width: 28%;
   min-width: var(--table-col-place-min);
-  max-width: none;
-  overflow: visible;
+  max-width: 40%;
+  overflow: hidden;
 }
 
 .sticky-col-city.cell-truncate-city .name-tip {
-  overflow: visible;
-  max-width: none;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .sticky-col-city.cell-truncate-city .cell-truncate-text {
   display: block;
-  overflow: visible;
-  text-overflow: clip;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.25;
 }
@@ -1288,15 +1268,16 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 /*
- * Country table: name column sizes to the label; spacer takes leftover.
+ * Country table: name column fits labels up to a soft cap so leftover
+ * width expands the metric columns instead of a blank name gutter.
  */
 .results-table--body .sticky-col-country.cell-truncate-country,
 .results-table--head:not(.results-table--cities)
   .sticky-col-country.cell-truncate-country,
 .results-table--foot .sticky-col-country.cell-truncate-country {
-  width: auto;
+  width: var(--table-col-country-full);
   min-width: var(--table-col-country-full);
-  max-width: none;
+  max-width: var(--table-col-country-full);
 }
 
 .results-table--body .sticky-col-country.cell-truncate-country .name-tip,
@@ -1317,15 +1298,15 @@ html.dark .is-x-scrolled .sticky-col-city {
 }
 
 .sticky-col-country.cell-truncate-country {
-  overflow: visible;
+  overflow: hidden;
 }
 
 .sticky-col-country.cell-truncate-country .cell-truncate-text,
 .sticky-col-country.cell-truncate-country
   .country-flag-label
   .cell-truncate-text {
-  overflow: visible;
-  text-overflow: clip;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
