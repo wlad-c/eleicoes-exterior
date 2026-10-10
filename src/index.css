@@ -118,17 +118,33 @@ select {
   /* Fully opaque — no bleed-through of scrolling rows */
   background: var(--paper);
   backdrop-filter: none;
-  transition: transform 0.22s ease;
 }
 
 html.dark .sticky-table-chrome {
   background: var(--paper);
 }
 
-/* Mobile: slide sticky filters away on scroll-down (see useMobileScrollCollapse) */
+/* Mobile: collapse sticky filter height on scroll-down so rows reclaim space */
 @media (max-width: 640px) {
+  .sticky-table-chrome {
+    overflow: hidden;
+    overflow-anchor: none;
+    max-height: var(--sticky-chrome-height, 2000px);
+    transition:
+      max-height 0.22s ease,
+      opacity 0.18s ease,
+      padding 0.22s ease,
+      margin 0.22s ease,
+      border-bottom-width 0.22s ease;
+  }
+
   .sticky-table-chrome.is-scroll-collapsed {
-    transform: translateY(-100%);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom-width: 0;
+    opacity: 0;
     pointer-events: none;
   }
 
