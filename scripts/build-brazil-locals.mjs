@@ -15,6 +15,10 @@
  * After rebuilding tallies, run `node scripts/enrich-suburb-coords.mjs` to
  * attach WGS84 centroids (NR_LATITUDE / NR_LONGITUDE) for the city map.
  *
+ * Abstention / registered voters are overlaid from detalhe_votacao_munzona
+ * (same source as `npm run apply:abstention`). Re-run apply:abstention if you
+ * skip that step or rebuild cities without electorate.
+ *
  * Usage: node scripts/build-brazil-locals.mjs
  */
 import {
@@ -99,14 +103,79 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid) {
-  return {
+function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+  const y = {
     lula,
     bolsonaro,
     totalValid,
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
+  if (registered != null && registered > 0 && abstentions != null) {
+    y.registered = registered
+    y.abstentions = abstentions
+    y.abstentionPct = round1((abstentions / registered) * 100)
+  }
+  return y
+}
+
+/** Zone-grain electorate from detalhe_votacao_munzona_${year}_BRASIL.csv. */
+async function loadZoneElectorate(year, work) {
+  const zipUrl = `${CDN}/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_${year}.zip`
+  const zipPath = join(work, `detalhe_votacao_munzona_${year}.zip`)
+  const csvName = `detalhe_votacao_munzona_${year}_BRASIL.csv`
+  const csvPath = join(work, csvName)
+  if (!existsSync(zipPath) || statSync(zipPath).size < 1000) {
+    console.log(`Downloading ${zipUrl}`)
+    await download(zipUrl, zipPath)
+  }
+  if (!existsSync(csvPath)) {
+    execFileSync('unzip', ['-o', zipPath, csvName, '-d', work], {
+      stdio: 'inherit',
+    })
+  }
+  /** @type {Map<string, {registered:number, abstentions:number}>} */
+  const zones = new Map()
+  const rl = createInterface({
+    input: createReadStream(csvPath, { encoding: 'latin1' }),
+    crlfDelay: Infinity,
+  })
+  let header = null
+  const idx = {}
+  for await (const line of rl) {
+    if (!header) {
+      header = parseCsvLine(line).map((h) => h.replace(/^\uFEFF/, ''))
+      for (const name of [
+        'SG_UF',
+        'CD_MUNICIPIO',
+        'NR_ZONA',
+        'NR_TURNO',
+        'CD_CARGO',
+        'QT_APTOS',
+        'QT_ABSTENCOES',
+      ]) {
+        idx[name] = header.indexOf(name)
+      }
+      continue
+    }
+    const cols = parseCsvLine(line)
+    if (cols[idx.NR_TURNO] !== '1') continue
+    if (cols[idx.CD_CARGO] !== '1' && cols[idx.CD_CARGO] !== '01') continue
+    const uf = cols[idx.SG_UF]
+    if (!uf || uf === 'ZZ' || !UF_META[uf]) continue
+    const mun = pad(cols[idx.CD_MUNICIPIO], 5)
+    const zona = pad(String(cols[idx.NR_ZONA] || '').trim(), 3)
+    if (!mun || mun === '00000' || !zona || zona === '000') continue
+    const key = `${uf}|${mun}|${zona}`
+    const registered = Number.parseInt(cols[idx.QT_APTOS] || '0', 10) || 0
+    const abstentions = Number.parseInt(cols[idx.QT_ABSTENCOES] || '0', 10) || 0
+    const agg = zones.get(key) || { registered: 0, abstentions: 0 }
+    agg.registered += registered
+    agg.abstentions += abstentions
+    zones.set(key, agg)
+  }
+  console.log(`  ${year} zone electorate: ${zones.size}`)
+  return zones
 }
 
 const TITLE_SMALL = new Set(['de', 'da', 'do', 'das', 'dos', 'e'])
@@ -416,6 +485,10 @@ async function main() {
     await aggregateYear(csvPath, cfg.year === 2022 ? by2022 : by2026)
   }
 
+  console.log('\n=== zone electorate (abstention) ===')
+  const el2026 = await loadZoneElectorate(2026, work)
+  const el2022 = await loadZoneElectorate(2022, work)
+
   const keys = new Set([...by2022.keys(), ...by2026.keys()])
   const suburbs = []
   let labeled = 0
@@ -424,11 +497,25 @@ async function main() {
     const a = by2026.get(key)
     const b = by2022.get(key)
     const base = a || b
+    const e26 = el2026.get(key)
+    const e22 = el2022.get(key)
     const y2026 = a
-      ? yearResult(a.lula, a.bolsonaro, a.totalValid)
+      ? yearResult(
+          a.lula,
+          a.bolsonaro,
+          a.totalValid,
+          e26?.registered,
+          e26?.abstentions,
+        )
       : null
     const y2022 = b
-      ? yearResult(b.lula, b.bolsonaro, b.totalValid)
+      ? yearResult(
+          b.lula,
+          b.bolsonaro,
+          b.totalValid,
+          e22?.registered,
+          e22?.abstentions,
+        )
       : null
     if (!y2026) continue
     const munPretty = titleCasePt(base.munName)

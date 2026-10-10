@@ -4,6 +4,8 @@
  *   - 2022 ZZ areas + countries from detalhe_votacao_munzona (QT_APTOS / QT_ABSTENCOES)
  *   - 2026 ZZ areas + countries from TSE EA20 `e.te` / `e.a`
  *   - Brazil national + UF areas (2022 munzona + 2026 EA20)
+ *   - Brazil municipalities (brazil-cities.json) + zonas (brazil-suburbs.json)
+ *     from detalhe_votacao_munzona 2022 + 2026 (zone grain; cities = sum of zones)
  *
  * Does not rebuild vote totals — only electorate overlays.
  *
@@ -24,6 +26,8 @@ const ROOT = join(__dirname, '..')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
 const CITY_2022_PATH = join(ROOT, 'src/data/tse-city-2022.json')
 const CITY_MAP_PATH = join(ROOT, 'src/data/tse-city-map.json')
+const BRAZIL_CITIES_PATH = join(ROOT, 'src/data/brazil-cities.json')
+const BRAZIL_SUBURBS_PATH = join(ROOT, 'src/data/brazil-suburbs.json')
 
 const HOST = 'https://resultados.tse.jus.br'
 const AMBIENTE = 'oficial'
@@ -32,7 +36,8 @@ const ELEICAO = '6257'
 const CARGO = '1'
 const UA = 'eleicoes-exterior/1.0 (+abstention overlay)'
 const CDN = 'https://cdn.tse.jus.br'
-const MUNZONA_ZIP = `${CDN}/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_2022.zip`
+const MUNZONA_ZIP = (year) =>
+  `${CDN}/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_${year}.zip`
 
 const UFS = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -119,22 +124,27 @@ function electorateOf(doc) {
 
 /**
  * President 1st-round electorate from detalhe_votacao_munzona BRASIL CSV.
- * Returns `{ zz: Map(mun→el), ufs: Map(UF→el) }`.
- * (Per-UF munzona files omit cargo Presidente — only BRASIL has it.)
+ * Returns:
+ *   zz: Map(munCode → el)           overseas ZZ municipalities
+ *   ufs: Map(UF → el)               domestic UF totals
+ *   cities: Map(`${UF}|${mun}` → el)
+ *   zones: Map(`${UF}|${mun}|${zona}` → el)  zona padded to 3 digits
  */
-async function loadMunzona2022Electorate() {
+async function loadMunzonaElectorate(year) {
   const work = join(tmpdir(), 'eleicoes-abstention')
   mkdirSync(work, { recursive: true })
-  const zipPath = join(work, 'detalhe_votacao_munzona_2022.zip')
-  await download(MUNZONA_ZIP, zipPath)
-  const csvName = 'detalhe_votacao_munzona_2022_BRASIL.csv'
+  const zipPath = join(work, `detalhe_votacao_munzona_${year}.zip`)
+  await download(MUNZONA_ZIP(year), zipPath)
+  const csvName = `detalhe_votacao_munzona_${year}_BRASIL.csv`
   const csvPath = join(work, csvName)
   if (!existsSync(csvPath)) {
     execFileSync('unzip', ['-o', zipPath, csvName, '-d', work], { stdio: 'inherit' })
   }
 
-  const byMun = new Map()
-  const byUf = new Map()
+  const zz = new Map()
+  const ufs = new Map()
+  const cities = new Map()
+  const zones = new Map()
   const rl = createInterface({
     input: createReadStream(csvPath, { encoding: 'latin1' }),
     crlfDelay: Infinity,
@@ -156,24 +166,84 @@ async function loadMunzona2022Electorate() {
     const uf = cols[idx.SG_UF]
     const registered = Number.parseInt(cols[idx.QT_APTOS] || '0', 10) || 0
     const abstentions = Number.parseInt(cols[idx.QT_ABSTENCOES] || '0', 10) || 0
+    const mun = pad(cols[idx.CD_MUNICIPIO] || '', 5)
+    const zonaRaw = String(cols[idx.NR_ZONA] || '').trim()
+    const zona = zonaRaw ? pad(zonaRaw, 3) : ''
+
     if (uf === 'ZZ') {
-      const mun = pad(cols[idx.CD_MUNICIPIO] || '', 5)
       if (!mun || mun === '00000') continue
-      const agg = byMun.get(mun) || { registered: 0, abstentions: 0 }
+      const agg = zz.get(mun) || { registered: 0, abstentions: 0 }
       agg.registered += registered
       agg.abstentions += abstentions
-      byMun.set(mun, agg)
-    } else if (UFS.includes(uf)) {
-      const agg = byUf.get(uf) || { registered: 0, abstentions: 0 }
-      agg.registered += registered
-      agg.abstentions += abstentions
-      byUf.set(uf, agg)
+      zz.set(mun, agg)
+      continue
+    }
+    if (!UFS.includes(uf) || !mun || mun === '00000') continue
+
+    const cityKey = `${uf}|${mun}`
+    const cityAgg = cities.get(cityKey) || { registered: 0, abstentions: 0 }
+    cityAgg.registered += registered
+    cityAgg.abstentions += abstentions
+    cities.set(cityKey, cityAgg)
+
+    const ufAgg = ufs.get(uf) || { registered: 0, abstentions: 0 }
+    ufAgg.registered += registered
+    ufAgg.abstentions += abstentions
+    ufs.set(uf, ufAgg)
+
+    if (zona) {
+      const zoneKey = `${uf}|${mun}|${zona}`
+      const zoneAgg = zones.get(zoneKey) || { registered: 0, abstentions: 0 }
+      zoneAgg.registered += registered
+      zoneAgg.abstentions += abstentions
+      zones.set(zoneKey, zoneAgg)
     }
   }
   console.log(
-    `2022 electorate: ${byMun.size} ZZ municipalities, ${byUf.size} UFs`,
+    `${year} electorate: ${zz.size} ZZ muns, ${ufs.size} UFs, ${cities.size} cities, ${zones.size} zones`,
   )
-  return { zz: byMun, ufs: byUf }
+  return { zz, ufs, cities, zones }
+}
+
+function patchYearResult(row, yearKey, el) {
+  if (!el || !row?.[yearKey]) return false
+  row[yearKey] = withElectorate(row[yearKey], el.registered, el.abstentions)
+  return true
+}
+
+function patchBrazilLocals(citiesDoc, suburbsDoc, el2022, el2026) {
+  let cities26 = 0
+  let cities22 = 0
+  for (const city of citiesDoc.cities || []) {
+    // code: UF-MMMMM
+    const m = String(city.code || '').match(/^([A-Z]{2})-(\d{5})$/)
+    if (!m) continue
+    const key = `${m[1]}|${m[2]}`
+    if (patchYearResult(city, 'y2026', el2026.cities.get(key))) cities26++
+    if (patchYearResult(city, 'y2022', el2022.cities.get(key))) cities22++
+  }
+
+  let suburbs26 = 0
+  let suburbs22 = 0
+  for (const suburb of suburbsDoc.suburbs || []) {
+    // code: UF-MMMMM-Znnn
+    const m = String(suburb.code || '').match(/^([A-Z]{2})-(\d{5})-Z(\d{3})$/i)
+    if (!m) continue
+    const key = `${m[1]}|${m[2]}|${m[3]}`
+    if (patchYearResult(suburb, 'y2026', el2026.zones.get(key))) suburbs26++
+    if (patchYearResult(suburb, 'y2022', el2022.zones.get(key))) suburbs22++
+  }
+
+  citiesDoc.updatedAt = new Date().toISOString()
+  suburbsDoc.updatedAt = new Date().toISOString()
+  writeFileSync(BRAZIL_CITIES_PATH, JSON.stringify(citiesDoc) + '\n')
+  writeFileSync(BRAZIL_SUBURBS_PATH, JSON.stringify(suburbsDoc) + '\n')
+  console.log(
+    `Patched brazil-cities.json: 2026=${cities26}/${(citiesDoc.cities || []).length}, 2022=${cities22}`,
+  )
+  console.log(
+    `Patched brazil-suburbs.json: 2026=${suburbs26}/${(suburbsDoc.suburbs || []).length}, 2022=${suburbs22}`,
+  )
 }
 
 async function mapPool(items, concurrency, worker) {
@@ -196,7 +266,10 @@ async function main() {
   const city2022 = JSON.parse(readFileSync(CITY_2022_PATH, 'utf8'))
   const results = JSON.parse(readFileSync(RESULTS_PATH, 'utf8'))
 
-  const { zz: zz2022, ufs: uf2022 } = await loadMunzona2022Electorate()
+  const el2022 = await loadMunzonaElectorate(2022)
+  const el2026Munzona = await loadMunzonaElectorate(2026)
+  const zz2022 = el2022.zz
+  const uf2022 = el2022.ufs
   let patchedCity2022 = 0
   for (const [code, el] of zz2022) {
     const row = city2022[code]
@@ -338,6 +411,15 @@ async function main() {
 
   writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
   console.log('Wrote', RESULTS_PATH)
+
+  // Brazil City + Neighborhood tabs (lazy JSON).
+  if (existsSync(BRAZIL_CITIES_PATH) && existsSync(BRAZIL_SUBURBS_PATH)) {
+    const citiesDoc = JSON.parse(readFileSync(BRAZIL_CITIES_PATH, 'utf8'))
+    const suburbsDoc = JSON.parse(readFileSync(BRAZIL_SUBURBS_PATH, 'utf8'))
+    patchBrazilLocals(citiesDoc, suburbsDoc, el2022, el2026Munzona)
+  } else {
+    console.warn('Skip brazil-cities/suburbs — files missing')
+  }
 }
 
 main().catch((err) => {
