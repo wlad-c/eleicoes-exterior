@@ -1,5 +1,11 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react'
 import { CountryFlag } from './CountryFlag'
 import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
@@ -907,7 +913,17 @@ export function CityBreakdownTable({
 
   return (
     <div>
-      <div className="results-table-shell" ref={shellRef}>
+      <div
+        className="results-table-shell"
+        ref={shellRef}
+        style={
+          {
+            '--results-table-min-width': showCountry
+              ? `calc(var(--table-col-rank, 2.35rem) + var(--table-col-abbr) + var(--table-col-place-min) + 5rem + ${metricCols.length} * var(--metric-col-min, 5.5rem))`
+              : `calc(var(--table-col-rank, 2.35rem) + var(--table-col-place-min) + 7rem + ${metricCols.length} * var(--metric-col-min, 5.5rem))`,
+          } as CSSProperties
+        }
+      >
         {/* Sticky header under filter chrome (same pattern as Country table) */}
         <div className="table-head-sticky">
           <div

@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react'
 import { CountryFlag } from './CountryFlag'
 import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
@@ -618,7 +624,16 @@ export function ResultsTable({
 
   return (
     <div>
-      <div className="results-table-shell" ref={shellRef}>
+      <div
+        className="results-table-shell"
+        ref={shellRef}
+        style={
+          {
+            /* Bake count into calc — unitless custom props are unreliable in min() */
+            '--results-table-min-width': `calc(var(--table-col-rank, 2.35rem) + var(--table-col-country-full, 12rem) + ${metricCols.length} * var(--metric-col-min, 5.5rem))`,
+          } as CSSProperties
+        }
+      >
         {/* Sticky header lives outside the body x-scroller so vertical stick works */}
         <div className="table-head-sticky">
           <div
