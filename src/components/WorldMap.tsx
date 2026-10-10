@@ -1011,21 +1011,19 @@ function focusLabel(
 ): string {
   if (focus.level === 'brazil') {
     if (brazilGrain === 'cities') {
-      return lang === 'pt'
-        ? 'Brasil · municípios'
-        : 'Brazil · municipalities'
+      return `${t('Brazil', lang)} · ${t('mapGrainCities', lang)}`
     }
-    return lang === 'pt' ? 'Brasil · UFs' : 'Brazil · states'
+    return `${t('Brazil', lang)} · ${t('mapGrainStates', lang)}`
   }
   if (focus.level === 'uf') {
     const area = areas.find((a) => a.code === focus.uf)
     const name = area ? cityDisplayName(area, lang) : focus.uf
-    return `${name} · ${lang === 'pt' ? 'municípios' : 'municipalities'}`
+    return `${name} · ${t('mapGrainCities', lang)}`
   }
   if (focus.level === 'city') {
     const city = cities.find((c) => c.code === focus.cityCode)
     const name = city ? cityDisplayName(city, lang) : focus.cityCode
-    return `${name} · ${lang === 'pt' ? 'bairros (zonas)' : 'neighborhoods (zones)'}`
+    return `${name} · ${t('mapGrainNeighborhoods', lang)}`
   }
   return ''
 }

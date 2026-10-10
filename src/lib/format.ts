@@ -6,6 +6,7 @@ import type {
   Swing,
   YearResult,
 } from '../types'
+import { t } from './i18n'
 
 /** Minimal vote shape for map/table metrics (country or place rows). */
 export type VoteLike = {
@@ -435,15 +436,13 @@ export function formatMetricValue(
   switch (metric) {
     case 'leader2026':
     case 'leader2022': {
-      if (value === 0) return lang === 'pt' ? 'Empate' : 'Tie'
+      if (value === 0) return t('tie', lang)
       const who =
         value > 0
-          ? lang === 'pt'
-            ? 'Lula'
-            : 'Lula'
-          : lang === 'pt'
-            ? 'Bolsonaro'
-            : 'Bolsonaro'
+          ? t('lula', lang)
+          : metric === 'leader2026'
+            ? t('fBolsonaro', lang)
+            : t('jBolsonaro', lang)
       return `${who} ${fmtPct(Math.abs(value), lang)}`
     }
     case 'difference2026':

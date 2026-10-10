@@ -1,5 +1,11 @@
 import type { Lang } from '../types'
 
+/**
+ * UI copy (EN / PT). Naming rules:
+ * - Hierarchy: Country → Area → City → Neighborhood (País → Área → Cidade → Bairro)
+ * - Metrics: subject then year at the end (e.g. Lula % 2026, Votes 2026)
+ * - Short labels in chrome; formulas live in hints / disclaimers
+ */
 const dict = {
   brand: { en: 'eleições exterior', pt: 'eleições exterior' },
   reported: { en: 'reported', pt: 'apurados' },
@@ -9,14 +15,14 @@ const dict = {
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
   searchArea: { en: 'Search area or country…', pt: 'Buscar área ou país…' },
   searchSuburb: {
-    en: 'Search neighborhood, municipality, or Brazil…',
-    pt: 'Buscar bairro, município ou Brasil…',
+    en: 'Search neighborhood, city, or Brazil…',
+    pt: 'Buscar bairro, cidade ou Brasil…',
   },
   tabCountries: { en: 'Country', pt: 'País' },
   tabAreas: { en: 'Area', pt: 'Área' },
   tabCities: { en: 'City', pt: 'Cidade' },
   tabSuburbs: { en: 'Neighborhood', pt: 'Bairro' },
-  tableView: { en: 'Table view', pt: 'Visão da tabela' },
+  tableView: { en: 'Table', pt: 'Tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   allAreasFilter: { en: 'Any area', pt: 'Qualquer área' },
   allCitiesFilter: { en: 'Any city', pt: 'Qualquer cidade' },
@@ -36,7 +42,7 @@ const dict = {
     pt: 'Buscar cidades…',
   },
   filterEmpty: {
-    en: 'No matches',
+    en: 'No results',
     pt: 'Sem resultados',
   },
   filterSelected: {
@@ -49,59 +55,50 @@ const dict = {
     pt: 'Incluir Brasil',
   },
   includeBrazilHint: {
-    en: 'Off by default — turn on or select Brazil on the map to show domestic rows in the tables',
-    pt: 'Desligado por padrão — ligue ou selecione Brasil no mapa para ver linhas domésticas nas tabelas',
+    en: 'Off by default — turn on or select Brazil on the map to show domestic rows',
+    pt: 'Desligado por padrão — ligue ou selecione Brasil no mapa para ver linhas domésticas',
   },
   allRegions: {
-    en: 'All global regions',
-    pt: 'Todas as regiões globais',
+    en: 'Any region',
+    pt: 'Qualquer região',
   },
   filterGlobalRegions: {
-    en: 'Global regions',
-    pt: 'Regiões globais',
+    en: 'Region',
+    pt: 'Região',
   },
   status: { en: 'Status', pt: 'Status' },
-  statusAll: { en: 'All countries', pt: 'Todos os países' },
-  statusReported: { en: 'Reported only', pt: 'Só apurados' },
-  statusPending: { en: 'Pending only', pt: 'Só pendentes' },
-  mapMetric: { en: 'Heatmap metric', pt: 'Métrica do mapa de calor' },
+  statusAll: { en: 'All', pt: 'Todos' },
+  statusReported: { en: 'Reported', pt: 'Apurados' },
+  statusPending: { en: 'Pending', pt: 'Pendentes' },
+  mapMetric: { en: 'Color by', pt: 'Colorir por' },
   lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
   bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
   swing: {
-    en: 'Swing (Lula − Bolsonaro Δ)',
-    pt: 'Swing (Lula − Bolsonaro Δ)',
+    en: 'Swing',
+    pt: 'Swing',
   },
   difference2026: {
-    en: '2026 difference (Lula − Bolsonaro)',
-    pt: 'Diferença 2026 (Lula − Bolsonaro)',
-  },
-  difference2022: {
-    en: '2022 difference (Lula − Bolsonaro)',
-    pt: 'Diferença 2022 (Lula − Bolsonaro)',
-  },
-  colDifference2026: {
     en: 'Difference 2026',
     pt: 'Diferença 2026',
   },
-  colDifference2022: {
+  difference2022: {
     en: 'Difference 2022',
     pt: 'Diferença 2022',
   },
-  colSwing: { en: 'Swing', pt: 'Swing' },
   leader2026: {
-    en: '2026 leader (who has more votes)',
-    pt: 'Líder 2026 (quem tem mais votos)',
+    en: 'Leader 2026',
+    pt: 'Líder 2026',
   },
   leader2022: {
-    en: '2022 leader (who has more votes)',
-    pt: 'Líder 2022 (quem tem mais votos)',
+    en: 'Leader 2022',
+    pt: 'Líder 2022',
   },
-  lulaPct2026: { en: '2026 Lula %', pt: 'Lula % 2026' },
-  bolsonaroPct2026: { en: '2026 F Bolsonaro %', pt: 'F Bolsonaro % 2026' },
-  lulaPct2022: { en: '2022 Lula %', pt: 'Lula % 2022' },
-  bolsonaroPct2022: { en: '2022 J Bolsonaro %', pt: 'J Bolsonaro % 2022' },
-  votes2026: { en: 'Total votes 2026', pt: 'Total de votos 2026' },
-  votes2022: { en: 'Total votes 2022', pt: 'Total de votos 2022' },
+  lulaPct2026: { en: 'Lula % 2026', pt: 'Lula % 2026' },
+  bolsonaroPct2026: { en: 'F Bolsonaro % 2026', pt: 'F Bolsonaro % 2026' },
+  lulaPct2022: { en: 'Lula % 2022', pt: 'Lula % 2022' },
+  bolsonaroPct2022: { en: 'J Bolsonaro % 2022', pt: 'J Bolsonaro % 2022' },
+  votes2026: { en: 'Votes 2026', pt: 'Votos 2026' },
+  votes2022: { en: 'Votes 2022', pt: 'Votos 2022' },
   lulaVotes2026: { en: 'Lula votes 2026', pt: 'Votos Lula 2026' },
   lulaVotes2022: { en: 'Lula votes 2022', pt: 'Votos Lula 2022' },
   bolsonaroVotes2026: {
@@ -113,32 +110,32 @@ const dict = {
     pt: 'Votos J Bolsonaro 2022',
   },
   otherPct2026: {
-    en: '2026 other candidates %',
-    pt: 'Outros candidatos % 2026',
+    en: 'Other % 2026',
+    pt: 'Outros % 2026',
   },
   otherPct2022: {
-    en: '2022 other candidates %',
-    pt: 'Outros candidatos % 2022',
+    en: 'Other % 2022',
+    pt: 'Outros % 2022',
   },
   noValidVotePct2026: {
-    en: '2026 no valid vote %',
+    en: 'No valid vote % 2026',
     pt: 'Sem voto válido % 2026',
   },
   noValidVotePct2022: {
-    en: '2022 no valid vote %',
+    en: 'No valid vote % 2022',
     pt: 'Sem voto válido % 2022',
   },
   noValidVotes2026: {
-    en: 'No valid vote 2026',
+    en: 'No valid votes 2026',
     pt: 'Sem voto válido 2026',
   },
   noValidVotes2022: {
-    en: 'No valid vote 2022',
+    en: 'No valid votes 2022',
     pt: 'Sem voto válido 2022',
   },
   showPending: {
-    en: 'Show pending countries',
-    pt: 'Mostrar países pendentes',
+    en: 'Show pending',
+    pt: 'Mostrar pendentes',
   },
   showPendingShort: {
     en: 'Pending',
@@ -151,11 +148,11 @@ const dict = {
   pendingHidden: { en: 'hidden', pt: 'ocultos' },
   heatmapHint: {
     en: 'Colors the map and the matching table column',
-    pt: 'Colorize o mapa e a coluna correspondente na tabela',
+    pt: 'Colore o mapa e a coluna correspondente na tabela',
   },
   mapBack: {
     en: 'Broader map',
-    pt: 'Mapa anterior',
+    pt: 'Mapa mais amplo',
   },
   mapLoading: {
     en: 'Loading map…',
@@ -173,21 +170,20 @@ const dict = {
   sortBy: { en: 'Sort', pt: 'Ordenar' },
   tableColumns: { en: 'Columns', pt: 'Colunas' },
   tableColumnsHint: {
-    en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for country, area, city, and suburb.',
-    pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para país, área, cidade e município.',
+    en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for Country, Area, City, and Neighborhood.',
+    pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para País, Área, Cidade e Bairro.',
   },
   tableColumnsDrag: {
     en: 'Drag to reorder columns',
     pt: 'Arraste para reordenar colunas',
   },
-  colLula2026: { en: 'Lula 2026', pt: 'Lula 2026' },
-  colFBolsonaro2026: { en: 'F Bolsonaro 2026', pt: 'F Bolsonaro 2026' },
-  colLula2022: { en: 'Lula 2022', pt: 'Lula 2022' },
-  colJBolsonaro2022: { en: 'J Bolsonaro 2022', pt: 'J Bolsonaro 2022' },
   rank: { en: '#', pt: '#' },
   country: { en: 'Country', pt: 'País' },
   region: { en: 'Region', pt: 'Região' },
-  runningTotal: { en: 'Running total (reported)', pt: 'Total parcial (apurados)' },
+  runningTotal: {
+    en: 'Overseas total (reported)',
+    pt: 'Total exterior (apurados)',
+  },
   tableTotal: { en: 'Total', pt: 'Total' },
   totalFootnoteMixed: {
     en: 'Note: 2022 share columns in Total sum every filtered country. 2026 shares and change/swing use only countries with 2026 results (comparable set).',
@@ -215,7 +211,7 @@ const dict = {
     pt: 'Exterior: cidades de votação dos boletins de urna do TSE (NM_LOCAL_VOTACAO). Brasil: municípios sob cada UF.',
   },
   suburbTableHint: {
-    en: 'Brazil only — each row is an electoral zone, labeled like news maps (e.g. Bela Vista, Piraporinha, Copacabana): official TRE nicknames when known, otherwise main TSE bairros.',
+    en: 'Brazil only — each row is an electoral zone, labeled like news maps (e.g. Bela Vista, Piraporinha, Copacabana): official TRE nicknames when known, otherwise main TSE neighborhoods.',
     pt: 'Só Brasil — cada linha é uma zona eleitoral, com rótulo no estilo dos mapas de apuração (ex.: Bela Vista, Piraporinha, Copacabana): apelido oficial do TRE quando conhecido; senão, principais bairros do TSE.',
   },
   selectCountry: {
@@ -245,16 +241,16 @@ const dict = {
     pt: 'Nenhum bairro com esses filtros. Selecione Brasil ou ligue Incluir Brasil.',
   },
   cityLoading: {
-    en: 'Loading city / municipality breakdown…',
-    pt: 'Carregando detalhamento por cidade / município…',
+    en: 'Loading cities…',
+    pt: 'Carregando cidades…',
   },
   suburbLoading: {
-    en: 'Loading neighborhood-labeled electoral zones…',
-    pt: 'Carregando zonas eleitorais com nome de bairro…',
+    en: 'Loading neighborhoods…',
+    pt: 'Carregando bairros…',
   },
   suburbLoadError: {
-    en: 'Could not load the neighborhood breakdown. Check your connection and try again — this tab is zone/neighborhood level, not municipalities.',
-    pt: 'Não foi possível carregar o detalhamento por bairro. Verifique a conexão e tente de novo — esta aba é por zona/bairro, não municípios.',
+    en: 'Could not load neighborhoods. Check your connection and try again — this tab is electoral zones labeled as neighborhoods, not cities.',
+    pt: 'Não foi possível carregar os bairros. Verifique a conexão e tente de novo — esta aba é por zona eleitoral com nome de bairro, não por cidade.',
   },
   suburbRetry: { en: 'Retry', pt: 'Tentar de novo' },
   cityNo2022Footnote: {
@@ -263,22 +259,25 @@ const dict = {
   },
   hintArea: {
     en: 'TSE area',
-    pt: 'área TSE',
+    pt: 'Área TSE',
   },
   hintCity: {
     en: 'name',
     pt: 'nome',
   },
-  map: { en: 'Swing map', pt: 'Mapa de oscilação' },
-  noMatch: { en: 'No countries match these filters.', pt: 'Nenhum país com esses filtros.' },
+  map: { en: 'Map', pt: 'Mapa' },
+  noMatch: {
+    en: 'No countries match these filters.',
+    pt: 'Nenhum país com esses filtros.',
+  },
   pendingHint: { en: '2026 tally pending', pt: 'Apuração 2026 pendente' },
   disputedShort: {
-    en: 'Disputed 2026 tally — see notes / awaiting TSE',
-    pt: 'Apuração 2026 contestada — ver notas / aguardando TSE',
+    en: 'Disputed 2026 tally — awaiting TSE',
+    pt: 'Apuração 2026 contestada — aguardando TSE',
   },
   notes: { en: 'Sections', pt: 'Seções' },
   hintCountry: { en: 'name', pt: 'nome' },
-  hintRegion: { en: 'world region', pt: 'região' },
+  hintRegion: { en: 'region', pt: 'região' },
   hintVotes2026: {
     en: 'total votes',
     pt: 'total de votos',
@@ -288,12 +287,12 @@ const dict = {
     pt: 'total de votos',
   },
   hintShare2026: {
-    en: '% of valid (votes)',
-    pt: '% dos válidos (votos)',
+    en: '% of valid votes',
+    pt: '% dos votos válidos',
   },
   hintShare2022: {
-    en: '% of valid (votes)',
-    pt: '% dos válidos (votos)',
+    en: '% of valid votes',
+    pt: '% dos votos válidos',
   },
   hintOther2026: {
     en: '% of valid · other candidates',
@@ -358,8 +357,8 @@ const dict = {
     pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing é a variação de Lula menos a de Bolsonaro (pontos percentuais; positivo para Lula, negativo para Bolsonaro).',
   },
   disclaimerScope: {
-    en: 'Default scope is overseas 1st-round presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas running total.',
-    pt: 'O recorte padrão é a votação presidencial do 1º turno no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total parcial do exterior.',
+    en: 'Default scope is overseas 1st-round presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total.',
+    pt: 'O recorte padrão é a votação presidencial do 1º turno no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior.',
   },
   howToEdit: {
     en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run sync:brazil && npm run build:pages to refresh the committed seed JSON.',
@@ -367,18 +366,33 @@ const dict = {
   },
   updated: { en: 'Updated', pt: 'Atualizado' },
   autoRefresh: {
-    en: 'checks for new data on load / focus / every 30 min',
-    pt: 'busca novos dados ao carregar / focar / a cada 30 min',
+    en: 'updates every 30 min',
+    pt: 'atualiza a cada 30 min',
+  },
+  autoRefreshPaused: {
+    en: 'refresh paused until runoff (NZ)',
+    pt: 'atualização pausada até o 2º turno (NZ)',
   },
   autoRefreshFast: {
     en: 'live TSE every 2 min',
     pt: 'TSE ao vivo a cada 2 min',
   },
+  syncLive: { en: 'live TSE', pt: 'TSE ao vivo' },
+  syncUpdating: { en: 'updating TSE…', pt: 'atualizando TSE…' },
+  syncError: {
+    en: 'TSE fetch failed — retrying',
+    pt: 'falha no TSE — tentando de novo',
+  },
+  syncSeed: { en: 'local seed', pt: 'seed local' },
+  mapGrainStates: { en: 'states', pt: 'estados' },
+  mapGrainCities: { en: 'cities', pt: 'cidades' },
+  mapGrainNeighborhoods: { en: 'neighborhoods', pt: 'bairros' },
+  tie: { en: 'Tie', pt: 'Empate' },
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },
-  legendLeaderLula: { en: 'Lula share → 100%', pt: 'Lula % → 100%' },
+  legendLeaderLula: { en: 'Lula % → 100%', pt: 'Lula % → 100%' },
   legendLeaderBolso: {
-    en: 'Bolsonaro share → 100%',
+    en: 'Bolsonaro % → 100%',
     pt: 'Bolsonaro % → 100%',
   },
   legendPending: { en: 'pending', pt: 'pendente' },
