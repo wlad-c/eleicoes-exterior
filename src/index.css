@@ -126,6 +126,11 @@ html.dark .sticky-table-chrome {
 
 /* Mobile: collapse sticky filter height on scroll-down so rows reclaim space */
 @media (max-width: 640px) {
+  /* Avoid browser scroll-anchoring fighting the chrome height animation */
+  .panel-results {
+    overflow-anchor: none;
+  }
+
   .sticky-table-chrome {
     overflow: hidden;
     overflow-anchor: none;
