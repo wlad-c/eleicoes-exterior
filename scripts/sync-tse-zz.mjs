@@ -89,14 +89,27 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid) {
-  return {
+function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+  const y = {
     lula,
     bolsonaro,
     totalValid,
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
+  if (registered != null && registered > 0 && abstentions != null) {
+    y.registered = registered
+    y.abstentions = abstentions
+    y.abstentionPct = round1((abstentions / registered) * 100)
+  }
+  return y
+}
+
+function electorateOf(doc) {
+  const registered = parseIntPT(doc?.e?.te)
+  const abstentions = parseIntPT(doc?.e?.a)
+  if (registered <= 0) return null
+  return { registered, abstentions }
 }
 
 function swingOf(y2022, y2026) {
@@ -176,6 +189,7 @@ async function main() {
     const totalValid = parseIntPT(doc.v?.vv ?? doc.v?.vvc)
     const counted = parseIntPT(doc.s?.st)
     const total = parseIntPT(doc.s?.ts)
+    const electorate = electorateOf(doc)
     const city = names[code] || code
 
     // Acompanhamento can mark a municipality finished before the EA20
@@ -190,6 +204,9 @@ async function main() {
       totalValid: 0,
       counted: 0,
       total: 0,
+      registered: 0,
+      abstentions: 0,
+      hasElectorate: false,
       areas: [],
     }
     agg.lula += lula
@@ -197,10 +214,27 @@ async function main() {
     agg.totalValid += totalValid
     agg.counted += counted
     agg.total += total
-    const y2026 = yearResult(lula, bolsonaro, totalValid)
+    if (electorate) {
+      agg.hasElectorate = true
+      agg.registered += electorate.registered
+      agg.abstentions += electorate.abstentions
+    }
+    const y2026 = yearResult(
+      lula,
+      bolsonaro,
+      totalValid,
+      electorate?.registered,
+      electorate?.abstentions,
+    )
     const y2022Raw = CITY_2022[code]
     const y2022 = y2022Raw
-      ? yearResult(y2022Raw.lula, y2022Raw.bolsonaro, y2022Raw.totalValid)
+      ? yearResult(
+          y2022Raw.lula,
+          y2022Raw.bolsonaro,
+          y2022Raw.totalValid,
+          y2022Raw.registered,
+          y2022Raw.abstentions,
+        )
       : null
     agg.areas.push({
       code,
@@ -238,7 +272,13 @@ async function main() {
     }
 
     const wasPending = country.status !== 'reported'
-    const y2026 = yearResult(agg.lula, agg.bolsonaro, agg.totalValid)
+    const y2026 = yearResult(
+      agg.lula,
+      agg.bolsonaro,
+      agg.totalValid,
+      agg.hasElectorate ? agg.registered : null,
+      agg.hasElectorate ? agg.abstentions : null,
+    )
     country.y2026 = y2026
     country.swing = swingOf(country.y2022, y2026)
     country.status = 'reported'

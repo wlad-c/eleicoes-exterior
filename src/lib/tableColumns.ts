@@ -9,6 +9,10 @@ export type TableMetricCol =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'otherPct2026'
+  | 'otherPct2022'
+  | 'abstentionPct2026'
+  | 'abstentionPct2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
@@ -23,6 +27,10 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'otherPct2026',
+  'otherPct2022',
+  'abstentionPct2026',
+  'abstentionPct2022',
   'lulaChange',
   'bolsonaroChange',
   'swingToLula',
@@ -30,7 +38,10 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'sections',
 ]
 
-/** Default: hide region, 2022 vote/share columns, swing to Bolsonaro, and sections. */
+/**
+ * Default: hide region, 2022 vote/share columns, other/abstention shares,
+ * swing to Bolsonaro, and sections.
+ */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
   'lulaPct2026',
@@ -48,6 +59,10 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   bolsonaroPct2026: 'colFBolsonaro2026',
   lulaPct2022: 'colLula2022',
   bolsonaroPct2022: 'colJBolsonaro2022',
+  otherPct2026: 'otherPct2026',
+  otherPct2022: 'otherPct2022',
+  abstentionPct2026: 'abstentionPct2026',
+  abstentionPct2022: 'abstentionPct2022',
   lulaChange: 'lulaChange',
   bolsonaroChange: 'bolsonaroChange',
   swingToLula: 'swingToLula',
@@ -56,7 +71,7 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
 }
 
 /** Bump when default visibility changes so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v2'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v3'
 export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v1'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {

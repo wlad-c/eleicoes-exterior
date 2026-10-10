@@ -17,6 +17,7 @@ import {
   type CityTableRow,
 } from '../lib/cityRows'
 import {
+  abstentionPct,
   areaDisplayName,
   cityDisplayName,
   cityPlaceParentLabel,
@@ -30,6 +31,8 @@ import {
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
+  otherPct,
+  otherVotes,
 } from '../lib/format'
 import { foldForSearch } from '../lib/searchText'
 import { regionLabel, t } from '../lib/i18n'
@@ -164,6 +167,12 @@ export function CityBreakdownTable({
     let bolso2022Comparable = 0
     let lula2026Comparable = 0
     let bolso2026Comparable = 0
+    let registered2026 = 0
+    let abstentions2026 = 0
+    let hasAbstention2026 = false
+    let registered2022 = 0
+    let abstentions2022 = 0
+    let hasAbstention2022 = false
     let has2022 = false
     let counted = 0
     let total = 0
@@ -173,6 +182,11 @@ export function CityBreakdownTable({
       valid += c.y2026.totalValid
       counted += c.coverage?.counted ?? 0
       total += c.coverage?.total ?? 0
+      if (c.y2026.registered != null && c.y2026.abstentions != null) {
+        hasAbstention2026 = true
+        registered2026 += c.y2026.registered
+        abstentions2026 += c.y2026.abstentions
+      }
       if (c.y2022) {
         has2022 = true
         lula2022 += c.y2022.lula
@@ -182,13 +196,33 @@ export function CityBreakdownTable({
         bolso2022Comparable += c.y2022.bolsonaro
         lula2026Comparable += c.y2026.lula
         bolso2026Comparable += c.y2026.bolsonaro
+        if (c.y2022.registered != null && c.y2022.abstentions != null) {
+          hasAbstention2022 = true
+          registered2022 += c.y2022.registered
+          abstentions2022 += c.y2022.abstentions
+        }
       }
     }
+    const other = Math.max(0, valid - lula - bolsonaro)
+    const other2022 = has2022
+      ? Math.max(0, valid2022 - lula2022 - bolso2022)
+      : null
     const lulaPct = valid ? (lula / valid) * 100 : null
     const bolsoPct = valid ? (bolsonaro / valid) * 100 : null
+    const otherPctTotal = valid ? (other / valid) * 100 : null
     const lulaPct2022 = has2022 && valid2022 ? (lula2022 / valid2022) * 100 : null
     const bolsoPct2022 =
       has2022 && valid2022 ? (bolso2022 / valid2022) * 100 : null
+    const otherPct2022 =
+      other2022 != null && valid2022 ? (other2022 / valid2022) * 100 : null
+    const abstentionPct2026 =
+      hasAbstention2026 && registered2026 > 0
+        ? (abstentions2026 / registered2026) * 100
+        : null
+    const abstentionPct2022 =
+      hasAbstention2022 && registered2022 > 0
+        ? (abstentions2022 / registered2022) * 100
+        : null
     const lulaChange =
       lulaPct != null && lulaPct2022 != null ? lulaPct - lulaPct2022 : null
     const bolsonaroChange =
@@ -205,13 +239,21 @@ export function CityBreakdownTable({
       lula,
       bolsonaro,
       valid,
+      other,
+      otherPct: otherPctTotal,
       valid2022: has2022 ? valid2022 : null,
       lulaPct,
       bolsoPct,
       lula2022,
       bolso2022,
+      other2022,
+      otherPct2022,
       lulaPct2022,
       bolsoPct2022,
+      abstentions2026: hasAbstention2026 ? abstentions2026 : null,
+      abstentionPct2026,
+      abstentions2022: hasAbstention2022 ? abstentions2022 : null,
+      abstentionPct2022,
       lulaChange,
       bolsonaroChange,
       swingToLula,
@@ -543,6 +585,46 @@ export function CityBreakdownTable({
                 {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
               </td>
             )
+          case 'otherPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.otherPct, totals.other, lang, shareOpts)}
+              </td>
+            )
+          case 'otherPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.otherPct2022, totals.other2022, lang, shareOpts)}
+              </td>
+            )
+          case 'abstentionPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(
+                  totals.abstentionPct2026,
+                  totals.abstentions2026,
+                  lang,
+                  shareOpts,
+                )}
+              </td>
+            )
+          case 'abstentionPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(
+                  totals.abstentionPct2022,
+                  totals.abstentions2022,
+                  lang,
+                  shareOpts,
+                )}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -698,6 +780,58 @@ export function CityBreakdownTable({
                 {...drag}
               >
                 {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
+              </SortableTh>
+            )
+          case 'otherPct2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintOther2026', lang)}
+                onClick={() => onSort('otherPct2026')}
+                {...drag}
+              >
+                {t('otherPct2026', lang)}
+                {arrow('otherPct2026')}
+              </SortableTh>
+            )
+          case 'otherPct2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintOther2022', lang)}
+                onClick={() => onSort('otherPct2022')}
+                {...drag}
+              >
+                {t('otherPct2022', lang)}
+                {arrow('otherPct2022')}
+              </SortableTh>
+            )
+          case 'abstentionPct2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintAbstention2026', lang)}
+                onClick={() => onSort('abstentionPct2026')}
+                {...drag}
+              >
+                {t('abstentionPct2026', lang)}
+                {arrow('abstentionPct2026')}
+              </SortableTh>
+            )
+          case 'abstentionPct2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintAbstention2022', lang)}
+                onClick={() => onSort('abstentionPct2022')}
+                {...drag}
+              >
+                {t('abstentionPct2022', lang)}
+                {arrow('abstentionPct2022')}
               </SortableTh>
             )
           case 'lulaChange':
@@ -1002,6 +1136,62 @@ export function CityBreakdownTable({
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang, shareOpts)}
+                          </td>
+                        )
+                      case 'otherPct2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              otherPct(c.y2026),
+                              otherVotes(c.y2026),
+                              lang,
+                              shareOpts,
+                            )}
+                          </td>
+                        )
+                      case 'otherPct2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              otherPct(c.y2022),
+                              otherVotes(c.y2022),
+                              lang,
+                              shareOpts,
+                            )}
+                          </td>
+                        )
+                      case 'abstentionPct2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              abstentionPct(c.y2026),
+                              c.y2026.abstentions,
+                              lang,
+                              shareOpts,
+                            )}
+                          </td>
+                        )
+                      case 'abstentionPct2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              abstentionPct(c.y2022),
+                              c.y2022?.abstentions,
+                              lang,
+                              shareOpts,
+                            )}
                           </td>
                         )
                       case 'lulaChange':

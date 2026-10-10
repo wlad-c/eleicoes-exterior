@@ -94,14 +94,27 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid) {
-  return {
+function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+  const y = {
     lula,
     bolsonaro,
     totalValid,
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
+  if (registered != null && registered > 0 && abstentions != null) {
+    y.registered = registered
+    y.abstentions = abstentions
+    y.abstentionPct = round1((abstentions / registered) * 100)
+  }
+  return y
+}
+
+function electorateOf(doc) {
+  const registered = parseIntPT(doc?.e?.te)
+  const abstentions = parseIntPT(doc?.e?.a)
+  if (registered <= 0) return null
+  return { registered, abstentions }
 }
 
 function swingOf(y2022, y2026) {
@@ -383,18 +396,42 @@ async function main() {
   let natLula = 0
   let natBolso = 0
   let natValid = 0
+  let natRegistered = 0
+  let natAbstentions = 0
+  let natHasElectorate = false
   let natCounted = 0
   let natTotal = 0
   for (const { uf, doc } of ufDocs) {
     const cand = extractCandidates(doc)
     const valid = totalValidOf(doc, cand.lula, cand.bolsonaro)
-    const y2026 = yearResult(cand.lula, cand.bolsonaro, valid)
-    const prev = y2022.ufs[uf] || null
+    const electorate = electorateOf(doc)
+    const y2026 = yearResult(
+      cand.lula,
+      cand.bolsonaro,
+      valid,
+      electorate?.registered,
+      electorate?.abstentions,
+    )
+    const prevRaw = y2022.ufs[uf] || null
+    const prev = prevRaw
+      ? yearResult(
+          prevRaw.lula,
+          prevRaw.bolsonaro,
+          prevRaw.totalValid,
+          prevRaw.registered,
+          prevRaw.abstentions,
+        )
+      : null
     const meta = UF_META[uf]
     const cov = coverageOf(doc)
     natLula += cand.lula
     natBolso += cand.bolsonaro
     natValid += valid
+    if (electorate) {
+      natHasElectorate = true
+      natRegistered += electorate.registered
+      natAbstentions += electorate.abstentions
+    }
     if (cov) {
       natCounted += cov.counted
       natTotal += cov.total
@@ -412,7 +449,13 @@ async function main() {
     })
   }
   areas.sort((a, b) => a.namePt.localeCompare(b.namePt, 'pt'))
-  const y2026National = yearResult(natLula, natBolso, natValid)
+  const y2026National = yearResult(
+    natLula,
+    natBolso,
+    natValid,
+    natHasElectorate ? natRegistered : null,
+    natHasElectorate ? natAbstentions : null,
+  )
   const brCoverage =
     natTotal > 0 ? { counted: natCounted, total: natTotal } : null
 
@@ -441,9 +484,16 @@ async function main() {
       if (done % 250 === 0 || done === munList.length) {
         console.log(`  municipalities ${done}/${munList.length}`)
       }
+      const electorate = electorateOf(doc)
       return {
         ...m,
-        y2026: yearResult(cand.lula, cand.bolsonaro, valid),
+        y2026: yearResult(
+          cand.lula,
+          cand.bolsonaro,
+          valid,
+          electorate?.registered,
+          electorate?.abstentions,
+        ),
         coverage: coverageOf(doc),
       }
     } catch (err) {
@@ -461,7 +511,13 @@ async function main() {
     const prevKey = `${m.uf}|${m.code}`
     const prevRaw = y2022.municipios[prevKey]
     const prev = prevRaw
-      ? yearResult(prevRaw.lula, prevRaw.bolsonaro, prevRaw.totalValid)
+      ? yearResult(
+          prevRaw.lula,
+          prevRaw.bolsonaro,
+          prevRaw.totalValid,
+          prevRaw.registered,
+          prevRaw.abstentions,
+        )
       : null
     const pretty = titleCasePt(m.name)
     cities.push({

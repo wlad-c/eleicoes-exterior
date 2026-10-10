@@ -12,7 +12,16 @@ import { MultiSelectFilter } from './components/MultiSelectFilter'
 import { ResultsTable } from './components/ResultsTable'
 import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
-import { countryName, fmtInt, fmtPct, fmtPp, aggregateRows, runningTotals } from './lib/format'
+import {
+  abstentionPct,
+  aggregateRows,
+  countryName,
+  fmtInt,
+  fmtPct,
+  fmtPp,
+  otherPct,
+  runningTotals,
+} from './lib/format'
 import {
   parentFocus,
   tableViewForFocus,
@@ -1217,6 +1226,14 @@ export default function App() {
                 <option value="bolsonaroPct2022">
                   {t('bolsonaroPct2022', lang)}
                 </option>
+                <option value="otherPct2026">{t('otherPct2026', lang)}</option>
+                <option value="otherPct2022">{t('otherPct2022', lang)}</option>
+                <option value="abstentionPct2026">
+                  {t('abstentionPct2026', lang)}
+                </option>
+                <option value="abstentionPct2022">
+                  {t('abstentionPct2022', lang)}
+                </option>
                 <option value="lulaChange">{t('lulaChange', lang)}</option>
                 <option value="bolsonaroChange">
                   {t('bolsonaroChange', lang)}
@@ -1464,6 +1481,14 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2022.lulaPct
     case 'bolsonaroPct2022':
       return c.y2022.bolsonaroPct
+    case 'otherPct2026':
+      return otherPct(c.y2026) ?? Number.NaN
+    case 'otherPct2022':
+      return otherPct(c.y2022) ?? Number.NaN
+    case 'abstentionPct2026':
+      return abstentionPct(c.y2026) ?? Number.NaN
+    case 'abstentionPct2022':
+      return abstentionPct(c.y2022) ?? Number.NaN
     case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
     case 'bolsonaroChange':

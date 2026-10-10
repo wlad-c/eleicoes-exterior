@@ -19,6 +19,12 @@ export const BOLSONARO_COLOR_LIGHT = '#B7D0F0'
 /** Absolute total-vote heatmap (light → dark purple). */
 export const VOTES_COLOR = '#6A1B9A'
 export const VOTES_COLOR_LIGHT = '#F3E5F5'
+/** Other-candidate share heatmap (light → dark slate). */
+export const OTHER_COLOR = '#455A64'
+export const OTHER_COLOR_LIGHT = '#ECEFF1'
+/** Abstention share heatmap (light → dark brown). */
+export const ABSTENTION_COLOR = '#5D4037'
+export const ABSTENTION_COLOR_LIGHT = '#EFEBE9'
 
 /** Darkest diverging heatmap shade is reached at ±this many pp (outliers clamp). */
 export const DIVERGING_PP_CAP = 10
@@ -32,6 +38,8 @@ type ScaleKind =
   | 'lulaSeq'
   | 'bolsoSeq'
   | 'votesSeq'
+  | 'otherSeq'
+  | 'abstentionSeq'
 
 function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
@@ -55,6 +63,12 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'bolsonaroVotes2026':
     case 'bolsonaroVotes2022':
       return 'bolsoSeq'
+    case 'otherPct2026':
+    case 'otherPct2022':
+      return 'otherSeq'
+    case 'abstentionPct2026':
+    case 'abstentionPct2022':
+      return 'abstentionSeq'
     case 'votes2026':
     case 'votes2022':
       return 'votesSeq'
@@ -112,20 +126,28 @@ function leaderColor(value: number): string {
 function sequentialScale(
   domainLo: number,
   domainHi: number,
-  toward: 'lula' | 'bolso' | 'votes',
+  toward: 'lula' | 'bolso' | 'votes' | 'other' | 'abstention',
 ) {
   const hiColor =
     toward === 'lula'
       ? LULA_COLOR
       : toward === 'bolso'
         ? BOLSONARO_COLOR
-        : VOTES_COLOR
+        : toward === 'votes'
+          ? VOTES_COLOR
+          : toward === 'other'
+            ? OTHER_COLOR
+            : ABSTENTION_COLOR
   const loColor =
     toward === 'lula'
       ? '#F7F0F0'
       : toward === 'bolso'
         ? '#EEF3F9'
-        : VOTES_COLOR_LIGHT
+        : toward === 'votes'
+          ? VOTES_COLOR_LIGHT
+          : toward === 'other'
+            ? OTHER_COLOR_LIGHT
+            : ABSTENTION_COLOR_LIGHT
   let lo = domainLo
   let hi = domainHi
   if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
@@ -178,7 +200,15 @@ export function makeMetricColorizer(
   // Sequential metrics stretch across the visible min→max (not fixed 0→max).
   // Absolute vote counts use log1p so a few large places don’t dominate.
   const toward =
-    kind === 'lulaSeq' ? 'lula' : kind === 'votesSeq' ? 'votes' : 'bolso'
+    kind === 'lulaSeq'
+      ? 'lula'
+      : kind === 'votesSeq'
+        ? 'votes'
+        : kind === 'otherSeq'
+          ? 'other'
+          : kind === 'abstentionSeq'
+            ? 'abstention'
+            : 'bolso'
   const voteCount =
     metric === 'votes2026' ||
     metric === 'votes2022' ||
@@ -206,7 +236,14 @@ export function withAlpha(color: string, alpha: number): string {
   return color
 }
 
-export type LegendMode = 'diverging' | 'leader' | 'lula' | 'bolso' | 'votes'
+export type LegendMode =
+  | 'diverging'
+  | 'leader'
+  | 'lula'
+  | 'bolso'
+  | 'votes'
+  | 'other'
+  | 'abstention'
 
 export function legendModeForMetric(metric: MapMetric): LegendMode {
   const kind = scaleKind(metric)
@@ -214,5 +251,7 @@ export function legendModeForMetric(metric: MapMetric): LegendMode {
   if (kind === 'divergingLB') return 'diverging'
   if (kind === 'lulaSeq') return 'lula'
   if (kind === 'votesSeq') return 'votes'
+  if (kind === 'otherSeq') return 'other'
+  if (kind === 'abstentionSeq') return 'abstention'
   return 'bolso'
 }

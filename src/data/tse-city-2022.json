@@ -5,7 +5,10 @@
     "bolsonaro": 14,
     "totalValid": 15,
     "lulaPct": 6.67,
-    "bolsonaroPct": 93.33
+    "bolsonaroPct": 93.33,
+    "registered": 33,
+    "abstentions": 18,
+    "abstentionPct": 54.55
   },
   "29254": {
     "name": "ABIDJÃ",
@@ -13,7 +16,10 @@
     "bolsonaro": 18,
     "totalValid": 46,
     "lulaPct": 45.65,
-    "bolsonaroPct": 39.13
+    "bolsonaroPct": 39.13,
+    "registered": 77,
+    "abstentions": 30,
+    "abstentionPct": 38.96
   },
   "29262": {
     "name": "ABU DHABI",
@@ -21,7 +27,10 @@
     "bolsonaro": 464,
     "totalValid": 955,
     "lulaPct": 36.86,
-    "bolsonaroPct": 48.59
+    "bolsonaroPct": 48.59,
+    "registered": 2248,
+    "abstentions": 1269,
+    "abstentionPct": 56.45
   },
   "29270": {
     "name": "ACCRA",
@@ -29,7 +38,10 @@
     "bolsonaro": 9,
     "totalValid": 22,
     "lulaPct": 54.55,
-    "bolsonaroPct": 40.91
+    "bolsonaroPct": 40.91,
+    "registered": 53,
+    "abstentions": 31,
+    "abstentionPct": 58.49
   },
   "29289": {
     "name": "AMÃ",
@@ -37,7 +49,10 @@
     "bolsonaro": 107,
     "totalValid": 552,
     "lulaPct": 61.23,
-    "bolsonaroPct": 19.38
+    "bolsonaroPct": 19.38,
+    "registered": 1036,
+    "abstentions": 454,
+    "abstentionPct": 43.82
   },
   "29297": {
     "name": "ANCARA",
@@ -45,7 +60,10 @@
     "bolsonaro": 7,
     "totalValid": 27,
     "lulaPct": 70.37,
-    "bolsonaroPct": 25.93
+    "bolsonaroPct": 25.93,
+    "registered": 58,
+    "abstentions": 31,
+    "abstentionPct": 53.45
   },
   "29319": {
     "name": "ARTIGAS",
@@ -53,7 +71,10 @@
     "bolsonaro": 245,
     "totalValid": 412,
     "lulaPct": 28.16,
-    "bolsonaroPct": 59.47
+    "bolsonaroPct": 59.47,
+    "registered": 686,
+    "abstentions": 261,
+    "abstentionPct": 38.05
   },
   "29327": {
     "name": "ASSUNÇÃO",
@@ -61,7 +82,10 @@
     "bolsonaro": 772,
     "totalValid": 1143,
     "lulaPct": 22.4,
-    "bolsonaroPct": 67.54
+    "bolsonaroPct": 67.54,
+    "registered": 2241,
+    "abstentions": 1053,
+    "abstentionPct": 46.99
   },
   "29335": {
     "name": "ATENAS",
@@ -69,7 +93,10 @@
     "bolsonaro": 205,
     "totalValid": 437,
     "lulaPct": 37.53,
-    "bolsonaroPct": 46.91
+    "bolsonaroPct": 46.91,
+    "registered": 1063,
+    "abstentions": 615,
+    "abstentionPct": 57.86
   },
   "29343": {
     "name": "BANGKOK",
@@ -77,7 +104,10 @@
     "bolsonaro": 42,
     "totalValid": 105,
     "lulaPct": 43.81,
-    "bolsonaroPct": 40
+    "bolsonaroPct": 40,
+    "registered": 220,
+    "abstentions": 111,
+    "abstentionPct": 50.45
   },
   "29351": {
     "name": "BARCELONA",
@@ -85,7 +115,10 @@
     "bolsonaro": 901,
     "totalValid": 4373,
     "lulaPct": 70.2,
-    "bolsonaroPct": 20.6
+    "bolsonaroPct": 20.6,
+    "registered": 10879,
+    "abstentions": 6379,
+    "abstentionPct": 58.64
   },
   "29360": {
     "name": "BEIRUTE",
@@ -93,7 +126,10 @@
     "bolsonaro": 947,
     "totalValid": 2850,
     "lulaPct": 56.18,
-    "bolsonaroPct": 33.23
+    "bolsonaroPct": 33.23,
+    "registered": 6340,
+    "abstentions": 3372,
+    "abstentionPct": 53.19
   },
   "29378": {
     "name": "BELGRADO",
@@ -101,7 +137,10 @@
     "bolsonaro": 8,
     "totalValid": 49,
     "lulaPct": 61.22,
-    "bolsonaroPct": 16.33
+    "bolsonaroPct": 16.33,
+    "registered": 98,
+    "abstentions": 47,
+    "abstentionPct": 47.96
   },
   "29386": {
     "name": "BERLIM",
@@ -109,7 +148,10 @@
     "bolsonaro": 809,
     "totalValid": 7179,
     "lulaPct": 79.58,
-    "bolsonaroPct": 11.27
+    "bolsonaroPct": 11.27,
+    "registered": 12621,
+    "abstentions": 5315,
+    "abstentionPct": 42.11
   },
   "29394": {
     "name": "BISSAU",
@@ -117,7 +159,10 @@
     "bolsonaro": 21,
     "totalValid": 44,
     "lulaPct": 52.27,
-    "bolsonaroPct": 47.73
+    "bolsonaroPct": 47.73,
+    "registered": 78,
+    "abstentions": 34,
+    "abstentionPct": 43.59
   },
   "29408": {
     "name": "BOGOTÁ",
@@ -125,7 +170,10 @@
     "bolsonaro": 242,
     "totalValid": 691,
     "lulaPct": 52.82,
-    "bolsonaroPct": 35.02
+    "bolsonaroPct": 35.02,
+    "registered": 1562,
+    "abstentions": 839,
+    "abstentionPct": 53.71
   },
   "29416": {
     "name": "BOSTON",
@@ -133,7 +181,10 @@
     "bolsonaro": 9046,
     "totalValid": 12943,
     "lulaPct": 23.04,
-    "bolsonaroPct": 69.89
+    "bolsonaroPct": 69.89,
+    "registered": 37105,
+    "abstentions": 23649,
+    "abstentionPct": 63.74
   },
   "29432": {
     "name": "BRUXELAS",
@@ -141,7 +192,10 @@
     "bolsonaro": 1271,
     "totalValid": 3646,
     "lulaPct": 54.42,
-    "bolsonaroPct": 34.86
+    "bolsonaroPct": 34.86,
+    "registered": 6422,
+    "abstentions": 2658,
+    "abstentionPct": 41.39
   },
   "29440": {
     "name": "BUCARESTE",
@@ -149,7 +203,10 @@
     "bolsonaro": 12,
     "totalValid": 54,
     "lulaPct": 53.7,
-    "bolsonaroPct": 22.22
+    "bolsonaroPct": 22.22,
+    "registered": 108,
+    "abstentions": 53,
+    "abstentionPct": 49.07
   },
   "29459": {
     "name": "BUDAPESTE",
@@ -157,7 +214,10 @@
     "bolsonaro": 72,
     "totalValid": 607,
     "lulaPct": 80.89,
-    "bolsonaroPct": 11.86
+    "bolsonaroPct": 11.86,
+    "registered": 813,
+    "abstentions": 195,
+    "abstentionPct": 23.99
   },
   "29467": {
     "name": "BUENOS AIRES",
@@ -165,7 +225,10 @@
     "bolsonaro": 1910,
     "totalValid": 6812,
     "lulaPct": 64.68,
-    "bolsonaroPct": 28.04
+    "bolsonaroPct": 28.04,
+    "registered": 11515,
+    "abstentions": 4569,
+    "abstentionPct": 39.68
   },
   "29475": {
     "name": "CAIENA",
@@ -173,7 +236,10 @@
     "bolsonaro": 666,
     "totalValid": 1371,
     "lulaPct": 42.6,
-    "bolsonaroPct": 48.58
+    "bolsonaroPct": 48.58,
+    "registered": 3481,
+    "abstentions": 2038,
+    "abstentionPct": 58.55
   },
   "29483": {
     "name": "CAIRO",
@@ -181,7 +247,10 @@
     "bolsonaro": 21,
     "totalValid": 70,
     "lulaPct": 60,
-    "bolsonaroPct": 30
+    "bolsonaroPct": 30,
+    "registered": 152,
+    "abstentions": 79,
+    "abstentionPct": 51.97
   },
   "29491": {
     "name": "CAMBERRA",
@@ -189,7 +258,10 @@
     "bolsonaro": 535,
     "totalValid": 1964,
     "lulaPct": 56.01,
-    "bolsonaroPct": 27.24
+    "bolsonaroPct": 27.24,
+    "registered": 4607,
+    "abstentions": 2561,
+    "abstentionPct": 55.59
   },
   "29513": {
     "name": "CHICAGO",
@@ -197,7 +269,10 @@
     "bolsonaro": 947,
     "totalValid": 2811,
     "lulaPct": 51.44,
-    "bolsonaroPct": 33.69
+    "bolsonaroPct": 33.69,
+    "registered": 10285,
+    "abstentions": 7401,
+    "abstentionPct": 71.96
   },
   "29530": {
     "name": "CIDADE DO CABO",
@@ -205,7 +280,10 @@
     "bolsonaro": 49,
     "totalValid": 155,
     "lulaPct": 52.9,
-    "bolsonaroPct": 31.61
+    "bolsonaroPct": 31.61,
+    "registered": 303,
+    "abstentions": 136,
+    "abstentionPct": 44.88
   },
   "29548": {
     "name": "SINGAPURA",
@@ -213,7 +291,10 @@
     "bolsonaro": 97,
     "totalValid": 390,
     "lulaPct": 46.67,
-    "bolsonaroPct": 24.87
+    "bolsonaroPct": 24.87,
+    "registered": 808,
+    "abstentions": 400,
+    "abstentionPct": 49.5
   },
   "29556": {
     "name": "CIUDAD DEL ESTE",
@@ -221,7 +302,10 @@
     "bolsonaro": 2561,
     "totalValid": 2875,
     "lulaPct": 8.35,
-    "bolsonaroPct": 89.08
+    "bolsonaroPct": 89.08,
+    "registered": 4622,
+    "abstentions": 1691,
+    "abstentionPct": 36.59
   },
   "29572": {
     "name": "COCHABAMBA",
@@ -229,7 +313,10 @@
     "bolsonaro": 148,
     "totalValid": 258,
     "lulaPct": 36.05,
-    "bolsonaroPct": 57.36
+    "bolsonaroPct": 57.36,
+    "registered": 418,
+    "abstentions": 157,
+    "abstentionPct": 37.56
   },
   "29580": {
     "name": "CONCEPCIÓN",
@@ -237,7 +324,10 @@
     "bolsonaro": 35,
     "totalValid": 38,
     "lulaPct": 5.26,
-    "bolsonaroPct": 92.11
+    "bolsonaroPct": 92.11,
+    "registered": 70,
+    "abstentions": 32,
+    "abstentionPct": 45.71
   },
   "29599": {
     "name": "COPENHAGUE",
@@ -245,7 +335,10 @@
     "bolsonaro": 147,
     "totalValid": 1222,
     "lulaPct": 76.6,
-    "bolsonaroPct": 12.03
+    "bolsonaroPct": 12.03,
+    "registered": 2299,
+    "abstentions": 1044,
+    "abstentionPct": 45.41
   },
   "29602": {
     "name": "CÓRDOBA",
@@ -253,7 +346,10 @@
     "bolsonaro": 138,
     "totalValid": 338,
     "lulaPct": 50.89,
-    "bolsonaroPct": 40.83
+    "bolsonaroPct": 40.83,
+    "registered": 883,
+    "abstentions": 533,
+    "abstentionPct": 60.36
   },
   "29610": {
     "name": "DACAR",
@@ -261,7 +357,10 @@
     "bolsonaro": 23,
     "totalValid": 55,
     "lulaPct": 47.27,
-    "bolsonaroPct": 41.82
+    "bolsonaroPct": 41.82,
+    "registered": 105,
+    "abstentions": 50,
+    "abstentionPct": 47.62
   },
   "29645": {
     "name": "DÍLI",
@@ -269,7 +368,10 @@
     "bolsonaro": 37,
     "totalValid": 65,
     "lulaPct": 27.69,
-    "bolsonaroPct": 56.92
+    "bolsonaroPct": 56.92,
+    "registered": 90,
+    "abstentions": 25,
+    "abstentionPct": 27.78
   },
   "29653": {
     "name": "DOHA",
@@ -277,7 +379,10 @@
     "bolsonaro": 192,
     "totalValid": 360,
     "lulaPct": 36.67,
-    "bolsonaroPct": 53.33
+    "bolsonaroPct": 53.33,
+    "registered": 665,
+    "abstentions": 294,
+    "abstentionPct": 44.21
   },
   "29661": {
     "name": "DUBLIN",
@@ -285,7 +390,10 @@
     "bolsonaro": 1038,
     "totalValid": 7594,
     "lulaPct": 78.36,
-    "bolsonaroPct": 13.67
+    "bolsonaroPct": 13.67,
+    "registered": 11930,
+    "abstentions": 4257,
+    "abstentionPct": 35.68
   },
   "29670": {
     "name": "ENCARNACIÓN",
@@ -293,7 +401,10 @@
     "bolsonaro": 111,
     "totalValid": 131,
     "lulaPct": 11.45,
-    "bolsonaroPct": 84.73
+    "bolsonaroPct": 84.73,
+    "registered": 235,
+    "abstentions": 103,
+    "abstentionPct": 43.83
   },
   "29688": {
     "name": "ESTOCOLMO",
@@ -301,7 +412,10 @@
     "bolsonaro": 421,
     "totalValid": 2433,
     "lulaPct": 67.08,
-    "bolsonaroPct": 17.3
+    "bolsonaroPct": 17.3,
+    "registered": 4322,
+    "abstentions": 1826,
+    "abstentionPct": 42.25
   },
   "29696": {
     "name": "FRANKFURT",
@@ -309,7 +423,10 @@
     "bolsonaro": 1120,
     "totalValid": 4904,
     "lulaPct": 64.09,
-    "bolsonaroPct": 22.84
+    "bolsonaroPct": 22.84,
+    "registered": 11523,
+    "abstentions": 6472,
+    "abstentionPct": 56.17
   },
   "29700": {
     "name": "GENEBRA",
@@ -317,7 +434,10 @@
     "bolsonaro": 1930,
     "totalValid": 4493,
     "lulaPct": 44.09,
-    "bolsonaroPct": 42.96
+    "bolsonaroPct": 42.96,
+    "registered": 10517,
+    "abstentions": 5874,
+    "abstentionPct": 55.85
   },
   "29718": {
     "name": "GEORGETOWN",
@@ -325,7 +445,10 @@
     "bolsonaro": 55,
     "totalValid": 70,
     "lulaPct": 10,
-    "bolsonaroPct": 78.57
+    "bolsonaroPct": 78.57,
+    "registered": 217,
+    "abstentions": 144,
+    "abstentionPct": 66.36
   },
   "29742": {
     "name": "HAMAMATSU",
@@ -333,7 +456,10 @@
     "bolsonaro": 4220,
     "totalValid": 5599,
     "lulaPct": 11.59,
-    "bolsonaroPct": 75.37
+    "bolsonaroPct": 75.37,
+    "registered": 12177,
+    "abstentions": 6202,
+    "abstentionPct": 50.93
   },
   "29750": {
     "name": "HANÓI",
@@ -341,7 +467,10 @@
     "bolsonaro": 4,
     "totalValid": 20,
     "lulaPct": 65,
-    "bolsonaroPct": 20
+    "bolsonaroPct": 20,
+    "registered": 50,
+    "abstentions": 30,
+    "abstentionPct": 60
   },
   "29777": {
     "name": "HAVANA",
@@ -349,7 +478,10 @@
     "bolsonaro": 1,
     "totalValid": 31,
     "lulaPct": 90.32,
-    "bolsonaroPct": 3.23
+    "bolsonaroPct": 3.23,
+    "registered": 87,
+    "abstentions": 56,
+    "abstentionPct": 64.37
   },
   "29785": {
     "name": "HELSINQUE",
@@ -357,7 +489,10 @@
     "bolsonaro": 127,
     "totalValid": 625,
     "lulaPct": 62.4,
-    "bolsonaroPct": 20.32
+    "bolsonaroPct": 20.32,
+    "registered": 1016,
+    "abstentions": 366,
+    "abstentionPct": 36.02
   },
   "29793": {
     "name": "HONG KONG",
@@ -365,7 +500,10 @@
     "bolsonaro": 86,
     "totalValid": 178,
     "lulaPct": 30.9,
-    "bolsonaroPct": 48.31
+    "bolsonaroPct": 48.31,
+    "registered": 595,
+    "abstentions": 402,
+    "abstentionPct": 67.56
   },
   "29807": {
     "name": "HOUSTON",
@@ -373,7 +511,10 @@
     "bolsonaro": 2282,
     "totalValid": 4127,
     "lulaPct": 28.96,
-    "bolsonaroPct": 55.29
+    "bolsonaroPct": 55.29,
+    "registered": 13775,
+    "abstentions": 9559,
+    "abstentionPct": 69.39
   },
   "29840": {
     "name": "JACARTA",
@@ -381,7 +522,10 @@
     "bolsonaro": 30,
     "totalValid": 50,
     "lulaPct": 32,
-    "bolsonaroPct": 60
+    "bolsonaroPct": 60,
+    "registered": 157,
+    "abstentions": 107,
+    "abstentionPct": 68.15
   },
   "29874": {
     "name": "KINSHASA",
@@ -389,7 +533,10 @@
     "bolsonaro": 14,
     "totalValid": 17,
     "lulaPct": 11.76,
-    "bolsonaroPct": 82.35
+    "bolsonaroPct": 82.35,
+    "registered": 33,
+    "abstentions": 16,
+    "abstentionPct": 48.48
   },
   "29882": {
     "name": "KUAITE",
@@ -397,7 +544,10 @@
     "bolsonaro": 27,
     "totalValid": 43,
     "lulaPct": 20.93,
-    "bolsonaroPct": 62.79
+    "bolsonaroPct": 62.79,
+    "registered": 82,
+    "abstentions": 37,
+    "abstentionPct": 45.12
   },
   "29890": {
     "name": "KUALA LUMPUR",
@@ -405,7 +555,10 @@
     "bolsonaro": 24,
     "totalValid": 57,
     "lulaPct": 47.37,
-    "bolsonaroPct": 42.11
+    "bolsonaroPct": 42.11,
+    "registered": 119,
+    "abstentions": 61,
+    "abstentionPct": 51.26
   },
   "29904": {
     "name": "LA PAZ",
@@ -413,7 +566,10 @@
     "bolsonaro": 115,
     "totalValid": 203,
     "lulaPct": 31.03,
-    "bolsonaroPct": 56.65
+    "bolsonaroPct": 56.65,
+    "registered": 390,
+    "abstentions": 172,
+    "abstentionPct": 44.1
   },
   "29912": {
     "name": "LAGOS",
@@ -421,7 +577,10 @@
     "bolsonaro": 7,
     "totalValid": 28,
     "lulaPct": 57.14,
-    "bolsonaroPct": 25
+    "bolsonaroPct": 25,
+    "registered": 70,
+    "abstentions": 42,
+    "abstentionPct": 60
   },
   "29947": {
     "name": "LIMA",
@@ -429,7 +588,10 @@
     "bolsonaro": 384,
     "totalValid": 788,
     "lulaPct": 34.64,
-    "bolsonaroPct": 48.73
+    "bolsonaroPct": 48.73,
+    "registered": 1533,
+    "abstentions": 726,
+    "abstentionPct": 47.36
   },
   "29955": {
     "name": "LISBOA",
@@ -437,7 +599,10 @@
     "bolsonaro": 6068,
     "totalValid": 19770,
     "lulaPct": 61.47,
-    "bolsonaroPct": 30.69
+    "bolsonaroPct": 30.69,
+    "registered": 45162,
+    "abstentions": 24896,
+    "abstentionPct": 55.13
   },
   "29971": {
     "name": "LONDRES",
@@ -445,7 +610,10 @@
     "bolsonaro": 5170,
     "totalValid": 14796,
     "lulaPct": 55.18,
-    "bolsonaroPct": 34.94
+    "bolsonaroPct": 34.94,
+    "registered": 34407,
+    "abstentions": 19304,
+    "abstentionPct": 56.1
   },
   "29980": {
     "name": "LOS ANGELES",
@@ -453,7 +621,10 @@
     "bolsonaro": 1671,
     "totalValid": 3938,
     "lulaPct": 45.53,
-    "bolsonaroPct": 42.43
+    "bolsonaroPct": 42.43,
+    "registered": 11172,
+    "abstentions": 7146,
+    "abstentionPct": 63.96
   },
   "29998": {
     "name": "LUANDA",
@@ -461,7 +632,10 @@
     "bolsonaro": 93,
     "totalValid": 236,
     "lulaPct": 52.54,
-    "bolsonaroPct": 39.41
+    "bolsonaroPct": 39.41,
+    "registered": 575,
+    "abstentions": 329,
+    "abstentionPct": 57.22
   },
   "30066": {
     "name": "MADRI",
@@ -469,7 +643,10 @@
     "bolsonaro": 2004,
     "totalValid": 5437,
     "lulaPct": 52.27,
-    "bolsonaroPct": 36.86
+    "bolsonaroPct": 36.86,
+    "registered": 19827,
+    "abstentions": 14119,
+    "abstentionPct": 71.21
   },
   "30074": {
     "name": "MANÁGUA",
@@ -477,7 +654,10 @@
     "bolsonaro": 32,
     "totalValid": 79,
     "lulaPct": 43.04,
-    "bolsonaroPct": 40.51
+    "bolsonaroPct": 40.51,
+    "registered": 132,
+    "abstentions": 46,
+    "abstentionPct": 34.85
   },
   "30082": {
     "name": "MANILA",
@@ -485,7 +665,10 @@
     "bolsonaro": 35,
     "totalValid": 63,
     "lulaPct": 31.75,
-    "bolsonaroPct": 55.56
+    "bolsonaroPct": 55.56,
+    "registered": 192,
+    "abstentions": 129,
+    "abstentionPct": 67.19
   },
   "30090": {
     "name": "MAPUTO",
@@ -493,7 +676,10 @@
     "bolsonaro": 150,
     "totalValid": 291,
     "lulaPct": 40.21,
-    "bolsonaroPct": 51.55
+    "bolsonaroPct": 51.55,
+    "registered": 665,
+    "abstentions": 356,
+    "abstentionPct": 53.53
   },
   "30104": {
     "name": "MEXICO",
@@ -501,7 +687,10 @@
     "bolsonaro": 595,
     "totalValid": 1389,
     "lulaPct": 44.2,
-    "bolsonaroPct": 42.84
+    "bolsonaroPct": 42.84,
+    "registered": 3939,
+    "abstentions": 2515,
+    "abstentionPct": 63.85
   },
   "30112": {
     "name": "MIAMI",
@@ -509,7 +698,10 @@
     "bolsonaro": 11682,
     "totalValid": 15732,
     "lulaPct": 16.2,
-    "bolsonaroPct": 74.26
+    "bolsonaroPct": 74.26,
+    "registered": 40095,
+    "abstentions": 24117,
+    "abstentionPct": 60.15
   },
   "30120": {
     "name": "MILÃO",
@@ -517,7 +709,10 @@
     "bolsonaro": 2483,
     "totalValid": 6226,
     "lulaPct": 50.18,
-    "bolsonaroPct": 39.88
+    "bolsonaroPct": 39.88,
+    "registered": 20013,
+    "abstentions": 13586,
+    "abstentionPct": 67.89
   },
   "30147": {
     "name": "MONTEVIDÉU",
@@ -525,7 +720,10 @@
     "bolsonaro": 434,
     "totalValid": 1290,
     "lulaPct": 53.26,
-    "bolsonaroPct": 33.64
+    "bolsonaroPct": 33.64,
+    "registered": 2391,
+    "abstentions": 992,
+    "abstentionPct": 41.49
   },
   "30155": {
     "name": "MONTREAL",
@@ -533,7 +731,10 @@
     "bolsonaro": 1404,
     "totalValid": 5722,
     "lulaPct": 60.73,
-    "bolsonaroPct": 24.54
+    "bolsonaroPct": 24.54,
+    "registered": 9438,
+    "abstentions": 3512,
+    "abstentionPct": 37.21
   },
   "30163": {
     "name": "MOSCOU",
@@ -541,7 +742,10 @@
     "bolsonaro": 28,
     "totalValid": 84,
     "lulaPct": 53.57,
-    "bolsonaroPct": 33.33
+    "bolsonaroPct": 33.33,
+    "registered": 221,
+    "abstentions": 136,
+    "abstentionPct": 61.54
   },
   "30171": {
     "name": "MUMBAI",
@@ -549,7 +753,10 @@
     "bolsonaro": 2,
     "totalValid": 12,
     "lulaPct": 75,
-    "bolsonaroPct": 16.67
+    "bolsonaroPct": 16.67,
+    "registered": 55,
+    "abstentions": 41,
+    "abstentionPct": 74.55
   },
   "30180": {
     "name": "MUNIQUE",
@@ -557,7 +764,10 @@
     "bolsonaro": 1241,
     "totalValid": 5018,
     "lulaPct": 60.16,
-    "bolsonaroPct": 24.73
+    "bolsonaroPct": 24.73,
+    "registered": 11836,
+    "abstentions": 6687,
+    "abstentionPct": 56.5
   },
   "30198": {
     "name": "NAGÓIA",
@@ -565,7 +775,10 @@
     "bolsonaro": 10684,
     "totalValid": 14156,
     "lulaPct": 11.88,
-    "bolsonaroPct": 75.47
+    "bolsonaroPct": 75.47,
+    "registered": 35578,
+    "abstentions": 20498,
+    "abstentionPct": 57.61
   },
   "30201": {
     "name": "NAIRÓBI",
@@ -573,7 +786,10 @@
     "bolsonaro": 23,
     "totalValid": 51,
     "lulaPct": 49.02,
-    "bolsonaroPct": 45.1
+    "bolsonaroPct": 45.1,
+    "registered": 108,
+    "abstentions": 57,
+    "abstentionPct": 52.78
   },
   "30210": {
     "name": "NOVA DELHI",
@@ -581,7 +797,10 @@
     "bolsonaro": 12,
     "totalValid": 41,
     "lulaPct": 65.85,
-    "bolsonaroPct": 29.27
+    "bolsonaroPct": 29.27,
+    "registered": 102,
+    "abstentions": 61,
+    "abstentionPct": 59.8
   },
   "30228": {
     "name": "NOVA YORK",
@@ -589,7 +808,10 @@
     "bolsonaro": 5088,
     "totalValid": 10997,
     "lulaPct": 42.88,
-    "bolsonaroPct": 46.27
+    "bolsonaroPct": 46.27,
+    "registered": 27870,
+    "abstentions": 16580,
+    "abstentionPct": 59.49
   },
   "30244": {
     "name": "OSLO",
@@ -597,7 +819,10 @@
     "bolsonaro": 161,
     "totalValid": 830,
     "lulaPct": 66.14,
-    "bolsonaroPct": 19.4
+    "bolsonaroPct": 19.4,
+    "registered": 1732,
+    "abstentions": 881,
+    "abstentionPct": 50.87
   },
   "30252": {
     "name": "OTTAWA",
@@ -605,7 +830,10 @@
     "bolsonaro": 318,
     "totalValid": 1109,
     "lulaPct": 50.86,
-    "bolsonaroPct": 28.67
+    "bolsonaroPct": 28.67,
+    "registered": 1850,
+    "abstentions": 689,
+    "abstentionPct": 37.24
   },
   "30260": {
     "name": "PANAMA",
@@ -613,7 +841,10 @@
     "bolsonaro": 349,
     "totalValid": 678,
     "lulaPct": 31.56,
-    "bolsonaroPct": 51.47
+    "bolsonaroPct": 51.47,
+    "registered": 1320,
+    "abstentions": 624,
+    "abstentionPct": 47.27
   },
   "30279": {
     "name": "PARAMARIBO",
@@ -621,7 +852,10 @@
     "bolsonaro": 311,
     "totalValid": 471,
     "lulaPct": 26.54,
-    "bolsonaroPct": 66.03
+    "bolsonaroPct": 66.03,
+    "registered": 1302,
+    "abstentions": 811,
+    "abstentionPct": 62.29
   },
   "30287": {
     "name": "PARIS",
@@ -629,7 +863,10 @@
     "bolsonaro": 1384,
     "totalValid": 10063,
     "lulaPct": 77.6,
-    "bolsonaroPct": 13.75
+    "bolsonaroPct": 13.75,
+    "registered": 22562,
+    "abstentions": 12333,
+    "abstentionPct": 54.66
   },
   "30309": {
     "name": "PEDRO JUAN CABALLERO",
@@ -637,7 +874,10 @@
     "bolsonaro": 230,
     "totalValid": 350,
     "lulaPct": 26.29,
-    "bolsonaroPct": 65.71
+    "bolsonaroPct": 65.71,
+    "registered": 625,
+    "abstentions": 249,
+    "abstentionPct": 39.84
   },
   "30317": {
     "name": "PEQUIM",
@@ -645,7 +885,10 @@
     "bolsonaro": 19,
     "totalValid": 76,
     "lulaPct": 63.16,
-    "bolsonaroPct": 25
+    "bolsonaroPct": 25,
+    "registered": 280,
+    "abstentions": 199,
+    "abstentionPct": 71.07
   },
   "30325": {
     "name": "PORT OF SPAIN",
@@ -653,7 +896,10 @@
     "bolsonaro": 16,
     "totalValid": 34,
     "lulaPct": 50,
-    "bolsonaroPct": 47.06
+    "bolsonaroPct": 47.06,
+    "registered": 116,
+    "abstentions": 81,
+    "abstentionPct": 69.83
   },
   "30333": {
     "name": "PORTO PRÍNCIPE",
@@ -661,7 +907,10 @@
     "bolsonaro": 4,
     "totalValid": 7,
     "lulaPct": 28.57,
-    "bolsonaroPct": 57.14
+    "bolsonaroPct": 57.14,
+    "registered": 44,
+    "abstentions": 37,
+    "abstentionPct": 84.09
   },
   "30341": {
     "name": "PORTO",
@@ -669,7 +918,10 @@
     "bolsonaro": 4420,
     "totalValid": 14618,
     "lulaPct": 60.29,
-    "bolsonaroPct": 30.24
+    "bolsonaroPct": 30.24,
+    "registered": 30014,
+    "abstentions": 14985,
+    "abstentionPct": 49.93
   },
   "30350": {
     "name": "PRAGA",
@@ -677,7 +929,10 @@
     "bolsonaro": 58,
     "totalValid": 367,
     "lulaPct": 68.94,
-    "bolsonaroPct": 15.8
+    "bolsonaroPct": 15.8,
+    "registered": 572,
+    "abstentions": 190,
+    "abstentionPct": 33.22
   },
   "30368": {
     "name": "PRAIA",
@@ -685,7 +940,10 @@
     "bolsonaro": 22,
     "totalValid": 65,
     "lulaPct": 58.46,
-    "bolsonaroPct": 33.85
+    "bolsonaroPct": 33.85,
+    "registered": 103,
+    "abstentions": 36,
+    "abstentionPct": 34.95
   },
   "30376": {
     "name": "PRETÓRIA",
@@ -693,7 +951,10 @@
     "bolsonaro": 193,
     "totalValid": 303,
     "lulaPct": 24.09,
-    "bolsonaroPct": 63.7
+    "bolsonaroPct": 63.7,
+    "registered": 710,
+    "abstentions": 399,
+    "abstentionPct": 56.2
   },
   "30392": {
     "name": "QUITO",
@@ -701,7 +962,10 @@
     "bolsonaro": 231,
     "totalValid": 383,
     "lulaPct": 28.72,
-    "bolsonaroPct": 60.31
+    "bolsonaroPct": 60.31,
+    "registered": 1005,
+    "abstentions": 612,
+    "abstentionPct": 60.9
   },
   "30406": {
     "name": "RABAT",
@@ -709,7 +973,10 @@
     "bolsonaro": 8,
     "totalValid": 53,
     "lulaPct": 64.15,
-    "bolsonaroPct": 15.09
+    "bolsonaroPct": 15.09,
+    "registered": 102,
+    "abstentions": 49,
+    "abstentionPct": 48.04
   },
   "30414": {
     "name": "RAMALLAH",
@@ -717,7 +984,10 @@
     "bolsonaro": 52,
     "totalValid": 698,
     "lulaPct": 84.81,
-    "bolsonaroPct": 7.45
+    "bolsonaroPct": 7.45,
+    "registered": 1419,
+    "abstentions": 703,
+    "abstentionPct": 49.54
   },
   "30422": {
     "name": "RIADE",
@@ -725,7 +995,10 @@
     "bolsonaro": 18,
     "totalValid": 54,
     "lulaPct": 48.15,
-    "bolsonaroPct": 33.33
+    "bolsonaroPct": 33.33,
+    "registered": 181,
+    "abstentions": 126,
+    "abstentionPct": 69.61
   },
   "30430": {
     "name": "RIO BRANCO",
@@ -733,7 +1006,10 @@
     "bolsonaro": 7,
     "totalValid": 23,
     "lulaPct": 43.48,
-    "bolsonaroPct": 30.43
+    "bolsonaroPct": 30.43,
+    "registered": 47,
+    "abstentions": 21,
+    "abstentionPct": 44.68
   },
   "30449": {
     "name": "ROMA",
@@ -741,7 +1017,10 @@
     "bolsonaro": 1401,
     "totalValid": 4189,
     "lulaPct": 54.76,
-    "bolsonaroPct": 33.44
+    "bolsonaroPct": 33.44,
+    "registered": 12945,
+    "abstentions": 8628,
+    "abstentionPct": 66.65
   },
   "30457": {
     "name": "AMSTERDÃ",
@@ -749,7 +1028,10 @@
     "bolsonaro": 961,
     "totalValid": 5770,
     "lulaPct": 70.95,
-    "bolsonaroPct": 16.66
+    "bolsonaroPct": 16.66,
+    "registered": 10044,
+    "abstentions": 4165,
+    "abstentionPct": 41.47
   },
   "30465": {
     "name": "SALTO DEL GUAIRÁ",
@@ -757,7 +1039,10 @@
     "bolsonaro": 535,
     "totalValid": 575,
     "lulaPct": 5.04,
-    "bolsonaroPct": 93.04
+    "bolsonaroPct": 93.04,
+    "registered": 777,
+    "abstentions": 198,
+    "abstentionPct": 25.48
   },
   "30473": {
     "name": "SANTA CRUZ DE LA SIERRA",
@@ -765,7 +1050,10 @@
     "bolsonaro": 1014,
     "totalValid": 1270,
     "lulaPct": 15.04,
-    "bolsonaroPct": 79.84
+    "bolsonaroPct": 79.84,
+    "registered": 2324,
+    "abstentions": 1030,
+    "abstentionPct": 44.32
   },
   "30481": {
     "name": "SANTIAGO",
@@ -773,7 +1061,10 @@
     "bolsonaro": 796,
     "totalValid": 1937,
     "lulaPct": 44.86,
-    "bolsonaroPct": 41.09
+    "bolsonaroPct": 41.09,
+    "registered": 3280,
+    "abstentions": 1241,
+    "abstentionPct": 37.84
   },
   "30490": {
     "name": "SÃO DOMINGOS",
@@ -781,7 +1072,10 @@
     "bolsonaro": 117,
     "totalValid": 209,
     "lulaPct": 31.1,
-    "bolsonaroPct": 55.98
+    "bolsonaroPct": 55.98,
+    "registered": 410,
+    "abstentions": 196,
+    "abstentionPct": 47.8
   },
   "30503": {
     "name": "SÃO FRANCISCO",
@@ -789,7 +1083,10 @@
     "bolsonaro": 1344,
     "totalValid": 4030,
     "lulaPct": 53.95,
-    "bolsonaroPct": 33.35
+    "bolsonaroPct": 33.35,
+    "registered": 11678,
+    "abstentions": 7575,
+    "abstentionPct": 64.87
   },
   "30511": {
     "name": "SÃO JOSÉ",
@@ -797,7 +1094,10 @@
     "bolsonaro": 169,
     "totalValid": 367,
     "lulaPct": 37.06,
-    "bolsonaroPct": 46.05
+    "bolsonaroPct": 46.05,
+    "registered": 654,
+    "abstentions": 274,
+    "abstentionPct": 41.9
   },
   "30520": {
     "name": "SÃO SALVADOR",
@@ -805,7 +1105,10 @@
     "bolsonaro": 41,
     "totalValid": 74,
     "lulaPct": 29.73,
-    "bolsonaroPct": 55.41
+    "bolsonaroPct": 55.41,
+    "registered": 142,
+    "abstentions": 65,
+    "abstentionPct": 45.77
   },
   "30538": {
     "name": "SEUL",
@@ -813,7 +1116,10 @@
     "bolsonaro": 53,
     "totalValid": 207,
     "lulaPct": 62.8,
-    "bolsonaroPct": 25.6
+    "bolsonaroPct": 25.6,
+    "registered": 376,
+    "abstentions": 160,
+    "abstentionPct": 42.55
   },
   "30546": {
     "name": "SÓFIA",
@@ -821,7 +1127,10 @@
     "bolsonaro": 6,
     "totalValid": 33,
     "lulaPct": 66.67,
-    "bolsonaroPct": 18.18
+    "bolsonaroPct": 18.18,
+    "registered": 55,
+    "abstentions": 20,
+    "abstentionPct": 36.36
   },
   "30562": {
     "name": "SYDNEY",
@@ -829,7 +1138,10 @@
     "bolsonaro": 1291,
     "totalValid": 4388,
     "lulaPct": 54.35,
-    "bolsonaroPct": 29.42
+    "bolsonaroPct": 29.42,
+    "registered": 10749,
+    "abstentions": 6201,
+    "abstentionPct": 57.69
   },
   "30570": {
     "name": "TAIPÉ",
@@ -837,7 +1149,10 @@
     "bolsonaro": 100,
     "totalValid": 223,
     "lulaPct": 35.43,
-    "bolsonaroPct": 44.84
+    "bolsonaroPct": 44.84,
+    "registered": 607,
+    "abstentions": 369,
+    "abstentionPct": 60.79
   },
   "30597": {
     "name": "TEERÃ",
@@ -845,7 +1160,10 @@
     "bolsonaro": 9,
     "totalValid": 17,
     "lulaPct": 41.18,
-    "bolsonaroPct": 52.94
+    "bolsonaroPct": 52.94,
+    "registered": 39,
+    "abstentions": 21,
+    "abstentionPct": 53.85
   },
   "30600": {
     "name": "TEGUCIGALPA",
@@ -853,7 +1171,10 @@
     "bolsonaro": 47,
     "totalValid": 88,
     "lulaPct": 39.77,
-    "bolsonaroPct": 53.41
+    "bolsonaroPct": 53.41,
+    "registered": 196,
+    "abstentions": 107,
+    "abstentionPct": 54.59
   },
   "30619": {
     "name": "TEL AVIV",
@@ -861,7 +1182,10 @@
     "bolsonaro": 320,
     "totalValid": 696,
     "lulaPct": 39.37,
-    "bolsonaroPct": 45.98
+    "bolsonaroPct": 45.98,
+    "registered": 2852,
+    "abstentions": 2123,
+    "abstentionPct": 74.44
   },
   "30627": {
     "name": "TÓQUIO",
@@ -869,7 +1193,10 @@
     "bolsonaro": 8103,
     "totalValid": 12105,
     "lulaPct": 16.24,
-    "bolsonaroPct": 66.94
+    "bolsonaroPct": 66.94,
+    "registered": 28688,
+    "abstentions": 15663,
+    "abstentionPct": 54.6
   },
   "30635": {
     "name": "TORONTO",
@@ -877,7 +1204,10 @@
     "bolsonaro": 3425,
     "totalValid": 9222,
     "lulaPct": 50.56,
-    "bolsonaroPct": 37.14
+    "bolsonaroPct": 37.14,
+    "registered": 17712,
+    "abstentions": 8243,
+    "abstentionPct": 46.54
   },
   "30651": {
     "name": "CANTÃO",
@@ -885,7 +1215,10 @@
     "bolsonaro": 54,
     "totalValid": 87,
     "lulaPct": 28.74,
-    "bolsonaroPct": 62.07
+    "bolsonaroPct": 62.07,
+    "registered": 380,
+    "abstentions": 285,
+    "abstentionPct": 75
   },
   "30708": {
     "name": "TUNIS",
@@ -893,7 +1226,10 @@
     "bolsonaro": 6,
     "totalValid": 14,
     "lulaPct": 57.14,
-    "bolsonaroPct": 42.86
+    "bolsonaroPct": 42.86,
+    "registered": 34,
+    "abstentions": 20,
+    "abstentionPct": 58.82
   },
   "30740": {
     "name": "VARSÓVIA",
@@ -901,7 +1237,10 @@
     "bolsonaro": 55,
     "totalValid": 311,
     "lulaPct": 68.49,
-    "bolsonaroPct": 17.68
+    "bolsonaroPct": 17.68,
+    "registered": 580,
+    "abstentions": 267,
+    "abstentionPct": 46.03
   },
   "30767": {
     "name": "VIENA",
@@ -909,7 +1248,10 @@
     "bolsonaro": 313,
     "totalValid": 1386,
     "lulaPct": 62.34,
-    "bolsonaroPct": 22.58
+    "bolsonaroPct": 22.58,
+    "registered": 2912,
+    "abstentions": 1467,
+    "abstentionPct": 50.38
   },
   "30783": {
     "name": "WASHINGTON",
@@ -917,7 +1259,10 @@
     "bolsonaro": 2089,
     "totalValid": 5010,
     "lulaPct": 45.33,
-    "bolsonaroPct": 41.7
+    "bolsonaroPct": 41.7,
+    "registered": 14038,
+    "abstentions": 8923,
+    "abstentionPct": 63.56
   },
   "30805": {
     "name": "WELLINGTON",
@@ -925,7 +1270,10 @@
     "bolsonaro": 71,
     "totalValid": 451,
     "lulaPct": 72.95,
-    "bolsonaroPct": 15.74
+    "bolsonaroPct": 15.74,
+    "registered": 2943,
+    "abstentions": 2485,
+    "abstentionPct": 84.44
   },
   "30821": {
     "name": "WINDHOEK",
@@ -933,7 +1281,10 @@
     "bolsonaro": 33,
     "totalValid": 39,
     "lulaPct": 10.26,
-    "bolsonaroPct": 84.62
+    "bolsonaroPct": 84.62,
+    "registered": 71,
+    "abstentions": 31,
+    "abstentionPct": 43.66
   },
   "30848": {
     "name": "XANGAI",
@@ -941,7 +1292,10 @@
     "bolsonaro": 48,
     "totalValid": 179,
     "lulaPct": 51.96,
-    "bolsonaroPct": 26.82
+    "bolsonaroPct": 26.82,
+    "registered": 695,
+    "abstentions": 495,
+    "abstentionPct": 71.22
   },
   "30864": {
     "name": "ZURIQUE",
@@ -949,7 +1303,10 @@
     "bolsonaro": 2243,
     "totalValid": 5690,
     "lulaPct": 47.15,
-    "bolsonaroPct": 39.42
+    "bolsonaroPct": 39.42,
+    "registered": 13718,
+    "abstentions": 7753,
+    "abstentionPct": 56.52
   },
   "30902": {
     "name": "HARTFORD",
@@ -957,7 +1314,10 @@
     "bolsonaro": 820,
     "totalValid": 1431,
     "lulaPct": 30.96,
-    "bolsonaroPct": 57.3
+    "bolsonaroPct": 57.3,
+    "registered": 4021,
+    "abstentions": 2566,
+    "abstentionPct": 63.81
   },
   "30961": {
     "name": "FARO",
@@ -965,7 +1325,10 @@
     "bolsonaro": 730,
     "totalValid": 1777,
     "lulaPct": 49.13,
-    "bolsonaroPct": 41.08
+    "bolsonaroPct": 41.08,
+    "registered": 5516,
+    "abstentions": 3694,
+    "abstentionPct": 66.97
   },
   "38962": {
     "name": "DAR ES SALAAM",
@@ -973,7 +1336,10 @@
     "bolsonaro": 2,
     "totalValid": 8,
     "lulaPct": 75,
-    "bolsonaroPct": 25
+    "bolsonaroPct": 25,
+    "registered": 34,
+    "abstentions": 26,
+    "abstentionPct": 76.47
   },
   "39004": {
     "name": "MENDOZA",
@@ -981,7 +1347,10 @@
     "bolsonaro": 77,
     "totalValid": 139,
     "lulaPct": 37.41,
-    "bolsonaroPct": 55.4
+    "bolsonaroPct": 55.4,
+    "registered": 238,
+    "abstentions": 94,
+    "abstentionPct": 39.5
   },
   "39020": {
     "name": "ZAGREB",
@@ -989,7 +1358,10 @@
     "bolsonaro": 14,
     "totalValid": 46,
     "lulaPct": 54.35,
-    "bolsonaroPct": 30.43
+    "bolsonaroPct": 30.43,
+    "registered": 98,
+    "abstentions": 52,
+    "abstentionPct": 53.06
   },
   "39063": {
     "name": "VANCOUVER",
@@ -997,7 +1369,10 @@
     "bolsonaro": 1712,
     "totalValid": 5641,
     "lulaPct": 55.29,
-    "bolsonaroPct": 30.35
+    "bolsonaroPct": 30.35,
+    "registered": 9970,
+    "abstentions": 4107,
+    "abstentionPct": 41.19
   },
   "39080": {
     "name": "ATLANTA",
@@ -1005,7 +1380,10 @@
     "bolsonaro": 2879,
     "totalValid": 4320,
     "lulaPct": 22.52,
-    "bolsonaroPct": 66.64
+    "bolsonaroPct": 66.64,
+    "registered": 12580,
+    "abstentions": 8193,
+    "abstentionPct": 65.13
   },
   "39102": {
     "name": "MASCATE",
@@ -1013,7 +1391,10 @@
     "bolsonaro": 25,
     "totalValid": 41,
     "lulaPct": 26.83,
-    "bolsonaroPct": 60.98
+    "bolsonaroPct": 60.98,
+    "registered": 95,
+    "abstentions": 54,
+    "abstentionPct": 56.84
   },
   "39160": {
     "name": "LIUBLIANA",
@@ -1021,7 +1402,10 @@
     "bolsonaro": 15,
     "totalValid": 76,
     "lulaPct": 65.79,
-    "bolsonaroPct": 19.74
+    "bolsonaroPct": 19.74,
+    "registered": 122,
+    "abstentions": 41,
+    "abstentionPct": 33.61
   },
   "39209": {
     "name": "BRATISLAVA",
@@ -1029,7 +1413,10 @@
     "bolsonaro": 14,
     "totalValid": 66,
     "lulaPct": 36.36,
-    "bolsonaroPct": 21.21
+    "bolsonaroPct": 21.21,
+    "registered": 115,
+    "abstentions": 45,
+    "abstentionPct": 39.13
   },
   "39306": {
     "name": "ISTAMBUL",
@@ -1037,7 +1424,10 @@
     "bolsonaro": 44,
     "totalValid": 126,
     "lulaPct": 57.14,
-    "bolsonaroPct": 34.92
+    "bolsonaroPct": 34.92,
+    "registered": 246,
+    "abstentions": 116,
+    "abstentionPct": 47.15
   },
   "39322": {
     "name": "NICOSIA",
@@ -1045,7 +1435,10 @@
     "bolsonaro": 7,
     "totalValid": 25,
     "lulaPct": 52,
-    "bolsonaroPct": 28
+    "bolsonaroPct": 28,
+    "registered": 72,
+    "abstentions": 44,
+    "abstentionPct": 61.11
   },
   "98000": {
     "name": "GUATEMALA",
@@ -1053,7 +1446,10 @@
     "bolsonaro": 90,
     "totalValid": 147,
     "lulaPct": 21.77,
-    "bolsonaroPct": 61.22
+    "bolsonaroPct": 61.22,
+    "registered": 289,
+    "abstentions": 142,
+    "abstentionPct": 49.13
   },
   "99155": {
     "name": "PUERTO IGUAZÚ",
@@ -1061,7 +1457,10 @@
     "bolsonaro": 0,
     "totalValid": 4,
     "lulaPct": 100,
-    "bolsonaroPct": 0
+    "bolsonaroPct": 0,
+    "registered": 30,
+    "abstentions": 26,
+    "abstentionPct": 86.67
   },
   "99180": {
     "name": "NASSAU",
@@ -1069,7 +1468,10 @@
     "bolsonaro": 15,
     "totalValid": 25,
     "lulaPct": 32,
-    "bolsonaroPct": 60
+    "bolsonaroPct": 60,
+    "registered": 65,
+    "abstentions": 39,
+    "abstentionPct": 60
   },
   "99287": {
     "name": "LUSACA",
@@ -1077,7 +1479,10 @@
     "bolsonaro": 2,
     "totalValid": 14,
     "lulaPct": 78.57,
-    "bolsonaroPct": 14.29
+    "bolsonaroPct": 14.29,
+    "registered": 34,
+    "abstentions": 20,
+    "abstentionPct": 58.82
   },
   "99317": {
     "name": "TALIN",
@@ -1085,7 +1490,10 @@
     "bolsonaro": 16,
     "totalValid": 186,
     "lulaPct": 79.57,
-    "bolsonaroPct": 8.6
+    "bolsonaroPct": 8.6,
+    "registered": 250,
+    "abstentions": 60,
+    "abstentionPct": 24
   },
   "99430": {
     "name": "KINGSTON-JAMAICA",
@@ -1093,7 +1501,10 @@
     "bolsonaro": 6,
     "totalValid": 13,
     "lulaPct": 53.85,
-    "bolsonaroPct": 46.15
+    "bolsonaroPct": 46.15,
+    "registered": 107,
+    "abstentions": 94,
+    "abstentionPct": 87.85
   },
   "99473": {
     "name": "BAREIN",
@@ -1101,6 +1512,9 @@
     "bolsonaro": 22,
     "totalValid": 38,
     "lulaPct": 26.32,
-    "bolsonaroPct": 57.89
+    "bolsonaroPct": 57.89,
+    "registered": 50,
+    "abstentions": 12,
+    "abstentionPct": 24
   }
 }
