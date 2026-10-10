@@ -4,10 +4,14 @@ import { useMediaQuery } from './useMediaQuery'
 /** Matches the single-column filter stack — phones only. */
 export const MOBILE_SCROLL_COLLAPSE_MQ = '(max-width: 640px)'
 
-const DELTA_PX = 12
+const DELTA_PX = 14
 const TOP_REVEAL_PX = 48
-/** Ignore scrollY jumps caused by the chrome height animation itself. */
-const TOGGLE_LOCK_MS = 360
+/**
+ * Ignore scrollY jumps caused by the chrome height animation itself.
+ * Keep ≥ CSS collapse duration (0.42s) so mid-tween scroll anchoring
+ * doesn’t snap the chrome back open.
+ */
+const TOGGLE_LOCK_MS = 480
 
 /**
  * On small screens, collapse a sticky chrome while scrolling down and

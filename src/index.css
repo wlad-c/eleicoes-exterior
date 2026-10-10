@@ -130,12 +130,13 @@ html.dark .sticky-table-chrome {
     overflow: hidden;
     overflow-anchor: none;
     max-height: var(--sticky-chrome-height, 2000px);
+    /* Expand: longer ease-out so it settles instead of popping open */
     transition:
-      max-height 0.22s ease,
-      opacity 0.18s ease,
-      padding 0.22s ease,
-      margin 0.22s ease,
-      border-bottom-width 0.22s ease;
+      max-height 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      margin 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      border-bottom-width 0.48s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .sticky-table-chrome.is-scroll-collapsed {
@@ -146,10 +147,29 @@ html.dark .sticky-table-chrome {
     border-bottom-width: 0;
     opacity: 0;
     pointer-events: none;
+    /* Collapse: material-style curve — decelerates into closed */
+    transition:
+      max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      padding 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+      border-bottom-width 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Table header eases with the chrome instead of jumping to top: 0 */
+  .table-head-sticky {
+    transition: top 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .panel-results:has(.sticky-table-chrome:not(.is-scroll-collapsed))
+    .table-head-sticky {
+    transition: top 0.48s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sticky-table-chrome {
+    .sticky-table-chrome,
+    .sticky-table-chrome.is-scroll-collapsed,
+    .table-head-sticky {
       transition: none;
     }
   }
