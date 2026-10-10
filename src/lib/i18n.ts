@@ -93,6 +93,22 @@ const dict = {
     en: 'J Bolsonaro votes 2022',
     pt: 'Votos J Bolsonaro 2022',
   },
+  otherPct2026: {
+    en: '2026 other candidates %',
+    pt: 'Outros candidatos % 2026',
+  },
+  otherPct2022: {
+    en: '2022 other candidates %',
+    pt: 'Outros candidatos % 2022',
+  },
+  abstentionPct2026: {
+    en: '2026 abstention %',
+    pt: 'Abstenção % 2026',
+  },
+  abstentionPct2022: {
+    en: '2022 abstention %',
+    pt: 'Abstenção % 2022',
+  },
   showPending: {
     en: 'Show pending countries',
     pt: 'Mostrar países pendentes',
@@ -251,6 +267,22 @@ const dict = {
   hintShare2022: {
     en: '% of valid (votes)',
     pt: '% dos válidos (votos)',
+  },
+  hintOther2026: {
+    en: '% of valid · other candidates',
+    pt: '% dos válidos · outros candidatos',
+  },
+  hintOther2022: {
+    en: '% of valid · other candidates',
+    pt: '% dos válidos · outros candidatos',
+  },
+  hintAbstention2026: {
+    en: '% of registered (non-voters)',
+    pt: '% dos aptos (não votaram)',
+  },
+  hintAbstention2022: {
+    en: '% of registered (non-voters)',
+    pt: '% dos aptos (não votaram)',
   },
   hintLulaChange: {
     en: 'pp vs 2022 (Δ votes)',

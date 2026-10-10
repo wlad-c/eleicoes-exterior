@@ -16,6 +16,7 @@
     "build:locations": "node scripts/build-location-map.mjs",
     "build:city-2022": "node scripts/build-city-2022.mjs",
     "apply:city-2022": "node scripts/apply-city-2022.mjs",
+    "apply:abstention": "node scripts/apply-abstention.mjs",
     "apply:abbrevs": "node scripts/apply-country-abbrevs.mjs",
     "apply:place-names": "node scripts/apply-place-names.mjs"
   },

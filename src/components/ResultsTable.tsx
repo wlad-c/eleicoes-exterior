@@ -4,6 +4,7 @@ import { NameTip } from './NameTip'
 import { SortableTh } from './SortableTh'
 import { makeMetricColorizer, withAlpha } from '../lib/colors'
 import {
+  abstentionPct,
   aggregateRows,
   bolsonaroVotesDelta,
   countryName,
@@ -14,6 +15,8 @@ import {
   fmtShare,
   lulaVotesDelta,
   metricValue,
+  otherPct,
+  otherVotes,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
 import {
@@ -330,6 +333,62 @@ export function ResultsTable({
                 {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
               </SortableTh>
             )
+          case 'otherPct2026':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('otherPct2026')}
+                align="right"
+                heated={heatCol === 'other2026'}
+                hint={t('hintOther2026', lang)}
+                {...drag}
+              >
+                {t('otherPct2026', lang)}
+                {arrow('otherPct2026')}
+              </SortableTh>
+            )
+          case 'otherPct2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('otherPct2022')}
+                align="right"
+                heated={heatCol === 'other2022'}
+                hint={t('hintOther2022', lang)}
+                {...drag}
+              >
+                {t('otherPct2022', lang)}
+                {arrow('otherPct2022')}
+              </SortableTh>
+            )
+          case 'abstentionPct2026':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('abstentionPct2026')}
+                align="right"
+                heated={heatCol === 'abstention2026'}
+                hint={t('hintAbstention2026', lang)}
+                {...drag}
+              >
+                {t('abstentionPct2026', lang)}
+                {arrow('abstentionPct2026')}
+              </SortableTh>
+            )
+          case 'abstentionPct2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('abstentionPct2022')}
+                align="right"
+                heated={heatCol === 'abstention2022'}
+                hint={t('hintAbstention2022', lang)}
+                {...drag}
+              >
+                {t('abstentionPct2022', lang)}
+                {arrow('abstentionPct2022')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -471,6 +530,46 @@ export function ResultsTable({
                 className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
               >
                 {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
+              </td>
+            )
+          case 'otherPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.otherPct2026, totals.other2026, lang, shareOpts)}
+              </td>
+            )
+          case 'otherPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.otherPct2022, totals.other2022, lang, shareOpts)}
+              </td>
+            )
+          case 'abstentionPct2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(
+                  totals.abstentionPct2026,
+                  totals.abstentions2026,
+                  lang,
+                  shareOpts,
+                )}
+              </td>
+            )
+          case 'abstentionPct2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtShare(
+                  totals.abstentionPct2022,
+                  totals.abstentions2022,
+                  lang,
+                  shareOpts,
+                )}
               </td>
             )
           case 'lulaChange':
@@ -663,6 +762,70 @@ export function ResultsTable({
                               heat={heat}
                             >
                               {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang, shareOpts)}
+                            </HeatTd>
+                          )
+                        case 'otherPct2026':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="other2026"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                otherPct(c.y2026),
+                                otherVotes(c.y2026),
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'otherPct2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="other2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                otherPct(c.y2022),
+                                otherVotes(c.y2022),
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'abstentionPct2026':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="abstention2026"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                abstentionPct(c.y2026),
+                                c.y2026?.abstentions,
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'abstentionPct2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="abstention2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                abstentionPct(c.y2022),
+                                c.y2022.abstentions,
+                                lang,
+                                shareOpts,
+                              )}
                             </HeatTd>
                           )
                         case 'lulaChange':

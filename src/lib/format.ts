@@ -84,6 +84,49 @@ export function bolsonaroVotesDelta(c: CountryResult): number | null {
   return c.y2026.bolsonaro - c.y2022.bolsonaro
 }
 
+function round1(n: number): number {
+  return Math.round(n * 100) / 100
+}
+
+/** Valid votes for candidates other than Lula / Bolsonaro. */
+export function otherVotes(y: YearResult | null | undefined): number | null {
+  if (!y) return null
+  return Math.max(0, y.totalValid - y.lula - y.bolsonaro)
+}
+
+/** Other-candidate share of valid votes (0–100). */
+export function otherPct(y: YearResult | null | undefined): number | null {
+  if (!y || y.totalValid <= 0) return null
+  return round1(((y.totalValid - y.lula - y.bolsonaro) / y.totalValid) * 100)
+}
+
+/** Abstention share of registered voters when electorate fields exist. */
+export function abstentionPct(y: YearResult | null | undefined): number | null {
+  if (!y) return null
+  if (y.abstentionPct != null && !Number.isNaN(y.abstentionPct)) {
+    return y.abstentionPct
+  }
+  if (y.registered != null && y.registered > 0 && y.abstentions != null) {
+    return round1((y.abstentions / y.registered) * 100)
+  }
+  return null
+}
+
+/** Attach TSE electorate (aptos / abstenções) onto a YearResult. */
+export function withElectorate(
+  y: YearResult,
+  registered: number | null | undefined,
+  abstentions: number | null | undefined,
+): YearResult {
+  if (registered == null || registered <= 0 || abstentions == null) return y
+  return {
+    ...y,
+    registered,
+    abstentions,
+    abstentionPct: round1((abstentions / registered) * 100),
+  }
+}
+
 export function countryName(c: CountryResult, lang: Lang): string {
   return lang === 'pt' ? c.countryPt : c.countryEn
 }
@@ -304,6 +347,14 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return c.y2022?.lulaPct ?? null
     case 'bolsonaroPct2022':
       return c.y2022?.bolsonaroPct ?? null
+    case 'otherPct2026':
+      return isReported(c) && c.y2026 ? otherPct(c.y2026) : null
+    case 'otherPct2022':
+      return otherPct(c.y2022)
+    case 'abstentionPct2026':
+      return isReported(c) && c.y2026 ? abstentionPct(c.y2026) : null
+    case 'abstentionPct2022':
+      return abstentionPct(c.y2022)
     case 'votes2026':
       return isReported(c) && c.y2026 ? c.y2026.totalValid : null
     case 'votes2022':
@@ -348,6 +399,10 @@ export function formatMetricValue(
     case 'bolsonaroPct2026':
     case 'lulaPct2022':
     case 'bolsonaroPct2022':
+    case 'otherPct2026':
+    case 'otherPct2022':
+    case 'abstentionPct2026':
+    case 'abstentionPct2022':
       return fmtPct(value, lang)
     case 'votes2026':
     case 'votes2022':
@@ -383,6 +438,16 @@ export type RowTotals = {
   valid2026: number | null
   lulaPct2026: number | null
   bolsoPct2026: number | null
+  other2026: number | null
+  otherPct2026: number | null
+  other2022: number
+  otherPct2022: number
+  registered2026: number | null
+  abstentions2026: number | null
+  abstentionPct2026: number | null
+  registered2022: number | null
+  abstentions2022: number | null
+  abstentionPct2022: number | null
   lula2022: number
   bolso2022: number
   valid2022: number
@@ -410,6 +475,12 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
   let lula2022Comparable = 0
   let bolso2022Comparable = 0
   let valid2022Comparable = 0
+  let registered2026 = 0
+  let abstentions2026 = 0
+  let hasAbstention2026 = false
+  let registered2022 = 0
+  let abstentions2022 = 0
+  let hasAbstention2022 = false
   let sectionsCounted = 0
   let sectionsTotal = 0
   let hasSections = false
@@ -418,6 +489,11 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lula2022 += c.y2022.lula
     bolso2022 += c.y2022.bolsonaro
     valid2022 += c.y2022.totalValid
+    if (c.y2022.registered != null && c.y2022.abstentions != null) {
+      hasAbstention2022 = true
+      registered2022 += c.y2022.registered
+      abstentions2022 += c.y2022.abstentions
+    }
     if (c.status === 'reported' && c.y2026) {
       has2026 = true
       lula2026 += c.y2026.lula
@@ -426,6 +502,11 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
       lula2022Comparable += c.y2022.lula
       bolso2022Comparable += c.y2022.bolsonaro
       valid2022Comparable += c.y2022.totalValid
+      if (c.y2026.registered != null && c.y2026.abstentions != null) {
+        hasAbstention2026 = true
+        registered2026 += c.y2026.registered
+        abstentions2026 += c.y2026.abstentions
+      }
     }
     if (c.coverage) {
       hasSections = true
@@ -434,10 +515,23 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     }
   }
 
+  const other2022 = Math.max(0, valid2022 - lula2022 - bolso2022)
+  const other2026 = has2026 ? Math.max(0, valid2026 - lula2026 - bolso2026) : null
   const lulaPct2022 = valid2022 ? (lula2022 / valid2022) * 100 : 0
   const bolsoPct2022 = valid2022 ? (bolso2022 / valid2022) * 100 : 0
+  const otherPct2022 = valid2022 ? (other2022 / valid2022) * 100 : 0
   const lulaPct2026 = has2026 && valid2026 ? (lula2026 / valid2026) * 100 : null
   const bolsoPct2026 = has2026 && valid2026 ? (bolso2026 / valid2026) * 100 : null
+  const otherPct2026 =
+    other2026 != null && valid2026 ? (other2026 / valid2026) * 100 : null
+  const abstentionPct2026 =
+    hasAbstention2026 && registered2026 > 0
+      ? (abstentions2026 / registered2026) * 100
+      : null
+  const abstentionPct2022 =
+    hasAbstention2022 && registered2022 > 0
+      ? (abstentions2022 / registered2022) * 100
+      : null
   const lulaPct2022Comparable = valid2022Comparable
     ? (lula2022Comparable / valid2022Comparable) * 100
     : null
@@ -468,6 +562,16 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     valid2026: has2026 ? valid2026 : null,
     lulaPct2026,
     bolsoPct2026,
+    other2026,
+    otherPct2026,
+    other2022,
+    otherPct2022,
+    registered2026: hasAbstention2026 ? registered2026 : null,
+    abstentions2026: hasAbstention2026 ? abstentions2026 : null,
+    abstentionPct2026,
+    registered2022: hasAbstention2022 ? registered2022 : null,
+    abstentions2022: hasAbstention2022 ? abstentions2022 : null,
+    abstentionPct2022,
     lula2022,
     bolso2022,
     valid2022,

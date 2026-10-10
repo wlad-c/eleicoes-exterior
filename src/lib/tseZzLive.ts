@@ -1,6 +1,7 @@
 import cityMap from '../data/tse-city-map.json'
 import city2022 from '../data/tse-city-2022.json'
 import type { CityResult, CountryResult, ResultsData, YearResult } from '../types'
+import { withElectorate } from './format'
 import { withPlaceNames } from './placeNames'
 
 type City2022Map = Record<
@@ -12,6 +13,9 @@ type City2022Map = Record<
     totalValid: number
     lulaPct: number
     bolsonaroPct: number
+    registered?: number
+    abstentions?: number
+    abstentionPct?: number
   }
 >
 
@@ -52,14 +56,24 @@ function round1(n: number): number {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula: number, bolsonaro: number, totalValid: number): YearResult {
-  return {
-    lula,
-    bolsonaro,
-    totalValid,
-    lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
-    bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
-  }
+function yearResult(
+  lula: number,
+  bolsonaro: number,
+  totalValid: number,
+  registered?: number | null,
+  abstentions?: number | null,
+): YearResult {
+  return withElectorate(
+    {
+      lula,
+      bolsonaro,
+      totalValid,
+      lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
+      bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
+    },
+    registered,
+    abstentions,
+  )
 }
 
 function swingOf(y2022: YearResult | null | undefined, y2026: YearResult) {
@@ -76,7 +90,13 @@ function swingOf(y2022: YearResult | null | undefined, y2026: YearResult) {
 function cityY2022(code: string): YearResult | null {
   const raw = (city2022 as City2022Map)[code]
   if (!raw) return null
-  return yearResult(raw.lula, raw.bolsonaro, raw.totalValid)
+  return yearResult(
+    raw.lula,
+    raw.bolsonaro,
+    raw.totalValid,
+    raw.registered,
+    raw.abstentions,
+  )
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -97,12 +117,22 @@ function ea20Url(base: string, municipioCode = ''): string {
 type Ea20Doc = {
   s?: { st?: string; ts?: string; pst?: string }
   v?: { vv?: string; vvc?: string }
+  e?: { te?: string; a?: string; pa?: string }
   carg?: Array<{
     cd?: string
     agr?: Array<{
       par?: Array<{ cand?: Array<{ n?: string; vap?: string }> }>
     }>
   }>
+}
+
+function extractElectorate(
+  doc: Ea20Doc,
+): { registered: number; abstentions: number } | null {
+  const registered = parseIntPT(doc.e?.te)
+  const abstentions = parseIntPT(doc.e?.a)
+  if (registered <= 0) return null
+  return { registered, abstentions }
 }
 
 function extractCandidates(doc: Ea20Doc): { lula: number; bolsonaro: number } {
@@ -151,6 +181,8 @@ type MunVotes = {
   totalValid: number
   counted: number
   total: number
+  registered: number | null
+  abstentions: number | null
 }
 
 type Agg = {
@@ -159,6 +191,9 @@ type Agg = {
   totalValid: number
   counted: number
   total: number
+  registered: number
+  abstentions: number
+  hasElectorate: boolean
   areas: CityResult[]
 }
 
@@ -216,6 +251,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       const totalValid = parseIntPT(doc.v?.vv ?? doc.v?.vvc)
       const counted = parseIntPT(doc.s?.st)
       const total = parseIntPT(doc.s?.ts)
+      const electorate = extractElectorate(doc)
       if (totalValid <= 0 && counted <= 0) return null
       return {
         countryId,
@@ -226,6 +262,8 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
         totalValid,
         counted,
         total,
+        registered: electorate?.registered ?? null,
+        abstentions: electorate?.abstentions ?? null,
       }
     } catch {
       return null
@@ -241,6 +279,9 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       totalValid: 0,
       counted: 0,
       total: 0,
+      registered: 0,
+      abstentions: 0,
+      hasElectorate: false,
       areas: [],
     }
     agg.lula += row.lula
@@ -248,7 +289,18 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
     agg.totalValid += row.totalValid
     agg.counted += row.counted
     agg.total += row.total
-    const y2026 = yearResult(row.lula, row.bolsonaro, row.totalValid)
+    if (row.registered != null && row.abstentions != null) {
+      agg.hasElectorate = true
+      agg.registered += row.registered
+      agg.abstentions += row.abstentions
+    }
+    const y2026 = yearResult(
+      row.lula,
+      row.bolsonaro,
+      row.totalValid,
+      row.registered,
+      row.abstentions,
+    )
     const y2022 = cityY2022(row.code)
     agg.areas.push(
       withPlaceNames({
@@ -271,7 +323,13 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
   const countries: CountryResult[] = base.countries.map((country) => {
     const agg = aggregates.get(country.id)
     if (!agg || agg.totalValid <= 0) return country
-    const y2026 = yearResult(agg.lula, agg.bolsonaro, agg.totalValid)
+    const y2026 = yearResult(
+      agg.lula,
+      agg.bolsonaro,
+      agg.totalValid,
+      agg.hasElectorate ? agg.registered : null,
+      agg.hasElectorate ? agg.abstentions : null,
+    )
     const partial = agg.counted < agg.total
     const areaNotes = agg.areas
       .map((c) => `${c.name} ${c.coverage?.counted ?? 0}/${c.coverage?.total ?? 0}`)

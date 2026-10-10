@@ -8,6 +8,15 @@ export type YearResult = {
   totalValid: number
   lulaPct: number
   bolsonaroPct: number
+  /**
+   * Registered voters (aptos) when known (TSE EA20 `e.te` / open-data QT_APTOS).
+   * Used with `abstentions` for abstention %.
+   */
+  registered?: number
+  /** Non-voters (abstenções) when known. */
+  abstentions?: number
+  /** Abstention share of registered voters (0–100). */
+  abstentionPct?: number
 }
 
 export type Swing = {
@@ -149,6 +158,10 @@ export type MapMetric =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'otherPct2026'
+  | 'otherPct2022'
+  | 'abstentionPct2026'
+  | 'abstentionPct2022'
   | 'votes2026'
   | 'votes2022'
   | 'lulaVotes2026'
@@ -167,6 +180,10 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'otherPct2026',
+  'otherPct2022',
+  'abstentionPct2026',
+  'abstentionPct2022',
   'votes2026',
   'votes2022',
   'lulaVotes2026',
@@ -182,6 +199,10 @@ export type SortKey =
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'otherPct2026'
+  | 'otherPct2022'
+  | 'abstentionPct2026'
+  | 'abstentionPct2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
@@ -196,6 +217,10 @@ export type HeatColumn =
   | 'bolso2026'
   | 'lula2022'
   | 'bolso2022'
+  | 'other2026'
+  | 'other2022'
+  | 'abstention2026'
+  | 'abstention2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
@@ -227,6 +252,14 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'bolsonaroPct2022':
     case 'bolsonaroVotes2022':
       return 'bolso2022'
+    case 'otherPct2026':
+      return 'other2026'
+    case 'otherPct2022':
+      return 'other2022'
+    case 'abstentionPct2026':
+      return 'abstention2026'
+    case 'abstentionPct2022':
+      return 'abstention2022'
     case 'votes2026':
     case 'votes2022':
       return 'none'
