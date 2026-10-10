@@ -1,5 +1,11 @@
 import { collatorFor } from './collator'
-import { abstentionPct, cityDisplayName, countryName, otherPct } from './format'
+import {
+  abstentionPct,
+  abstentionVotes,
+  cityDisplayName,
+  countryName,
+  otherPct,
+} from './format'
 import { foldForSearch } from './searchText'
 import type {
   CityResult,
@@ -340,6 +346,10 @@ function citySortValue(
       return abstentionPct(row.y2026) ?? Number.NaN
     case 'abstentionPct2022':
       return abstentionPct(row.y2022) ?? Number.NaN
+    case 'abstentions2026':
+      return abstentionVotes(row.y2026) ?? Number.NaN
+    case 'abstentions2022':
+      return abstentionVotes(row.y2022) ?? Number.NaN
     case 'lulaChange':
       return cityLulaChange(row) ?? Number.NaN
     case 'bolsonaroChange':

@@ -395,6 +395,34 @@ export function ResultsTable({
                 {arrow('abstentionPct2022')}
               </SortableTh>
             )
+          case 'abstentions2026':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('abstentions2026')}
+                align="right"
+                heated={heatCol === 'abstention2026'}
+                hint={t('hintAbstentionVotes2026', lang)}
+                {...drag}
+              >
+                {t('abstentions2026', lang)}
+                {arrow('abstentions2026')}
+              </SortableTh>
+            )
+          case 'abstentions2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('abstentions2022')}
+                align="right"
+                heated={heatCol === 'abstention2022'}
+                hint={t('hintAbstentionVotes2022', lang)}
+                {...drag}
+              >
+                {t('abstentions2022', lang)}
+                {arrow('abstentions2022')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -576,6 +604,21 @@ export function ResultsTable({
                   lang,
                   shareOpts,
                 )}
+              </td>
+            )
+          case 'abstentions2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.abstentions2026, lang)}
+              </td>
+            )
+          case 'abstentions2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtInt(totals.abstentions2022, lang)}
               </td>
             )
           case 'lulaChange':
@@ -841,6 +884,28 @@ export function ResultsTable({
                                 lang,
                                 shareOpts,
                               )}
+                            </HeatTd>
+                          )
+                        case 'abstentions2026':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="abstention2026"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtInt(c.y2026?.abstentions, lang)}
+                            </HeatTd>
+                          )
+                        case 'abstentions2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="abstention2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtInt(c.y2022.abstentions, lang)}
                             </HeatTd>
                           )
                         case 'lulaChange':

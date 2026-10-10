@@ -631,6 +631,21 @@ export function CityBreakdownTable({
                 )}
               </td>
             )
+          case 'abstentions2026':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.abstentions2026, lang)}
+              </td>
+            )
+          case 'abstentions2022':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtInt(totals.abstentions2022, lang)}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -838,6 +853,32 @@ export function CityBreakdownTable({
               >
                 {t('abstentionPct2022', lang)}
                 {arrow('abstentionPct2022')}
+              </SortableTh>
+            )
+          case 'abstentions2026':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintAbstentionVotes2026', lang)}
+                onClick={() => onSort('abstentions2026')}
+                {...drag}
+              >
+                {t('abstentions2026', lang)}
+                {arrow('abstentions2026')}
+              </SortableTh>
+            )
+          case 'abstentions2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintAbstentionVotes2022', lang)}
+                onClick={() => onSort('abstentions2022')}
+                {...drag}
+              >
+                {t('abstentions2022', lang)}
+                {arrow('abstentions2022')}
               </SortableTh>
             )
           case 'lulaChange':
@@ -1208,6 +1249,24 @@ export function CityBreakdownTable({
                               lang,
                               shareOpts,
                             )}
+                          </td>
+                        )
+                      case 'abstentions2026':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.y2026.abstentions, lang)}
+                          </td>
+                        )
+                      case 'abstentions2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.y2022?.abstentions, lang)}
                           </td>
                         )
                       case 'lulaChange':

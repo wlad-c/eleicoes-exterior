@@ -162,6 +162,8 @@ export type MapMetric =
   | 'otherPct2022'
   | 'abstentionPct2026'
   | 'abstentionPct2022'
+  | 'abstentions2026'
+  | 'abstentions2022'
   | 'votes2026'
   | 'votes2022'
   | 'lulaVotes2026'
@@ -184,6 +186,8 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'otherPct2022',
   'abstentionPct2026',
   'abstentionPct2022',
+  'abstentions2026',
+  'abstentions2022',
   'votes2026',
   'votes2022',
   'lulaVotes2026',
@@ -203,6 +207,8 @@ export type SortKey =
   | 'otherPct2022'
   | 'abstentionPct2026'
   | 'abstentionPct2022'
+  | 'abstentions2026'
+  | 'abstentions2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swingToLula'
@@ -257,8 +263,10 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'otherPct2022':
       return 'other2022'
     case 'abstentionPct2026':
+    case 'abstentions2026':
       return 'abstention2026'
     case 'abstentionPct2022':
+    case 'abstentions2022':
       return 'abstention2022'
     case 'votes2026':
     case 'votes2022':

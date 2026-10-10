@@ -14,6 +14,7 @@ import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import {
   abstentionPct,
+  abstentionVotes,
   aggregateRows,
   countryName,
   fmtInt,
@@ -1262,6 +1263,12 @@ export default function App() {
                 <option value="abstentionPct2022">
                   {t('abstentionPct2022', lang)}
                 </option>
+                <option value="abstentions2026">
+                  {t('abstentions2026', lang)}
+                </option>
+                <option value="abstentions2022">
+                  {t('abstentions2022', lang)}
+                </option>
                 <option value="lulaChange">{t('lulaChange', lang)}</option>
                 <option value="bolsonaroChange">
                   {t('bolsonaroChange', lang)}
@@ -1518,6 +1525,10 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return abstentionPct(c.y2026) ?? Number.NaN
     case 'abstentionPct2022':
       return abstentionPct(c.y2022) ?? Number.NaN
+    case 'abstentions2026':
+      return abstentionVotes(c.y2026) ?? Number.NaN
+    case 'abstentions2022':
+      return abstentionVotes(c.y2022) ?? Number.NaN
     case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
     case 'bolsonaroChange':

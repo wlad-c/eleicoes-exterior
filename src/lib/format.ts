@@ -112,6 +112,12 @@ export function abstentionPct(y: YearResult | null | undefined): number | null {
   return null
 }
 
+/** Absolute abstention count (non-voters) when known. */
+export function abstentionVotes(y: YearResult | null | undefined): number | null {
+  if (!y || y.abstentions == null || Number.isNaN(y.abstentions)) return null
+  return y.abstentions
+}
+
 /** Attach TSE electorate (aptos / abstenções) onto a YearResult. */
 export function withElectorate(
   y: YearResult,
@@ -355,6 +361,10 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return isReported(c) && c.y2026 ? abstentionPct(c.y2026) : null
     case 'abstentionPct2022':
       return abstentionPct(c.y2022)
+    case 'abstentions2026':
+      return isReported(c) && c.y2026 ? abstentionVotes(c.y2026) : null
+    case 'abstentions2022':
+      return abstentionVotes(c.y2022)
     case 'votes2026':
       return isReported(c) && c.y2026 ? c.y2026.totalValid : null
     case 'votes2022':
@@ -410,6 +420,8 @@ export function formatMetricValue(
     case 'lulaVotes2022':
     case 'bolsonaroVotes2026':
     case 'bolsonaroVotes2022':
+    case 'abstentions2026':
+    case 'abstentions2022':
       return fmtInt(value, lang)
   }
 }
