@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Lang, ResultsData } from '../types'
+import { t } from './i18n'
 import { fetchLiveTseZz } from './tseZzLive'
 
 /** Poll interval once live refresh is allowed (runoff counting). */
@@ -42,14 +43,8 @@ export function resolveRefreshMs(
 }
 
 export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
-  if (isRefreshPaused(now)) {
-    return lang === 'pt'
-      ? 'atualização pausada até o 2º turno (NZ)'
-      : 'refresh paused until runoff (NZ)'
-  }
-  return lang === 'pt'
-    ? 'atualiza a cada 30 min'
-    : 'updates every 30 min'
+  if (isRefreshPaused(now)) return t('autoRefreshPaused', lang)
+  return t('autoRefresh', lang)
 }
 
 /**

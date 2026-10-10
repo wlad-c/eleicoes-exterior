@@ -849,20 +849,12 @@ export default function App() {
   const zz = data.meta.tseZz
   const syncLabel =
     syncStatus === 'syncing'
-      ? lang === 'pt'
-        ? 'atualizando TSE…'
-        : 'updating TSE…'
+      ? t('syncUpdating', lang)
       : syncStatus === 'error'
-        ? lang === 'pt'
-          ? 'falha no TSE — tentando de novo'
-          : 'TSE fetch failed — retrying'
+        ? t('syncError', lang)
         : live
-          ? lang === 'pt'
-            ? 'TSE ao vivo'
-            : 'live TSE'
-          : lang === 'pt'
-            ? 'seed local'
-            : 'local seed'
+          ? t('syncLive', lang)
+          : t('syncSeed', lang)
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6 lg:max-w-7xl xl:max-w-[90rem] 2xl:max-w-[100rem]">
