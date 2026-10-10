@@ -13,10 +13,10 @@ export type TableMetricCol =
   | 'difference2022'
   | 'otherPct2026'
   | 'otherPct2022'
-  | 'abstentionPct2026'
-  | 'abstentionPct2022'
-  | 'abstentions2026'
-  | 'abstentions2022'
+  | 'noValidVotePct2026'
+  | 'noValidVotePct2022'
+  | 'noValidVotes2026'
+  | 'noValidVotes2022'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
@@ -34,10 +34,10 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'difference2022',
   'otherPct2026',
   'otherPct2022',
-  'abstentionPct2026',
-  'abstentionPct2022',
-  'abstentions2026',
-  'abstentions2022',
+  'noValidVotePct2026',
+  'noValidVotePct2022',
+  'noValidVotes2026',
+  'noValidVotes2022',
   'lulaChange',
   'bolsonaroChange',
   'swing',
@@ -45,8 +45,8 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
 ]
 
 /**
- * Default: hide region, 2022 vote/share/difference columns, other/abstention
- * shares and volumes, and sections.
+ * Default: hide region, 2022 vote/share/difference columns, other /
+ * no-valid-vote shares and volumes, and sections.
  */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
@@ -70,19 +70,19 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   difference2022: 'colDifference2022',
   otherPct2026: 'otherPct2026',
   otherPct2022: 'otherPct2022',
-  abstentionPct2026: 'abstentionPct2026',
-  abstentionPct2022: 'abstentionPct2022',
-  abstentions2026: 'abstentions2026',
-  abstentions2022: 'abstentions2022',
+  noValidVotePct2026: 'noValidVotePct2026',
+  noValidVotePct2022: 'noValidVotePct2022',
+  noValidVotes2026: 'noValidVotes2026',
+  noValidVotes2022: 'noValidVotes2022',
   lulaChange: 'lulaChange',
   bolsonaroChange: 'bolsonaroChange',
   swing: 'colSwing',
   sections: 'notes',
 }
 
-/** Bump when default visibility changes so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v5'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v2'
+/** Bump when default visibility / column ids change so stored prefs reset. */
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v6'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v3'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
@@ -91,6 +91,10 @@ export function isTableMetricCol(v: string): v is TableMetricCol {
 /** Map legacy column ids onto the current set. */
 function migrateLegacyCol(c: string): TableMetricCol | null {
   if (c === 'swingToLula' || c === 'swingToBolsonaro') return 'swing'
+  if (c === 'abstentionPct2026') return 'noValidVotePct2026'
+  if (c === 'abstentionPct2022') return 'noValidVotePct2022'
+  if (c === 'abstentions2026') return 'noValidVotes2026'
+  if (c === 'abstentions2022') return 'noValidVotes2022'
   if (isTableMetricCol(c)) return c
   return null
 }

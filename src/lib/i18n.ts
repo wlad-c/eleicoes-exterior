@@ -120,21 +120,21 @@ const dict = {
     en: '2022 other candidates %',
     pt: 'Outros candidatos % 2022',
   },
-  abstentionPct2026: {
-    en: '2026 abstention %',
-    pt: 'Abstenção % 2026',
+  noValidVotePct2026: {
+    en: '2026 no valid vote %',
+    pt: 'Sem voto válido % 2026',
   },
-  abstentionPct2022: {
-    en: '2022 abstention %',
-    pt: 'Abstenção % 2022',
+  noValidVotePct2022: {
+    en: '2022 no valid vote %',
+    pt: 'Sem voto válido % 2022',
   },
-  abstentions2026: {
-    en: 'Abstentions 2026',
-    pt: 'Abstenções 2026',
+  noValidVotes2026: {
+    en: 'No valid vote 2026',
+    pt: 'Sem voto válido 2026',
   },
-  abstentions2022: {
-    en: 'Abstentions 2022',
-    pt: 'Abstenções 2022',
+  noValidVotes2022: {
+    en: 'No valid vote 2022',
+    pt: 'Sem voto válido 2022',
   },
   showPending: {
     en: 'Show pending countries',
@@ -303,21 +303,21 @@ const dict = {
     en: '% of valid · other candidates',
     pt: '% dos válidos · outros candidatos',
   },
-  hintAbstention2026: {
-    en: '% of registered (non-voters)',
-    pt: '% dos aptos (não votaram)',
+  hintNoValidVotePct2026: {
+    en: '% of registered · abstention + blank + null',
+    pt: '% dos aptos · abstenção + branco + nulo',
   },
-  hintAbstention2022: {
-    en: '% of registered (non-voters)',
-    pt: '% dos aptos (não votaram)',
+  hintNoValidVotePct2022: {
+    en: '% of registered · abstention + blank + null',
+    pt: '% dos aptos · abstenção + branco + nulo',
   },
-  hintAbstentionVotes2026: {
-    en: 'non-voters (count)',
-    pt: 'não votaram (quantidade)',
+  hintNoValidVotes2026: {
+    en: 'abstention + blank + null (count)',
+    pt: 'abstenção + branco + nulo (quantidade)',
   },
-  hintAbstentionVotes2022: {
-    en: 'non-voters (count)',
-    pt: 'não votaram (quantidade)',
+  hintNoValidVotes2022: {
+    en: 'abstention + blank + null (count)',
+    pt: 'abstenção + branco + nulo (quantidade)',
   },
   hintLulaChange: {
     en: 'pp vs 2022 (Δ votes)',

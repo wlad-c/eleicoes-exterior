@@ -103,7 +103,15 @@ function round1(n) {
   return Math.round(n * 100) / 100
 }
 
-function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
+function yearResult(
+  lula,
+  bolsonaro,
+  totalValid,
+  registered,
+  abstentions,
+  blank,
+  nullVotes,
+) {
   const y = {
     lula,
     bolsonaro,
@@ -111,11 +119,19 @@ function yearResult(lula, bolsonaro, totalValid, registered, abstentions) {
     lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
     bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
   }
-  if (registered != null && registered > 0 && abstentions != null) {
-    y.registered = registered
-    y.abstentions = abstentions
-    y.abstentionPct = round1((abstentions / registered) * 100)
+  if (registered == null || registered <= 0) return y
+  y.registered = registered
+  if (abstentions != null) y.abstentions = abstentions
+  if (blank != null) y.blank = blank
+  if (nullVotes != null) y.nullVotes = nullVotes
+  let noValid
+  if (abstentions != null && blank != null && nullVotes != null) {
+    noValid = abstentions + blank + nullVotes
+  } else {
+    noValid = Math.max(0, registered - totalValid)
   }
+  y.noValidVote = noValid
+  y.noValidVotePct = round1((noValid / registered) * 100)
   return y
 }
 
@@ -134,7 +150,7 @@ async function loadZoneElectorate(year, work) {
       stdio: 'inherit',
     })
   }
-  /** @type {Map<string, {registered:number, abstentions:number}>} */
+  /** @type {Map<string, {registered:number, abstentions:number, blank:number, nullVotes:number}>} */
   const zones = new Map()
   const rl = createInterface({
     input: createReadStream(csvPath, { encoding: 'latin1' }),
@@ -153,6 +169,8 @@ async function loadZoneElectorate(year, work) {
         'CD_CARGO',
         'QT_APTOS',
         'QT_ABSTENCOES',
+        'QT_VOTOS_BRANCOS',
+        'QT_TOTAL_VOTOS_NULOS',
       ]) {
         idx[name] = header.indexOf(name)
       }
@@ -169,9 +187,19 @@ async function loadZoneElectorate(year, work) {
     const key = `${uf}|${mun}|${zona}`
     const registered = Number.parseInt(cols[idx.QT_APTOS] || '0', 10) || 0
     const abstentions = Number.parseInt(cols[idx.QT_ABSTENCOES] || '0', 10) || 0
-    const agg = zones.get(key) || { registered: 0, abstentions: 0 }
+    const blank = Number.parseInt(cols[idx.QT_VOTOS_BRANCOS] || '0', 10) || 0
+    const nullVotes =
+      Number.parseInt(cols[idx.QT_TOTAL_VOTOS_NULOS] || '0', 10) || 0
+    const agg = zones.get(key) || {
+      registered: 0,
+      abstentions: 0,
+      blank: 0,
+      nullVotes: 0,
+    }
     agg.registered += registered
     agg.abstentions += abstentions
+    agg.blank += blank
+    agg.nullVotes += nullVotes
     zones.set(key, agg)
   }
   console.log(`  ${year} zone electorate: ${zones.size}`)
@@ -485,7 +513,7 @@ async function main() {
     await aggregateYear(csvPath, cfg.year === 2022 ? by2022 : by2026)
   }
 
-  console.log('\n=== zone electorate (abstention) ===')
+  console.log('\n=== zone electorate (no valid vote) ===')
   const el2026 = await loadZoneElectorate(2026, work)
   const el2022 = await loadZoneElectorate(2022, work)
 
@@ -506,6 +534,8 @@ async function main() {
           a.totalValid,
           e26?.registered,
           e26?.abstentions,
+          e26?.blank,
+          e26?.nullVotes,
         )
       : null
     const y2022 = b
@@ -515,6 +545,8 @@ async function main() {
           b.totalValid,
           e22?.registered,
           e22?.abstentions,
+          e22?.blank,
+          e22?.nullVotes,
         )
       : null
     if (!y2026) continue

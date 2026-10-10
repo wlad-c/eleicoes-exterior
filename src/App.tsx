@@ -13,8 +13,8 @@ import { ResultsTable } from './components/ResultsTable'
 import { TableColumnPicker } from './components/TableColumnPicker'
 import { WorldMap } from './components/WorldMap'
 import {
-  abstentionPct,
-  abstentionVotes,
+  noValidVotePct,
+  noValidVotes,
   aggregateRows,
   countryName,
   fmtInt,
@@ -1263,17 +1263,17 @@ export default function App() {
                 </option>
                 <option value="otherPct2026">{t('otherPct2026', lang)}</option>
                 <option value="otherPct2022">{t('otherPct2022', lang)}</option>
-                <option value="abstentionPct2026">
-                  {t('abstentionPct2026', lang)}
+                <option value="noValidVotePct2026">
+                  {t('noValidVotePct2026', lang)}
                 </option>
-                <option value="abstentionPct2022">
-                  {t('abstentionPct2022', lang)}
+                <option value="noValidVotePct2022">
+                  {t('noValidVotePct2022', lang)}
                 </option>
-                <option value="abstentions2026">
-                  {t('abstentions2026', lang)}
+                <option value="noValidVotes2026">
+                  {t('noValidVotes2026', lang)}
                 </option>
-                <option value="abstentions2022">
-                  {t('abstentions2022', lang)}
+                <option value="noValidVotes2022">
+                  {t('noValidVotes2022', lang)}
                 </option>
                 <option value="lulaChange">{t('lulaChange', lang)}</option>
                 <option value="bolsonaroChange">
@@ -1524,14 +1524,14 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return otherPct(c.y2026) ?? Number.NaN
     case 'otherPct2022':
       return otherPct(c.y2022) ?? Number.NaN
-    case 'abstentionPct2026':
-      return abstentionPct(c.y2026) ?? Number.NaN
-    case 'abstentionPct2022':
-      return abstentionPct(c.y2022) ?? Number.NaN
-    case 'abstentions2026':
-      return abstentionVotes(c.y2026) ?? Number.NaN
-    case 'abstentions2022':
-      return abstentionVotes(c.y2022) ?? Number.NaN
+    case 'noValidVotePct2026':
+      return noValidVotePct(c.y2026) ?? Number.NaN
+    case 'noValidVotePct2022':
+      return noValidVotePct(c.y2022) ?? Number.NaN
+    case 'noValidVotes2026':
+      return noValidVotes(c.y2026) ?? Number.NaN
+    case 'noValidVotes2022':
+      return noValidVotes(c.y2022) ?? Number.NaN
     case 'difference2026':
       return c.y2026 != null
         ? c.y2026.lulaPct - c.y2026.bolsonaroPct

@@ -23,8 +23,8 @@ export const VOTES_COLOR_LIGHT = '#F3E5F5'
 export const OTHER_COLOR = '#455A64'
 export const OTHER_COLOR_LIGHT = '#ECEFF1'
 /** Abstention share heatmap (light → dark brown). */
-export const ABSTENTION_COLOR = '#5D4037'
-export const ABSTENTION_COLOR_LIGHT = '#EFEBE9'
+export const NO_VALID_VOTE_COLOR = '#5D4037'
+export const NO_VALID_VOTE_COLOR_LIGHT = '#EFEBE9'
 
 /** Darkest diverging heatmap shade is reached at ±this many pp (outliers clamp). */
 export const DIVERGING_PP_CAP = 10
@@ -39,7 +39,7 @@ type ScaleKind =
   | 'bolsoSeq'
   | 'votesSeq'
   | 'otherSeq'
-  | 'abstentionSeq'
+  | 'noValidSeq'
 
 function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
@@ -67,11 +67,11 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'otherPct2026':
     case 'otherPct2022':
       return 'otherSeq'
-    case 'abstentionPct2026':
-    case 'abstentionPct2022':
-    case 'abstentions2026':
-    case 'abstentions2022':
-      return 'abstentionSeq'
+    case 'noValidVotePct2026':
+    case 'noValidVotePct2022':
+    case 'noValidVotes2026':
+    case 'noValidVotes2022':
+      return 'noValidSeq'
     case 'votes2026':
     case 'votes2022':
       return 'votesSeq'
@@ -133,7 +133,7 @@ function leaderColor(value: number): string {
 function sequentialScale(
   domainLo: number,
   domainHi: number,
-  toward: 'lula' | 'bolso' | 'votes' | 'other' | 'abstention',
+  toward: 'lula' | 'bolso' | 'votes' | 'other' | 'noValid',
 ) {
   const hiColor =
     toward === 'lula'
@@ -144,7 +144,7 @@ function sequentialScale(
           ? VOTES_COLOR
           : toward === 'other'
             ? OTHER_COLOR
-            : ABSTENTION_COLOR
+            : NO_VALID_VOTE_COLOR
   const loColor =
     toward === 'lula'
       ? '#F7F0F0'
@@ -154,7 +154,7 @@ function sequentialScale(
           ? VOTES_COLOR_LIGHT
           : toward === 'other'
             ? OTHER_COLOR_LIGHT
-            : ABSTENTION_COLOR_LIGHT
+            : NO_VALID_VOTE_COLOR_LIGHT
   let lo = domainLo
   let hi = domainHi
   if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
@@ -223,8 +223,8 @@ export function makeMetricColorizer(
         ? 'votes'
         : kind === 'otherSeq'
           ? 'other'
-          : kind === 'abstentionSeq'
-            ? 'abstention'
+          : kind === 'noValidSeq'
+            ? 'noValid'
             : 'bolso'
   const voteCount =
     metric === 'votes2026' ||
@@ -233,8 +233,8 @@ export function makeMetricColorizer(
     metric === 'lulaVotes2022' ||
     metric === 'bolsonaroVotes2026' ||
     metric === 'bolsonaroVotes2022' ||
-    metric === 'abstentions2026' ||
-    metric === 'abstentions2022'
+    metric === 'noValidVotes2026' ||
+    metric === 'noValidVotes2022'
   const domainLo = voteCount ? Math.log1p(Math.max(lo, 0)) : lo
   const domainHi = voteCount ? Math.log1p(Math.max(hi, 0)) : hi
   const scale = sequentialScale(domainLo, domainHi, toward)
@@ -262,7 +262,7 @@ export type LegendMode =
   | 'bolso'
   | 'votes'
   | 'other'
-  | 'abstention'
+  | 'noValid'
 
 export function legendModeForMetric(metric: MapMetric): LegendMode {
   const kind = scaleKind(metric)
@@ -271,6 +271,6 @@ export function legendModeForMetric(metric: MapMetric): LegendMode {
   if (kind === 'lulaSeq') return 'lula'
   if (kind === 'votesSeq') return 'votes'
   if (kind === 'otherSeq') return 'other'
-  if (kind === 'abstentionSeq') return 'abstention'
+  if (kind === 'noValidSeq') return 'noValid'
   return 'bolso'
 }

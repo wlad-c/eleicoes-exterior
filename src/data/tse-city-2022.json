@@ -8,7 +8,10 @@
     "bolsonaroPct": 93.33,
     "registered": 33,
     "abstentions": 18,
-    "abstentionPct": 54.55
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 18,
+    "noValidVotePct": 54.55
   },
   "29254": {
     "name": "ABIDJÃ",
@@ -19,7 +22,10 @@
     "bolsonaroPct": 39.13,
     "registered": 77,
     "abstentions": 30,
-    "abstentionPct": 38.96
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 31,
+    "noValidVotePct": 40.26
   },
   "29262": {
     "name": "ABU DHABI",
@@ -30,7 +36,10 @@
     "bolsonaroPct": 48.59,
     "registered": 2248,
     "abstentions": 1269,
-    "abstentionPct": 56.45
+    "blank": 12,
+    "nullVotes": 12,
+    "noValidVote": 1293,
+    "noValidVotePct": 57.52
   },
   "29270": {
     "name": "ACCRA",
@@ -41,7 +50,10 @@
     "bolsonaroPct": 40.91,
     "registered": 53,
     "abstentions": 31,
-    "abstentionPct": 58.49
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 31,
+    "noValidVotePct": 58.49
   },
   "29289": {
     "name": "AMÃ",
@@ -52,7 +64,10 @@
     "bolsonaroPct": 19.38,
     "registered": 1036,
     "abstentions": 454,
-    "abstentionPct": 43.82
+    "blank": 16,
+    "nullVotes": 14,
+    "noValidVote": 484,
+    "noValidVotePct": 46.72
   },
   "29297": {
     "name": "ANCARA",
@@ -63,7 +78,10 @@
     "bolsonaroPct": 25.93,
     "registered": 58,
     "abstentions": 31,
-    "abstentionPct": 53.45
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 31,
+    "noValidVotePct": 53.45
   },
   "29319": {
     "name": "ARTIGAS",
@@ -74,7 +92,10 @@
     "bolsonaroPct": 59.47,
     "registered": 686,
     "abstentions": 261,
-    "abstentionPct": 38.05
+    "blank": 9,
+    "nullVotes": 4,
+    "noValidVote": 274,
+    "noValidVotePct": 39.94
   },
   "29327": {
     "name": "ASSUNÇÃO",
@@ -85,7 +106,10 @@
     "bolsonaroPct": 67.54,
     "registered": 2241,
     "abstentions": 1053,
-    "abstentionPct": 46.99
+    "blank": 29,
+    "nullVotes": 16,
+    "noValidVote": 1098,
+    "noValidVotePct": 49
   },
   "29335": {
     "name": "ATENAS",
@@ -96,7 +120,10 @@
     "bolsonaroPct": 46.91,
     "registered": 1063,
     "abstentions": 615,
-    "abstentionPct": 57.86
+    "blank": 6,
+    "nullVotes": 5,
+    "noValidVote": 626,
+    "noValidVotePct": 58.89
   },
   "29343": {
     "name": "BANGKOK",
@@ -107,7 +134,10 @@
     "bolsonaroPct": 40,
     "registered": 220,
     "abstentions": 111,
-    "abstentionPct": 50.45
+    "blank": 2,
+    "nullVotes": 2,
+    "noValidVote": 115,
+    "noValidVotePct": 52.27
   },
   "29351": {
     "name": "BARCELONA",
@@ -118,7 +148,10 @@
     "bolsonaroPct": 20.6,
     "registered": 10879,
     "abstentions": 6379,
-    "abstentionPct": 58.64
+    "blank": 72,
+    "nullVotes": 55,
+    "noValidVote": 6506,
+    "noValidVotePct": 59.8
   },
   "29360": {
     "name": "BEIRUTE",
@@ -129,7 +162,10 @@
     "bolsonaroPct": 33.23,
     "registered": 6340,
     "abstentions": 3372,
-    "abstentionPct": 53.19
+    "blank": 64,
+    "nullVotes": 54,
+    "noValidVote": 3490,
+    "noValidVotePct": 55.05
   },
   "29378": {
     "name": "BELGRADO",
@@ -140,7 +176,10 @@
     "bolsonaroPct": 16.33,
     "registered": 98,
     "abstentions": 47,
-    "abstentionPct": 47.96
+    "blank": 0,
+    "nullVotes": 2,
+    "noValidVote": 49,
+    "noValidVotePct": 50
   },
   "29386": {
     "name": "BERLIM",
@@ -151,7 +190,10 @@
     "bolsonaroPct": 11.27,
     "registered": 12621,
     "abstentions": 5315,
-    "abstentionPct": 42.11
+    "blank": 45,
+    "nullVotes": 82,
+    "noValidVote": 5442,
+    "noValidVotePct": 43.12
   },
   "29394": {
     "name": "BISSAU",
@@ -162,7 +204,10 @@
     "bolsonaroPct": 47.73,
     "registered": 78,
     "abstentions": 34,
-    "abstentionPct": 43.59
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 34,
+    "noValidVotePct": 43.59
   },
   "29408": {
     "name": "BOGOTÁ",
@@ -173,7 +218,10 @@
     "bolsonaroPct": 35.02,
     "registered": 1562,
     "abstentions": 839,
-    "abstentionPct": 53.71
+    "blank": 28,
+    "nullVotes": 4,
+    "noValidVote": 871,
+    "noValidVotePct": 55.76
   },
   "29416": {
     "name": "BOSTON",
@@ -184,7 +232,10 @@
     "bolsonaroPct": 69.89,
     "registered": 37105,
     "abstentions": 23649,
-    "abstentionPct": 63.74
+    "blank": 129,
+    "nullVotes": 384,
+    "noValidVote": 24162,
+    "noValidVotePct": 65.12
   },
   "29432": {
     "name": "BRUXELAS",
@@ -195,7 +246,10 @@
     "bolsonaroPct": 34.86,
     "registered": 6422,
     "abstentions": 2658,
-    "abstentionPct": 41.39
+    "blank": 63,
+    "nullVotes": 55,
+    "noValidVote": 2776,
+    "noValidVotePct": 43.23
   },
   "29440": {
     "name": "BUCARESTE",
@@ -206,7 +260,10 @@
     "bolsonaroPct": 22.22,
     "registered": 108,
     "abstentions": 53,
-    "abstentionPct": 49.07
+    "blank": 0,
+    "nullVotes": 1,
+    "noValidVote": 54,
+    "noValidVotePct": 50
   },
   "29459": {
     "name": "BUDAPESTE",
@@ -217,7 +274,10 @@
     "bolsonaroPct": 11.86,
     "registered": 813,
     "abstentions": 195,
-    "abstentionPct": 23.99
+    "blank": 4,
+    "nullVotes": 7,
+    "noValidVote": 206,
+    "noValidVotePct": 25.34
   },
   "29467": {
     "name": "BUENOS AIRES",
@@ -228,7 +288,10 @@
     "bolsonaroPct": 28.04,
     "registered": 11515,
     "abstentions": 4569,
-    "abstentionPct": 39.68
+    "blank": 71,
+    "nullVotes": 63,
+    "noValidVote": 4703,
+    "noValidVotePct": 40.84
   },
   "29475": {
     "name": "CAIENA",
@@ -239,7 +302,10 @@
     "bolsonaroPct": 48.58,
     "registered": 3481,
     "abstentions": 2038,
-    "abstentionPct": 58.55
+    "blank": 38,
+    "nullVotes": 34,
+    "noValidVote": 2110,
+    "noValidVotePct": 60.61
   },
   "29483": {
     "name": "CAIRO",
@@ -250,7 +316,10 @@
     "bolsonaroPct": 30,
     "registered": 152,
     "abstentions": 79,
-    "abstentionPct": 51.97
+    "blank": 0,
+    "nullVotes": 3,
+    "noValidVote": 82,
+    "noValidVotePct": 53.95
   },
   "29491": {
     "name": "CAMBERRA",
@@ -261,7 +330,10 @@
     "bolsonaroPct": 27.24,
     "registered": 4607,
     "abstentions": 2561,
-    "abstentionPct": 55.59
+    "blank": 42,
+    "nullVotes": 40,
+    "noValidVote": 2643,
+    "noValidVotePct": 57.37
   },
   "29513": {
     "name": "CHICAGO",
@@ -272,7 +344,10 @@
     "bolsonaroPct": 33.69,
     "registered": 10285,
     "abstentions": 7401,
-    "abstentionPct": 71.96
+    "blank": 31,
+    "nullVotes": 42,
+    "noValidVote": 7474,
+    "noValidVotePct": 72.67
   },
   "29530": {
     "name": "CIDADE DO CABO",
@@ -283,7 +358,10 @@
     "bolsonaroPct": 31.61,
     "registered": 303,
     "abstentions": 136,
-    "abstentionPct": 44.88
+    "blank": 7,
+    "nullVotes": 5,
+    "noValidVote": 148,
+    "noValidVotePct": 48.84
   },
   "29548": {
     "name": "SINGAPURA",
@@ -294,7 +372,10 @@
     "bolsonaroPct": 24.87,
     "registered": 808,
     "abstentions": 400,
-    "abstentionPct": 49.5
+    "blank": 12,
+    "nullVotes": 6,
+    "noValidVote": 418,
+    "noValidVotePct": 51.73
   },
   "29556": {
     "name": "CIUDAD DEL ESTE",
@@ -305,7 +386,10 @@
     "bolsonaroPct": 89.08,
     "registered": 4622,
     "abstentions": 1691,
-    "abstentionPct": 36.59
+    "blank": 25,
+    "nullVotes": 31,
+    "noValidVote": 1747,
+    "noValidVotePct": 37.8
   },
   "29572": {
     "name": "COCHABAMBA",
@@ -316,7 +400,10 @@
     "bolsonaroPct": 57.36,
     "registered": 418,
     "abstentions": 157,
-    "abstentionPct": 37.56
+    "blank": 1,
+    "nullVotes": 2,
+    "noValidVote": 160,
+    "noValidVotePct": 38.28
   },
   "29580": {
     "name": "CONCEPCIÓN",
@@ -327,7 +414,10 @@
     "bolsonaroPct": 92.11,
     "registered": 70,
     "abstentions": 32,
-    "abstentionPct": 45.71
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 32,
+    "noValidVotePct": 45.71
   },
   "29599": {
     "name": "COPENHAGUE",
@@ -338,7 +428,10 @@
     "bolsonaroPct": 12.03,
     "registered": 2299,
     "abstentions": 1044,
-    "abstentionPct": 45.41
+    "blank": 16,
+    "nullVotes": 17,
+    "noValidVote": 1077,
+    "noValidVotePct": 46.85
   },
   "29602": {
     "name": "CÓRDOBA",
@@ -349,7 +442,10 @@
     "bolsonaroPct": 40.83,
     "registered": 883,
     "abstentions": 533,
-    "abstentionPct": 60.36
+    "blank": 5,
+    "nullVotes": 7,
+    "noValidVote": 545,
+    "noValidVotePct": 61.72
   },
   "29610": {
     "name": "DACAR",
@@ -360,7 +456,10 @@
     "bolsonaroPct": 41.82,
     "registered": 105,
     "abstentions": 50,
-    "abstentionPct": 47.62
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 50,
+    "noValidVotePct": 47.62
   },
   "29645": {
     "name": "DÍLI",
@@ -371,7 +470,10 @@
     "bolsonaroPct": 56.92,
     "registered": 90,
     "abstentions": 25,
-    "abstentionPct": 27.78
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 25,
+    "noValidVotePct": 27.78
   },
   "29653": {
     "name": "DOHA",
@@ -382,7 +484,10 @@
     "bolsonaroPct": 53.33,
     "registered": 665,
     "abstentions": 294,
-    "abstentionPct": 44.21
+    "blank": 5,
+    "nullVotes": 6,
+    "noValidVote": 305,
+    "noValidVotePct": 45.86
   },
   "29661": {
     "name": "DUBLIN",
@@ -393,7 +498,10 @@
     "bolsonaroPct": 13.67,
     "registered": 11930,
     "abstentions": 4257,
-    "abstentionPct": 35.68
+    "blank": 25,
+    "nullVotes": 54,
+    "noValidVote": 4336,
+    "noValidVotePct": 36.35
   },
   "29670": {
     "name": "ENCARNACIÓN",
@@ -404,7 +512,10 @@
     "bolsonaroPct": 84.73,
     "registered": 235,
     "abstentions": 103,
-    "abstentionPct": 43.83
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 104,
+    "noValidVotePct": 44.26
   },
   "29688": {
     "name": "ESTOCOLMO",
@@ -415,7 +526,10 @@
     "bolsonaroPct": 17.3,
     "registered": 4322,
     "abstentions": 1826,
-    "abstentionPct": 42.25
+    "blank": 40,
+    "nullVotes": 23,
+    "noValidVote": 1889,
+    "noValidVotePct": 43.71
   },
   "29696": {
     "name": "FRANKFURT",
@@ -426,7 +540,10 @@
     "bolsonaroPct": 22.84,
     "registered": 11523,
     "abstentions": 6472,
-    "abstentionPct": 56.17
+    "blank": 77,
+    "nullVotes": 70,
+    "noValidVote": 6619,
+    "noValidVotePct": 57.44
   },
   "29700": {
     "name": "GENEBRA",
@@ -437,7 +554,10 @@
     "bolsonaroPct": 42.96,
     "registered": 10517,
     "abstentions": 5874,
-    "abstentionPct": 55.85
+    "blank": 86,
+    "nullVotes": 64,
+    "noValidVote": 6024,
+    "noValidVotePct": 57.28
   },
   "29718": {
     "name": "GEORGETOWN",
@@ -448,7 +568,10 @@
     "bolsonaroPct": 78.57,
     "registered": 217,
     "abstentions": 144,
-    "abstentionPct": 66.36
+    "blank": 3,
+    "nullVotes": 0,
+    "noValidVote": 147,
+    "noValidVotePct": 67.74
   },
   "29742": {
     "name": "HAMAMATSU",
@@ -459,7 +582,10 @@
     "bolsonaroPct": 75.37,
     "registered": 12177,
     "abstentions": 6202,
-    "abstentionPct": 50.93
+    "blank": 219,
+    "nullVotes": 157,
+    "noValidVote": 6578,
+    "noValidVotePct": 54.02
   },
   "29750": {
     "name": "HANÓI",
@@ -470,7 +596,10 @@
     "bolsonaroPct": 20,
     "registered": 50,
     "abstentions": 30,
-    "abstentionPct": 60
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 30,
+    "noValidVotePct": 60
   },
   "29777": {
     "name": "HAVANA",
@@ -481,7 +610,10 @@
     "bolsonaroPct": 3.23,
     "registered": 87,
     "abstentions": 56,
-    "abstentionPct": 64.37
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 56,
+    "noValidVotePct": 64.37
   },
   "29785": {
     "name": "HELSINQUE",
@@ -492,7 +624,10 @@
     "bolsonaroPct": 20.32,
     "registered": 1016,
     "abstentions": 366,
-    "abstentionPct": 36.02
+    "blank": 19,
+    "nullVotes": 6,
+    "noValidVote": 391,
+    "noValidVotePct": 38.48
   },
   "29793": {
     "name": "HONG KONG",
@@ -503,7 +638,10 @@
     "bolsonaroPct": 48.31,
     "registered": 595,
     "abstentions": 402,
-    "abstentionPct": 67.56
+    "blank": 10,
+    "nullVotes": 5,
+    "noValidVote": 417,
+    "noValidVotePct": 70.08
   },
   "29807": {
     "name": "HOUSTON",
@@ -514,7 +652,10 @@
     "bolsonaroPct": 55.29,
     "registered": 13775,
     "abstentions": 9559,
-    "abstentionPct": 69.39
+    "blank": 49,
+    "nullVotes": 40,
+    "noValidVote": 9648,
+    "noValidVotePct": 70.04
   },
   "29840": {
     "name": "JACARTA",
@@ -525,7 +666,10 @@
     "bolsonaroPct": 60,
     "registered": 157,
     "abstentions": 107,
-    "abstentionPct": 68.15
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 107,
+    "noValidVotePct": 68.15
   },
   "29874": {
     "name": "KINSHASA",
@@ -536,7 +680,10 @@
     "bolsonaroPct": 82.35,
     "registered": 33,
     "abstentions": 16,
-    "abstentionPct": 48.48
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 16,
+    "noValidVotePct": 48.48
   },
   "29882": {
     "name": "KUAITE",
@@ -547,7 +694,10 @@
     "bolsonaroPct": 62.79,
     "registered": 82,
     "abstentions": 37,
-    "abstentionPct": 45.12
+    "blank": 0,
+    "nullVotes": 2,
+    "noValidVote": 39,
+    "noValidVotePct": 47.56
   },
   "29890": {
     "name": "KUALA LUMPUR",
@@ -558,7 +708,10 @@
     "bolsonaroPct": 42.11,
     "registered": 119,
     "abstentions": 61,
-    "abstentionPct": 51.26
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 62,
+    "noValidVotePct": 52.1
   },
   "29904": {
     "name": "LA PAZ",
@@ -569,7 +722,10 @@
     "bolsonaroPct": 56.65,
     "registered": 390,
     "abstentions": 172,
-    "abstentionPct": 44.1
+    "blank": 7,
+    "nullVotes": 8,
+    "noValidVote": 187,
+    "noValidVotePct": 47.95
   },
   "29912": {
     "name": "LAGOS",
@@ -580,7 +736,10 @@
     "bolsonaroPct": 25,
     "registered": 70,
     "abstentions": 42,
-    "abstentionPct": 60
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 42,
+    "noValidVotePct": 60
   },
   "29947": {
     "name": "LIMA",
@@ -591,7 +750,10 @@
     "bolsonaroPct": 48.73,
     "registered": 1533,
     "abstentions": 726,
-    "abstentionPct": 47.36
+    "blank": 5,
+    "nullVotes": 14,
+    "noValidVote": 745,
+    "noValidVotePct": 48.6
   },
   "29955": {
     "name": "LISBOA",
@@ -602,7 +764,10 @@
     "bolsonaroPct": 30.69,
     "registered": 45162,
     "abstentions": 24896,
-    "abstentionPct": 55.13
+    "blank": 246,
+    "nullVotes": 250,
+    "noValidVote": 25392,
+    "noValidVotePct": 56.22
   },
   "29971": {
     "name": "LONDRES",
@@ -613,7 +778,10 @@
     "bolsonaroPct": 34.94,
     "registered": 34407,
     "abstentions": 19304,
-    "abstentionPct": 56.1
+    "blank": 143,
+    "nullVotes": 164,
+    "noValidVote": 19611,
+    "noValidVotePct": 57
   },
   "29980": {
     "name": "LOS ANGELES",
@@ -624,7 +792,10 @@
     "bolsonaroPct": 42.43,
     "registered": 11172,
     "abstentions": 7146,
-    "abstentionPct": 63.96
+    "blank": 43,
+    "nullVotes": 45,
+    "noValidVote": 7234,
+    "noValidVotePct": 64.75
   },
   "29998": {
     "name": "LUANDA",
@@ -635,7 +806,10 @@
     "bolsonaroPct": 39.41,
     "registered": 575,
     "abstentions": 329,
-    "abstentionPct": 57.22
+    "blank": 1,
+    "nullVotes": 9,
+    "noValidVote": 339,
+    "noValidVotePct": 58.96
   },
   "30066": {
     "name": "MADRI",
@@ -646,7 +820,10 @@
     "bolsonaroPct": 36.86,
     "registered": 19827,
     "abstentions": 14119,
-    "abstentionPct": 71.21
+    "blank": 129,
+    "nullVotes": 142,
+    "noValidVote": 14390,
+    "noValidVotePct": 72.58
   },
   "30074": {
     "name": "MANÁGUA",
@@ -657,7 +834,10 @@
     "bolsonaroPct": 40.51,
     "registered": 132,
     "abstentions": 46,
-    "abstentionPct": 34.85
+    "blank": 3,
+    "nullVotes": 4,
+    "noValidVote": 53,
+    "noValidVotePct": 40.15
   },
   "30082": {
     "name": "MANILA",
@@ -668,7 +848,10 @@
     "bolsonaroPct": 55.56,
     "registered": 192,
     "abstentions": 129,
-    "abstentionPct": 67.19
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 129,
+    "noValidVotePct": 67.19
   },
   "30090": {
     "name": "MAPUTO",
@@ -679,7 +862,10 @@
     "bolsonaroPct": 51.55,
     "registered": 665,
     "abstentions": 356,
-    "abstentionPct": 53.53
+    "blank": 9,
+    "nullVotes": 9,
+    "noValidVote": 374,
+    "noValidVotePct": 56.24
   },
   "30104": {
     "name": "MEXICO",
@@ -690,7 +876,10 @@
     "bolsonaroPct": 42.84,
     "registered": 3939,
     "abstentions": 2515,
-    "abstentionPct": 63.85
+    "blank": 14,
+    "nullVotes": 21,
+    "noValidVote": 2550,
+    "noValidVotePct": 64.74
   },
   "30112": {
     "name": "MIAMI",
@@ -701,7 +890,10 @@
     "bolsonaroPct": 74.26,
     "registered": 40095,
     "abstentions": 24117,
-    "abstentionPct": 60.15
+    "blank": 120,
+    "nullVotes": 126,
+    "noValidVote": 24363,
+    "noValidVotePct": 60.76
   },
   "30120": {
     "name": "MILÃO",
@@ -712,7 +904,10 @@
     "bolsonaroPct": 39.88,
     "registered": 20013,
     "abstentions": 13586,
-    "abstentionPct": 67.89
+    "blank": 105,
+    "nullVotes": 96,
+    "noValidVote": 13787,
+    "noValidVotePct": 68.89
   },
   "30147": {
     "name": "MONTEVIDÉU",
@@ -723,7 +918,10 @@
     "bolsonaroPct": 33.64,
     "registered": 2391,
     "abstentions": 992,
-    "abstentionPct": 41.49
+    "blank": 75,
+    "nullVotes": 34,
+    "noValidVote": 1101,
+    "noValidVotePct": 46.05
   },
   "30155": {
     "name": "MONTREAL",
@@ -734,7 +932,10 @@
     "bolsonaroPct": 24.54,
     "registered": 9438,
     "abstentions": 3512,
-    "abstentionPct": 37.21
+    "blank": 82,
+    "nullVotes": 122,
+    "noValidVote": 3716,
+    "noValidVotePct": 39.37
   },
   "30163": {
     "name": "MOSCOU",
@@ -745,7 +946,10 @@
     "bolsonaroPct": 33.33,
     "registered": 221,
     "abstentions": 136,
-    "abstentionPct": 61.54
+    "blank": 0,
+    "nullVotes": 1,
+    "noValidVote": 137,
+    "noValidVotePct": 61.99
   },
   "30171": {
     "name": "MUMBAI",
@@ -756,7 +960,10 @@
     "bolsonaroPct": 16.67,
     "registered": 55,
     "abstentions": 41,
-    "abstentionPct": 74.55
+    "blank": 2,
+    "nullVotes": 0,
+    "noValidVote": 43,
+    "noValidVotePct": 78.18
   },
   "30180": {
     "name": "MUNIQUE",
@@ -767,7 +974,10 @@
     "bolsonaroPct": 24.73,
     "registered": 11836,
     "abstentions": 6687,
-    "abstentionPct": 56.5
+    "blank": 52,
+    "nullVotes": 79,
+    "noValidVote": 6818,
+    "noValidVotePct": 57.6
   },
   "30198": {
     "name": "NAGÓIA",
@@ -778,7 +988,10 @@
     "bolsonaroPct": 75.47,
     "registered": 35578,
     "abstentions": 20498,
-    "abstentionPct": 57.61
+    "blank": 569,
+    "nullVotes": 355,
+    "noValidVote": 21422,
+    "noValidVotePct": 60.21
   },
   "30201": {
     "name": "NAIRÓBI",
@@ -789,7 +1002,10 @@
     "bolsonaroPct": 45.1,
     "registered": 108,
     "abstentions": 57,
-    "abstentionPct": 52.78
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 57,
+    "noValidVotePct": 52.78
   },
   "30210": {
     "name": "NOVA DELHI",
@@ -800,7 +1016,10 @@
     "bolsonaroPct": 29.27,
     "registered": 102,
     "abstentions": 61,
-    "abstentionPct": 59.8
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 61,
+    "noValidVotePct": 59.8
   },
   "30228": {
     "name": "NOVA YORK",
@@ -811,7 +1030,10 @@
     "bolsonaroPct": 46.27,
     "registered": 27870,
     "abstentions": 16580,
-    "abstentionPct": 59.49
+    "blank": 154,
+    "nullVotes": 139,
+    "noValidVote": 16873,
+    "noValidVotePct": 60.54
   },
   "30244": {
     "name": "OSLO",
@@ -822,7 +1044,10 @@
     "bolsonaroPct": 19.4,
     "registered": 1732,
     "abstentions": 881,
-    "abstentionPct": 50.87
+    "blank": 9,
+    "nullVotes": 12,
+    "noValidVote": 902,
+    "noValidVotePct": 52.08
   },
   "30252": {
     "name": "OTTAWA",
@@ -833,7 +1058,10 @@
     "bolsonaroPct": 28.67,
     "registered": 1850,
     "abstentions": 689,
-    "abstentionPct": 37.24
+    "blank": 24,
+    "nullVotes": 28,
+    "noValidVote": 741,
+    "noValidVotePct": 40.05
   },
   "30260": {
     "name": "PANAMA",
@@ -844,7 +1072,10 @@
     "bolsonaroPct": 51.47,
     "registered": 1320,
     "abstentions": 624,
-    "abstentionPct": 47.27
+    "blank": 11,
+    "nullVotes": 7,
+    "noValidVote": 642,
+    "noValidVotePct": 48.64
   },
   "30279": {
     "name": "PARAMARIBO",
@@ -855,7 +1086,10 @@
     "bolsonaroPct": 66.03,
     "registered": 1302,
     "abstentions": 811,
-    "abstentionPct": 62.29
+    "blank": 11,
+    "nullVotes": 9,
+    "noValidVote": 831,
+    "noValidVotePct": 63.82
   },
   "30287": {
     "name": "PARIS",
@@ -866,7 +1100,10 @@
     "bolsonaroPct": 13.75,
     "registered": 22562,
     "abstentions": 12333,
-    "abstentionPct": 54.66
+    "blank": 95,
+    "nullVotes": 71,
+    "noValidVote": 12499,
+    "noValidVotePct": 55.4
   },
   "30309": {
     "name": "PEDRO JUAN CABALLERO",
@@ -877,7 +1114,10 @@
     "bolsonaroPct": 65.71,
     "registered": 625,
     "abstentions": 249,
-    "abstentionPct": 39.84
+    "blank": 14,
+    "nullVotes": 12,
+    "noValidVote": 275,
+    "noValidVotePct": 44
   },
   "30317": {
     "name": "PEQUIM",
@@ -888,7 +1128,10 @@
     "bolsonaroPct": 25,
     "registered": 280,
     "abstentions": 199,
-    "abstentionPct": 71.07
+    "blank": 4,
+    "nullVotes": 1,
+    "noValidVote": 204,
+    "noValidVotePct": 72.86
   },
   "30325": {
     "name": "PORT OF SPAIN",
@@ -899,7 +1142,10 @@
     "bolsonaroPct": 47.06,
     "registered": 116,
     "abstentions": 81,
-    "abstentionPct": 69.83
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 82,
+    "noValidVotePct": 70.69
   },
   "30333": {
     "name": "PORTO PRÍNCIPE",
@@ -910,7 +1156,10 @@
     "bolsonaroPct": 57.14,
     "registered": 44,
     "abstentions": 37,
-    "abstentionPct": 84.09
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 37,
+    "noValidVotePct": 84.09
   },
   "30341": {
     "name": "PORTO",
@@ -921,7 +1170,10 @@
     "bolsonaroPct": 30.24,
     "registered": 30014,
     "abstentions": 14985,
-    "abstentionPct": 49.93
+    "blank": 223,
+    "nullVotes": 188,
+    "noValidVote": 15396,
+    "noValidVotePct": 51.3
   },
   "30350": {
     "name": "PRAGA",
@@ -932,7 +1184,10 @@
     "bolsonaroPct": 15.8,
     "registered": 572,
     "abstentions": 190,
-    "abstentionPct": 33.22
+    "blank": 7,
+    "nullVotes": 8,
+    "noValidVote": 205,
+    "noValidVotePct": 35.84
   },
   "30368": {
     "name": "PRAIA",
@@ -943,7 +1198,10 @@
     "bolsonaroPct": 33.85,
     "registered": 103,
     "abstentions": 36,
-    "abstentionPct": 34.95
+    "blank": 1,
+    "nullVotes": 1,
+    "noValidVote": 38,
+    "noValidVotePct": 36.89
   },
   "30376": {
     "name": "PRETÓRIA",
@@ -954,7 +1212,10 @@
     "bolsonaroPct": 63.7,
     "registered": 710,
     "abstentions": 399,
-    "abstentionPct": 56.2
+    "blank": 4,
+    "nullVotes": 4,
+    "noValidVote": 407,
+    "noValidVotePct": 57.32
   },
   "30392": {
     "name": "QUITO",
@@ -965,7 +1226,10 @@
     "bolsonaroPct": 60.31,
     "registered": 1005,
     "abstentions": 612,
-    "abstentionPct": 60.9
+    "blank": 4,
+    "nullVotes": 6,
+    "noValidVote": 622,
+    "noValidVotePct": 61.89
   },
   "30406": {
     "name": "RABAT",
@@ -976,7 +1240,10 @@
     "bolsonaroPct": 15.09,
     "registered": 102,
     "abstentions": 49,
-    "abstentionPct": 48.04
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 49,
+    "noValidVotePct": 48.04
   },
   "30414": {
     "name": "RAMALLAH",
@@ -987,7 +1254,10 @@
     "bolsonaroPct": 7.45,
     "registered": 1419,
     "abstentions": 703,
-    "abstentionPct": 49.54
+    "blank": 8,
+    "nullVotes": 10,
+    "noValidVote": 721,
+    "noValidVotePct": 50.81
   },
   "30422": {
     "name": "RIADE",
@@ -998,7 +1268,10 @@
     "bolsonaroPct": 33.33,
     "registered": 181,
     "abstentions": 126,
-    "abstentionPct": 69.61
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 127,
+    "noValidVotePct": 70.17
   },
   "30430": {
     "name": "RIO BRANCO",
@@ -1009,7 +1282,10 @@
     "bolsonaroPct": 30.43,
     "registered": 47,
     "abstentions": 21,
-    "abstentionPct": 44.68
+    "blank": 1,
+    "nullVotes": 2,
+    "noValidVote": 24,
+    "noValidVotePct": 51.06
   },
   "30449": {
     "name": "ROMA",
@@ -1020,7 +1296,10 @@
     "bolsonaroPct": 33.44,
     "registered": 12945,
     "abstentions": 8628,
-    "abstentionPct": 66.65
+    "blank": 69,
+    "nullVotes": 59,
+    "noValidVote": 8756,
+    "noValidVotePct": 67.64
   },
   "30457": {
     "name": "AMSTERDÃ",
@@ -1031,7 +1310,10 @@
     "bolsonaroPct": 16.66,
     "registered": 10044,
     "abstentions": 4165,
-    "abstentionPct": 41.47
+    "blank": 45,
+    "nullVotes": 64,
+    "noValidVote": 4274,
+    "noValidVotePct": 42.55
   },
   "30465": {
     "name": "SALTO DEL GUAIRÁ",
@@ -1042,7 +1324,10 @@
     "bolsonaroPct": 93.04,
     "registered": 777,
     "abstentions": 198,
-    "abstentionPct": 25.48
+    "blank": 3,
+    "nullVotes": 1,
+    "noValidVote": 202,
+    "noValidVotePct": 26
   },
   "30473": {
     "name": "SANTA CRUZ DE LA SIERRA",
@@ -1053,7 +1338,10 @@
     "bolsonaroPct": 79.84,
     "registered": 2324,
     "abstentions": 1030,
-    "abstentionPct": 44.32
+    "blank": 8,
+    "nullVotes": 16,
+    "noValidVote": 1054,
+    "noValidVotePct": 45.35
   },
   "30481": {
     "name": "SANTIAGO",
@@ -1064,7 +1352,10 @@
     "bolsonaroPct": 41.09,
     "registered": 3280,
     "abstentions": 1241,
-    "abstentionPct": 37.84
+    "blank": 43,
+    "nullVotes": 59,
+    "noValidVote": 1343,
+    "noValidVotePct": 40.95
   },
   "30490": {
     "name": "SÃO DOMINGOS",
@@ -1075,7 +1366,10 @@
     "bolsonaroPct": 55.98,
     "registered": 410,
     "abstentions": 196,
-    "abstentionPct": 47.8
+    "blank": 3,
+    "nullVotes": 2,
+    "noValidVote": 201,
+    "noValidVotePct": 49.02
   },
   "30503": {
     "name": "SÃO FRANCISCO",
@@ -1086,7 +1380,10 @@
     "bolsonaroPct": 33.35,
     "registered": 11678,
     "abstentions": 7575,
-    "abstentionPct": 64.87
+    "blank": 42,
+    "nullVotes": 31,
+    "noValidVote": 7648,
+    "noValidVotePct": 65.49
   },
   "30511": {
     "name": "SÃO JOSÉ",
@@ -1097,7 +1394,10 @@
     "bolsonaroPct": 46.05,
     "registered": 654,
     "abstentions": 274,
-    "abstentionPct": 41.9
+    "blank": 7,
+    "nullVotes": 6,
+    "noValidVote": 287,
+    "noValidVotePct": 43.88
   },
   "30520": {
     "name": "SÃO SALVADOR",
@@ -1108,7 +1408,10 @@
     "bolsonaroPct": 55.41,
     "registered": 142,
     "abstentions": 65,
-    "abstentionPct": 45.77
+    "blank": 1,
+    "nullVotes": 2,
+    "noValidVote": 68,
+    "noValidVotePct": 47.89
   },
   "30538": {
     "name": "SEUL",
@@ -1119,7 +1422,10 @@
     "bolsonaroPct": 25.6,
     "registered": 376,
     "abstentions": 160,
-    "abstentionPct": 42.55
+    "blank": 6,
+    "nullVotes": 3,
+    "noValidVote": 169,
+    "noValidVotePct": 44.95
   },
   "30546": {
     "name": "SÓFIA",
@@ -1130,7 +1436,10 @@
     "bolsonaroPct": 18.18,
     "registered": 55,
     "abstentions": 20,
-    "abstentionPct": 36.36
+    "blank": 0,
+    "nullVotes": 2,
+    "noValidVote": 22,
+    "noValidVotePct": 40
   },
   "30562": {
     "name": "SYDNEY",
@@ -1141,7 +1450,10 @@
     "bolsonaroPct": 29.42,
     "registered": 10749,
     "abstentions": 6201,
-    "abstentionPct": 57.69
+    "blank": 88,
+    "nullVotes": 72,
+    "noValidVote": 6361,
+    "noValidVotePct": 59.18
   },
   "30570": {
     "name": "TAIPÉ",
@@ -1152,7 +1464,10 @@
     "bolsonaroPct": 44.84,
     "registered": 607,
     "abstentions": 369,
-    "abstentionPct": 60.79
+    "blank": 7,
+    "nullVotes": 8,
+    "noValidVote": 384,
+    "noValidVotePct": 63.26
   },
   "30597": {
     "name": "TEERÃ",
@@ -1163,7 +1478,10 @@
     "bolsonaroPct": 52.94,
     "registered": 39,
     "abstentions": 21,
-    "abstentionPct": 53.85
+    "blank": 0,
+    "nullVotes": 1,
+    "noValidVote": 22,
+    "noValidVotePct": 56.41
   },
   "30600": {
     "name": "TEGUCIGALPA",
@@ -1174,7 +1492,10 @@
     "bolsonaroPct": 53.41,
     "registered": 196,
     "abstentions": 107,
-    "abstentionPct": 54.59
+    "blank": 1,
+    "nullVotes": 0,
+    "noValidVote": 108,
+    "noValidVotePct": 55.1
   },
   "30619": {
     "name": "TEL AVIV",
@@ -1185,7 +1506,10 @@
     "bolsonaroPct": 45.98,
     "registered": 2852,
     "abstentions": 2123,
-    "abstentionPct": 74.44
+    "blank": 16,
+    "nullVotes": 17,
+    "noValidVote": 2156,
+    "noValidVotePct": 75.6
   },
   "30627": {
     "name": "TÓQUIO",
@@ -1196,7 +1520,10 @@
     "bolsonaroPct": 66.94,
     "registered": 28688,
     "abstentions": 15663,
-    "abstentionPct": 54.6
+    "blank": 584,
+    "nullVotes": 336,
+    "noValidVote": 16583,
+    "noValidVotePct": 57.8
   },
   "30635": {
     "name": "TORONTO",
@@ -1207,7 +1534,10 @@
     "bolsonaroPct": 37.14,
     "registered": 17712,
     "abstentions": 8243,
-    "abstentionPct": 46.54
+    "blank": 93,
+    "nullVotes": 154,
+    "noValidVote": 8490,
+    "noValidVotePct": 47.93
   },
   "30651": {
     "name": "CANTÃO",
@@ -1218,7 +1548,10 @@
     "bolsonaroPct": 62.07,
     "registered": 380,
     "abstentions": 285,
-    "abstentionPct": 75
+    "blank": 3,
+    "nullVotes": 5,
+    "noValidVote": 293,
+    "noValidVotePct": 77.11
   },
   "30708": {
     "name": "TUNIS",
@@ -1229,7 +1562,10 @@
     "bolsonaroPct": 42.86,
     "registered": 34,
     "abstentions": 20,
-    "abstentionPct": 58.82
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 20,
+    "noValidVotePct": 58.82
   },
   "30740": {
     "name": "VARSÓVIA",
@@ -1240,7 +1576,10 @@
     "bolsonaroPct": 17.68,
     "registered": 580,
     "abstentions": 267,
-    "abstentionPct": 46.03
+    "blank": 2,
+    "nullVotes": 0,
+    "noValidVote": 269,
+    "noValidVotePct": 46.38
   },
   "30767": {
     "name": "VIENA",
@@ -1251,7 +1590,10 @@
     "bolsonaroPct": 22.58,
     "registered": 2912,
     "abstentions": 1467,
-    "abstentionPct": 50.38
+    "blank": 17,
+    "nullVotes": 42,
+    "noValidVote": 1526,
+    "noValidVotePct": 52.4
   },
   "30783": {
     "name": "WASHINGTON",
@@ -1262,7 +1604,10 @@
     "bolsonaroPct": 41.7,
     "registered": 14038,
     "abstentions": 8923,
-    "abstentionPct": 63.56
+    "blank": 57,
+    "nullVotes": 48,
+    "noValidVote": 9028,
+    "noValidVotePct": 64.31
   },
   "30805": {
     "name": "WELLINGTON",
@@ -1273,7 +1618,10 @@
     "bolsonaroPct": 15.74,
     "registered": 2943,
     "abstentions": 2485,
-    "abstentionPct": 84.44
+    "blank": 3,
+    "nullVotes": 4,
+    "noValidVote": 2492,
+    "noValidVotePct": 84.68
   },
   "30821": {
     "name": "WINDHOEK",
@@ -1284,7 +1632,10 @@
     "bolsonaroPct": 84.62,
     "registered": 71,
     "abstentions": 31,
-    "abstentionPct": 43.66
+    "blank": 0,
+    "nullVotes": 1,
+    "noValidVote": 32,
+    "noValidVotePct": 45.07
   },
   "30848": {
     "name": "XANGAI",
@@ -1295,7 +1646,10 @@
     "bolsonaroPct": 26.82,
     "registered": 695,
     "abstentions": 495,
-    "abstentionPct": 71.22
+    "blank": 6,
+    "nullVotes": 15,
+    "noValidVote": 516,
+    "noValidVotePct": 74.24
   },
   "30864": {
     "name": "ZURIQUE",
@@ -1306,7 +1660,10 @@
     "bolsonaroPct": 39.42,
     "registered": 13718,
     "abstentions": 7753,
-    "abstentionPct": 56.52
+    "blank": 142,
+    "nullVotes": 133,
+    "noValidVote": 8028,
+    "noValidVotePct": 58.52
   },
   "30902": {
     "name": "HARTFORD",
@@ -1317,7 +1674,10 @@
     "bolsonaroPct": 57.3,
     "registered": 4021,
     "abstentions": 2566,
-    "abstentionPct": 63.81
+    "blank": 14,
+    "nullVotes": 10,
+    "noValidVote": 2590,
+    "noValidVotePct": 64.41
   },
   "30961": {
     "name": "FARO",
@@ -1328,7 +1688,10 @@
     "bolsonaroPct": 41.08,
     "registered": 5516,
     "abstentions": 3694,
-    "abstentionPct": 66.97
+    "blank": 19,
+    "nullVotes": 26,
+    "noValidVote": 3739,
+    "noValidVotePct": 67.78
   },
   "38962": {
     "name": "DAR ES SALAAM",
@@ -1339,7 +1702,10 @@
     "bolsonaroPct": 25,
     "registered": 34,
     "abstentions": 26,
-    "abstentionPct": 76.47
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 26,
+    "noValidVotePct": 76.47
   },
   "39004": {
     "name": "MENDOZA",
@@ -1350,7 +1716,10 @@
     "bolsonaroPct": 55.4,
     "registered": 238,
     "abstentions": 94,
-    "abstentionPct": 39.5
+    "blank": 2,
+    "nullVotes": 3,
+    "noValidVote": 99,
+    "noValidVotePct": 41.6
   },
   "39020": {
     "name": "ZAGREB",
@@ -1361,7 +1730,10 @@
     "bolsonaroPct": 30.43,
     "registered": 98,
     "abstentions": 52,
-    "abstentionPct": 53.06
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 52,
+    "noValidVotePct": 53.06
   },
   "39063": {
     "name": "VANCOUVER",
@@ -1372,7 +1744,10 @@
     "bolsonaroPct": 30.35,
     "registered": 9970,
     "abstentions": 4107,
-    "abstentionPct": 41.19
+    "blank": 99,
+    "nullVotes": 123,
+    "noValidVote": 4329,
+    "noValidVotePct": 43.42
   },
   "39080": {
     "name": "ATLANTA",
@@ -1383,7 +1758,10 @@
     "bolsonaroPct": 66.64,
     "registered": 12580,
     "abstentions": 8193,
-    "abstentionPct": 65.13
+    "blank": 33,
+    "nullVotes": 34,
+    "noValidVote": 8260,
+    "noValidVotePct": 65.66
   },
   "39102": {
     "name": "MASCATE",
@@ -1394,7 +1772,10 @@
     "bolsonaroPct": 60.98,
     "registered": 95,
     "abstentions": 54,
-    "abstentionPct": 56.84
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 54,
+    "noValidVotePct": 56.84
   },
   "39160": {
     "name": "LIUBLIANA",
@@ -1405,7 +1786,10 @@
     "bolsonaroPct": 19.74,
     "registered": 122,
     "abstentions": 41,
-    "abstentionPct": 33.61
+    "blank": 2,
+    "nullVotes": 3,
+    "noValidVote": 46,
+    "noValidVotePct": 37.7
   },
   "39209": {
     "name": "BRATISLAVA",
@@ -1416,7 +1800,10 @@
     "bolsonaroPct": 21.21,
     "registered": 115,
     "abstentions": 45,
-    "abstentionPct": 39.13
+    "blank": 1,
+    "nullVotes": 3,
+    "noValidVote": 49,
+    "noValidVotePct": 42.61
   },
   "39306": {
     "name": "ISTAMBUL",
@@ -1427,7 +1814,10 @@
     "bolsonaroPct": 34.92,
     "registered": 246,
     "abstentions": 116,
-    "abstentionPct": 47.15
+    "blank": 0,
+    "nullVotes": 4,
+    "noValidVote": 120,
+    "noValidVotePct": 48.78
   },
   "39322": {
     "name": "NICOSIA",
@@ -1438,7 +1828,10 @@
     "bolsonaroPct": 28,
     "registered": 72,
     "abstentions": 44,
-    "abstentionPct": 61.11
+    "blank": 1,
+    "nullVotes": 2,
+    "noValidVote": 47,
+    "noValidVotePct": 65.28
   },
   "98000": {
     "name": "GUATEMALA",
@@ -1449,7 +1842,10 @@
     "bolsonaroPct": 61.22,
     "registered": 289,
     "abstentions": 142,
-    "abstentionPct": 49.13
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 142,
+    "noValidVotePct": 49.13
   },
   "99155": {
     "name": "PUERTO IGUAZÚ",
@@ -1460,7 +1856,10 @@
     "bolsonaroPct": 0,
     "registered": 30,
     "abstentions": 26,
-    "abstentionPct": 86.67
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 26,
+    "noValidVotePct": 86.67
   },
   "99180": {
     "name": "NASSAU",
@@ -1471,7 +1870,10 @@
     "bolsonaroPct": 60,
     "registered": 65,
     "abstentions": 39,
-    "abstentionPct": 60
+    "blank": 0,
+    "nullVotes": 1,
+    "noValidVote": 40,
+    "noValidVotePct": 61.54
   },
   "99287": {
     "name": "LUSACA",
@@ -1482,7 +1884,10 @@
     "bolsonaroPct": 14.29,
     "registered": 34,
     "abstentions": 20,
-    "abstentionPct": 58.82
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 20,
+    "noValidVotePct": 58.82
   },
   "99317": {
     "name": "TALIN",
@@ -1493,7 +1898,10 @@
     "bolsonaroPct": 8.6,
     "registered": 250,
     "abstentions": 60,
-    "abstentionPct": 24
+    "blank": 0,
+    "nullVotes": 4,
+    "noValidVote": 64,
+    "noValidVotePct": 25.6
   },
   "99430": {
     "name": "KINGSTON-JAMAICA",
@@ -1504,7 +1912,10 @@
     "bolsonaroPct": 46.15,
     "registered": 107,
     "abstentions": 94,
-    "abstentionPct": 87.85
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 94,
+    "noValidVotePct": 87.85
   },
   "99473": {
     "name": "BAREIN",
@@ -1515,6 +1926,9 @@
     "bolsonaroPct": 57.89,
     "registered": 50,
     "abstentions": 12,
-    "abstentionPct": 24
+    "blank": 0,
+    "nullVotes": 0,
+    "noValidVote": 12,
+    "noValidVotePct": 24
   }
 }

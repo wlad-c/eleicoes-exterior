@@ -1,10 +1,11 @@
 import { collatorFor } from './collator'
 import {
-  abstentionPct,
-  abstentionVotes,
+  noValidVotePct,
+  noValidVotes,
   cityDisplayName,
   countryName,
   otherPct,
+  withElectorate,
 } from './format'
 import { foldForSearch } from './searchText'
 import type {
@@ -117,20 +118,22 @@ function yearFromVotes(
   totalValid: number,
   registered?: number | null,
   abstentions?: number | null,
+  blank?: number | null,
+  nullVotes?: number | null,
 ): YearResult {
-  const y: YearResult = {
-    lula,
-    bolsonaro,
-    totalValid,
-    lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
-    bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
-  }
-  if (registered != null && registered > 0 && abstentions != null) {
-    y.registered = registered
-    y.abstentions = abstentions
-    y.abstentionPct = round1((abstentions / registered) * 100)
-  }
-  return y
+  return withElectorate(
+    {
+      lula,
+      bolsonaro,
+      totalValid,
+      lulaPct: totalValid ? round1((lula / totalValid) * 100) : 0,
+      bolsonaroPct: totalValid ? round1((bolsonaro / totalValid) * 100) : 0,
+    },
+    registered,
+    abstentions,
+    blank,
+    nullVotes,
+  )
 }
 
 function swingFromYears(
@@ -189,13 +192,19 @@ export function groupSuburbRowsByNeighborhood(
     let valid = 0
     let registered26 = 0
     let abstentions26 = 0
+    let blank26 = 0
+    let null26 = 0
     let hasElectorate26 = false
+    let hasParts26 = false
     let lula22 = 0
     let bolso22 = 0
     let valid22 = 0
     let registered22 = 0
     let abstentions22 = 0
+    let blank22 = 0
+    let null22 = 0
     let hasElectorate22 = false
+    let hasParts22 = false
     let has22 = false
     let counted = 0
     let total = 0
@@ -204,20 +213,40 @@ export function groupSuburbRowsByNeighborhood(
       lula += m.y2026.lula
       bolso += m.y2026.bolsonaro
       valid += m.y2026.totalValid
-      if (m.y2026.registered != null && m.y2026.abstentions != null) {
+      const nv26 = noValidVotes(m.y2026)
+      if (m.y2026.registered != null && nv26 != null) {
         hasElectorate26 = true
         registered26 += m.y2026.registered
-        abstentions26 += m.y2026.abstentions
+        if (
+          m.y2026.abstentions != null &&
+          m.y2026.blank != null &&
+          m.y2026.nullVotes != null
+        ) {
+          hasParts26 = true
+          abstentions26 += m.y2026.abstentions
+          blank26 += m.y2026.blank
+          null26 += m.y2026.nullVotes
+        }
       }
       if (m.y2022) {
         has22 = true
         lula22 += m.y2022.lula
         bolso22 += m.y2022.bolsonaro
         valid22 += m.y2022.totalValid
-        if (m.y2022.registered != null && m.y2022.abstentions != null) {
+        const nv22 = noValidVotes(m.y2022)
+        if (m.y2022.registered != null && nv22 != null) {
           hasElectorate22 = true
           registered22 += m.y2022.registered
-          abstentions22 += m.y2022.abstentions
+          if (
+            m.y2022.abstentions != null &&
+            m.y2022.blank != null &&
+            m.y2022.nullVotes != null
+          ) {
+            hasParts22 = true
+            abstentions22 += m.y2022.abstentions
+            blank22 += m.y2022.blank
+            null22 += m.y2022.nullVotes
+          }
         }
       }
       if (m.coverage) {
@@ -231,7 +260,9 @@ export function groupSuburbRowsByNeighborhood(
       bolso,
       valid,
       hasElectorate26 ? registered26 : null,
-      hasElectorate26 ? abstentions26 : null,
+      hasParts26 ? abstentions26 : null,
+      hasParts26 ? blank26 : null,
+      hasParts26 ? null26 : null,
     )
     const y2022 = has22
       ? yearFromVotes(
@@ -239,7 +270,9 @@ export function groupSuburbRowsByNeighborhood(
           bolso22,
           valid22,
           hasElectorate22 ? registered22 : null,
-          hasElectorate22 ? abstentions22 : null,
+          hasParts22 ? abstentions22 : null,
+          hasParts22 ? blank22 : null,
+          hasParts22 ? null22 : null,
         )
       : null
     const coverage: Coverage | null = hasCov ? { counted, total } : null
@@ -345,14 +378,14 @@ function citySortValue(
       return otherPct(row.y2026) ?? Number.NaN
     case 'otherPct2022':
       return otherPct(row.y2022) ?? Number.NaN
-    case 'abstentionPct2026':
-      return abstentionPct(row.y2026) ?? Number.NaN
-    case 'abstentionPct2022':
-      return abstentionPct(row.y2022) ?? Number.NaN
-    case 'abstentions2026':
-      return abstentionVotes(row.y2026) ?? Number.NaN
-    case 'abstentions2022':
-      return abstentionVotes(row.y2022) ?? Number.NaN
+    case 'noValidVotePct2026':
+      return noValidVotePct(row.y2026) ?? Number.NaN
+    case 'noValidVotePct2022':
+      return noValidVotePct(row.y2022) ?? Number.NaN
+    case 'noValidVotes2026':
+      return noValidVotes(row.y2026) ?? Number.NaN
+    case 'noValidVotes2022':
+      return noValidVotes(row.y2022) ?? Number.NaN
     case 'difference2026':
       return cityDifference2026(row) ?? Number.NaN
     case 'difference2022':
