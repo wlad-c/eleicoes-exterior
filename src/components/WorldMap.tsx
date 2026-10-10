@@ -1059,10 +1059,6 @@ function Legend({
   }
 
   if (mode === 'diverging') {
-    const difference =
-      metric === 'difference2026' || metric === 'difference2022'
-    const [lo, hi] = extent
-    const absCap = Math.max(Math.abs(lo), Math.abs(hi), 1)
     return (
       <>
         <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
@@ -1072,21 +1068,9 @@ function Legend({
             background: `linear-gradient(90deg, ${BOLSONARO_COLOR}, #E8EDE8, ${LULA_COLOR})`,
           }}
         />
-        {difference ? (
-          <>
-            <span>
-              {formatMetricValue(-absCap, metric, lang)} Bolsonaro
-            </span>
-            <span aria-hidden>·</span>
-            <span>{formatMetricValue(absCap, metric, lang)} Lula</span>
-          </>
-        ) : (
-          <>
-            <span>{t('legendBolso', lang)}</span>
-            <span aria-hidden>·</span>
-            <span>{t('legendLula', lang)}</span>
-          </>
-        )}
+        <span>{t('legendBolso', lang)}</span>
+        <span aria-hidden>·</span>
+        <span>{t('legendLula', lang)}</span>
       </>
     )
   }
