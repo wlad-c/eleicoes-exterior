@@ -118,10 +118,25 @@ select {
   /* Fully opaque — no bleed-through of scrolling rows */
   background: var(--paper);
   backdrop-filter: none;
+  transition: transform 0.22s ease;
 }
 
 html.dark .sticky-table-chrome {
   background: var(--paper);
+}
+
+/* Mobile: slide sticky filters away on scroll-down (see useMobileScrollCollapse) */
+@media (max-width: 640px) {
+  .sticky-table-chrome.is-scroll-collapsed {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-table-chrome {
+      transition: none;
+    }
+  }
 }
 
 /* Sticky header strip sticks under filter chrome (outside body x-scroller) */
