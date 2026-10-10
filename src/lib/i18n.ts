@@ -376,10 +376,10 @@ const dict = {
   },
   legendLula: { en: '≥ +10 pp Lula', pt: '≥ +10 pp Lula' },
   legendBolso: { en: '≤ −10 pp Bolsonaro', pt: '≤ −10 pp Bolsonaro' },
-  legendLeaderLula: { en: 'Lula >50% → 100%', pt: 'Lula >50% → 100%' },
+  legendLeaderLula: { en: 'Lula share → 100%', pt: 'Lula % → 100%' },
   legendLeaderBolso: {
-    en: 'Bolsonaro >50% → 100%',
-    pt: 'Bolsonaro >50% → 100%',
+    en: 'Bolsonaro share → 100%',
+    pt: 'Bolsonaro % → 100%',
   },
   legendPending: { en: 'pending', pt: 'pendente' },
   themeLight: { en: 'Light', pt: 'Claro' },

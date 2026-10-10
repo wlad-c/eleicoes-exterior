@@ -13,9 +13,19 @@ export const BOLSONARO_COLOR = '#1565C0'
 export const LULA_COLOR_DARK = '#EF5350'
 export const BOLSONARO_COLOR_DARK = '#64B5F6'
 export const SWING_NEUTRAL = '#E8EDE8'
-/** Light end of the leader scale (just over 50%). */
-export const LULA_COLOR_LIGHT = '#F0B7B7'
-export const BOLSONARO_COLOR_LIGHT = '#B7D0F0'
+/**
+ * Light end of the leader scale (low plurality share).
+ * Kept a step stronger than pastel so first-round ~45–50% winners
+ * (Brazil) still read clearly against the map paper.
+ */
+export const LULA_COLOR_LIGHT = '#E57373'
+export const BOLSONARO_COLOR_LIGHT = '#64B5F6'
+/**
+ * Same-year margin heatmaps: darkest shade at ±this many pp.
+ * Matches swing/change so a ~2pp national gap (Brazil) still tints the
+ * world map; overseas landslides clamp at full colour.
+ */
+export const DIFFERENCE_PP_CAP = 10
 /** Absolute total-vote heatmap (light → dark purple). */
 export const VOTES_COLOR = '#6A1B9A'
 export const VOTES_COLOR_LIGHT = '#F3E5F5'
@@ -120,12 +130,13 @@ function divergingScale() {
 
 /**
  * Leader score: +winnerPct if Lula leads, −winnerPct if Bolsonaro leads, 0 on tie.
- * Colour intensity maps 50%→100% from light to dark party colour.
+ * Colour intensity maps share of valid votes 0%→100% (1st round winners are
+ * often below 50% — e.g. Brazil ~47% — so a 50% floor washed the country out).
  */
 function leaderColor(value: number): string {
   if (value === 0) return SWING_NEUTRAL
   const pct = Math.abs(value)
-  const t = Math.max(0, Math.min(1, (pct - 50) / 50))
+  const t = Math.max(0, Math.min(1, pct / 100))
   if (value > 0) return lerpColor(LULA_COLOR_LIGHT, LULA_COLOR, t)
   return lerpColor(BOLSONARO_COLOR_LIGHT, BOLSONARO_COLOR, t)
 }
@@ -197,14 +208,9 @@ export function makeMetricColorizer(
   }
 
   if (kind === 'divergingLB') {
-    // Same-year margins are often >> ±10pp; stretch the scale to the visible extent.
     const scale = isDifferenceMetric(metric)
       ? scaleDiverging<string>()
-          .domain([
-            -Math.max(Math.abs(lo), Math.abs(hi), 1),
-            0,
-            Math.max(Math.abs(lo), Math.abs(hi), 1),
-          ])
+          .domain([-DIFFERENCE_PP_CAP, 0, DIFFERENCE_PP_CAP])
           .clamp(true)
           .interpolator(divergingScale().interpolator())
       : divergingScale()
