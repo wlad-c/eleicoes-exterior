@@ -301,7 +301,8 @@ export function ResultsTable({
                 hint={t('hintShare2026', lang)}
                 {...drag}
               >
-                {t('lula', lang)} 2026{arrow('lulaPct2026')}
+                {t('lulaPct2026', lang)}
+                {arrow('lulaPct2026')}
               </SortableTh>
             )
           case 'bolsonaroPct2026':
@@ -314,7 +315,8 @@ export function ResultsTable({
                 hint={t('hintShare2026', lang)}
                 {...drag}
               >
-                {t('fBolsonaro', lang)} 2026{arrow('bolsonaroPct2026')}
+                {t('bolsonaroPct2026', lang)}
+                {arrow('bolsonaroPct2026')}
               </SortableTh>
             )
           case 'lulaPct2022':
@@ -327,7 +329,8 @@ export function ResultsTable({
                 hint={t('hintShare2022', lang)}
                 {...drag}
               >
-                {t('lula', lang)} 2022{arrow('lulaPct2022')}
+                {t('lulaPct2022', lang)}
+                {arrow('lulaPct2022')}
               </SortableTh>
             )
           case 'bolsonaroPct2022':
@@ -340,7 +343,8 @@ export function ResultsTable({
                 hint={t('hintShare2022', lang)}
                 {...drag}
               >
-                {t('jBolsonaro', lang)} 2022{arrow('bolsonaroPct2022')}
+                {t('bolsonaroPct2022', lang)}
+                {arrow('bolsonaroPct2022')}
               </SortableTh>
             )
           case 'otherPct2026':
@@ -437,7 +441,7 @@ export function ResultsTable({
                 hint={t('hintDifference2026', lang)}
                 {...drag}
               >
-                {t('colDifference2026', lang)}
+                {t('difference2026', lang)}
                 {arrow('difference2026')}
               </SortableTh>
             )
@@ -451,7 +455,7 @@ export function ResultsTable({
                 hint={t('hintDifference2022', lang)}
                 {...drag}
               >
-                {t('colDifference2022', lang)}
+                {t('difference2022', lang)}
                 {arrow('difference2022')}
               </SortableTh>
             )
@@ -493,7 +497,7 @@ export function ResultsTable({
                 hint={t('hintSwing', lang)}
                 {...drag}
               >
-                {t('colSwing', lang)}
+                {t('swing', lang)}
                 {arrow('swing')}
               </SortableTh>
             )
