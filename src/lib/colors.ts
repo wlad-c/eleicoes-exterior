@@ -68,6 +68,8 @@ function scaleKind(metric: MapMetric): ScaleKind {
       return 'otherSeq'
     case 'abstentionPct2026':
     case 'abstentionPct2022':
+    case 'abstentions2026':
+    case 'abstentions2022':
       return 'abstentionSeq'
     case 'votes2026':
     case 'votes2022':
@@ -215,7 +217,9 @@ export function makeMetricColorizer(
     metric === 'lulaVotes2026' ||
     metric === 'lulaVotes2022' ||
     metric === 'bolsonaroVotes2026' ||
-    metric === 'bolsonaroVotes2022'
+    metric === 'bolsonaroVotes2022' ||
+    metric === 'abstentions2026' ||
+    metric === 'abstentions2022'
   const domainLo = voteCount ? Math.log1p(Math.max(lo, 0)) : lo
   const domainHi = voteCount ? Math.log1p(Math.max(hi, 0)) : hi
   const scale = sequentialScale(domainLo, domainHi, toward)

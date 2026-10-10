@@ -109,6 +109,14 @@ const dict = {
     en: '2022 abstention %',
     pt: 'Abstenção % 2022',
   },
+  abstentions2026: {
+    en: 'Abstentions 2026',
+    pt: 'Abstenções 2026',
+  },
+  abstentions2022: {
+    en: 'Abstentions 2022',
+    pt: 'Abstenções 2022',
+  },
   showPending: {
     en: 'Show pending countries',
     pt: 'Mostrar países pendentes',
@@ -283,6 +291,14 @@ const dict = {
   hintAbstention2022: {
     en: '% of registered (non-voters)',
     pt: '% dos aptos (não votaram)',
+  },
+  hintAbstentionVotes2026: {
+    en: 'non-voters (count)',
+    pt: 'não votaram (quantidade)',
+  },
+  hintAbstentionVotes2022: {
+    en: 'non-voters (count)',
+    pt: 'não votaram (quantidade)',
   },
   hintLulaChange: {
     en: 'pp vs 2022 (Δ votes)',
