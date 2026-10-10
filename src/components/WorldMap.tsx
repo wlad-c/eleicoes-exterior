@@ -1,4 +1,4 @@
-import { geoNaturalEarth1, geoPath, geoCentroid } from 'd3-geo'
+import { geoEqualEarth, geoPath, geoCentroid } from 'd3-geo'
 import {
   useCallback,
   useEffect,
@@ -499,7 +499,7 @@ export function WorldMap({
         topo,
         topo.objects.countries,
       ) as FeatureCollection<Geometry>
-      const projection = geoNaturalEarth1().fitSize([width, height], fc)
+      const projection = geoEqualEarth().fitSize([width, height], fc)
       const path = geoPath(projection)
       const items: DrawnFeature[] = fc.features.map((f, i) => {
         const rawId = f.id
@@ -524,7 +524,7 @@ export function WorldMap({
 
     if (focus.level === 'brazil') {
       if (!ufMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
-      const projection = geoNaturalEarth1().fitSize([width, height], ufMesh)
+      const projection = geoEqualEarth().fitSize([width, height], ufMesh)
       const path = geoPath(projection)
 
       // City / Bairro tabs: national municipality choropleth + UF outlines.
@@ -576,7 +576,7 @@ export function WorldMap({
 
     if (focus.level === 'uf') {
       if (!munMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
-      const projection = geoNaturalEarth1().fitSize([width, height], munMesh)
+      const projection = geoEqualEarth().fitSize([width, height], munMesh)
       const path = geoPath(projection)
       const multi = new Set(neighborhoodCities.map((c) => c.code))
       const items: DrawnFeature[] = munMesh.features.map((f) => {
@@ -598,7 +598,7 @@ export function WorldMap({
     // City → neighborhoods at TSE voting-local centroids (real geography).
     if (!cityFeature) return { drawn: [] as DrawnFeature[], fitReady: false }
     const pad = Math.max(16, Math.round(Math.min(width, height) * 0.04))
-    const projection = geoNaturalEarth1().fitExtent(
+    const projection = geoEqualEarth().fitExtent(
       [
         [pad, pad],
         [width - pad, height - pad],
