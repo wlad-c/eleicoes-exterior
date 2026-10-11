@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-09T05:23:41.097Z",
+    "updatedAt": "2026-10-11T04:58:46.822Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -116,7 +116,7 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-09T05:21:21.917Z",
+      "fetchedAt": "2026-10-11T04:55:21.573Z",
       "sectionsCounted": 1351,
       "sectionsTotal": 1351,
       "sectionsPct": 100,
@@ -1394,13 +1394,7 @@
             "bolsonaro": 10684,
             "totalValid": 14156,
             "lulaPct": 11.88,
-            "bolsonaroPct": 75.47,
-            "registered": 35578,
-            "abstentions": 20498,
-            "blank": 569,
-            "nullVotes": 355,
-            "noValidVote": 21422,
-            "noValidVotePct": 60.21
+            "bolsonaroPct": 75.47
           },
           "swing": {
             "lulaPp": 1.24,
@@ -1436,13 +1430,7 @@
             "bolsonaro": 8103,
             "totalValid": 12105,
             "lulaPct": 16.24,
-            "bolsonaroPct": 66.94,
-            "registered": 28688,
-            "abstentions": 15663,
-            "blank": 584,
-            "nullVotes": 336,
-            "noValidVote": 16583,
-            "noValidVotePct": 57.8
+            "bolsonaroPct": 66.94
           },
           "swing": {
             "lulaPp": 2.53,
@@ -1478,13 +1466,7 @@
             "bolsonaro": 4220,
             "totalValid": 5599,
             "lulaPct": 11.59,
-            "bolsonaroPct": 75.37,
-            "registered": 12177,
-            "abstentions": 6202,
-            "blank": 219,
-            "nullVotes": 157,
-            "noValidVote": 6578,
-            "noValidVotePct": 54.02
+            "bolsonaroPct": 75.37
           },
           "swing": {
             "lulaPp": 2.06,
@@ -1801,13 +1783,7 @@
             "bolsonaro": 1291,
             "totalValid": 4388,
             "lulaPct": 54.35,
-            "bolsonaroPct": 29.42,
-            "registered": 10749,
-            "abstentions": 6201,
-            "blank": 88,
-            "nullVotes": 72,
-            "noValidVote": 6361,
-            "noValidVotePct": 59.18
+            "bolsonaroPct": 29.42
           },
           "swing": {
             "lulaPp": 1.36,
@@ -1843,13 +1819,7 @@
             "bolsonaro": 535,
             "totalValid": 1964,
             "lulaPct": 56.01,
-            "bolsonaroPct": 27.24,
-            "registered": 4607,
-            "abstentions": 2561,
-            "blank": 42,
-            "nullVotes": 40,
-            "noValidVote": 2643,
-            "noValidVotePct": 57.37
+            "bolsonaroPct": 27.24
           },
           "swing": {
             "lulaPp": 0.99,
@@ -2100,13 +2070,7 @@
             "bolsonaro": 48,
             "totalValid": 179,
             "lulaPct": 51.96,
-            "bolsonaroPct": 26.82,
-            "registered": 695,
-            "abstentions": 495,
-            "blank": 6,
-            "nullVotes": 15,
-            "noValidVote": 516,
-            "noValidVotePct": 74.24
+            "bolsonaroPct": 26.82
           },
           "swing": {
             "lulaPp": 12.13,
@@ -2142,13 +2106,7 @@
             "bolsonaro": 19,
             "totalValid": 76,
             "lulaPct": 63.16,
-            "bolsonaroPct": 25,
-            "registered": 280,
-            "abstentions": 199,
-            "blank": 4,
-            "nullVotes": 1,
-            "noValidVote": 204,
-            "noValidVotePct": 72.86
+            "bolsonaroPct": 25
           },
           "swing": {
             "lulaPp": 14.45,
@@ -2184,13 +2142,7 @@
             "bolsonaro": 54,
             "totalValid": 87,
             "lulaPct": 28.74,
-            "bolsonaroPct": 62.07,
-            "registered": 380,
-            "abstentions": 285,
-            "blank": 3,
-            "nullVotes": 5,
-            "noValidVote": 293,
-            "noValidVotePct": 77.11
+            "bolsonaroPct": 62.07
           },
           "swing": {
             "lulaPp": 23.43,
@@ -2274,13 +2226,7 @@
             "bolsonaro": 71,
             "totalValid": 451,
             "lulaPct": 72.95,
-            "bolsonaroPct": 15.74,
-            "registered": 2943,
-            "abstentions": 2485,
-            "blank": 3,
-            "nullVotes": 4,
-            "noValidVote": 2492,
-            "noValidVotePct": 84.68
+            "bolsonaroPct": 15.74
           },
           "swing": {
             "lulaPp": -2.47,
@@ -2364,13 +2310,7 @@
             "bolsonaro": 97,
             "totalValid": 390,
             "lulaPct": 46.67,
-            "bolsonaroPct": 24.87,
-            "registered": 808,
-            "abstentions": 400,
-            "blank": 12,
-            "nullVotes": 6,
-            "noValidVote": 418,
-            "noValidVotePct": 51.73
+            "bolsonaroPct": 24.87
           },
           "swing": {
             "lulaPp": 7.93,
@@ -2454,13 +2394,7 @@
             "bolsonaro": 86,
             "totalValid": 178,
             "lulaPct": 30.9,
-            "bolsonaroPct": 48.31,
-            "registered": 595,
-            "abstentions": 402,
-            "blank": 10,
-            "nullVotes": 5,
-            "noValidVote": 417,
-            "noValidVotePct": 70.08
+            "bolsonaroPct": 48.31
           },
           "swing": {
             "lulaPp": 9.67,
@@ -2544,13 +2478,7 @@
             "bolsonaro": 53,
             "totalValid": 207,
             "lulaPct": 62.8,
-            "bolsonaroPct": 25.6,
-            "registered": 376,
-            "abstentions": 160,
-            "blank": 6,
-            "nullVotes": 3,
-            "noValidVote": 169,
-            "noValidVotePct": 44.95
+            "bolsonaroPct": 25.6
           },
           "swing": {
             "lulaPp": -5.86,
@@ -2634,13 +2562,7 @@
             "bolsonaro": 42,
             "totalValid": 105,
             "lulaPct": 43.81,
-            "bolsonaroPct": 40,
-            "registered": 220,
-            "abstentions": 111,
-            "blank": 2,
-            "nullVotes": 2,
-            "noValidVote": 115,
-            "noValidVotePct": 52.27
+            "bolsonaroPct": 40
           },
           "swing": {
             "lulaPp": -3.41,
@@ -2724,13 +2646,7 @@
             "bolsonaro": 24,
             "totalValid": 57,
             "lulaPct": 47.37,
-            "bolsonaroPct": 42.11,
-            "registered": 119,
-            "abstentions": 61,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 62,
-            "noValidVotePct": 52.1
+            "bolsonaroPct": 42.11
           },
           "swing": {
             "lulaPp": 6.29,
@@ -2814,13 +2730,7 @@
             "bolsonaro": 35,
             "totalValid": 63,
             "lulaPct": 31.75,
-            "bolsonaroPct": 55.56,
-            "registered": 192,
-            "abstentions": 129,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 129,
-            "noValidVotePct": 67.19
+            "bolsonaroPct": 55.56
           },
           "swing": {
             "lulaPp": 10.19,
@@ -2904,13 +2814,7 @@
             "bolsonaro": 9046,
             "totalValid": 12943,
             "lulaPct": 23.04,
-            "bolsonaroPct": 69.89,
-            "registered": 37105,
-            "abstentions": 23649,
-            "blank": 129,
-            "nullVotes": 384,
-            "noValidVote": 24162,
-            "noValidVotePct": 65.12
+            "bolsonaroPct": 69.89
           },
           "swing": {
             "lulaPp": 1.31,
@@ -2946,13 +2850,7 @@
             "bolsonaro": 11682,
             "totalValid": 15732,
             "lulaPct": 16.2,
-            "bolsonaroPct": 74.26,
-            "registered": 40095,
-            "abstentions": 24117,
-            "blank": 120,
-            "nullVotes": 126,
-            "noValidVote": 24363,
-            "noValidVotePct": 60.76
+            "bolsonaroPct": 74.26
           },
           "swing": {
             "lulaPp": 2.61,
@@ -2988,13 +2886,7 @@
             "bolsonaro": 5088,
             "totalValid": 10997,
             "lulaPct": 42.88,
-            "bolsonaroPct": 46.27,
-            "registered": 27870,
-            "abstentions": 16580,
-            "blank": 154,
-            "nullVotes": 139,
-            "noValidVote": 16873,
-            "noValidVotePct": 60.54
+            "bolsonaroPct": 46.27
           },
           "swing": {
             "lulaPp": 3.32,
@@ -3056,13 +2948,7 @@
             "bolsonaro": 2879,
             "totalValid": 4320,
             "lulaPct": 22.52,
-            "bolsonaroPct": 66.64,
-            "registered": 12580,
-            "abstentions": 8193,
-            "blank": 33,
-            "nullVotes": 34,
-            "noValidVote": 8260,
-            "noValidVotePct": 65.66
+            "bolsonaroPct": 66.64
           },
           "swing": {
             "lulaPp": 2.38,
@@ -3098,13 +2984,7 @@
             "bolsonaro": 2089,
             "totalValid": 5010,
             "lulaPct": 45.33,
-            "bolsonaroPct": 41.7,
-            "registered": 14038,
-            "abstentions": 8923,
-            "blank": 57,
-            "nullVotes": 48,
-            "noValidVote": 9028,
-            "noValidVotePct": 64.31
+            "bolsonaroPct": 41.7
           },
           "swing": {
             "lulaPp": 6.07,
@@ -3140,13 +3020,7 @@
             "bolsonaro": 1671,
             "totalValid": 3938,
             "lulaPct": 45.53,
-            "bolsonaroPct": 42.43,
-            "registered": 11172,
-            "abstentions": 7146,
-            "blank": 43,
-            "nullVotes": 45,
-            "noValidVote": 7234,
-            "noValidVotePct": 64.75
+            "bolsonaroPct": 42.43
           },
           "swing": {
             "lulaPp": 1.91,
@@ -3182,13 +3056,7 @@
             "bolsonaro": 2282,
             "totalValid": 4127,
             "lulaPct": 28.96,
-            "bolsonaroPct": 55.29,
-            "registered": 13775,
-            "abstentions": 9559,
-            "blank": 49,
-            "nullVotes": 40,
-            "noValidVote": 9648,
-            "noValidVotePct": 70.04
+            "bolsonaroPct": 55.29
           },
           "swing": {
             "lulaPp": 0.32,
@@ -3224,13 +3092,7 @@
             "bolsonaro": 1344,
             "totalValid": 4030,
             "lulaPct": 53.95,
-            "bolsonaroPct": 33.35,
-            "registered": 11678,
-            "abstentions": 7575,
-            "blank": 42,
-            "nullVotes": 31,
-            "noValidVote": 7648,
-            "noValidVotePct": 65.49
+            "bolsonaroPct": 33.35
           },
           "swing": {
             "lulaPp": 3.59,
@@ -3266,13 +3128,7 @@
             "bolsonaro": 947,
             "totalValid": 2811,
             "lulaPct": 51.44,
-            "bolsonaroPct": 33.69,
-            "registered": 10285,
-            "abstentions": 7401,
-            "blank": 31,
-            "nullVotes": 42,
-            "noValidVote": 7474,
-            "noValidVotePct": 72.67
+            "bolsonaroPct": 33.69
           },
           "swing": {
             "lulaPp": 3.68,
@@ -3308,13 +3164,7 @@
             "bolsonaro": 820,
             "totalValid": 1431,
             "lulaPct": 30.96,
-            "bolsonaroPct": 57.3,
-            "registered": 4021,
-            "abstentions": 2566,
-            "blank": 14,
-            "nullVotes": 10,
-            "noValidVote": 2590,
-            "noValidVotePct": 64.41
+            "bolsonaroPct": 57.3
           },
           "swing": {
             "lulaPp": -1.57,
@@ -3611,13 +3461,7 @@
             "bolsonaro": 6068,
             "totalValid": 19770,
             "lulaPct": 61.47,
-            "bolsonaroPct": 30.69,
-            "registered": 45162,
-            "abstentions": 24896,
-            "blank": 246,
-            "nullVotes": 250,
-            "noValidVote": 25392,
-            "noValidVotePct": 56.22
+            "bolsonaroPct": 30.69
           },
           "swing": {
             "lulaPp": -7.96,
@@ -3653,13 +3497,7 @@
             "bolsonaro": 4420,
             "totalValid": 14618,
             "lulaPct": 60.29,
-            "bolsonaroPct": 30.24,
-            "registered": 30014,
-            "abstentions": 14985,
-            "blank": 223,
-            "nullVotes": 188,
-            "noValidVote": 15396,
-            "noValidVotePct": 51.3
+            "bolsonaroPct": 30.24
           },
           "swing": {
             "lulaPp": -7.8,
@@ -3695,13 +3533,7 @@
             "bolsonaro": 730,
             "totalValid": 1777,
             "lulaPct": 49.13,
-            "bolsonaroPct": 41.08,
-            "registered": 5516,
-            "abstentions": 3694,
-            "blank": 19,
-            "nullVotes": 26,
-            "noValidVote": 3739,
-            "noValidVotePct": 67.78
+            "bolsonaroPct": 41.08
           },
           "swing": {
             "lulaPp": -8.04,
@@ -3785,13 +3617,7 @@
             "bolsonaro": 3425,
             "totalValid": 9222,
             "lulaPct": 50.56,
-            "bolsonaroPct": 37.14,
-            "registered": 17712,
-            "abstentions": 8243,
-            "blank": 93,
-            "nullVotes": 154,
-            "noValidVote": 8490,
-            "noValidVotePct": 47.93
+            "bolsonaroPct": 37.14
           },
           "swing": {
             "lulaPp": 3.14,
@@ -3827,13 +3653,7 @@
             "bolsonaro": 1404,
             "totalValid": 5722,
             "lulaPct": 60.73,
-            "bolsonaroPct": 24.54,
-            "registered": 9438,
-            "abstentions": 3512,
-            "blank": 82,
-            "nullVotes": 122,
-            "noValidVote": 3716,
-            "noValidVotePct": 39.37
+            "bolsonaroPct": 24.54
           },
           "swing": {
             "lulaPp": 4.19,
@@ -3869,13 +3689,7 @@
             "bolsonaro": 1712,
             "totalValid": 5641,
             "lulaPct": 55.29,
-            "bolsonaroPct": 30.35,
-            "registered": 9970,
-            "abstentions": 4107,
-            "blank": 99,
-            "nullVotes": 123,
-            "noValidVote": 4329,
-            "noValidVotePct": 43.42
+            "bolsonaroPct": 30.35
           },
           "swing": {
             "lulaPp": 1.11,
@@ -3911,13 +3725,7 @@
             "bolsonaro": 318,
             "totalValid": 1109,
             "lulaPct": 50.86,
-            "bolsonaroPct": 28.67,
-            "registered": 1850,
-            "abstentions": 689,
-            "blank": 24,
-            "nullVotes": 28,
-            "noValidVote": 741,
-            "noValidVotePct": 40.05
+            "bolsonaroPct": 28.67
           },
           "swing": {
             "lulaPp": 7.48,
@@ -4135,13 +3943,7 @@
             "bolsonaro": 809,
             "totalValid": 7179,
             "lulaPct": 79.58,
-            "bolsonaroPct": 11.27,
-            "registered": 12621,
-            "abstentions": 5315,
-            "blank": 45,
-            "nullVotes": 82,
-            "noValidVote": 5442,
-            "noValidVotePct": 43.12
+            "bolsonaroPct": 11.27
           },
           "swing": {
             "lulaPp": 1.53,
@@ -4177,13 +3979,7 @@
             "bolsonaro": 1120,
             "totalValid": 4904,
             "lulaPct": 64.09,
-            "bolsonaroPct": 22.84,
-            "registered": 11523,
-            "abstentions": 6472,
-            "blank": 77,
-            "nullVotes": 70,
-            "noValidVote": 6619,
-            "noValidVotePct": 57.44
+            "bolsonaroPct": 22.84
           },
           "swing": {
             "lulaPp": 2.46,
@@ -4219,13 +4015,7 @@
             "bolsonaro": 1241,
             "totalValid": 5018,
             "lulaPct": 60.16,
-            "bolsonaroPct": 24.73,
-            "registered": 11836,
-            "abstentions": 6687,
-            "blank": 52,
-            "nullVotes": 79,
-            "noValidVote": 6818,
-            "noValidVotePct": 57.6
+            "bolsonaroPct": 24.73
           },
           "swing": {
             "lulaPp": 3.46,
@@ -4443,13 +4233,7 @@
             "bolsonaro": 5170,
             "totalValid": 14796,
             "lulaPct": 55.18,
-            "bolsonaroPct": 34.94,
-            "registered": 34407,
-            "abstentions": 19304,
-            "blank": 143,
-            "nullVotes": 164,
-            "noValidVote": 19611,
-            "noValidVotePct": 57
+            "bolsonaroPct": 34.94
           },
           "swing": {
             "lulaPp": 1.15,
@@ -4607,13 +4391,7 @@
             "bolsonaro": 2483,
             "totalValid": 6226,
             "lulaPct": 50.18,
-            "bolsonaroPct": 39.88,
-            "registered": 20013,
-            "abstentions": 13586,
-            "blank": 105,
-            "nullVotes": 96,
-            "noValidVote": 13787,
-            "noValidVotePct": 68.89
+            "bolsonaroPct": 39.88
           },
           "swing": {
             "lulaPp": -0.02,
@@ -4649,13 +4427,7 @@
             "bolsonaro": 1401,
             "totalValid": 4189,
             "lulaPct": 54.76,
-            "bolsonaroPct": 33.44,
-            "registered": 12945,
-            "abstentions": 8628,
-            "blank": 69,
-            "nullVotes": 59,
-            "noValidVote": 8756,
-            "noValidVotePct": 67.64
+            "bolsonaroPct": 33.44
           },
           "swing": {
             "lulaPp": 2.89,
@@ -4739,13 +4511,7 @@
             "bolsonaro": 2243,
             "totalValid": 5690,
             "lulaPct": 47.15,
-            "bolsonaroPct": 39.42,
-            "registered": 13718,
-            "abstentions": 7753,
-            "blank": 142,
-            "nullVotes": 133,
-            "noValidVote": 8028,
-            "noValidVotePct": 58.52
+            "bolsonaroPct": 39.42
           },
           "swing": {
             "lulaPp": 2.87,
@@ -4781,13 +4547,7 @@
             "bolsonaro": 1930,
             "totalValid": 4493,
             "lulaPct": 44.09,
-            "bolsonaroPct": 42.96,
-            "registered": 10517,
-            "abstentions": 5874,
-            "blank": 86,
-            "nullVotes": 64,
-            "noValidVote": 6024,
-            "noValidVotePct": 57.28
+            "bolsonaroPct": 42.96
           },
           "swing": {
             "lulaPp": 1.3,
@@ -4871,13 +4631,7 @@
             "bolsonaro": 1384,
             "totalValid": 10063,
             "lulaPct": 77.6,
-            "bolsonaroPct": 13.75,
-            "registered": 22562,
-            "abstentions": 12333,
-            "blank": 95,
-            "nullVotes": 71,
-            "noValidVote": 12499,
-            "noValidVotePct": 55.4
+            "bolsonaroPct": 13.75
           },
           "swing": {
             "lulaPp": 0.28,
@@ -4987,13 +4741,7 @@
             "bolsonaro": 2004,
             "totalValid": 5437,
             "lulaPct": 52.27,
-            "bolsonaroPct": 36.86,
-            "registered": 19827,
-            "abstentions": 14119,
-            "blank": 129,
-            "nullVotes": 142,
-            "noValidVote": 14390,
-            "noValidVotePct": 72.58
+            "bolsonaroPct": 36.86
           },
           "swing": {
             "lulaPp": 2.22,
@@ -5029,13 +4777,7 @@
             "bolsonaro": 901,
             "totalValid": 4373,
             "lulaPct": 70.2,
-            "bolsonaroPct": 20.6,
-            "registered": 10879,
-            "abstentions": 6379,
-            "blank": 72,
-            "nullVotes": 55,
-            "noValidVote": 6506,
-            "noValidVotePct": 59.8
+            "bolsonaroPct": 20.6
           },
           "swing": {
             "lulaPp": 3.01,
@@ -5119,13 +4861,7 @@
             "bolsonaro": 1038,
             "totalValid": 7594,
             "lulaPct": 78.36,
-            "bolsonaroPct": 13.67,
-            "registered": 11930,
-            "abstentions": 4257,
-            "blank": 25,
-            "nullVotes": 54,
-            "noValidVote": 4336,
-            "noValidVotePct": 36.35
+            "bolsonaroPct": 13.67
           },
           "swing": {
             "lulaPp": -5.76,
@@ -5209,13 +4945,7 @@
             "bolsonaro": 1910,
             "totalValid": 6812,
             "lulaPct": 64.68,
-            "bolsonaroPct": 28.04,
-            "registered": 11515,
-            "abstentions": 4569,
-            "blank": 71,
-            "nullVotes": 63,
-            "noValidVote": 4703,
-            "noValidVotePct": 40.84
+            "bolsonaroPct": 28.04
           },
           "swing": {
             "lulaPp": 1.38,
@@ -5251,13 +4981,7 @@
             "bolsonaro": 138,
             "totalValid": 338,
             "lulaPct": 50.89,
-            "bolsonaroPct": 40.83,
-            "registered": 883,
-            "abstentions": 533,
-            "blank": 5,
-            "nullVotes": 7,
-            "noValidVote": 545,
-            "noValidVotePct": 61.72
+            "bolsonaroPct": 40.83
           },
           "swing": {
             "lulaPp": -1.3,
@@ -5293,13 +5017,7 @@
             "bolsonaro": 77,
             "totalValid": 139,
             "lulaPct": 37.41,
-            "bolsonaroPct": 55.4,
-            "registered": 238,
-            "abstentions": 94,
-            "blank": 2,
-            "nullVotes": 3,
-            "noValidVote": 99,
-            "noValidVotePct": 41.6
+            "bolsonaroPct": 55.4
           },
           "swing": {
             "lulaPp": 6.34,
@@ -5335,13 +5053,7 @@
             "bolsonaro": 0,
             "totalValid": 4,
             "lulaPct": 100,
-            "bolsonaroPct": 0,
-            "registered": 30,
-            "abstentions": 26,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 26,
-            "noValidVotePct": 86.67
+            "bolsonaroPct": 0
           },
           "swing": {
             "lulaPp": -68.18,
@@ -5451,13 +5163,7 @@
             "bolsonaro": 961,
             "totalValid": 5770,
             "lulaPct": 70.95,
-            "bolsonaroPct": 16.66,
-            "registered": 10044,
-            "abstentions": 4165,
-            "blank": 45,
-            "nullVotes": 64,
-            "noValidVote": 4274,
-            "noValidVotePct": 42.55
+            "bolsonaroPct": 16.66
           },
           "swing": {
             "lulaPp": 2.75,
@@ -5541,13 +5247,7 @@
             "bolsonaro": 2561,
             "totalValid": 2875,
             "lulaPct": 8.35,
-            "bolsonaroPct": 89.08,
-            "registered": 4622,
-            "abstentions": 1691,
-            "blank": 25,
-            "nullVotes": 31,
-            "noValidVote": 1747,
-            "noValidVotePct": 37.8
+            "bolsonaroPct": 89.08
           },
           "swing": {
             "lulaPp": -0.28,
@@ -5583,13 +5283,7 @@
             "bolsonaro": 772,
             "totalValid": 1143,
             "lulaPct": 22.4,
-            "bolsonaroPct": 67.54,
-            "registered": 2241,
-            "abstentions": 1053,
-            "blank": 29,
-            "nullVotes": 16,
-            "noValidVote": 1098,
-            "noValidVotePct": 49
+            "bolsonaroPct": 67.54
           },
           "swing": {
             "lulaPp": 1.16,
@@ -5625,13 +5319,7 @@
             "bolsonaro": 535,
             "totalValid": 575,
             "lulaPct": 5.04,
-            "bolsonaroPct": 93.04,
-            "registered": 777,
-            "abstentions": 198,
-            "blank": 3,
-            "nullVotes": 1,
-            "noValidVote": 202,
-            "noValidVotePct": 26
+            "bolsonaroPct": 93.04
           },
           "swing": {
             "lulaPp": -1.42,
@@ -5667,13 +5355,7 @@
             "bolsonaro": 230,
             "totalValid": 350,
             "lulaPct": 26.29,
-            "bolsonaroPct": 65.71,
-            "registered": 625,
-            "abstentions": 249,
-            "blank": 14,
-            "nullVotes": 12,
-            "noValidVote": 275,
-            "noValidVotePct": 44
+            "bolsonaroPct": 65.71
           },
           "swing": {
             "lulaPp": -6.29,
@@ -5709,13 +5391,7 @@
             "bolsonaro": 111,
             "totalValid": 131,
             "lulaPct": 11.45,
-            "bolsonaroPct": 84.73,
-            "registered": 235,
-            "abstentions": 103,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 104,
-            "noValidVotePct": 44.26
+            "bolsonaroPct": 84.73
           },
           "swing": {
             "lulaPp": -1.52,
@@ -5799,13 +5475,7 @@
             "bolsonaro": 1271,
             "totalValid": 3646,
             "lulaPct": 54.42,
-            "bolsonaroPct": 34.86,
-            "registered": 6422,
-            "abstentions": 2658,
-            "blank": 63,
-            "nullVotes": 55,
-            "noValidVote": 2776,
-            "noValidVotePct": 43.23
+            "bolsonaroPct": 34.86
           },
           "swing": {
             "lulaPp": -3.85,
@@ -5947,13 +5617,7 @@
             "bolsonaro": 947,
             "totalValid": 2850,
             "lulaPct": 56.18,
-            "bolsonaroPct": 33.23,
-            "registered": 6340,
-            "abstentions": 3372,
-            "blank": 64,
-            "nullVotes": 54,
-            "noValidVote": 3490,
-            "noValidVotePct": 55.05
+            "bolsonaroPct": 33.23
           },
           "swing": {
             "lulaPp": 9.18,
@@ -6105,13 +5769,7 @@
             "bolsonaro": 421,
             "totalValid": 2433,
             "lulaPct": 67.08,
-            "bolsonaroPct": 17.3,
-            "registered": 4322,
-            "abstentions": 1826,
-            "blank": 40,
-            "nullVotes": 23,
-            "noValidVote": 1889,
-            "noValidVotePct": 43.71
+            "bolsonaroPct": 17.3
           },
           "swing": {
             "lulaPp": 2.61,
@@ -6263,13 +5921,7 @@
             "bolsonaro": 796,
             "totalValid": 1937,
             "lulaPct": 44.86,
-            "bolsonaroPct": 41.09,
-            "registered": 3280,
-            "abstentions": 1241,
-            "blank": 43,
-            "nullVotes": 59,
-            "noValidVote": 1343,
-            "noValidVotePct": 40.95
+            "bolsonaroPct": 41.09
           },
           "swing": {
             "lulaPp": 2.22,
@@ -6353,13 +6005,7 @@
             "bolsonaro": 1014,
             "totalValid": 1270,
             "lulaPct": 15.04,
-            "bolsonaroPct": 79.84,
-            "registered": 2324,
-            "abstentions": 1030,
-            "blank": 8,
-            "nullVotes": 16,
-            "noValidVote": 1054,
-            "noValidVotePct": 45.35
+            "bolsonaroPct": 79.84
           },
           "swing": {
             "lulaPp": -1.45,
@@ -6395,13 +6041,7 @@
             "bolsonaro": 115,
             "totalValid": 203,
             "lulaPct": 31.03,
-            "bolsonaroPct": 56.65,
-            "registered": 390,
-            "abstentions": 172,
-            "blank": 7,
-            "nullVotes": 8,
-            "noValidVote": 187,
-            "noValidVotePct": 47.95
+            "bolsonaroPct": 56.65
           },
           "swing": {
             "lulaPp": 12.72,
@@ -6437,13 +6077,7 @@
             "bolsonaro": 148,
             "totalValid": 258,
             "lulaPct": 36.05,
-            "bolsonaroPct": 57.36,
-            "registered": 418,
-            "abstentions": 157,
-            "blank": 1,
-            "nullVotes": 2,
-            "noValidVote": 160,
-            "noValidVotePct": 38.28
+            "bolsonaroPct": 57.36
           },
           "swing": {
             "lulaPp": -5.24,
@@ -6579,13 +6213,7 @@
             "bolsonaro": 434,
             "totalValid": 1290,
             "lulaPct": 53.26,
-            "bolsonaroPct": 33.64,
-            "registered": 2391,
-            "abstentions": 992,
-            "blank": 75,
-            "nullVotes": 34,
-            "noValidVote": 1101,
-            "noValidVotePct": 46.05
+            "bolsonaroPct": 33.64
           },
           "swing": {
             "lulaPp": 1.06,
@@ -6621,13 +6249,7 @@
             "bolsonaro": 245,
             "totalValid": 412,
             "lulaPct": 28.16,
-            "bolsonaroPct": 59.47,
-            "registered": 686,
-            "abstentions": 261,
-            "blank": 9,
-            "nullVotes": 4,
-            "noValidVote": 274,
-            "noValidVotePct": 39.94
+            "bolsonaroPct": 59.47
           },
           "swing": {
             "lulaPp": 0.18,
@@ -6763,13 +6385,7 @@
             "bolsonaro": 595,
             "totalValid": 1389,
             "lulaPct": 44.2,
-            "bolsonaroPct": 42.84,
-            "registered": 3939,
-            "abstentions": 2515,
-            "blank": 14,
-            "nullVotes": 21,
-            "noValidVote": 2550,
-            "noValidVotePct": 64.74
+            "bolsonaroPct": 42.84
           },
           "swing": {
             "lulaPp": 1.33,
@@ -6853,13 +6469,7 @@
             "bolsonaro": 313,
             "totalValid": 1386,
             "lulaPct": 62.34,
-            "bolsonaroPct": 22.58,
-            "registered": 2912,
-            "abstentions": 1467,
-            "blank": 17,
-            "nullVotes": 42,
-            "noValidVote": 1526,
-            "noValidVotePct": 52.4
+            "bolsonaroPct": 22.58
           },
           "swing": {
             "lulaPp": 4.21,
@@ -6943,13 +6553,7 @@
             "bolsonaro": 666,
             "totalValid": 1371,
             "lulaPct": 42.6,
-            "bolsonaroPct": 48.58,
-            "registered": 3481,
-            "abstentions": 2038,
-            "blank": 38,
-            "nullVotes": 34,
-            "noValidVote": 2110,
-            "noValidVotePct": 60.61
+            "bolsonaroPct": 48.58
           },
           "swing": {
             "lulaPp": 2.05,
@@ -7059,13 +6663,7 @@
             "bolsonaro": 147,
             "totalValid": 1222,
             "lulaPct": 76.6,
-            "bolsonaroPct": 12.03,
-            "registered": 2299,
-            "abstentions": 1044,
-            "blank": 16,
-            "nullVotes": 17,
-            "noValidVote": 1077,
-            "noValidVotePct": 46.85
+            "bolsonaroPct": 12.03
           },
           "swing": {
             "lulaPp": 2.4,
@@ -7149,13 +6747,7 @@
             "bolsonaro": 464,
             "totalValid": 955,
             "lulaPct": 36.86,
-            "bolsonaroPct": 48.59,
-            "registered": 2248,
-            "abstentions": 1269,
-            "blank": 12,
-            "nullVotes": 12,
-            "noValidVote": 1293,
-            "noValidVotePct": 57.52
+            "bolsonaroPct": 48.59
           },
           "swing": {
             "lulaPp": 0.93,
@@ -7307,13 +6899,7 @@
             "bolsonaro": 161,
             "totalValid": 830,
             "lulaPct": 66.14,
-            "bolsonaroPct": 19.4,
-            "registered": 1732,
-            "abstentions": 881,
-            "blank": 9,
-            "nullVotes": 12,
-            "noValidVote": 902,
-            "noValidVotePct": 52.08
+            "bolsonaroPct": 19.4
           },
           "swing": {
             "lulaPp": 0.83,
@@ -7397,13 +6983,7 @@
             "bolsonaro": 384,
             "totalValid": 788,
             "lulaPct": 34.64,
-            "bolsonaroPct": 48.73,
-            "registered": 1533,
-            "abstentions": 726,
-            "blank": 5,
-            "nullVotes": 14,
-            "noValidVote": 745,
-            "noValidVotePct": 48.6
+            "bolsonaroPct": 48.73
           },
           "swing": {
             "lulaPp": -0.67,
@@ -7513,13 +7093,7 @@
             "bolsonaro": 52,
             "totalValid": 698,
             "lulaPct": 84.81,
-            "bolsonaroPct": 7.45,
-            "registered": 1419,
-            "abstentions": 703,
-            "blank": 8,
-            "nullVotes": 10,
-            "noValidVote": 721,
-            "noValidVotePct": 50.81
+            "bolsonaroPct": 7.45
           },
           "swing": {
             "lulaPp": 8.36,
@@ -7677,13 +7251,7 @@
             "bolsonaro": 320,
             "totalValid": 696,
             "lulaPct": 39.37,
-            "bolsonaroPct": 45.98,
-            "registered": 2852,
-            "abstentions": 2123,
-            "blank": 16,
-            "nullVotes": 17,
-            "noValidVote": 2156,
-            "noValidVotePct": 75.6
+            "bolsonaroPct": 45.98
           },
           "swing": {
             "lulaPp": -26.3,
@@ -7767,13 +7335,7 @@
             "bolsonaro": 242,
             "totalValid": 691,
             "lulaPct": 52.82,
-            "bolsonaroPct": 35.02,
-            "registered": 1562,
-            "abstentions": 839,
-            "blank": 28,
-            "nullVotes": 4,
-            "noValidVote": 871,
-            "noValidVotePct": 55.76
+            "bolsonaroPct": 35.02
           },
           "swing": {
             "lulaPp": -6.33,
@@ -7857,13 +7419,7 @@
             "bolsonaro": 349,
             "totalValid": 678,
             "lulaPct": 31.56,
-            "bolsonaroPct": 51.47,
-            "registered": 1320,
-            "abstentions": 624,
-            "blank": 11,
-            "nullVotes": 7,
-            "noValidVote": 642,
-            "noValidVotePct": 48.64
+            "bolsonaroPct": 51.47
           },
           "swing": {
             "lulaPp": 4.31,
@@ -7947,13 +7503,7 @@
             "bolsonaro": 127,
             "totalValid": 625,
             "lulaPct": 62.4,
-            "bolsonaroPct": 20.32,
-            "registered": 1016,
-            "abstentions": 366,
-            "blank": 19,
-            "nullVotes": 6,
-            "noValidVote": 391,
-            "noValidVotePct": 38.48
+            "bolsonaroPct": 20.32
           },
           "swing": {
             "lulaPp": 6.14,
@@ -8037,13 +7587,7 @@
             "bolsonaro": 72,
             "totalValid": 607,
             "lulaPct": 80.89,
-            "bolsonaroPct": 11.86,
-            "registered": 813,
-            "abstentions": 195,
-            "blank": 4,
-            "nullVotes": 7,
-            "noValidVote": 206,
-            "noValidVotePct": 25.34
+            "bolsonaroPct": 11.86
           },
           "swing": {
             "lulaPp": -9.55,
@@ -8127,13 +7671,7 @@
             "bolsonaro": 107,
             "totalValid": 552,
             "lulaPct": 61.23,
-            "bolsonaroPct": 19.38,
-            "registered": 1036,
-            "abstentions": 454,
-            "blank": 16,
-            "nullVotes": 14,
-            "noValidVote": 484,
-            "noValidVotePct": 46.72
+            "bolsonaroPct": 19.38
           },
           "swing": {
             "lulaPp": 24.98,
@@ -8217,13 +7755,7 @@
             "bolsonaro": 311,
             "totalValid": 471,
             "lulaPct": 26.54,
-            "bolsonaroPct": 66.03,
-            "registered": 1302,
-            "abstentions": 811,
-            "blank": 11,
-            "nullVotes": 9,
-            "noValidVote": 831,
-            "noValidVotePct": 63.82
+            "bolsonaroPct": 66.03
           },
           "swing": {
             "lulaPp": -4.13,
@@ -8307,13 +7839,7 @@
             "bolsonaro": 193,
             "totalValid": 303,
             "lulaPct": 24.09,
-            "bolsonaroPct": 63.7,
-            "registered": 710,
-            "abstentions": 399,
-            "blank": 4,
-            "nullVotes": 4,
-            "noValidVote": 407,
-            "noValidVotePct": 57.32
+            "bolsonaroPct": 63.7
           },
           "swing": {
             "lulaPp": -0.15,
@@ -8349,13 +7875,7 @@
             "bolsonaro": 49,
             "totalValid": 155,
             "lulaPct": 52.9,
-            "bolsonaroPct": 31.61,
-            "registered": 303,
-            "abstentions": 136,
-            "blank": 7,
-            "nullVotes": 5,
-            "noValidVote": 148,
-            "noValidVotePct": 48.84
+            "bolsonaroPct": 31.61
           },
           "swing": {
             "lulaPp": 3.35,
@@ -8439,13 +7959,7 @@
             "bolsonaro": 205,
             "totalValid": 437,
             "lulaPct": 37.53,
-            "bolsonaroPct": 46.91,
-            "registered": 1063,
-            "abstentions": 615,
-            "blank": 6,
-            "nullVotes": 5,
-            "noValidVote": 626,
-            "noValidVotePct": 58.89
+            "bolsonaroPct": 46.91
           },
           "swing": {
             "lulaPp": 2.15,
@@ -8529,13 +8043,7 @@
             "bolsonaro": 231,
             "totalValid": 383,
             "lulaPct": 28.72,
-            "bolsonaroPct": 60.31,
-            "registered": 1005,
-            "abstentions": 612,
-            "blank": 4,
-            "nullVotes": 6,
-            "noValidVote": 622,
-            "noValidVotePct": 61.89
+            "bolsonaroPct": 60.31
           },
           "swing": {
             "lulaPp": 10.91,
@@ -8619,13 +8127,7 @@
             "bolsonaro": 58,
             "totalValid": 367,
             "lulaPct": 68.94,
-            "bolsonaroPct": 15.8,
-            "registered": 572,
-            "abstentions": 190,
-            "blank": 7,
-            "nullVotes": 8,
-            "noValidVote": 205,
-            "noValidVotePct": 35.84
+            "bolsonaroPct": 15.8
           },
           "swing": {
             "lulaPp": 1.34,
@@ -8709,13 +8211,7 @@
             "bolsonaro": 169,
             "totalValid": 367,
             "lulaPct": 37.06,
-            "bolsonaroPct": 46.05,
-            "registered": 654,
-            "abstentions": 274,
-            "blank": 7,
-            "nullVotes": 6,
-            "noValidVote": 287,
-            "noValidVotePct": 43.88
+            "bolsonaroPct": 46.05
           },
           "swing": {
             "lulaPp": 9.7,
@@ -8799,13 +8295,7 @@
             "bolsonaro": 192,
             "totalValid": 360,
             "lulaPct": 36.67,
-            "bolsonaroPct": 53.33,
-            "registered": 665,
-            "abstentions": 294,
-            "blank": 5,
-            "nullVotes": 6,
-            "noValidVote": 305,
-            "noValidVotePct": 45.86
+            "bolsonaroPct": 53.33
           },
           "swing": {
             "lulaPp": 4.51,
@@ -8889,13 +8379,7 @@
             "bolsonaro": 55,
             "totalValid": 311,
             "lulaPct": 68.49,
-            "bolsonaroPct": 17.68,
-            "registered": 580,
-            "abstentions": 267,
-            "blank": 2,
-            "nullVotes": 0,
-            "noValidVote": 269,
-            "noValidVotePct": 46.38
+            "bolsonaroPct": 17.68
           },
           "swing": {
             "lulaPp": -3.6,
@@ -8979,13 +8463,7 @@
             "bolsonaro": 150,
             "totalValid": 291,
             "lulaPct": 40.21,
-            "bolsonaroPct": 51.55,
-            "registered": 665,
-            "abstentions": 356,
-            "blank": 9,
-            "nullVotes": 9,
-            "noValidVote": 374,
-            "noValidVotePct": 56.24
+            "bolsonaroPct": 51.55
           },
           "swing": {
             "lulaPp": 1.38,
@@ -9069,13 +8547,7 @@
             "bolsonaro": 93,
             "totalValid": 236,
             "lulaPct": 52.54,
-            "bolsonaroPct": 39.41,
-            "registered": 575,
-            "abstentions": 329,
-            "blank": 1,
-            "nullVotes": 9,
-            "noValidVote": 339,
-            "noValidVotePct": 58.96
+            "bolsonaroPct": 39.41
           },
           "swing": {
             "lulaPp": 3.14,
@@ -9159,13 +8631,7 @@
             "bolsonaro": 100,
             "totalValid": 223,
             "lulaPct": 35.43,
-            "bolsonaroPct": 44.84,
-            "registered": 607,
-            "abstentions": 369,
-            "blank": 7,
-            "nullVotes": 8,
-            "noValidVote": 384,
-            "noValidVotePct": 63.26
+            "bolsonaroPct": 44.84
           },
           "swing": {
             "lulaPp": -0.11,
@@ -9249,13 +8715,7 @@
             "bolsonaro": 117,
             "totalValid": 209,
             "lulaPct": 31.1,
-            "bolsonaroPct": 55.98,
-            "registered": 410,
-            "abstentions": 196,
-            "blank": 3,
-            "nullVotes": 2,
-            "noValidVote": 201,
-            "noValidVotePct": 49.02
+            "bolsonaroPct": 55.98
           },
           "swing": {
             "lulaPp": 3.47,
@@ -9339,13 +8799,7 @@
             "bolsonaro": 16,
             "totalValid": 186,
             "lulaPct": 79.57,
-            "bolsonaroPct": 8.6,
-            "registered": 250,
-            "abstentions": 60,
-            "blank": 0,
-            "nullVotes": 4,
-            "noValidVote": 64,
-            "noValidVotePct": 25.6
+            "bolsonaroPct": 8.6
           },
           "swing": {
             "lulaPp": -4.83,
@@ -9429,13 +8883,7 @@
             "bolsonaro": 44,
             "totalValid": 126,
             "lulaPct": 57.14,
-            "bolsonaroPct": 34.92,
-            "registered": 246,
-            "abstentions": 116,
-            "blank": 0,
-            "nullVotes": 4,
-            "noValidVote": 120,
-            "noValidVotePct": 48.78
+            "bolsonaroPct": 34.92
           },
           "swing": {
             "lulaPp": 13.73,
@@ -9519,13 +8967,7 @@
             "bolsonaro": 90,
             "totalValid": 147,
             "lulaPct": 21.77,
-            "bolsonaroPct": 61.22,
-            "registered": 289,
-            "abstentions": 142,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 142,
-            "noValidVotePct": 49.13
+            "bolsonaroPct": 61.22
           },
           "swing": {
             "lulaPp": 6.2,
@@ -9609,13 +9051,7 @@
             "bolsonaro": 47,
             "totalValid": 88,
             "lulaPct": 39.77,
-            "bolsonaroPct": 53.41,
-            "registered": 196,
-            "abstentions": 107,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 108,
-            "noValidVotePct": 55.1
+            "bolsonaroPct": 53.41
           },
           "swing": {
             "lulaPp": -10.96,
@@ -9699,13 +9135,7 @@
             "bolsonaro": 28,
             "totalValid": 84,
             "lulaPct": 53.57,
-            "bolsonaroPct": 33.33,
-            "registered": 221,
-            "abstentions": 136,
-            "blank": 0,
-            "nullVotes": 1,
-            "noValidVote": 137,
-            "noValidVotePct": 61.99
+            "bolsonaroPct": 33.33
           },
           "swing": {
             "lulaPp": 6.92,
@@ -9789,13 +9219,7 @@
             "bolsonaro": 32,
             "totalValid": 79,
             "lulaPct": 43.04,
-            "bolsonaroPct": 40.51,
-            "registered": 132,
-            "abstentions": 46,
-            "blank": 3,
-            "nullVotes": 4,
-            "noValidVote": 53,
-            "noValidVotePct": 40.15
+            "bolsonaroPct": 40.51
           },
           "swing": {
             "lulaPp": 4.79,
@@ -9879,13 +9303,7 @@
             "bolsonaro": 15,
             "totalValid": 76,
             "lulaPct": 65.79,
-            "bolsonaroPct": 19.74,
-            "registered": 122,
-            "abstentions": 41,
-            "blank": 2,
-            "nullVotes": 3,
-            "noValidVote": 46,
-            "noValidVotePct": 37.7
+            "bolsonaroPct": 19.74
           },
           "swing": {
             "lulaPp": -3.55,
@@ -9969,13 +9387,7 @@
             "bolsonaro": 41,
             "totalValid": 74,
             "lulaPct": 29.73,
-            "bolsonaroPct": 55.41,
-            "registered": 142,
-            "abstentions": 65,
-            "blank": 1,
-            "nullVotes": 2,
-            "noValidVote": 68,
-            "noValidVotePct": 47.89
+            "bolsonaroPct": 55.41
           },
           "swing": {
             "lulaPp": 0.14,
@@ -10059,13 +9471,7 @@
             "bolsonaro": 21,
             "totalValid": 70,
             "lulaPct": 60,
-            "bolsonaroPct": 30,
-            "registered": 152,
-            "abstentions": 79,
-            "blank": 0,
-            "nullVotes": 3,
-            "noValidVote": 82,
-            "noValidVotePct": 53.95
+            "bolsonaroPct": 30
           },
           "swing": {
             "lulaPp": 11.88,
@@ -10149,13 +9555,7 @@
             "bolsonaro": 55,
             "totalValid": 70,
             "lulaPct": 10,
-            "bolsonaroPct": 78.57,
-            "registered": 217,
-            "abstentions": 144,
-            "blank": 3,
-            "nullVotes": 0,
-            "noValidVote": 147,
-            "noValidVotePct": 67.74
+            "bolsonaroPct": 78.57
           },
           "swing": {
             "lulaPp": 3.21,
@@ -10239,13 +9639,7 @@
             "bolsonaro": 14,
             "totalValid": 66,
             "lulaPct": 36.36,
-            "bolsonaroPct": 21.21,
-            "registered": 115,
-            "abstentions": 45,
-            "blank": 1,
-            "nullVotes": 3,
-            "noValidVote": 49,
-            "noValidVotePct": 42.61
+            "bolsonaroPct": 21.21
           },
           "swing": {
             "lulaPp": 23.98,
@@ -10329,13 +9723,7 @@
             "bolsonaro": 22,
             "totalValid": 65,
             "lulaPct": 58.46,
-            "bolsonaroPct": 33.85,
-            "registered": 103,
-            "abstentions": 36,
-            "blank": 1,
-            "nullVotes": 1,
-            "noValidVote": 38,
-            "noValidVotePct": 36.89
+            "bolsonaroPct": 33.85
           },
           "swing": {
             "lulaPp": -2.75,
@@ -10419,13 +9807,7 @@
             "bolsonaro": 37,
             "totalValid": 65,
             "lulaPct": 27.69,
-            "bolsonaroPct": 56.92,
-            "registered": 90,
-            "abstentions": 25,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 25,
-            "noValidVotePct": 27.78
+            "bolsonaroPct": 56.92
           },
           "swing": {
             "lulaPp": 7.09,
@@ -10509,13 +9891,7 @@
             "bolsonaro": 23,
             "totalValid": 55,
             "lulaPct": 47.27,
-            "bolsonaroPct": 41.82,
-            "registered": 105,
-            "abstentions": 50,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 50,
-            "noValidVotePct": 47.62
+            "bolsonaroPct": 41.82
           },
           "swing": {
             "lulaPp": 17.29,
@@ -10599,13 +9975,7 @@
             "bolsonaro": 12,
             "totalValid": 54,
             "lulaPct": 53.7,
-            "bolsonaroPct": 22.22,
-            "registered": 108,
-            "abstentions": 53,
-            "blank": 0,
-            "nullVotes": 1,
-            "noValidVote": 54,
-            "noValidVotePct": 50
+            "bolsonaroPct": 22.22
           },
           "swing": {
             "lulaPp": -3.7,
@@ -10689,13 +10059,7 @@
             "bolsonaro": 18,
             "totalValid": 54,
             "lulaPct": 48.15,
-            "bolsonaroPct": 33.33,
-            "registered": 181,
-            "abstentions": 126,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 127,
-            "noValidVotePct": 70.17
+            "bolsonaroPct": 33.33
           },
           "swing": {
             "lulaPp": 14.5,
@@ -10779,13 +10143,7 @@
             "bolsonaro": 12,
             "totalValid": 41,
             "lulaPct": 65.85,
-            "bolsonaroPct": 29.27,
-            "registered": 102,
-            "abstentions": 61,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 61,
-            "noValidVotePct": 59.8
+            "bolsonaroPct": 29.27
           },
           "swing": {
             "lulaPp": -17.85,
@@ -10821,13 +10179,7 @@
             "bolsonaro": 2,
             "totalValid": 12,
             "lulaPct": 75,
-            "bolsonaroPct": 16.67,
-            "registered": 55,
-            "abstentions": 41,
-            "blank": 2,
-            "nullVotes": 0,
-            "noValidVote": 43,
-            "noValidVotePct": 78.18
+            "bolsonaroPct": 16.67
           },
           "swing": {
             "lulaPp": -29.55,
@@ -10911,13 +10263,7 @@
             "bolsonaro": 8,
             "totalValid": 53,
             "lulaPct": 64.15,
-            "bolsonaroPct": 15.09,
-            "registered": 102,
-            "abstentions": 49,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 49,
-            "noValidVotePct": 48.04
+            "bolsonaroPct": 15.09
           },
           "swing": {
             "lulaPp": 7.28,
@@ -11001,13 +10347,7 @@
             "bolsonaro": 23,
             "totalValid": 51,
             "lulaPct": 49.02,
-            "bolsonaroPct": 45.1,
-            "registered": 108,
-            "abstentions": 57,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 57,
-            "noValidVotePct": 52.78
+            "bolsonaroPct": 45.1
           },
           "swing": {
             "lulaPp": 7.5,
@@ -11091,13 +10431,7 @@
             "bolsonaro": 30,
             "totalValid": 50,
             "lulaPct": 32,
-            "bolsonaroPct": 60,
-            "registered": 157,
-            "abstentions": 107,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 107,
-            "noValidVotePct": 68.15
+            "bolsonaroPct": 60
           },
           "swing": {
             "lulaPp": -6.19,
@@ -11181,13 +10515,7 @@
             "bolsonaro": 8,
             "totalValid": 49,
             "lulaPct": 61.22,
-            "bolsonaroPct": 16.33,
-            "registered": 98,
-            "abstentions": 47,
-            "blank": 0,
-            "nullVotes": 2,
-            "noValidVote": 49,
-            "noValidVotePct": 50
+            "bolsonaroPct": 16.33
           },
           "swing": {
             "lulaPp": 1.28,
@@ -11271,13 +10599,7 @@
             "bolsonaro": 18,
             "totalValid": 46,
             "lulaPct": 45.65,
-            "bolsonaroPct": 39.13,
-            "registered": 77,
-            "abstentions": 30,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 31,
-            "noValidVotePct": 40.26
+            "bolsonaroPct": 39.13
           },
           "swing": {
             "lulaPp": 8.9,
@@ -11361,13 +10683,7 @@
             "bolsonaro": 14,
             "totalValid": 46,
             "lulaPct": 54.35,
-            "bolsonaroPct": 30.43,
-            "registered": 98,
-            "abstentions": 52,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 52,
-            "noValidVotePct": 53.06
+            "bolsonaroPct": 30.43
           },
           "swing": {
             "lulaPp": 6.07,
@@ -11451,13 +10767,7 @@
             "bolsonaro": 21,
             "totalValid": 44,
             "lulaPct": 52.27,
-            "bolsonaroPct": 47.73,
-            "registered": 78,
-            "abstentions": 34,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 34,
-            "noValidVotePct": 43.59
+            "bolsonaroPct": 47.73
           },
           "swing": {
             "lulaPp": -6.32,
@@ -11541,13 +10851,7 @@
             "bolsonaro": 27,
             "totalValid": 43,
             "lulaPct": 20.93,
-            "bolsonaroPct": 62.79,
-            "registered": 82,
-            "abstentions": 37,
-            "blank": 0,
-            "nullVotes": 2,
-            "noValidVote": 39,
-            "noValidVotePct": 47.56
+            "bolsonaroPct": 62.79
           },
           "swing": {
             "lulaPp": 53.04,
@@ -11631,13 +10935,7 @@
             "bolsonaro": 25,
             "totalValid": 41,
             "lulaPct": 26.83,
-            "bolsonaroPct": 60.98,
-            "registered": 95,
-            "abstentions": 54,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 54,
-            "noValidVotePct": 56.84
+            "bolsonaroPct": 60.98
           },
           "swing": {
             "lulaPp": 6.5,
@@ -11721,13 +11019,7 @@
             "bolsonaro": 33,
             "totalValid": 39,
             "lulaPct": 10.26,
-            "bolsonaroPct": 84.62,
-            "registered": 71,
-            "abstentions": 31,
-            "blank": 0,
-            "nullVotes": 1,
-            "noValidVote": 32,
-            "noValidVotePct": 45.07
+            "bolsonaroPct": 84.62
           },
           "swing": {
             "lulaPp": 35.89,
@@ -11811,13 +11103,7 @@
             "bolsonaro": 22,
             "totalValid": 38,
             "lulaPct": 26.32,
-            "bolsonaroPct": 57.89,
-            "registered": 50,
-            "abstentions": 12,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 12,
-            "noValidVotePct": 24
+            "bolsonaroPct": 57.89
           },
           "swing": {
             "lulaPp": 9.85,
@@ -11901,13 +11187,7 @@
             "bolsonaro": 16,
             "totalValid": 34,
             "lulaPct": 50,
-            "bolsonaroPct": 47.06,
-            "registered": 116,
-            "abstentions": 81,
-            "blank": 1,
-            "nullVotes": 0,
-            "noValidVote": 82,
-            "noValidVotePct": 70.69
+            "bolsonaroPct": 47.06
           },
           "swing": {
             "lulaPp": -28.95,
@@ -11991,13 +11271,7 @@
             "bolsonaro": 6,
             "totalValid": 33,
             "lulaPct": 66.67,
-            "bolsonaroPct": 18.18,
-            "registered": 55,
-            "abstentions": 20,
-            "blank": 0,
-            "nullVotes": 2,
-            "noValidVote": 22,
-            "noValidVotePct": 40
+            "bolsonaroPct": 18.18
           },
           "swing": {
             "lulaPp": 5.67,
@@ -12081,13 +11355,7 @@
             "bolsonaro": 1,
             "totalValid": 31,
             "lulaPct": 90.32,
-            "bolsonaroPct": 3.23,
-            "registered": 87,
-            "abstentions": 56,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 56,
-            "noValidVotePct": 64.37
+            "bolsonaroPct": 3.23
           },
           "swing": {
             "lulaPp": 4.42,
@@ -12171,13 +11439,7 @@
             "bolsonaro": 7,
             "totalValid": 28,
             "lulaPct": 57.14,
-            "bolsonaroPct": 25,
-            "registered": 70,
-            "abstentions": 42,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 42,
-            "noValidVotePct": 60
+            "bolsonaroPct": 25
           },
           "swing": {
             "lulaPp": 24.11,
@@ -12287,13 +11549,7 @@
             "bolsonaro": 7,
             "totalValid": 25,
             "lulaPct": 52,
-            "bolsonaroPct": 28,
-            "registered": 72,
-            "abstentions": 44,
-            "blank": 1,
-            "nullVotes": 2,
-            "noValidVote": 47,
-            "noValidVotePct": 65.28
+            "bolsonaroPct": 28
           },
           "swing": {
             "lulaPp": -9.89,
@@ -12377,13 +11633,7 @@
             "bolsonaro": 15,
             "totalValid": 25,
             "lulaPct": 32,
-            "bolsonaroPct": 60,
-            "registered": 65,
-            "abstentions": 39,
-            "blank": 0,
-            "nullVotes": 1,
-            "noValidVote": 40,
-            "noValidVotePct": 61.54
+            "bolsonaroPct": 60
           },
           "swing": {
             "lulaPp": -0.42,
@@ -12467,13 +11717,7 @@
             "bolsonaro": 9,
             "totalValid": 22,
             "lulaPct": 54.55,
-            "bolsonaroPct": 40.91,
-            "registered": 53,
-            "abstentions": 31,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 31,
-            "noValidVotePct": 58.49
+            "bolsonaroPct": 40.91
           },
           "swing": {
             "lulaPp": 6.99,
@@ -12557,13 +11801,7 @@
             "bolsonaro": 4,
             "totalValid": 20,
             "lulaPct": 65,
-            "bolsonaroPct": 20,
-            "registered": 50,
-            "abstentions": 30,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 30,
-            "noValidVotePct": 60
+            "bolsonaroPct": 20
           },
           "swing": {
             "lulaPp": -20.17,
@@ -12647,13 +11885,7 @@
             "bolsonaro": 9,
             "totalValid": 17,
             "lulaPct": 41.18,
-            "bolsonaroPct": 52.94,
-            "registered": 39,
-            "abstentions": 21,
-            "blank": 0,
-            "nullVotes": 1,
-            "noValidVote": 22,
-            "noValidVotePct": 56.41
+            "bolsonaroPct": 52.94
           },
           "swing": {
             "lulaPp": 14.82,
@@ -12764,13 +11996,7 @@
             "bolsonaro": 14,
             "totalValid": 15,
             "lulaPct": 6.67,
-            "bolsonaroPct": 93.33,
-            "registered": 33,
-            "abstentions": 18,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 18,
-            "noValidVotePct": 54.55
+            "bolsonaroPct": 93.33
           },
           "swing": {
             "lulaPp": 1.02,
@@ -12854,13 +12080,7 @@
             "bolsonaro": 6,
             "totalValid": 14,
             "lulaPct": 57.14,
-            "bolsonaroPct": 42.86,
-            "registered": 34,
-            "abstentions": 20,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 20,
-            "noValidVotePct": 58.82
+            "bolsonaroPct": 42.86
           },
           "swing": {
             "lulaPp": -2.59,
@@ -12971,13 +12191,7 @@
             "bolsonaro": 6,
             "totalValid": 13,
             "lulaPct": 53.85,
-            "bolsonaroPct": 46.15,
-            "registered": 107,
-            "abstentions": 94,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 94,
-            "noValidVotePct": 87.85
+            "bolsonaroPct": 46.15
           },
           "swing": {
             "lulaPp": -32.8,
@@ -13061,13 +12275,7 @@
             "bolsonaro": 2,
             "totalValid": 8,
             "lulaPct": 75,
-            "bolsonaroPct": 25,
-            "registered": 34,
-            "abstentions": 26,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 26,
-            "noValidVotePct": 76.47
+            "bolsonaroPct": 25
           },
           "swing": {
             "lulaPp": -6.25,
@@ -13151,13 +12359,7 @@
             "bolsonaro": 4,
             "totalValid": 7,
             "lulaPct": 28.57,
-            "bolsonaroPct": 57.14,
-            "registered": 44,
-            "abstentions": 37,
-            "blank": 0,
-            "nullVotes": 0,
-            "noValidVote": 37,
-            "noValidVotePct": 84.09
+            "bolsonaroPct": 57.14
           },
           "swing": {
             "lulaPp": 71.43,
