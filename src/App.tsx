@@ -100,6 +100,27 @@ function brazilHasSuburbData(c: CountryResult | null | undefined): boolean {
   return (c.suburbs?.length ?? 0) > 0 || (c.suburbCount ?? 0) > 0
 }
 
+/** Bypass HTTP / Cache API caches — useful on iOS where Cmd/Ctrl+Shift+R is unavailable. */
+async function hardRefresh(): Promise<void> {
+  try {
+    if ('caches' in window) {
+      const keys = await caches.keys()
+      await Promise.all(keys.map((key) => caches.delete(key)))
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    await fetch(window.location.href, {
+      cache: 'reload',
+      credentials: 'same-origin',
+    })
+  } catch {
+    /* ignore */
+  }
+  window.location.reload()
+}
+
 export default function App() {
   const { theme, setTheme } = useTheme()
   const { data: seedData, syncStatus, live } = useResultsData(seed)
@@ -903,6 +924,37 @@ export default function App() {
                 </button>
               ))}
             </div>
+            <button
+              type="button"
+              className="hard-refresh-btn control px-2 py-1.5 text-[var(--ink-muted)]"
+              aria-label={t('hardRefresh', lang)}
+              title={t('hardRefresh', lang)}
+              onClick={() => {
+                void hardRefresh()
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M13.5 2.5v3.2h-3.2"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
         <h1 className="max-w-3xl text-xl font-semibold leading-snug text-[var(--ink)] sm:text-2xl">
