@@ -399,6 +399,10 @@ const dict = {
   themeLight: { en: 'Light', pt: 'Claro' },
   themeDark: { en: 'Dark', pt: 'Escuro' },
   themeToggle: { en: 'Toggle color theme', pt: 'Alternar tema de cores' },
+  hardRefresh: {
+    en: 'Hard refresh',
+    pt: 'Recarregar página',
+  },
   scope: {
     en: '1st round · overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
     pt: '1º turno · exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',

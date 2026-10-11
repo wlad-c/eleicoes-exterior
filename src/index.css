@@ -1363,6 +1363,20 @@ th.col-dragging .col-drag-handle {
   border-color: var(--ink);
 }
 
+.hard-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.55;
+  line-height: 0;
+}
+
+.hard-refresh-btn:hover,
+.hard-refresh-btn:focus-visible {
+  opacity: 1;
+  color: var(--ink);
+}
+
 .bar-lula {
   background: var(--lula);
 }
