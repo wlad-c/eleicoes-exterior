@@ -9,6 +9,8 @@ import { defineConfig } from 'vite'
 const rootDir = dirname(fileURLToPath(import.meta.url))
 const resultsSrc = resolve(rootDir, 'src/data/results.json')
 const resultsPublic = resolve(rootDir, 'public/data/results.json')
+const resultsRunoffSrc = resolve(rootDir, 'src/data/results-runoff.json')
+const resultsRunoffPublic = resolve(rootDir, 'public/data/results-runoff.json')
 const citiesSrc = resolve(rootDir, 'src/data/brazil-cities.json')
 const citiesPublic = resolve(rootDir, 'public/data/brazil-cities.json')
 const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
@@ -21,6 +23,11 @@ function syncResultsJson(): Plugin {
   const write = () => {
     mkdirSync(dirname(resultsPublic), { recursive: true })
     copyFileSync(resultsSrc, resultsPublic)
+    try {
+      copyFileSync(resultsRunoffSrc, resultsRunoffPublic)
+    } catch {
+      /* optional until scaffold-runoff */
+    }
     for (const [src, dest] of [
       [citiesSrc, citiesPublic],
       [suburbsSrc, suburbsPublic],
@@ -42,6 +49,7 @@ function syncResultsJson(): Plugin {
     configureServer(server) {
       write()
       server.watcher.add(resultsSrc)
+      server.watcher.add(resultsRunoffSrc)
       server.watcher.add(citiesSrc)
       server.watcher.add(suburbsSrc)
       server.watcher.add(ufsSrc)
@@ -49,6 +57,7 @@ function syncResultsJson(): Plugin {
         const abs = resolve(path)
         if (
           abs === resultsSrc ||
+          abs === resultsRunoffSrc ||
           abs === citiesSrc ||
           abs === suburbsSrc ||
           abs === ufsSrc

@@ -14,6 +14,11 @@ export type VoteLike = {
   y2026?: YearResult | null
   y2022?: YearResult | null
   swing?: Swing | null
+  /**
+   * Same place’s 2026 1º turno tallies when the active view is runoff.
+   * Used for R1→R2 shift columns/metrics.
+   */
+  yRound1?: YearResult | null
 }
 
 export function fmtInt(n: number | null | undefined, lang: Lang): string {
@@ -366,6 +371,26 @@ export function swing(c: VoteLike): number | null {
   return l - b
 }
 
+/** Lula pp shift from 2026 1º → 2026 2º (requires `yRound1`). */
+export function lulaRoundShift(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !c.yRound1) return null
+  return round1(c.y2026.lulaPct - c.yRound1.lulaPct)
+}
+
+/** Bolsonaro pp shift from 2026 1º → 2026 2º (requires `yRound1`). */
+export function bolsonaroRoundShift(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !c.yRound1) return null
+  return round1(c.y2026.bolsonaroPct - c.yRound1.bolsonaroPct)
+}
+
+/** Round swing = Lula R1→R2 shift − Bolsonaro R1→R2 shift. */
+export function roundSwing(c: VoteLike): number | null {
+  const l = lulaRoundShift(c)
+  const b = bolsonaroRoundShift(c)
+  if (l == null || b == null) return null
+  return round1(l - b)
+}
+
 export function metricValue(c: VoteLike, metric: MapMetric): number | null {
   switch (metric) {
     case 'leader2026': {
@@ -392,6 +417,12 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return bolsonaroChange(c)
     case 'swing':
       return swing(c)
+    case 'lulaRoundShift':
+      return lulaRoundShift(c)
+    case 'bolsonaroRoundShift':
+      return bolsonaroRoundShift(c)
+    case 'roundSwing':
+      return roundSwing(c)
     case 'lulaPct2026':
       return isReported(c) && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
@@ -450,6 +481,9 @@ export function formatMetricValue(
     case 'lulaChange':
     case 'bolsonaroChange':
     case 'swing':
+    case 'lulaRoundShift':
+    case 'bolsonaroRoundShift':
+    case 'roundSwing':
       return fmtPp(value, lang)
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
@@ -516,6 +550,9 @@ export type RowTotals = {
   lulaChange: number | null
   bolsonaroChange: number | null
   swing: number | null
+  lulaRoundShift: number | null
+  bolsonaroRoundShift: number | null
+  roundSwing: number | null
   lulaVotesDelta: number | null
   bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
@@ -534,6 +571,10 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
   let lula2022Comparable = 0
   let bolso2022Comparable = 0
   let valid2022Comparable = 0
+  let lulaR1Comparable = 0
+  let bolsoR1Comparable = 0
+  let validR1Comparable = 0
+  let hasRound1 = false
   let registered2026 = 0
   let noValidVotes2026 = 0
   let hasAbstention2026 = false
@@ -564,6 +605,12 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
       lula2022Comparable += c.y2022.lula
       bolso2022Comparable += c.y2022.bolsonaro
       valid2022Comparable += c.y2022.totalValid
+      if (c.yRound1 && c.yRound1.totalValid > 0) {
+        hasRound1 = true
+        lulaR1Comparable += c.yRound1.lula
+        bolsoR1Comparable += c.yRound1.bolsonaro
+        validR1Comparable += c.yRound1.totalValid
+      }
       const nv = noValidVotes(c.y2026)
       if (c.y2026.registered != null && nv != null) {
         hasAbstention2026 = true
@@ -613,6 +660,22 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaChange != null && bolsonaroChange != null
       ? lulaChange - bolsonaroChange
       : null
+  const lulaPctR1 =
+    hasRound1 && validR1Comparable
+      ? (lulaR1Comparable / validR1Comparable) * 100
+      : null
+  const bolsoPctR1 =
+    hasRound1 && validR1Comparable
+      ? (bolsoR1Comparable / validR1Comparable) * 100
+      : null
+  const lulaRoundShift =
+    lulaPct2026 != null && lulaPctR1 != null ? lulaPct2026 - lulaPctR1 : null
+  const bolsonaroRoundShift =
+    bolsoPct2026 != null && bolsoPctR1 != null ? bolsoPct2026 - bolsoPctR1 : null
+  const roundSwing =
+    lulaRoundShift != null && bolsonaroRoundShift != null
+      ? lulaRoundShift - bolsonaroRoundShift
+      : null
   const difference2026 =
     lulaPct2026 != null && bolsoPct2026 != null
       ? lulaPct2026 - bolsoPct2026
@@ -646,6 +709,9 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaChange,
     bolsonaroChange,
     swing,
+    lulaRoundShift,
+    bolsonaroRoundShift,
+    roundSwing,
     lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
     bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,

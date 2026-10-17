@@ -20,6 +20,9 @@ export type TableMetricCol =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
+  | 'lulaRoundShift'
+  | 'bolsonaroRoundShift'
+  | 'roundSwing'
   | 'sections'
 
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
@@ -41,7 +44,17 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'lulaChange',
   'bolsonaroChange',
   'swing',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
   'sections',
+]
+
+/** Round-shift columns are runoff-only. */
+export const RUNOFF_ONLY_TABLE_COLS: TableMetricCol[] = [
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
 ]
 
 /**
@@ -53,6 +66,20 @@ export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'lulaPct2026',
   'bolsonaroPct2026',
   'difference2026',
+  'lulaChange',
+  'bolsonaroChange',
+  'swing',
+]
+
+/** Runoff default also surfaces 1º → 2º shift. */
+export const DEFAULT_RUNOFF_TABLE_METRIC_COLS: TableMetricCol[] = [
+  'votes2026',
+  'lulaPct2026',
+  'bolsonaroPct2026',
+  'difference2026',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
   'lulaChange',
   'bolsonaroChange',
   'swing',
@@ -77,12 +104,18 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   lulaChange: 'lulaChange',
   bolsonaroChange: 'bolsonaroChange',
   swing: 'swing',
+  lulaRoundShift: 'lulaRoundShift',
+  bolsonaroRoundShift: 'bolsonaroRoundShift',
+  roundSwing: 'roundSwing',
   sections: 'notes',
 }
 
 /** Bump when default visibility / column ids change so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v6'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v3'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v7'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v4'
+export const TABLE_COLS_RUNOFF_STORAGE_KEY = 'eleicoes-exterior-table-cols-runoff-v1'
+export const TABLE_COL_ORDER_RUNOFF_STORAGE_KEY =
+  'eleicoes-exterior-table-col-order-runoff-v1'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
@@ -141,12 +174,15 @@ export function moveColumn(
   return next
 }
 
-export function readStoredTableCols(): TableMetricCol[] {
+function readColsFromKey(
+  key: string,
+  fallback: TableMetricCol[],
+): TableMetricCol[] {
   try {
-    const raw = localStorage.getItem(TABLE_COLS_STORAGE_KEY)
-    if (!raw) return DEFAULT_TABLE_METRIC_COLS
+    const raw = localStorage.getItem(key)
+    if (!raw) return fallback
     const parsed = JSON.parse(raw) as unknown
-    if (!Array.isArray(parsed)) return DEFAULT_TABLE_METRIC_COLS
+    if (!Array.isArray(parsed)) return fallback
     const seen = new Set<TableMetricCol>()
     const cols: TableMetricCol[] = []
     for (const c of parsed) {
@@ -157,23 +193,42 @@ export function readStoredTableCols(): TableMetricCol[] {
         cols.push(col)
       }
     }
-    return cols.length > 0 ? cols : DEFAULT_TABLE_METRIC_COLS
+    return cols.length > 0 ? cols : fallback
   } catch {
-    return DEFAULT_TABLE_METRIC_COLS
+    return fallback
   }
 }
 
-export function writeStoredTableCols(cols: TableMetricCol[]) {
+export function readStoredTableCols(round: '1' | '2' = '1'): TableMetricCol[] {
+  if (round === '2') {
+    return readColsFromKey(
+      TABLE_COLS_RUNOFF_STORAGE_KEY,
+      DEFAULT_RUNOFF_TABLE_METRIC_COLS,
+    )
+  }
+  return readColsFromKey(TABLE_COLS_STORAGE_KEY, DEFAULT_TABLE_METRIC_COLS)
+}
+
+export function writeStoredTableCols(
+  cols: TableMetricCol[],
+  round: '1' | '2' = '1',
+) {
   try {
-    localStorage.setItem(TABLE_COLS_STORAGE_KEY, JSON.stringify(cols))
+    const key =
+      round === '2' ? TABLE_COLS_RUNOFF_STORAGE_KEY : TABLE_COLS_STORAGE_KEY
+    localStorage.setItem(key, JSON.stringify(cols))
   } catch {
     /* ignore */
   }
 }
 
-export function readStoredColumnOrder(): TableMetricCol[] {
+export function readStoredColumnOrder(round: '1' | '2' = '1'): TableMetricCol[] {
   try {
-    const raw = localStorage.getItem(TABLE_COL_ORDER_STORAGE_KEY)
+    const key =
+      round === '2'
+        ? TABLE_COL_ORDER_RUNOFF_STORAGE_KEY
+        : TABLE_COL_ORDER_STORAGE_KEY
+    const raw = localStorage.getItem(key)
     if (!raw) return [...ALL_TABLE_METRIC_COLS]
     const parsed = JSON.parse(raw) as unknown
     if (!Array.isArray(parsed)) return [...ALL_TABLE_METRIC_COLS]
@@ -183,12 +238,16 @@ export function readStoredColumnOrder(): TableMetricCol[] {
   }
 }
 
-export function writeStoredColumnOrder(order: TableMetricCol[]) {
+export function writeStoredColumnOrder(
+  order: TableMetricCol[],
+  round: '1' | '2' = '1',
+) {
   try {
-    localStorage.setItem(
-      TABLE_COL_ORDER_STORAGE_KEY,
-      JSON.stringify(normalizeColumnOrder(order)),
-    )
+    const key =
+      round === '2'
+        ? TABLE_COL_ORDER_RUNOFF_STORAGE_KEY
+        : TABLE_COL_ORDER_STORAGE_KEY
+    localStorage.setItem(key, JSON.stringify(normalizeColumnOrder(order)))
   } catch {
     /* ignore */
   }

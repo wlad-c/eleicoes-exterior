@@ -14,13 +14,34 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const RESULTS_PATH = join(ROOT, 'src/data/results.json')
-
 const HOST = 'https://resultados.tse.jus.br'
 const AMBIENTE = 'oficial'
 const CICLO = 'ele2026'
-const ELEICAO = '6257'
 const CARGO = '1' // Presidente
+
+function parseArgs(argv) {
+  let turno = 1
+  for (const a of argv) {
+    if (a.startsWith('--turno=')) turno = Number(a.slice('--turno='.length))
+  }
+  if (turno !== 1 && turno !== 2) {
+    throw new Error(`Invalid --turno=${turno}; use 1 or 2`)
+  }
+  return { turno }
+}
+
+const { turno: TURNO } = parseArgs(process.argv.slice(2))
+const ELEICAO = TURNO === 2 ? '6258' : '6257'
+const RESULTS_PATH = join(
+  ROOT,
+  TURNO === 2 ? 'src/data/results-runoff.json' : 'src/data/results.json',
+)
+const CITY_2022_PATH = join(
+  ROOT,
+  TURNO === 2
+    ? 'src/data/tse-city-2022-r2.json'
+    : 'src/data/tse-city-2022.json',
+)
 
 const UA =
   'eleicoes-exterior/1.0 (+https://github.com/wlad-c/eleicoes-exterior; TSE EA20 sync)'
@@ -31,9 +52,7 @@ const CITY_TO_COUNTRY = JSON.parse(
 )
 
 /** TSE ZZ municipality code → 2022 YearResult (from votacao_secao open data). */
-const CITY_2022 = JSON.parse(
-  readFileSync(join(ROOT, 'src/data/tse-city-2022.json'), 'utf8'),
-)
+const CITY_2022 = JSON.parse(readFileSync(CITY_2022_PATH, 'utf8'))
 
 function pad(n, w) {
   return String(n).padStart(w, '0')

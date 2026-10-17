@@ -60,8 +60,11 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'difference2022':
     case 'lulaChange':
     case 'swing':
+    case 'lulaRoundShift':
+    case 'roundSwing':
       return 'divergingLB'
     case 'bolsonaroChange':
+    case 'bolsonaroRoundShift':
       // positive Bolsonaro change → blue (inverted below)
       return 'divergingLB'
     case 'lulaPct2026':
@@ -89,7 +92,7 @@ function scaleKind(metric: MapMetric): ScaleKind {
 }
 
 function isInverted(metric: MapMetric): boolean {
-  return metric === 'bolsonaroChange'
+  return metric === 'bolsonaroChange' || metric === 'bolsonaroRoundShift'
 }
 
 function isDifferenceMetric(metric: MapMetric): boolean {

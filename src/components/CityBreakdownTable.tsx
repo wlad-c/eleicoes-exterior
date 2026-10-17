@@ -34,13 +34,16 @@ import {
   placeParentLabel,
   placeParentLabelCompact,
   placeParentUf,
+  bolsonaroRoundShift,
   fmtCoverage,
   fmtInt,
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
+  lulaRoundShift,
   otherPct,
   otherVotes,
+  roundSwing,
 } from '../lib/format'
 import { foldForSearch } from '../lib/searchText'
 import { regionLabel, t } from '../lib/i18n'
@@ -175,6 +178,10 @@ export function CityBreakdownTable({
     let bolso2022Comparable = 0
     let lula2026Comparable = 0
     let bolso2026Comparable = 0
+    let lulaR1 = 0
+    let bolsoR1 = 0
+    let validR1 = 0
+    let hasRound1 = false
     let registered2026 = 0
     let noValidVotes2026 = 0
     let hasAbstention2026 = false
@@ -197,6 +204,12 @@ export function CityBreakdownTable({
           registered2026 += c.y2026.registered
           noValidVotes2026 += nv
         }
+      }
+      if (c.yRound1 && c.yRound1.totalValid > 0) {
+        hasRound1 = true
+        lulaR1 += c.yRound1.lula
+        bolsoR1 += c.yRound1.bolsonaro
+        validR1 += c.yRound1.totalValid
       }
       if (c.y2022) {
         has2022 = true
@@ -227,6 +240,8 @@ export function CityBreakdownTable({
       has2022 && valid2022 ? (bolso2022 / valid2022) * 100 : null
     const otherPct2022 =
       other2022 != null && valid2022 ? (other2022 / valid2022) * 100 : null
+    const lulaPctR1 = hasRound1 && validR1 ? (lulaR1 / validR1) * 100 : null
+    const bolsoPctR1 = hasRound1 && validR1 ? (bolsoR1 / validR1) * 100 : null
     const noValidVotePct2026 =
       hasAbstention2026 && registered2026 > 0
         ? (noValidVotes2026 / registered2026) * 100
@@ -242,6 +257,14 @@ export function CityBreakdownTable({
     const swing =
       lulaChange != null && bolsonaroChange != null
         ? lulaChange - bolsonaroChange
+        : null
+    const lulaRoundShiftTotal =
+      lulaPct != null && lulaPctR1 != null ? lulaPct - lulaPctR1 : null
+    const bolsonaroRoundShiftTotal =
+      bolsoPct != null && bolsoPctR1 != null ? bolsoPct - bolsoPctR1 : null
+    const roundSwingTotal =
+      lulaRoundShiftTotal != null && bolsonaroRoundShiftTotal != null
+        ? lulaRoundShiftTotal - bolsonaroRoundShiftTotal
         : null
     const difference2026 =
       lulaPct != null && bolsoPct != null ? lulaPct - bolsoPct : null
@@ -273,6 +296,9 @@ export function CityBreakdownTable({
       lulaChange,
       bolsonaroChange,
       swing,
+      lulaRoundShift: lulaRoundShiftTotal,
+      bolsonaroRoundShift: bolsonaroRoundShiftTotal,
+      roundSwing: roundSwingTotal,
       lulaVotesDelta: has2022
         ? lula2026Comparable - lula2022Comparable
         : null,
@@ -688,6 +714,24 @@ export function CityBreakdownTable({
                 {fmtPp(totals.swing, lang)}
               </td>
             )
+          case 'lulaRoundShift':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.lulaRoundShift, lang)}
+              </td>
+            )
+          case 'bolsonaroRoundShift':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.bolsonaroRoundShift, lang)}
+              </td>
+            )
+          case 'roundSwing':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.roundSwing, lang)}
+              </td>
+            )
           case 'sections':
             return (
               <td
@@ -966,6 +1010,45 @@ export function CityBreakdownTable({
               >
                 {t('swing', lang)}
                 {arrow('swing')}
+              </SortableTh>
+            )
+          case 'lulaRoundShift':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintLulaRoundShift', lang)}
+                onClick={() => onSort('lulaRoundShift')}
+                {...drag}
+              >
+                {t('lulaRoundShift', lang)}
+                {arrow('lulaRoundShift')}
+              </SortableTh>
+            )
+          case 'bolsonaroRoundShift':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintBolsonaroRoundShift', lang)}
+                onClick={() => onSort('bolsonaroRoundShift')}
+                {...drag}
+              >
+                {t('bolsonaroRoundShift', lang)}
+                {arrow('bolsonaroRoundShift')}
+              </SortableTh>
+            )
+          case 'roundSwing':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintRoundSwing', lang)}
+                onClick={() => onSort('roundSwing')}
+                {...drag}
+              >
+                {t('roundSwing', lang)}
+                {arrow('roundSwing')}
               </SortableTh>
             )
           case 'sections':
@@ -1347,6 +1430,33 @@ export function CityBreakdownTable({
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtPp(citySwing(c), lang)}
+                          </td>
+                        )
+                      case 'lulaRoundShift':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(lulaRoundShift(c), lang)}
+                          </td>
+                        )
+                      case 'bolsonaroRoundShift':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(bolsonaroRoundShift(c), lang)}
+                          </td>
+                        )
+                      case 'roundSwing':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(roundSwing(c), lang)}
                           </td>
                         )
                       case 'sections':

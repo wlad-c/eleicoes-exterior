@@ -396,6 +396,20 @@ function citySortValue(
       return cityBolsonaroChange(row) ?? Number.NaN
     case 'swing':
       return citySwing(row) ?? Number.NaN
+    case 'lulaRoundShift':
+      return row.y2026 && row.yRound1
+        ? row.y2026.lulaPct - row.yRound1.lulaPct
+        : Number.NaN
+    case 'bolsonaroRoundShift':
+      return row.y2026 && row.yRound1
+        ? row.y2026.bolsonaroPct - row.yRound1.bolsonaroPct
+        : Number.NaN
+    case 'roundSwing': {
+      if (!row.y2026 || !row.yRound1) return Number.NaN
+      const l = row.y2026.lulaPct - row.yRound1.lulaPct
+      const b = row.y2026.bolsonaroPct - row.yRound1.bolsonaroPct
+      return l - b
+    }
     case 'sections':
       return row.coverage && row.coverage.total > 0
         ? row.coverage.counted / row.coverage.total

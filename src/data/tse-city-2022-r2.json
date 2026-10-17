@@ -1,0 +1,1114 @@
+{
+  "29173": {
+    "name": "KATMANDU",
+    "lula": 2,
+    "bolsonaro": 13,
+    "totalValid": 15,
+    "lulaPct": 13.33,
+    "bolsonaroPct": 86.67
+  },
+  "29254": {
+    "name": "ABIDJÃ",
+    "lula": 26,
+    "bolsonaro": 15,
+    "totalValid": 41,
+    "lulaPct": 63.41,
+    "bolsonaroPct": 36.59
+  },
+  "29262": {
+    "name": "ABU DHABI",
+    "lula": 404,
+    "bolsonaro": 593,
+    "totalValid": 997,
+    "lulaPct": 40.52,
+    "bolsonaroPct": 59.48
+  },
+  "29270": {
+    "name": "ACCRA",
+    "lula": 14,
+    "bolsonaro": 4,
+    "totalValid": 18,
+    "lulaPct": 77.78,
+    "bolsonaroPct": 22.22
+  },
+  "29289": {
+    "name": "AMÃ",
+    "lula": 407,
+    "bolsonaro": 125,
+    "totalValid": 532,
+    "lulaPct": 76.5,
+    "bolsonaroPct": 23.5
+  },
+  "29297": {
+    "name": "ANCARA",
+    "lula": 20,
+    "bolsonaro": 8,
+    "totalValid": 28,
+    "lulaPct": 71.43,
+    "bolsonaroPct": 28.57
+  },
+  "29319": {
+    "name": "ARTIGAS",
+    "lula": 125,
+    "bolsonaro": 292,
+    "totalValid": 417,
+    "lulaPct": 29.98,
+    "bolsonaroPct": 70.02
+  },
+  "29327": {
+    "name": "ASSUNÇÃO",
+    "lula": 317,
+    "bolsonaro": 920,
+    "totalValid": 1237,
+    "lulaPct": 25.63,
+    "bolsonaroPct": 74.37
+  },
+  "29335": {
+    "name": "ATENAS",
+    "lula": 193,
+    "bolsonaro": 242,
+    "totalValid": 435,
+    "lulaPct": 44.37,
+    "bolsonaroPct": 55.63
+  },
+  "29343": {
+    "name": "BANGKOK",
+    "lula": 47,
+    "bolsonaro": 50,
+    "totalValid": 97,
+    "lulaPct": 48.45,
+    "bolsonaroPct": 51.55
+  },
+  "29351": {
+    "name": "JURISDIÇÃO DE BARCELONA",
+    "lula": 3246,
+    "bolsonaro": 1053,
+    "totalValid": 4299,
+    "lulaPct": 75.51,
+    "bolsonaroPct": 24.49
+  },
+  "29360": {
+    "name": "BEIRUTE",
+    "lula": 1591,
+    "bolsonaro": 1099,
+    "totalValid": 2690,
+    "lulaPct": 59.14,
+    "bolsonaroPct": 40.86
+  },
+  "29378": {
+    "name": "BELGRADO",
+    "lula": 36,
+    "bolsonaro": 12,
+    "totalValid": 48,
+    "lulaPct": 75,
+    "bolsonaroPct": 25
+  },
+  "29386": {
+    "name": "BERLIM",
+    "lula": 6206,
+    "bolsonaro": 1011,
+    "totalValid": 7217,
+    "lulaPct": 85.99,
+    "bolsonaroPct": 14.01
+  },
+  "29394": {
+    "name": "BISSAU",
+    "lula": 20,
+    "bolsonaro": 25,
+    "totalValid": 45,
+    "lulaPct": 44.44,
+    "bolsonaroPct": 55.56
+  },
+  "29408": {
+    "name": "BOGOTÁ",
+    "lula": 380,
+    "bolsonaro": 293,
+    "totalValid": 673,
+    "lulaPct": 56.46,
+    "bolsonaroPct": 43.54
+  },
+  "29416": {
+    "name": "BOSTON",
+    "lula": 3508,
+    "bolsonaro": 10960,
+    "totalValid": 14468,
+    "lulaPct": 24.25,
+    "bolsonaroPct": 75.75
+  },
+  "29432": {
+    "name": "CONSULADO DO BRASIL EM BRUXELAS",
+    "lula": 2115,
+    "bolsonaro": 1444,
+    "totalValid": 3559,
+    "lulaPct": 59.43,
+    "bolsonaroPct": 40.57
+  },
+  "29440": {
+    "name": "ROMENIA",
+    "lula": 38,
+    "bolsonaro": 19,
+    "totalValid": 57,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "29459": {
+    "name": "HUNGRIA",
+    "lula": 481,
+    "bolsonaro": 83,
+    "totalValid": 564,
+    "lulaPct": 85.28,
+    "bolsonaroPct": 14.72
+  },
+  "29467": {
+    "name": "JURISCIÇÃO DO CONSULADO EM BUENOS AIRES",
+    "lula": 4373,
+    "bolsonaro": 2240,
+    "totalValid": 6613,
+    "lulaPct": 66.13,
+    "bolsonaroPct": 33.87
+  },
+  "29475": {
+    "name": "CAIENA",
+    "lula": 598,
+    "bolsonaro": 722,
+    "totalValid": 1320,
+    "lulaPct": 45.3,
+    "bolsonaroPct": 54.7
+  },
+  "29483": {
+    "name": "CAIRO",
+    "lula": 46,
+    "bolsonaro": 23,
+    "totalValid": 69,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "29491": {
+    "name": "CAMBERRA",
+    "lula": 1264,
+    "bolsonaro": 709,
+    "totalValid": 1973,
+    "lulaPct": 64.06,
+    "bolsonaroPct": 35.94
+  },
+  "29505": {
+    "name": "CARACAS",
+    "lula": 0,
+    "bolsonaro": 6,
+    "totalValid": 6,
+    "lulaPct": 0,
+    "bolsonaroPct": 100
+  },
+  "29513": {
+    "name": "CHICAGO",
+    "lula": 1586,
+    "bolsonaro": 1251,
+    "totalValid": 2837,
+    "lulaPct": 55.9,
+    "bolsonaroPct": 44.1
+  },
+  "29530": {
+    "name": "CIDADE DO CABO",
+    "lula": 100,
+    "bolsonaro": 62,
+    "totalValid": 162,
+    "lulaPct": 61.73,
+    "bolsonaroPct": 38.27
+  },
+  "29548": {
+    "name": "SINGAPURA",
+    "lula": 230,
+    "bolsonaro": 131,
+    "totalValid": 361,
+    "lulaPct": 63.71,
+    "bolsonaroPct": 36.29
+  },
+  "29556": {
+    "name": "CIUDAD DEL ESTE",
+    "lula": 238,
+    "bolsonaro": 2719,
+    "totalValid": 2957,
+    "lulaPct": 8.05,
+    "bolsonaroPct": 91.95
+  },
+  "29572": {
+    "name": "COCHABAMBA",
+    "lula": 101,
+    "bolsonaro": 169,
+    "totalValid": 270,
+    "lulaPct": 37.41,
+    "bolsonaroPct": 62.59
+  },
+  "29580": {
+    "name": "CONCEPCIÓN",
+    "lula": 3,
+    "bolsonaro": 32,
+    "totalValid": 35,
+    "lulaPct": 8.57,
+    "bolsonaroPct": 91.43
+  },
+  "29599": {
+    "name": "COPENHAGUE",
+    "lula": 1047,
+    "bolsonaro": 198,
+    "totalValid": 1245,
+    "lulaPct": 84.1,
+    "bolsonaroPct": 15.9
+  },
+  "29602": {
+    "name": "PROVÍNCIA DE CÓRDOBA",
+    "lula": 180,
+    "bolsonaro": 161,
+    "totalValid": 341,
+    "lulaPct": 52.79,
+    "bolsonaroPct": 47.21
+  },
+  "29610": {
+    "name": "DACAR",
+    "lula": 39,
+    "bolsonaro": 28,
+    "totalValid": 67,
+    "lulaPct": 58.21,
+    "bolsonaroPct": 41.79
+  },
+  "29645": {
+    "name": "DÍLI",
+    "lula": 22,
+    "bolsonaro": 37,
+    "totalValid": 59,
+    "lulaPct": 37.29,
+    "bolsonaroPct": 62.71
+  },
+  "29653": {
+    "name": "DOHA",
+    "lula": 151,
+    "bolsonaro": 221,
+    "totalValid": 372,
+    "lulaPct": 40.59,
+    "bolsonaroPct": 59.41
+  },
+  "29661": {
+    "name": "DUBLIN",
+    "lula": 6023,
+    "bolsonaro": 1339,
+    "totalValid": 7362,
+    "lulaPct": 81.81,
+    "bolsonaroPct": 18.19
+  },
+  "29670": {
+    "name": "ENCARNACIÓN",
+    "lula": 16,
+    "bolsonaro": 121,
+    "totalValid": 137,
+    "lulaPct": 11.68,
+    "bolsonaroPct": 88.32
+  },
+  "29688": {
+    "name": "ESTOCOLMO",
+    "lula": 1785,
+    "bolsonaro": 542,
+    "totalValid": 2327,
+    "lulaPct": 76.71,
+    "bolsonaroPct": 23.29
+  },
+  "29696": {
+    "name": "COLÔNIA",
+    "lula": 3647,
+    "bolsonaro": 1453,
+    "totalValid": 5100,
+    "lulaPct": 71.51,
+    "bolsonaroPct": 28.49
+  },
+  "29700": {
+    "name": "GENEBRA",
+    "lula": 2320,
+    "bolsonaro": 2279,
+    "totalValid": 4599,
+    "lulaPct": 50.45,
+    "bolsonaroPct": 49.55
+  },
+  "29718": {
+    "name": "GEORGETOWN",
+    "lula": 8,
+    "bolsonaro": 58,
+    "totalValid": 66,
+    "lulaPct": 12.12,
+    "bolsonaroPct": 87.88
+  },
+  "29742": {
+    "name": "HAMAMATSU",
+    "lula": 841,
+    "bolsonaro": 4916,
+    "totalValid": 5757,
+    "lulaPct": 14.61,
+    "bolsonaroPct": 85.39
+  },
+  "29750": {
+    "name": "HANÓI",
+    "lula": 13,
+    "bolsonaro": 6,
+    "totalValid": 19,
+    "lulaPct": 68.42,
+    "bolsonaroPct": 31.58
+  },
+  "29777": {
+    "name": "HAVANA",
+    "lula": 32,
+    "bolsonaro": 0,
+    "totalValid": 32,
+    "lulaPct": 100,
+    "bolsonaroPct": 0
+  },
+  "29785": {
+    "name": "HELSINQUE",
+    "lula": 444,
+    "bolsonaro": 163,
+    "totalValid": 607,
+    "lulaPct": 73.15,
+    "bolsonaroPct": 26.85
+  },
+  "29793": {
+    "name": "HONG KONG",
+    "lula": 80,
+    "bolsonaro": 95,
+    "totalValid": 175,
+    "lulaPct": 45.71,
+    "bolsonaroPct": 54.29
+  },
+  "29807": {
+    "name": "HOUSTON",
+    "lula": 1458,
+    "bolsonaro": 2748,
+    "totalValid": 4206,
+    "lulaPct": 34.66,
+    "bolsonaroPct": 65.34
+  },
+  "29840": {
+    "name": "JACARTA",
+    "lula": 15,
+    "bolsonaro": 32,
+    "totalValid": 47,
+    "lulaPct": 31.91,
+    "bolsonaroPct": 68.09
+  },
+  "29874": {
+    "name": "KINSHASA",
+    "lula": 1,
+    "bolsonaro": 9,
+    "totalValid": 10,
+    "lulaPct": 10,
+    "bolsonaroPct": 90
+  },
+  "29882": {
+    "name": "KUAITE",
+    "lula": 10,
+    "bolsonaro": 29,
+    "totalValid": 39,
+    "lulaPct": 25.64,
+    "bolsonaroPct": 74.36
+  },
+  "29890": {
+    "name": "KUALA LUMPUR",
+    "lula": 32,
+    "bolsonaro": 26,
+    "totalValid": 58,
+    "lulaPct": 55.17,
+    "bolsonaroPct": 44.83
+  },
+  "29904": {
+    "name": "LA PAZ",
+    "lula": 74,
+    "bolsonaro": 126,
+    "totalValid": 200,
+    "lulaPct": 37,
+    "bolsonaroPct": 63
+  },
+  "29912": {
+    "name": "LAGOS",
+    "lula": 21,
+    "bolsonaro": 4,
+    "totalValid": 25,
+    "lulaPct": 84,
+    "bolsonaroPct": 16
+  },
+  "29947": {
+    "name": "LIMA",
+    "lula": 314,
+    "bolsonaro": 430,
+    "totalValid": 744,
+    "lulaPct": 42.2,
+    "bolsonaroPct": 57.8
+  },
+  "29955": {
+    "name": "LISBOA",
+    "lula": 12872,
+    "bolsonaro": 7085,
+    "totalValid": 19957,
+    "lulaPct": 64.5,
+    "bolsonaroPct": 35.5
+  },
+  "29971": {
+    "name": "INGLATERRA",
+    "lula": 9064,
+    "bolsonaro": 6004,
+    "totalValid": 15068,
+    "lulaPct": 60.15,
+    "bolsonaroPct": 39.85
+  },
+  "29980": {
+    "name": "LOS ANGELES",
+    "lula": 1955,
+    "bolsonaro": 2014,
+    "totalValid": 3969,
+    "lulaPct": 49.26,
+    "bolsonaroPct": 50.74
+  },
+  "29998": {
+    "name": "LUANDA",
+    "lula": 124,
+    "bolsonaro": 99,
+    "totalValid": 223,
+    "lulaPct": 55.61,
+    "bolsonaroPct": 44.39
+  },
+  "30066": {
+    "name": "JURISDIÇÃO DE MADRI",
+    "lula": 3078,
+    "bolsonaro": 2410,
+    "totalValid": 5488,
+    "lulaPct": 56.09,
+    "bolsonaroPct": 43.91
+  },
+  "30074": {
+    "name": "MANÁGUA",
+    "lula": 34,
+    "bolsonaro": 38,
+    "totalValid": 72,
+    "lulaPct": 47.22,
+    "bolsonaroPct": 52.78
+  },
+  "30082": {
+    "name": "MANILA",
+    "lula": 22,
+    "bolsonaro": 34,
+    "totalValid": 56,
+    "lulaPct": 39.29,
+    "bolsonaroPct": 60.71
+  },
+  "30090": {
+    "name": "MAPUTO",
+    "lula": 140,
+    "bolsonaro": 166,
+    "totalValid": 306,
+    "lulaPct": 45.75,
+    "bolsonaroPct": 54.25
+  },
+  "30104": {
+    "name": "CIDADE DO MÉXICO",
+    "lula": 633,
+    "bolsonaro": 696,
+    "totalValid": 1329,
+    "lulaPct": 47.63,
+    "bolsonaroPct": 52.37
+  },
+  "30112": {
+    "name": "MIAMI",
+    "lula": 3058,
+    "bolsonaro": 13187,
+    "totalValid": 16245,
+    "lulaPct": 18.82,
+    "bolsonaroPct": 81.18
+  },
+  "30120": {
+    "name": "MILÃO",
+    "lula": 3371,
+    "bolsonaro": 3044,
+    "totalValid": 6415,
+    "lulaPct": 52.55,
+    "bolsonaroPct": 47.45
+  },
+  "30147": {
+    "name": "INSTITUTO DE CULTURA URUGUAI BRASIL",
+    "lula": 745,
+    "bolsonaro": 540,
+    "totalValid": 1285,
+    "lulaPct": 57.98,
+    "bolsonaroPct": 42.02
+  },
+  "30155": {
+    "name": "CIDADE DE QUEBEC",
+    "lula": 3871,
+    "bolsonaro": 1741,
+    "totalValid": 5612,
+    "lulaPct": 68.98,
+    "bolsonaroPct": 31.02
+  },
+  "30163": {
+    "name": "MOSCOU",
+    "lula": 46,
+    "bolsonaro": 23,
+    "totalValid": 69,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "30171": {
+    "name": "MUMBAI",
+    "lula": 11,
+    "bolsonaro": 4,
+    "totalValid": 15,
+    "lulaPct": 73.33,
+    "bolsonaroPct": 26.67
+  },
+  "30180": {
+    "name": "MUNIQUE",
+    "lula": 3534,
+    "bolsonaro": 1559,
+    "totalValid": 5093,
+    "lulaPct": 69.39,
+    "bolsonaroPct": 30.61
+  },
+  "30198": {
+    "name": "HIROSHIMA",
+    "lula": 2117,
+    "bolsonaro": 12704,
+    "totalValid": 14821,
+    "lulaPct": 14.28,
+    "bolsonaroPct": 85.72
+  },
+  "30201": {
+    "name": "EMBAIXADA DO BRASIL",
+    "lula": 35,
+    "bolsonaro": 25,
+    "totalValid": 60,
+    "lulaPct": 58.33,
+    "bolsonaroPct": 41.67
+  },
+  "30210": {
+    "name": "NOVA DELHI",
+    "lula": 23,
+    "bolsonaro": 14,
+    "totalValid": 37,
+    "lulaPct": 62.16,
+    "bolsonaroPct": 37.84
+  },
+  "30228": {
+    "name": "NOVA YORK",
+    "lula": 5331,
+    "bolsonaro": 6068,
+    "totalValid": 11399,
+    "lulaPct": 46.77,
+    "bolsonaroPct": 53.23
+  },
+  "30244": {
+    "name": "OSLO",
+    "lula": 628,
+    "bolsonaro": 197,
+    "totalValid": 825,
+    "lulaPct": 76.12,
+    "bolsonaroPct": 23.88
+  },
+  "30252": {
+    "name": "OTTAWA",
+    "lula": 680,
+    "bolsonaro": 381,
+    "totalValid": 1061,
+    "lulaPct": 64.09,
+    "bolsonaroPct": 35.91
+  },
+  "30260": {
+    "name": "PANAMÁ",
+    "lula": 252,
+    "bolsonaro": 392,
+    "totalValid": 644,
+    "lulaPct": 39.13,
+    "bolsonaroPct": 60.87
+  },
+  "30279": {
+    "name": "PARAMARIBO",
+    "lula": 131,
+    "bolsonaro": 354,
+    "totalValid": 485,
+    "lulaPct": 27.01,
+    "bolsonaroPct": 72.99
+  },
+  "30287": {
+    "name": "PARIS",
+    "lula": 7885,
+    "bolsonaro": 1622,
+    "totalValid": 9507,
+    "lulaPct": 82.94,
+    "bolsonaroPct": 17.06
+  },
+  "30309": {
+    "name": "PEDRO JUAN CABALLERO",
+    "lula": 98,
+    "bolsonaro": 260,
+    "totalValid": 358,
+    "lulaPct": 27.37,
+    "bolsonaroPct": 72.63
+  },
+  "30317": {
+    "name": "PEQUIM",
+    "lula": 47,
+    "bolsonaro": 23,
+    "totalValid": 70,
+    "lulaPct": 67.14,
+    "bolsonaroPct": 32.86
+  },
+  "30325": {
+    "name": "PORT OF SPAIN",
+    "lula": 16,
+    "bolsonaro": 15,
+    "totalValid": 31,
+    "lulaPct": 51.61,
+    "bolsonaroPct": 48.39
+  },
+  "30333": {
+    "name": "PORTO PRÍNCIPE",
+    "lula": 2,
+    "bolsonaro": 3,
+    "totalValid": 5,
+    "lulaPct": 40,
+    "bolsonaroPct": 60
+  },
+  "30341": {
+    "name": "PORTO",
+    "lula": 9450,
+    "bolsonaro": 5134,
+    "totalValid": 14584,
+    "lulaPct": 64.8,
+    "bolsonaroPct": 35.2
+  },
+  "30350": {
+    "name": "PRAGA",
+    "lula": 286,
+    "bolsonaro": 73,
+    "totalValid": 359,
+    "lulaPct": 79.67,
+    "bolsonaroPct": 20.33
+  },
+  "30368": {
+    "name": "PRAIA",
+    "lula": 40,
+    "bolsonaro": 22,
+    "totalValid": 62,
+    "lulaPct": 64.52,
+    "bolsonaroPct": 35.48
+  },
+  "30376": {
+    "name": "PRETÓRIA",
+    "lula": 83,
+    "bolsonaro": 207,
+    "totalValid": 290,
+    "lulaPct": 28.62,
+    "bolsonaroPct": 71.38
+  },
+  "30392": {
+    "name": "QUITO",
+    "lula": 115,
+    "bolsonaro": 255,
+    "totalValid": 370,
+    "lulaPct": 31.08,
+    "bolsonaroPct": 68.92
+  },
+  "30406": {
+    "name": "RABAT",
+    "lula": 38,
+    "bolsonaro": 8,
+    "totalValid": 46,
+    "lulaPct": 82.61,
+    "bolsonaroPct": 17.39
+  },
+  "30414": {
+    "name": "ESCRITORIO BRASILEIRO EM RAMALÁ",
+    "lula": 584,
+    "bolsonaro": 61,
+    "totalValid": 645,
+    "lulaPct": 90.54,
+    "bolsonaroPct": 9.46
+  },
+  "30422": {
+    "name": "RIADE",
+    "lula": 38,
+    "bolsonaro": 18,
+    "totalValid": 56,
+    "lulaPct": 67.86,
+    "bolsonaroPct": 32.14
+  },
+  "30430": {
+    "name": "RIO BRANCO",
+    "lula": 13,
+    "bolsonaro": 9,
+    "totalValid": 22,
+    "lulaPct": 59.09,
+    "bolsonaroPct": 40.91
+  },
+  "30449": {
+    "name": "ROMA",
+    "lula": 2449,
+    "bolsonaro": 1648,
+    "totalValid": 4097,
+    "lulaPct": 59.78,
+    "bolsonaroPct": 40.22
+  },
+  "30457": {
+    "name": "AMSTERDÃ",
+    "lula": 4511,
+    "bolsonaro": 1242,
+    "totalValid": 5753,
+    "lulaPct": 78.41,
+    "bolsonaroPct": 21.59
+  },
+  "30465": {
+    "name": "SALTOS DO GUAIRA",
+    "lula": 29,
+    "bolsonaro": 549,
+    "totalValid": 578,
+    "lulaPct": 5.02,
+    "bolsonaroPct": 94.98
+  },
+  "30473": {
+    "name": "SANTA CRUZ DE LA SIERRA",
+    "lula": 138,
+    "bolsonaro": 870,
+    "totalValid": 1008,
+    "lulaPct": 13.69,
+    "bolsonaroPct": 86.31
+  },
+  "30481": {
+    "name": "SANTIAGO",
+    "lula": 905,
+    "bolsonaro": 922,
+    "totalValid": 1827,
+    "lulaPct": 49.53,
+    "bolsonaroPct": 50.47
+  },
+  "30490": {
+    "name": "SÃO DOMINGOS",
+    "lula": 80,
+    "bolsonaro": 138,
+    "totalValid": 218,
+    "lulaPct": 36.7,
+    "bolsonaroPct": 63.3
+  },
+  "30503": {
+    "name": "SÃO FRANCISCO",
+    "lula": 2447,
+    "bolsonaro": 1568,
+    "totalValid": 4015,
+    "lulaPct": 60.95,
+    "bolsonaroPct": 39.05
+  },
+  "30511": {
+    "name": "SÃO JOSÉ",
+    "lula": 166,
+    "bolsonaro": 200,
+    "totalValid": 366,
+    "lulaPct": 45.36,
+    "bolsonaroPct": 54.64
+  },
+  "30520": {
+    "name": "SÃO SALVADOR",
+    "lula": 27,
+    "bolsonaro": 44,
+    "totalValid": 71,
+    "lulaPct": 38.03,
+    "bolsonaroPct": 61.97
+  },
+  "30538": {
+    "name": "SEUL",
+    "lula": 126,
+    "bolsonaro": 70,
+    "totalValid": 196,
+    "lulaPct": 64.29,
+    "bolsonaroPct": 35.71
+  },
+  "30546": {
+    "name": "SÓFIA",
+    "lula": 24,
+    "bolsonaro": 7,
+    "totalValid": 31,
+    "lulaPct": 77.42,
+    "bolsonaroPct": 22.58
+  },
+  "30562": {
+    "name": "BRISBANE",
+    "lula": 3057,
+    "bolsonaro": 1863,
+    "totalValid": 4920,
+    "lulaPct": 62.13,
+    "bolsonaroPct": 37.87
+  },
+  "30570": {
+    "name": "ESCRITÓRIO COMERCIAL DO BRASIL EM TAIPÉ",
+    "lula": 101,
+    "bolsonaro": 132,
+    "totalValid": 233,
+    "lulaPct": 43.35,
+    "bolsonaroPct": 56.65
+  },
+  "30597": {
+    "name": "TEERÃ",
+    "lula": 8,
+    "bolsonaro": 9,
+    "totalValid": 17,
+    "lulaPct": 47.06,
+    "bolsonaroPct": 52.94
+  },
+  "30600": {
+    "name": "TEGUCIGALPA",
+    "lula": 29,
+    "bolsonaro": 47,
+    "totalValid": 76,
+    "lulaPct": 38.16,
+    "bolsonaroPct": 61.84
+  },
+  "30619": {
+    "name": "TEL AVIV",
+    "lula": 353,
+    "bolsonaro": 405,
+    "totalValid": 758,
+    "lulaPct": 46.57,
+    "bolsonaroPct": 53.43
+  },
+  "30627": {
+    "name": "GUNMA",
+    "lula": 2454,
+    "bolsonaro": 10020,
+    "totalValid": 12474,
+    "lulaPct": 19.67,
+    "bolsonaroPct": 80.33
+  },
+  "30635": {
+    "name": "TORONTO",
+    "lula": 5188,
+    "bolsonaro": 4111,
+    "totalValid": 9299,
+    "lulaPct": 55.79,
+    "bolsonaroPct": 44.21
+  },
+  "30651": {
+    "name": "CANTÃO",
+    "lula": 27,
+    "bolsonaro": 61,
+    "totalValid": 88,
+    "lulaPct": 30.68,
+    "bolsonaroPct": 69.32
+  },
+  "30708": {
+    "name": "TUNIS",
+    "lula": 8,
+    "bolsonaro": 4,
+    "totalValid": 12,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "30740": {
+    "name": "VARSÓVIA",
+    "lula": 212,
+    "bolsonaro": 68,
+    "totalValid": 280,
+    "lulaPct": 75.71,
+    "bolsonaroPct": 24.29
+  },
+  "30767": {
+    "name": "VIENA",
+    "lula": 960,
+    "bolsonaro": 379,
+    "totalValid": 1339,
+    "lulaPct": 71.7,
+    "bolsonaroPct": 28.3
+  },
+  "30783": {
+    "name": "WASHINGTON, DC",
+    "lula": 2552,
+    "bolsonaro": 2494,
+    "totalValid": 5046,
+    "lulaPct": 50.57,
+    "bolsonaroPct": 49.43
+  },
+  "30805": {
+    "name": "WELLINGTON",
+    "lula": 389,
+    "bolsonaro": 164,
+    "totalValid": 553,
+    "lulaPct": 70.34,
+    "bolsonaroPct": 29.66
+  },
+  "30821": {
+    "name": "WINDHOEK",
+    "lula": 4,
+    "bolsonaro": 31,
+    "totalValid": 35,
+    "lulaPct": 11.43,
+    "bolsonaroPct": 88.57
+  },
+  "30848": {
+    "name": "CONSULADO DO BRASIL",
+    "lula": 125,
+    "bolsonaro": 62,
+    "totalValid": 187,
+    "lulaPct": 66.84,
+    "bolsonaroPct": 33.16
+  },
+  "30864": {
+    "name": "ZURIQUE",
+    "lula": 3189,
+    "bolsonaro": 2762,
+    "totalValid": 5951,
+    "lulaPct": 53.59,
+    "bolsonaroPct": 46.41
+  },
+  "30902": {
+    "name": "HARTFORD",
+    "lula": 525,
+    "bolsonaro": 933,
+    "totalValid": 1458,
+    "lulaPct": 36.01,
+    "bolsonaroPct": 63.99
+  },
+  "30961": {
+    "name": "CONSULADO GERAL DO BRASIL",
+    "lula": 934,
+    "bolsonaro": 862,
+    "totalValid": 1796,
+    "lulaPct": 52,
+    "bolsonaroPct": 48
+  },
+  "38962": {
+    "name": "DAR ES SALAAM",
+    "lula": 6,
+    "bolsonaro": 2,
+    "totalValid": 8,
+    "lulaPct": 75,
+    "bolsonaroPct": 25
+  },
+  "39004": {
+    "name": "PROVÍNCIA DE MENDOZA",
+    "lula": 56,
+    "bolsonaro": 88,
+    "totalValid": 144,
+    "lulaPct": 38.89,
+    "bolsonaroPct": 61.11
+  },
+  "39020": {
+    "name": "ZAGREB",
+    "lula": 26,
+    "bolsonaro": 15,
+    "totalValid": 41,
+    "lulaPct": 63.41,
+    "bolsonaroPct": 36.59
+  },
+  "39063": {
+    "name": "ALBERTA",
+    "lula": 3442,
+    "bolsonaro": 1980,
+    "totalValid": 5422,
+    "lulaPct": 63.48,
+    "bolsonaroPct": 36.52
+  },
+  "39080": {
+    "name": "ATLANTA, GA",
+    "lula": 1180,
+    "bolsonaro": 3373,
+    "totalValid": 4553,
+    "lulaPct": 25.92,
+    "bolsonaroPct": 74.08
+  },
+  "39102": {
+    "name": "MASCATE OMÃ",
+    "lula": 14,
+    "bolsonaro": 32,
+    "totalValid": 46,
+    "lulaPct": 30.43,
+    "bolsonaroPct": 69.57
+  },
+  "39160": {
+    "name": "LIUBLIANA",
+    "lula": 52,
+    "bolsonaro": 21,
+    "totalValid": 73,
+    "lulaPct": 71.23,
+    "bolsonaroPct": 28.77
+  },
+  "39209": {
+    "name": "BRATISLAVA",
+    "lula": 43,
+    "bolsonaro": 19,
+    "totalValid": 62,
+    "lulaPct": 69.35,
+    "bolsonaroPct": 30.65
+  },
+  "39306": {
+    "name": "ISTAMBUL-CONSULADO GERAL DO BRASIL",
+    "lula": 76,
+    "bolsonaro": 44,
+    "totalValid": 120,
+    "lulaPct": 63.33,
+    "bolsonaroPct": 36.67
+  },
+  "39322": {
+    "name": "NICÓSIA",
+    "lula": 15,
+    "bolsonaro": 9,
+    "totalValid": 24,
+    "lulaPct": 62.5,
+    "bolsonaroPct": 37.5
+  },
+  "98000": {
+    "name": "GUATEMALA",
+    "lula": 35,
+    "bolsonaro": 108,
+    "totalValid": 143,
+    "lulaPct": 24.48,
+    "bolsonaroPct": 75.52
+  },
+  "99155": {
+    "name": "PUERTO IGUAZÚ",
+    "lula": 5,
+    "bolsonaro": 0,
+    "totalValid": 5,
+    "lulaPct": 100,
+    "bolsonaroPct": 0
+  },
+  "99180": {
+    "name": "NASSAU",
+    "lula": 9,
+    "bolsonaro": 14,
+    "totalValid": 23,
+    "lulaPct": 39.13,
+    "bolsonaroPct": 60.87
+  },
+  "99287": {
+    "name": "LUSACA",
+    "lula": 13,
+    "bolsonaro": 1,
+    "totalValid": 14,
+    "lulaPct": 92.86,
+    "bolsonaroPct": 7.14
+  },
+  "99317": {
+    "name": "TALIN",
+    "lula": 156,
+    "bolsonaro": 23,
+    "totalValid": 179,
+    "lulaPct": 87.15,
+    "bolsonaroPct": 12.85
+  },
+  "99430": {
+    "name": "KINGSTON-JAMAICA",
+    "lula": 11,
+    "bolsonaro": 10,
+    "totalValid": 21,
+    "lulaPct": 52.38,
+    "bolsonaroPct": 47.62
+  },
+  "99473": {
+    "name": "BAREIN",
+    "lula": 11,
+    "bolsonaro": 25,
+    "totalValid": 36,
+    "lulaPct": 30.56,
+    "bolsonaroPct": 69.44
+  }
+}

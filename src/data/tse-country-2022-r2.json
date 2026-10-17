@@ -1,0 +1,695 @@
+{
+  "angola": {
+    "lula": 124,
+    "bolsonaro": 99,
+    "totalValid": 223,
+    "lulaPct": 55.61,
+    "bolsonaroPct": 44.39
+  },
+  "argentina": {
+    "lula": 4614,
+    "bolsonaro": 2489,
+    "totalValid": 7103,
+    "lulaPct": 64.96,
+    "bolsonaroPct": 35.04
+  },
+  "australia": {
+    "lula": 4321,
+    "bolsonaro": 2572,
+    "totalValid": 6893,
+    "lulaPct": 62.69,
+    "bolsonaroPct": 37.31
+  },
+  "austria": {
+    "lula": 960,
+    "bolsonaro": 379,
+    "totalValid": 1339,
+    "lulaPct": 71.7,
+    "bolsonaroPct": 28.3
+  },
+  "bahamas": {
+    "lula": 9,
+    "bolsonaro": 14,
+    "totalValid": 23,
+    "lulaPct": 39.13,
+    "bolsonaroPct": 60.87
+  },
+  "bahrain": {
+    "lula": 11,
+    "bolsonaro": 25,
+    "totalValid": 36,
+    "lulaPct": 30.56,
+    "bolsonaroPct": 69.44
+  },
+  "belgium": {
+    "lula": 2115,
+    "bolsonaro": 1444,
+    "totalValid": 3559,
+    "lulaPct": 59.43,
+    "bolsonaroPct": 40.57
+  },
+  "bolivia": {
+    "lula": 313,
+    "bolsonaro": 1165,
+    "totalValid": 1478,
+    "lulaPct": 21.18,
+    "bolsonaroPct": 78.82
+  },
+  "bulgaria": {
+    "lula": 24,
+    "bolsonaro": 7,
+    "totalValid": 31,
+    "lulaPct": 77.42,
+    "bolsonaroPct": 22.58
+  },
+  "canada": {
+    "lula": 13181,
+    "bolsonaro": 8213,
+    "totalValid": 21394,
+    "lulaPct": 61.61,
+    "bolsonaroPct": 38.39
+  },
+  "cape-verde": {
+    "lula": 40,
+    "bolsonaro": 22,
+    "totalValid": 62,
+    "lulaPct": 64.52,
+    "bolsonaroPct": 35.48
+  },
+  "chile": {
+    "lula": 905,
+    "bolsonaro": 922,
+    "totalValid": 1827,
+    "lulaPct": 49.53,
+    "bolsonaroPct": 50.47
+  },
+  "china-mainland": {
+    "lula": 199,
+    "bolsonaro": 146,
+    "totalValid": 345,
+    "lulaPct": 57.68,
+    "bolsonaroPct": 42.32
+  },
+  "colombia": {
+    "lula": 380,
+    "bolsonaro": 293,
+    "totalValid": 673,
+    "lulaPct": 56.46,
+    "bolsonaroPct": 43.54
+  },
+  "costa-rica": {
+    "lula": 166,
+    "bolsonaro": 200,
+    "totalValid": 366,
+    "lulaPct": 45.36,
+    "bolsonaroPct": 54.64
+  },
+  "croatia": {
+    "lula": 26,
+    "bolsonaro": 15,
+    "totalValid": 41,
+    "lulaPct": 63.41,
+    "bolsonaroPct": 36.59
+  },
+  "cuba": {
+    "lula": 32,
+    "bolsonaro": 0,
+    "totalValid": 32,
+    "lulaPct": 100,
+    "bolsonaroPct": 0
+  },
+  "cyprus": {
+    "lula": 15,
+    "bolsonaro": 9,
+    "totalValid": 24,
+    "lulaPct": 62.5,
+    "bolsonaroPct": 37.5
+  },
+  "czech-republic": {
+    "lula": 286,
+    "bolsonaro": 73,
+    "totalValid": 359,
+    "lulaPct": 79.67,
+    "bolsonaroPct": 20.33
+  },
+  "denmark": {
+    "lula": 1047,
+    "bolsonaro": 198,
+    "totalValid": 1245,
+    "lulaPct": 84.1,
+    "bolsonaroPct": 15.9
+  },
+  "dominican-republic": {
+    "lula": 80,
+    "bolsonaro": 138,
+    "totalValid": 218,
+    "lulaPct": 36.7,
+    "bolsonaroPct": 63.3
+  },
+  "dr-congo": {
+    "lula": 1,
+    "bolsonaro": 9,
+    "totalValid": 10,
+    "lulaPct": 10,
+    "bolsonaroPct": 90
+  },
+  "ecuador": {
+    "lula": 115,
+    "bolsonaro": 255,
+    "totalValid": 370,
+    "lulaPct": 31.08,
+    "bolsonaroPct": 68.92
+  },
+  "egypt": {
+    "lula": 46,
+    "bolsonaro": 23,
+    "totalValid": 69,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "el-salvador": {
+    "lula": 27,
+    "bolsonaro": 44,
+    "totalValid": 71,
+    "lulaPct": 38.03,
+    "bolsonaroPct": 61.97
+  },
+  "estonia": {
+    "lula": 156,
+    "bolsonaro": 23,
+    "totalValid": 179,
+    "lulaPct": 87.15,
+    "bolsonaroPct": 12.85
+  },
+  "finland": {
+    "lula": 444,
+    "bolsonaro": 163,
+    "totalValid": 607,
+    "lulaPct": 73.15,
+    "bolsonaroPct": 26.85
+  },
+  "france": {
+    "lula": 7885,
+    "bolsonaro": 1622,
+    "totalValid": 9507,
+    "lulaPct": 82.94,
+    "bolsonaroPct": 17.06
+  },
+  "french-guiana": {
+    "lula": 598,
+    "bolsonaro": 722,
+    "totalValid": 1320,
+    "lulaPct": 45.3,
+    "bolsonaroPct": 54.7
+  },
+  "germany": {
+    "lula": 13387,
+    "bolsonaro": 4023,
+    "totalValid": 17410,
+    "lulaPct": 76.89,
+    "bolsonaroPct": 23.11
+  },
+  "ghana": {
+    "lula": 14,
+    "bolsonaro": 4,
+    "totalValid": 18,
+    "lulaPct": 77.78,
+    "bolsonaroPct": 22.22
+  },
+  "greece": {
+    "lula": 193,
+    "bolsonaro": 242,
+    "totalValid": 435,
+    "lulaPct": 44.37,
+    "bolsonaroPct": 55.63
+  },
+  "guatemala": {
+    "lula": 35,
+    "bolsonaro": 108,
+    "totalValid": 143,
+    "lulaPct": 24.48,
+    "bolsonaroPct": 75.52
+  },
+  "guinea-bissau": {
+    "lula": 20,
+    "bolsonaro": 25,
+    "totalValid": 45,
+    "lulaPct": 44.44,
+    "bolsonaroPct": 55.56
+  },
+  "guyana": {
+    "lula": 8,
+    "bolsonaro": 58,
+    "totalValid": 66,
+    "lulaPct": 12.12,
+    "bolsonaroPct": 87.88
+  },
+  "haiti": {
+    "lula": 2,
+    "bolsonaro": 3,
+    "totalValid": 5,
+    "lulaPct": 40,
+    "bolsonaroPct": 60
+  },
+  "honduras": {
+    "lula": 29,
+    "bolsonaro": 47,
+    "totalValid": 76,
+    "lulaPct": 38.16,
+    "bolsonaroPct": 61.84
+  },
+  "hong-kong": {
+    "lula": 80,
+    "bolsonaro": 95,
+    "totalValid": 175,
+    "lulaPct": 45.71,
+    "bolsonaroPct": 54.29
+  },
+  "hungary": {
+    "lula": 481,
+    "bolsonaro": 83,
+    "totalValid": 564,
+    "lulaPct": 85.28,
+    "bolsonaroPct": 14.72
+  },
+  "india": {
+    "lula": 34,
+    "bolsonaro": 18,
+    "totalValid": 52,
+    "lulaPct": 65.38,
+    "bolsonaroPct": 34.62
+  },
+  "indonesia": {
+    "lula": 15,
+    "bolsonaro": 32,
+    "totalValid": 47,
+    "lulaPct": 31.91,
+    "bolsonaroPct": 68.09
+  },
+  "iran": {
+    "lula": 8,
+    "bolsonaro": 9,
+    "totalValid": 17,
+    "lulaPct": 47.06,
+    "bolsonaroPct": 52.94
+  },
+  "ireland": {
+    "lula": 6023,
+    "bolsonaro": 1339,
+    "totalValid": 7362,
+    "lulaPct": 81.81,
+    "bolsonaroPct": 18.19
+  },
+  "israel": {
+    "lula": 353,
+    "bolsonaro": 405,
+    "totalValid": 758,
+    "lulaPct": 46.57,
+    "bolsonaroPct": 53.43
+  },
+  "italy": {
+    "lula": 5820,
+    "bolsonaro": 4692,
+    "totalValid": 10512,
+    "lulaPct": 55.37,
+    "bolsonaroPct": 44.63
+  },
+  "ivory-coast": {
+    "lula": 26,
+    "bolsonaro": 15,
+    "totalValid": 41,
+    "lulaPct": 63.41,
+    "bolsonaroPct": 36.59
+  },
+  "jamaica": {
+    "lula": 11,
+    "bolsonaro": 10,
+    "totalValid": 21,
+    "lulaPct": 52.38,
+    "bolsonaroPct": 47.62
+  },
+  "japan": {
+    "lula": 5412,
+    "bolsonaro": 27640,
+    "totalValid": 33052,
+    "lulaPct": 16.37,
+    "bolsonaroPct": 83.63
+  },
+  "jordan": {
+    "lula": 407,
+    "bolsonaro": 125,
+    "totalValid": 532,
+    "lulaPct": 76.5,
+    "bolsonaroPct": 23.5
+  },
+  "kenya": {
+    "lula": 35,
+    "bolsonaro": 25,
+    "totalValid": 60,
+    "lulaPct": 58.33,
+    "bolsonaroPct": 41.67
+  },
+  "kuwait": {
+    "lula": 10,
+    "bolsonaro": 29,
+    "totalValid": 39,
+    "lulaPct": 25.64,
+    "bolsonaroPct": 74.36
+  },
+  "lebanon": {
+    "lula": 1591,
+    "bolsonaro": 1099,
+    "totalValid": 2690,
+    "lulaPct": 59.14,
+    "bolsonaroPct": 40.86
+  },
+  "malaysia": {
+    "lula": 32,
+    "bolsonaro": 26,
+    "totalValid": 58,
+    "lulaPct": 55.17,
+    "bolsonaroPct": 44.83
+  },
+  "mexico": {
+    "lula": 633,
+    "bolsonaro": 696,
+    "totalValid": 1329,
+    "lulaPct": 47.63,
+    "bolsonaroPct": 52.37
+  },
+  "morocco": {
+    "lula": 38,
+    "bolsonaro": 8,
+    "totalValid": 46,
+    "lulaPct": 82.61,
+    "bolsonaroPct": 17.39
+  },
+  "mozambique": {
+    "lula": 140,
+    "bolsonaro": 166,
+    "totalValid": 306,
+    "lulaPct": 45.75,
+    "bolsonaroPct": 54.25
+  },
+  "namibia": {
+    "lula": 4,
+    "bolsonaro": 31,
+    "totalValid": 35,
+    "lulaPct": 11.43,
+    "bolsonaroPct": 88.57
+  },
+  "nepal": {
+    "lula": 2,
+    "bolsonaro": 13,
+    "totalValid": 15,
+    "lulaPct": 13.33,
+    "bolsonaroPct": 86.67
+  },
+  "netherlands": {
+    "lula": 4511,
+    "bolsonaro": 1242,
+    "totalValid": 5753,
+    "lulaPct": 78.41,
+    "bolsonaroPct": 21.59
+  },
+  "new-zealand": {
+    "lula": 389,
+    "bolsonaro": 164,
+    "totalValid": 553,
+    "lulaPct": 70.34,
+    "bolsonaroPct": 29.66
+  },
+  "nicaragua": {
+    "lula": 34,
+    "bolsonaro": 38,
+    "totalValid": 72,
+    "lulaPct": 47.22,
+    "bolsonaroPct": 52.78
+  },
+  "nigeria": {
+    "lula": 21,
+    "bolsonaro": 4,
+    "totalValid": 25,
+    "lulaPct": 84,
+    "bolsonaroPct": 16
+  },
+  "norway": {
+    "lula": 628,
+    "bolsonaro": 197,
+    "totalValid": 825,
+    "lulaPct": 76.12,
+    "bolsonaroPct": 23.88
+  },
+  "oman": {
+    "lula": 14,
+    "bolsonaro": 32,
+    "totalValid": 46,
+    "lulaPct": 30.43,
+    "bolsonaroPct": 69.57
+  },
+  "palestine": {
+    "lula": 584,
+    "bolsonaro": 61,
+    "totalValid": 645,
+    "lulaPct": 90.54,
+    "bolsonaroPct": 9.46
+  },
+  "panama": {
+    "lula": 252,
+    "bolsonaro": 392,
+    "totalValid": 644,
+    "lulaPct": 39.13,
+    "bolsonaroPct": 60.87
+  },
+  "paraguay": {
+    "lula": 698,
+    "bolsonaro": 4569,
+    "totalValid": 5267,
+    "lulaPct": 13.25,
+    "bolsonaroPct": 86.75
+  },
+  "peru": {
+    "lula": 314,
+    "bolsonaro": 430,
+    "totalValid": 744,
+    "lulaPct": 42.2,
+    "bolsonaroPct": 57.8
+  },
+  "philippines": {
+    "lula": 22,
+    "bolsonaro": 34,
+    "totalValid": 56,
+    "lulaPct": 39.29,
+    "bolsonaroPct": 60.71
+  },
+  "poland": {
+    "lula": 212,
+    "bolsonaro": 68,
+    "totalValid": 280,
+    "lulaPct": 75.71,
+    "bolsonaroPct": 24.29
+  },
+  "portugal": {
+    "lula": 23256,
+    "bolsonaro": 13081,
+    "totalValid": 36337,
+    "lulaPct": 64,
+    "bolsonaroPct": 36
+  },
+  "qatar": {
+    "lula": 151,
+    "bolsonaro": 221,
+    "totalValid": 372,
+    "lulaPct": 40.59,
+    "bolsonaroPct": 59.41
+  },
+  "romania": {
+    "lula": 38,
+    "bolsonaro": 19,
+    "totalValid": 57,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "russia": {
+    "lula": 46,
+    "bolsonaro": 23,
+    "totalValid": 69,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "saudi-arabia": {
+    "lula": 38,
+    "bolsonaro": 18,
+    "totalValid": 56,
+    "lulaPct": 67.86,
+    "bolsonaroPct": 32.14
+  },
+  "senegal": {
+    "lula": 39,
+    "bolsonaro": 28,
+    "totalValid": 67,
+    "lulaPct": 58.21,
+    "bolsonaroPct": 41.79
+  },
+  "serbia": {
+    "lula": 36,
+    "bolsonaro": 12,
+    "totalValid": 48,
+    "lulaPct": 75,
+    "bolsonaroPct": 25
+  },
+  "singapore": {
+    "lula": 230,
+    "bolsonaro": 131,
+    "totalValid": 361,
+    "lulaPct": 63.71,
+    "bolsonaroPct": 36.29
+  },
+  "slovakia": {
+    "lula": 43,
+    "bolsonaro": 19,
+    "totalValid": 62,
+    "lulaPct": 69.35,
+    "bolsonaroPct": 30.65
+  },
+  "slovenia": {
+    "lula": 52,
+    "bolsonaro": 21,
+    "totalValid": 73,
+    "lulaPct": 71.23,
+    "bolsonaroPct": 28.77
+  },
+  "south-africa": {
+    "lula": 183,
+    "bolsonaro": 269,
+    "totalValid": 452,
+    "lulaPct": 40.49,
+    "bolsonaroPct": 59.51
+  },
+  "south-korea": {
+    "lula": 126,
+    "bolsonaro": 70,
+    "totalValid": 196,
+    "lulaPct": 64.29,
+    "bolsonaroPct": 35.71
+  },
+  "spain": {
+    "lula": 6324,
+    "bolsonaro": 3463,
+    "totalValid": 9787,
+    "lulaPct": 64.62,
+    "bolsonaroPct": 35.38
+  },
+  "suriname": {
+    "lula": 131,
+    "bolsonaro": 354,
+    "totalValid": 485,
+    "lulaPct": 27.01,
+    "bolsonaroPct": 72.99
+  },
+  "sweden": {
+    "lula": 1785,
+    "bolsonaro": 542,
+    "totalValid": 2327,
+    "lulaPct": 76.71,
+    "bolsonaroPct": 23.29
+  },
+  "switzerland": {
+    "lula": 5509,
+    "bolsonaro": 5041,
+    "totalValid": 10550,
+    "lulaPct": 52.22,
+    "bolsonaroPct": 47.78
+  },
+  "taiwan": {
+    "lula": 101,
+    "bolsonaro": 132,
+    "totalValid": 233,
+    "lulaPct": 43.35,
+    "bolsonaroPct": 56.65
+  },
+  "tanzania": {
+    "lula": 6,
+    "bolsonaro": 2,
+    "totalValid": 8,
+    "lulaPct": 75,
+    "bolsonaroPct": 25
+  },
+  "thailand": {
+    "lula": 47,
+    "bolsonaro": 50,
+    "totalValid": 97,
+    "lulaPct": 48.45,
+    "bolsonaroPct": 51.55
+  },
+  "timor-leste": {
+    "lula": 22,
+    "bolsonaro": 37,
+    "totalValid": 59,
+    "lulaPct": 37.29,
+    "bolsonaroPct": 62.71
+  },
+  "trinidad-and-tobago": {
+    "lula": 16,
+    "bolsonaro": 15,
+    "totalValid": 31,
+    "lulaPct": 51.61,
+    "bolsonaroPct": 48.39
+  },
+  "tunisia": {
+    "lula": 8,
+    "bolsonaro": 4,
+    "totalValid": 12,
+    "lulaPct": 66.67,
+    "bolsonaroPct": 33.33
+  },
+  "turkey": {
+    "lula": 76,
+    "bolsonaro": 44,
+    "totalValid": 120,
+    "lulaPct": 63.33,
+    "bolsonaroPct": 36.67
+  },
+  "united-arab-emirates": {
+    "lula": 404,
+    "bolsonaro": 593,
+    "totalValid": 997,
+    "lulaPct": 40.52,
+    "bolsonaroPct": 59.48
+  },
+  "united-kingdom": {
+    "lula": 9064,
+    "bolsonaro": 6004,
+    "totalValid": 15068,
+    "lulaPct": 60.15,
+    "bolsonaroPct": 39.85
+  },
+  "united-states": {
+    "lula": 23600,
+    "bolsonaro": 44596,
+    "totalValid": 68196,
+    "lulaPct": 34.61,
+    "bolsonaroPct": 65.39
+  },
+  "uruguay": {
+    "lula": 870,
+    "bolsonaro": 832,
+    "totalValid": 1702,
+    "lulaPct": 51.12,
+    "bolsonaroPct": 48.88
+  },
+  "vietnam": {
+    "lula": 13,
+    "bolsonaro": 6,
+    "totalValid": 19,
+    "lulaPct": 68.42,
+    "bolsonaroPct": 31.58
+  },
+  "zambia": {
+    "lula": 13,
+    "bolsonaro": 1,
+    "totalValid": 14,
+    "lulaPct": 92.86,
+    "bolsonaroPct": 7.14
+  }
+}

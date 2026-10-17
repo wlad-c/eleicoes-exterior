@@ -2,13 +2,20 @@
 /**
  * Build 2022 overseas presidential totals by TSE ZZ municipality and by
  * voting local (NM_LOCAL_VOTACAO) from official TSE open data:
- *   votacao_secao_2022_BR.zip (UF ZZ, 1º turno, Presidente)
+ *   votacao_secao_2022_BR.zip (UF ZZ, Presidente)
  *
- * Writes:
+ * Writes (1º turno, default):
  *   src/data/tse-city-2022.json      — mun code → YearResult
  *   src/data/tse-location-2022.json  — mun code → { localName → YearResult }
  *
- * Usage: node scripts/build-city-2022.mjs
+ * Writes (2º turno, --turno=2):
+ *   src/data/tse-city-2022-r2.json
+ *   src/data/tse-location-2022-r2.json
+ *   src/data/tse-country-2022-r2.json — countryId → YearResult (via tse-city-map)
+ *
+ * Usage:
+ *   node scripts/build-city-2022.mjs
+ *   node scripts/build-city-2022.mjs --turno=2
  */
 import { createWriteStream, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -22,13 +29,27 @@ import { Readable } from 'node:stream'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const CITY_OUT = join(ROOT, 'src/data/tse-city-2022.json')
-const LOC_OUT = join(ROOT, 'src/data/tse-location-2022.json')
 
 const CDN = 'https://cdn.tse.jus.br'
 const UA = 'eleicoes-exterior/1.0 (+2022 city/location builder)'
 const ZIP_URL = `${CDN}/estatistica/sead/odsele/votacao_secao/votacao_secao_2022_BR.zip`
 const CSV_NAME = 'votacao_secao_2022_BR.csv'
+
+function parseArgs(argv) {
+  let turno = 1
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]
+    if (a.startsWith('--turno=')) {
+      turno = Number(a.slice('--turno='.length))
+    } else if ((a === '--turno' || a === '-t') && argv[i + 1]) {
+      turno = Number(argv[++i])
+    }
+  }
+  if (turno !== 1 && turno !== 2) {
+    throw new Error(`Invalid --turno=${turno}; use 1 or 2`)
+  }
+  return { turno }
+}
 
 function pad(n, w) {
   return String(n).padStart(w, '0')
@@ -94,16 +115,35 @@ async function download(url, dest) {
 }
 
 async function main() {
-  const work = join(tmpdir(), 'eleicoes-city2022')
+  const { turno } = parseArgs(process.argv.slice(2))
+  const turnoStr = String(turno)
+  const suffix = turno === 2 ? '-r2' : ''
+  const CITY_OUT = join(ROOT, `src/data/tse-city-2022${suffix}.json`)
+  const LOC_OUT = join(ROOT, `src/data/tse-location-2022${suffix}.json`)
+  const COUNTRY_OUT = join(ROOT, `src/data/tse-country-2022${suffix}.json`)
+
+  console.log(`Building 2022 overseas city/location cache for NR_TURNO=${turnoStr}`)
+
+  const work = join(tmpdir(), 'eleicoes-tse-2022')
   mkdirSync(work, { recursive: true })
   const zipPath = join(work, 'votacao_secao_2022_BR.zip')
   const csvPath = join(work, CSV_NAME)
 
-  await download(ZIP_URL, zipPath)
-  console.log('Extracting CSV…')
-  execFileSync('unzip', ['-o', zipPath, CSV_NAME, '-d', work], {
-    stdio: 'inherit',
-  })
+  try {
+    const { statSync } = await import('node:fs')
+    const st = statSync(csvPath)
+    if (st.size > 1_000_000) {
+      console.log(`Reusing cached ${csvPath}`)
+    } else {
+      throw new Error('too small')
+    }
+  } catch {
+    await download(ZIP_URL, zipPath)
+    console.log('Extracting CSV…')
+    execFileSync('unzip', ['-o', zipPath, CSV_NAME, '-d', work], {
+      stdio: 'inherit',
+    })
+  }
 
   /** mun → Map(loc → {lula,bolso,valid}) */
   const byMun = new Map()
@@ -130,7 +170,7 @@ async function main() {
     rows++
     const cols = parseCsvLine(line)
     if (cols[idx.SG_UF] !== 'ZZ') continue
-    if (cols[idx.NR_TURNO] !== '1') continue
+    if (cols[idx.NR_TURNO] !== turnoStr) continue
     const cargo = (cols[idx.DS_CARGO] || '').toUpperCase()
     const cdCargo = cols[idx.CD_CARGO]
     if (cargo !== 'PRESIDENTE' && cdCargo !== '1' && cdCargo !== '01') continue
@@ -180,8 +220,6 @@ async function main() {
   writeFileSync(CITY_OUT, JSON.stringify(cityOut, null, 2) + '\n')
   writeFileSync(LOC_OUT, JSON.stringify(locOut, null, 2) + '\n')
 
-  // Sanity: compare a few country rollups to seed results.json
-  const results = JSON.parse(readFileSync(join(ROOT, 'src/data/results.json'), 'utf8'))
   const cityToCountry = JSON.parse(
     readFileSync(join(ROOT, 'src/data/tse-city-map.json'), 'utf8'),
   )
@@ -195,30 +233,48 @@ async function main() {
     agg.totalValid += y.totalValid
     byCountry.set(id, agg)
   }
+
+  let countryOut = null
+  if (turno === 2) {
+    countryOut = {}
+    for (const id of [...byCountry.keys()].sort()) {
+      const a = byCountry.get(id)
+      countryOut[id] = yearResult(a.lula, a.bolsonaro, a.totalValid)
+    }
+    writeFileSync(COUNTRY_OUT, JSON.stringify(countryOut, null, 2) + '\n')
+  }
+
+  // Sanity (1º turno only): compare country rollups to seed results.json
   let mismatches = 0
-  for (const c of results.countries) {
-    const agg = byCountry.get(c.id)
-    if (!agg || !c.y2022) continue
-    if (
-      agg.lula !== c.y2022.lula ||
-      agg.bolsonaro !== c.y2022.bolsonaro ||
-      agg.totalValid !== c.y2022.totalValid
-    ) {
-      mismatches++
-      console.warn('mismatch', c.id, agg, c.y2022)
+  if (turno === 1) {
+    const results = JSON.parse(readFileSync(join(ROOT, 'src/data/results.json'), 'utf8'))
+    for (const c of results.countries) {
+      const agg = byCountry.get(c.id)
+      if (!agg || !c.y2022) continue
+      if (
+        agg.lula !== c.y2022.lula ||
+        agg.bolsonaro !== c.y2022.bolsonaro ||
+        agg.totalValid !== c.y2022.totalValid
+      ) {
+        mismatches++
+        console.warn('mismatch', c.id, agg, c.y2022)
+      }
     }
   }
 
   console.log(
     JSON.stringify(
       {
+        turno,
         scannedRows: rows,
         zzVoteRows: kept,
         municipalities: Object.keys(cityOut).length,
         locations: Object.values(locOut).reduce((n, m) => n + Object.keys(m).length, 0),
-        countryMismatches: mismatches,
+        countries: countryOut ? Object.keys(countryOut).length : undefined,
+        countryMismatches: turno === 1 ? mismatches : undefined,
         cityOut: CITY_OUT,
         locOut: LOC_OUT,
+        countryOut: countryOut ? COUNTRY_OUT : undefined,
       },
       null,
       2,

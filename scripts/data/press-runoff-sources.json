@@ -1,0 +1,17 @@
+[
+  {
+    "name": "g1",
+    "url": "https://g1.globo.com/mundo/",
+    "note": "Replace with the runoff overseas BU roundup URL when it publishes on election night"
+  },
+  {
+    "name": "Poder360",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/",
+    "note": "Replace with the runoff exterior results URL when published"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/",
+    "note": "Replace with the runoff overseas BU article when published"
+  }
+]
