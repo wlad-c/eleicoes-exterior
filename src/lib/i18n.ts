@@ -10,6 +10,10 @@ const dict = {
   brand: { en: 'eleições exterior', pt: 'eleições exterior' },
   reported: { en: 'reported', pt: 'apurados' },
   pending: { en: 'pending', pt: 'pendentes' },
+  with2022History: {
+    en: 'with 2022 history',
+    pt: 'com histórico 2022',
+  },
   countries: { en: 'countries', pt: 'países' },
   search: { en: 'Search country…', pt: 'Buscar país…' },
   searchCity: { en: 'Search city or country…', pt: 'Buscar cidade ou país…' },
