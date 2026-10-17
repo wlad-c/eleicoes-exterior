@@ -64,6 +64,11 @@ export type CityResult = {
   y2026: YearResult
   /** Present when historical open data exists for this place; else null/omitted. */
   y2022?: YearResult | null
+  /**
+   * Same place’s 2026 1º turno tallies when viewing runoff (R1→R2 shift).
+   * Attached at runtime; not persisted in seed JSON.
+   */
+  yRound1?: YearResult | null
   swing?: Swing | null
   coverage: Coverage | null
   /**
@@ -89,6 +94,11 @@ export type CountryResult = {
   region: string
   y2022: YearResult
   y2026: YearResult | null
+  /**
+   * Same country’s 2026 1º turno tallies when viewing runoff (R1→R2 shift).
+   * Attached at runtime; not persisted in seed JSON.
+   */
+  yRound1?: YearResult | null
   swing: Swing | null
   /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
@@ -112,6 +122,12 @@ export type CountryResult = {
   domestic?: boolean
   notes: string
   status: CountryStatus
+  /**
+   * Provenance for the current-year tallies on this row.
+   * `press` = BU / news scrape (secondary); `tse` = official EA20.
+   * Omitted on frozen historical seeds.
+   */
+  source?: 'tse' | 'press'
 }
 
 export type TseZzRollup = {
@@ -161,6 +177,9 @@ export type MapMetric =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
+  | 'lulaRoundShift'
+  | 'bolsonaroRoundShift'
+  | 'roundSwing'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
@@ -186,6 +205,9 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'lulaChange',
   'bolsonaroChange',
   'swing',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
@@ -202,6 +224,13 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'lulaVotes2022',
   'bolsonaroVotes2026',
   'bolsonaroVotes2022',
+]
+
+/** Metrics only meaningful on the runoff tab (1º → 2º shift). */
+export const RUNOFF_ONLY_METRICS: MapMetric[] = [
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
 ]
 
 export type SortKey =
@@ -222,6 +251,9 @@ export type SortKey =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
+  | 'lulaRoundShift'
+  | 'bolsonaroRoundShift'
+  | 'roundSwing'
   | 'sections'
   | 'country'
   | 'region'
@@ -241,6 +273,9 @@ export type HeatColumn =
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
+  | 'lulaRoundShift'
+  | 'bolsonaroRoundShift'
+  | 'roundSwing'
   | 'none'
 
 export function heatColumnForMetric(metric: MapMetric): HeatColumn {
@@ -258,6 +293,12 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'bolsonaroChange'
     case 'swing':
       return 'swing'
+    case 'lulaRoundShift':
+      return 'lulaRoundShift'
+    case 'bolsonaroRoundShift':
+      return 'bolsonaroRoundShift'
+    case 'roundSwing':
+      return 'roundSwing'
     case 'lulaPct2026':
     case 'lulaVotes2026':
       return 'lula2026'

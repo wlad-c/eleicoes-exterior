@@ -12,6 +12,8 @@
  * 2022: official TSE open data votacao_secao_2022_BR.csv (streamed)
  *
  * Usage: node scripts/sync-tse-brazil.mjs
+ *        node scripts/sync-tse-brazil.mjs --turno=2 --cache-only
+ *          → writes src/data/tse-brazil-2022-r2.json only (no results.json)
  *        npm run build:brazil-locals   # within-municipality electoral zones
  */
 import {
@@ -34,6 +36,7 @@ const ROOT = join(__dirname, '..')
 const RESULTS_PATH = join(ROOT, 'src/data/results.json')
 const CITIES_PATH = join(ROOT, 'src/data/brazil-cities.json')
 const BRAZIL_2022_CACHE = join(ROOT, 'src/data/tse-brazil-2022.json')
+const BRAZIL_2022_R2_CACHE = join(ROOT, 'src/data/tse-brazil-2022-r2.json')
 
 const HOST = 'https://resultados.tse.jus.br'
 const AMBIENTE = 'oficial'
@@ -238,6 +241,21 @@ function parseCsvLine(line) {
   return cols
 }
 
+function parseCliArgs(argv) {
+  let turno = 1
+  let cacheOnly = false
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]
+    if (a === '--cache-only') cacheOnly = true
+    else if (a.startsWith('--turno=')) turno = Number(a.slice('--turno='.length))
+    else if ((a === '--turno' || a === '-t') && argv[i + 1]) turno = Number(argv[++i])
+  }
+  if (turno !== 1 && turno !== 2) {
+    throw new Error(`Invalid --turno=${turno}; use 1 or 2`)
+  }
+  return { turno, cacheOnly }
+}
+
 async function ensure2022Csv(work) {
   mkdirSync(work, { recursive: true })
   const zipPath = join(work, 'votacao_secao_2022_BR.zip')
@@ -264,11 +282,14 @@ async function ensure2022Csv(work) {
 }
 
 /**
- * Aggregate 2022 1st-round President votes by UF and by município.
+ * Aggregate 2022 President votes by UF and by município for one turno.
  * Excludes overseas ZZ.
  */
-async function build2022Domestic(csvPath) {
-  console.log('Aggregating 2022 domestic votes by UF and municipality…')
+async function build2022Domestic(csvPath, { turno = 1, outPath = BRAZIL_2022_CACHE } = {}) {
+  const turnoStr = String(turno)
+  console.log(
+    `Aggregating 2022 domestic votes by UF and municipality (NR_TURNO=${turnoStr})…`,
+  )
   const idx = {}
   const byUf = new Map()
   const byMun = new Map() // key: UF|munCode
@@ -276,7 +297,7 @@ async function build2022Domestic(csvPath) {
   let header = null
 
   const rl = createInterface({
-    input: createReadStream(csvPath),
+    input: createReadStream(csvPath, { encoding: 'latin1' }),
     crlfDelay: Infinity,
   })
 
@@ -300,7 +321,7 @@ async function build2022Domestic(csvPath) {
     const cols = parseCsvLine(line)
     const uf = cols[idx.SG_UF]
     if (!uf || uf === 'ZZ' || !UF_META[uf]) continue
-    if (cols[idx.NR_TURNO] !== '1') continue
+    if (cols[idx.NR_TURNO] !== turnoStr) continue
     const cargo = cols[idx.CD_CARGO]
     const dsCargo = (cols[idx.DS_CARGO] || '').toUpperCase()
     if (cargo !== '1' && !dsCargo.includes('PRESIDENTE')) continue
@@ -367,9 +388,9 @@ async function build2022Domestic(csvPath) {
     municipios,
     builtAt: new Date().toISOString(),
   }
-  writeFileSync(BRAZIL_2022_CACHE, JSON.stringify(out))
+  writeFileSync(outPath, JSON.stringify(out))
   console.log(
-    `2022 domestic: ${national.totalValid} valid · ${byUf.size} UFs · ${byMun.size} municipalities`,
+    `2022 T${turno} domestic: ${national.totalValid} valid · ${byUf.size} UFs · ${byMun.size} municipalities → ${outPath}`,
   )
   return out
 }
@@ -389,13 +410,25 @@ function titleCasePt(name) {
 }
 
 async function main() {
+  const { turno, cacheOnly } = parseCliArgs(process.argv.slice(2))
+
+  // Cache-only path: build a 2022 domestic JSON cache for the given turno and exit
+  // without touching results.json / 2026 EA20 fetches.
+  if (cacheOnly || turno === 2) {
+    const work = join(tmpdir(), 'eleicoes-tse-2022')
+    const csvPath = await ensure2022Csv(work)
+    const outPath = turno === 2 ? BRAZIL_2022_R2_CACHE : BRAZIL_2022_CACHE
+    await build2022Domestic(csvPath, { turno, outPath })
+    return
+  }
+
   const results = JSON.parse(readFileSync(RESULTS_PATH, 'utf8'))
 
   let y2022 = load2022Cache()
   if (!y2022?.national || !y2022?.ufs || !y2022?.municipios) {
-    const work = join(tmpdir(), 'eleicoes-brazil-2022')
+    const work = join(tmpdir(), 'eleicoes-tse-2022')
     const csvPath = await ensure2022Csv(work)
-    y2022 = await build2022Domestic(csvPath)
+    y2022 = await build2022Domestic(csvPath, { turno: 1, outPath: BRAZIL_2022_CACHE })
   } else {
     console.log(`Reusing ${BRAZIL_2022_CACHE}`)
   }

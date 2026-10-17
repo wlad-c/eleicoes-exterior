@@ -4,8 +4,12 @@ name: Sync TSE ZZ tallies
 # directly in the browser and does not depend on this job.
 on:
   schedule:
-    # Every 48h (00:00 UTC on even calendar days).
+    # Quiet baseline: every 48h.
     - cron: '0 0 */2 * *'
+    # Runoff Sunday 25 Oct 2026 from NZ close (~04:00 UTC), every 20 min.
+    - cron: '*/20 4-23 25 10 *'
+    # Continue through Monday 26 Oct afternoon UTC.
+    - cron: '*/20 0-15 26 10 *'
   workflow_dispatch:
 
 permissions:
@@ -29,20 +33,39 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Sync from TSE
+      - name: Decide sync mode
+        id: mode
+        run: |
+          NOW=$(date -u +%s)
+          START=$(date -u -d '2026-10-25 04:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-25 04:00:00' +%s)
+          END=$(date -u -d '2026-10-26 16:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-26 16:00:00' +%s)
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] || { [ "$NOW" -ge "$START" ] && [ "$NOW" -lt "$END" ]; }; then
+            echo "mode=runoff" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=round1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sync 1º turno seed
+        if: steps.mode.outputs.mode == 'round1'
         run: npm run sync:tse
+
+      - name: Sync runoff (TSE 6258 + press BUs)
+        if: steps.mode.outputs.mode == 'runoff'
+        run: |
+          npm run sync:tse:runoff || true
+          npm run scrape:press:runoff -- --apply || true
 
       - name: Build Pages
         run: npm run build:pages
 
       - name: Commit if changed
         run: |
-          if git diff --quiet -- src/data/results.json docs/; then
+          if git diff --quiet -- src/data/results.json src/data/results-runoff.json docs/; then
             echo "No meaningful file changes"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/results.json docs/
-          git commit -m "chore: sync TSE ZZ tallies"
+          git add src/data/results.json src/data/results-runoff.json docs/ || true
+          git commit -m "chore: sync TSE / press runoff tallies" || exit 0
           git push origin HEAD:main

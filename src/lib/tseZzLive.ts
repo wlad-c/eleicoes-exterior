@@ -1,6 +1,14 @@
 import cityMap from '../data/tse-city-map.json'
 import city2022 from '../data/tse-city-2022.json'
+import city2022r2 from '../data/tse-city-2022-r2.json'
 import type { CityResult, CountryResult, ResultsData, YearResult } from '../types'
+import {
+  AMBIENTE,
+  CARGO_PRESIDENTE,
+  CICLO,
+  type ElectionRound,
+  eleicaoForRound,
+} from './electionRound'
 import { withElectorate } from './format'
 import { withPlaceNames } from './placeNames'
 
@@ -22,10 +30,7 @@ type City2022Map = Record<
   }
 >
 
-const ELEICAO = '6257'
-const CARGO = '1'
-const CICLO = 'ele2026'
-const AMBIENTE = 'oficial'
+const CARGO = CARGO_PRESIDENTE
 
 /**
  * On localhost, Vite proxies `/tse-api` → resultados.tse.jus.br.
@@ -37,6 +42,11 @@ export function tseBaseUrl(): string {
     if (host === 'localhost' || host === '127.0.0.1') return '/tse-api'
   }
   return 'https://resultados.tse.jus.br'
+}
+
+export type LiveTseOptions = {
+  /** Defaults to 1º (6257). Runoff uses 6258 + 2022 R2 historical. */
+  round?: ElectionRound
 }
 
 function pad(n: string | number, w: number): string {
@@ -94,8 +104,9 @@ function swingOf(y2022: YearResult | null | undefined, y2026: YearResult) {
   }
 }
 
-function cityY2022(code: string): YearResult | null {
-  const raw = (city2022 as City2022Map)[code]
+function cityY2022(code: string, round: ElectionRound): YearResult | null {
+  const map = (round === '2' ? city2022r2 : city2022) as City2022Map
+  const raw = map[code]
   if (!raw) return null
   return yearResult(
     raw.lula,
@@ -117,10 +128,10 @@ async function fetchJson<T>(url: string): Promise<T> {
   return res.json() as Promise<T>
 }
 
-function ea20Url(base: string, municipioCode = ''): string {
+function ea20Url(base: string, eleicao: string, municipioCode = ''): string {
   const mun = municipioCode ? pad(municipioCode, 5) : ''
-  const file = `zz${mun}-c${pad(CARGO, 4)}-e${pad(ELEICAO, 6)}-u.json`
-  return `${base}/${AMBIENTE}/${CICLO}/${ELEICAO}/dados/zz/${file}`
+  const file = `zz${mun}-c${pad(CARGO, 4)}-e${pad(eleicao, 6)}-u.json`
+  return `${base}/${AMBIENTE}/${CICLO}/${eleicao}/dados/zz/${file}`
 }
 
 type Ea20Doc = {
@@ -223,14 +234,19 @@ type Agg = {
  * Pull official TSE EA20 ZZ presidential tallies and overlay onto `base`.
  * Throws if the top-level TSE endpoints are unreachable.
  */
-export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
+export async function fetchLiveTseZz(
+  base: ResultsData,
+  opts: LiveTseOptions = {},
+): Promise<ResultsData> {
+  const round: ElectionRound = opts.round ?? '1'
+  const eleicao = eleicaoForRound(round)
   const baseUrl = tseBaseUrl()
   const byId = new Map(base.countries.map((c) => [c.id, c]))
   const cityToCountry = cityMap as Record<string, string>
 
-  const munUrl = `${baseUrl}/${AMBIENTE}/${CICLO}/${ELEICAO}/config/mun-e${pad(ELEICAO, 6)}-cm.json`
-  const abUrl = `${baseUrl}/${AMBIENTE}/${CICLO}/${ELEICAO}/dados/zz/zz-e${pad(ELEICAO, 6)}-ab.json`
-  const zzUrl = ea20Url(baseUrl)
+  const munUrl = `${baseUrl}/${AMBIENTE}/${CICLO}/${eleicao}/config/mun-e${pad(eleicao, 6)}-cm.json`
+  const abUrl = `${baseUrl}/${AMBIENTE}/${CICLO}/${eleicao}/dados/zz/zz-e${pad(eleicao, 6)}-ab.json`
+  const zzUrl = ea20Url(baseUrl, eleicao)
 
   const [mun, ab, zzAgg] = await Promise.all([
     fetchJson<{ abr?: Array<{ cd?: string; mu?: Array<{ cd?: string; nm?: string }> }> }>(
@@ -268,7 +284,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
   const munVotes = await mapPool(codes, 16, async (code): Promise<MunVotes | null> => {
     const countryId = cityToCountry[code]
     try {
-      const doc = await fetchJson<Ea20Doc>(ea20Url(baseUrl, code))
+      const doc = await fetchJson<Ea20Doc>(ea20Url(baseUrl, eleicao, code))
       const { lula, bolsonaro } = extractCandidates(doc)
       const totalValid = parseIntPT(doc.v?.vv ?? doc.v?.vvc)
       const counted = parseIntPT(doc.s?.st)
@@ -336,7 +352,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       row.blank,
       row.nullVotes,
     )
-    const y2022 = cityY2022(row.code)
+    const y2022 = cityY2022(row.code, round)
     agg.areas.push(
       withPlaceNames({
         code: row.code,
@@ -376,6 +392,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       y2026,
       swing: swingOf(country.y2022, y2026),
       status: 'reported',
+      source: 'tse',
       coverage: { counted: agg.counted, total: agg.total },
       areas: agg.areas,
       notes: partial
@@ -394,7 +411,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
       ...base.meta,
       updatedAt: fetchedAt,
       tseZz: {
-        election: ELEICAO,
+        election: eleicao,
         fetchedAt,
         sectionsCounted: parseIntPT(zzAgg.s?.st),
         sectionsTotal: parseIntPT(zzAgg.s?.ts),
@@ -402,7 +419,7 @@ export async function fetchLiveTseZz(base: ResultsData): Promise<ResultsData> {
         lula: zzCand.lula,
         bolsonaro: zzCand.bolsonaro,
         totalValid: zzValid,
-        url: 'https://resultados.tse.jus.br/oficial/ele2026/6257/dados/zz/zz-c0001-e006257-u.json',
+        url: `https://resultados.tse.jus.br/oficial/ele2026/${eleicao}/dados/zz/zz-c0001-e${pad(eleicao, 6)}-u.json`,
       },
     },
     countries,

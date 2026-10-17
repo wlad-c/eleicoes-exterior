@@ -23,9 +23,12 @@ import {
   fmtPpWithVotes,
   fmtShare,
   lulaVotesDelta,
+  lulaRoundShift,
+  bolsonaroRoundShift,
   metricValue,
   otherPct,
   otherVotes,
+  roundSwing,
   swing,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
@@ -501,6 +504,48 @@ export function ResultsTable({
                 {arrow('swing')}
               </SortableTh>
             )
+          case 'lulaRoundShift':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaRoundShift')}
+                align="right"
+                heated={heatCol === 'lulaRoundShift'}
+                hint={t('hintLulaRoundShift', lang)}
+                {...drag}
+              >
+                {t('lulaRoundShift', lang)}
+                {arrow('lulaRoundShift')}
+              </SortableTh>
+            )
+          case 'bolsonaroRoundShift':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroRoundShift')}
+                align="right"
+                heated={heatCol === 'bolsonaroRoundShift'}
+                hint={t('hintBolsonaroRoundShift', lang)}
+                {...drag}
+              >
+                {t('bolsonaroRoundShift', lang)}
+                {arrow('bolsonaroRoundShift')}
+              </SortableTh>
+            )
+          case 'roundSwing':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('roundSwing')}
+                align="right"
+                heated={heatCol === 'roundSwing'}
+                hint={t('hintRoundSwing', lang)}
+                {...drag}
+              >
+                {t('roundSwing', lang)}
+                {arrow('roundSwing')}
+              </SortableTh>
+            )
           case 'sections':
             return (
               <SortableTh
@@ -674,6 +719,24 @@ export function ResultsTable({
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtPp(totals.swing, lang)}
+              </td>
+            )
+          case 'lulaRoundShift':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.lulaRoundShift, lang)}
+              </td>
+            )
+          case 'bolsonaroRoundShift':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.bolsonaroRoundShift, lang)}
+              </td>
+            )
+          case 'roundSwing':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.roundSwing, lang)}
               </td>
             )
           case 'sections':
@@ -992,6 +1055,39 @@ export function ResultsTable({
                               heat={heat}
                             >
                               {fmtPp(swing(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'lulaRoundShift':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lulaRoundShift"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(lulaRoundShift(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroRoundShift':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolsonaroRoundShift"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(bolsonaroRoundShift(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'roundSwing':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="roundSwing"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(roundSwing(c), lang)}
                             </HeatTd>
                           )
                         case 'sections':

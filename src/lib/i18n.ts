@@ -22,6 +22,11 @@ const dict = {
   tabAreas: { en: 'Area', pt: 'Área' },
   tabCities: { en: 'City', pt: 'Cidade' },
   tabSuburbs: { en: 'Neighborhood', pt: 'Bairro' },
+  roundTabGroup: { en: 'Election round', pt: 'Turno' },
+  round1: { en: '1st round', pt: '1º turno' },
+  round2: { en: 'Runoff', pt: '2º turno' },
+  sourcePress: { en: 'press BU', pt: 'BU imprensa' },
+  sourceTse: { en: 'TSE', pt: 'TSE' },
   tableView: { en: 'Table', pt: 'Tabela' },
   allCountriesFilter: { en: 'Any country', pt: 'Qualquer país' },
   allAreasFilter: { en: 'Any area', pt: 'Qualquer área' },
@@ -76,6 +81,30 @@ const dict = {
   swing: {
     en: 'Swing',
     pt: 'Swing',
+  },
+  lulaRoundShift: {
+    en: 'Lula 1º→2º',
+    pt: 'Lula 1º→2º',
+  },
+  bolsonaroRoundShift: {
+    en: 'Bolsonaro 1º→2º',
+    pt: 'Bolsonaro 1º→2º',
+  },
+  roundSwing: {
+    en: 'Round swing',
+    pt: 'Swing entre turnos',
+  },
+  hintLulaRoundShift: {
+    en: 'Lula share in runoff minus 1st round (2026), percentage points',
+    pt: 'Percentual de Lula no 2º turno menos o 1º (2026), em pontos percentuais',
+  },
+  hintBolsonaroRoundShift: {
+    en: 'Bolsonaro share in runoff minus 1st round (2026), percentage points',
+    pt: 'Percentual de Bolsonaro no 2º turno menos o 1º (2026), em pontos percentuais',
+  },
+  hintRoundSwing: {
+    en: 'Lula 1º→2º shift minus Bolsonaro 1º→2º shift (positive toward Lula)',
+    pt: 'Variação Lula 1º→2º menos variação Bolsonaro 1º→2º (positivo para Lula)',
   },
   difference2026: {
     en: 'Difference 2026',
@@ -357,8 +386,12 @@ const dict = {
     pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing é a variação de Lula menos a de Bolsonaro (pontos percentuais; positivo para Lula, negativo para Bolsonaro).',
   },
   disclaimerScope: {
-    en: 'Default scope is overseas 1st-round presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total.',
-    pt: 'O recorte padrão é a votação presidencial do 1º turno no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior.',
+    en: 'Default scope is overseas presidential voting for the selected round. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total.',
+    pt: 'O recorte padrão é a votação presidencial no exterior no turno selecionado. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior.',
+  },
+  disclaimerRoundShift: {
+    en: 'On the runoff tab, “1º→2º” columns compare 2026 runoff shares to the same place’s 2026 1st-round shares. Year-over-year change/swing still compare 2026 runoff to 2022 runoff.',
+    pt: 'Na aba do 2º turno, as colunas “1º→2º” comparam os percentuais de 2026 no 2º turno com o 1º turno do mesmo lugar. A variação/swing ano a ano continua comparando o 2º turno de 2026 com o de 2022.',
   },
   howToEdit: {
     en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run sync:brazil && npm run build:pages to refresh the committed seed JSON.',
@@ -374,8 +407,8 @@ const dict = {
     pt: 'atualização pausada até o 2º turno (NZ)',
   },
   autoRefreshFast: {
-    en: 'live TSE every 2 min',
-    pt: 'TSE ao vivo a cada 2 min',
+    en: 'live every 2 min',
+    pt: 'ao vivo a cada 2 min',
   },
   syncLive: { en: 'live TSE', pt: 'TSE ao vivo' },
   syncUpdating: { en: 'updating TSE…', pt: 'atualizando TSE…' },
@@ -404,8 +437,16 @@ const dict = {
     pt: 'Recarregar página',
   },
   scope: {
+    en: 'overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
+    pt: 'exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
+  },
+  scopeRound1: {
     en: '1st round · overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
     pt: '1º turno · exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
+  },
+  scopeRound2: {
+    en: 'runoff · overseas by default · 2026 2º vs 2022 2º · plus 1º→2º shift',
+    pt: '2º turno · exterior por padrão · 2026 2º vs 2022 2º · mais variação 1º→2º',
   },
   Africa: { en: 'Africa', pt: 'África' },
   Americas: { en: 'Americas', pt: 'Américas' },

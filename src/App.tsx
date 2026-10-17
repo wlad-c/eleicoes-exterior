@@ -6,7 +6,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import raw from './data/results.json'
+import rawRound1 from './data/results.json'
+import rawRound2 from './data/results-runoff.json'
 import { CityBreakdownTable } from './components/CityBreakdownTable'
 import { MultiSelectFilter } from './components/MultiSelectFilter'
 import { ResultsTable } from './components/ResultsTable'
@@ -63,6 +64,12 @@ import {
 type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
 const BRAZIL_ID = 'brazil'
 import {
+  defaultElectionRound,
+  type ElectionRound,
+  readStoredRound,
+  writeStoredRound,
+} from './lib/electionRound'
+import {
   moveColumn,
   readStoredColumnOrder,
   readStoredTableCols,
@@ -74,9 +81,45 @@ import { useTheme } from './lib/theme'
 import { useMobileScrollCollapse } from './lib/useMobileScrollCollapse'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
-import { HEATMAP_METRICS } from './types'
+import { HEATMAP_METRICS, RUNOFF_ONLY_METRICS } from './types'
 
-const seed = raw as ResultsData
+const seedRound1 = rawRound1 as ResultsData
+const seedRound2 = rawRound2 as ResultsData
+
+/** Attach 2026 1º tallies onto runoff rows for R1→R2 shift columns. */
+function withRound1Compare(
+  runoff: ResultsData,
+  round1: ResultsData,
+): ResultsData {
+  const r1ById = new Map(round1.countries.map((c) => [c.id, c]))
+  return {
+    ...runoff,
+    countries: runoff.countries.map((c) => {
+      const r1 = r1ById.get(c.id)
+      if (!r1?.y2026) return c
+      const areas =
+        c.areas && r1.areas
+          ? c.areas.map((a) => {
+              const a1 = r1.areas?.find((x) => x.code === a.code)
+              return a1?.y2026 ? { ...a, yRound1: a1.y2026 } : a
+            })
+          : c.areas
+      const cities =
+        c.cities && r1.cities
+          ? c.cities.map((city) => {
+              const c1 = r1.cities?.find((x) => x.code === city.code)
+              return c1?.y2026 ? { ...city, yRound1: c1.y2026 } : city
+            })
+          : c.cities
+      return {
+        ...c,
+        yRound1: r1.y2026,
+        areas,
+        cities,
+      }
+    }),
+  }
+}
 
 const LANG_KEY = 'eleicoes-exterior-lang'
 
@@ -123,7 +166,23 @@ async function hardRefresh(): Promise<void> {
 
 export default function App() {
   const { theme, setTheme } = useTheme()
-  const { data: seedData, syncStatus, live } = useResultsData(seed)
+  const [electionRound, setElectionRoundState] = useState<ElectionRound>(() => {
+    if (typeof window === 'undefined') return '1'
+    return readStoredRound() ?? defaultElectionRound()
+  })
+  const setElectionRound = (next: ElectionRound) => {
+    setElectionRoundState(next)
+    writeStoredRound(next)
+  }
+  const activeSeed = electionRound === '2' ? seedRound2 : seedRound1
+  const { data: liveData, syncStatus, live } = useResultsData(
+    activeSeed,
+    electionRound,
+  )
+  const seedData = useMemo(() => {
+    if (electionRound !== '2') return liveData
+    return withRound1Compare(liveData, seedRound1)
+  }, [electionRound, liveData])
   const [lang, setLangState] = useState<Lang>(() =>
     typeof window === 'undefined' ? 'pt' : readStoredLang(),
   )
@@ -161,10 +220,14 @@ export default function App() {
     mapFocus.level !== 'world'
   // Cities (municipalities) when Brazil is included; locals on Suburb tab or
   // when the map is drilled into a city (neighborhood markers).
+  // Domestic Brazil grain files are still 1º-turno until runoff sync lands.
+  // On the runoff tab, show the Brazil country row only (no city/bairro drill).
   const brazilDomestic = useBrazilDomestic({
-    wantCities: wantBrazil,
+    wantCities: wantBrazil && electionRound === '1',
     wantSuburbs:
-      wantBrazil && (tableView === 'suburbs' || mapFocus.level === 'city'),
+      wantBrazil &&
+      electionRound === '1' &&
+      (tableView === 'suburbs' || mapFocus.level === 'city'),
   })
 
   const data = useMemo(() => {
@@ -191,23 +254,41 @@ export default function App() {
     }
   }, [seedData, brazilDomestic.cities, brazilDomestic.suburbs])
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
-    readStoredTableCols(),
+    readStoredTableCols(readStoredRound() ?? defaultElectionRound()),
   )
   const [columnOrder, setColumnOrder] = useState<TableMetricCol[]>(() =>
-    readStoredColumnOrder(),
+    readStoredColumnOrder(readStoredRound() ?? defaultElectionRound()),
+  )
+
+  useEffect(() => {
+    setVisibleCols(readStoredTableCols(electionRound))
+    setColumnOrder(readStoredColumnOrder(electionRound))
+    if (electionRound === '1' && RUNOFF_ONLY_METRICS.includes(metric)) {
+      setMetric('leader2026')
+    }
+    // Only re-load prefs when the round tab changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [electionRound])
+
+  const mapMetrics = useMemo(
+    () =>
+      electionRound === '2'
+        ? HEATMAP_METRICS
+        : HEATMAP_METRICS.filter((m) => !RUNOFF_ONLY_METRICS.includes(m)),
+    [electionRound],
   )
   const tableChromeRef = useRef<HTMLDivElement>(null)
   const chromeCollapsed = useMobileScrollCollapse(tableChromeRef)
 
   function setVisibleColsPersist(next: TableMetricCol[]) {
     setVisibleCols(next)
-    writeStoredTableCols(next)
+    writeStoredTableCols(next, electionRound)
   }
 
   function reorderColumns(from: TableMetricCol, to: TableMetricCol) {
     setColumnOrder((prev) => {
       const next = moveColumn(prev, from, to)
-      writeStoredColumnOrder(next)
+      writeStoredColumnOrder(next, electionRound)
       return next
     })
   }
@@ -957,11 +1038,36 @@ export default function App() {
             </button>
           </div>
         </div>
+        <div
+          className="mb-4 flex gap-1"
+          role="tablist"
+          aria-label={t('roundTabGroup', lang)}
+        >
+          {(
+            [
+              { id: '1' as const, label: t('round1', lang) },
+              { id: '2' as const, label: t('round2', lang) },
+            ] as const
+          ).map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={electionRound === tab.id}
+              className="lang-btn control px-4 py-2 text-sm font-semibold"
+              onClick={() => setElectionRound(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
         <h1 className="max-w-3xl text-xl font-semibold leading-snug text-[var(--ink)] sm:text-2xl">
           {data.meta.title[lang]}
         </h1>
         <p className="mt-2 max-w-2xl text-[var(--ink-muted)]">{data.meta.subtitle[lang]}</p>
-        <p className="mt-1 text-sm text-[var(--ink-muted)]">{t('scope', lang)}</p>
+        <p className="mt-1 text-sm text-[var(--ink-muted)]">
+          {t(electionRound === '2' ? 'scopeRound2' : 'scopeRound1', lang)}
+        </p>
       </header>
 
       <section className="panel animate-rise-delay mb-6 rounded-xl p-4 sm:p-5">
@@ -1050,7 +1156,7 @@ export default function App() {
               onChange={(e) => setMetric(e.target.value as MapMetric)}
               aria-describedby="heatmap-hint"
             >
-              {HEATMAP_METRICS.map((m) => (
+              {mapMetrics.map((m) => (
                 <option key={m} value={m}>
                   {t(m, lang)}
                 </option>
@@ -1418,6 +1524,9 @@ export default function App() {
             <li>{t('disclaimerUnofficial', lang)}</li>
             <li>{t('disclaimerBu', lang)}</li>
             <li>{t('disclaimerCompare', lang)}</li>
+            {electionRound === '2' ? (
+              <li>{t('disclaimerRoundShift', lang)}</li>
+            ) : null}
             <li>{t('disclaimerScope', lang)}</li>
           </ul>
         </div>
@@ -1590,6 +1699,20 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.swing != null
         ? c.swing.lulaPp - c.swing.bolsonaroPp
         : Number.NaN
+    case 'lulaRoundShift':
+      return c.y2026 && c.yRound1
+        ? c.y2026.lulaPct - c.yRound1.lulaPct
+        : Number.NaN
+    case 'bolsonaroRoundShift':
+      return c.y2026 && c.yRound1
+        ? c.y2026.bolsonaroPct - c.yRound1.bolsonaroPct
+        : Number.NaN
+    case 'roundSwing': {
+      if (!c.y2026 || !c.yRound1) return Number.NaN
+      const l = c.y2026.lulaPct - c.yRound1.lulaPct
+      const b = c.y2026.bolsonaroPct - c.yRound1.bolsonaroPct
+      return l - b
+    }
     case 'sections':
       return c.coverage && c.coverage.total > 0
         ? c.coverage.counted / c.coverage.total
