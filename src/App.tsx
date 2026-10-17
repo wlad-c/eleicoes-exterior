@@ -199,7 +199,14 @@ export default function App() {
   const deferredQuery = useDeferredValue(query)
   const [region, setRegion] = useState('all')
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
-    'reported',
+    () =>
+      // Runoff seed is all-pending until 2026 BUs/TSE land; default to All so
+      // 2022 R2 history is visible immediately.
+      (typeof window !== 'undefined'
+        ? (readStoredRound() ?? defaultElectionRound())
+        : '1') === '2'
+        ? 'all'
+        : 'reported',
   )
   /** Multi-select geo filters above the table (cascading country → area → city). */
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>([])
@@ -265,6 +272,17 @@ export default function App() {
     setColumnOrder(readStoredColumnOrder(electionRound))
     if (electionRound === '1' && RUNOFF_ONLY_METRICS.includes(metric)) {
       setMetric('leader2026')
+    }
+    // Runoff with no 2026 rows yet: show All so 2022 history isn't hidden.
+    // 1º turno stays on Reported (finalized).
+    if (electionRound === '2') {
+      const any2026 = seedData.countries.some(
+        (c) => !c.domestic && c.status === 'reported' && c.y2026,
+      )
+      setStatusFilter(any2026 ? 'reported' : 'all')
+      if (!any2026) setMetric('leader2022')
+    } else {
+      setStatusFilter('reported')
     }
     // Only re-load prefs when the round tab changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -377,8 +395,27 @@ export default function App() {
     [reportedOverseas],
   )
   const reportedCount = reportedOverseas.length
+  const hist2022OverseasCount = useMemo(
+    () =>
+      data.countries.filter(
+        (c) => !c.domestic && c.y2022 && c.y2022.totalValid > 0,
+      ).length,
+    [data.countries],
+  )
 
-  const mapCountries = reportedCountries
+  /**
+   * Map must include pending countries that already have 2022 history —
+   * otherwise the runoff tab looks empty until the first 2026 BU lands,
+   * even when coloring by Leader 2022 / other historical metrics.
+   */
+  const mapCountries = useMemo(() => {
+    return data.countries.filter((c) => {
+      if (c.domestic && !showBrazilInTables) return false
+      if (c.status === 'reported' && c.y2026) return true
+      if (c.y2022 && c.y2022.totalValid > 0) return true
+      return false
+    })
+  }, [data.countries, showBrazilInTables])
 
   const filtered = useMemo(() => {
     const q = deferredQuery.trim()
@@ -1145,7 +1182,9 @@ export default function App() {
           <div>
             <h2 className="brand text-lg font-bold">{t('map', lang)}</h2>
             <p className="mt-0.5 text-xs text-[var(--ink-muted)]">
-              {reportedCount} {t('reported', lang)}
+              {reportedCount > 0
+                ? `${reportedCount} ${t('reported', lang)}`
+                : `${hist2022OverseasCount} ${t('with2022History', lang)}`}
             </p>
           </div>
           <label className="block w-full min-w-0 text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)] sm:min-w-[220px] sm:w-auto">
