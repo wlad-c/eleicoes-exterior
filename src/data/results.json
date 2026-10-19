@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-17T03:42:29.960Z",
+    "updatedAt": "2026-10-19T03:59:17.206Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 1st round",
@@ -116,7 +116,7 @@
     },
     "tseZz": {
       "election": "6257",
-      "fetchedAt": "2026-10-17T03:40:32.015Z",
+      "fetchedAt": "2026-10-19T03:56:32.589Z",
       "sectionsCounted": 1351,
       "sectionsTotal": 1351,
       "sectionsPct": 100,
