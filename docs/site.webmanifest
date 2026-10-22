@@ -1,0 +1,24 @@
+{
+  "name": "eleições exterior",
+  "short_name": "eleições",
+  "description": "Brazilian overseas presidential vote — 2026 vs 2022",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#3D1A78",
+  "theme_color": "#5B2C9D",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
