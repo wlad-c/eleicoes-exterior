@@ -732,7 +732,14 @@ html.dark .is-x-scrolled .sticky-col-city {
     grid-column: 1 / -1;
   }
 
-  .filter-row--tools > .filter-tool {
+  /* Keep Brazil as a horizontal checkbox + label row */
+  .filter-row--tools > .filter-tool--brazil {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .filter-row--tools > .filter-tool:not(.filter-tool--brazil) {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -740,7 +747,7 @@ html.dark .is-x-scrolled .sticky-col-city {
     min-width: 0;
   }
 
-  .filter-row--tools > .filter-tool > select.control {
+  .filter-row--tools > .filter-tool:not(.filter-tool--brazil) > select.control {
     width: 100%;
     min-width: 0;
     max-width: 100%;
