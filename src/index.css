@@ -1475,9 +1475,11 @@ th.col-dragging .col-drag-handle {
 .table-col-picker-sheet-body {
   flex: 1 1 auto;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   padding: 0.45rem 0.65rem 0.85rem;
 }
 
@@ -1487,9 +1489,22 @@ th.col-dragging .col-drag-handle {
   list-style: none;
 }
 
-.table-col-picker-sheet .table-col-picker-list label {
-  min-height: 2.4rem;
-  padding-block: 0.55rem;
+.table-col-picker-list > li + li {
+  margin-top: 0.15rem;
+}
+
+.table-col-picker-option {
+  touch-action: manipulation;
+}
+
+.table-col-picker-sheet .table-col-picker-option {
+  min-height: 2.75rem;
+  padding-block: 0.65rem;
+}
+
+.table-col-picker-sheet .col-drag-handle {
+  padding: 0.35rem 0.25rem;
+  touch-action: none;
 }
 
 .lang-btn[aria-pressed='true'],

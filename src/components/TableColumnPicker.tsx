@@ -36,7 +36,8 @@ export function TableColumnPicker({
   const [open, setOpen] = useState(false)
   const isNarrow = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
   const visibleSet = new Set(visible)
-  const { dragProps } = useColumnDrag(onReorder)
+  // Handle-only drag so list scroll / checkbox taps are not stolen on touch.
+  const { dragProps } = useColumnDrag(onReorder, { handleOnly: true })
 
   const toggle = (col: TableMetricCol) => {
     if (visibleSet.has(col)) {
@@ -69,15 +70,19 @@ export function TableColumnPicker({
   useEffect(() => {
     if (!open || !isNarrow) return
     const html = document.documentElement
-    const prev = html.style.overflow
+    const body = document.body
+    const prevHtml = html.style.overflow
+    const prevBody = body.style.overflow
     html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
     return () => {
-      html.style.overflow = prev
+      html.style.overflow = prevHtml
+      body.style.overflow = prevBody
     }
   }, [open, isNarrow])
 
   const list = (
-    <ul className="table-col-picker-list space-y-0.5">
+    <ul className="table-col-picker-list">
       {columnOrder.map((col) => {
         const checked = visibleSet.has(col)
         const id = `${menuId}-${col}`
@@ -85,7 +90,7 @@ export function TableColumnPicker({
           <li key={col} className="col-draggable rounded-sm" {...dragProps(col)}>
             <label
               htmlFor={id}
-              className="flex cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1.5 text-sm hover:bg-[var(--chip-soft)]"
+              className="table-col-picker-option flex cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1.5 text-sm hover:bg-[var(--chip-soft)]"
             >
               <span
                 className="col-drag-handle select-none text-[var(--ink-muted)]"
@@ -103,7 +108,7 @@ export function TableColumnPicker({
                 onClick={(e) => e.stopPropagation()}
                 onPointerDown={(e) => e.stopPropagation()}
               />
-              <span>{t(TABLE_METRIC_COL_LABEL[col], lang)}</span>
+              <span className="min-w-0 flex-1">{t(TABLE_METRIC_COL_LABEL[col], lang)}</span>
             </label>
           </li>
         )
