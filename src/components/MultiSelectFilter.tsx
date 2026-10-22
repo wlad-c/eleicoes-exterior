@@ -2,12 +2,16 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { foldForSearch } from '../lib/searchText'
+import { COUNTRY_FLAG_ONLY_MQ, useMediaQuery } from '../lib/useMediaQuery'
 
 export type MultiSelectOption = {
   value: string
@@ -32,11 +36,19 @@ type Props = {
 
 const OPTION_ROW_PX = 34
 const VIRTUALIZE_AT = 60
+const MENU_MAX_PX = 288 // 18rem
 
 function matchesQuery(option: MultiSelectOption, qFolded: string): boolean {
   if (!qFolded) return true
   const hay = `${option.label} ${option.searchText ?? ''}`
   return foldForSearch(hay).includes(qFolded)
+}
+
+type MenuPos = {
+  top: number
+  left: number
+  width: number
+  maxHeight: number
 }
 
 /** Searchable multi-select dropdown for table filters. */
@@ -53,10 +65,14 @@ export function MultiSelectFilter({
 }: Props) {
   const listId = useId()
   const rootRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [menuPos, setMenuPos] = useState<MenuPos | null>(null)
+  const isNarrow = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
 
   const selected = useMemo(() => new Set(value), [value])
   const labelByValue = useMemo(
@@ -97,19 +113,58 @@ export function MultiSelectFilter({
     return selectedCountLabel(value.length)
   }, [value, labelByValue, allLabel, selectedCountLabel])
 
+  const close = () => {
+    setOpen(false)
+    setQuery('')
+  }
+
+  useLayoutEffect(() => {
+    if (!open || !isNarrow) {
+      setMenuPos(null)
+      return
+    }
+    const sync = () => {
+      const trigger = triggerRef.current
+      if (!trigger) return
+      const r = trigger.getBoundingClientRect()
+      const gap = 4
+      const spaceBelow = window.innerHeight - r.bottom - gap - 8
+      const spaceAbove = r.top - gap - 8
+      const preferBelow = spaceBelow >= Math.min(MENU_MAX_PX, 160) || spaceBelow >= spaceAbove
+      const maxHeight = Math.max(
+        120,
+        Math.min(MENU_MAX_PX, preferBelow ? spaceBelow : spaceAbove),
+      )
+      const top = preferBelow
+        ? r.bottom + gap
+        : Math.max(8, r.top - gap - maxHeight)
+      setMenuPos({
+        top,
+        left: Math.max(8, Math.min(r.left, window.innerWidth - r.width - 8)),
+        width: r.width,
+        maxHeight,
+      })
+    }
+    sync()
+    window.addEventListener('resize', sync)
+    // Capture scroll from sticky chrome / page so the menu tracks the trigger.
+    window.addEventListener('scroll', sync, true)
+    return () => {
+      window.removeEventListener('resize', sync)
+      window.removeEventListener('scroll', sync, true)
+    }
+  }, [open, isNarrow])
+
   useEffect(() => {
     if (!open) return
     const onPointer = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) {
-        setOpen(false)
-        setQuery('')
-      }
+      const target = e.target as Node
+      if (rootRef.current?.contains(target)) return
+      if (menuRef.current?.contains(target)) return
+      close()
     }
     const onKey = (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpen(false)
-        setQuery('')
-      }
+      if (e.key === 'Escape') close()
     }
     document.addEventListener('pointerdown', onPointer)
     document.addEventListener('keydown', onKey)
@@ -155,11 +210,134 @@ export function MultiSelectFilter({
     }
   }
 
+  const menuStyle: CSSProperties | undefined =
+    isNarrow && menuPos
+      ? {
+          position: 'fixed',
+          top: menuPos.top,
+          left: menuPos.left,
+          width: menuPos.width,
+          maxHeight: menuPos.maxHeight,
+          zIndex: 95,
+        }
+      : undefined
+
+  const menu = open ? (
+    <div
+      ref={menuRef}
+      className={`multi-select-menu${isNarrow ? ' multi-select-menu--portal' : ''}`}
+      role="presentation"
+      style={menuStyle}
+    >
+      <div className="multi-select-search-wrap">
+        <input
+          ref={searchRef}
+          className="control multi-select-search w-full min-w-0"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={searchPlaceholder}
+          aria-label={searchPlaceholder}
+        />
+        {value.length > 0 ? (
+          <button
+            type="button"
+            className="multi-select-clear-all"
+            onClick={clearAll}
+          >
+            {allLabel}
+          </button>
+        ) : null}
+      </div>
+      <div
+        id={listId}
+        ref={listRef}
+        className="multi-select-list"
+        role="listbox"
+        aria-multiselectable="true"
+        aria-label={label}
+      >
+        {filtered.length === 0 ? (
+          <div className="multi-select-empty">{emptyLabel}</div>
+        ) : renderVirtual ? (
+          <div
+            className="multi-select-virtual"
+            style={{ height: virtualizer.getTotalSize() }}
+          >
+            {virtualItems!.map((item) => {
+              const option = filtered[item.index]!
+              const checked = selected.has(option.value)
+              const optionId = `${listId}-${option.value}`
+              return (
+                <div
+                  key={option.value}
+                  className="multi-select-virtual-row"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: `${item.size}px`,
+                    transform: `translateY(${item.start}px)`,
+                  }}
+                  role="option"
+                  aria-selected={checked}
+                >
+                  <label htmlFor={optionId} className="multi-select-option">
+                    <input
+                      id={optionId}
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggle(option.value)}
+                    />
+                    <span className="truncate">{option.label}</span>
+                  </label>
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          filtered.map((option) => {
+            const checked = selected.has(option.value)
+            const optionId = `${listId}-${option.value}`
+            return (
+              <div
+                key={option.value}
+                role="option"
+                aria-selected={checked}
+              >
+                <label htmlFor={optionId} className="multi-select-option">
+                  <input
+                    id={optionId}
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggle(option.value)}
+                  />
+                  <span className="truncate">{option.label}</span>
+                </label>
+              </div>
+            )
+          })
+        )}
+      </div>
+      {filtered.length > 0 ? (
+        <p className="multi-select-count" aria-live="polite">
+          {filtered.length === options.length
+            ? String(filtered.length)
+            : `${filtered.length} / ${options.length}`}
+        </p>
+      ) : null}
+    </div>
+  ) : null
+
   return (
-    <div className="filter-field text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]" ref={rootRef}>
+    <div
+      className="filter-field text-xs font-semibold uppercase tracking-wide text-[var(--ink-muted)]"
+      ref={rootRef}
+    >
       <span className="filter-label">{label}</span>
       <div className="multi-select mt-1">
         <button
+          ref={triggerRef}
           type="button"
           className="control multi-select-trigger w-full min-w-0 text-left text-sm font-normal normal-case tracking-normal"
           aria-haspopup="listbox"
@@ -168,8 +346,8 @@ export function MultiSelectFilter({
           disabled={disabled}
           onClick={() => {
             if (disabled) return
-            setOpen((v) => !v)
-            if (open) setQuery('')
+            if (open) close()
+            else setOpen(true)
           }}
           onKeyDown={onTriggerKeyDown}
         >
@@ -178,113 +356,11 @@ export function MultiSelectFilter({
             ▾
           </span>
         </button>
-        {open ? (
-          <div className="multi-select-menu" role="presentation">
-            <div className="multi-select-search-wrap">
-              <input
-                ref={searchRef}
-                className="control multi-select-search w-full min-w-0"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={searchPlaceholder}
-                aria-label={searchPlaceholder}
-              />
-              {value.length > 0 ? (
-                <button
-                  type="button"
-                  className="multi-select-clear-all"
-                  onClick={clearAll}
-                >
-                  {allLabel}
-                </button>
-              ) : null}
-            </div>
-            <div
-              id={listId}
-              ref={listRef}
-              className="multi-select-list"
-              role="listbox"
-              aria-multiselectable="true"
-              aria-label={label}
-            >
-              {filtered.length === 0 ? (
-                <div className="multi-select-empty">{emptyLabel}</div>
-              ) : renderVirtual ? (
-                <div
-                  className="multi-select-virtual"
-                  style={{ height: virtualizer.getTotalSize() }}
-                >
-                  {virtualItems!.map((item) => {
-                    const option = filtered[item.index]!
-                    const checked = selected.has(option.value)
-                    const optionId = `${listId}-${option.value}`
-                    return (
-                      <div
-                        key={option.value}
-                        className="multi-select-virtual-row"
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: `${item.size}px`,
-                          transform: `translateY(${item.start}px)`,
-                        }}
-                        role="option"
-                        aria-selected={checked}
-                      >
-                        <label
-                          htmlFor={optionId}
-                          className="multi-select-option"
-                        >
-                          <input
-                            id={optionId}
-                            type="checkbox"
-                            checked={checked}
-                            onChange={() => toggle(option.value)}
-                          />
-                          <span className="truncate">{option.label}</span>
-                        </label>
-                      </div>
-                    )
-                  })}
-                </div>
-              ) : (
-                filtered.map((option) => {
-                  const checked = selected.has(option.value)
-                  const optionId = `${listId}-${option.value}`
-                  return (
-                    <div
-                      key={option.value}
-                      role="option"
-                      aria-selected={checked}
-                    >
-                      <label
-                        htmlFor={optionId}
-                        className="multi-select-option"
-                      >
-                        <input
-                          id={optionId}
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggle(option.value)}
-                        />
-                        <span className="truncate">{option.label}</span>
-                      </label>
-                    </div>
-                  )
-                })
-              )}
-            </div>
-            {filtered.length > 0 ? (
-              <p className="multi-select-count" aria-live="polite">
-                {filtered.length === options.length
-                  ? String(filtered.length)
-                  : `${filtered.length} / ${options.length}`}
-              </p>
-            ) : null}
-          </div>
-        ) : null}
+        {open && isNarrow && menuPos
+          ? createPortal(menu, document.body)
+          : !isNarrow
+            ? menu
+            : null}
       </div>
     </div>
   )

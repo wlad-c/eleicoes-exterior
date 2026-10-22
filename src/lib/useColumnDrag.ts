@@ -3,20 +3,34 @@ import type { TableMetricCol } from './tableColumns'
 
 const DRAG_THRESHOLD_PX = 6
 
+type DragOptions = {
+  /**
+   * Only start a reorder drag from `.col-drag-handle`.
+   * Use in scrollable checklists so taps/scrolls are not captured.
+   */
+  handleOnly?: boolean
+}
+
 /**
  * Pointer-based column reorder (mouse + touch).
  * HTML5 drag-and-drop is unreliable on iOS; this uses setPointerCapture instead.
  * Shared order is applied by the caller (same handler for country/area/city).
+ *
+ * Capture is deferred until the pointer moves past a threshold so a tap can
+ * still toggle checkboxes and a vertical flick can still scroll a list.
  */
 export function useColumnDrag(
   onReorder: ((from: TableMetricCol, to: TableMetricCol) => void) | undefined,
+  options: DragOptions = {},
 ) {
+  const handleOnly = options.handleOnly === true
   const dragFrom = useRef<TableMetricCol | null>(null)
   const overCol = useRef<TableMetricCol | null>(null)
   const activeEl = useRef<HTMLElement | null>(null)
   const start = useRef<{ x: number; y: number } | null>(null)
   const moved = useRef(false)
   const suppressClick = useRef(false)
+  const pointerId = useRef<number | null>(null)
 
   function clearHighlights() {
     document
@@ -41,12 +55,12 @@ export function useColumnDrag(
     }
   }
 
-  function endDrag(pointerId: number | null) {
+  function endDrag(id: number | null) {
     const from = dragFrom.current
     const to = overCol.current
-    if (activeEl.current && pointerId != null) {
+    if (activeEl.current && id != null) {
       try {
-        activeEl.current.releasePointerCapture(pointerId)
+        activeEl.current.releasePointerCapture(id)
       } catch {
         /* already released */
       }
@@ -56,6 +70,7 @@ export function useColumnDrag(
     overCol.current = null
     activeEl.current = null
     start.current = null
+    pointerId.current = null
     if (moved.current) suppressClick.current = true
     moved.current = false
     if (from && to && from !== to && onReorder) onReorder(from, to)
@@ -70,28 +85,46 @@ export function useColumnDrag(
         if (e.pointerType === 'mouse' && e.button !== 0) return
         const t = e.target as HTMLElement
         if (t.closest('input, a, button, select, textarea')) return
+        if (handleOnly && !t.closest('.col-drag-handle')) return
         dragFrom.current = col
         overCol.current = null
         moved.current = false
         start.current = { x: e.clientX, y: e.clientY }
         activeEl.current = e.currentTarget
-        activeEl.current.classList.add('col-dragging')
-        activeEl.current.setPointerCapture(e.pointerId)
+        pointerId.current = e.pointerId
+        // Do NOT setPointerCapture yet — keep scroll/tap working until drag.
       },
       onPointerMove: (e: ReactPointerEvent<HTMLElement>) => {
         if (!dragFrom.current || !start.current) return
+        if (pointerId.current != null && e.pointerId !== pointerId.current) {
+          return
+        }
         const dx = e.clientX - start.current.x
         const dy = e.clientY - start.current.y
-        if (!moved.current && dx * dx + dy * dy < DRAG_THRESHOLD_PX ** 2) return
-        moved.current = true
+        if (!moved.current) {
+          if (dx * dx + dy * dy < DRAG_THRESHOLD_PX ** 2) return
+          moved.current = true
+          activeEl.current?.classList.add('col-dragging')
+          try {
+            activeEl.current?.setPointerCapture(e.pointerId)
+          } catch {
+            /* ignore */
+          }
+        }
         highlightOver(e.clientX, e.clientY)
       },
       onPointerUp: (e: ReactPointerEvent<HTMLElement>) => {
         if (!dragFrom.current) return
+        if (pointerId.current != null && e.pointerId !== pointerId.current) {
+          return
+        }
         if (moved.current) highlightOver(e.clientX, e.clientY)
         endDrag(e.pointerId)
       },
-      onPointerCancel: () => {
+      onPointerCancel: (e: ReactPointerEvent<HTMLElement>) => {
+        if (pointerId.current != null && e.pointerId !== pointerId.current) {
+          return
+        }
         moved.current = false
         endDrag(null)
       },
