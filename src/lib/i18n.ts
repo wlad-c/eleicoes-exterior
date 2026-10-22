@@ -201,14 +201,19 @@ const dict = {
   legendLow: { en: 'low', pt: 'baixo' },
   legendHigh: { en: 'high', pt: 'alto' },
   sortBy: { en: 'Sort', pt: 'Ordenar' },
-  tableColumns: { en: 'Columns', pt: 'Colunas' },
+  tableColumns: { en: 'Metrics', pt: 'Métricas' },
   tableColumnsHint: {
     en: 'Drag ⋮⋮ (or a column header) to reorder. Same order for Country, Area, City, and Neighborhood.',
     pt: 'Arraste ⋮⋮ (ou o cabeçalho da coluna) para reordenar. A mesma ordem vale para País, Área, Cidade e Bairro.',
   },
   tableColumnsDrag: {
-    en: 'Drag to reorder columns',
-    pt: 'Arraste para reordenar colunas',
+    en: 'Drag to reorder metrics',
+    pt: 'Arraste para reordenar métricas',
+  },
+  tableColumnsDone: { en: 'Done', pt: 'Pronto' },
+  tableColumnsClose: {
+    en: 'Close metrics',
+    pt: 'Fechar métricas',
   },
   rank: { en: '#', pt: '#' },
   country: { en: 'Country', pt: 'País' },

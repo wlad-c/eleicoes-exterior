@@ -1374,7 +1374,7 @@ export default function App() {
 
           <div className="filter-row filter-row--tools">
             <label
-              className="flex items-center gap-2 text-sm text-[var(--ink-muted)]"
+              className="filter-tool filter-tool--brazil flex items-center gap-2 text-sm text-[var(--ink-muted)]"
               title={t('includeBrazilHint', lang)}
               onMouseEnter={prefetchBrazilCities}
               onFocus={prefetchBrazilCities}
@@ -1410,7 +1410,7 @@ export default function App() {
               onChange={setVisibleColsPersist}
               onReorder={reorderColumns}
             />
-            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+            <label className="filter-tool flex items-center gap-2 text-sm text-[var(--ink-muted)]">
               {t('sortBy', lang)}
               <select
                 className="control"
@@ -1474,7 +1474,7 @@ export default function App() {
                 <option value="region">{t('region', lang)}</option>
               </select>
             </label>
-            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
+            <label className="filter-tool flex items-center gap-2 text-sm text-[var(--ink-muted)]">
               {t('status', lang)}
               <select
                 className="control"
