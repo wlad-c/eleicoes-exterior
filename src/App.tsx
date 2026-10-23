@@ -215,6 +215,13 @@ export default function App() {
   const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>([])
   const [selectedAreaKeys, setSelectedAreaKeys] = useState<string[]>([])
   const [selectedCityKeys, setSelectedCityKeys] = useState<string[]>([])
+  // Latest picks for tab switches — avoids stale closures wiping Australia→Brazil.
+  const selectedCountryIdsRef = useRef(selectedCountryIds)
+  selectedCountryIdsRef.current = selectedCountryIds
+  const selectedAreaKeysRef = useRef(selectedAreaKeys)
+  selectedAreaKeysRef.current = selectedAreaKeys
+  const selectedCityKeysRef = useRef(selectedCityKeys)
+  selectedCityKeysRef.current = selectedCityKeys
   const [metric, setMetric] = useState<MapMetric>('leader2026')
   const [sortKey, setSortKey] = useState<SortKey>('votes2026')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
@@ -484,9 +491,14 @@ export default function App() {
     // Preserve an explicit country pick (e.g. Australia) across Country →
     // Area / City / Bairro. Only default to Brazil when the filter is empty.
     // Same rules for 1º turno and runoff — filter state is shared.
-    const hasCountryFilter = selectedCountryIds.length > 0
+    // Read from refs so a just-committed PAÍS pick is never wiped by a stale
+    // closure when the user taps Bairro/Cidade immediately after selecting.
+    const countryIds = selectedCountryIdsRef.current
+    const areaKeys = selectedAreaKeysRef.current
+    const cityKeys = selectedCityKeysRef.current
+    const hasCountryFilter = countryIds.length > 0
     const brazilInFilter =
-      !hasCountryFilter || selectedCountryIds.includes(BRAZIL_ID)
+      !hasCountryFilter || countryIds.includes(BRAZIL_ID)
 
     // City / Bairro tabs drive a Brazil city map (municipalities with
     // neighborhood data) — not the world choropleth — when Brazil is in scope.
@@ -502,8 +514,8 @@ export default function App() {
       }
 
       if (brazilInFilter) {
-        if (next === 'suburbs' && selectedCityKeys.length === 1) {
-          const parsed = parsePlaceFilterKey(selectedCityKeys[0])
+        if (next === 'suburbs' && cityKeys.length === 1) {
+          const parsed = parsePlaceFilterKey(cityKeys[0])
           const cityCode = parsed?.code
           const uf = cityCode ? ufFromCityCode(cityCode) : null
           if (cityCode && uf) {
@@ -512,8 +524,8 @@ export default function App() {
             return
           }
         }
-        if (selectedAreaKeys.length === 1) {
-          const parsed = parsePlaceFilterKey(selectedAreaKeys[0])
+        if (areaKeys.length === 1) {
+          const parsed = parsePlaceFilterKey(areaKeys[0])
           const uf = parsed?.code
           if (uf && /^[A-Z]{2}$/.test(uf)) {
             setMapFocus({ level: 'uf', uf })
