@@ -481,49 +481,68 @@ export default function App() {
       setSortKey('votes2026')
       setSortDir('desc')
     }
-    // City / Bairro tabs drive a Brazil city map (municipalities with
-    // neighborhood data) — not the world choropleth.
-    if (next === 'cities' || next === 'suburbs') {
-      setIncludeBrazil(true)
-      prefetchBrazilCities()
-      if (next === 'suburbs') prefetchBrazilSuburbs()
-      applyCountryFilter(BRAZIL_ID)
-      setHighlightId(BRAZIL_ID)
+    // Preserve an explicit country pick (e.g. Australia) across Country →
+    // Area / City / Bairro. Only default to Brazil when the filter is empty.
+    // Same rules for 1º turno and runoff — filter state is shared.
+    const hasCountryFilter = selectedCountryIds.length > 0
+    const brazilInFilter =
+      !hasCountryFilter || selectedCountryIds.includes(BRAZIL_ID)
 
-      if (next === 'suburbs' && selectedCityKeys.length === 1) {
-        const parsed = parsePlaceFilterKey(selectedCityKeys[0])
-        const cityCode = parsed?.code
-        const uf = cityCode ? ufFromCityCode(cityCode) : null
-        if (cityCode && uf) {
-          setMapFocus({ level: 'city', uf, cityCode })
-          setHighlightId(cityCode)
-          return
+    // City / Bairro tabs drive a Brazil city map (municipalities with
+    // neighborhood data) — not the world choropleth — when Brazil is in scope.
+    if (next === 'cities' || next === 'suburbs') {
+      if (brazilInFilter) {
+        setIncludeBrazil(true)
+        prefetchBrazilCities()
+        if (next === 'suburbs') prefetchBrazilSuburbs()
+      }
+      if (!hasCountryFilter) {
+        applyCountryFilter(BRAZIL_ID)
+        setHighlightId(BRAZIL_ID)
+      }
+
+      if (brazilInFilter) {
+        if (next === 'suburbs' && selectedCityKeys.length === 1) {
+          const parsed = parsePlaceFilterKey(selectedCityKeys[0])
+          const cityCode = parsed?.code
+          const uf = cityCode ? ufFromCityCode(cityCode) : null
+          if (cityCode && uf) {
+            setMapFocus({ level: 'city', uf, cityCode })
+            setHighlightId(cityCode)
+            return
+          }
         }
-      }
-      if (selectedAreaKeys.length === 1) {
-        const parsed = parsePlaceFilterKey(selectedAreaKeys[0])
-        const uf = parsed?.code
-        if (uf && /^[A-Z]{2}$/.test(uf)) {
-          setMapFocus({ level: 'uf', uf })
-          setHighlightId(uf)
-          return
+        if (selectedAreaKeys.length === 1) {
+          const parsed = parsePlaceFilterKey(selectedAreaKeys[0])
+          const uf = parsed?.code
+          if (uf && /^[A-Z]{2}$/.test(uf)) {
+            setMapFocus({ level: 'uf', uf })
+            setHighlightId(uf)
+            return
+          }
         }
+        if (mapFocus.level === 'world' || mapFocus.level === 'brazil') {
+          setMapFocus({ level: 'brazil' })
+        }
+        // Keep uf/city drill if the user already zoomed the map.
       }
-      if (mapFocus.level === 'world' || mapFocus.level === 'brazil') {
-        setMapFocus({ level: 'brazil' })
-      }
-      // Keep uf/city drill if the user already zoomed the map.
     }
     if (next === 'areas') {
-      setIncludeBrazil(true)
-      prefetchBrazilCities()
-      applyCountryFilter(BRAZIL_ID)
-      if (mapFocus.level === 'world') {
-        setMapFocus({ level: 'brazil' })
-        setHighlightId(BRAZIL_ID)
-      } else if (mapFocus.level === 'city') {
-        setMapFocus({ level: 'uf', uf: mapFocus.uf })
-        setHighlightId(mapFocus.uf)
+      if (brazilInFilter) {
+        setIncludeBrazil(true)
+        prefetchBrazilCities()
+      }
+      if (!hasCountryFilter) {
+        applyCountryFilter(BRAZIL_ID)
+      }
+      if (brazilInFilter) {
+        if (mapFocus.level === 'world') {
+          setMapFocus({ level: 'brazil' })
+          setHighlightId(BRAZIL_ID)
+        } else if (mapFocus.level === 'city') {
+          setMapFocus({ level: 'uf', uf: mapFocus.uf })
+          setHighlightId(mapFocus.uf)
+        }
       }
     }
     if (next === 'countries' && mapFocus.level !== 'world') {
