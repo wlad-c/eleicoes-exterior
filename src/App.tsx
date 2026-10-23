@@ -78,7 +78,10 @@ import {
   type TableMetricCol,
 } from './lib/tableColumns'
 import { useTheme } from './lib/theme'
-import { useMobileScrollCollapse } from './lib/useMobileScrollCollapse'
+import {
+  COUNTRY_FLAG_ONLY_MQ,
+  useMediaQuery,
+} from './lib/useMediaQuery'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
 import { HEATMAP_METRICS, RUNOFF_ONLY_METRICS } from './types'
@@ -296,7 +299,8 @@ export default function App() {
     [electionRound],
   )
   const tableChromeRef = useRef<HTMLDivElement>(null)
-  const chromeCollapsed = useMobileScrollCollapse(tableChromeRef)
+  /** Phones: filters scroll with the page (not sticky). */
+  const filtersUnsticky = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
 
   function setVisibleColsPersist(next: TableMetricCol[]) {
     setVisibleCols(next)
@@ -319,31 +323,29 @@ export default function App() {
     const el = tableChromeRef.current
     if (!el) return
     const syncHeadOffset = () => {
-      if (!chromeCollapsed) {
-        // Measure the open size before/while expanded so max-height
-        // transitions from a real pixel value (smooth) rather than 2000px.
-        const height = Math.ceil(
-          (el.querySelector('.sticky-table-chrome-inner') as HTMLElement | null)
-            ?.scrollHeight ?? el.scrollHeight,
-        )
-        // Include outer vertical padding so expand doesn’t clip labels.
-        const style = getComputedStyle(el)
-        const padY =
-          (parseFloat(style.paddingTop) || 0) +
-          (parseFloat(style.paddingBottom) || 0)
-        const full = Math.ceil(height + padY)
-        el.style.setProperty('--sticky-chrome-height', `${full}px`)
-        document.documentElement.style.setProperty(
-          '--sticky-table-head-top',
-          `${full}px`,
-        )
-      } else {
-        // top transitions via CSS on .table-head-sticky
+      // Mobile: chrome scrolls away — table headers stick to the viewport top.
+      if (filtersUnsticky) {
+        el.style.removeProperty('--sticky-chrome-height')
         document.documentElement.style.setProperty(
           '--sticky-table-head-top',
           '0px',
         )
+        return
       }
+      const height = Math.ceil(
+        (el.querySelector('.sticky-table-chrome-inner') as HTMLElement | null)
+          ?.scrollHeight ?? el.scrollHeight,
+      )
+      const style = getComputedStyle(el)
+      const padY =
+        (parseFloat(style.paddingTop) || 0) +
+        (parseFloat(style.paddingBottom) || 0)
+      const full = Math.ceil(height + padY)
+      el.style.setProperty('--sticky-chrome-height', `${full}px`)
+      document.documentElement.style.setProperty(
+        '--sticky-table-head-top',
+        `${full}px`,
+      )
     }
     syncHeadOffset()
     const ro = new ResizeObserver(syncHeadOffset)
@@ -355,7 +357,7 @@ export default function App() {
       ro.disconnect()
       window.removeEventListener('resize', syncHeadOffset)
     }
-  }, [chromeCollapsed])
+  }, [filtersUnsticky])
 
   const brazilCountry = useMemo(
     () => data.countries.find((c) => c.id === BRAZIL_ID) ?? null,
@@ -1231,9 +1233,7 @@ export default function App() {
       <section className="panel panel-results mb-4 rounded-xl px-2 py-4 sm:p-5">
         <div
           ref={tableChromeRef}
-          className={`sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5${
-            chromeCollapsed ? ' is-scroll-collapsed' : ''
-          }`}
+          className="sticky-table-chrome sticky top-0 z-30 -mx-2 mb-3 border-b border-[var(--line)] px-2 pb-3 sm:-mx-5 sm:px-5"
         >
           <div className="sticky-table-chrome-inner space-y-3">
           <div
