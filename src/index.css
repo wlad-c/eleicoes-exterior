@@ -518,9 +518,15 @@ html.dark .is-x-scrolled .sticky-col-city {
     padding-inline-end: 0.75rem;
   }
 
-  .sticky-col-rank {
-    padding-left: 0.15rem;
-    padding-right: 0.25rem;
+  .results-table .sticky-col-rank {
+    padding-left: 0.1rem;
+    padding-right: 0.15rem;
+  }
+
+  .results-table .sticky-col-country,
+  .results-table .sticky-col-city {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
   }
 
   .map-wrap {
@@ -1170,24 +1176,31 @@ html.dark .is-x-scrolled .sticky-col-city {
 
 @media (max-width: 900px) {
   :root {
-    --table-col-rank: 1.6rem;
-    --table-col-abbr: 3.5rem;
-    --table-col-place-min: 5.5rem;
+    --table-col-rank: 1.5rem;
+    --table-col-abbr: 3.25rem;
+    /* Fixed place width on compact (see override below — not % of table) */
+    --table-col-place-min: 6.75rem;
+    --table-col-country-full: 8.5rem;
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --table-col-rank: 1.4rem;
-    --table-col-flag: 2rem;
-    --table-col-abbr: 3.35rem;
-    --table-col-place-min: 5rem;
+    --table-col-rank: 1.25rem;
+    --table-col-flag: 1.75rem;
+    --table-col-abbr: 2.85rem;
+    --table-col-place-min: 5.5rem;
+    --table-col-country-full: 7rem;
   }
 }
 
 /*
  * Place / neighborhood / city name: reserved share under fixed layout.
  * Leftover pane width is shared across metric columns.
+ *
+ * On phones/small tablets the table often grows past the viewport (many
+ * metrics). A % width of that wide table left a blank gutter after short
+ * names and pushed the first metric off-screen — use a fixed rem instead.
  */
 .cell-truncate-city,
 .sticky-col-city.cell-truncate-city,
@@ -1196,6 +1209,21 @@ html.dark .is-x-scrolled .sticky-col-city {
   min-width: var(--table-col-place-min);
   max-width: 40%;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .cell-truncate-city,
+  .sticky-col-city.cell-truncate-city,
+  .results-table--suburb .sticky-col-city.cell-truncate-city {
+    width: var(--table-col-place-min);
+    min-width: var(--table-col-place-min);
+    max-width: var(--table-col-place-min);
+  }
+
+  .sticky-col-country.cell-truncate-flag {
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
+  }
 }
 
 .sticky-col-city.cell-truncate-city .name-tip {
