@@ -7,7 +7,7 @@ import type { Lang } from '../types'
  * - Short labels in chrome; formulas live in hints / disclaimers
  */
 const dict = {
-  brand: { en: 'eleições exterior', pt: 'eleições exterior' },
+  brand: { en: 'elections 2026', pt: 'eleições 2026' },
   reported: { en: 'reported', pt: 'apurados' },
   pending: { en: 'pending', pt: 'pendentes' },
   with2022History: {
