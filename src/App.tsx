@@ -168,7 +168,7 @@ async function hardRefresh(): Promise<void> {
 }
 
 export default function App() {
-  const { theme, setTheme } = useTheme()
+  const { theme, toggleTheme } = useTheme()
   const [electionRound, setElectionRoundState] = useState<ElectionRound>(() => {
     if (typeof window === 'undefined') return '1'
     return readStoredRound() ?? defaultElectionRound()
@@ -324,6 +324,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'
+    document.title = t('brand', lang)
   }, [lang])
 
   useEffect(() => {
@@ -1031,50 +1032,45 @@ export default function App() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6 lg:max-w-7xl xl:max-w-[90rem] 2xl:max-w-[100rem]">
       <header className="animate-rise mb-8">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="brand text-3xl font-extrabold text-[var(--ink)] sm:text-4xl">
-            {t('brand', lang)}
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            <div
-              className="flex gap-1"
-              role="group"
-              aria-label={t('themeToggle', lang)}
+        <div className="mb-4 flex justify-end">
+          <div className="flex flex-nowrap items-center gap-2">
+            <button
+              type="button"
+              className="theme-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-label={
+                theme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)
+              }
+              title={
+                theme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)
+              }
+              onClick={toggleTheme}
             >
-              <button
-                type="button"
-                className="theme-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-pressed={theme === 'light'}
-                aria-label={t('themeLight', lang)}
-                title={t('themeLight', lang)}
-                onClick={() => setTheme('light')}
-              >
-                {t('themeLight', lang)}
-              </button>
-              <button
-                type="button"
-                className="theme-btn control px-3 py-1.5 text-sm font-semibold"
-                aria-pressed={theme === 'dark'}
-                aria-label={t('themeDark', lang)}
-                title={t('themeDark', lang)}
-                onClick={() => setTheme('dark')}
-              >
-                {t('themeDark', lang)}
-              </button>
-            </div>
-            <div className="flex gap-1">
-              {(['en', 'pt'] as Lang[]).map((l) => (
-                <button
-                  key={l}
-                  type="button"
-                  className="lang-btn control px-3 py-1.5 text-sm font-semibold uppercase"
-                  aria-pressed={lang === l}
-                  onClick={() => setLang(l)}
-                >
-                  {l}
-                </button>
-              ))}
-            </div>
+              {theme === 'dark' ? t('themeLight', lang) : t('themeDark', lang)}
+            </button>
+            <button
+              type="button"
+              className="lang-btn control px-3 py-1.5 text-sm font-semibold uppercase"
+              aria-label={lang === 'pt' ? 'EN' : 'PT'}
+              title={lang === 'pt' ? 'EN' : 'PT'}
+              onClick={() => setLang(lang === 'pt' ? 'en' : 'pt')}
+            >
+              {lang === 'pt' ? 'EN' : 'PT'}
+            </button>
+            <button
+              type="button"
+              className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-label={
+                electionRound === '1' ? t('round2', lang) : t('round1', lang)
+              }
+              title={
+                electionRound === '1' ? t('round2', lang) : t('round1', lang)
+              }
+              onClick={() =>
+                setElectionRound(electionRound === '1' ? '2' : '1')
+              }
+            >
+              {electionRound === '1' ? t('round2', lang) : t('round1', lang)}
+            </button>
             <button
               type="button"
               className="hard-refresh-btn control px-2 py-1.5 text-[var(--ink-muted)]"
@@ -1108,29 +1104,9 @@ export default function App() {
             </button>
           </div>
         </div>
-        <div
-          className="mb-4 flex gap-1"
-          role="tablist"
-          aria-label={t('roundTabGroup', lang)}
-        >
-          {(
-            [
-              { id: '1' as const, label: t('round1', lang) },
-              { id: '2' as const, label: t('round2', lang) },
-            ] as const
-          ).map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              aria-selected={electionRound === tab.id}
-              className="lang-btn control px-4 py-2 text-sm font-semibold"
-              onClick={() => setElectionRound(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <p className="brand mb-4 text-3xl font-extrabold text-[var(--ink)] sm:text-4xl">
+          {t('brand', lang)}
+        </p>
         <h1 className="max-w-3xl text-xl font-semibold leading-snug text-[var(--ink)] sm:text-2xl">
           {data.meta.title[lang]}
         </h1>
