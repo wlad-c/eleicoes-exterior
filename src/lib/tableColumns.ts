@@ -36,17 +36,21 @@ export type TableMetricCol =
   | 'roundSwing2022'
   | 'sections'
 
+/**
+ * Wide-screen default order (1º votes/% → 2º votes/% → Δ → swing).
+ * Remaining metrics follow for the column picker.
+ */
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
-  'region',
+  'votes2026R1',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
   'votes2026',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaRoundShift',
   'bolsonaroRoundShift',
   'roundSwing',
-  'votes2026R1',
-  'lulaPct2026R1',
-  'bolsonaroPct2026R1',
+  'region',
   'difference2026',
   'difference2026R1',
   'votes2022',
@@ -72,10 +76,16 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'sections',
 ]
 
+/** Match country-name no-truncate; enough room for the 9-column default. */
+export const TABLE_WIDE_DEFAULTS_MQ = '(min-width: 1100px)'
+
 /**
- * Default landing: 2026 runoff votes/% + change vs 1st round + round swing.
+ * Large screens: 2026 1º votes/%, 2026 2º votes/%, round change, round swing.
  */
-export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
+export const DEFAULT_TABLE_METRIC_COLS_WIDE: TableMetricCol[] = [
+  'votes2026R1',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
   'votes2026',
   'lulaPct2026',
   'bolsonaroPct2026',
@@ -83,6 +93,34 @@ export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'bolsonaroRoundShift',
   'roundSwing',
 ]
+
+/**
+ * Narrow screens: 2026 runoff votes/% + change vs 1st round + round swing.
+ */
+export const DEFAULT_TABLE_METRIC_COLS_NARROW: TableMetricCol[] = [
+  'votes2026',
+  'lulaPct2026',
+  'bolsonaroPct2026',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
+]
+
+/** @deprecated Prefer defaultTableMetricCols() — kept for call-site clarity. */
+export const DEFAULT_TABLE_METRIC_COLS = DEFAULT_TABLE_METRIC_COLS_WIDE
+
+export function isWideTableViewport(): boolean {
+  if (typeof window === 'undefined' || !window.matchMedia) return true
+  return window.matchMedia(TABLE_WIDE_DEFAULTS_MQ).matches
+}
+
+export function defaultTableMetricCols(
+  wide = isWideTableViewport(),
+): TableMetricCol[] {
+  return wide
+    ? [...DEFAULT_TABLE_METRIC_COLS_WIDE]
+    : [...DEFAULT_TABLE_METRIC_COLS_NARROW]
+}
 
 export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   region: 'region',
@@ -121,8 +159,8 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
 }
 
 /** Bump when default visibility / column ids change so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v8'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v5'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v9'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v6'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
@@ -182,11 +220,12 @@ export function moveColumn(
 }
 
 export function readStoredTableCols(): TableMetricCol[] {
+  const fallback = defaultTableMetricCols()
   try {
     const raw = localStorage.getItem(TABLE_COLS_STORAGE_KEY)
-    if (!raw) return [...DEFAULT_TABLE_METRIC_COLS]
+    if (!raw) return fallback
     const parsed = JSON.parse(raw) as unknown
-    if (!Array.isArray(parsed)) return [...DEFAULT_TABLE_METRIC_COLS]
+    if (!Array.isArray(parsed)) return fallback
     const seen = new Set<TableMetricCol>()
     const cols: TableMetricCol[] = []
     for (const c of parsed) {
@@ -197,9 +236,9 @@ export function readStoredTableCols(): TableMetricCol[] {
         cols.push(col)
       }
     }
-    return cols.length > 0 ? cols : [...DEFAULT_TABLE_METRIC_COLS]
+    return cols.length > 0 ? cols : fallback
   } catch {
-    return [...DEFAULT_TABLE_METRIC_COLS]
+    return fallback
   }
 }
 
