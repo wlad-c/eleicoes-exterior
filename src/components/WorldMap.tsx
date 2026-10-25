@@ -62,6 +62,8 @@ type Props = {
   /** Brazil neighborhoods / zonas (Bairro tab). */
   suburbs?: CityResult[]
   metric: MapMetric
+  /** Round-aware display name for `metric`; defaults to the plain label. */
+  metricLabel?: string
   lang: Lang
   focus: MapFocus
   /**
@@ -106,6 +108,7 @@ export function WorldMap({
   cities = [],
   suburbs = [],
   metric,
+  metricLabel,
   lang,
   focus,
   brazilGrain = 'ufs',
@@ -113,6 +116,7 @@ export function WorldMap({
   onPick,
   onBack,
 }: Props) {
+  const label = metricLabel ?? t(metric, lang)
   const wrapRef = useRef<HTMLDivElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -929,6 +933,7 @@ export function WorldMap({
       <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
         <Legend
           metric={metric}
+          label={label}
           mode={legendMode}
           lang={lang}
           extent={legendExtent}
@@ -955,7 +960,7 @@ export function WorldMap({
               <div className="app-tip-body">
                 <span className="app-tip-title">{tip.title}</span>
                 <span className="app-tip-meta">
-                  {t(metric, lang)}:{' '}
+                  {label}:{' '}
                   {formatMetricValue(
                     metricValue(tip.row, metric),
                     metric,
@@ -1030,11 +1035,13 @@ function focusLabel(
 
 function Legend({
   metric,
+  label,
   mode,
   lang,
   extent,
 }: {
   metric: MapMetric
+  label: string
   mode: ReturnType<typeof legendModeForMetric>
   lang: Lang
   extent: [number, number]
@@ -1042,7 +1049,7 @@ function Legend({
   if (mode === 'leader') {
     return (
       <>
-        <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+        <span className="font-medium text-[var(--ink)]">{label}</span>
         <span
           className="inline-block h-2.5 w-28 rounded-sm"
           style={{
@@ -1059,7 +1066,7 @@ function Legend({
   if (mode === 'diverging') {
     return (
       <>
-        <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+        <span className="font-medium text-[var(--ink)]">{label}</span>
         <span
           className="inline-block h-2.5 w-28 rounded-sm"
           style={{
@@ -1097,7 +1104,7 @@ function Legend({
 
   return (
     <>
-      <span className="font-medium text-[var(--ink)]">{t(metric, lang)}</span>
+      <span className="font-medium text-[var(--ink)]">{label}</span>
       <span
         className="inline-block h-2.5 w-28 rounded-sm"
         style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}

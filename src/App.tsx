@@ -52,7 +52,7 @@ import {
   rowMatchesCityFilter,
   rowMatchesCountryFilter,
 } from './lib/geoFilters'
-import { regionLabel, t } from './lib/i18n'
+import { metricLabel, regionLabel, t } from './lib/i18n'
 import { collatorFor } from './lib/collator'
 import { searchIncludes } from './lib/searchText'
 import {
@@ -377,7 +377,9 @@ export default function App() {
   const mapMetrics = useMemo(
     () =>
       electionRound === '2'
-        ? HEATMAP_METRICS
+        ? HEATMAP_METRICS.filter((m) => m !== 'roundSwing').flatMap((m) =>
+            m === 'swing' ? (['swing', 'roundSwing'] as MapMetric[]) : [m],
+          )
         : HEATMAP_METRICS.filter((m) => !RUNOFF_ONLY_METRICS.includes(m)),
     [electionRound],
   )
@@ -1320,7 +1322,11 @@ export default function App() {
             tone="bolso"
             lang={lang}
           />
-          <SwingCard swing={reportedAgg.swing} lang={lang} />
+          <SwingCard
+            swing={reportedAgg.swing}
+            label={metricLabel('swing', electionRound, lang)}
+            lang={lang}
+          />
         </div>
       </section>
 
@@ -1344,7 +1350,7 @@ export default function App() {
             >
               {mapMetrics.map((m) => (
                 <option key={m} value={m}>
-                  {t(m, lang)}
+                  {metricLabel(m, electionRound, lang)}
                 </option>
               ))}
             </select>
@@ -1362,6 +1368,7 @@ export default function App() {
           cities={brazilCities}
           suburbs={brazilSuburbs}
           metric={metric}
+          metricLabel={metricLabel(metric, electionRound, lang)}
           lang={lang}
           focus={mapFocus}
           brazilGrain={
@@ -1613,7 +1620,9 @@ export default function App() {
                 <option value="bolsonaroChange">
                   {t('bolsonaroChange', lang)}
                 </option>
-                <option value="swing">{t('swing', lang)}</option>
+                <option value="swing">
+                  {metricLabel('swing', electionRound, lang)}
+                </option>
                 <option value="sections">{t('notes', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
                 <option value="region">{t('region', lang)}</option>
@@ -1786,16 +1795,18 @@ function TotalCard({
 
 function SwingCard({
   swing,
+  label,
   lang,
 }: {
   swing: number | null
+  label: string
   lang: Lang
 }) {
   const towardLula = (swing ?? 0) >= 0
   return (
     <div>
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-semibold">{t('swing', lang)}</span>
+        <span className="font-semibold">{label}</span>
         <span
           className={`tabular-nums text-lg font-bold ${
             towardLula ? 'text-[var(--lula)]' : 'text-[var(--bolso)]'

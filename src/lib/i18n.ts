@@ -1,4 +1,4 @@
-import type { Lang } from '../types'
+import type { Lang, MapMetric } from '../types'
 
 /**
  * UI copy (EN / PT). Naming rules:
@@ -83,8 +83,12 @@ const dict = {
   lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
   bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
   swing: {
-    en: 'Swing',
-    pt: 'Swing',
+    en: 'Swing vs 2022',
+    pt: 'Swing vs 2022',
+  },
+  swingVs2022Runoff: {
+    en: 'Swing vs 2022 runoff',
+    pt: 'Swing vs 2º turno 2022',
   },
   lulaRoundShift: {
     en: 'Lula 1º→2º',
@@ -95,8 +99,8 @@ const dict = {
     pt: 'Bolsonaro 1º→2º',
   },
   roundSwing: {
-    en: 'Round swing',
-    pt: 'Swing entre turnos',
+    en: 'Swing vs 2026 1st round',
+    pt: 'Swing vs 1º turno 2026',
   },
   hintLulaRoundShift: {
     en: 'Lula share in runoff minus 1st round (2026), percentage points',
@@ -484,6 +488,16 @@ export type DictKey = keyof typeof dict
 
 export function t(key: DictKey, lang: Lang): string {
   return dict[key][lang]
+}
+
+/** On the runoff tab, "2022" means the 2022 runoff — spell that out for swing. */
+export function metricLabel(
+  metric: MapMetric,
+  round: '1' | '2',
+  lang: Lang,
+): string {
+  if (metric === 'swing' && round === '2') return t('swingVs2022Runoff', lang)
+  return t(metric, lang)
 }
 
 export function regionLabel(region: string, lang: Lang): string {
