@@ -108,7 +108,9 @@ export function MultiSelectFilter({
   const summary = useMemo(() => {
     if (value.length === 0) return allLabel
     if (value.length === 1) {
-      return labelByValue.get(value[0]) ?? allLabel
+      // Never fall back to allLabel while a value is selected — that lied when
+      // the option dropped out of `options` (e.g. Brazil + Status=Reported).
+      return labelByValue.get(value[0]) ?? selectedCountLabel(1)
     }
     return selectedCountLabel(value.length)
   }, [value, labelByValue, allLabel, selectedCountLabel])
