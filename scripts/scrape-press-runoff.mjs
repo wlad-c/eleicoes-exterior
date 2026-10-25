@@ -547,10 +547,9 @@ function discoverArticleUrls(hubUrl, html, limit = MAX_DISCOVERED_PER_HUB) {
     let abs
     try {
       // Markdown / prose often leaves trailing ) ] . ; or doubled slashes
-      const cleaned = String(raw)
-        .trim()
-        .replace(/[)\],.;!"']+$/g, '')
-        .replace(/([^:])\/{2,}/g, '$1/')
+      let cleaned = String(raw).trim().replace(/[)\],.;!"']+$/g, '')
+      // Collapse duplicate slashes in the path only (keep https://)
+      cleaned = cleaned.replace(/^(https?:\/\/)(.*)$/i, (_, scheme, rest) => scheme + rest.replace(/\/{2,}/g, '/'))
       abs = new URL(cleaned, base).href.split('#')[0]
     } catch {
       continue
