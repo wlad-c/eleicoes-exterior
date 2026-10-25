@@ -61,7 +61,6 @@ import {
   useBrazilDomestic,
 } from './lib/useBrazilDomestic'
 
-type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
 const BRAZIL_ID = 'brazil'
 import {
   defaultElectionRound,
@@ -79,6 +78,13 @@ import {
   writeStoredTableCols,
   type TableMetricCol,
 } from './lib/tableColumns'
+import {
+  buildShareUrl,
+  copyTextToClipboard,
+  parseShareSearch,
+  type ShareViewState,
+  type TableView,
+} from './lib/shareUrl'
 import { useTheme } from './lib/theme'
 import {
   COUNTRY_FLAG_ONLY_MQ,
@@ -87,6 +93,11 @@ import {
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
 import { HEATMAP_METRICS, RUNOFF_ONLY_METRICS } from './types'
+
+function readInitialShare() {
+  if (typeof window === 'undefined') return parseShareSearch('')
+  return parseShareSearch(window.location.search)
+}
 
 const seedRound1 = rawRound1 as ResultsData
 const seedRound2 = rawRound2 as ResultsData
@@ -170,8 +181,15 @@ async function hardRefresh(): Promise<void> {
 }
 
 export default function App() {
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme, setTheme } = useTheme()
+  const [initialShare] = useState(readInitialShare)
+  /** Skip the mount-time round side-effect so a shared link keeps its filters/metric/cols. */
+  const skipRoundSideEffects = useRef(initialShare.active)
+  const [shareFeedback, setShareFeedback] = useState<'copied' | 'failed' | null>(
+    null,
+  )
   const [electionRound, setElectionRoundState] = useState<ElectionRound>(() => {
+    if (initialShare.round) return initialShare.round
     if (typeof window === 'undefined') return '1'
     return readStoredRound() ?? defaultElectionRound()
   })
@@ -195,9 +213,10 @@ export default function App() {
     if (electionRound !== '2') return liveData
     return withRound1Compare(liveData, seedRound1)
   }, [electionRound, liveData])
-  const [lang, setLangState] = useState<Lang>(() =>
-    typeof window === 'undefined' ? 'pt' : readStoredLang(),
-  )
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (initialShare.lang) return initialShare.lang
+    return typeof window === 'undefined' ? 'pt' : readStoredLang()
+  })
   const setLang = (next: Lang) => {
     setLangState(next)
     try {
@@ -206,24 +225,33 @@ export default function App() {
       /* ignore */
     }
   }
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(() => initialShare.query ?? '')
   /** Keep typing snappy while large Brazil tables filter/sort. */
   const deferredQuery = useDeferredValue(query)
-  const [region, setRegion] = useState('all')
+  const [region, setRegion] = useState(() => initialShare.region ?? 'all')
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
-    () =>
+    () => {
+      if (initialShare.status) return initialShare.status
+      const round =
+        initialShare.round ??
+        (typeof window !== 'undefined'
+          ? (readStoredRound() ?? defaultElectionRound())
+          : '1')
       // Runoff seed is all-pending until 2026 BUs/TSE land; default to All so
       // 2022 R2 history is visible immediately.
-      (typeof window !== 'undefined'
-        ? (readStoredRound() ?? defaultElectionRound())
-        : '1') === '2'
-        ? 'all'
-        : 'reported',
+      return round === '2' ? 'all' : 'reported'
+    },
   )
   /** Multi-select geo filters above the table (cascading country → area → city). */
-  const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>([])
-  const [selectedAreaKeys, setSelectedAreaKeys] = useState<string[]>([])
-  const [selectedCityKeys, setSelectedCityKeys] = useState<string[]>([])
+  const [selectedCountryIds, setSelectedCountryIds] = useState<string[]>(
+    () => initialShare.countries ?? [],
+  )
+  const [selectedAreaKeys, setSelectedAreaKeys] = useState<string[]>(
+    () => initialShare.areas ?? [],
+  )
+  const [selectedCityKeys, setSelectedCityKeys] = useState<string[]>(
+    () => initialShare.cities ?? [],
+  )
   // Latest picks for tab switches — avoids stale closures wiping Australia→Brazil.
   const selectedCountryIdsRef = useRef(selectedCountryIds)
   selectedCountryIdsRef.current = selectedCountryIds
@@ -231,15 +259,29 @@ export default function App() {
   selectedAreaKeysRef.current = selectedAreaKeys
   const selectedCityKeysRef = useRef(selectedCityKeys)
   selectedCityKeysRef.current = selectedCityKeys
-  const [metric, setMetric] = useState<MapMetric>('leader2026')
-  const [sortKey, setSortKey] = useState<SortKey>('votes2026')
-  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
-  const [highlightId, setHighlightId] = useState<string | null>(null)
+  const [metric, setMetric] = useState<MapMetric>(
+    () => initialShare.metric ?? 'leader2026',
+  )
+  const [sortKey, setSortKey] = useState<SortKey>(
+    () => initialShare.sortKey ?? 'votes2026',
+  )
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>(
+    () => initialShare.sortDir ?? 'desc',
+  )
+  const [highlightId, setHighlightId] = useState<string | null>(
+    () => initialShare.highlightId ?? null,
+  )
   /** World → Brazil UFs → municipalities → neighborhoods. */
-  const [mapFocus, setMapFocus] = useState<MapFocus>({ level: 'world' })
+  const [mapFocus, setMapFocus] = useState<MapFocus>(
+    () => initialShare.mapFocus ?? { level: 'world' },
+  )
   /** Domestic Brazil is hidden from tables until toggled or selected on the map. */
-  const [includeBrazil, setIncludeBrazil] = useState(false)
-  const [tableView, setTableView] = useState<TableView>('countries')
+  const [includeBrazil, setIncludeBrazil] = useState(
+    () => initialShare.includeBrazil ?? false,
+  )
+  const [tableView, setTableView] = useState<TableView>(
+    () => initialShare.tableView ?? 'countries',
+  )
   const wantBrazil =
     includeBrazil ||
     highlightId === BRAZIL_ID ||
@@ -279,14 +321,30 @@ export default function App() {
       ),
     }
   }, [seedData, brazilDomestic.cities, brazilDomestic.suburbs])
-  const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() =>
-    readStoredTableCols(readStoredRound() ?? defaultElectionRound()),
-  )
-  const [columnOrder, setColumnOrder] = useState<TableMetricCol[]>(() =>
-    readStoredColumnOrder(readStoredRound() ?? defaultElectionRound()),
-  )
+  const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() => {
+    if (initialShare.visibleCols) return initialShare.visibleCols
+    const round =
+      initialShare.round ??
+      (typeof window !== 'undefined'
+        ? (readStoredRound() ?? defaultElectionRound())
+        : '1')
+    return readStoredTableCols(round)
+  })
+  const [columnOrder, setColumnOrder] = useState<TableMetricCol[]>(() => {
+    if (initialShare.columnOrder) return initialShare.columnOrder
+    const round =
+      initialShare.round ??
+      (typeof window !== 'undefined'
+        ? (readStoredRound() ?? defaultElectionRound())
+        : '1')
+    return readStoredColumnOrder(round)
+  })
 
   useEffect(() => {
+    if (skipRoundSideEffects.current) {
+      skipRoundSideEffects.current = false
+      return
+    }
     setVisibleCols(readStoredTableCols(electionRound))
     setColumnOrder(readStoredColumnOrder(electionRound))
     if (electionRound === '1' && RUNOFF_ONLY_METRICS.includes(metric)) {
@@ -306,6 +364,12 @@ export default function App() {
     // Only re-load prefs when the round tab changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [electionRound])
+
+  useEffect(() => {
+    if (initialShare.theme) setTheme(initialShare.theme)
+    // Apply once from the shared link.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const mapMetrics = useMemo(
     () =>
@@ -335,6 +399,45 @@ export default function App() {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'
     document.title = t('brand', lang)
   }, [lang])
+
+  useEffect(() => {
+    if (!shareFeedback) return
+    const id = window.setTimeout(() => setShareFeedback(null), 2000)
+    return () => window.clearTimeout(id)
+  }, [shareFeedback])
+
+  async function handleShare() {
+    const snapshot: ShareViewState = {
+      round: electionRound,
+      lang,
+      theme,
+      query,
+      region,
+      status: statusFilter,
+      countries: selectedCountryIds,
+      areas: selectedAreaKeys,
+      cities: selectedCityKeys,
+      metric,
+      sortKey,
+      sortDir,
+      highlightId,
+      mapFocus,
+      includeBrazil,
+      tableView,
+      visibleCols,
+      columnOrder,
+    }
+    const url = buildShareUrl(snapshot)
+    const ok = await copyTextToClipboard(url)
+    setShareFeedback(ok ? 'copied' : 'failed')
+    if (ok) {
+      try {
+        window.history.replaceState(null, '', url)
+      } catch {
+        /* ignore */
+      }
+    }
+  }
 
   useEffect(() => {
     const el = tableChromeRef.current
@@ -1045,6 +1148,27 @@ export default function App() {
       <header className="animate-rise mb-8">
         <div className="mb-4 flex justify-end">
           <div className="flex flex-nowrap items-center gap-2">
+            <button
+              type="button"
+              className="share-btn control px-3 py-1.5 text-sm font-semibold"
+              aria-label={t('share', lang)}
+              title={
+                shareFeedback === 'copied'
+                  ? t('shareCopied', lang)
+                  : shareFeedback === 'failed'
+                    ? t('shareFailed', lang)
+                    : t('share', lang)
+              }
+              onClick={() => {
+                void handleShare()
+              }}
+            >
+              {shareFeedback === 'copied'
+                ? t('shareCopied', lang)
+                : shareFeedback === 'failed'
+                  ? t('shareFailed', lang)
+                  : t('share', lang)}
+            </button>
             <button
               type="button"
               className="theme-btn control px-3 py-1.5 text-sm font-semibold"

@@ -450,6 +450,12 @@ const dict = {
     en: 'Hard refresh',
     pt: 'Recarregar página',
   },
+  share: { en: 'Share', pt: 'Compartilhar' },
+  shareCopied: { en: 'Link copied', pt: 'Link copiado' },
+  shareFailed: {
+    en: 'Could not copy link',
+    pt: 'Não foi possível copiar o link',
+  },
   scope: {
     en: 'overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
     pt: 'exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
