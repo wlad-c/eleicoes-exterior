@@ -1441,25 +1441,35 @@ th.col-dragging .col-drag-handle {
 }
 
 .table-col-picker-menu {
-  /* Wide enough for full metric names on one line (large screens). */
-  min-width: max(22rem, min(36rem, 92vw));
-  width: max-content;
-  max-width: min(40rem, 96vw);
+  /*
+   * Stay inside the viewport. A previous max-content + right:0 width pushed
+   * the checklist off-screen to the left (empty dark panel).
+   */
+  box-sizing: border-box;
+  width: min(28rem, calc(100vw - 1.25rem));
+  max-width: calc(100vw - 1.25rem);
   max-height: min(70vh, 28rem);
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
 .table-col-picker-label {
   min-width: 0;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 @media (min-width: 1100px) {
   .table-col-picker-menu {
-    min-width: max(28rem, min(42rem, 70vw));
-    max-width: min(48rem, 92vw);
+    /* Room for full metric names on one line when the viewport is wide. */
+    width: min(36rem, calc(100vw - 2rem));
+  }
+
+  .table-col-picker-label {
+    overflow-wrap: normal;
+    word-break: normal;
+    white-space: nowrap;
   }
 }
 
