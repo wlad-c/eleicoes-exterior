@@ -55,27 +55,42 @@ function scaleKind(metric: MapMetric): ScaleKind {
   switch (metric) {
     case 'leader2026':
     case 'leader2022':
+    case 'leader2026R1':
+    case 'leader2022R1':
       return 'leader'
     case 'difference2026':
     case 'difference2022':
+    case 'difference2026R1':
+    case 'difference2022R1':
     case 'lulaChange':
     case 'swing':
     case 'lulaRoundShift':
     case 'roundSwing':
+    case 'lulaRoundShift2022':
+    case 'roundSwing2022':
       return 'divergingLB'
     case 'bolsonaroChange':
     case 'bolsonaroRoundShift':
+    case 'bolsonaroRoundShift2022':
       // positive Bolsonaro change → blue (inverted below)
       return 'divergingLB'
     case 'lulaPct2026':
     case 'lulaPct2022':
+    case 'lulaPct2026R1':
+    case 'lulaPct2022R1':
     case 'lulaVotes2026':
     case 'lulaVotes2022':
+    case 'lulaVotes2026R1':
+    case 'lulaVotes2022R1':
       return 'lulaSeq'
     case 'bolsonaroPct2026':
     case 'bolsonaroPct2022':
+    case 'bolsonaroPct2026R1':
+    case 'bolsonaroPct2022R1':
     case 'bolsonaroVotes2026':
     case 'bolsonaroVotes2022':
+    case 'bolsonaroVotes2026R1':
+    case 'bolsonaroVotes2022R1':
       return 'bolsoSeq'
     case 'otherPct2026':
     case 'otherPct2022':
@@ -87,16 +102,27 @@ function scaleKind(metric: MapMetric): ScaleKind {
       return 'noValidSeq'
     case 'votes2026':
     case 'votes2022':
+    case 'votes2026R1':
+    case 'votes2022R1':
       return 'votesSeq'
   }
 }
 
 function isInverted(metric: MapMetric): boolean {
-  return metric === 'bolsonaroChange' || metric === 'bolsonaroRoundShift'
+  return (
+    metric === 'bolsonaroChange' ||
+    metric === 'bolsonaroRoundShift' ||
+    metric === 'bolsonaroRoundShift2022'
+  )
 }
 
 function isDifferenceMetric(metric: MapMetric): boolean {
-  return metric === 'difference2026' || metric === 'difference2022'
+  return (
+    metric === 'difference2026' ||
+    metric === 'difference2022' ||
+    metric === 'difference2026R1' ||
+    metric === 'difference2022R1'
+  )
 }
 
 function lerpColor(a: string, b: string, t: number): string {
@@ -238,10 +264,16 @@ export function makeMetricColorizer(
   const voteCount =
     metric === 'votes2026' ||
     metric === 'votes2022' ||
+    metric === 'votes2026R1' ||
+    metric === 'votes2022R1' ||
     metric === 'lulaVotes2026' ||
     metric === 'lulaVotes2022' ||
+    metric === 'lulaVotes2026R1' ||
+    metric === 'lulaVotes2022R1' ||
     metric === 'bolsonaroVotes2026' ||
     metric === 'bolsonaroVotes2022' ||
+    metric === 'bolsonaroVotes2026R1' ||
+    metric === 'bolsonaroVotes2022R1' ||
     metric === 'noValidVotes2026' ||
     metric === 'noValidVotes2022'
   const domainLo = voteCount ? Math.log1p(Math.max(lo, 0)) : lo

@@ -20,12 +20,20 @@ const TABLE_VIEWS: TableView[] = ['countries', 'areas', 'cities', 'suburbs']
 const SORT_KEYS: SortKey[] = [
   'votes2026',
   'votes2022',
+  'votes2026R1',
+  'votes2022R1',
   'lulaPct2026',
   'bolsonaroPct2026',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
+  'lulaPct2022R1',
+  'bolsonaroPct2022R1',
   'difference2026',
   'difference2022',
+  'difference2026R1',
+  'difference2022R1',
   'otherPct2026',
   'otherPct2022',
   'noValidVotePct2026',
@@ -38,6 +46,9 @@ const SORT_KEYS: SortKey[] = [
   'lulaRoundShift',
   'bolsonaroRoundShift',
   'roundSwing',
+  'lulaRoundShift2022',
+  'bolsonaroRoundShift2022',
+  'roundSwing2022',
   'sections',
   'country',
   'region',
@@ -243,7 +254,8 @@ export function buildShareSearch(
     params.set('refreshMs', refreshMs)
   }
 
-  params.set('round', state.round)
+  // Rounds are merged into one experience; keep `round=2` for older share links.
+  params.set('round', '2')
   params.set('lang', state.lang)
   params.set('theme', state.theme)
   if (state.query) params.set('q', state.query)

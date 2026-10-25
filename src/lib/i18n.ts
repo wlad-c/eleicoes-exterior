@@ -80,95 +80,183 @@ const dict = {
   statusReported: { en: 'Reported', pt: 'Apurados' },
   statusPending: { en: 'Pending', pt: 'Pendentes' },
   mapMetric: { en: 'Color by', pt: 'Colorir por' },
-  lulaChange: { en: 'Lula change', pt: 'Variação Lula' },
-  bolsonaroChange: { en: 'Bolsonaro change', pt: 'Variação Bolsonaro' },
-  swing: {
-    en: 'Swing vs 2022',
-    pt: 'Swing vs 2022',
+  lulaChange: {
+    en: 'Lula Δ 2026 runoff vs 2022 runoff',
+    pt: 'Variação Lula 2026 2º vs 2022 2º',
   },
-  swingVs2022Runoff: {
-    en: 'Swing vs 2022 runoff',
-    pt: 'Swing vs 2º turno 2022',
+  bolsonaroChange: {
+    en: 'Bolsonaro Δ 2026 runoff vs 2022 runoff',
+    pt: 'Variação Bolsonaro 2026 2º vs 2022 2º',
+  },
+  swing: {
+    en: 'Swing 2026 runoff vs 2022 runoff',
+    pt: 'Swing 2026 2º turno vs 2022 2º',
   },
   lulaRoundShift: {
-    en: 'Lula 1º→2º',
-    pt: 'Lula 1º→2º',
+    en: 'Lula Δ 2026 runoff vs 1st round',
+    pt: 'Variação Lula 2026 2º vs 1º',
   },
   bolsonaroRoundShift: {
-    en: 'Bolsonaro 1º→2º',
-    pt: 'Bolsonaro 1º→2º',
+    en: 'Bolsonaro Δ 2026 runoff vs 1st round',
+    pt: 'Variação Bolsonaro 2026 2º vs 1º',
   },
   roundSwing: {
-    en: 'Swing vs 2026 1st round',
-    pt: 'Swing vs 1º turno 2026',
+    en: 'Swing 2026 runoff vs 1st round',
+    pt: 'Swing 2026 2º turno vs 1º',
+  },
+  lulaRoundShift2022: {
+    en: 'Lula Δ 2022 runoff vs 1st round',
+    pt: 'Variação Lula 2022 2º vs 1º',
+  },
+  bolsonaroRoundShift2022: {
+    en: 'Bolsonaro Δ 2022 runoff vs 1st round',
+    pt: 'Variação Bolsonaro 2022 2º vs 1º',
+  },
+  roundSwing2022: {
+    en: 'Swing 2022 runoff vs 1st round',
+    pt: 'Swing 2022 2º turno vs 1º',
   },
   hintLulaRoundShift: {
-    en: 'Lula share in runoff minus 1st round (2026), percentage points',
-    pt: 'Percentual de Lula no 2º turno menos o 1º (2026), em pontos percentuais',
+    en: 'Lula % in 2026 runoff minus 2026 1st round, percentage points',
+    pt: 'Percentual de Lula no 2º turno 2026 menos o 1º turno 2026, em pp',
   },
   hintBolsonaroRoundShift: {
-    en: 'Bolsonaro share in runoff minus 1st round (2026), percentage points',
-    pt: 'Percentual de Bolsonaro no 2º turno menos o 1º (2026), em pontos percentuais',
+    en: 'Bolsonaro % in 2026 runoff minus 2026 1st round, percentage points',
+    pt: 'Percentual de Bolsonaro no 2º turno 2026 menos o 1º turno 2026, em pp',
   },
   hintRoundSwing: {
-    en: 'Lula 1º→2º shift minus Bolsonaro 1º→2º shift (positive toward Lula)',
-    pt: 'Variação Lula 1º→2º menos variação Bolsonaro 1º→2º (positivo para Lula)',
+    en: '2026 runoff vs 1st round: Lula shift minus Bolsonaro shift (positive toward Lula)',
+    pt: '2026 2º vs 1º: variação Lula menos variação Bolsonaro (positivo para Lula)',
+  },
+  hintLulaRoundShift2022: {
+    en: 'Lula % in 2022 runoff minus 2022 1st round, percentage points',
+    pt: 'Percentual de Lula no 2º turno 2022 menos o 1º turno 2022, em pp',
+  },
+  hintBolsonaroRoundShift2022: {
+    en: 'Bolsonaro % in 2022 runoff minus 2022 1st round, percentage points',
+    pt: 'Percentual de Bolsonaro no 2º turno 2022 menos o 1º turno 2022, em pp',
+  },
+  hintRoundSwing2022: {
+    en: '2022 runoff vs 1st round: Lula shift minus Bolsonaro shift (positive toward Lula)',
+    pt: '2022 2º vs 1º: variação Lula menos variação Bolsonaro (positivo para Lula)',
   },
   difference2026: {
-    en: 'Difference 2026',
-    pt: 'Diferença 2026',
+    en: 'Difference 2026 runoff',
+    pt: 'Diferença 2026 2º turno',
   },
   difference2022: {
-    en: 'Difference 2022',
-    pt: 'Diferença 2022',
+    en: 'Difference 2022 runoff',
+    pt: 'Diferença 2022 2º turno',
+  },
+  difference2026R1: {
+    en: 'Difference 2026 1st round',
+    pt: 'Diferença 2026 1º turno',
+  },
+  difference2022R1: {
+    en: 'Difference 2022 1st round',
+    pt: 'Diferença 2022 1º turno',
   },
   leader2026: {
-    en: 'Leader 2026',
-    pt: 'Líder 2026',
+    en: 'Leader 2026 runoff',
+    pt: 'Líder 2026 2º turno',
   },
   leader2022: {
-    en: 'Leader 2022',
-    pt: 'Líder 2022',
+    en: 'Leader 2022 runoff',
+    pt: 'Líder 2022 2º turno',
   },
-  lulaPct2026: { en: 'Lula % 2026', pt: 'Lula % 2026' },
-  bolsonaroPct2026: { en: 'F Bolsonaro % 2026', pt: 'F Bolsonaro % 2026' },
-  lulaPct2022: { en: 'Lula % 2022', pt: 'Lula % 2022' },
-  bolsonaroPct2022: { en: 'J Bolsonaro % 2022', pt: 'J Bolsonaro % 2022' },
-  votes2026: { en: 'Votes 2026', pt: 'Votos 2026' },
-  votes2022: { en: 'Votes 2022', pt: 'Votos 2022' },
-  lulaVotes2026: { en: 'Lula votes 2026', pt: 'Votos Lula 2026' },
-  lulaVotes2022: { en: 'Lula votes 2022', pt: 'Votos Lula 2022' },
+  leader2026R1: {
+    en: 'Leader 2026 1st round',
+    pt: 'Líder 2026 1º turno',
+  },
+  leader2022R1: {
+    en: 'Leader 2022 1st round',
+    pt: 'Líder 2022 1º turno',
+  },
+  lulaPct2026: { en: 'Lula % 2026 runoff', pt: 'Lula % 2026 2º turno' },
+  bolsonaroPct2026: {
+    en: 'F Bolsonaro % 2026 runoff',
+    pt: 'F Bolsonaro % 2026 2º turno',
+  },
+  lulaPct2022: { en: 'Lula % 2022 runoff', pt: 'Lula % 2022 2º turno' },
+  bolsonaroPct2022: {
+    en: 'J Bolsonaro % 2022 runoff',
+    pt: 'J Bolsonaro % 2022 2º turno',
+  },
+  lulaPct2026R1: {
+    en: 'Lula % 2026 1st round',
+    pt: 'Lula % 2026 1º turno',
+  },
+  bolsonaroPct2026R1: {
+    en: 'F Bolsonaro % 2026 1st round',
+    pt: 'F Bolsonaro % 2026 1º turno',
+  },
+  lulaPct2022R1: {
+    en: 'Lula % 2022 1st round',
+    pt: 'Lula % 2022 1º turno',
+  },
+  bolsonaroPct2022R1: {
+    en: 'J Bolsonaro % 2022 1st round',
+    pt: 'J Bolsonaro % 2022 1º turno',
+  },
+  votes2026: { en: 'Votes 2026 runoff', pt: 'Votos 2026 2º turno' },
+  votes2022: { en: 'Votes 2022 runoff', pt: 'Votos 2022 2º turno' },
+  votes2026R1: { en: 'Votes 2026 1st round', pt: 'Votos 2026 1º turno' },
+  votes2022R1: { en: 'Votes 2022 1st round', pt: 'Votos 2022 1º turno' },
+  lulaVotes2026: {
+    en: 'Lula votes 2026 runoff',
+    pt: 'Votos Lula 2026 2º turno',
+  },
+  lulaVotes2022: {
+    en: 'Lula votes 2022 runoff',
+    pt: 'Votos Lula 2022 2º turno',
+  },
   bolsonaroVotes2026: {
-    en: 'F Bolsonaro votes 2026',
-    pt: 'Votos F Bolsonaro 2026',
+    en: 'F Bolsonaro votes 2026 runoff',
+    pt: 'Votos F Bolsonaro 2026 2º turno',
   },
   bolsonaroVotes2022: {
-    en: 'J Bolsonaro votes 2022',
-    pt: 'Votos J Bolsonaro 2022',
+    en: 'J Bolsonaro votes 2022 runoff',
+    pt: 'Votos J Bolsonaro 2022 2º turno',
+  },
+  lulaVotes2026R1: {
+    en: 'Lula votes 2026 1st round',
+    pt: 'Votos Lula 2026 1º turno',
+  },
+  lulaVotes2022R1: {
+    en: 'Lula votes 2022 1st round',
+    pt: 'Votos Lula 2022 1º turno',
+  },
+  bolsonaroVotes2026R1: {
+    en: 'F Bolsonaro votes 2026 1st round',
+    pt: 'Votos F Bolsonaro 2026 1º turno',
+  },
+  bolsonaroVotes2022R1: {
+    en: 'J Bolsonaro votes 2022 1st round',
+    pt: 'Votos J Bolsonaro 2022 1º turno',
   },
   otherPct2026: {
-    en: 'Other % 2026',
-    pt: 'Outros % 2026',
+    en: 'Other % 2026 runoff',
+    pt: 'Outros % 2026 2º turno',
   },
   otherPct2022: {
-    en: 'Other % 2022',
-    pt: 'Outros % 2022',
+    en: 'Other % 2022 runoff',
+    pt: 'Outros % 2022 2º turno',
   },
   noValidVotePct2026: {
-    en: 'No valid vote % 2026',
-    pt: 'Sem voto válido % 2026',
+    en: 'No valid vote % 2026 runoff',
+    pt: 'Sem voto válido % 2026 2º turno',
   },
   noValidVotePct2022: {
-    en: 'No valid vote % 2022',
-    pt: 'Sem voto válido % 2022',
+    en: 'No valid vote % 2022 runoff',
+    pt: 'Sem voto válido % 2022 2º turno',
   },
   noValidVotes2026: {
-    en: 'No valid votes 2026',
-    pt: 'Sem voto válido 2026',
+    en: 'No valid votes 2026 runoff',
+    pt: 'Sem voto válido 2026 2º turno',
   },
   noValidVotes2022: {
-    en: 'No valid votes 2022',
-    pt: 'Sem voto válido 2022',
+    en: 'No valid votes 2022 runoff',
+    pt: 'Sem voto válido 2022 2º turno',
   },
   showPending: {
     en: 'Show pending',
@@ -321,64 +409,88 @@ const dict = {
   hintCountry: { en: 'name', pt: 'nome' },
   hintRegion: { en: 'region', pt: 'região' },
   hintVotes2026: {
-    en: 'total votes',
-    pt: 'total de votos',
+    en: 'total valid votes · 2026 runoff',
+    pt: 'total de votos válidos · 2º turno 2026',
   },
   hintVotes2022: {
-    en: 'total votes',
-    pt: 'total de votos',
+    en: 'total valid votes · 2022 runoff',
+    pt: 'total de votos válidos · 2º turno 2022',
+  },
+  hintVotes2026R1: {
+    en: 'total valid votes · 2026 1st round',
+    pt: 'total de votos válidos · 1º turno 2026',
+  },
+  hintVotes2022R1: {
+    en: 'total valid votes · 2022 1st round',
+    pt: 'total de votos válidos · 1º turno 2022',
   },
   hintShare2026: {
-    en: '% of valid votes',
-    pt: '% dos votos válidos',
+    en: '% of valid votes · 2026 runoff',
+    pt: '% dos votos válidos · 2º turno 2026',
   },
   hintShare2022: {
-    en: '% of valid votes',
-    pt: '% dos votos válidos',
+    en: '% of valid votes · 2022 runoff',
+    pt: '% dos votos válidos · 2º turno 2022',
+  },
+  hintShare2026R1: {
+    en: '% of valid votes · 2026 1st round',
+    pt: '% dos votos válidos · 1º turno 2026',
+  },
+  hintShare2022R1: {
+    en: '% of valid votes · 2022 1st round',
+    pt: '% dos votos válidos · 1º turno 2022',
   },
   hintOther2026: {
-    en: '% of valid · other candidates',
-    pt: '% dos válidos · outros candidatos',
+    en: '% of valid · other candidates · 2026 runoff',
+    pt: '% dos válidos · outros candidatos · 2º turno 2026',
   },
   hintOther2022: {
-    en: '% of valid · other candidates',
-    pt: '% dos válidos · outros candidatos',
+    en: '% of valid · other candidates · 2022 runoff',
+    pt: '% dos válidos · outros candidatos · 2º turno 2022',
   },
   hintNoValidVotePct2026: {
-    en: '% of registered · abstention + blank + null',
-    pt: '% dos aptos · abstenção + branco + nulo',
+    en: '% of registered · abstention + blank + null · 2026 runoff',
+    pt: '% dos aptos · abstenção + branco + nulo · 2º turno 2026',
   },
   hintNoValidVotePct2022: {
-    en: '% of registered · abstention + blank + null',
-    pt: '% dos aptos · abstenção + branco + nulo',
+    en: '% of registered · abstention + blank + null · 2022 runoff',
+    pt: '% dos aptos · abstenção + branco + nulo · 2º turno 2022',
   },
   hintNoValidVotes2026: {
-    en: 'abstention + blank + null (count)',
-    pt: 'abstenção + branco + nulo (quantidade)',
+    en: 'abstention + blank + null (count) · 2026 runoff',
+    pt: 'abstenção + branco + nulo (quantidade) · 2º turno 2026',
   },
   hintNoValidVotes2022: {
-    en: 'abstention + blank + null (count)',
-    pt: 'abstenção + branco + nulo (quantidade)',
+    en: 'abstention + blank + null (count) · 2022 runoff',
+    pt: 'abstenção + branco + nulo (quantidade) · 2º turno 2022',
   },
   hintLulaChange: {
-    en: 'pp vs 2022 (Δ votes)',
-    pt: 'pp vs 2022 (Δ votos)',
+    en: 'pp · 2026 runoff vs 2022 runoff (Δ votes)',
+    pt: 'pp · 2º turno 2026 vs 2º 2022 (Δ votos)',
   },
   hintBolsonaroChange: {
-    en: 'pp vs 2022 (Δ votes)',
-    pt: 'pp vs 2022 (Δ votos)',
+    en: 'pp · 2026 runoff vs 2022 runoff (Δ votes)',
+    pt: 'pp · 2º turno 2026 vs 2º 2022 (Δ votos)',
   },
   hintDifference2026: {
-    en: 'Lula % − Bolsonaro % (2026)',
-    pt: 'Lula % − Bolsonaro % (2026)',
+    en: 'Lula % − Bolsonaro % · 2026 runoff',
+    pt: 'Lula % − Bolsonaro % · 2º turno 2026',
   },
   hintDifference2022: {
-    en: 'Lula % − Bolsonaro % (2022)',
-    pt: 'Lula % − Bolsonaro % (2022)',
+    en: 'Lula % − Bolsonaro % · 2022 runoff',
+    pt: 'Lula % − Bolsonaro % · 2º turno 2022',
+  },
+  hintDifference2026R1: {
+    en: 'Lula % − Bolsonaro % · 2026 1st round',
+    pt: 'Lula % − Bolsonaro % · 1º turno 2026',
+  },
+  hintDifference2022R1: {
+    en: 'Lula % − Bolsonaro % · 2022 1st round',
+    pt: 'Lula % − Bolsonaro % · 1º turno 2022',
   },
   hintSwing: {
-    en: 'Lula Δ − Bolso Δ · red → Lula, blue → Bolsonaro',
-    pt: 'Lula Δ − Bolso Δ · vermelho → Lula, azul → Bolsonaro',
+    en: '2026 runoff vs 2022 runoff · Lula Δ − Bolso Δ · red → Lula',
+    pt: '2º 2026 vs 2º 2022 · Lula Δ − Bolso Δ · vermelho → Lula',
   },
   hintSections: {
     en: 'counted / total',
@@ -399,12 +511,12 @@ const dict = {
     pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing é a variação de Lula menos a de Bolsonaro (pontos percentuais; positivo para Lula, negativo para Bolsonaro).',
   },
   disclaimerScope: {
-    en: 'Default scope is overseas presidential voting for the selected round. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total.',
-    pt: 'O recorte padrão é a votação presidencial no exterior no turno selecionado. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior.',
+    en: 'Default scope is overseas presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total. Brazil city/neighborhood grain still reflects 2026 1st-round tallies until runoff domestic sync lands.',
+    pt: 'O recorte padrão é a votação presidencial no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior. O detalhe de cidades/bairros do Brasil ainda reflete o 1º turno de 2026 até sair a sincronização do 2º turno doméstico.',
   },
   disclaimerRoundShift: {
-    en: 'On the runoff tab, “1º→2º” columns compare 2026 runoff shares to the same place’s 2026 1st-round shares. Year-over-year change/swing still compare 2026 runoff to 2022 runoff.',
-    pt: 'Na aba do 2º turno, as colunas “1º→2º” comparam os percentuais de 2026 no 2º turno com o 1º turno do mesmo lugar. A variação/swing ano a ano continua comparando o 2º turno de 2026 com o de 2022.',
+    en: 'Round-shift columns compare runoff shares to the same place’s 1st-round shares within the same year (2026 or 2022). Year-over-year change/swing compare 2026 runoff to 2022 runoff.',
+    pt: 'As colunas de variação entre turnos comparam o 2º turno com o 1º do mesmo lugar no mesmo ano (2026 ou 2022). A variação/swing ano a ano compara o 2º turno de 2026 com o de 2022.',
   },
   howToEdit: {
     en: 'The live page refreshes overseas tallies directly from the TSE. Optional: npm run sync:tse && npm run sync:brazil && npm run build:pages to refresh the committed seed JSON.',
@@ -461,16 +573,12 @@ const dict = {
     pt: 'Não foi possível copiar o link',
   },
   scope: {
-    en: 'overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
-    pt: 'exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
+    en: 'overseas by default · 2026/2022 runoff + 1st round · F Bolsonaro vs J Bolsonaro 2022',
+    pt: 'exterior por padrão · 2º e 1º turno 2026/2022 · F Bolsonaro vs J Bolsonaro 2022',
   },
-  scopeRound1: {
-    en: '1st round · overseas by default · F Bolsonaro compared to J Bolsonaro 2022',
-    pt: '1º turno · exterior por padrão · F Bolsonaro comparado a J Bolsonaro 2022',
-  },
-  scopeRound2: {
-    en: 'runoff · overseas by default · 2026 2º vs 2022 2º · plus 1º→2º shift',
-    pt: '2º turno · exterior por padrão · 2026 2º vs 2022 2º · mais variação 1º→2º',
+  scopeUnified: {
+    en: 'overseas by default · 2026 runoff featured · compare 1st round & 2022',
+    pt: 'exterior por padrão · 2º turno 2026 em destaque · compare 1º turno e 2022',
   },
   Africa: { en: 'Africa', pt: 'África' },
   Americas: { en: 'Americas', pt: 'Américas' },
@@ -490,13 +598,8 @@ export function t(key: DictKey, lang: Lang): string {
   return dict[key][lang]
 }
 
-/** On the runoff tab, "2022" means the 2022 runoff — spell that out for swing. */
-export function metricLabel(
-  metric: MapMetric,
-  round: '1' | '2',
-  lang: Lang,
-): string {
-  if (metric === 'swing' && round === '2') return t('swingVs2022Runoff', lang)
+/** Metric labels already include year + round in copy. */
+export function metricLabel(metric: MapMetric, lang: Lang): string {
   return t(metric, lang)
 }
 

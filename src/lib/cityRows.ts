@@ -366,6 +366,10 @@ function citySortValue(
       return row.y2026?.totalValid ?? -1
     case 'votes2022':
       return row.y2022?.totalValid ?? -1
+    case 'votes2026R1':
+      return row.yRound1?.totalValid ?? -1
+    case 'votes2022R1':
+      return row.y2022Round1?.totalValid ?? -1
     case 'lulaPct2026':
       return row.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
@@ -374,6 +378,14 @@ function citySortValue(
       return row.y2022?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2022':
       return row.y2022?.bolsonaroPct ?? Number.NaN
+    case 'lulaPct2026R1':
+      return row.yRound1?.lulaPct ?? Number.NaN
+    case 'bolsonaroPct2026R1':
+      return row.yRound1?.bolsonaroPct ?? Number.NaN
+    case 'lulaPct2022R1':
+      return row.y2022Round1?.lulaPct ?? Number.NaN
+    case 'bolsonaroPct2022R1':
+      return row.y2022Round1?.bolsonaroPct ?? Number.NaN
     case 'otherPct2026':
       return otherPct(row.y2026) ?? Number.NaN
     case 'otherPct2022':
@@ -390,6 +402,14 @@ function citySortValue(
       return cityDifference2026(row) ?? Number.NaN
     case 'difference2022':
       return cityDifference2022(row) ?? Number.NaN
+    case 'difference2026R1':
+      return row.yRound1
+        ? row.yRound1.lulaPct - row.yRound1.bolsonaroPct
+        : Number.NaN
+    case 'difference2022R1':
+      return row.y2022Round1
+        ? row.y2022Round1.lulaPct - row.y2022Round1.bolsonaroPct
+        : Number.NaN
     case 'lulaChange':
       return cityLulaChange(row) ?? Number.NaN
     case 'bolsonaroChange':
@@ -397,17 +417,33 @@ function citySortValue(
     case 'swing':
       return citySwing(row) ?? Number.NaN
     case 'lulaRoundShift':
-      return row.y2026 && row.yRound1
+      return row.y2026 && row.yRound1 && row.y2026.totalValid > 0
         ? row.y2026.lulaPct - row.yRound1.lulaPct
         : Number.NaN
     case 'bolsonaroRoundShift':
-      return row.y2026 && row.yRound1
+      return row.y2026 && row.yRound1 && row.y2026.totalValid > 0
         ? row.y2026.bolsonaroPct - row.yRound1.bolsonaroPct
         : Number.NaN
     case 'roundSwing': {
-      if (!row.y2026 || !row.yRound1) return Number.NaN
+      if (!row.y2026 || !row.yRound1 || row.y2026.totalValid <= 0) {
+        return Number.NaN
+      }
       const l = row.y2026.lulaPct - row.yRound1.lulaPct
       const b = row.y2026.bolsonaroPct - row.yRound1.bolsonaroPct
+      return l - b
+    }
+    case 'lulaRoundShift2022':
+      return row.y2022 && row.y2022Round1
+        ? row.y2022.lulaPct - row.y2022Round1.lulaPct
+        : Number.NaN
+    case 'bolsonaroRoundShift2022':
+      return row.y2022 && row.y2022Round1
+        ? row.y2022.bolsonaroPct - row.y2022Round1.bolsonaroPct
+        : Number.NaN
+    case 'roundSwing2022': {
+      if (!row.y2022 || !row.y2022Round1) return Number.NaN
+      const l = row.y2022.lulaPct - row.y2022Round1.lulaPct
+      const b = row.y2022.bolsonaroPct - row.y2022Round1.bolsonaroPct
       return l - b
     }
     case 'sections':

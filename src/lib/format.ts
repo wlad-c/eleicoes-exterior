@@ -15,10 +15,12 @@ export type VoteLike = {
   y2022?: YearResult | null
   swing?: Swing | null
   /**
-   * Same place’s 2026 1º turno tallies when the active view is runoff.
+   * Same place’s 2026 1º turno tallies (vs `y2026` runoff).
    * Used for R1→R2 shift columns/metrics.
    */
   yRound1?: YearResult | null
+  /** Same place’s 2022 1º turno tallies (vs `y2022` runoff). */
+  y2022Round1?: YearResult | null
 }
 
 export function fmtInt(n: number | null | undefined, lang: Lang): string {
@@ -329,8 +331,21 @@ export function placeParentLabelCompact(
 
 function isReported(c: VoteLike): boolean {
   if (c.status === 'pending') return false
-  if (c.status === 'reported') return !!c.y2026
-  return !!c.y2026
+  if (!c.y2026) return false
+  // Unified grain borrowed from 1º-only files: empty runoff until sync lands.
+  if (
+    c.status == null &&
+    c.yRound1 &&
+    c.yRound1.totalValid > 0 &&
+    c.y2026.totalValid === 0
+  ) {
+    return false
+  }
+  return true
+}
+
+function hasYear(y: YearResult | null | undefined): y is YearResult {
+  return !!y && y.totalValid > 0
 }
 
 /** Lula change = 2026% − 2022%. */
@@ -373,17 +388,17 @@ export function swing(c: VoteLike): number | null {
 
 /** Lula pp shift from 2026 1º → 2026 2º (requires `yRound1`). */
 export function lulaRoundShift(c: VoteLike): number | null {
-  if (!isReported(c) || !c.y2026 || !c.yRound1) return null
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
   return round1(c.y2026.lulaPct - c.yRound1.lulaPct)
 }
 
 /** Bolsonaro pp shift from 2026 1º → 2026 2º (requires `yRound1`). */
 export function bolsonaroRoundShift(c: VoteLike): number | null {
-  if (!isReported(c) || !c.y2026 || !c.yRound1) return null
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
   return round1(c.y2026.bolsonaroPct - c.yRound1.bolsonaroPct)
 }
 
-/** Round swing = Lula R1→R2 shift − Bolsonaro R1→R2 shift. */
+/** Round swing = Lula R1→R2 shift − Bolsonaro R1→R2 shift (2026). */
 export function roundSwing(c: VoteLike): number | null {
   const l = lulaRoundShift(c)
   const b = bolsonaroRoundShift(c)
@@ -391,26 +406,81 @@ export function roundSwing(c: VoteLike): number | null {
   return round1(l - b)
 }
 
+/** Lula vote delta from 2026 1º → 2026 2º. */
+export function lulaRoundVotesDelta(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
+  return c.y2026.lula - c.yRound1.lula
+}
+
+/** Bolsonaro vote delta from 2026 1º → 2026 2º. */
+export function bolsonaroRoundVotesDelta(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
+  return c.y2026.bolsonaro - c.yRound1.bolsonaro
+}
+
+/** Lula pp shift from 2022 1º → 2022 2º. */
+export function lulaRoundShift2022(c: VoteLike): number | null {
+  if (!hasYear(c.y2022) || !hasYear(c.y2022Round1)) return null
+  return round1(c.y2022.lulaPct - c.y2022Round1.lulaPct)
+}
+
+/** Bolsonaro pp shift from 2022 1º → 2022 2º. */
+export function bolsonaroRoundShift2022(c: VoteLike): number | null {
+  if (!hasYear(c.y2022) || !hasYear(c.y2022Round1)) return null
+  return round1(c.y2022.bolsonaroPct - c.y2022Round1.bolsonaroPct)
+}
+
+/** 2022 round swing = Lula R1→R2 shift − Bolsonaro R1→R2 shift. */
+export function roundSwing2022(c: VoteLike): number | null {
+  const l = lulaRoundShift2022(c)
+  const b = bolsonaroRoundShift2022(c)
+  if (l == null || b == null) return null
+  return round1(l - b)
+}
+
+export function difference2026R1(c: VoteLike): number | null {
+  if (!hasYear(c.yRound1)) return null
+  return c.yRound1.lulaPct - c.yRound1.bolsonaroPct
+}
+
+export function difference2022R1(c: VoteLike): number | null {
+  if (!hasYear(c.y2022Round1)) return null
+  return c.y2022Round1.lulaPct - c.y2022Round1.bolsonaroPct
+}
+
+function leaderScore(y: YearResult): number {
+  const { lulaPct, bolsonaroPct } = y
+  if (lulaPct > bolsonaroPct) return lulaPct
+  if (bolsonaroPct > lulaPct) return -bolsonaroPct
+  return 0
+}
+
 export function metricValue(c: VoteLike, metric: MapMetric): number | null {
   switch (metric) {
     case 'leader2026': {
       if (!isReported(c) || !c.y2026) return null
-      const { lulaPct, bolsonaroPct } = c.y2026
-      if (lulaPct > bolsonaroPct) return lulaPct
-      if (bolsonaroPct > lulaPct) return -bolsonaroPct
-      return 0
+      return leaderScore(c.y2026)
     }
     case 'leader2022': {
-      if (!c.y2022) return null
-      const { lulaPct, bolsonaroPct } = c.y2022
-      if (lulaPct > bolsonaroPct) return lulaPct
-      if (bolsonaroPct > lulaPct) return -bolsonaroPct
-      return 0
+      if (!hasYear(c.y2022)) return null
+      return leaderScore(c.y2022)
+    }
+    case 'leader2026R1': {
+      if (!hasYear(c.yRound1)) return null
+      return leaderScore(c.yRound1)
+    }
+    case 'leader2022R1': {
+      if (!hasYear(c.y2022Round1)) return null
+      return leaderScore(c.y2022Round1)
     }
     case 'difference2026':
       return difference2026(c)
     case 'difference2022':
       return difference2022(c)
+    case 'difference2026R1':
+      return difference2026R1(c)
+    case 'difference2022R1':
+      return difference2022R1(c)
     case 'lulaChange':
       return lulaChange(c)
     case 'bolsonaroChange':
@@ -423,14 +493,28 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return bolsonaroRoundShift(c)
     case 'roundSwing':
       return roundSwing(c)
+    case 'lulaRoundShift2022':
+      return lulaRoundShift2022(c)
+    case 'bolsonaroRoundShift2022':
+      return bolsonaroRoundShift2022(c)
+    case 'roundSwing2022':
+      return roundSwing2022(c)
     case 'lulaPct2026':
       return isReported(c) && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
       return isReported(c) && c.y2026 ? c.y2026.bolsonaroPct : null
     case 'lulaPct2022':
-      return c.y2022?.lulaPct ?? null
+      return hasYear(c.y2022) ? c.y2022.lulaPct : null
     case 'bolsonaroPct2022':
-      return c.y2022?.bolsonaroPct ?? null
+      return hasYear(c.y2022) ? c.y2022.bolsonaroPct : null
+    case 'lulaPct2026R1':
+      return hasYear(c.yRound1) ? c.yRound1.lulaPct : null
+    case 'bolsonaroPct2026R1':
+      return hasYear(c.yRound1) ? c.yRound1.bolsonaroPct : null
+    case 'lulaPct2022R1':
+      return hasYear(c.y2022Round1) ? c.y2022Round1.lulaPct : null
+    case 'bolsonaroPct2022R1':
+      return hasYear(c.y2022Round1) ? c.y2022Round1.bolsonaroPct : null
     case 'otherPct2026':
       return isReported(c) && c.y2026 ? otherPct(c.y2026) : null
     case 'otherPct2022':
@@ -446,15 +530,27 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
     case 'votes2026':
       return isReported(c) && c.y2026 ? c.y2026.totalValid : null
     case 'votes2022':
-      return c.y2022?.totalValid ?? null
+      return hasYear(c.y2022) ? c.y2022.totalValid : null
+    case 'votes2026R1':
+      return hasYear(c.yRound1) ? c.yRound1.totalValid : null
+    case 'votes2022R1':
+      return hasYear(c.y2022Round1) ? c.y2022Round1.totalValid : null
     case 'lulaVotes2026':
       return isReported(c) && c.y2026 ? c.y2026.lula : null
     case 'lulaVotes2022':
-      return c.y2022?.lula ?? null
+      return hasYear(c.y2022) ? c.y2022.lula : null
     case 'bolsonaroVotes2026':
       return isReported(c) && c.y2026 ? c.y2026.bolsonaro : null
     case 'bolsonaroVotes2022':
-      return c.y2022?.bolsonaro ?? null
+      return hasYear(c.y2022) ? c.y2022.bolsonaro : null
+    case 'lulaVotes2026R1':
+      return hasYear(c.yRound1) ? c.yRound1.lula : null
+    case 'lulaVotes2022R1':
+      return hasYear(c.y2022Round1) ? c.y2022Round1.lula : null
+    case 'bolsonaroVotes2026R1':
+      return hasYear(c.yRound1) ? c.yRound1.bolsonaro : null
+    case 'bolsonaroVotes2022R1':
+      return hasYear(c.y2022Round1) ? c.y2022Round1.bolsonaro : null
   }
 }
 
@@ -466,29 +562,42 @@ export function formatMetricValue(
   if (value == null) return '—'
   switch (metric) {
     case 'leader2026':
-    case 'leader2022': {
+    case 'leader2026R1':
+    case 'leader2022':
+    case 'leader2022R1': {
       if (value === 0) return t('tie', lang)
+      const flavio =
+        metric === 'leader2026' || metric === 'leader2026R1'
       const who =
         value > 0
           ? t('lula', lang)
-          : metric === 'leader2026'
+          : flavio
             ? t('fBolsonaro', lang)
             : t('jBolsonaro', lang)
       return `${who} ${fmtPct(Math.abs(value), lang)}`
     }
     case 'difference2026':
     case 'difference2022':
+    case 'difference2026R1':
+    case 'difference2022R1':
     case 'lulaChange':
     case 'bolsonaroChange':
     case 'swing':
     case 'lulaRoundShift':
     case 'bolsonaroRoundShift':
     case 'roundSwing':
+    case 'lulaRoundShift2022':
+    case 'bolsonaroRoundShift2022':
+    case 'roundSwing2022':
       return fmtPp(value, lang)
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
     case 'lulaPct2022':
     case 'bolsonaroPct2022':
+    case 'lulaPct2026R1':
+    case 'bolsonaroPct2026R1':
+    case 'lulaPct2022R1':
+    case 'bolsonaroPct2022R1':
     case 'otherPct2026':
     case 'otherPct2022':
     case 'noValidVotePct2026':
@@ -496,10 +605,16 @@ export function formatMetricValue(
       return fmtPct(value, lang)
     case 'votes2026':
     case 'votes2022':
+    case 'votes2026R1':
+    case 'votes2022R1':
     case 'lulaVotes2026':
     case 'lulaVotes2022':
     case 'bolsonaroVotes2026':
     case 'bolsonaroVotes2022':
+    case 'lulaVotes2026R1':
+    case 'lulaVotes2022R1':
+    case 'bolsonaroVotes2026R1':
+    case 'bolsonaroVotes2022R1':
     case 'noValidVotes2026':
     case 'noValidVotes2022':
       return fmtInt(value, lang)
@@ -545,14 +660,31 @@ export type RowTotals = {
   valid2022: number
   lulaPct2022: number
   bolsoPct2022: number
+  lula2026R1: number | null
+  bolso2026R1: number | null
+  valid2026R1: number | null
+  lulaPct2026R1: number | null
+  bolsoPct2026R1: number | null
+  lula2022R1: number | null
+  bolso2022R1: number | null
+  valid2022R1: number | null
+  lulaPct2022R1: number | null
+  bolsoPct2022R1: number | null
   difference2026: number | null
   difference2022: number
+  difference2026R1: number | null
+  difference2022R1: number | null
   lulaChange: number | null
   bolsonaroChange: number | null
   swing: number | null
   lulaRoundShift: number | null
   bolsonaroRoundShift: number | null
   roundSwing: number | null
+  lulaRoundVotesDelta: number | null
+  bolsonaroRoundVotesDelta: number | null
+  lulaRoundShift2022: number | null
+  bolsonaroRoundShift2022: number | null
+  roundSwing2022: number | null
   lulaVotesDelta: number | null
   bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
@@ -575,6 +707,18 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
   let bolsoR1Comparable = 0
   let validR1Comparable = 0
   let hasRound1 = false
+  let lula2026R1 = 0
+  let bolso2026R1 = 0
+  let valid2026R1 = 0
+  let has2026R1 = false
+  let lula2022R1 = 0
+  let bolso2022R1 = 0
+  let valid2022R1 = 0
+  let has2022R1 = false
+  let lula2022R2ForR1 = 0
+  let bolso2022R2ForR1 = 0
+  let valid2022R2ForR1 = 0
+  let has2022RoundCompare = false
   let registered2026 = 0
   let noValidVotes2026 = 0
   let hasAbstention2026 = false
@@ -595,6 +739,24 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
         hasAbstention2022 = true
         registered2022 += c.y2022.registered
         noValidVotes2022 += nv
+      }
+    }
+    if (c.yRound1 && c.yRound1.totalValid > 0) {
+      has2026R1 = true
+      lula2026R1 += c.yRound1.lula
+      bolso2026R1 += c.yRound1.bolsonaro
+      valid2026R1 += c.yRound1.totalValid
+    }
+    if (c.y2022Round1 && c.y2022Round1.totalValid > 0) {
+      has2022R1 = true
+      lula2022R1 += c.y2022Round1.lula
+      bolso2022R1 += c.y2022Round1.bolsonaro
+      valid2022R1 += c.y2022Round1.totalValid
+      if (c.y2022 && c.y2022.totalValid > 0) {
+        has2022RoundCompare = true
+        lula2022R2ForR1 += c.y2022.lula
+        bolso2022R2ForR1 += c.y2022.bolsonaro
+        valid2022R2ForR1 += c.y2022.totalValid
       }
     }
     if (c.status === 'reported' && c.y2026) {
@@ -676,11 +838,49 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaRoundShift != null && bolsonaroRoundShift != null
       ? lulaRoundShift - bolsonaroRoundShift
       : null
+  const lulaPct2026R1 =
+    has2026R1 && valid2026R1 ? (lula2026R1 / valid2026R1) * 100 : null
+  const bolsoPct2026R1 =
+    has2026R1 && valid2026R1 ? (bolso2026R1 / valid2026R1) * 100 : null
+  const lulaPct2022R1 =
+    has2022R1 && valid2022R1 ? (lula2022R1 / valid2022R1) * 100 : null
+  const bolsoPct2022R1 =
+    has2022R1 && valid2022R1 ? (bolso2022R1 / valid2022R1) * 100 : null
+  const lulaPct2022R2Comparable = valid2022R2ForR1
+    ? (lula2022R2ForR1 / valid2022R2ForR1) * 100
+    : null
+  const bolsoPct2022R2Comparable = valid2022R2ForR1
+    ? (bolso2022R2ForR1 / valid2022R2ForR1) * 100
+    : null
+  const lulaRoundShift2022 =
+    has2022RoundCompare &&
+    lulaPct2022R2Comparable != null &&
+    lulaPct2022R1 != null
+      ? lulaPct2022R2Comparable - lulaPct2022R1
+      : null
+  const bolsonaroRoundShift2022 =
+    has2022RoundCompare &&
+    bolsoPct2022R2Comparable != null &&
+    bolsoPct2022R1 != null
+      ? bolsoPct2022R2Comparable - bolsoPct2022R1
+      : null
+  const roundSwing2022 =
+    lulaRoundShift2022 != null && bolsonaroRoundShift2022 != null
+      ? lulaRoundShift2022 - bolsonaroRoundShift2022
+      : null
   const difference2026 =
     lulaPct2026 != null && bolsoPct2026 != null
       ? lulaPct2026 - bolsoPct2026
       : null
   const difference2022 = lulaPct2022 - bolsoPct2022
+  const difference2026R1 =
+    lulaPct2026R1 != null && bolsoPct2026R1 != null
+      ? lulaPct2026R1 - bolsoPct2026R1
+      : null
+  const difference2022R1 =
+    lulaPct2022R1 != null && bolsoPct2022R1 != null
+      ? lulaPct2022R1 - bolsoPct2022R1
+      : null
 
   return {
     countries: rows.length,
@@ -704,14 +904,32 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     valid2022,
     lulaPct2022,
     bolsoPct2022,
+    lula2026R1: has2026R1 ? lula2026R1 : null,
+    bolso2026R1: has2026R1 ? bolso2026R1 : null,
+    valid2026R1: has2026R1 ? valid2026R1 : null,
+    lulaPct2026R1,
+    bolsoPct2026R1,
+    lula2022R1: has2022R1 ? lula2022R1 : null,
+    bolso2022R1: has2022R1 ? bolso2022R1 : null,
+    valid2022R1: has2022R1 ? valid2022R1 : null,
+    lulaPct2022R1,
+    bolsoPct2022R1,
     difference2026,
     difference2022,
+    difference2026R1,
+    difference2022R1,
     lulaChange,
     bolsonaroChange,
     swing,
     lulaRoundShift,
     bolsonaroRoundShift,
     roundSwing,
+    lulaRoundVotesDelta: has2026 && hasRound1 ? lula2026 - lulaR1Comparable : null,
+    bolsonaroRoundVotesDelta:
+      has2026 && hasRound1 ? bolso2026 - bolsoR1Comparable : null,
+    lulaRoundShift2022,
+    bolsonaroRoundShift2022,
+    roundSwing2022,
     lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
     bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,

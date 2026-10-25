@@ -5,12 +5,20 @@ export type TableMetricCol =
   | 'region'
   | 'votes2026'
   | 'votes2022'
+  | 'votes2026R1'
+  | 'votes2022R1'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'lulaPct2026R1'
+  | 'bolsonaroPct2026R1'
+  | 'lulaPct2022R1'
+  | 'bolsonaroPct2022R1'
   | 'difference2026'
   | 'difference2022'
+  | 'difference2026R1'
+  | 'difference2022R1'
   | 'otherPct2026'
   | 'otherPct2022'
   | 'noValidVotePct2026'
@@ -23,60 +31,56 @@ export type TableMetricCol =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRoundShift2022'
+  | 'bolsonaroRoundShift2022'
+  | 'roundSwing2022'
   | 'sections'
 
 export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'region',
   'votes2026',
-  'votes2022',
   'lulaPct2026',
   'bolsonaroPct2026',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
+  'roundSwing',
+  'votes2026R1',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
+  'difference2026',
+  'difference2026R1',
+  'votes2022',
   'lulaPct2022',
   'bolsonaroPct2022',
-  'difference2026',
+  'votes2022R1',
+  'lulaPct2022R1',
+  'bolsonaroPct2022R1',
   'difference2022',
+  'difference2022R1',
+  'lulaRoundShift2022',
+  'bolsonaroRoundShift2022',
+  'roundSwing2022',
+  'lulaChange',
+  'bolsonaroChange',
+  'swing',
   'otherPct2026',
   'otherPct2022',
   'noValidVotePct2026',
   'noValidVotePct2022',
   'noValidVotes2026',
   'noValidVotes2022',
-  'lulaChange',
-  'bolsonaroChange',
-  'swing',
-  'lulaRoundShift',
-  'bolsonaroRoundShift',
-  'roundSwing',
   'sections',
 ]
 
-/** Round-shift columns are runoff-only. */
-export const RUNOFF_ONLY_TABLE_COLS: TableMetricCol[] = [
-  'lulaRoundShift',
-  'bolsonaroRoundShift',
-  'roundSwing',
-]
-
 /**
- * Default: hide region, 2022 vote/share/difference columns, other /
- * no-valid-vote shares and volumes, and sections.
+ * Default landing: 2026 runoff votes/% + change vs 1st round + round swing.
  */
 export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'votes2026',
   'lulaPct2026',
   'bolsonaroPct2026',
-  'difference2026',
-  'lulaChange',
-  'bolsonaroChange',
-  'swing',
-]
-
-/** Runoff default: 2026 votes/shares plus swing vs 2022 R2 and vs 2026 R1. */
-export const DEFAULT_RUNOFF_TABLE_METRIC_COLS: TableMetricCol[] = [
-  'votes2026',
-  'lulaPct2026',
-  'bolsonaroPct2026',
-  'swing',
+  'lulaRoundShift',
+  'bolsonaroRoundShift',
   'roundSwing',
 ]
 
@@ -84,12 +88,20 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   region: 'region',
   votes2026: 'votes2026',
   votes2022: 'votes2022',
+  votes2026R1: 'votes2026R1',
+  votes2022R1: 'votes2022R1',
   lulaPct2026: 'lulaPct2026',
   bolsonaroPct2026: 'bolsonaroPct2026',
   lulaPct2022: 'lulaPct2022',
   bolsonaroPct2022: 'bolsonaroPct2022',
+  lulaPct2026R1: 'lulaPct2026R1',
+  bolsonaroPct2026R1: 'bolsonaroPct2026R1',
+  lulaPct2022R1: 'lulaPct2022R1',
+  bolsonaroPct2022R1: 'bolsonaroPct2022R1',
   difference2026: 'difference2026',
   difference2022: 'difference2022',
+  difference2026R1: 'difference2026R1',
+  difference2022R1: 'difference2022R1',
   otherPct2026: 'otherPct2026',
   otherPct2022: 'otherPct2022',
   noValidVotePct2026: 'noValidVotePct2026',
@@ -102,15 +114,15 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   lulaRoundShift: 'lulaRoundShift',
   bolsonaroRoundShift: 'bolsonaroRoundShift',
   roundSwing: 'roundSwing',
+  lulaRoundShift2022: 'lulaRoundShift2022',
+  bolsonaroRoundShift2022: 'bolsonaroRoundShift2022',
+  roundSwing2022: 'roundSwing2022',
   sections: 'notes',
 }
 
 /** Bump when default visibility / column ids change so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v7'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v4'
-export const TABLE_COLS_RUNOFF_STORAGE_KEY = 'eleicoes-exterior-table-cols-runoff-v3'
-export const TABLE_COL_ORDER_RUNOFF_STORAGE_KEY =
-  'eleicoes-exterior-table-col-order-runoff-v2'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v8'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v5'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
@@ -169,15 +181,12 @@ export function moveColumn(
   return next
 }
 
-function readColsFromKey(
-  key: string,
-  fallback: TableMetricCol[],
-): TableMetricCol[] {
+export function readStoredTableCols(): TableMetricCol[] {
   try {
-    const raw = localStorage.getItem(key)
-    if (!raw) return fallback
+    const raw = localStorage.getItem(TABLE_COLS_STORAGE_KEY)
+    if (!raw) return [...DEFAULT_TABLE_METRIC_COLS]
     const parsed = JSON.parse(raw) as unknown
-    if (!Array.isArray(parsed)) return fallback
+    if (!Array.isArray(parsed)) return [...DEFAULT_TABLE_METRIC_COLS]
     const seen = new Set<TableMetricCol>()
     const cols: TableMetricCol[] = []
     for (const c of parsed) {
@@ -188,42 +197,23 @@ function readColsFromKey(
         cols.push(col)
       }
     }
-    return cols.length > 0 ? cols : fallback
+    return cols.length > 0 ? cols : [...DEFAULT_TABLE_METRIC_COLS]
   } catch {
-    return fallback
+    return [...DEFAULT_TABLE_METRIC_COLS]
   }
 }
 
-export function readStoredTableCols(round: '1' | '2' = '1'): TableMetricCol[] {
-  if (round === '2') {
-    return readColsFromKey(
-      TABLE_COLS_RUNOFF_STORAGE_KEY,
-      DEFAULT_RUNOFF_TABLE_METRIC_COLS,
-    )
-  }
-  return readColsFromKey(TABLE_COLS_STORAGE_KEY, DEFAULT_TABLE_METRIC_COLS)
-}
-
-export function writeStoredTableCols(
-  cols: TableMetricCol[],
-  round: '1' | '2' = '1',
-) {
+export function writeStoredTableCols(cols: TableMetricCol[]) {
   try {
-    const key =
-      round === '2' ? TABLE_COLS_RUNOFF_STORAGE_KEY : TABLE_COLS_STORAGE_KEY
-    localStorage.setItem(key, JSON.stringify(cols))
+    localStorage.setItem(TABLE_COLS_STORAGE_KEY, JSON.stringify(cols))
   } catch {
     /* ignore */
   }
 }
 
-export function readStoredColumnOrder(round: '1' | '2' = '1'): TableMetricCol[] {
+export function readStoredColumnOrder(): TableMetricCol[] {
   try {
-    const key =
-      round === '2'
-        ? TABLE_COL_ORDER_RUNOFF_STORAGE_KEY
-        : TABLE_COL_ORDER_STORAGE_KEY
-    const raw = localStorage.getItem(key)
+    const raw = localStorage.getItem(TABLE_COL_ORDER_STORAGE_KEY)
     if (!raw) return [...ALL_TABLE_METRIC_COLS]
     const parsed = JSON.parse(raw) as unknown
     if (!Array.isArray(parsed)) return [...ALL_TABLE_METRIC_COLS]
@@ -233,16 +223,12 @@ export function readStoredColumnOrder(round: '1' | '2' = '1'): TableMetricCol[] 
   }
 }
 
-export function writeStoredColumnOrder(
-  order: TableMetricCol[],
-  round: '1' | '2' = '1',
-) {
+export function writeStoredColumnOrder(order: TableMetricCol[]) {
   try {
-    const key =
-      round === '2'
-        ? TABLE_COL_ORDER_RUNOFF_STORAGE_KEY
-        : TABLE_COL_ORDER_STORAGE_KEY
-    localStorage.setItem(key, JSON.stringify(normalizeColumnOrder(order)))
+    localStorage.setItem(
+      TABLE_COL_ORDER_STORAGE_KEY,
+      JSON.stringify(normalizeColumnOrder(order)),
+    )
   } catch {
     /* ignore */
   }

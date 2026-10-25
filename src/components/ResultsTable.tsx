@@ -14,21 +14,28 @@ import {
   noValidVotes,
   aggregateRows,
   bolsonaroVotesDelta,
+  bolsonaroRoundVotesDelta,
   countryName,
   difference2022,
   difference2026,
+  difference2026R1,
+  difference2022R1,
   fmtCoverage,
   fmtInt,
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
   lulaVotesDelta,
+  lulaRoundVotesDelta,
   lulaRoundShift,
   bolsonaroRoundShift,
+  lulaRoundShift2022,
+  bolsonaroRoundShift2022,
   metricValue,
   otherPct,
   otherVotes,
   roundSwing,
+  roundSwing2022,
   swing,
 } from '../lib/format'
 import { regionLabel, t } from '../lib/i18n'
@@ -294,6 +301,32 @@ export function ResultsTable({
                 {arrow('votes2022')}
               </SortableTh>
             )
+          case 'votes2026R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('votes2026R1')}
+                align="right"
+                hint={t('hintVotes2026R1', lang)}
+                {...drag}
+              >
+                {t('votes2026R1', lang)}
+                {arrow('votes2026R1')}
+              </SortableTh>
+            )
+          case 'votes2022R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('votes2022R1')}
+                align="right"
+                hint={t('hintVotes2022R1', lang)}
+                {...drag}
+              >
+                {t('votes2022R1', lang)}
+                {arrow('votes2022R1')}
+              </SortableTh>
+            )
           case 'lulaPct2026':
             return (
               <SortableTh
@@ -348,6 +381,62 @@ export function ResultsTable({
               >
                 {t('bolsonaroPct2022', lang)}
                 {arrow('bolsonaroPct2022')}
+              </SortableTh>
+            )
+          case 'lulaPct2026R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaPct2026R1')}
+                align="right"
+                heated={heatCol === 'lula2026R1'}
+                hint={t('hintShare2026R1', lang)}
+                {...drag}
+              >
+                {t('lulaPct2026R1', lang)}
+                {arrow('lulaPct2026R1')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2026R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroPct2026R1')}
+                align="right"
+                heated={heatCol === 'bolso2026R1'}
+                hint={t('hintShare2026R1', lang)}
+                {...drag}
+              >
+                {t('bolsonaroPct2026R1', lang)}
+                {arrow('bolsonaroPct2026R1')}
+              </SortableTh>
+            )
+          case 'lulaPct2022R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaPct2022R1')}
+                align="right"
+                heated={heatCol === 'lula2022R1'}
+                hint={t('hintShare2022R1', lang)}
+                {...drag}
+              >
+                {t('lulaPct2022R1', lang)}
+                {arrow('lulaPct2022R1')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2022R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroPct2022R1')}
+                align="right"
+                heated={heatCol === 'bolso2022R1'}
+                hint={t('hintShare2022R1', lang)}
+                {...drag}
+              >
+                {t('bolsonaroPct2022R1', lang)}
+                {arrow('bolsonaroPct2022R1')}
               </SortableTh>
             )
           case 'otherPct2026':
@@ -462,6 +551,34 @@ export function ResultsTable({
                 {arrow('difference2022')}
               </SortableTh>
             )
+          case 'difference2026R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('difference2026R1')}
+                align="right"
+                heated={heatCol === 'difference2026R1'}
+                hint={t('hintDifference2026R1', lang)}
+                {...drag}
+              >
+                {t('difference2026R1', lang)}
+                {arrow('difference2026R1')}
+              </SortableTh>
+            )
+          case 'difference2022R1':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('difference2022R1')}
+                align="right"
+                heated={heatCol === 'difference2022R1'}
+                hint={t('hintDifference2022R1', lang)}
+                {...drag}
+              >
+                {t('difference2022R1', lang)}
+                {arrow('difference2022R1')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -546,6 +663,48 @@ export function ResultsTable({
                 {arrow('roundSwing')}
               </SortableTh>
             )
+          case 'lulaRoundShift2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaRoundShift2022')}
+                align="right"
+                heated={heatCol === 'lulaRoundShift2022'}
+                hint={t('hintLulaRoundShift2022', lang)}
+                {...drag}
+              >
+                {t('lulaRoundShift2022', lang)}
+                {arrow('lulaRoundShift2022')}
+              </SortableTh>
+            )
+          case 'bolsonaroRoundShift2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroRoundShift2022')}
+                align="right"
+                heated={heatCol === 'bolsonaroRoundShift2022'}
+                hint={t('hintBolsonaroRoundShift2022', lang)}
+                {...drag}
+              >
+                {t('bolsonaroRoundShift2022', lang)}
+                {arrow('bolsonaroRoundShift2022')}
+              </SortableTh>
+            )
+          case 'roundSwing2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('roundSwing2022')}
+                align="right"
+                heated={heatCol === 'roundSwing2022'}
+                hint={t('hintRoundSwing2022', lang)}
+                {...drag}
+              >
+                {t('roundSwing2022', lang)}
+                {arrow('roundSwing2022')}
+              </SortableTh>
+            )
           case 'sections':
             return (
               <SortableTh
@@ -559,6 +718,8 @@ export function ResultsTable({
                 {arrow('sections')}
               </SortableTh>
             )
+          default:
+            return <th key={col} />
         }
       })}
       <th className="table-col-spacer" aria-hidden="true" />
@@ -603,6 +764,18 @@ export function ResultsTable({
                 {fmtInt(totals.valid2022, lang)}
               </td>
             )
+          case 'votes2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid2026R1, lang)}
+              </td>
+            )
+          case 'votes2022R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid2022R1, lang)}
+              </td>
+            )
           case 'lulaPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -631,6 +804,36 @@ export function ResultsTable({
                 className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
               >
                 {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
+              </td>
+            )
+          case 'lulaPct2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.lulaPct2026R1, totals.lula2026R1, lang, shareOpts)}
+              </td>
+            )
+          case 'bolsonaroPct2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.bolsoPct2026R1, totals.bolso2026R1, lang, shareOpts)}
+              </td>
+            )
+          case 'lulaPct2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.lulaPct2022R1, totals.lula2022R1, lang, shareOpts)}
+              </td>
+            )
+          case 'bolsonaroPct2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.bolsoPct2022R1, totals.bolso2022R1, lang, shareOpts)}
               </td>
             )
           case 'otherPct2026':
@@ -703,6 +906,21 @@ export function ResultsTable({
                 {fmtPp(totals.difference2022, lang)}
               </td>
             )
+          case 'difference2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.difference2026R1, lang)}
+              </td>
+            )
+          case 'difference2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums font-medium text-[var(--ink-muted)]"
+              >
+                {fmtPp(totals.difference2022R1, lang)}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -724,19 +942,47 @@ export function ResultsTable({
           case 'lulaRoundShift':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.lulaRoundShift, lang)}
+                {fmtPpWithVotes(
+                  totals.lulaRoundShift,
+                  totals.lulaRoundVotesDelta,
+                  lang,
+                  shareOpts,
+                )}
               </td>
             )
           case 'bolsonaroRoundShift':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.bolsonaroRoundShift, lang)}
+                {fmtPpWithVotes(
+                  totals.bolsonaroRoundShift,
+                  totals.bolsonaroRoundVotesDelta,
+                  lang,
+                  shareOpts,
+                )}
               </td>
             )
           case 'roundSwing':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtPp(totals.roundSwing, lang)}
+              </td>
+            )
+          case 'lulaRoundShift2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.lulaRoundShift2022, lang)}
+              </td>
+            )
+          case 'bolsonaroRoundShift2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.bolsonaroRoundShift2022, lang)}
+              </td>
+            )
+          case 'roundSwing2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.roundSwing2022, lang)}
               </td>
             )
           case 'sections':
@@ -753,6 +999,8 @@ export function ResultsTable({
                   : '—'}
               </td>
             )
+          default:
+            return <td key={col} className="px-2 py-2.5" />
         }
       })}
       <td className="table-col-spacer" aria-hidden="true" />
@@ -872,6 +1120,24 @@ export function ResultsTable({
                               {fmtInt(c.y2022.totalValid, lang)}
                             </td>
                           )
+                        case 'votes2026R1':
+                          return (
+                            <td
+                              key={col}
+                              className="px-2 py-2.5 text-right tabular-nums"
+                            >
+                              {fmtInt(c.yRound1?.totalValid, lang)}
+                            </td>
+                          )
+                        case 'votes2022R1':
+                          return (
+                            <td
+                              key={col}
+                              className="px-2 py-2.5 text-right tabular-nums"
+                            >
+                              {fmtInt(c.y2022Round1?.totalValid, lang)}
+                            </td>
+                          )
                         case 'lulaPct2026':
                           return (
                             <HeatTd
@@ -914,6 +1180,70 @@ export function ResultsTable({
                               heat={heat}
                             >
                               {fmtShare(c.y2022.bolsonaroPct, c.y2022.bolsonaro, lang, shareOpts)}
+                            </HeatTd>
+                          )
+                        case 'lulaPct2026R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lula2026R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                c.yRound1?.lulaPct,
+                                c.yRound1?.lula,
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroPct2026R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolso2026R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                c.yRound1?.bolsonaroPct,
+                                c.yRound1?.bolsonaro,
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'lulaPct2022R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lula2022R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                c.y2022Round1?.lulaPct,
+                                c.y2022Round1?.lula,
+                                lang,
+                                shareOpts,
+                              )}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroPct2022R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolso2022R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtShare(
+                                c.y2022Round1?.bolsonaroPct,
+                                c.y2022Round1?.bolsonaro,
+                                lang,
+                                shareOpts,
+                              )}
                             </HeatTd>
                           )
                         case 'otherPct2026':
@@ -1024,6 +1354,28 @@ export function ResultsTable({
                               {fmtPp(difference2022(c), lang)}
                             </HeatTd>
                           )
+                        case 'difference2026R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="difference2026R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(difference2026R1(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'difference2022R1':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="difference2022R1"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(difference2022R1(c), lang)}
+                            </HeatTd>
+                          )
                         case 'lulaChange':
                           return (
                             <HeatTd
@@ -1065,7 +1417,12 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtPp(lulaRoundShift(c), lang)}
+                              {fmtPpWithVotes(
+                                lulaRoundShift(c),
+                                lulaRoundVotesDelta(c),
+                                lang,
+                                shareOpts,
+                              )}
                             </HeatTd>
                           )
                         case 'bolsonaroRoundShift':
@@ -1076,7 +1433,12 @@ export function ResultsTable({
                               heatCol={heatCol}
                               heat={heat}
                             >
-                              {fmtPp(bolsonaroRoundShift(c), lang)}
+                              {fmtPpWithVotes(
+                                bolsonaroRoundShift(c),
+                                bolsonaroRoundVotesDelta(c),
+                                lang,
+                                shareOpts,
+                              )}
                             </HeatTd>
                           )
                         case 'roundSwing':
@@ -1090,6 +1452,39 @@ export function ResultsTable({
                               {fmtPp(roundSwing(c), lang)}
                             </HeatTd>
                           )
+                        case 'lulaRoundShift2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lulaRoundShift2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(lulaRoundShift2022(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroRoundShift2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolsonaroRoundShift2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(bolsonaroRoundShift2022(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'roundSwing2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="roundSwing2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtPp(roundSwing2022(c), lang)}
+                            </HeatTd>
+                          )
                         case 'sections':
                           return (
                             <td
@@ -1099,6 +1494,8 @@ export function ResultsTable({
                               {fmtCoverage(c.coverage)}
                             </td>
                           )
+                        default:
+                          return <td key={col} className="px-2 py-2.5" />
                       }
                     })}
                     <td className="table-col-spacer" aria-hidden="true" />
