@@ -308,6 +308,7 @@ export function ResultsTable({
                 onClick={() => onSort('votes2026R1')}
                 align="right"
                 hint={t('hintVotes2026R1', lang)}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('votes2026R1', lang)}
@@ -391,6 +392,7 @@ export function ResultsTable({
                 align="right"
                 heated={heatCol === 'lula2026R1'}
                 hint={t('hintShare2026R1', lang)}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('lulaPct2026R1', lang)}
@@ -405,6 +407,7 @@ export function ResultsTable({
                 align="right"
                 heated={heatCol === 'bolso2026R1'}
                 hint={t('hintShare2026R1', lang)}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('bolsonaroPct2026R1', lang)}
@@ -766,7 +769,10 @@ export function ResultsTable({
             )
           case 'votes2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtInt(totals.valid2026R1, lang)}
               </td>
             )
@@ -808,13 +814,19 @@ export function ResultsTable({
             )
           case 'lulaPct2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtShare(totals.lulaPct2026R1, totals.lula2026R1, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtShare(totals.bolsoPct2026R1, totals.bolso2026R1, lang, shareOpts)}
               </td>
             )
@@ -1124,7 +1136,7 @@ export function ResultsTable({
                           return (
                             <td
                               key={col}
-                              className="px-2 py-2.5 text-right tabular-nums"
+                              className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
                             >
                               {fmtInt(c.yRound1?.totalValid, lang)}
                             </td>
@@ -1189,6 +1201,7 @@ export function ResultsTable({
                               col="lula2026R1"
                               heatCol={heatCol}
                               heat={heat}
+                              muted
                             >
                               {fmtShare(
                                 c.yRound1?.lulaPct,
@@ -1205,6 +1218,7 @@ export function ResultsTable({
                               col="bolso2026R1"
                               heatCol={heatCol}
                               heat={heat}
+                              muted
                             >
                               {fmtShare(
                                 c.yRound1?.bolsonaroPct,
@@ -1547,18 +1561,20 @@ function HeatTd({
   heatCol,
   heat,
   children,
+  muted,
 }: {
   col: HeatColumn
   heatCol: HeatColumn
   heat?: string
   children: React.ReactNode
+  muted?: boolean
 }) {
   const active = col === heatCol
   return (
     <td
       className={`px-2 py-2.5 text-right tabular-nums${
-        active && heat ? ' heat-cell' : ''
-      }`}
+        muted ? ' metric-col-prior' : ''
+      }${active && heat ? ' heat-cell' : ''}`}
       style={
         active && heat
           ? ({ ['--heat-bg']: heat } as React.CSSProperties)

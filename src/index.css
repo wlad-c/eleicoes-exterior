@@ -228,6 +228,20 @@ html.dark .sticky-table-chrome {
   letter-spacing: normal;
 }
 
+/* 2026 1º turnout columns — secondary to runoff in the default layout */
+.results-table th.metric-col-prior,
+.results-table .sticky-th.metric-col-prior {
+  color: var(--ink-muted);
+  opacity: 0.72;
+}
+
+.results-table--body tbody td.metric-col-prior,
+.results-table--cities:not(.results-table--foot) tbody td.metric-col-prior,
+.results-table tfoot td.metric-col-prior,
+.results-table--foot td.metric-col-prior {
+  color: var(--ink-muted);
+}
+
 .results-table tfoot td {
   background: var(--paper-deep);
 }

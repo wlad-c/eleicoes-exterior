@@ -676,7 +676,10 @@ export function CityBreakdownTable({
             )
           case 'votes2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtInt(totals.validR1, lang)}
               </td>
             )
@@ -718,13 +721,19 @@ export function CityBreakdownTable({
             )
           case 'lulaPct2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtShare(totals.lulaPctR1, totals.lulaR1, lang, shareOpts)}
               </td>
             )
           case 'bolsonaroPct2026R1':
             return (
-              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+              <td
+                key={col}
+                className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
+              >
                 {fmtShare(totals.bolsoPctR1, totals.bolsoR1, lang, shareOpts)}
               </td>
             )
@@ -989,6 +998,7 @@ export function CityBreakdownTable({
                 align="right"
                 hint={t('hintVotes2026R1', lang)}
                 onClick={() => onSort('votes2026R1')}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('votes2026R1', lang)}
@@ -1067,6 +1077,7 @@ export function CityBreakdownTable({
                 align="right"
                 hint={t('hintShare2026R1', lang)}
                 onClick={() => onSort('lulaPct2026R1')}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('lulaPct2026R1', lang)}
@@ -1080,6 +1091,7 @@ export function CityBreakdownTable({
                 align="right"
                 hint={t('hintShare2026R1', lang)}
                 onClick={() => onSort('bolsonaroPct2026R1')}
+                className="metric-col-prior"
                 {...drag}
               >
                 {t('bolsonaroPct2026R1', lang)}
@@ -1591,7 +1603,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums"
+                            className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtInt(c.yRound1?.totalValid, lang)}
                           </td>
@@ -1645,7 +1657,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums"
+                            className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(c.yRound1?.lulaPct, c.yRound1?.lula, lang, shareOpts)}
                           </td>
@@ -1654,7 +1666,7 @@ export function CityBreakdownTable({
                         return (
                           <td
                             key={col}
-                            className="px-2 py-2.5 text-right tabular-nums"
+                            className="metric-col-prior px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(
                               c.yRound1?.bolsonaroPct,
