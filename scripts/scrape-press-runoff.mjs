@@ -459,14 +459,31 @@ function extractTallies(html, nameIndex) {
     take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
   }
 
-  // Exame Asia bullets:
-  //   "Japão: Flávio Bolsonaro recebeu 28.538 votos (80,08%). Lula somou 7.098 (19,92%)."
-  //   "China: Lula recebeu 502 votos (65,28%). Flávio Bolsonaro somou 267 (34,72%)."
-  const exameBulletRe =
-    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s*:\s*(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s+votos?\s*\(\s*([\d.,]+)\s*%\s*\)[\s\S]{0,160}?(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s*(?:\(\s*([\d.,]+)\s*%\s*\)|votos?)/gi
-  while ((m = exameBulletRe.exec(text))) {
-    const name = m[1].trim()
-    const id = resolveCountry(name, nameIndex)
+  // Exame live roundup: "Austrália: No 2º turno, Lula recebeu 6.017 votos (63,46%). Flávio … somou 3.465 (36,54%)."
+  // Require "No 2º turno," so "No 1º turno: Lula recebeu …" never starts a match.
+  // No /i (otherwise [A-Z…] matches lowercase). htmlToText flattens newlines — anchor on
+  // non-word before the country, not line start. Allow "Coreia do Sul" connectors.
+  const exameLiveRe =
+    /(?:^|[^\wÀ-ü])([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:[ \t]+[\wÀ-ü'’\-]+){0,4})[ \t]*:[ \t]*No[ \t]+2[ºo][ \t]*turno,[ \t]*(Lula|(?:Flávio|Flavio)(?:[ \t]+Bolsonaro)?)[ \t]+(?:recebeu|somou)[ \t]+([\d.]+)[ \t]+votos?[ \t]*\([ \t]*([\d.,]+)[ \t]*%[ \t]*\)(?:(?!No[ \t]+1[ºo][ \t]*turno)[\s\S]){0,280}?(Lula|(?:Flávio|Flavio)(?:[ \t]+Bolsonaro)?)[ \t]+(?:recebeu|somou)[ \t]+([\d.]+)[ \t]*(?:\([ \t]*([\d.,]+)[ \t]*%[ \t]*\)|votos?)/g
+  while ((m = exameLiveRe.exec(text))) {
+    // Prefer the rightmost resolvable suffix ("Resultado país a país Austrália" → Austrália).
+    const rawName = m[1].trim()
+    if (/turno/i.test(rawName)) continue
+    const parts = rawName.split(/\s+/)
+    let name = rawName
+    let id = null
+    for (let i = parts.length - 1; i >= 0 && !id; i--) {
+      for (let len = 1; len <= 4 && i - len + 1 >= 0; len++) {
+        const candidate = parts.slice(i - len + 1, i + 1).join(' ')
+        if (!/^[A-ZÀ-Ü]/u.test(candidate)) continue
+        const cid = resolveCountry(candidate, nameIndex)
+        if (cid) {
+          name = candidate
+          id = cid
+          break
+        }
+      }
+    }
     if (!id) continue
     const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
     const aWho = who(m[2])
@@ -478,9 +495,50 @@ function extractTallies(html, nameIndex) {
     const bPct = m[7] ? parseNum(m[7]) : null
     const lula = aWho === 'lula' ? aVotes : bVotes
     const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
-    const lulaPct = aWho === 'lula' ? aPct : bPct
-    const bolsoPct = aWho === 'bolso' ? aPct : bPct
-    take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
+    take(
+      makeHit(
+        id,
+        name,
+        lula,
+        bolsonaro,
+        aWho === 'lula' ? aPct : bPct,
+        aWho === 'bolso' ? aPct : bPct,
+        m[0],
+      ),
+    )
+  }
+
+  // Older Exame Asia page (no "No 2º turno," prefix):
+  //   "Japão: Flávio Bolsonaro recebeu 28.538 votos (80,08%). Lula somou 7.098 (19,92%)."
+  const exameBulletRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s*:\s*(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s+votos?\s*\(\s*([\d.,]+)\s*%\s*\)(?:(?!No\s+1[ºo]\s*turno)(?!No\s+2[ºo]\s*turno).){0,160}?(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s*(?:\(\s*([\d.,]+)\s*%\s*\)|votos?)/gi
+  while ((m = exameBulletRe.exec(text))) {
+    const name = m[1].trim()
+    if (/turno/i.test(name)) continue
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    if (/1[ºo]\s*turno|2[ºo]\s*turno/i.test(m[0])) continue
+    const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
+    const aWho = who(m[2])
+    const bWho = who(m[5])
+    if (aWho === bWho) continue
+    const aVotes = parseNum(m[3])
+    const bVotes = parseNum(m[6])
+    const aPct = parseNum(m[4])
+    const bPct = m[7] ? parseNum(m[7]) : null
+    const lula = aWho === 'lula' ? aVotes : bVotes
+    const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
+    take(
+      makeHit(
+        id,
+        name,
+        lula,
+        bolsonaro,
+        aWho === 'lula' ? aPct : bPct,
+        aWho === 'bolso' ? aPct : bPct,
+        m[0],
+      ),
+    )
   }
 
   // UOL / BNews / BdF narrative (number before or after Flávio; optional trailing "votos"):
