@@ -122,6 +122,17 @@ export function defaultTableMetricCols(
     : [...DEFAULT_TABLE_METRIC_COLS_NARROW]
 }
 
+/** 2026 1º columns — de-emphasized vs runoff in the default wide layout. */
+export const PRIOR_ROUND_TABLE_COLS: ReadonlySet<TableMetricCol> = new Set([
+  'votes2026R1',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
+])
+
+export function isPriorRoundTableCol(col: TableMetricCol): boolean {
+  return PRIOR_ROUND_TABLE_COLS.has(col)
+}
+
 export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   region: 'region',
   votes2026: 'votes2026',
