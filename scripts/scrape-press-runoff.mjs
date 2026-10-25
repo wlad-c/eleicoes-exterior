@@ -266,6 +266,16 @@ function preferHit(prev, next) {
   const nq = hitQuality(next)
   if (nq > pq) return next
   if (nq < pq) return prev
+  // %-anchored absolute (source stated matching %) beats a larger vote-only
+  // guess when the implied Lula share diverges (Exame live-blog Estonia
+  // 160+Greece 311 → 33.97% vs real 82.9%).
+  if (pq >= 2 && nq >= 2) {
+    const shareGap = Math.abs((prev.lulaPct ?? 0) - (next.lulaPct ?? 0))
+    if (shareGap > 5) {
+      if (prev.pctAnchored && !next.pctAnchored) return prev
+      if (next.pctAnchored && !prev.pctAnchored) return next
+    }
+  }
   const pt = prev.totalValid || 0
   const nt = next.totalValid || 0
   // Require a meaningful gap so near-ties (UOL NZ 121 vs g1 101) keep the first hit.
@@ -297,8 +307,17 @@ function makeHit(countryId, name, lula, bolsonaro, lulaPct, bolsoPct, raw) {
     totalValid,
     lulaPct: lp,
     bolsoPct: bp,
+    // True when the source stated at least one % that matched the vote share.
+    pctAnchored: lulaPct != null || bolsoPct != null,
     raw: String(raw || '').slice(0, 180),
   }
+}
+
+/** Narrative matches must stay inside one country clause (no "Na Finlândia…" bleed). */
+function crossesCountryClause(raw) {
+  const s = String(raw || '')
+  const rest = s.replace(/^(?:Na|No|Em)\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}/u, '')
+  return /\b(?:Na|No|Em|Já\s+na)\s+[A-ZÀ-Ü]/u.test(rest)
 }
 
 /**
@@ -575,6 +594,8 @@ function extractTallies(html, nameIndex) {
     // Skip pure 1º-turno / 2022 sentences, but allow "em comparação com N no primeiro turno, e Flávio, M"
     if (/ainda\s+n[aã]o|2022/i.test(m[0])) continue
     if (/1[ºo]\s*turno|primeiro\s+turno/i.test(m[0]) && !/e\s+(?:Flávio|Flavio)/i.test(m[0])) continue
+    // Reject "Na Estônia… Já na Grécia, Flávio recebeu 311" cross-country bleeds.
+    if (crossesCountryClause(m[0])) continue
     const lula = parseNum(m[2])
     const bolsonaro = parseNum(m[3] || m[4] || m[5] || m[6])
     take(makeHit(id, name, lula, bolsonaro, null, null, m[0]))
@@ -599,6 +620,7 @@ function extractTallies(html, nameIndex) {
     if (!id) continue
     if (/ainda\s+n[aã]o|2022/i.test(m[0])) continue
     if (/1[ºo]\s*turno|primeiro\s+turno/i.test(m[0]) && !/e\s+Lula/i.test(m[0])) continue
+    if (crossesCountryClause(m[0])) continue
     const bolsonaro = parseNum(m[2])
     const lula = parseNum(m[3] || m[4] || m[5])
     take(makeHit(id, name, lula, bolsonaro, null, null, m[0]))
@@ -611,6 +633,7 @@ function extractTallies(html, nameIndex) {
     const name = m[1].trim()
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
+    if (crossesCountryClause(m[0])) continue
     take(makeHit(id, name, parseNum(m[2]), parseNum(m[3]), null, null, m[0]))
   }
 
@@ -885,9 +908,50 @@ async function main() {
     }`,
   )
 
+  // Machine-readable seed delta so timer ticks cannot miss NEW/REV countries.
+  const byId = new Map(data.countries.map((c) => [c.id, c]))
+  const deltaNew = []
+  const deltaRev = []
+  for (const hit of byCountry.values()) {
+    if (hitQuality(hit) < 2 || !(hit.totalValid > 0)) continue
+    const c = byId.get(hit.countryId)
+    if (!c) continue
+    if (c.source === 'tse' && c.status === 'reported') continue
+    const y = c.y2026
+    if (!(c.status === 'reported' && y?.totalValid > 0)) {
+      deltaNew.push(hit)
+      continue
+    }
+    if (y.lula !== hit.lula || y.bolsonaro !== hit.bolsonaro) {
+      deltaRev.push({ hit, prev: y })
+    }
+  }
+  const fmtHit = (h) => `${h.countryId} ${h.lula}/${h.bolsonaro} (${h.sourceName})`
+  console.log(
+    `\nDELTA_NEW: ${deltaNew.length ? deltaNew.map(fmtHit).join(' | ') : '(none)'}`,
+  )
+  console.log(
+    `DELTA_REV: ${
+      deltaRev.length
+        ? deltaRev
+            .map(
+              ({ hit, prev }) =>
+                `${hit.countryId} ${prev.lula}/${prev.bolsonaro}→${hit.lula}/${hit.bolsonaro} (${hit.sourceName})`,
+            )
+            .join(' | ')
+        : '(none)'
+    }`,
+  )
+  console.log(
+    `DELTA_COUNT: new=${deltaNew.length} rev=${deltaRev.length} absolute=${
+      [...byCountry.values()].filter((h) => hitQuality(h) >= 2 && h.totalValid > 0).length
+    }`,
+  )
+
   if (!apply) {
     console.log('\nDry-run only. Re-run with --apply to merge into results-runoff.json')
     console.log(`Sources file: ${SOURCES_PATH}`)
+    if (deltaNew.length || deltaRev.length) process.exitCode = 2
     return
   }
 
@@ -914,6 +978,18 @@ async function main() {
       const primary =
         /^(g1|CNN Brasil|Exame|Poder360|UOL)$/i.test(String(hit.sourceName || ''))
       if ((hit.totalValid || 0) < c.y2026.totalValid * 0.95 && !primary) {
+        skippedWeak++
+        return c
+      }
+      // Refuse vote-only outliers that flip the Lula share vs an existing row.
+      const prevShare = c.y2026.lulaPct
+      const nextShare = hit.lulaPct
+      if (
+        !hit.pctAnchored &&
+        prevShare != null &&
+        nextShare != null &&
+        Math.abs(prevShare - nextShare) > 5
+      ) {
         skippedWeak++
         return c
       }
