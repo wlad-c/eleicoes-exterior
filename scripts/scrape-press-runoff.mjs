@@ -411,12 +411,14 @@ function extractTallies(html, nameIndex) {
     take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
   }
 
-  // Exame / prose: "O petista recebeu 418 votos, contra 101 do candidato" near country name
-  // Window: country mention within 200 chars before the vote clause.
+  // Exame / prose: "O petista recebeu 418 votos, contra 101 do candidato" near country name.
+  // Keep the window tight so "…Egito… Jordânia… Lula recebeu 725 contra 76" cannot
+  // attribute Jordan's tally to Egypt (or any earlier country in the same paragraph).
   const exameProseRe =
-    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3}).{0,200}?(?:petista|Lula)(?:\s*\([^)]*\))?\s+recebeu\s+([\d.]+)\s+votos?\s*,?\s*contra\s+([\d.]+)/gi
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:[ \t]+[\wÀ-ü'’\-]+){0,4})[ \t,;:]*?(?:petista|Lula)(?:\s*\([^)]*\))?\s+recebeu\s+([\d.]+)\s+votos?\s*,?\s*contra\s+([\d.]+)/gi
   while ((m = exameProseRe.exec(text))) {
     const name = m[1].trim()
+    if (name.length > 40 || /turno|resultado|país/i.test(name)) continue
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
     if (/1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
@@ -424,8 +426,10 @@ function extractTallies(html, nameIndex) {
   }
 
   // Exame RESUMO: "Lula recebeu 6.017 votos (63,46%) na Austrália … contra 3.465"
+  // Stay inside one sentence ([^.]) so "…contra 76 do PL. No Egito… contra 16"
+  // cannot steal Jordan's 725 for Egypt.
   const exameResumoRe =
-    /Lula\s+recebeu\s+([\d.]+)\s+votos?.{0,40}?(?:na|no|em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3}).{0,100}?contra\s+([\d.]+)/gi
+    /Lula\s+recebeu\s+([\d.]+)\s+votos?[^.]{0,50}?(?:na|no|em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:[ \t]+[\wÀ-ü'’\-]+){0,4})[^.]{0,80}?contra\s+([\d.]+)/gi
   while ((m = exameResumoRe.exec(text))) {
     const name = m[2].trim()
     const id = resolveCountry(name, nameIndex)
@@ -508,16 +512,31 @@ function extractTallies(html, nameIndex) {
     )
   }
 
-  // Older Exame Asia page (no "No 2º turno," prefix):
-  //   "Japão: Flávio Bolsonaro recebeu 28.538 votos (80,08%). Lula somou 7.098 (19,92%)."
+  // Exame bullets without "No 2º turno," prefix (newer Middle East / Africa rows):
+  //   "Síria: Lula recebeu 106 votos (90,60%). Flávio Bolsonaro somou 11 (9,40%)."
+  //   "Arábia Saudita: Lula recebeu 49 votos (61,25%). Flávio Bolsonaro somou 31 (38,75%)."
+  // Stop before "No 1º turno" / "No 2º turno"; no /i so country names don't span prose.
   const exameBulletRe =
-    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s*:\s*(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s+votos?\s*\(\s*([\d.,]+)\s*%\s*\)(?:(?!No\s+1[ºo]\s*turno)(?!No\s+2[ºo]\s*turno).){0,160}?(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s*(?:\(\s*([\d.,]+)\s*%\s*\)|votos?)/gi
+    /(?:^|[^\wÀ-ü])([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:[ \t]+[\wÀ-ü'’\-]+){0,4})[ \t]*:[ \t]*(Lula|(?:Flávio|Flavio)(?:[ \t]+Bolsonaro)?)[ \t]+(?:recebeu|somou)[ \t]+([\d.]+)[ \t]+votos?[ \t]*\([ \t]*([\d.,]+)[ \t]*%[ \t]*\)(?:(?!No[ \t]+[12][ºo][ \t]*turno)[\s\S]){0,200}?(Lula|(?:Flávio|Flavio)(?:[ \t]+Bolsonaro)?)[ \t]+(?:recebeu|somou)[ \t]+([\d.]+)[ \t]*(?:\([ \t]*([\d.,]+)[ \t]*%[ \t]*\)|votos?)/g
   while ((m = exameBulletRe.exec(text))) {
-    const name = m[1].trim()
-    if (/turno/i.test(name)) continue
-    const id = resolveCountry(name, nameIndex)
+    const rawName = m[1].trim()
+    if (/turno/i.test(rawName)) continue
+    const parts = rawName.split(/\s+/)
+    let name = rawName
+    let id = null
+    for (let i = parts.length - 1; i >= 0 && !id; i--) {
+      for (let len = 1; len <= 4 && i - len + 1 >= 0; len++) {
+        const candidate = parts.slice(i - len + 1, i + 1).join(' ')
+        if (!/^[A-ZÀ-Ü]/u.test(candidate)) continue
+        const cid = resolveCountry(candidate, nameIndex)
+        if (cid) {
+          name = candidate
+          id = cid
+          break
+        }
+      }
+    }
     if (!id) continue
-    if (/1[ºo]\s*turno|2[ºo]\s*turno/i.test(m[0])) continue
     const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
     const aWho = who(m[2])
     const bWho = who(m[5])
