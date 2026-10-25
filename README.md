@@ -20,7 +20,7 @@ App runs at [http://localhost:4837/eleicoes-exterior/](http://localhost:4837/ele
 
 Live TSE refresh is **paused until New Zealand booths close** (`2026-10-25T04:00:00Z` = 17:00 NZDT). From then on, the runoff tab pulls overseas (ZZ) tallies on load, on focus, and every **2 minutes** for ~36h, then every **30 minutes**. Vote updates do not require a redeploy.
 
-Until TSE publishes a country, night-of **press BU** tallies can be merged. The scraper always checks the allowlisted outlets (**g1, UOL, Exame, Poder360, Metro1, Brasil de Fato, BNews**), discovers exterior/BU article links from their hubs, falls back via r.jina.ai when an outlet bot-blocks, and prefers richer absolute vote counts over %-only snippets:
+Until TSE publishes a country, night-of **press BU** tallies can be merged. The scraper checks allowlisted outlets (**g1, UOL, CNN Brasil, Poder360, Exame, Brasil de Fato, BNews, Metro1, O Globo, Folha, Estadão**), discovers exterior/BU links from hubs (including markdown from the reader fallback), falls back via curl+r.jina.ai when an outlet bot-blocks, parses each outlet’s tally format, and prefers richer absolute vote counts over %-only snippets:
 
 ```bash
 # Optional: refresh article URLs in scripts/data/press-runoff-sources.json
