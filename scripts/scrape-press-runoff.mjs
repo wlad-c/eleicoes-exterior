@@ -3,15 +3,17 @@
  * Night-of runoff helper: scrape reputable press BU roundups and merge into
  * results-runoff.json for countries still missing TSE totals.
  *
- * Always checks the 1º-turno allowlist outlets:
- *   g1, Exame, Poder360, Metro1, Brasil de Fato, BNews
+ * Always checks major Brazilian outlets:
+ *   g1, UOL, Exame, Poder360, Metro1, Brasil de Fato, BNews
+ *   (+ CNN Brasil / O Globo / Folha / Estadão / CBN when listed)
  *
  * Design:
  *   1. Fetch configured article + hub URLs (scripts/data/press-runoff-sources.json)
  *   2. Discover same-host exterior / BU / 2º-turno article links from hubs
- *   3. Parse absolute-vote and percentage patterns (g1 + Poder360 styles)
- *   4. Write/merge only where status is still pending OR source==='press'
- *   5. Never overwrite source==='tse' rows
+ *   3. Parse absolute-vote patterns (g1, Poder360, UOL narrative)
+ *   4. Fall back to r.jina.ai when an outlet returns 403 / Access Denied
+ *   5. Write/merge only where status is still pending OR source==='press'
+ *   6. Never overwrite source==='tse' rows
  *
  * Dry-run by default; pass --apply to write src + docs seeds.
  *
@@ -34,7 +36,7 @@ const SOURCES_PATH = join(ROOT, 'scripts/data/press-runoff-sources.json')
 const UA =
   'Mozilla/5.0 (compatible; eleicoes-exterior/1.0; +https://github.com/wlad-c/eleicoes-exterior) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
-/** Same outlets credited on the 1º turno seed — always scrape these. */
+/** Major Brazilian news hosts — always scrape when listed in sources. */
 const ALLOWLIST_HOSTS = new Set([
   'g1.globo.com',
   'www.poder360.com.br',
@@ -47,13 +49,32 @@ const ALLOWLIST_HOSTS = new Set([
   'brasildefato.com.br',
   'www.bnews.com.br',
   'bnews.com.br',
+  'noticias.uol.com.br',
+  'www.uol.com.br',
+  'uol.com.br',
+  'www.cnnbrasil.com.br',
+  'cnnbrasil.com.br',
+  'oglobo.globo.com',
+  'www.folha.uol.com.br',
+  'folha.uol.com.br',
+  'www.estadao.com.br',
+  'estadao.com.br',
+  'cbn.globo.com',
 ])
+
+const JINA_PROXY = 'https://r.jina.ai/'
 
 const DEFAULT_SOURCES = [
   {
     name: 'g1',
     url: 'https://g1.globo.com/mundo/',
     hub: 'https://g1.globo.com/mundo/',
+    discover: true,
+  },
+  {
+    name: 'UOL',
+    url: 'https://noticias.uol.com.br/internacional/ultimas-noticias/2026/10/25/votacao-exterior-segundo-turno-lula-e-flavio.ghtm',
+    hub: 'https://noticias.uol.com.br/eleicoes/',
     discover: true,
   },
   {
@@ -221,6 +242,20 @@ function hitQuality(hit) {
   return 0
 }
 
+/** Prefer the richer absolute tally when quality ties (e.g. g1 China > partial UOL). */
+function preferHit(prev, next) {
+  if (!prev) return next
+  const pq = hitQuality(prev)
+  const nq = hitQuality(next)
+  if (nq > pq) return next
+  if (nq < pq) return prev
+  const pt = prev.totalValid || 0
+  const nt = next.totalValid || 0
+  if (nt > pt) return next
+  if (nt < pt) return prev
+  return next
+}
+
 /**
  * Extract country tallies. Supports:
  *  - g1: "Nova Zelândia 2º turno: Lula, 418 votos (80,54%) … Flávio, 101 votos"
@@ -232,8 +267,7 @@ function extractTallies(html, nameIndex) {
   const found = new Map()
 
   const take = (hit) => {
-    const prev = found.get(hit.countryId)
-    if (!prev || hitQuality(hit) >= hitQuality(prev)) found.set(hit.countryId, hit)
+    found.set(hit.countryId, preferHit(found.get(hit.countryId), hit))
   }
 
   // g1-style absolute votes under "2º turno" — either candidate may be listed first
@@ -309,6 +343,57 @@ function extractTallies(html, nameIndex) {
     })
   }
 
+  // UOL / narrative patterns (number before or after Flávio):
+  //   "Na Austrália, Lula conseguiu 5.290 votos, comparados com 2.934 de Flávio Bolsonaro"
+  //   "Já na Nova Zelândia, Lula teve 418 votos, em comparação com 121 de Flávio Bolsonaro"
+  //   "Na China, Lula teve 375 votos e Flávio teve 134 votos."
+  const uolRe =
+    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+Lula(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou)\s+([\d.]+)\s+votos?\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+(?:Flávio|Flavio|Bolsonaro)|(?:e\s+)?(?:Flávio|Flavio|Bolsonaro).{0,40}?([\d.]+)\s+votos?)/gi
+  while ((m = uolRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    if (/ainda\s+n[aã]o|1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    const lula = parseNum(m[2])
+    const bolsonaro = parseNum(m[3] || m[4])
+    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
+    const totalValid = lula + bolsonaro
+    take({
+      countryId: id,
+      name,
+      lula,
+      bolsonaro,
+      totalValid,
+      lulaPct: round1((lula / totalValid) * 100),
+      bolsoPct: round1((bolsonaro / totalValid) * 100),
+      raw: m[0].slice(0, 180),
+    })
+  }
+
+  // Flávio-first narrative variant
+  const uolBolsoFirstRe =
+    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+(?:Flávio|Flavio)(?:\s+Bolsonaro)?(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou)\s+([\d.]+)\s+votos?\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+Lula|(?:e\s+)?Lula.{0,40}?([\d.]+)\s+votos?)/gi
+  while ((m = uolBolsoFirstRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    if (/ainda\s+n[aã]o|1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    const bolsonaro = parseNum(m[2])
+    const lula = parseNum(m[3] || m[4])
+    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
+    const totalValid = lula + bolsonaro
+    take({
+      countryId: id,
+      name,
+      lula,
+      bolsonaro,
+      totalValid,
+      lulaPct: round1((lula / totalValid) * 100),
+      bolsoPct: round1((bolsonaro / totalValid) * 100),
+      raw: m[0].slice(0, 180),
+    })
+  }
+
   // %-only fallback (no absolute votes) — last resort
   const pctRe =
     /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3}).{0,80}?(?:Lula|13).{0,40}?(\d{1,2}(?:[.,]\d{1,2})?)\s*%.{0,80}?(?:Bolsonaro|Flávio|Flavio|22).{0,40}?(\d{1,2}(?:[.,]\d{1,2})?)\s*%/gi
@@ -368,7 +453,7 @@ function discoverArticleUrls(hubUrl, html, limit = MAX_DISCOVERED_PER_HUB) {
   return out
 }
 
-async function fetchText(url) {
+async function fetchDirect(url) {
   const res = await fetch(url, {
     headers: {
       'User-Agent': UA,
@@ -378,7 +463,46 @@ async function fetchText(url) {
     redirect: 'follow',
   })
   if (!res.ok) throw new Error(`HTTP ${res.status} ${url}`)
-  return res.text()
+  const text = await res.text()
+  if (/access\s+denied/i.test(text) && text.length < 2000) {
+    throw new Error(`Access Denied ${url}`)
+  }
+  return text
+}
+
+/** Shell out to curl — node undici is often 403'd by jina/CDN while curl succeeds. */
+async function fetchViaCurl(url) {
+  const { execFile } = await import('node:child_process')
+  const { promisify } = await import('node:util')
+  const execFileAsync = promisify(execFile)
+  // Keep UA minimal — full Chrome UA is 403'd by r.jina.ai from this host.
+  const { stdout } = await execFileAsync(
+    'curl',
+    ['-sL', '-A', 'Mozilla/5.0', '-H', 'Accept: text/plain,*/*', '--max-time', '45', url],
+    { maxBuffer: 12 * 1024 * 1024, encoding: 'utf8' },
+  )
+  if (!stdout || stdout.length < 200) throw new Error(`curl empty/blocked ${url} (${stdout?.length || 0}b)`)
+  if (/access\s+denied|doctype html/i.test(stdout) && stdout.length < 2000) {
+    throw new Error(`curl Access Denied ${url}`)
+  }
+  return stdout
+}
+
+/** Direct fetch, then r.jina.ai via curl for bot-blocked outlets (UOL, etc.). */
+async function fetchText(url) {
+  try {
+    return await fetchDirect(url)
+  } catch (e) {
+    const msg = String(e.message || e)
+    if (!/HTTP 403|Access Denied|HTTP 401|HTTP 429/i.test(msg)) throw e
+    const proxyUrl = `${JINA_PROXY}${url}`
+    process.stdout.write(`  → retry via curl+jina\n`)
+    try {
+      return await fetchViaCurl(proxyUrl)
+    } catch (curlErr) {
+      throw new Error(`${msg}; ${curlErr.message || curlErr}`)
+    }
+  }
 }
 
 function loadSources(extraUrls) {
@@ -488,11 +612,10 @@ async function main() {
     }
   }
 
-  // Prefer higher-quality hits; later equal-quality sources win.
+  // Prefer higher-quality / richer absolute tallies across outlets.
   const byCountry = new Map()
   for (const h of allHits) {
-    const prev = byCountry.get(h.countryId)
-    if (!prev || hitQuality(h) >= hitQuality(prev)) byCountry.set(h.countryId, h)
+    byCountry.set(h.countryId, preferHit(byCountry.get(h.countryId), h))
   }
 
   console.log(`\nUnique countries parsed: ${byCountry.size}`)
@@ -529,12 +652,13 @@ async function main() {
       skippedTse++
       return c
     }
-    // Don't clobber a good absolute press row with %-only scrapes.
+    // Don't clobber a good absolute press row with %-only scrapes,
+    // or with a smaller absolute tally (partial BU refresh).
     if (
       c.source === 'press' &&
       c.status === 'reported' &&
       c.y2026?.totalValid > 0 &&
-      hitQuality(hit) < 2
+      (hitQuality(hit) < 2 || (hit.totalValid || 0) < c.y2026.totalValid)
     ) {
       skippedWeak++
       return c
@@ -567,17 +691,28 @@ async function main() {
   })
 
   data.meta.updatedAt = new Date().toISOString()
-  // Keep meta source link for the best NZ/g1-style roundup when present.
-  const preferUrl =
-    byCountry.get('new-zealand')?.sourceUrl ||
-    sources.find((s) => /g1/i.test(s.name || ''))?.url
-  if (Array.isArray(data.meta.sources) && preferUrl) {
-    data.meta.sources = data.meta.sources.map((s) => {
-      if (/g1|press|poder360|exame|metro1|bnews|fato/i.test(s.name || '')) {
-        return { ...s, url: preferUrl }
+  // Upsert press outlet links used for any applied hit (keep g1 + UOL both credited).
+  if (Array.isArray(data.meta.sources)) {
+    const used = new Map()
+    for (const h of byCountry.values()) {
+      if (!h.sourceUrl || !h.sourceName) continue
+      const key = fold(h.sourceName).split(' ')[0]
+      if (!used.has(key)) used.set(key, h)
+    }
+    for (const hit of used.values()) {
+      const nameRe = new RegExp(hit.sourceName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
+      const idx = data.meta.sources.findIndex((s) => nameRe.test(s.name || ''))
+      const entry = {
+        name: `${hit.sourceName} overseas BU — 2º turno 2026`,
+        url: hit.sourceUrl,
+        role: {
+          en: '2026 runoff overseas BU roundup (secondary — used only where TSE has not yet published)',
+          pt: 'Levantamento de BU do 2º turno 2026 no exterior (secundário — só onde o TSE ainda não publicou)',
+        },
       }
-      return s
-    })
+      if (idx >= 0) data.meta.sources[idx] = { ...data.meta.sources[idx], url: hit.sourceUrl }
+      else data.meta.sources.push(entry)
+    }
   }
 
   const payload = JSON.stringify(data) + '\n'

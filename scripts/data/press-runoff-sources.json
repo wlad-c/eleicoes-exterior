@@ -7,6 +7,13 @@
     "note": "Primary overseas BU roundup (updated through runoff night)"
   },
   {
+    "name": "UOL",
+    "url": "https://noticias.uol.com.br/internacional/ultimas-noticias/2026/10/25/votacao-exterior-segundo-turno-lula-e-flavio.ghtm",
+    "hub": "https://noticias.uol.com.br/eleicoes/",
+    "discover": true,
+    "note": "Australia / NZ / China runoff BUs (narrative tallies); Japan still counting"
+  },
+  {
     "name": "Poder360",
     "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-2-turno-exterior-resultados/",
     "hub": "https://www.poder360.com.br/poder-eleicoes-2026/",
