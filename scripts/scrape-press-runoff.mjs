@@ -862,23 +862,25 @@ async function main() {
       skippedTse++
       return c
     }
-    // Don't clobber a good absolute press row with %-only scrapes,
-    // or with a meaningfully smaller absolute tally (partial BU refresh).
-    // Near-ties (±5%) may still update so consensus corrections (e.g. NZ 101 vs 121) land.
-    // Primary outlets (g1 / CNN / Exame / Poder360) may revise downward when they correct.
+    // Never seed/update from %-only scrapes — need absolute BU vote totals.
+    if (hitQuality(hit) < 2 || !(hit.totalValid > 0)) {
+      skippedWeak++
+      return c
+    }
+    // Don't clobber a good absolute press row with a meaningfully smaller
+    // absolute tally (partial BU refresh). Near-ties (±5%) may still update so
+    // consensus corrections (e.g. NZ 101 vs 121) land. Primary outlets
+    // (g1 / CNN / Exame / Poder360) may revise downward when they correct.
     if (c.source === 'press' && c.status === 'reported' && c.y2026?.totalValid > 0) {
       const primary =
         /^(g1|CNN Brasil|Exame|Poder360|UOL)$/i.test(String(hit.sourceName || ''))
-      if (
-        hitQuality(hit) < 2 ||
-        ((hit.totalValid || 0) < c.y2026.totalValid * 0.95 && !primary)
-      ) {
+      if ((hit.totalValid || 0) < c.y2026.totalValid * 0.95 && !primary) {
         skippedWeak++
         return c
       }
     }
     const y2026 = yearFromHit(hit)
-    if (y2026.totalValid <= 0 && !(y2026.lulaPct > 0 || y2026.bolsonaroPct > 0)) {
+    if (!(y2026.totalValid > 0)) {
       return c
     }
     updated++
