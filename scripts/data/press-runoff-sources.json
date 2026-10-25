@@ -87,10 +87,20 @@
   },
   {
     "name": "O Globo",
-    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/eleicoes-2026-no-exterior-brasileiros-formam-filas-em-paris-lisboa-e-londres-veja-onde-lula-e-flavio-ja-venceram-na-asia.ghtml",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/eleicoes-no-exterior-veja-resultado-de-lula-x-flavio-bolsonaro-em-cada-pais.ghtml",
     "hub": "https://oglobo.globo.com/politica/eleicoes-2026/",
     "discover": true,
-    "note": "Asia/Europe exterior day-of (winners; BUs when added)"
+    "note": "Per-country runoff BU list (Lula:/Flávio: bullets)"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/brasil/votacao-para-presidente-no-exterior-lula-vence-flavio-bolsonaro-na-australia/",
+    "note": "Australia absolute BU story"
+  },
+  {
+    "name": "O Globo",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/eleicoes-2026-no-exterior-brasileiros-formam-filas-em-paris-lisboa-e-londres-veja-onde-lula-e-flavio-ja-venceram-na-asia.ghtml",
+    "note": "Asia/Europe exterior day-of color"
   },
   {
     "name": "Folha",

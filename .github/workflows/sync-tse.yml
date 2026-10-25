@@ -8,12 +8,18 @@ on:
   schedule:
     # Quiet baseline: every 48h.
     - cron: '0 0 */2 * *'
-    # Runoff Sunday 25 Oct 2026 from NZ booth close (04:00 UTC) — press BUs
-    # then TSE after Brazil close (20:00 UTC). Every 20 min.
-    - cron: '*/20 4-23 25 10 *'
-    # Continue through Monday 26 Oct afternoon UTC.
-    - cron: '*/20 0-15 26 10 *'
+    # Runoff window (UTC): every 15 min on 25–26 Oct.
+    # GitHub cron is often delayed; denser schedule improves pickup.
+    - cron: '*/15 * 25 10 *'
+    - cron: '*/15 0-16 26 10 *'
   workflow_dispatch:
+  # Re-run when the scraper or source list changes (does not replace schedule).
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/scrape-press-runoff.mjs'
+      - 'scripts/data/press-runoff-sources.json'
+      - '.github/workflows/sync-tse.yml'
 
 permissions:
   contents: write
@@ -43,7 +49,7 @@ jobs:
           # Press+TSE runoff window: NZ close → Monday afternoon UTC
           START=$(date -u -d '2026-10-25 04:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-25 04:00:00' +%s)
           END=$(date -u -d '2026-10-26 16:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-26 16:00:00' +%s)
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] || { [ "$NOW" -ge "$START" ] && [ "$NOW" -lt "$END" ]; }; then
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] || [ "$GITHUB_EVENT_NAME" = "push" ] || { [ "$NOW" -ge "$START" ] && [ "$NOW" -lt "$END" ]; }; then
             echo "mode=runoff" >> "$GITHUB_OUTPUT"
           else
             echo "mode=round1" >> "$GITHUB_OUTPUT"
