@@ -419,8 +419,13 @@ const dict = {
     en: 'live every 2 min',
     pt: 'ao vivo a cada 2 min',
   },
+  autoRefreshPress: {
+    en: 'every 2 min · TSE from 17h Brasília',
+    pt: 'a cada 2 min · TSE a partir das 17h de Brasília',
+  },
   syncLive: { en: 'live TSE', pt: 'TSE ao vivo' },
-  syncUpdating: { en: 'updating TSE…', pt: 'atualizando TSE…' },
+  syncPress: { en: 'press BUs', pt: 'BUs da imprensa' },
+  syncUpdating: { en: 'updating…', pt: 'atualizando…' },
   syncError: {
     en: 'TSE fetch failed — retrying',
     pt: 'falha no TSE — tentando de novo',

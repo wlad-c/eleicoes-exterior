@@ -14,6 +14,17 @@ export const AMBIENTE = 'oficial'
 /** First overseas booths close in New Zealand (17:00 NZDT on runoff Sunday). */
 export const RUNOFF_REFRESH_START_MS = Date.parse('2026-10-25T04:00:00.000Z')
 
+/**
+ * TSE publishes no overseas totals before Brazil's polls close (17:00
+ * Brasília). Until then the runoff tab polls only the deployed seed, which
+ * carries hand-curated press BU tallies.
+ */
+export const RUNOFF_TSE_START_MS = Date.parse('2026-10-25T20:00:00.000Z')
+
+export function isPressOnlyWindow(now = Date.now()): boolean {
+  return now >= RUNOFF_REFRESH_START_MS && now < RUNOFF_TSE_START_MS
+}
+
 /** Steady-state poll while counting continues after the night-of window. */
 export const RESULTS_REFRESH_MS = 30 * 60 * 1000
 
