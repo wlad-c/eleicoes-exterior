@@ -125,8 +125,8 @@ export function CityBreakdownTable({
   const areaUfCompact = useAreaUfCompact()
   const compactMetrics = useTableCompactMetrics()
   const shareOpts = compactMetrics ? { compact: true } : undefined
-  /** Area tab: Brazilian UFs → SP/RJ/… instead of truncated full names. */
-  const preferBrazilUf = placeKind === 'area' && areaUfCompact
+  /** Area tab: Brazilian UFs always use uppercase abbrevs (SP, RJ, DF). */
+  const preferBrazilUf = placeKind === 'area'
   const tableKindClass =
     placeKind === 'suburb' ? 'results-table--suburb' : ''
   const countryColClass = flagOnlyLabels

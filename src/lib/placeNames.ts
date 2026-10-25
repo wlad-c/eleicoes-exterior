@@ -1,11 +1,14 @@
 import placeNames from '../data/place-names.json'
 import type { CityResult } from '../types'
-import { titleCasePlaceName } from './format'
+import { brazilUfAbbrev, titleCasePlaceName } from './format'
 
 const byTse = placeNames.byTseName as Record<string, { en: string; pt: string }>
 
 function lookup(raw: string | undefined): { en: string; pt: string } | null {
   if (!raw) return null
+  // Brazilian UF codes stay uppercase (SP, RJ) — never title-cased to "Sp".
+  const uf = brazilUfAbbrev({ name: raw })
+  if (uf) return { en: uf, pt: uf }
   const hit = byTse[raw.toUpperCase()] || byTse[raw]
   if (hit) return hit
   const titled = titleCasePlaceName(raw)

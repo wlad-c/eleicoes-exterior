@@ -8,6 +8,37 @@ import type {
 } from '../types'
 import { t } from './i18n'
 
+/** Official IBGE/TSE UF abbreviations (states + DF). */
+const BRAZIL_UF_CODES = new Set([
+  'AC',
+  'AL',
+  'AP',
+  'AM',
+  'BA',
+  'CE',
+  'DF',
+  'ES',
+  'GO',
+  'MA',
+  'MT',
+  'MS',
+  'MG',
+  'PA',
+  'PB',
+  'PR',
+  'PE',
+  'PI',
+  'RJ',
+  'RN',
+  'RS',
+  'RO',
+  'RR',
+  'SC',
+  'SP',
+  'SE',
+  'TO',
+])
+
 /** Minimal vote shape for map/table metrics (country or place rows). */
 export type VoteLike = {
   status?: CountryStatus
@@ -201,12 +232,21 @@ export function titleCasePlaceName(name: string): string {
 /**
  * Language-aware area/city label.
  * Prefers nameEn/namePt from the dataset; falls back to title-cased TSE `name`.
+ * Brazilian states/DF always use the uppercase UF abbreviation (SP, RJ, DF).
  */
 export function cityDisplayName(
-  place: string | { name: string; nameEn?: string; namePt?: string },
+  place:
+    | string
+    | { code?: string; name: string; nameEn?: string; namePt?: string },
   lang: Lang = 'pt',
 ): string {
-  if (typeof place === 'string') return titleCasePlaceName(place)
+  if (typeof place === 'string') {
+    const uf = brazilUfAbbrev({ name: place })
+    if (uf) return uf
+    return titleCasePlaceName(place)
+  }
+  const uf = brazilUfAbbrev(place)
+  if (uf) return uf
   if (lang === 'en') return place.nameEn || titleCasePlaceName(place.name)
   return place.namePt || titleCasePlaceName(place.name)
 }
@@ -214,15 +254,21 @@ export function cityDisplayName(
 /** Standard IBGE/TSE UF code (AC…TO) when the place is a Brazilian state/DF row. */
 export function brazilUfAbbrev(place: {
   code?: string
-  name: string
+  name?: string
+  nameEn?: string
+  namePt?: string
 }): string | null {
-  const code = (place.code || place.name || '').trim().toUpperCase()
-  return /^[A-Z]{2}$/.test(code) ? code : null
+  for (const raw of [place.code, place.name, place.nameEn, place.namePt]) {
+    if (!raw) continue
+    const code = raw.trim().toUpperCase()
+    if (BRAZIL_UF_CODES.has(code)) return code
+  }
+  return null
 }
 
 /**
- * Area-tab place label. On compact viewports, Brazilian UFs show the 2-letter
- * abbreviation (SP, RJ) instead of a truncated full state name.
+ * Area-tab place label. Brazilian UFs always show the 2-letter abbreviation
+ * (SP, RJ, DF) — the common Brazilian convention — never title-cased "Sp".
  */
 export function areaDisplayName(
   place: {
@@ -234,7 +280,9 @@ export function areaDisplayName(
   lang: Lang,
   opts?: { domestic?: boolean; preferUf?: boolean },
 ): string {
-  if (opts?.preferUf && opts.domestic) {
+  // Domestic Area rows are UFs: always abbreviate in capitals when recognized.
+  // preferUf remains for callers that force UF even without domestic flag.
+  if (opts?.domestic || opts?.preferUf) {
     const uf = brazilUfAbbrev(place)
     if (uf) return uf
   }
