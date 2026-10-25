@@ -52,10 +52,27 @@ export function defaultElectionRound(now = Date.now()): ElectionRound {
   return now >= RUNOFF_REFRESH_START_MS ? '2' : '1'
 }
 
-export function readStoredRound(): ElectionRound | null {
+/**
+ * Picks saved before NZ close (including legacy bare '1'/'2' values with no
+ * timestamp) are ignored once the runoff has started, so returning visitors
+ * land on 2º turno instead of a stale 1º turno choice.
+ */
+export function readStoredRound(now = Date.now()): ElectionRound | null {
   try {
-    const v = localStorage.getItem(ROUND_STORAGE_KEY)
-    if (v === '1' || v === '2') return v
+    const raw = localStorage.getItem(ROUND_STORAGE_KEY)
+    if (!raw) return null
+    let round: unknown = raw
+    let savedAt = 0
+    if (raw.startsWith('{')) {
+      const parsed = JSON.parse(raw) as { round?: unknown; at?: unknown }
+      round = parsed.round
+      savedAt = typeof parsed.at === 'number' ? parsed.at : 0
+    }
+    if (round !== '1' && round !== '2') return null
+    if (now >= RUNOFF_REFRESH_START_MS && savedAt < RUNOFF_REFRESH_START_MS) {
+      return null
+    }
+    return round
   } catch {
     /* ignore */
   }
@@ -64,7 +81,10 @@ export function readStoredRound(): ElectionRound | null {
 
 export function writeStoredRound(round: ElectionRound): void {
   try {
-    localStorage.setItem(ROUND_STORAGE_KEY, round)
+    localStorage.setItem(
+      ROUND_STORAGE_KEY,
+      JSON.stringify({ round, at: Date.now() }),
+    )
   } catch {
     /* ignore */
   }
