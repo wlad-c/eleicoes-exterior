@@ -676,7 +676,12 @@ export default function App() {
       }
     }
     if (next === 'countries' && mapFocus.level !== 'world') {
+      // Match mapBack / world background: leaving a Brazil (or other) drill
+      // for the Country tab must not keep a hidden country filter that still
+      // empties the table while the control reads "Any country".
       setMapFocus({ level: 'world' })
+      setHighlightId(null)
+      clearGeoFilters()
     }
   }
 
@@ -908,8 +913,14 @@ export default function App() {
       ) {
         return false
       }
-      if (statusFilter === 'reported' && c.status !== 'reported') return false
-      if (statusFilter === 'pending' && c.status !== 'pending') return false
+      // Explicit country picks (e.g. Area-tab Brazil) stay available even when
+      // Status would hide them — otherwise place tables go empty under Reported.
+      const explicitlySelected =
+        selectedCountryIds.length > 0 && selectedCountryIds.includes(c.id)
+      if (!explicitlySelected) {
+        if (statusFilter === 'reported' && c.status !== 'reported') return false
+        if (statusFilter === 'pending' && c.status !== 'pending') return false
+      }
       if (region !== 'all' && c.region !== region) return false
       if (!rowMatchesCountryFilter(c.id, selectedCountryIds)) return false
       return true
@@ -933,15 +944,62 @@ export default function App() {
     })
   }, [data.countries, statusFilter, region, showBrazilInTables])
 
-  const countryOptions = useMemo(
-    () => countryFilterOptions(filterableCountries, lang),
-    [filterableCountries, lang],
-  )
+  const countryOptions = useMemo(() => {
+    // Keep currently selected countries in the menu even when status/region
+    // would hide them — otherwise the trigger falls back to "Any country"
+    // while the table is still filtered to e.g. pending Brazil.
+    const byId = new Map(filterableCountries.map((c) => [c.id, c]))
+    for (const id of selectedCountryIds) {
+      if (byId.has(id)) continue
+      const c = data.countries.find((row) => row.id === id)
+      if (c) byId.set(id, c)
+    }
+    return countryFilterOptions([...byId.values()], lang)
+  }, [filterableCountries, selectedCountryIds, data.countries, lang])
+
+  // Country + world: drop picks that status/region hide (common after Area/City
+  // auto-selected Brazil while Status is Reported). Otherwise the table stays
+  // empty while the control can still look like "Any country".
+  useEffect(() => {
+    if (tableView !== 'countries') return
+    if (mapFocus.level !== 'world') return
+    if (selectedCountryIds.length === 0) return
+    const allowed = new Set(filterableCountries.map((c) => c.id))
+    const next = selectedCountryIds.filter((id) => allowed.has(id))
+    if (next.length === selectedCountryIds.length) return
+    setSelectedCountryIds(next)
+    setSelectedAreaKeys((prev) => prunePlaceKeysToCountries(prev, next))
+    setSelectedCityKeys((prev) => prunePlaceKeysToCountries(prev, next))
+  }, [
+    tableView,
+    mapFocus.level,
+    filterableCountries,
+    selectedCountryIds,
+  ])
 
   const areaSourceCountries = useMemo(() => {
     if (selectedCountryIds.length === 0) return filterableCountries
-    return filterableCountries.filter((c) => selectedCountryIds.includes(c.id))
-  }, [filterableCountries, selectedCountryIds])
+    const byId = new Map(
+      filterableCountries
+        .filter((c) => selectedCountryIds.includes(c.id))
+        .map((c) => [c.id, c]),
+    )
+    // Area/City tabs may keep a country pick that Status currently hides
+    // (Brazil pending + Reported) — still need its places in the menus.
+    for (const id of selectedCountryIds) {
+      if (byId.has(id)) continue
+      const c = data.countries.find((row) => row.id === id)
+      if (!c) continue
+      if (c.domestic && !showBrazilInTables) continue
+      byId.set(id, c)
+    }
+    return [...byId.values()]
+  }, [
+    filterableCountries,
+    selectedCountryIds,
+    data.countries,
+    showBrazilInTables,
+  ])
 
   const areaOptions = useMemo(
     () => areaFilterOptions(areaSourceCountries, lang),
