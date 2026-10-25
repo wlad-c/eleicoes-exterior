@@ -34,9 +34,14 @@
   },
   {
     "name": "Exame",
-    "url": "https://exame.com/brasil/votacao-no-exterior-quem-venceu-no-japao-china-e-coreia-do-sul-no-2o-turno/",
+    "url": "https://exame.com/brasil/lula-ou-flavio-bolsonaro-quem-esta-ganhando-no-exterior-no-2o-turno-das-eleicoes/",
     "hub": "https://exame.com/",
     "discover": true,
+    "note": "Live exterior runoff roundup — country-by-country 2º turno BUs (updated through night)"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/brasil/votacao-no-exterior-quem-venceu-no-japao-china-e-coreia-do-sul-no-2o-turno/",
     "note": "Asia/Oceania BU bullets (Japan, China, Korea, Malaysia, NZ)"
   },
   {
