@@ -2,14 +2,15 @@ name: Sync TSE ZZ tallies
 
 # Backup persistence for cold loads / SEO. The live page also pulls TSE
 # directly in the browser and does not depend on this job.
+# Press BU tallies are applied into results-runoff.json until TSE lands;
+# open tabs re-read the deployed seed every ~2 minutes on runoff night.
 on:
   schedule:
     # Quiet baseline: every 48h.
     - cron: '0 0 */2 * *'
-    # Runoff Sunday 25 Oct 2026 from Brazil close (17:00 Brasília = 20:00 UTC),
-    # every 20 min. Before that TSE publishes nothing; press BUs are curated
-    # by hand into results-runoff.json.
-    - cron: '*/20 20-23 25 10 *'
+    # Runoff Sunday 25 Oct 2026 from NZ booth close (04:00 UTC) — press BUs
+    # then TSE after Brazil close (20:00 UTC). Every 20 min.
+    - cron: '*/20 4-23 25 10 *'
     # Continue through Monday 26 Oct afternoon UTC.
     - cron: '*/20 0-15 26 10 *'
   workflow_dispatch:
@@ -39,7 +40,8 @@ jobs:
         id: mode
         run: |
           NOW=$(date -u +%s)
-          START=$(date -u -d '2026-10-25 20:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-25 20:00:00' +%s)
+          # Press+TSE runoff window: NZ close → Monday afternoon UTC
+          START=$(date -u -d '2026-10-25 04:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-25 04:00:00' +%s)
           END=$(date -u -d '2026-10-26 16:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-26 16:00:00' +%s)
           if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] || { [ "$NOW" -ge "$START" ] && [ "$NOW" -lt "$END" ]; }; then
             echo "mode=runoff" >> "$GITHUB_OUTPUT"
@@ -51,13 +53,14 @@ jobs:
         if: steps.mode.outputs.mode == 'round1'
         run: npm run sync:tse
 
-      # Press scrape stays dry-run: --apply would replace curated press rows
-      # (absolute votes + BU coverage) with percentage-only guesses.
-      - name: Sync runoff (TSE 6258; press scrape dry-run)
+      - name: Sync runoff (TSE 6258 + press BUs apply)
         if: steps.mode.outputs.mode == 'runoff'
         run: |
           npm run sync:tse:runoff || true
-          npm run scrape:press:runoff || true
+          # Apply absolute press tallies into pending/press rows only.
+          # Guards in the scraper: never overwrite source=tse; skip %-only
+          # when absolute exists; primary outlets may revise downward.
+          npm run scrape:press:runoff -- --apply || true
 
       - name: Build Pages
         run: npm run build:pages
