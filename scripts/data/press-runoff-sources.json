@@ -127,5 +127,10 @@
     "hub": "https://www.estadao.com.br/politica/",
     "discover": true,
     "note": "Estadão politica hub — no runoff exterior absolute BU roundup yet"
+  },
+  {
+    "name": "Folha",
+    "url": "https://www1.folha.uol.com.br/mundo/2026/10/voto-no-exterior-veja-os-resultados-por-pais-e-a-apuracao-de-lula-x-flavio-no-2o-turno-das-eleicoes-2026.shtml",
+    "note": "Exterior 2º turno per-country BU roundup (discovered; includes Turkey)"
   }
 ]
