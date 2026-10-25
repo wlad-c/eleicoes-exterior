@@ -93,16 +93,16 @@ const dict = {
     pt: 'Swing 2026 2º turno vs 2022 2º',
   },
   lulaRoundShift: {
-    en: 'Lula Δ 2026 runoff vs 1st round',
-    pt: 'Variação Lula 2026 2º vs 1º',
+    en: 'Lula change 2026',
+    pt: 'Variação Lula 2026',
   },
   bolsonaroRoundShift: {
-    en: 'Bolsonaro Δ 2026 runoff vs 1st round',
-    pt: 'Variação Bolsonaro 2026 2º vs 1º',
+    en: 'Bolsonaro change 2026',
+    pt: 'Variação Bolsonaro 2026',
   },
   roundSwing: {
-    en: 'Swing 2026 runoff vs 1st round',
-    pt: 'Swing 2026 2º turno vs 1º',
+    en: 'Swing 2026 runoff',
+    pt: 'Swing 2026 2º turno',
   },
   lulaRoundShift2022: {
     en: 'Lula Δ 2022 runoff vs 1st round',
