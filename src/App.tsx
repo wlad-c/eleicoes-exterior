@@ -505,8 +505,8 @@ export default function App() {
       setSortKey('votes2026')
       setSortDir('desc')
     }
-    // Preserve an explicit country pick (e.g. Australia) across Country →
-    // Area / City / Bairro. Only default to Brazil when the filter is empty.
+    // Preserve country / Incluir Brasil state across Country → Area / City /
+    // Bairro. Never auto-check Incluir Brasil or force a Brazil country filter.
     // Same rules for 1º turno and runoff — filter state is shared.
     // Read from refs so a just-committed PAÍS pick is never wiped by a stale
     // closure when the user taps Bairro/Cidade immediately after selecting.
@@ -517,20 +517,16 @@ export default function App() {
     const brazilInFilter =
       !hasCountryFilter || countryIds.includes(BRAZIL_ID)
 
-    // City / Bairro tabs drive a Brazil city map (municipalities with
-    // neighborhood data) — not the world choropleth — when Brazil is in scope.
+    // City / Bairro: prefetch Brazil grain when Brazil is already in scope.
+    // Do not auto-check Incluir Brasil or force a Brazil country filter —
+    // overseas-only Area/City views should stay overseas-only.
     if (next === 'cities' || next === 'suburbs') {
-      if (brazilInFilter) {
-        setIncludeBrazil(true)
+      if (brazilInFilter && (includeBrazil || hasCountryFilter)) {
         prefetchBrazilCities()
         if (next === 'suburbs') prefetchBrazilSuburbs()
       }
-      if (!hasCountryFilter) {
-        applyCountryFilter(BRAZIL_ID)
-        setHighlightId(BRAZIL_ID)
-      }
 
-      if (brazilInFilter) {
+      if (brazilInFilter && (includeBrazil || countryIds.includes(BRAZIL_ID))) {
         if (next === 'suburbs' && cityKeys.length === 1) {
           const parsed = parsePlaceFilterKey(cityKeys[0])
           const cityCode = parsed?.code
@@ -557,14 +553,8 @@ export default function App() {
       }
     }
     if (next === 'areas') {
-      if (brazilInFilter) {
-        setIncludeBrazil(true)
+      if (brazilInFilter && (includeBrazil || countryIds.includes(BRAZIL_ID))) {
         prefetchBrazilCities()
-      }
-      if (!hasCountryFilter) {
-        applyCountryFilter(BRAZIL_ID)
-      }
-      if (brazilInFilter) {
         if (mapFocus.level === 'world') {
           setMapFocus({ level: 'brazil' })
           setHighlightId(BRAZIL_ID)
