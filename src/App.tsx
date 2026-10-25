@@ -213,6 +213,13 @@ export default function App() {
     if (electionRound !== '2') return liveData
     return withRound1Compare(liveData, seedRound1)
   }, [electionRound, liveData])
+  const any2026Reported = useMemo(
+    () =>
+      seedData.countries.some(
+        (c) => !c.domestic && c.status === 'reported' && c.y2026,
+      ),
+    [seedData],
+  )
   const [lang, setLangState] = useState<Lang>(() => {
     if (initialShare.lang) return initialShare.lang
     return typeof window === 'undefined' ? 'pt' : readStoredLang()
@@ -260,8 +267,10 @@ export default function App() {
   const selectedCityKeysRef = useRef(selectedCityKeys)
   selectedCityKeysRef.current = selectedCityKeys
   const [metric, setMetric] = useState<MapMetric>(
-    () => initialShare.metric ?? 'leader2026',
+    () => initialShare.metric ?? 'swing',
   )
+  /** A shared link's metric or a dropdown pick overrides the swing default. */
+  const metricPickedRef = useRef(Boolean(initialShare.metric))
   const [sortKey, setSortKey] = useState<SortKey>(
     () => initialShare.sortKey ?? 'votes2026',
   )
@@ -348,22 +357,25 @@ export default function App() {
     setVisibleCols(readStoredTableCols(electionRound))
     setColumnOrder(readStoredColumnOrder(electionRound))
     if (electionRound === '1' && RUNOFF_ONLY_METRICS.includes(metric)) {
-      setMetric('leader2026')
+      setMetric('swing')
     }
     // Runoff with no 2026 rows yet: show All so 2022 history isn't hidden.
     // 1º turno stays on Reported (finalized).
     if (electionRound === '2') {
-      const any2026 = seedData.countries.some(
-        (c) => !c.domestic && c.status === 'reported' && c.y2026,
-      )
-      setStatusFilter(any2026 ? 'reported' : 'all')
-      if (!any2026) setMetric('leader2022')
+      setStatusFilter(any2026Reported ? 'reported' : 'all')
     } else {
       setStatusFilter('reported')
     }
     // Only re-load prefs when the round tab changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [electionRound])
+
+  // Swing needs 2026 rows; until the first runoff tally lands, show the 2022
+  // leader map, then flip to swing unless the user picked a metric.
+  useEffect(() => {
+    if (metricPickedRef.current) return
+    setMetric(electionRound === '2' && !any2026Reported ? 'leader2022' : 'swing')
+  }, [electionRound, any2026Reported])
 
   useEffect(() => {
     if (initialShare.theme) setTheme(initialShare.theme)
@@ -1336,7 +1348,10 @@ export default function App() {
             <select
               className="control mt-1 w-full max-w-full"
               value={metric}
-              onChange={(e) => setMetric(e.target.value as MapMetric)}
+              onChange={(e) => {
+                metricPickedRef.current = true
+                setMetric(e.target.value as MapMetric)
+              }}
               aria-describedby="heatmap-hint"
             >
               {mapMetrics.map((m) => (
