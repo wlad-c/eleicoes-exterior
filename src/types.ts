@@ -65,10 +65,15 @@ export type CityResult = {
   /** Present when historical open data exists for this place; else null/omitted. */
   y2022?: YearResult | null
   /**
-   * Same place’s 2026 1º turno tallies when viewing runoff (R1→R2 shift).
+   * Same place’s 2026 1º turno tallies (R1→R2 shift vs `y2026` runoff).
    * Attached at runtime; not persisted in seed JSON.
    */
   yRound1?: YearResult | null
+  /**
+   * Same place’s 2022 1º turno tallies (R1→R2 shift vs `y2022` runoff).
+   * Attached at runtime; not persisted in seed JSON.
+   */
+  y2022Round1?: YearResult | null
   swing?: Swing | null
   coverage: Coverage | null
   /**
@@ -95,10 +100,15 @@ export type CountryResult = {
   y2022: YearResult
   y2026: YearResult | null
   /**
-   * Same country’s 2026 1º turno tallies when viewing runoff (R1→R2 shift).
+   * Same country’s 2026 1º turno tallies (R1→R2 shift vs `y2026` runoff).
    * Attached at runtime; not persisted in seed JSON.
    */
   yRound1?: YearResult | null
+  /**
+   * Same country’s 2022 1º turno tallies (R1→R2 shift vs `y2022` runoff).
+   * Attached at runtime; not persisted in seed JSON.
+   */
+  y2022Round1?: YearResult | null
   swing: Swing | null
   /** Electoral sections counted/total when full or partial (e.g. 119/119, 26/29). */
   coverage: Coverage | null
@@ -164,26 +174,36 @@ export type ResultsData = {
 
 /**
  * Heatmap / map coloring metrics.
- * Leader: who has more valid votes (share intensity from 50%→100%).
- * Difference: Lula % − Bolsonaro % within the same year (signed pp).
- * Changes: 2026% − 2022%.
- * Swing: Lula change − Bolsonaro change (red toward Lula, blue toward Bolsonaro).
+ * Primary year fields (y2026 / y2022) are runoff; *R1 metrics read 1º turno.
+ * Round-shift / roundSwing compare runoff vs 1st round within the same year.
+ * Change / swing compare 2026 runoff vs 2022 runoff.
  */
 export type MapMetric =
   | 'leader2026'
   | 'leader2022'
+  | 'leader2026R1'
+  | 'leader2022R1'
   | 'difference2026'
   | 'difference2022'
+  | 'difference2026R1'
+  | 'difference2022R1'
   | 'lulaChange'
   | 'bolsonaroChange'
   | 'swing'
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRoundShift2022'
+  | 'bolsonaroRoundShift2022'
+  | 'roundSwing2022'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'lulaPct2026R1'
+  | 'bolsonaroPct2026R1'
+  | 'lulaPct2022R1'
+  | 'bolsonaroPct2022R1'
   | 'otherPct2026'
   | 'otherPct2022'
   | 'noValidVotePct2026'
@@ -192,26 +212,43 @@ export type MapMetric =
   | 'noValidVotes2022'
   | 'votes2026'
   | 'votes2022'
+  | 'votes2026R1'
+  | 'votes2022R1'
   | 'lulaVotes2026'
   | 'lulaVotes2022'
   | 'bolsonaroVotes2026'
   | 'bolsonaroVotes2022'
+  | 'lulaVotes2026R1'
+  | 'lulaVotes2022R1'
+  | 'bolsonaroVotes2026R1'
+  | 'bolsonaroVotes2022R1'
 
 export const HEATMAP_METRICS: MapMetric[] = [
-  'leader2026',
-  'leader2022',
-  'difference2026',
-  'difference2022',
-  'lulaChange',
-  'bolsonaroChange',
-  'swing',
+  'roundSwing',
   'lulaRoundShift',
   'bolsonaroRoundShift',
-  'roundSwing',
+  'swing',
+  'lulaChange',
+  'bolsonaroChange',
+  'roundSwing2022',
+  'lulaRoundShift2022',
+  'bolsonaroRoundShift2022',
+  'leader2026',
+  'leader2026R1',
+  'leader2022',
+  'leader2022R1',
+  'difference2026',
+  'difference2026R1',
+  'difference2022',
+  'difference2022R1',
   'lulaPct2026',
   'bolsonaroPct2026',
+  'lulaPct2026R1',
+  'bolsonaroPct2026R1',
   'lulaPct2022',
   'bolsonaroPct2022',
+  'lulaPct2022R1',
+  'bolsonaroPct2022R1',
   'otherPct2026',
   'otherPct2022',
   'noValidVotePct2026',
@@ -219,29 +256,36 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'noValidVotes2026',
   'noValidVotes2022',
   'votes2026',
+  'votes2026R1',
   'votes2022',
+  'votes2022R1',
   'lulaVotes2026',
-  'lulaVotes2022',
+  'lulaVotes2026R1',
   'bolsonaroVotes2026',
+  'bolsonaroVotes2026R1',
+  'lulaVotes2022',
+  'lulaVotes2022R1',
   'bolsonaroVotes2022',
-]
-
-/** Metrics only meaningful on the runoff tab (1º → 2º shift). */
-export const RUNOFF_ONLY_METRICS: MapMetric[] = [
-  'lulaRoundShift',
-  'bolsonaroRoundShift',
-  'roundSwing',
+  'bolsonaroVotes2022R1',
 ]
 
 export type SortKey =
   | 'votes2026'
   | 'votes2022'
+  | 'votes2026R1'
+  | 'votes2022R1'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
   | 'bolsonaroPct2022'
+  | 'lulaPct2026R1'
+  | 'bolsonaroPct2026R1'
+  | 'lulaPct2022R1'
+  | 'bolsonaroPct2022R1'
   | 'difference2026'
   | 'difference2022'
+  | 'difference2026R1'
+  | 'difference2022R1'
   | 'otherPct2026'
   | 'otherPct2022'
   | 'noValidVotePct2026'
@@ -254,6 +298,9 @@ export type SortKey =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRoundShift2022'
+  | 'bolsonaroRoundShift2022'
+  | 'roundSwing2022'
   | 'sections'
   | 'country'
   | 'region'
@@ -264,8 +311,14 @@ export type HeatColumn =
   | 'bolso2026'
   | 'lula2022'
   | 'bolso2022'
+  | 'lula2026R1'
+  | 'bolso2026R1'
+  | 'lula2022R1'
+  | 'bolso2022R1'
   | 'difference2026'
   | 'difference2022'
+  | 'difference2026R1'
+  | 'difference2022R1'
   | 'other2026'
   | 'other2022'
   | 'noValidVote2026'
@@ -276,17 +329,26 @@ export type HeatColumn =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRoundShift2022'
+  | 'bolsonaroRoundShift2022'
+  | 'roundSwing2022'
   | 'none'
 
 export function heatColumnForMetric(metric: MapMetric): HeatColumn {
   switch (metric) {
     case 'leader2026':
     case 'leader2022':
+    case 'leader2026R1':
+    case 'leader2022R1':
       return 'none'
     case 'difference2026':
       return 'difference2026'
     case 'difference2022':
       return 'difference2022'
+    case 'difference2026R1':
+      return 'difference2026R1'
+    case 'difference2022R1':
+      return 'difference2022R1'
     case 'lulaChange':
       return 'lulaChange'
     case 'bolsonaroChange':
@@ -299,6 +361,12 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'bolsonaroRoundShift'
     case 'roundSwing':
       return 'roundSwing'
+    case 'lulaRoundShift2022':
+      return 'lulaRoundShift2022'
+    case 'bolsonaroRoundShift2022':
+      return 'bolsonaroRoundShift2022'
+    case 'roundSwing2022':
+      return 'roundSwing2022'
     case 'lulaPct2026':
     case 'lulaVotes2026':
       return 'lula2026'
@@ -311,6 +379,18 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
     case 'bolsonaroPct2022':
     case 'bolsonaroVotes2022':
       return 'bolso2022'
+    case 'lulaPct2026R1':
+    case 'lulaVotes2026R1':
+      return 'lula2026R1'
+    case 'bolsonaroPct2026R1':
+    case 'bolsonaroVotes2026R1':
+      return 'bolso2026R1'
+    case 'lulaPct2022R1':
+    case 'lulaVotes2022R1':
+      return 'lula2022R1'
+    case 'bolsonaroPct2022R1':
+    case 'bolsonaroVotes2022R1':
+      return 'bolso2022R1'
     case 'otherPct2026':
       return 'other2026'
     case 'otherPct2022':
@@ -323,6 +403,8 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'noValidVote2022'
     case 'votes2026':
     case 'votes2022':
+    case 'votes2026R1':
+    case 'votes2022R1':
       return 'none'
   }
 }

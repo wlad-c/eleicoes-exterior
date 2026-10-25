@@ -62,14 +62,8 @@ import {
 } from './lib/useBrazilDomestic'
 
 const BRAZIL_ID = 'brazil'
-import {
-  defaultElectionRound,
-  type ElectionRound,
-  RUNOFF_REFRESH_START_MS,
-  isPressOnlyWindow,
-  readStoredRound,
-  writeStoredRound,
-} from './lib/electionRound'
+import { isPressOnlyWindow } from './lib/electionRound'
+import { mergeRounds, remapBrazilGrain } from './lib/mergeRounds'
 import {
   moveColumn,
   readStoredColumnOrder,
@@ -92,7 +86,7 @@ import {
 } from './lib/useMediaQuery'
 import { autoRefreshLabel, useResultsData } from './lib/useResultsData'
 import type { CountryResult, Lang, MapMetric, ResultsData, SortKey } from './types'
-import { HEATMAP_METRICS, RUNOFF_ONLY_METRICS } from './types'
+import { HEATMAP_METRICS } from './types'
 
 function readInitialShare() {
   if (typeof window === 'undefined') return parseShareSearch('')
@@ -101,41 +95,7 @@ function readInitialShare() {
 
 const seedRound1 = rawRound1 as ResultsData
 const seedRound2 = rawRound2 as ResultsData
-
-/** Attach 2026 1º tallies onto runoff rows for R1→R2 shift columns. */
-function withRound1Compare(
-  runoff: ResultsData,
-  round1: ResultsData,
-): ResultsData {
-  const r1ById = new Map(round1.countries.map((c) => [c.id, c]))
-  return {
-    ...runoff,
-    countries: runoff.countries.map((c) => {
-      const r1 = r1ById.get(c.id)
-      if (!r1?.y2026) return c
-      const areas =
-        c.areas && r1.areas
-          ? c.areas.map((a) => {
-              const a1 = r1.areas?.find((x) => x.code === a.code)
-              return a1?.y2026 ? { ...a, yRound1: a1.y2026 } : a
-            })
-          : c.areas
-      const cities =
-        c.cities && r1.cities
-          ? c.cities.map((city) => {
-              const c1 = r1.cities?.find((x) => x.code === city.code)
-              return c1?.y2026 ? { ...city, yRound1: c1.y2026 } : city
-            })
-          : c.cities
-      return {
-        ...c,
-        yRound1: r1.y2026,
-        areas,
-        cities,
-      }
-    }),
-  }
-}
+const unifiedSeed = mergeRounds(seedRound2, seedRound1)
 
 const LANG_KEY = 'eleicoes-exterior-lang'
 
@@ -183,36 +143,14 @@ async function hardRefresh(): Promise<void> {
 export default function App() {
   const { theme, toggleTheme, setTheme } = useTheme()
   const [initialShare] = useState(readInitialShare)
-  /** Skip the mount-time round side-effect so a shared link keeps its filters/metric/cols. */
-  const skipRoundSideEffects = useRef(initialShare.active)
   const [shareFeedback, setShareFeedback] = useState<'copied' | 'failed' | null>(
     null,
   )
-  const [electionRound, setElectionRoundState] = useState<ElectionRound>(() => {
-    if (initialShare.round) return initialShare.round
-    if (typeof window === 'undefined') return '1'
-    return readStoredRound() ?? defaultElectionRound()
-  })
-  const setElectionRound = (next: ElectionRound) => {
-    setElectionRoundState(next)
-    writeStoredRound(next)
-  }
-  // Tabs left open across NZ close flip to 2º turno at that moment.
-  useEffect(() => {
-    const wait = RUNOFF_REFRESH_START_MS - Date.now()
-    if (wait <= 0) return
-    const id = window.setTimeout(() => setElectionRoundState('2'), wait)
-    return () => window.clearTimeout(id)
-  }, [])
-  const activeSeed = electionRound === '2' ? seedRound2 : seedRound1
-  const { data: liveData, syncStatus, live } = useResultsData(
-    activeSeed,
-    electionRound,
+  const { data: liveData, syncStatus, live } = useResultsData(unifiedSeed, '2')
+  const seedData = useMemo(
+    () => mergeRounds(liveData, seedRound1),
+    [liveData],
   )
-  const seedData = useMemo(() => {
-    if (electionRound !== '2') return liveData
-    return withRound1Compare(liveData, seedRound1)
-  }, [electionRound, liveData])
   const any2026Reported = useMemo(
     () =>
       seedData.countries.some(
@@ -239,14 +177,8 @@ export default function App() {
   const [statusFilter, setStatusFilter] = useState<'reported' | 'all' | 'pending'>(
     () => {
       if (initialShare.status) return initialShare.status
-      const round =
-        initialShare.round ??
-        (typeof window !== 'undefined'
-          ? (readStoredRound() ?? defaultElectionRound())
-          : '1')
-      // Runoff seed is all-pending until 2026 BUs/TSE land; default to All so
-      // 2022 R2 history is visible immediately.
-      return round === '2' ? 'all' : 'reported'
+      // Until 2026 runoff BUs/TSE land, default to All so 2022 history shows.
+      return any2026Reported ? 'reported' : 'all'
     },
   )
   /** Multi-select geo filters above the table (cascading country → area → city). */
@@ -266,16 +198,9 @@ export default function App() {
   selectedAreaKeysRef.current = selectedAreaKeys
   const selectedCityKeysRef = useRef(selectedCityKeys)
   selectedCityKeysRef.current = selectedCityKeys
-  const [metric, setMetric] = useState<MapMetric>(() => {
-    if (initialShare.metric) return initialShare.metric
-    const round =
-      initialShare.round ??
-      (typeof window !== 'undefined'
-        ? (readStoredRound() ?? defaultElectionRound())
-        : '1')
-    // Runoff: color / headline swing vs 2026 1st round; 1º keeps YoY vs 2022.
-    return round === '2' ? 'roundSwing' : 'swing'
-  })
+  const [metric, setMetric] = useState<MapMetric>(
+    () => initialShare.metric ?? 'roundSwing',
+  )
   const [sortKey, setSortKey] = useState<SortKey>(
     () => initialShare.sortKey ?? 'votes2026',
   )
@@ -300,36 +225,34 @@ export default function App() {
     includeBrazil ||
     highlightId === BRAZIL_ID ||
     mapFocus.level !== 'world'
-  // Cities (municipalities) when Brazil is included; locals on Suburb tab or
-  // when the map is drilled into a city (neighborhood markers).
-  // Domestic Brazil grain files are still 1º-turno until runoff sync lands.
-  // On the runoff tab, show the Brazil country row only (no city/bairro drill).
+  // Cities / suburbs: 1º-only grain files remapped into unified schema until
+  // runoff domestic sync lands.
   const brazilDomestic = useBrazilDomestic({
-    wantCities: wantBrazil && electionRound === '1',
+    wantCities: wantBrazil,
     wantSuburbs:
       wantBrazil &&
-      electionRound === '1' &&
       (tableView === 'suburbs' || mapFocus.level === 'city'),
   })
 
   const data = useMemo(() => {
-    if (!brazilDomestic.cities?.length && !brazilDomestic.suburbs?.length) {
-      return seedData
-    }
+    const cities = brazilDomestic.cities?.length
+      ? remapBrazilGrain(brazilDomestic.cities)
+      : null
+    const suburbs = brazilDomestic.suburbs?.length
+      ? remapBrazilGrain(brazilDomestic.suburbs)
+      : null
+    if (!cities && !suburbs) return seedData
     return {
       ...seedData,
       countries: seedData.countries.map((c) =>
         c.id === BRAZIL_ID
           ? {
               ...c,
-              cities: brazilDomestic.cities ?? c.cities,
-              cityCount:
-                brazilDomestic.cities?.length ?? c.cityCount ?? c.cities?.length,
-              suburbs: brazilDomestic.suburbs ?? c.suburbs,
+              cities: cities ?? c.cities,
+              cityCount: cities?.length ?? c.cityCount ?? c.cities?.length,
+              suburbs: suburbs ?? c.suburbs,
               suburbCount:
-                brazilDomestic.suburbs?.length ??
-                c.suburbCount ??
-                c.suburbs?.length,
+                suburbs?.length ?? c.suburbCount ?? c.suburbs?.length,
             }
           : c,
       ),
@@ -337,42 +260,12 @@ export default function App() {
   }, [seedData, brazilDomestic.cities, brazilDomestic.suburbs])
   const [visibleCols, setVisibleCols] = useState<TableMetricCol[]>(() => {
     if (initialShare.visibleCols) return initialShare.visibleCols
-    const round =
-      initialShare.round ??
-      (typeof window !== 'undefined'
-        ? (readStoredRound() ?? defaultElectionRound())
-        : '1')
-    return readStoredTableCols(round)
+    return readStoredTableCols()
   })
   const [columnOrder, setColumnOrder] = useState<TableMetricCol[]>(() => {
     if (initialShare.columnOrder) return initialShare.columnOrder
-    const round =
-      initialShare.round ??
-      (typeof window !== 'undefined'
-        ? (readStoredRound() ?? defaultElectionRound())
-        : '1')
-    return readStoredColumnOrder(round)
+    return readStoredColumnOrder()
   })
-
-  useEffect(() => {
-    if (skipRoundSideEffects.current) {
-      skipRoundSideEffects.current = false
-      return
-    }
-    setVisibleCols(readStoredTableCols(electionRound))
-    setColumnOrder(readStoredColumnOrder(electionRound))
-    // Map + header swing: runoff defaults to vs 2026 1st round; 1º to vs 2022.
-    setMetric(electionRound === '2' ? 'roundSwing' : 'swing')
-    // Runoff with no 2026 rows yet: show All so 2022 history isn't hidden.
-    // 1º turno stays on Reported (finalized).
-    if (electionRound === '2') {
-      setStatusFilter(any2026Reported ? 'reported' : 'all')
-    } else {
-      setStatusFilter('reported')
-    }
-    // Only re-load prefs when the round tab changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [electionRound])
 
   useEffect(() => {
     if (initialShare.theme) setTheme(initialShare.theme)
@@ -380,29 +273,26 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const mapMetrics = useMemo(
-    () =>
-      electionRound === '2'
-        ? HEATMAP_METRICS.filter((m) => m !== 'roundSwing').flatMap((m) =>
-            // Lead with round swing — the runoff default for map + top stats.
-            m === 'swing' ? (['roundSwing', 'swing'] as MapMetric[]) : [m],
-          )
-        : HEATMAP_METRICS.filter((m) => !RUNOFF_ONLY_METRICS.includes(m)),
-    [electionRound],
-  )
+  // Flip status to Reported once the first 2026 runoff overseas tally lands.
+  useEffect(() => {
+    if (initialShare.status) return
+    if (any2026Reported) setStatusFilter('reported')
+  }, [any2026Reported, initialShare.status])
+
+  const mapMetrics = HEATMAP_METRICS
   const tableChromeRef = useRef<HTMLDivElement>(null)
   /** Phones: filters scroll with the page (not sticky). */
   const filtersUnsticky = useMediaQuery(COUNTRY_FLAG_ONLY_MQ)
 
   function setVisibleColsPersist(next: TableMetricCol[]) {
     setVisibleCols(next)
-    writeStoredTableCols(next, electionRound)
+    writeStoredTableCols(next)
   }
 
   function reorderColumns(from: TableMetricCol, to: TableMetricCol) {
     setColumnOrder((prev) => {
       const next = moveColumn(prev, from, to)
-      writeStoredColumnOrder(next, electionRound)
+      writeStoredColumnOrder(next)
       return next
     })
   }
@@ -420,7 +310,7 @@ export default function App() {
 
   async function handleShare() {
     const snapshot: ShareViewState = {
-      round: electionRound,
+      round: '2',
       lang,
       theme,
       query,
@@ -538,15 +428,17 @@ export default function App() {
   )
 
   /**
-   * Map must include pending countries that already have 2022 history —
-   * otherwise the runoff tab looks empty until the first 2026 BU lands,
-   * even when coloring by Leader 2022 / other historical metrics.
+   * Map must include pending countries that already have 2022 or 1º history —
+   * otherwise the map looks empty until the first 2026 runoff BU lands,
+   * even when coloring by Leader 2022 / 1st-round metrics.
    */
   const mapCountries = useMemo(() => {
     return data.countries.filter((c) => {
       if (c.domestic && !showBrazilInTables) return false
       if (c.status === 'reported' && c.y2026) return true
       if (c.y2022 && c.y2022.totalValid > 0) return true
+      if (c.yRound1 && c.yRound1.totalValid > 0) return true
+      if (c.y2022Round1 && c.y2022Round1.totalValid > 0) return true
       return false
     })
   }, [data.countries, showBrazilInTables])
@@ -1209,7 +1101,7 @@ export default function App() {
         ? t('syncError', lang)
         : live
           ? t('syncLive', lang)
-          : electionRound === '2' && isPressOnlyWindow()
+          : isPressOnlyWindow()
             ? t('syncPress', lang)
             : t('syncSeed', lang)
 
@@ -1263,21 +1155,6 @@ export default function App() {
             </button>
             <button
               type="button"
-              className="lang-btn control px-3 py-1.5 text-sm font-semibold"
-              aria-label={
-                electionRound === '1' ? t('round2', lang) : t('round1', lang)
-              }
-              title={
-                electionRound === '1' ? t('round2', lang) : t('round1', lang)
-              }
-              onClick={() =>
-                setElectionRound(electionRound === '1' ? '2' : '1')
-              }
-            >
-              {electionRound === '1' ? t('round2', lang) : t('round1', lang)}
-            </button>
-            <button
-              type="button"
               className="hard-refresh-btn control px-2 py-1.5 text-[var(--ink-muted)]"
               aria-label={t('hardRefresh', lang)}
               title={t('hardRefresh', lang)}
@@ -1317,7 +1194,7 @@ export default function App() {
         </h1>
         <p className="mt-2 max-w-2xl text-[var(--ink-muted)]">{data.meta.subtitle[lang]}</p>
         <p className="mt-1 text-sm text-[var(--ink-muted)]">
-          {t(electionRound === '2' ? 'scopeRound2' : 'scopeRound1', lang)}
+          {t('scopeUnified', lang)}
         </p>
       </header>
 
@@ -1374,31 +1251,23 @@ export default function App() {
 
         <div className="grid gap-4 sm:grid-cols-3">
           <TotalCard
-            label={t('lula', lang)}
+            label={`${t('lula', lang)} · ${t('round2', lang)} 2026`}
             votes={totals.lula}
             pct={lulaShare}
             tone="lula"
             lang={lang}
           />
           <TotalCard
-            label={t('fBolsonaro', lang)}
+            label={`${t('fBolsonaro', lang)} · ${t('round2', lang)} 2026`}
             votes={totals.bolsonaro}
             pct={bolsoShare}
             tone="bolso"
             lang={lang}
           />
           <SwingCard
-            swing={
-              electionRound === '2'
-                ? reportedAgg.roundSwing
-                : reportedAgg.swing
-            }
-            label={metricLabel(
-              electionRound === '2' ? 'roundSwing' : 'swing',
-              electionRound,
-              lang,
-            )}
-            hintKey={electionRound === '2' ? 'hintRoundSwing' : 'hintSwing'}
+            swing={reportedAgg.roundSwing}
+            label={metricLabel('roundSwing', lang)}
+            hintKey="hintRoundSwing"
             lang={lang}
           />
         </div>
@@ -1424,7 +1293,7 @@ export default function App() {
             >
               {mapMetrics.map((m) => (
                 <option key={m} value={m}>
-                  {metricLabel(m, electionRound, lang)}
+                  {metricLabel(m, lang)}
                 </option>
               ))}
             </select>
@@ -1442,7 +1311,7 @@ export default function App() {
           cities={brazilCities}
           suburbs={brazilSuburbs}
           metric={metric}
-          metricLabel={metricLabel(metric, electionRound, lang)}
+          metricLabel={metricLabel(metric, lang)}
           lang={lang}
           focus={mapFocus}
           brazilGrain={
@@ -1694,8 +1563,42 @@ export default function App() {
                 <option value="bolsonaroChange">
                   {t('bolsonaroChange', lang)}
                 </option>
-                <option value="swing">
-                  {metricLabel('swing', electionRound, lang)}
+                <option value="swing">{metricLabel('swing', lang)}</option>
+                <option value="lulaRoundShift">
+                  {metricLabel('lulaRoundShift', lang)}
+                </option>
+                <option value="bolsonaroRoundShift">
+                  {metricLabel('bolsonaroRoundShift', lang)}
+                </option>
+                <option value="roundSwing">
+                  {metricLabel('roundSwing', lang)}
+                </option>
+                <option value="lulaRoundShift2022">
+                  {metricLabel('lulaRoundShift2022', lang)}
+                </option>
+                <option value="bolsonaroRoundShift2022">
+                  {metricLabel('bolsonaroRoundShift2022', lang)}
+                </option>
+                <option value="roundSwing2022">
+                  {metricLabel('roundSwing2022', lang)}
+                </option>
+                <option value="votes2026R1">
+                  {metricLabel('votes2026R1', lang)}
+                </option>
+                <option value="votes2022R1">
+                  {metricLabel('votes2022R1', lang)}
+                </option>
+                <option value="lulaPct2026R1">
+                  {metricLabel('lulaPct2026R1', lang)}
+                </option>
+                <option value="bolsonaroPct2026R1">
+                  {metricLabel('bolsonaroPct2026R1', lang)}
+                </option>
+                <option value="lulaPct2022R1">
+                  {metricLabel('lulaPct2022R1', lang)}
+                </option>
+                <option value="bolsonaroPct2022R1">
+                  {metricLabel('bolsonaroPct2022R1', lang)}
                 </option>
                 <option value="sections">{t('notes', lang)}</option>
                 <option value="country">{t('country', lang)}</option>
@@ -1791,9 +1694,7 @@ export default function App() {
             <li>{t('disclaimerUnofficial', lang)}</li>
             <li>{t('disclaimerBu', lang)}</li>
             <li>{t('disclaimerCompare', lang)}</li>
-            {electionRound === '2' ? (
-              <li>{t('disclaimerRoundShift', lang)}</li>
-            ) : null}
+            <li>{t('disclaimerRoundShift', lang)}</li>
             <li>{t('disclaimerScope', lang)}</li>
           </ul>
         </div>
@@ -1936,6 +1837,10 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2026?.totalValid ?? -1
     case 'votes2022':
       return c.y2022.totalValid
+    case 'votes2026R1':
+      return c.yRound1?.totalValid ?? -1
+    case 'votes2022R1':
+      return c.y2022Round1?.totalValid ?? -1
     case 'lulaPct2026':
       return c.y2026?.lulaPct ?? Number.NaN
     case 'bolsonaroPct2026':
@@ -1944,6 +1849,14 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       return c.y2022.lulaPct
     case 'bolsonaroPct2022':
       return c.y2022.bolsonaroPct
+    case 'lulaPct2026R1':
+      return c.yRound1?.lulaPct ?? Number.NaN
+    case 'bolsonaroPct2026R1':
+      return c.yRound1?.bolsonaroPct ?? Number.NaN
+    case 'lulaPct2022R1':
+      return c.y2022Round1?.lulaPct ?? Number.NaN
+    case 'bolsonaroPct2022R1':
+      return c.y2022Round1?.bolsonaroPct ?? Number.NaN
     case 'otherPct2026':
       return otherPct(c.y2026) ?? Number.NaN
     case 'otherPct2022':
@@ -1962,6 +1875,14 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
         : Number.NaN
     case 'difference2022':
       return c.y2022.lulaPct - c.y2022.bolsonaroPct
+    case 'difference2026R1':
+      return c.yRound1
+        ? c.yRound1.lulaPct - c.yRound1.bolsonaroPct
+        : Number.NaN
+    case 'difference2022R1':
+      return c.y2022Round1
+        ? c.y2022Round1.lulaPct - c.y2022Round1.bolsonaroPct
+        : Number.NaN
     case 'lulaChange':
       return c.swing?.lulaPp ?? Number.NaN
     case 'bolsonaroChange':
@@ -1982,6 +1903,20 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       if (!c.y2026 || !c.yRound1) return Number.NaN
       const l = c.y2026.lulaPct - c.yRound1.lulaPct
       const b = c.y2026.bolsonaroPct - c.yRound1.bolsonaroPct
+      return l - b
+    }
+    case 'lulaRoundShift2022':
+      return c.y2022 && c.y2022Round1
+        ? c.y2022.lulaPct - c.y2022Round1.lulaPct
+        : Number.NaN
+    case 'bolsonaroRoundShift2022':
+      return c.y2022 && c.y2022Round1
+        ? c.y2022.bolsonaroPct - c.y2022Round1.bolsonaroPct
+        : Number.NaN
+    case 'roundSwing2022': {
+      if (!c.y2022 || !c.y2022Round1) return Number.NaN
+      const l = c.y2022.lulaPct - c.y2022Round1.lulaPct
+      const b = c.y2022.bolsonaroPct - c.y2022Round1.bolsonaroPct
       return l - b
     }
     case 'sections':

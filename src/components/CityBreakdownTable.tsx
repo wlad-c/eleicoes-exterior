@@ -35,15 +35,22 @@ import {
   placeParentLabelCompact,
   placeParentUf,
   bolsonaroRoundShift,
+  bolsonaroRoundShift2022,
+  bolsonaroRoundVotesDelta,
+  difference2026R1,
+  difference2022R1,
   fmtCoverage,
   fmtInt,
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
   lulaRoundShift,
+  lulaRoundShift2022,
+  lulaRoundVotesDelta,
   otherPct,
   otherVotes,
   roundSwing,
+  roundSwing2022,
 } from '../lib/format'
 import { foldForSearch } from '../lib/searchText'
 import { regionLabel, t } from '../lib/i18n'
@@ -182,6 +189,14 @@ export function CityBreakdownTable({
     let bolsoR1 = 0
     let validR1 = 0
     let hasRound1 = false
+    let lula2022R1 = 0
+    let bolso2022R1 = 0
+    let valid2022R1 = 0
+    let has2022R1 = false
+    let lula2022R2ForR1 = 0
+    let bolso2022R2ForR1 = 0
+    let valid2022R2ForR1 = 0
+    let has2022RoundCompare = false
     let registered2026 = 0
     let noValidVotes2026 = 0
     let hasAbstention2026 = false
@@ -192,12 +207,10 @@ export function CityBreakdownTable({
     let counted = 0
     let total = 0
     for (const c of rows) {
-      lula += c.y2026.lula
-      bolsonaro += c.y2026.bolsonaro
-      valid += c.y2026.totalValid
-      counted += c.coverage?.counted ?? 0
-      total += c.coverage?.total ?? 0
-      {
+      if (c.y2026.totalValid > 0) {
+        lula += c.y2026.lula
+        bolsonaro += c.y2026.bolsonaro
+        valid += c.y2026.totalValid
         const nv = noValidVotes(c.y2026)
         if (c.y2026.registered != null && nv != null) {
           hasAbstention2026 = true
@@ -205,21 +218,37 @@ export function CityBreakdownTable({
           noValidVotes2026 += nv
         }
       }
+      counted += c.coverage?.counted ?? 0
+      total += c.coverage?.total ?? 0
       if (c.yRound1 && c.yRound1.totalValid > 0) {
         hasRound1 = true
         lulaR1 += c.yRound1.lula
         bolsoR1 += c.yRound1.bolsonaro
         validR1 += c.yRound1.totalValid
       }
-      if (c.y2022) {
+      if (c.y2022Round1 && c.y2022Round1.totalValid > 0) {
+        has2022R1 = true
+        lula2022R1 += c.y2022Round1.lula
+        bolso2022R1 += c.y2022Round1.bolsonaro
+        valid2022R1 += c.y2022Round1.totalValid
+        if (c.y2022 && c.y2022.totalValid > 0) {
+          has2022RoundCompare = true
+          lula2022R2ForR1 += c.y2022.lula
+          bolso2022R2ForR1 += c.y2022.bolsonaro
+          valid2022R2ForR1 += c.y2022.totalValid
+        }
+      }
+      if (c.y2022 && c.y2022.totalValid > 0) {
         has2022 = true
         lula2022 += c.y2022.lula
         bolso2022 += c.y2022.bolsonaro
         valid2022 += c.y2022.totalValid
-        lula2022Comparable += c.y2022.lula
-        bolso2022Comparable += c.y2022.bolsonaro
-        lula2026Comparable += c.y2026.lula
-        bolso2026Comparable += c.y2026.bolsonaro
+        if (c.y2026.totalValid > 0) {
+          lula2022Comparable += c.y2022.lula
+          bolso2022Comparable += c.y2022.bolsonaro
+          lula2026Comparable += c.y2026.lula
+          bolso2026Comparable += c.y2026.bolsonaro
+        }
         const nv = noValidVotes(c.y2022)
         if (c.y2022.registered != null && nv != null) {
           hasAbstention2022 = true
@@ -266,11 +295,43 @@ export function CityBreakdownTable({
       lulaRoundShiftTotal != null && bolsonaroRoundShiftTotal != null
         ? lulaRoundShiftTotal - bolsonaroRoundShiftTotal
         : null
+    const lulaPct2022R1 =
+      has2022R1 && valid2022R1 ? (lula2022R1 / valid2022R1) * 100 : null
+    const bolsoPct2022R1 =
+      has2022R1 && valid2022R1 ? (bolso2022R1 / valid2022R1) * 100 : null
+    const lulaPct2022R2Cmp = valid2022R2ForR1
+      ? (lula2022R2ForR1 / valid2022R2ForR1) * 100
+      : null
+    const bolsoPct2022R2Cmp = valid2022R2ForR1
+      ? (bolso2022R2ForR1 / valid2022R2ForR1) * 100
+      : null
+    const lulaRoundShift2022Total =
+      has2022RoundCompare &&
+      lulaPct2022R2Cmp != null &&
+      lulaPct2022R1 != null
+        ? lulaPct2022R2Cmp - lulaPct2022R1
+        : null
+    const bolsonaroRoundShift2022Total =
+      has2022RoundCompare &&
+      bolsoPct2022R2Cmp != null &&
+      bolsoPct2022R1 != null
+        ? bolsoPct2022R2Cmp - bolsoPct2022R1
+        : null
+    const roundSwing2022Total =
+      lulaRoundShift2022Total != null && bolsonaroRoundShift2022Total != null
+        ? lulaRoundShift2022Total - bolsonaroRoundShift2022Total
+        : null
     const difference2026 =
       lulaPct != null && bolsoPct != null ? lulaPct - bolsoPct : null
     const difference2022 =
       lulaPct2022 != null && bolsoPct2022 != null
         ? lulaPct2022 - bolsoPct2022
+        : null
+    const difference2026R1Total =
+      lulaPctR1 != null && bolsoPctR1 != null ? lulaPctR1 - bolsoPctR1 : null
+    const difference2022R1Total =
+      lulaPct2022R1 != null && bolsoPct2022R1 != null
+        ? lulaPct2022R1 - bolsoPct2022R1
         : null
     return {
       lula,
@@ -287,18 +348,35 @@ export function CityBreakdownTable({
       otherPct2022,
       lulaPct2022,
       bolsoPct2022,
+      lulaR1: hasRound1 ? lulaR1 : null,
+      bolsoR1: hasRound1 ? bolsoR1 : null,
+      validR1: hasRound1 ? validR1 : null,
+      lulaPctR1,
+      bolsoPctR1,
+      lula2022R1: has2022R1 ? lula2022R1 : null,
+      bolso2022R1: has2022R1 ? bolso2022R1 : null,
+      valid2022R1: has2022R1 ? valid2022R1 : null,
+      lulaPct2022R1,
+      bolsoPct2022R1,
       noValidVotes2026: hasAbstention2026 ? noValidVotes2026 : null,
       noValidVotePct2026,
       noValidVotes2022: hasAbstention2022 ? noValidVotes2022 : null,
       noValidVotePct2022,
       difference2026,
       difference2022,
+      difference2026R1: difference2026R1Total,
+      difference2022R1: difference2022R1Total,
       lulaChange,
       bolsonaroChange,
       swing,
       lulaRoundShift: lulaRoundShiftTotal,
       bolsonaroRoundShift: bolsonaroRoundShiftTotal,
       roundSwing: roundSwingTotal,
+      lulaRoundVotesDelta: hasRound1 && valid ? lula - lulaR1 : null,
+      bolsonaroRoundVotesDelta: hasRound1 && valid ? bolsonaro - bolsoR1 : null,
+      lulaRoundShift2022: lulaRoundShift2022Total,
+      bolsonaroRoundShift2022: bolsonaroRoundShift2022Total,
+      roundSwing2022: roundSwing2022Total,
       lulaVotesDelta: has2022
         ? lula2026Comparable - lula2022Comparable
         : null,
@@ -596,6 +674,18 @@ export function CityBreakdownTable({
                 {fmtInt(totals.valid2022, lang)}
               </td>
             )
+          case 'votes2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.validR1, lang)}
+              </td>
+            )
+          case 'votes2022R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtInt(totals.valid2022R1, lang)}
+              </td>
+            )
           case 'lulaPct2026':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -624,6 +714,36 @@ export function CityBreakdownTable({
                 className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
               >
                 {fmtShare(totals.bolsoPct2022, totals.bolso2022, lang, shareOpts)}
+              </td>
+            )
+          case 'lulaPct2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.lulaPctR1, totals.lulaR1, lang, shareOpts)}
+              </td>
+            )
+          case 'bolsonaroPct2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtShare(totals.bolsoPctR1, totals.bolsoR1, lang, shareOpts)}
+              </td>
+            )
+          case 'lulaPct2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.lulaPct2022R1, totals.lula2022R1, lang, shareOpts)}
+              </td>
+            )
+          case 'bolsonaroPct2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtShare(totals.bolsoPct2022R1, totals.bolso2022R1, lang, shareOpts)}
               </td>
             )
           case 'otherPct2026':
@@ -696,6 +816,21 @@ export function CityBreakdownTable({
                 {fmtPp(totals.difference2022, lang)}
               </td>
             )
+          case 'difference2026R1':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.difference2026R1, lang)}
+              </td>
+            )
+          case 'difference2022R1':
+            return (
+              <td
+                key={col}
+                className="px-2 py-2.5 text-right tabular-nums text-[var(--ink-muted)]"
+              >
+                {fmtPp(totals.difference2022R1, lang)}
+              </td>
+            )
           case 'lulaChange':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
@@ -717,19 +852,47 @@ export function CityBreakdownTable({
           case 'lulaRoundShift':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.lulaRoundShift, lang)}
+                {fmtPpWithVotes(
+                  totals.lulaRoundShift,
+                  totals.lulaRoundVotesDelta,
+                  lang,
+                  shareOpts,
+                )}
               </td>
             )
           case 'bolsonaroRoundShift':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
-                {fmtPp(totals.bolsonaroRoundShift, lang)}
+                {fmtPpWithVotes(
+                  totals.bolsonaroRoundShift,
+                  totals.bolsonaroRoundVotesDelta,
+                  lang,
+                  shareOpts,
+                )}
               </td>
             )
           case 'roundSwing':
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtPp(totals.roundSwing, lang)}
+              </td>
+            )
+          case 'lulaRoundShift2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.lulaRoundShift2022, lang)}
+              </td>
+            )
+          case 'bolsonaroRoundShift2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.bolsonaroRoundShift2022, lang)}
+              </td>
+            )
+          case 'roundSwing2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtPp(totals.roundSwing2022, lang)}
               </td>
             )
           case 'sections':
@@ -741,6 +904,8 @@ export function CityBreakdownTable({
                 {fmtCoverage(totals.coverage)}
               </td>
             )
+          default:
+            return <td key={col} className="px-2 py-2.5" />
         }
       })}
       <td className="table-col-spacer" aria-hidden="true" />
@@ -817,6 +982,32 @@ export function CityBreakdownTable({
                 {arrow('votes2022')}
               </SortableTh>
             )
+          case 'votes2026R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintVotes2026R1', lang)}
+                onClick={() => onSort('votes2026R1')}
+                {...drag}
+              >
+                {t('votes2026R1', lang)}
+                {arrow('votes2026R1')}
+              </SortableTh>
+            )
+          case 'votes2022R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintVotes2022R1', lang)}
+                onClick={() => onSort('votes2022R1')}
+                {...drag}
+              >
+                {t('votes2022R1', lang)}
+                {arrow('votes2022R1')}
+              </SortableTh>
+            )
           case 'lulaPct2026':
             return (
               <SortableTh
@@ -867,6 +1058,58 @@ export function CityBreakdownTable({
               >
                 {t('bolsonaroPct2022', lang)}
                 {arrow('bolsonaroPct2022')}
+              </SortableTh>
+            )
+          case 'lulaPct2026R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2026R1', lang)}
+                onClick={() => onSort('lulaPct2026R1')}
+                {...drag}
+              >
+                {t('lulaPct2026R1', lang)}
+                {arrow('lulaPct2026R1')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2026R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2026R1', lang)}
+                onClick={() => onSort('bolsonaroPct2026R1')}
+                {...drag}
+              >
+                {t('bolsonaroPct2026R1', lang)}
+                {arrow('bolsonaroPct2026R1')}
+              </SortableTh>
+            )
+          case 'lulaPct2022R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2022R1', lang)}
+                onClick={() => onSort('lulaPct2022R1')}
+                {...drag}
+              >
+                {t('lulaPct2022R1', lang)}
+                {arrow('lulaPct2022R1')}
+              </SortableTh>
+            )
+          case 'bolsonaroPct2022R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintShare2022R1', lang)}
+                onClick={() => onSort('bolsonaroPct2022R1')}
+                {...drag}
+              >
+                {t('bolsonaroPct2022R1', lang)}
+                {arrow('bolsonaroPct2022R1')}
               </SortableTh>
             )
           case 'otherPct2026':
@@ -973,6 +1216,32 @@ export function CityBreakdownTable({
                 {arrow('difference2022')}
               </SortableTh>
             )
+          case 'difference2026R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintDifference2026R1', lang)}
+                onClick={() => onSort('difference2026R1')}
+                {...drag}
+              >
+                {t('difference2026R1', lang)}
+                {arrow('difference2026R1')}
+              </SortableTh>
+            )
+          case 'difference2022R1':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintDifference2022R1', lang)}
+                onClick={() => onSort('difference2022R1')}
+                {...drag}
+              >
+                {t('difference2022R1', lang)}
+                {arrow('difference2022R1')}
+              </SortableTh>
+            )
           case 'lulaChange':
             return (
               <SortableTh
@@ -1051,6 +1320,45 @@ export function CityBreakdownTable({
                 {arrow('roundSwing')}
               </SortableTh>
             )
+          case 'lulaRoundShift2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintLulaRoundShift2022', lang)}
+                onClick={() => onSort('lulaRoundShift2022')}
+                {...drag}
+              >
+                {t('lulaRoundShift2022', lang)}
+                {arrow('lulaRoundShift2022')}
+              </SortableTh>
+            )
+          case 'bolsonaroRoundShift2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintBolsonaroRoundShift2022', lang)}
+                onClick={() => onSort('bolsonaroRoundShift2022')}
+                {...drag}
+              >
+                {t('bolsonaroRoundShift2022', lang)}
+                {arrow('bolsonaroRoundShift2022')}
+              </SortableTh>
+            )
+          case 'roundSwing2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintRoundSwing2022', lang)}
+                onClick={() => onSort('roundSwing2022')}
+                {...drag}
+              >
+                {t('roundSwing2022', lang)}
+                {arrow('roundSwing2022')}
+              </SortableTh>
+            )
           case 'sections':
             return (
               <SortableTh
@@ -1064,6 +1372,8 @@ export function CityBreakdownTable({
                 {arrow('sections')}
               </SortableTh>
             )
+          default:
+            return <th key={col} />
         }
       })}
       <th className="table-col-spacer" aria-hidden="true" />
@@ -1277,6 +1587,24 @@ export function CityBreakdownTable({
                             {fmtInt(c.y2022?.totalValid, lang)}
                           </td>
                         )
+                      case 'votes2026R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.yRound1?.totalValid, lang)}
+                          </td>
+                        )
+                      case 'votes2022R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtInt(c.y2022Round1?.totalValid, lang)}
+                          </td>
+                        )
                       case 'lulaPct2026':
                         return (
                           <td
@@ -1311,6 +1639,57 @@ export function CityBreakdownTable({
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtShare(c.y2022?.bolsonaroPct, c.y2022?.bolsonaro, lang, shareOpts)}
+                          </td>
+                        )
+                      case 'lulaPct2026R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(c.yRound1?.lulaPct, c.yRound1?.lula, lang, shareOpts)}
+                          </td>
+                        )
+                      case 'bolsonaroPct2026R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              c.yRound1?.bolsonaroPct,
+                              c.yRound1?.bolsonaro,
+                              lang,
+                              shareOpts,
+                            )}
+                          </td>
+                        )
+                      case 'lulaPct2022R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              c.y2022Round1?.lulaPct,
+                              c.y2022Round1?.lula,
+                              lang,
+                              shareOpts,
+                            )}
+                          </td>
+                        )
+                      case 'bolsonaroPct2022R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtShare(
+                              c.y2022Round1?.bolsonaroPct,
+                              c.y2022Round1?.bolsonaro,
+                              lang,
+                              shareOpts,
+                            )}
                           </td>
                         )
                       case 'otherPct2026':
@@ -1405,6 +1784,24 @@ export function CityBreakdownTable({
                             {fmtPp(cityDifference2022(c), lang)}
                           </td>
                         )
+                      case 'difference2026R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(difference2026R1(c), lang)}
+                          </td>
+                        )
+                      case 'difference2022R1':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(difference2022R1(c), lang)}
+                          </td>
+                        )
                       case 'lulaChange':
                         return (
                           <td
@@ -1438,7 +1835,12 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPp(lulaRoundShift(c), lang)}
+                            {fmtPpWithVotes(
+                              lulaRoundShift(c),
+                              lulaRoundVotesDelta(c),
+                              lang,
+                              shareOpts,
+                            )}
                           </td>
                         )
                       case 'bolsonaroRoundShift':
@@ -1447,7 +1849,12 @@ export function CityBreakdownTable({
                             key={col}
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
-                            {fmtPp(bolsonaroRoundShift(c), lang)}
+                            {fmtPpWithVotes(
+                              bolsonaroRoundShift(c),
+                              bolsonaroRoundVotesDelta(c),
+                              lang,
+                              shareOpts,
+                            )}
                           </td>
                         )
                       case 'roundSwing':
@@ -1459,6 +1866,33 @@ export function CityBreakdownTable({
                             {fmtPp(roundSwing(c), lang)}
                           </td>
                         )
+                      case 'lulaRoundShift2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(lulaRoundShift2022(c), lang)}
+                          </td>
+                        )
+                      case 'bolsonaroRoundShift2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(bolsonaroRoundShift2022(c), lang)}
+                          </td>
+                        )
+                      case 'roundSwing2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtPp(roundSwing2022(c), lang)}
+                          </td>
+                        )
                       case 'sections':
                         return (
                           <td
@@ -1468,6 +1902,8 @@ export function CityBreakdownTable({
                             {fmtCoverage(c.coverage)}
                           </td>
                         )
+                      default:
+                        return <td key={col} className="px-2 py-2.5" />
                     }
                   })}
                   <td className="table-col-spacer" aria-hidden="true" />
