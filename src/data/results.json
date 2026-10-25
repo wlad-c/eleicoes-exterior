@@ -187,8 +187,8 @@
         {
           "code": "AC",
           "name": "AC",
-          "nameEn": "Ac",
-          "namePt": "Ac",
+          "nameEn": "AC",
+          "namePt": "AC",
           "level": "area",
           "y2026": {
             "lula": 134770,
@@ -229,8 +229,8 @@
         {
           "code": "AL",
           "name": "AL",
-          "nameEn": "Al",
-          "namePt": "Al",
+          "nameEn": "AL",
+          "namePt": "AL",
           "level": "area",
           "y2026": {
             "lula": 995459,
@@ -271,8 +271,8 @@
         {
           "code": "AP",
           "name": "AP",
-          "nameEn": "Ap",
-          "namePt": "Ap",
+          "nameEn": "AP",
+          "namePt": "AP",
           "level": "area",
           "y2026": {
             "lula": 212503,
@@ -313,8 +313,8 @@
         {
           "code": "AM",
           "name": "AM",
-          "nameEn": "Am",
-          "namePt": "Am",
+          "nameEn": "AM",
+          "namePt": "AM",
           "level": "area",
           "y2026": {
             "lula": 1046996,
@@ -355,8 +355,8 @@
         {
           "code": "BA",
           "name": "BA",
-          "nameEn": "Ba",
-          "namePt": "Ba",
+          "nameEn": "BA",
+          "namePt": "BA",
           "level": "area",
           "y2026": {
             "lula": 5664771,
@@ -397,8 +397,8 @@
         {
           "code": "CE",
           "name": "CE",
-          "nameEn": "Ce",
-          "namePt": "Ce",
+          "nameEn": "CE",
+          "namePt": "CE",
           "level": "area",
           "y2026": {
             "lula": 3555263,
@@ -439,8 +439,8 @@
         {
           "code": "DF",
           "name": "DF",
-          "nameEn": "Df",
-          "namePt": "Df",
+          "nameEn": "DF",
+          "namePt": "DF",
           "level": "area",
           "y2026": {
             "lula": 675627,
@@ -481,8 +481,8 @@
         {
           "code": "ES",
           "name": "ES",
-          "nameEn": "Es",
-          "namePt": "Es",
+          "nameEn": "ES",
+          "namePt": "ES",
           "level": "area",
           "y2026": {
             "lula": 850028,
@@ -523,8 +523,8 @@
         {
           "code": "GO",
           "name": "GO",
-          "nameEn": "Go",
-          "namePt": "Go",
+          "nameEn": "GO",
+          "namePt": "GO",
           "level": "area",
           "y2026": {
             "lula": 1188880,
@@ -565,8 +565,8 @@
         {
           "code": "MA",
           "name": "MA",
-          "nameEn": "Ma",
-          "namePt": "Ma",
+          "nameEn": "MA",
+          "namePt": "MA",
           "level": "area",
           "y2026": {
             "lula": 2566301,
@@ -607,8 +607,8 @@
         {
           "code": "MT",
           "name": "MT",
-          "nameEn": "Mt",
-          "namePt": "Mt",
+          "nameEn": "MT",
+          "namePt": "MT",
           "level": "area",
           "y2026": {
             "lula": 581681,
@@ -649,8 +649,8 @@
         {
           "code": "MS",
           "name": "MS",
-          "nameEn": "Ms",
-          "namePt": "Ms",
+          "nameEn": "MS",
+          "namePt": "MS",
           "level": "area",
           "y2026": {
             "lula": 516855,
@@ -691,8 +691,8 @@
         {
           "code": "MG",
           "name": "MG",
-          "nameEn": "Mg",
-          "namePt": "Mg",
+          "nameEn": "MG",
+          "namePt": "MG",
           "level": "area",
           "y2026": {
             "lula": 5188936,
@@ -733,8 +733,8 @@
         {
           "code": "PA",
           "name": "PA",
-          "nameEn": "Pa",
-          "namePt": "Pa",
+          "nameEn": "PA",
+          "namePt": "PA",
           "level": "area",
           "y2026": {
             "lula": 2427237,
@@ -775,8 +775,8 @@
         {
           "code": "PB",
           "name": "PB",
-          "nameEn": "Pb",
-          "namePt": "Pb",
+          "nameEn": "PB",
+          "namePt": "PB",
           "level": "area",
           "y2026": {
             "lula": 1541127,
@@ -817,8 +817,8 @@
         {
           "code": "PR",
           "name": "PR",
-          "nameEn": "Pr",
-          "namePt": "Pr",
+          "nameEn": "PR",
+          "namePt": "PR",
           "level": "area",
           "y2026": {
             "lula": 2054597,
@@ -859,8 +859,8 @@
         {
           "code": "PE",
           "name": "PE",
-          "nameEn": "Pe",
-          "namePt": "Pe",
+          "nameEn": "PE",
+          "namePt": "PE",
           "level": "area",
           "y2026": {
             "lula": 3553971,
@@ -901,8 +901,8 @@
         {
           "code": "PI",
           "name": "PI",
-          "nameEn": "Pi",
-          "namePt": "Pi",
+          "nameEn": "PI",
+          "namePt": "PI",
           "level": "area",
           "y2026": {
             "lula": 1523710,
@@ -943,8 +943,8 @@
         {
           "code": "RJ",
           "name": "RJ",
-          "nameEn": "Rj",
-          "namePt": "Rj",
+          "nameEn": "RJ",
+          "namePt": "RJ",
           "level": "area",
           "y2026": {
             "lula": 3693021,
@@ -985,8 +985,8 @@
         {
           "code": "RN",
           "name": "RN",
-          "nameEn": "Rn",
-          "namePt": "Rn",
+          "nameEn": "RN",
+          "namePt": "RN",
           "level": "area",
           "y2026": {
             "lula": 1237963,
@@ -1027,8 +1027,8 @@
         {
           "code": "RS",
           "name": "RS",
-          "nameEn": "Rs",
-          "namePt": "Rs",
+          "nameEn": "RS",
+          "namePt": "RS",
           "level": "area",
           "y2026": {
             "lula": 2294759,
@@ -1069,8 +1069,8 @@
         {
           "code": "RO",
           "name": "RO",
-          "nameEn": "Ro",
-          "namePt": "Ro",
+          "nameEn": "RO",
+          "namePt": "RO",
           "level": "area",
           "y2026": {
             "lula": 250667,
@@ -1111,8 +1111,8 @@
         {
           "code": "RR",
           "name": "RR",
-          "nameEn": "Rr",
-          "namePt": "Rr",
+          "nameEn": "RR",
+          "namePt": "RR",
           "level": "area",
           "y2026": {
             "lula": 74420,
@@ -1153,8 +1153,8 @@
         {
           "code": "SC",
           "name": "SC",
-          "nameEn": "Sc",
-          "namePt": "Sc",
+          "nameEn": "SC",
+          "namePt": "SC",
           "level": "area",
           "y2026": {
             "lula": 1127168,
@@ -1195,8 +1195,8 @@
         {
           "code": "SP",
           "name": "SP",
-          "nameEn": "Sp",
-          "namePt": "Sp",
+          "nameEn": "SP",
+          "namePt": "SP",
           "level": "area",
           "y2026": {
             "lula": 9505413,
@@ -1237,8 +1237,8 @@
         {
           "code": "SE",
           "name": "SE",
-          "nameEn": "Se",
-          "namePt": "Se",
+          "nameEn": "SE",
+          "namePt": "SE",
           "level": "area",
           "y2026": {
             "lula": 856019,
@@ -1279,8 +1279,8 @@
         {
           "code": "TO",
           "name": "TO",
-          "nameEn": "To",
-          "namePt": "To",
+          "nameEn": "TO",
+          "namePt": "TO",
           "level": "area",
           "y2026": {
             "lula": 404009,

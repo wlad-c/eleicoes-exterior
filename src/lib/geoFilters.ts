@@ -49,10 +49,11 @@ export function areaFilterOptions(
   const options: { value: string; label: string; searchText: string }[] = []
   for (const c of countries) {
     for (const area of c.areas ?? []) {
-      // Full state / area names in the Area filter (not UF abbreviations).
+      // Brazilian UFs use uppercase abbreviations (SP, RJ); overseas areas keep
+      // their consular / city labels.
       const label = areaDisplayName(area, lang, {
         domestic: c.domestic,
-        preferUf: false,
+        preferUf: c.domestic,
       })
       const country = countryName(c, lang)
       options.push({

@@ -13,6 +13,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const NAMES_PATH = join(ROOT, 'src/data/place-names.json')
 
+/** Official IBGE/TSE UF abbreviations — keep uppercase, never title-case to "Sp". */
+const BRAZIL_UFS = new Set([
+  'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',
+  'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE',
+  'TO',
+])
+
 function titleCasePt(name) {
   return String(name)
     .toLocaleLowerCase('pt-BR')
@@ -22,15 +29,22 @@ function titleCasePt(name) {
 function lookup(byTse, raw) {
   if (!raw) return null
   const key = String(raw).toUpperCase()
+  if (BRAZIL_UFS.has(key)) return { en: key, pt: key }
   const hit = byTse[key] || byTse[raw]
   if (hit) return hit
   const titled = titleCasePt(raw)
   return { en: titled, pt: titled }
 }
 
+function isMapped(byTse, raw) {
+  if (!raw) return true
+  const key = String(raw).toUpperCase()
+  return BRAZIL_UFS.has(key) || Boolean(byTse[key] || byTse[raw])
+}
+
 function patchPlace(place, byTse, missing) {
   const names = lookup(byTse, place.name)
-  if (!byTse[String(place.name).toUpperCase()]) missing.add(place.name)
+  if (!isMapped(byTse, place.name)) missing.add(place.name)
   const out = {
     ...place,
     nameEn: names.en,
@@ -38,7 +52,7 @@ function patchPlace(place, byTse, missing) {
   }
   if (place.area) {
     const areaNames = lookup(byTse, place.area)
-    if (!byTse[String(place.area).toUpperCase()]) missing.add(place.area)
+    if (!isMapped(byTse, place.area)) missing.add(place.area)
     out.areaEn = areaNames.en
     out.areaPt = areaNames.pt
   }
