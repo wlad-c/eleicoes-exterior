@@ -82,11 +82,15 @@ function scaleKind(metric: MapMetric): ScaleKind {
     case 'lulaVotes2022':
     case 'lulaVotes2026R1':
     case 'lulaVotes2022R1':
+    case 'lulaRelativeGrowth':
+    case 'lulaRelativeGrowth2022':
       return 'lulaSeq'
     case 'bolsonaroPct2026':
     case 'bolsonaroPct2022':
     case 'bolsonaroPct2026R1':
     case 'bolsonaroPct2022R1':
+    case 'bolsonaroRelativeGrowth':
+    case 'bolsonaroRelativeGrowth2022':
     case 'bolsonaroVotes2026':
     case 'bolsonaroVotes2022':
     case 'bolsonaroVotes2026R1':

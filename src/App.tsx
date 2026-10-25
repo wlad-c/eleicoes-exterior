@@ -1572,6 +1572,18 @@ export default function App() {
                 <option value="roundSwing2022">
                   {metricLabel('roundSwing2022', lang)}
                 </option>
+                <option value="lulaRelativeGrowth">
+                  {metricLabel('lulaRelativeGrowth', lang)}
+                </option>
+                <option value="bolsonaroRelativeGrowth">
+                  {metricLabel('bolsonaroRelativeGrowth', lang)}
+                </option>
+                <option value="lulaRelativeGrowth2022">
+                  {metricLabel('lulaRelativeGrowth2022', lang)}
+                </option>
+                <option value="bolsonaroRelativeGrowth2022">
+                  {metricLabel('bolsonaroRelativeGrowth2022', lang)}
+                </option>
                 <option value="votes2026R1">
                   {metricLabel('votes2026R1', lang)}
                 </option>
@@ -1909,6 +1921,22 @@ function sortValue(c: CountryResult, key: SortKey, lang: Lang): number | string 
       const b = c.y2022.bolsonaroPct - c.y2022Round1.bolsonaroPct
       return l - b
     }
+    case 'lulaRelativeGrowth':
+      return c.y2026 && c.yRound1 && c.yRound1.lula > 0
+        ? ((c.y2026.lula - c.yRound1.lula) / c.yRound1.lula) * 100
+        : Number.NaN
+    case 'bolsonaroRelativeGrowth':
+      return c.y2026 && c.yRound1 && c.yRound1.bolsonaro > 0
+        ? ((c.y2026.bolsonaro - c.yRound1.bolsonaro) / c.yRound1.bolsonaro) * 100
+        : Number.NaN
+    case 'lulaRelativeGrowth2022':
+      return c.y2022 && c.y2022Round1 && c.y2022Round1.lula > 0
+        ? ((c.y2022.lula - c.y2022Round1.lula) / c.y2022Round1.lula) * 100
+        : Number.NaN
+    case 'bolsonaroRelativeGrowth2022':
+      return c.y2022 && c.y2022Round1 && c.y2022Round1.bolsonaro > 0
+        ? ((c.y2022.bolsonaro - c.y2022Round1.bolsonaro) / c.y2022Round1.bolsonaro) * 100
+        : Number.NaN
     case 'sections':
       return c.coverage && c.coverage.total > 0
         ? c.coverage.counted / c.coverage.total

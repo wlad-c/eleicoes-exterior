@@ -193,9 +193,13 @@ export type MapMetric =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRelativeGrowth'
+  | 'bolsonaroRelativeGrowth'
   | 'lulaRoundShift2022'
   | 'bolsonaroRoundShift2022'
   | 'roundSwing2022'
+  | 'lulaRelativeGrowth2022'
+  | 'bolsonaroRelativeGrowth2022'
   | 'lulaPct2026'
   | 'bolsonaroPct2026'
   | 'lulaPct2022'
@@ -227,12 +231,16 @@ export const HEATMAP_METRICS: MapMetric[] = [
   'roundSwing',
   'lulaRoundShift',
   'bolsonaroRoundShift',
+  'lulaRelativeGrowth',
+  'bolsonaroRelativeGrowth',
   'swing',
   'lulaChange',
   'bolsonaroChange',
   'roundSwing2022',
   'lulaRoundShift2022',
   'bolsonaroRoundShift2022',
+  'lulaRelativeGrowth2022',
+  'bolsonaroRelativeGrowth2022',
   'leader2026',
   'leader2026R1',
   'leader2022',
@@ -298,9 +306,13 @@ export type SortKey =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRelativeGrowth'
+  | 'bolsonaroRelativeGrowth'
   | 'lulaRoundShift2022'
   | 'bolsonaroRoundShift2022'
   | 'roundSwing2022'
+  | 'lulaRelativeGrowth2022'
+  | 'bolsonaroRelativeGrowth2022'
   | 'sections'
   | 'country'
   | 'region'
@@ -329,9 +341,13 @@ export type HeatColumn =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRelativeGrowth'
+  | 'bolsonaroRelativeGrowth'
   | 'lulaRoundShift2022'
   | 'bolsonaroRoundShift2022'
   | 'roundSwing2022'
+  | 'lulaRelativeGrowth2022'
+  | 'bolsonaroRelativeGrowth2022'
   | 'none'
 
 export function heatColumnForMetric(metric: MapMetric): HeatColumn {
@@ -361,12 +377,20 @@ export function heatColumnForMetric(metric: MapMetric): HeatColumn {
       return 'bolsonaroRoundShift'
     case 'roundSwing':
       return 'roundSwing'
+    case 'lulaRelativeGrowth':
+      return 'lulaRelativeGrowth'
+    case 'bolsonaroRelativeGrowth':
+      return 'bolsonaroRelativeGrowth'
     case 'lulaRoundShift2022':
       return 'lulaRoundShift2022'
     case 'bolsonaroRoundShift2022':
       return 'bolsonaroRoundShift2022'
     case 'roundSwing2022':
       return 'roundSwing2022'
+    case 'lulaRelativeGrowth2022':
+      return 'lulaRelativeGrowth2022'
+    case 'bolsonaroRelativeGrowth2022':
+      return 'bolsonaroRelativeGrowth2022'
     case 'lulaPct2026':
     case 'lulaVotes2026':
       return 'lula2026'

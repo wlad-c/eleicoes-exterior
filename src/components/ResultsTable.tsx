@@ -31,6 +31,11 @@ import {
   bolsonaroRoundShift,
   lulaRoundShift2022,
   bolsonaroRoundShift2022,
+  lulaRelativeGrowth,
+  bolsonaroRelativeGrowth,
+  lulaRelativeGrowth2022,
+  bolsonaroRelativeGrowth2022,
+  fmtSignedPct,
   metricValue,
   otherPct,
   otherVotes,
@@ -708,6 +713,63 @@ export function ResultsTable({
                 {arrow('roundSwing2022')}
               </SortableTh>
             )
+
+          case 'lulaRelativeGrowth':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaRelativeGrowth')}
+                align="right"
+                heated={heatCol === 'lulaRelativeGrowth'}
+                hint={t('hintLulaRelativeGrowth', lang)}
+                {...drag}
+              >
+                {t('lulaRelativeGrowth', lang)}
+                {arrow('lulaRelativeGrowth')}
+              </SortableTh>
+            )
+          case 'bolsonaroRelativeGrowth':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroRelativeGrowth')}
+                align="right"
+                heated={heatCol === 'bolsonaroRelativeGrowth'}
+                hint={t('hintBolsonaroRelativeGrowth', lang)}
+                {...drag}
+              >
+                {t('bolsonaroRelativeGrowth', lang)}
+                {arrow('bolsonaroRelativeGrowth')}
+              </SortableTh>
+            )
+          case 'lulaRelativeGrowth2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('lulaRelativeGrowth2022')}
+                align="right"
+                heated={heatCol === 'lulaRelativeGrowth2022'}
+                hint={t('hintLulaRelativeGrowth2022', lang)}
+                {...drag}
+              >
+                {t('lulaRelativeGrowth2022', lang)}
+                {arrow('lulaRelativeGrowth2022')}
+              </SortableTh>
+            )
+          case 'bolsonaroRelativeGrowth2022':
+            return (
+              <SortableTh
+                key={col}
+                onClick={() => onSort('bolsonaroRelativeGrowth2022')}
+                align="right"
+                heated={heatCol === 'bolsonaroRelativeGrowth2022'}
+                hint={t('hintBolsonaroRelativeGrowth2022', lang)}
+                {...drag}
+              >
+                {t('bolsonaroRelativeGrowth2022', lang)}
+                {arrow('bolsonaroRelativeGrowth2022')}
+              </SortableTh>
+            )
           case 'sections':
             return (
               <SortableTh
@@ -995,6 +1057,31 @@ export function ResultsTable({
             return (
               <td key={col} className="px-2 py-2.5 text-right tabular-nums">
                 {fmtPp(totals.roundSwing2022, lang)}
+              </td>
+            )
+
+          case 'lulaRelativeGrowth':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.lulaRelativeGrowth, lang)}
+              </td>
+            )
+          case 'bolsonaroRelativeGrowth':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.bolsonaroRelativeGrowth, lang)}
+              </td>
+            )
+          case 'lulaRelativeGrowth2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.lulaRelativeGrowth2022, lang)}
+              </td>
+            )
+          case 'bolsonaroRelativeGrowth2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.bolsonaroRelativeGrowth2022, lang)}
               </td>
             )
           case 'sections':
@@ -1497,6 +1584,51 @@ export function ResultsTable({
                               heat={heat}
                             >
                               {fmtPp(roundSwing2022(c), lang)}
+                            </HeatTd>
+                          )
+
+                        case 'lulaRelativeGrowth':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lulaRelativeGrowth"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtSignedPct(lulaRelativeGrowth(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroRelativeGrowth':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolsonaroRelativeGrowth"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtSignedPct(bolsonaroRelativeGrowth(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'lulaRelativeGrowth2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="lulaRelativeGrowth2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtSignedPct(lulaRelativeGrowth2022(c), lang)}
+                            </HeatTd>
+                          )
+                        case 'bolsonaroRelativeGrowth2022':
+                          return (
+                            <HeatTd
+                              key={col}
+                              col="bolsonaroRelativeGrowth2022"
+                              heatCol={heatCol}
+                              heat={heat}
+                            >
+                              {fmtSignedPct(bolsonaroRelativeGrowth2022(c), lang)}
                             </HeatTd>
                           )
                         case 'sections':

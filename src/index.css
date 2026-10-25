@@ -217,6 +217,53 @@ html.dark .sticky-table-chrome {
   display: none;
 }
 
+/*
+ * Large screens: taller metric header row so long names can wrap to two
+ * lines before truncating (e.g. relative growth labels).
+ */
+.results-table th .th-cell-inner {
+  white-space: nowrap;
+}
+
+@media (min-width: 1100px) {
+  .results-table thead th.sticky-th:not(.sticky-col),
+  .results-table--head thead th.sticky-th:not(.sticky-col) {
+    height: 4.5rem;
+    max-height: 4.5rem;
+    vertical-align: bottom;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+    white-space: normal;
+  }
+
+  .results-table th:not(.sticky-col):not(.table-col-spacer) {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: unset;
+  }
+
+  .results-table th:not(.sticky-col) .th-cell-inner {
+    white-space: normal;
+  }
+
+  .results-table th:not(.sticky-col) .th-label-row {
+    white-space: normal;
+    align-items: flex-end;
+  }
+
+  .results-table th:not(.sticky-col) .th-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.2;
+    max-height: 2.4em;
+  }
+}
+
 /* Body rows share one type treatment; thead + Total row stay distinct */
 .results-table--body tbody td,
 .results-table--cities:not(.results-table--foot) tbody td {
@@ -1394,9 +1441,26 @@ th.col-dragging .col-drag-handle {
 }
 
 .table-col-picker-menu {
-  max-height: min(70vh, 24rem);
+  /* Wide enough for full metric names on one line (large screens). */
+  min-width: max(22rem, min(36rem, 92vw));
+  width: max-content;
+  max-width: min(40rem, 96vw);
+  max-height: min(70vh, 28rem);
+  overflow-x: auto;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+.table-col-picker-label {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+@media (min-width: 1100px) {
+  .table-col-picker-menu {
+    min-width: max(28rem, min(42rem, 70vw));
+    max-width: min(48rem, 92vw);
+  }
 }
 
 /*

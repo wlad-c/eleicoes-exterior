@@ -446,6 +446,22 @@ function citySortValue(
       const b = row.y2022.bolsonaroPct - row.y2022Round1.bolsonaroPct
       return l - b
     }
+    case 'lulaRelativeGrowth':
+      return row.y2026 && row.yRound1 && row.yRound1.lula > 0
+        ? ((row.y2026.lula - row.yRound1.lula) / row.yRound1.lula) * 100
+        : Number.NaN
+    case 'bolsonaroRelativeGrowth':
+      return row.y2026 && row.yRound1 && row.yRound1.bolsonaro > 0
+        ? ((row.y2026.bolsonaro - row.yRound1.bolsonaro) / row.yRound1.bolsonaro) * 100
+        : Number.NaN
+    case 'lulaRelativeGrowth2022':
+      return row.y2022 && row.y2022Round1 && row.y2022Round1.lula > 0
+        ? ((row.y2022.lula - row.y2022Round1.lula) / row.y2022Round1.lula) * 100
+        : Number.NaN
+    case 'bolsonaroRelativeGrowth2022':
+      return row.y2022 && row.y2022Round1 && row.y2022Round1.bolsonaro > 0
+        ? ((row.y2022.bolsonaro - row.y2022Round1.bolsonaro) / row.y2022Round1.bolsonaro) * 100
+        : Number.NaN
     case 'sections':
       return row.coverage && row.coverage.total > 0
         ? row.coverage.counted / row.coverage.total
