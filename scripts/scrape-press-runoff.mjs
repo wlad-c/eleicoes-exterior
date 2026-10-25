@@ -213,6 +213,8 @@ function countryIndex(countries) {
     formosa: 'taiwan',
     'hong kong': 'hong-kong',
     hongkong: 'hong-kong',
+    cingapura: 'singapore',
+    singapura: 'singapore',
   }
   for (const [k, id] of Object.entries(aliases)) {
     if (!map.has(k)) map.set(k, id)
@@ -419,6 +421,42 @@ function extractTallies(html, nameIndex) {
     if (!id) continue
     if (/1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
     take(makeHit(id, name, parseNum(m[2]), parseNum(m[3]), null, null, m[0]))
+  }
+
+  // Exame RESUMO: "Lula recebeu 6.017 votos (63,46%) na Austrália … contra 3.465"
+  const exameResumoRe =
+    /Lula\s+recebeu\s+([\d.]+)\s+votos?.{0,40}?(?:na|no|em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3}).{0,100}?contra\s+([\d.]+)/gi
+  while ((m = exameResumoRe.exec(text))) {
+    const name = m[2].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    if (/1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    take(makeHit(id, name, parseNum(m[1]), parseNum(m[3]), null, null, m[0]))
+  }
+
+
+  // O Globo / Exame list bullets under a country heading:
+  //   "Austrália" then "Lula: 6.017" / "Flávio Bolsonaro: 3.465"
+  //   "Nova Zelândia" then "Lula: 418 votos (80,54%)" / "Flávio: 101 votos"
+  const listBulletRe =
+    /(?:^|[\n\r\*#]|\s{2,})([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s+(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s*:\s*([\d.]+)(?:\s+votos?)?(?:\s*\(\s*([\d.,]+)\s*%[^)]*\))?\s+(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s*:\s*([\d.]+)(?:\s+votos?)?(?:\s*\(\s*([\d.,]+)\s*%[^)]*\))?/gi
+  while ((m = listBulletRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
+    const aWho = who(m[2])
+    const bWho = who(m[5])
+    if (aWho === bWho) continue
+    const aVotes = parseNum(m[3])
+    const bVotes = parseNum(m[6])
+    const aPct = m[4] ? parseNum(m[4]) : null
+    const bPct = m[7] ? parseNum(m[7]) : null
+    const lula = aWho === 'lula' ? aVotes : bVotes
+    const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
+    const lulaPct = aWho === 'lula' ? aPct : bPct
+    const bolsoPct = aWho === 'bolso' ? aPct : bPct
+    take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
   }
 
   // Exame Asia bullets:
