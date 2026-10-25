@@ -2,16 +2,58 @@
   {
     "name": "g1",
     "url": "https://g1.globo.com/mundo/noticia/2026/10/25/votacao-no-exterior-confira-os-resultados-do-2o-turno-entre-lula-e-flavio-bolsonaro.ghtml",
-    "note": "Runoff overseas BU roundup (25 Oct 2026)"
+    "hub": "https://g1.globo.com/mundo/",
+    "discover": true,
+    "note": "Primary overseas BU roundup (updated through runoff night)"
   },
   {
     "name": "Poder360",
-    "url": "https://www.poder360.com.br/poder-eleicoes-2026/",
-    "note": "Replace with the runoff exterior results URL when published"
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-2-turno-exterior-resultados/",
+    "hub": "https://www.poder360.com.br/poder-eleicoes-2026/",
+    "discover": true,
+    "note": "Runoff overseas BU roundup"
   },
   {
     "name": "Exame",
-    "url": "https://exame.com/",
-    "note": "Replace with the runoff overseas BU article when published"
+    "url": "https://exame.com/mundo/segundo-turno-das-eleicoes-comeca-no-exterior-nova-zelandia-abre-urnas/",
+    "hub": "https://exame.com/",
+    "discover": true,
+    "note": "Discover Exame exterior / BU articles from homepage + known runoff posts"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/brasil/voto-no-exterior-no-2o-turno-a-que-horas-votam-os-brasileiros-em-cada-pais/",
+    "note": "Runoff overseas schedule (may gain tallies)"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/live-blog/brasil/eleicoes-2026-apuracao-2turno-resultado-ao-vivo/",
+    "note": "Runoff live blog — check for exterior BU inserts"
+  },
+  {
+    "name": "Metro1",
+    "url": "https://www.metro1.com.br/",
+    "hub": "https://www.metro1.com.br/",
+    "discover": true,
+    "note": "Discover Metro1 Eleições 2026 / exterior BU posts"
+  },
+  {
+    "name": "Brasil de Fato",
+    "url": "https://www.brasildefato.com.br/",
+    "hub": "https://www.brasildefato.com.br/categoria/politica/",
+    "discover": true,
+    "note": "Discover BdF exterior / Asia-Oceania BU coverage"
+  },
+  {
+    "name": "BNews",
+    "url": "https://www.bnews.com.br/noticias/politica/urnas-do-exterior-sao-abertas-para-quase-1-milhao-de-brasileiros-no-segundo-turno-das-eleicoes-2026.html",
+    "hub": "https://www.bnews.com.br/",
+    "discover": true,
+    "note": "Runoff exterior opening story + homepage discovery"
+  },
+  {
+    "name": "Poder360",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-urnas-abrem-no-exterior-e-brasileiros-comecam-a-votar/",
+    "note": "Runoff exterior open — may gain BU inserts"
   }
 ]
