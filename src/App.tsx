@@ -269,8 +269,6 @@ export default function App() {
   const [metric, setMetric] = useState<MapMetric>(
     () => initialShare.metric ?? 'swing',
   )
-  /** A shared link's metric or a dropdown pick overrides the swing default. */
-  const metricPickedRef = useRef(Boolean(initialShare.metric))
   const [sortKey, setSortKey] = useState<SortKey>(
     () => initialShare.sortKey ?? 'votes2026',
   )
@@ -369,13 +367,6 @@ export default function App() {
     // Only re-load prefs when the round tab changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [electionRound])
-
-  // Swing needs 2026 rows; until the first runoff tally lands, show the 2022
-  // leader map, then flip to swing unless the user picked a metric.
-  useEffect(() => {
-    if (metricPickedRef.current) return
-    setMetric(electionRound === '2' && !any2026Reported ? 'leader2022' : 'swing')
-  }, [electionRound, any2026Reported])
 
   useEffect(() => {
     if (initialShare.theme) setTheme(initialShare.theme)
@@ -1348,10 +1339,7 @@ export default function App() {
             <select
               className="control mt-1 w-full max-w-full"
               value={metric}
-              onChange={(e) => {
-                metricPickedRef.current = true
-                setMetric(e.target.value as MapMetric)
-              }}
+              onChange={(e) => setMetric(e.target.value as MapMetric)}
               aria-describedby="heatmap-hint"
             >
               {mapMetrics.map((m) => (
