@@ -71,25 +71,13 @@ export const DEFAULT_TABLE_METRIC_COLS: TableMetricCol[] = [
   'swing',
 ]
 
-/**
- * Runoff default: show 2022 R2 shares immediately (2026 may still be pending),
- * plus room for 1º→2º shift / YoY once 2026 lands.
- */
+/** Runoff default: 2026 votes/shares plus swing vs 2022 R2 and vs 2026 R1. */
 export const DEFAULT_RUNOFF_TABLE_METRIC_COLS: TableMetricCol[] = [
-  'votes2022',
-  'lulaPct2022',
-  'bolsonaroPct2022',
-  'difference2022',
   'votes2026',
   'lulaPct2026',
   'bolsonaroPct2026',
-  'difference2026',
-  'lulaRoundShift',
-  'bolsonaroRoundShift',
-  'roundSwing',
-  'lulaChange',
-  'bolsonaroChange',
   'swing',
+  'roundSwing',
 ]
 
 export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
@@ -120,9 +108,9 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
 /** Bump when default visibility / column ids change so stored prefs reset. */
 export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v7'
 export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v4'
-export const TABLE_COLS_RUNOFF_STORAGE_KEY = 'eleicoes-exterior-table-cols-runoff-v2'
+export const TABLE_COLS_RUNOFF_STORAGE_KEY = 'eleicoes-exterior-table-cols-runoff-v3'
 export const TABLE_COL_ORDER_RUNOFF_STORAGE_KEY =
-  'eleicoes-exterior-table-col-order-runoff-v1'
+  'eleicoes-exterior-table-col-order-runoff-v2'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)
