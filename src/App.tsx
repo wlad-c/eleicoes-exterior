@@ -67,6 +67,7 @@ import {
   defaultElectionRound,
   type ElectionRound,
   RUNOFF_REFRESH_START_MS,
+  isPressOnlyWindow,
   readStoredRound,
   writeStoredRound,
 } from './lib/electionRound'
@@ -1035,7 +1036,9 @@ export default function App() {
         ? t('syncError', lang)
         : live
           ? t('syncLive', lang)
-          : t('syncSeed', lang)
+          : electionRound === '2' && isPressOnlyWindow()
+            ? t('syncPress', lang)
+            : t('syncSeed', lang)
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pb-[45vh] pt-6 sm:px-6 lg:max-w-7xl xl:max-w-[90rem] 2xl:max-w-[100rem]">

@@ -3,6 +3,8 @@ import type { Lang, ResultsData } from '../types'
 import {
   type ElectionRound,
   RUNOFF_REFRESH_START_MS,
+  RUNOFF_TSE_START_MS,
+  isPressOnlyWindow,
   isRefreshPaused,
   resolveRefreshMs,
   resultsSeedUrl,
@@ -75,6 +77,7 @@ function samePayload(a: ResultsData, b: ResultsData): boolean {
 
 export function autoRefreshLabel(lang: Lang, now = Date.now()): string {
   if (isRefreshPaused(now)) return t('autoRefreshPaused', lang)
+  if (isPressOnlyWindow(now)) return t('autoRefreshPress', lang)
   const ms = resolveRefreshMs(undefined, now)
   if (ms != null && ms <= 5 * 60 * 1000) return t('autoRefreshFast', lang)
   return t('autoRefresh', lang)
@@ -126,9 +129,17 @@ export function useResultsData(
       inFlight = (async () => {
         setSyncStatus('syncing')
         try {
-          let base = latest
-          if (!hasLive) {
-            base = (await pullDeployedSeed(round)) ?? latest
+          // Always re-read the deployed seed so press BU updates reach open tabs.
+          const seed = await pullDeployedSeed(round)
+          const base = seed ?? latest
+
+          if (Date.now() < RUNOFF_TSE_START_MS) {
+            if (cancelled) return
+            lastPulledAt = Date.now()
+            latest = base
+            setData((prev) => (samePayload(prev, base) ? prev : base))
+            setSyncStatus(seed ? 'ok' : 'error')
+            return
           }
 
           const next = await fetchLiveTseZz(base, { round: '2' })
