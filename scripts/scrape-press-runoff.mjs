@@ -841,9 +841,29 @@ async function main() {
     }
   }
 
+  // Drop same-source duplicate absolute tallies. g1 sometimes pastes one
+  // country's 2º turno line onto the next (e.g. Estonia getting Finland's 550/185).
+  const pairCountries = new Map()
+  for (const h of allHits) {
+    if (!(h.totalValid > 0)) continue
+    const k = `${h.sourceUrl}\t${h.lula}\t${h.bolsonaro}`
+    if (!pairCountries.has(k)) pairCountries.set(k, new Set())
+    pairCountries.get(k).add(h.countryId)
+  }
+  const poisoned = new Set()
+  for (const [k, ids] of pairCountries) {
+    if (ids.size < 2) continue
+    const url = k.split('\t')[0]
+    for (const id of ids) poisoned.add(`${url}\t${id}`)
+    console.warn(
+      `  ! dropping duplicate absolute tally from same source for: ${[...ids].join(', ')}`,
+    )
+  }
+
   // Prefer higher-quality / richer absolute tallies across outlets.
   const byCountry = new Map()
   for (const h of allHits) {
+    if (poisoned.has(`${h.sourceUrl}\t${h.countryId}`) && h.totalValid > 0) continue
     byCountry.set(h.countryId, preferHit(byCountry.get(h.countryId), h))
   }
 
