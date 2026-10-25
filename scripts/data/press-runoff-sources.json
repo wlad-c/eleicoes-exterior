@@ -11,38 +11,48 @@
     "url": "https://noticias.uol.com.br/internacional/ultimas-noticias/2026/10/25/votacao-exterior-segundo-turno-lula-e-flavio.ghtm",
     "hub": "https://noticias.uol.com.br/eleicoes/",
     "discover": true,
-    "note": "Australia / NZ / China runoff BUs (narrative tallies); Japan still counting"
+    "note": "Australia / NZ / China runoff narrative BUs"
+  },
+  {
+    "name": "CNN Brasil",
+    "url": "https://www.cnnbrasil.com.br/internacional/eleicoes-2026-exterior-boletins-urna-flavio-lula/",
+    "hub": "https://www.cnnbrasil.com.br/internacional/",
+    "discover": true,
+    "note": "Multi-country BU roundup incl. Australia, Taiwan, Hong Kong"
+  },
+  {
+    "name": "CNN Brasil",
+    "url": "https://www.cnnbrasil.com.br/internacional/eleicoes-no-exterior-flavio-sai-na-frente-no-japao-e-lula-na-oceania/",
+    "note": "Earlier CNN Asia/Oceania BU roundup"
   },
   {
     "name": "Poder360",
     "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-2-turno-exterior-resultados/",
     "hub": "https://www.poder360.com.br/poder-eleicoes-2026/",
     "discover": true,
-    "note": "Runoff overseas BU roundup"
+    "note": "Runoff overseas BU roundup (per-country bullets)"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/brasil/votacao-no-exterior-quem-venceu-no-japao-china-e-coreia-do-sul-no-2o-turno/",
+    "hub": "https://exame.com/",
+    "discover": true,
+    "note": "Asia/Oceania BU bullets (Japan, China, Korea, Malaysia, NZ)"
+  },
+  {
+    "name": "Exame",
+    "url": "https://exame.com/brasil/voto-no-exterior-nova-zelandia-fecha-as-urnas-e-sai-o-primeiro-boletim-do-2o-turno/",
+    "note": "NZ absolute BU story"
   },
   {
     "name": "Exame",
     "url": "https://exame.com/mundo/segundo-turno-das-eleicoes-comeca-no-exterior-nova-zelandia-abre-urnas/",
-    "hub": "https://exame.com/",
-    "discover": true,
-    "note": "Discover Exame exterior / BU articles from homepage + known runoff posts"
-  },
-  {
-    "name": "Exame",
-    "url": "https://exame.com/brasil/voto-no-exterior-no-2o-turno-a-que-horas-votam-os-brasileiros-em-cada-pais/",
-    "note": "Runoff overseas schedule (may gain tallies)"
+    "note": "Runoff exterior open"
   },
   {
     "name": "Exame",
     "url": "https://exame.com/live-blog/brasil/eleicoes-2026-apuracao-2turno-resultado-ao-vivo/",
     "note": "Runoff live blog — check for exterior BU inserts"
-  },
-  {
-    "name": "Metro1",
-    "url": "https://www.metro1.com.br/",
-    "hub": "https://www.metro1.com.br/",
-    "discover": true,
-    "note": "Discover Metro1 Eleições 2026 / exterior BU posts"
   },
   {
     "name": "Brasil de Fato",
@@ -52,15 +62,48 @@
     "note": "China mainland runoff BU roundup"
   },
   {
-    "name": "BNews",
-    "url": "https://www.bnews.com.br/noticias/politica/urnas-do-exterior-sao-abertas-para-quase-1-milhao-de-brasileiros-no-segundo-turno-das-eleicoes-2026.html",
-    "hub": "https://www.bnews.com.br/",
-    "discover": true,
-    "note": "Runoff exterior opening story + homepage discovery"
+    "name": "Brasil de Fato",
+    "url": "https://www.brasildefato.com.br/2026/10/25/lula-ampliou-vitoria-sobre-flavio-bolsonaro-em-quase-10-pontos-na-nova-zelandia-no-segundo-turno/",
+    "note": "NZ runoff BU follow-up"
   },
   {
-    "name": "Poder360",
-    "url": "https://www.poder360.com.br/poder-eleicoes-2026/eleicoes-2026-urnas-abrem-no-exterior-e-brasileiros-comecam-a-votar/",
-    "note": "Runoff exterior open — may gain BU inserts"
+    "name": "BNews",
+    "url": "https://www.bnews.com.br/noticias/politica/aumenta-numero-de-brasileiros-que-vao-as-urnas-no-exterior-e-lula-vence-nos-primeiros-paises-apurados.html",
+    "hub": "https://www.bnews.com.br/",
+    "discover": true,
+    "note": "NZ + South Korea absolute tallies"
+  },
+  {
+    "name": "BNews",
+    "url": "https://www.bnews.com.br/noticias/politica/urnas-do-exterior-sao-abertas-para-quase-1-milhao-de-brasileiros-no-segundo-turno-das-eleicoes-2026.html",
+    "note": "Runoff exterior opening story"
+  },
+  {
+    "name": "Metro1",
+    "url": "https://www.metro1.com.br/",
+    "hub": "https://www.metro1.com.br/",
+    "discover": true,
+    "note": "Discover Metro1 Eleições 2026 / exterior BU posts"
+  },
+  {
+    "name": "O Globo",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/",
+    "hub": "https://oglobo.globo.com/politica/eleicoes-2026/",
+    "discover": true,
+    "note": "Discover O Globo exterior close / BU posts"
+  },
+  {
+    "name": "Folha",
+    "url": "https://www1.folha.uol.com.br/poder/",
+    "hub": "https://www1.folha.uol.com.br/poder/",
+    "discover": true,
+    "note": "Discover Folha exterior / BU posts"
+  },
+  {
+    "name": "Estadão",
+    "url": "https://www.estadao.com.br/politica/",
+    "hub": "https://www.estadao.com.br/politica/",
+    "discover": true,
+    "note": "Discover Estadão exterior / BU posts"
   }
 ]

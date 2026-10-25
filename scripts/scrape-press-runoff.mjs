@@ -4,14 +4,16 @@
  * results-runoff.json for countries still missing TSE totals.
  *
  * Always checks major Brazilian outlets:
- *   g1, UOL, Exame, Poder360, Metro1, Brasil de Fato, BNews
- *   (+ CNN Brasil / O Globo / Folha / Estadão / CBN when listed)
+ *   g1, UOL, CNN Brasil, Poder360, Exame, Brasil de Fato, BNews,
+ *   Metro1, O Globo, Folha, Estadão (+ CBN when listed)
  *
  * Design:
  *   1. Fetch configured article + hub URLs (scripts/data/press-runoff-sources.json)
  *   2. Discover same-host exterior / BU / 2º-turno article links from hubs
- *   3. Parse absolute-vote patterns (g1, Poder360, UOL narrative)
- *   4. Fall back to r.jina.ai when an outlet returns 403 / Access Denied
+ *      (HTML href + markdown links from the reader fallback)
+ *   3. Parse absolute-vote patterns (g1, Poder360 bullets, CNN bullets,
+ *      Exame prose, UOL/BNews/BdF narrative)
+ *   4. Fall back to curl + r.jina.ai when an outlet returns 403 / Access Denied
  *   5. Write/merge only where status is still pending OR source==='press'
  *   6. Never overwrite source==='tse' rows
  *
@@ -57,6 +59,7 @@ const ALLOWLIST_HOSTS = new Set([
   'oglobo.globo.com',
   'www.folha.uol.com.br',
   'folha.uol.com.br',
+  'www1.folha.uol.com.br',
   'www.estadao.com.br',
   'estadao.com.br',
   'cbn.globo.com',
@@ -115,15 +118,23 @@ const MAX_DISCOVERED_PER_HUB = 12
 function isDiscoverableHref(href) {
   const h = href.toLowerCase()
   if (/investir-no-exterior|canais-especiais\/investir/.test(h)) return false
-  if (/votacao-no-exterior|votos-no-exterior|eleicao-exterior|eleicoes-exterior/.test(h)) {
+  if (/pesquisa|datafolha|poderdata|agora|gerp|ipec|quaest/.test(h) && !/exterior|boletim|urna/.test(h)) {
+    return false
+  }
+  if (/votacao-no-exterior|votos-no-exterior|eleicao-exterior|eleicoes-exterior|votacao-exterior/.test(h)) {
     return true
   }
   if (/boletim/.test(h) && /urna/.test(h)) return true
-  if (/exterior/.test(h) && /voto|eleic|resultado|boletim|urna|apurac/.test(h)) {
+  if (/boletins-urna|exterior-boletins/.test(h)) return true
+  if (/exterior/.test(h) && /voto|eleic|resultado|boletim|urna|apurac|flavio|lula/.test(h)) {
     return true
   }
-  // Poder360 / Exame runoff exterior landing pages
-  if (/2-turno-exterior|2o-turno-exterior|exterior-resultados|exterior\/segundo/.test(h)) {
+  // Poder360 / Exame / CNN runoff exterior landing pages
+  if (
+    /2-turno-exterior|2o-turno-exterior|exterior-resultados|exterior\/segundo|sai-na-frente-no-japao|lula-na-oceania/.test(
+      h,
+    )
+  ) {
     return true
   }
   return false
@@ -198,6 +209,10 @@ function countryIndex(countries) {
     malaysia: 'malaysia',
     malasia: 'malaysia',
     singapura: 'singapore',
+    taiwan: 'taiwan',
+    formosa: 'taiwan',
+    'hong kong': 'hong-kong',
+    hongkong: 'hong-kong',
   }
   for (const [k, id] of Object.entries(aliases)) {
     if (!map.has(k)) map.set(k, id)
@@ -251,22 +266,59 @@ function preferHit(prev, next) {
   if (nq < pq) return prev
   const pt = prev.totalValid || 0
   const nt = next.totalValid || 0
-  if (nt > pt) return next
-  if (nt < pt) return prev
-  return next
+  // Require a meaningful gap so near-ties (UOL NZ 121 vs g1 101) keep the first hit.
+  if (nt > pt * 1.05) return next
+  if (nt < pt * 0.95) return prev
+  return prev
+}
+
+/** Drop absolute tallies whose stated % disagrees with the vote share (±3pp). */
+function pctMatchesVotes(votes, total, pct, tol = 3) {
+  if (pct == null || !(total > 0) || !(votes >= 0)) return true
+  const actual = (votes / total) * 100
+  return Math.abs(actual - pct) <= tol
+}
+
+function makeHit(countryId, name, lula, bolsonaro, lulaPct, bolsoPct, raw) {
+  if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) return null
+  const totalValid = lula + bolsonaro
+  const lp = lulaPct ?? round1((lula / totalValid) * 100)
+  const bp = bolsoPct ?? round1((bolsonaro / totalValid) * 100)
+  if (!pctMatchesVotes(lula, totalValid, lulaPct) || !pctMatchesVotes(bolsonaro, totalValid, bolsoPct)) {
+    return null
+  }
+  return {
+    countryId,
+    name,
+    lula,
+    bolsonaro,
+    totalValid,
+    lulaPct: lp,
+    bolsoPct: bp,
+    raw: String(raw || '').slice(0, 180),
+  }
 }
 
 /**
  * Extract country tallies. Supports:
  *  - g1: "Nova Zelândia 2º turno: Lula, 418 votos (80,54%) … Flávio, 101 votos"
- *  - Poder360: "NOVA ZELÂNDIA Lula (PT) – 80,54% (418 votos válidos); Flávio …"
+ *  - Poder360 bullets: "COREIA DO SUL Lula (PT) – 148 votos (64,35%); Flávio – 82 votos"
+ *  - CNN bullets: "Austrália (64,5%) com 6.017 votos contra 3.465 de Flávio"
+ *  - Exame / list: "Lula: 418 votos" near a country, or "recebeu 418 votos, contra 101"
+ *  - UOL / BNews / BdF narrative sentences
  *  - %-only fallback when both shares are present
  */
 function extractTallies(html, nameIndex) {
+  // Strip markdown emphasis so **Lula** / ## headings parse cleanly (jina reader).
   const text = htmlToText(html)
+    .replace(/\*{1,3}/g, ' ')
+    .replace(/_{1,2}/g, ' ')
+    .replace(/#{1,6}\s*/g, ' ')
+    .replace(/\bpublicidade\b/gi, ' ')
   const found = new Map()
 
   const take = (hit) => {
+    if (!hit) return
     found.set(hit.countryId, preferHit(found.get(hit.countryId), hit))
   }
 
@@ -298,100 +350,153 @@ function extractTallies(html, nameIndex) {
     const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
     const aPct = m[4] ? parseNum(m[4]) : null
     const bPct = m[7] ? parseNum(m[7]) : null
-    const totalValid = lula + bolsonaro
     const lulaPct =
-      aWho === 'lula'
-        ? (aPct ?? round1((lula / totalValid) * 100))
-        : (bPct ?? round1((lula / totalValid) * 100))
+      aWho === 'lula' ? aPct : bPct
     const bolsoPct =
-      aWho === 'bolso'
-        ? (aPct ?? round1((bolsonaro / totalValid) * 100))
-        : (bPct ?? round1((bolsonaro / totalValid) * 100))
-    take({
-      countryId: id,
-      name,
-      lula,
-      bolsonaro,
-      totalValid,
-      lulaPct,
-      bolsoPct,
-      raw: m[0].slice(0, 180),
-    })
+      aWho === 'bolso' ? aPct : bPct
+    take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
   }
 
-  // Poder360 / heading style: COUNTRY … Lula … 80,54% (418 votos); Flávio … 19,46% (101)
+  // Poder360 / heading + bullets (votes first, then %):
+  //   "COREIA DO SUL Lula (PT) – 148 votos válidos (64,35%); Flávio (PL) – 82 votos (35,65%)."
   const p360Re =
-    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4})\s+(?:Lula|\(\s*PT\s*\)).{0,40}?([\d.,]+)\s*%\s*\(?\s*([\d.]+)\s*vot[^)]{0,20}\)?.{0,80}?(?:Flávio|Flavio|Bolsonaro).{0,40}?([\d.,]+)\s*%\s*\(?\s*([\d.]+)\s*vot/gi
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4})\s+Lula(?:\s*\(\s*PT\s*\))?\s*[–—:\-]\s*([\d.]+)\s+votos?(?:\s+válidos)?\s*\(\s*([\d.,]+)\s*%\s*\)\s*;?\s*(?:Flávio|Flavio)(?:\s+Bolsonaro)?(?:\s*\(\s*PL\s*\))?\s*[–—:\-]\s*([\d.]+)\s+votos?(?:\s+válidos)?\s*\(\s*([\d.,]+)\s*%\s*\)/gi
   while ((m = p360Re.exec(text))) {
     const name = m[1].trim()
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
-    const lulaPct = parseNum(m[2])
-    const lula = parseNum(m[3])
-    const bolsoPct = parseNum(m[4])
-    const bolsonaro = parseNum(m[5])
-    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
-    take({
-      countryId: id,
-      name,
-      lula,
-      bolsonaro,
-      totalValid: lula + bolsonaro,
-      lulaPct,
-      bolsoPct,
-      raw: m[0].slice(0, 180),
-    })
+    take(makeHit(id, name, parseNum(m[2]), parseNum(m[4]), parseNum(m[3]), parseNum(m[5]), m[0]))
   }
 
-  // UOL / narrative patterns (number before or after Flávio):
+  // Flávio-first Poder360 blocks (Filipinas / Malásia)
+  const p360BolsoFirstRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4})\s+(?:Flávio|Flavio)(?:\s+Bolsonaro)?(?:\s*\(\s*PL\s*\))?\s*[–—:\-]\s*([\d.]+)\s+votos?(?:\s+válidos)?\s*\(\s*([\d.,]+)\s*%\s*\)\s*;?\s*Lula(?:\s*\(\s*PT\s*\))?\s*[–—:\-]\s*([\d.]+)\s+votos?(?:\s+válidos)?\s*\(\s*([\d.,]+)\s*%\s*\)/gi
+  while ((m = p360BolsoFirstRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    take(makeHit(id, name, parseNum(m[4]), parseNum(m[2]), parseNum(m[5]), parseNum(m[3]), m[0]))
+  }
+
+  // Legacy Poder360: pct then votes in parentheses
+  const p360LegacyRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4})\s+Lula(?:\s*\(\s*PT\s*\))?.{0,40}?([\d.,]+)\s*%\s*\(?\s*([\d.]+)\s*vot[^)]{0,20}\)?.{0,80}?(?:Flávio|Flavio|Bolsonaro).{0,40}?([\d.,]+)\s*%\s*\(?\s*([\d.]+)\s*vot/gi
+  while ((m = p360LegacyRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    take(makeHit(id, name, parseNum(m[3]), parseNum(m[5]), parseNum(m[2]), parseNum(m[4]), m[0]))
+  }
+
+  // CNN-style country bullets (winner's votes first):
+  //   "Japão (80,08%), com 28.538 votos contra 7.098 de Lula (19,92%)"
+  //   "Austrália (64,5%) com 6.017 votos contra 3.465 de Flávio (36,5%)"
+  const cnnRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s*\((\d{1,2}(?:[.,]\d{1,2})?)\s*%\)\s*,?\s*com\s+([\d.]+)\s+votos?\s+contra\s+([\d.]+)\s+de\s+(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s*(?:\((\d{1,2}(?:[.,]\d{1,2})?)\s*%\))?/gi
+  while ((m = cnnRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    const winnerPct = parseNum(m[2])
+    const winnerVotes = parseNum(m[3])
+    const loserVotes = parseNum(m[4])
+    const loserIsLula = /lula/i.test(m[5])
+    const loserPct = m[6] ? parseNum(m[6]) : null
+    const lula = loserIsLula ? loserVotes : winnerVotes
+    const bolsonaro = loserIsLula ? winnerVotes : loserVotes
+    const lulaPct = loserIsLula ? loserPct : winnerPct
+    const bolsoPct = loserIsLula ? winnerPct : loserPct
+    take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
+  }
+
+  // Exame / prose: "O petista recebeu 418 votos, contra 101 do candidato" near country name
+  // Window: country mention within 200 chars before the vote clause.
+  const exameProseRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3}).{0,200}?(?:petista|Lula)(?:\s*\([^)]*\))?\s+recebeu\s+([\d.]+)\s+votos?\s*,?\s*contra\s+([\d.]+)/gi
+  while ((m = exameProseRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    if (/1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    take(makeHit(id, name, parseNum(m[2]), parseNum(m[3]), null, null, m[0]))
+  }
+
+  // Exame Asia bullets:
+  //   "Japão: Flávio Bolsonaro recebeu 28.538 votos (80,08%). Lula somou 7.098 (19,92%)."
+  //   "China: Lula recebeu 502 votos (65,28%). Flávio Bolsonaro somou 267 (34,72%)."
+  const exameBulletRe =
+    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,3})\s*:\s*(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s+votos?\s*\(\s*([\d.,]+)\s*%\s*\)[\s\S]{0,160}?(Lula|(?:Flávio|Flavio)(?:\s+Bolsonaro)?)\s+(?:recebeu|somou)\s+([\d.]+)\s*(?:\(\s*([\d.,]+)\s*%\s*\)|votos?)/gi
+  while ((m = exameBulletRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
+    const aWho = who(m[2])
+    const bWho = who(m[5])
+    if (aWho === bWho) continue
+    const aVotes = parseNum(m[3])
+    const bVotes = parseNum(m[6])
+    const aPct = parseNum(m[4])
+    const bPct = m[7] ? parseNum(m[7]) : null
+    const lula = aWho === 'lula' ? aVotes : bVotes
+    const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
+    const lulaPct = aWho === 'lula' ? aPct : bPct
+    const bolsoPct = aWho === 'bolso' ? aPct : bPct
+    take(makeHit(id, name, lula, bolsonaro, lulaPct, bolsoPct, m[0]))
+  }
+
+  // UOL / BNews / BdF narrative (number before or after Flávio; optional trailing "votos"):
   //   "Na Austrália, Lula conseguiu 5.290 votos, comparados com 2.934 de Flávio Bolsonaro"
-  //   "Já na Nova Zelândia, Lula teve 418 votos, em comparação com 121 de Flávio Bolsonaro"
   //   "Na China, Lula teve 375 votos e Flávio teve 134 votos."
+  //   "… Lula recebeu 375 votos, em comparação com 268 no primeiro turno, e Flávio Bolsonaro, 134"
+  //   "Na Nova Zelândia, Lula passou de 234 para 418 votos, enquanto Flávio … de 64 para 101"
+  //   "Na Coreia do Sul, Lula venceu com 148 votos … Flávio Bolsonaro recebeu 82 votos"
   const uolRe =
-    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+Lula(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou)\s+([\d.]+)\s+votos?\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+(?:Flávio|Flavio|Bolsonaro)|(?:e\s+)?(?:Flávio|Flavio|Bolsonaro).{0,40}?([\d.]+)\s+votos?)/gi
+    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+(?:(?:o\s+petista|Lula)(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou|venceu\s+com|passou\s+de\s+[\d.]+\s+para|avan[cç]ou\s+de\s+[\d.]+\s+para)\s+([\d.]+)\s+votos?)\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+(?:Flávio|Flavio|Bolsonaro)|(?:e\s+)?(?:Flávio|Flavio|Bolsonaro)(?:\s+Bolsonaro)?(?:\s*\([^)]*\))?(?:\s+(?:teve|recebeu|obteve|somou))?\s*,?\s*([\d.]+)(?:\s+votos?)?|(?:enquanto|,)\s*(?:Flávio|Flavio|Bolsonaro|o\s+senador).{0,50}?(?:para|foi\s+de\s+[\d.]+\s+para|subiu\s+de\s+[\d.]+\s+para)\s+([\d.]+)|[\s\S]{0,140}?(?:Flávio|Flavio)(?:\s+Bolsonaro)?\s+(?:teve|recebeu|somou)\s+([\d.]+)\s+votos?)/gi
   while ((m = uolRe.exec(text))) {
     const name = m[1].trim()
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
-    if (/ainda\s+n[aã]o|1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    // Skip pure 1º-turno / 2022 sentences, but allow "em comparação com N no primeiro turno, e Flávio, M"
+    if (/ainda\s+n[aã]o|2022/i.test(m[0])) continue
+    if (/1[ºo]\s*turno|primeiro\s+turno/i.test(m[0]) && !/e\s+(?:Flávio|Flavio)/i.test(m[0])) continue
     const lula = parseNum(m[2])
-    const bolsonaro = parseNum(m[3] || m[4])
-    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
-    const totalValid = lula + bolsonaro
-    take({
-      countryId: id,
-      name,
-      lula,
-      bolsonaro,
-      totalValid,
-      lulaPct: round1((lula / totalValid) * 100),
-      bolsoPct: round1((bolsonaro / totalValid) * 100),
-      raw: m[0].slice(0, 180),
-    })
+    const bolsonaro = parseNum(m[3] || m[4] || m[5] || m[6])
+    take(makeHit(id, name, lula, bolsonaro, null, null, m[0]))
+  }
+
+  // BdF / long-form China: "… China Continental … Lula recebeu 375 votos, em comparação com 268 no primeiro turno, e Flávio Bolsonaro, 134"
+  const bdfChinaRe =
+    /(China(?:\s+Continental)?).{0,500}?Lula\s+recebeu\s+([\d.]+)\s+votos?,\s*em\s+compara[cç][aã]o\s+com\s+[\d.]+\s+no\s+primeiro\s+turno,\s*e\s+(?:Flávio|Flavio)(?:\s+Bolsonaro)?,\s*([\d.]+)/gi
+  while ((m = bdfChinaRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    take(makeHit(id, name, parseNum(m[2]), parseNum(m[3]), null, null, m[0]))
   }
 
   // Flávio-first narrative variant
   const uolBolsoFirstRe =
-    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+(?:Flávio|Flavio)(?:\s+Bolsonaro)?(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou)\s+([\d.]+)\s+votos?\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+Lula|(?:e\s+)?Lula.{0,40}?([\d.]+)\s+votos?)/gi
+    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+(?:Flávio|Flavio)(?:\s+Bolsonaro)?(?:\s*\([^)]*\))?\s+(?:conseguiu|teve|recebeu|obteve|somou|passou\s+de\s+[\d.]+\s+para)\s+([\d.]+)\s+votos?\s*[,.]?\s*(?:(?:comparados?|em\s+compara[cç][aã]o)\s+com\s+([\d.]+)\s+de\s+Lula|(?:e\s+)?Lula(?:\s*\([^)]*\))?(?:\s+(?:teve|recebeu|obteve|somou))?\s*,?\s*([\d.]+)(?:\s+votos?)?|(?:enquanto|,)\s*Lula.{0,40}?para\s+([\d.]+))/gi
   while ((m = uolBolsoFirstRe.exec(text))) {
     const name = m[1].trim()
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
-    if (/ainda\s+n[aã]o|1[ºo]\s*turno|primeiro\s+turno|2022/i.test(m[0])) continue
+    if (/ainda\s+n[aã]o|2022/i.test(m[0])) continue
+    if (/1[ºo]\s*turno|primeiro\s+turno/i.test(m[0]) && !/e\s+Lula/i.test(m[0])) continue
     const bolsonaro = parseNum(m[2])
-    const lula = parseNum(m[3] || m[4])
-    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
-    const totalValid = lula + bolsonaro
-    take({
-      countryId: id,
-      name,
-      lula,
-      bolsonaro,
-      totalValid,
-      lulaPct: round1((lula / totalValid) * 100),
-      bolsoPct: round1((bolsonaro / totalValid) * 100),
-      raw: m[0].slice(0, 180),
-    })
+    const lula = parseNum(m[3] || m[4] || m[5])
+    take(makeHit(id, name, lula, bolsonaro, null, null, m[0]))
+  }
+
+  // BNews / "recebeu N … Flávio … teve M" without requiring "Na X," immediately before Lula
+  const bnewsRe =
+    /(?:Na|No|Em)\s+([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4}),?\s+Lula(?:\s*\([^)]*\))?\s+recebeu\s+([\d.]+)\s+votos?.{0,120}?(?:Flávio|Flavio)(?:\s+Bolsonaro)?\s+(?:teve|recebeu|somou)\s+([\d.]+)\s+votos?/gi
+  while ((m = bnewsRe.exec(text))) {
+    const name = m[1].trim()
+    const id = resolveCountry(name, nameIndex)
+    if (!id) continue
+    take(makeHit(id, name, parseNum(m[2]), parseNum(m[3]), null, null, m[0]))
   }
 
   // %-only fallback (no absolute votes) — last resort
@@ -430,13 +535,23 @@ function sameRegistrableHost(a, b) {
 
 function discoverArticleUrls(hubUrl, html, limit = MAX_DISCOVERED_PER_HUB) {
   const base = new URL(hubUrl)
-  const hrefs = [...html.matchAll(/href=["']([^"']+)["']/gi)].map((x) => x[1])
+  // HTML href=… and markdown [text](url) from r.jina.ai reader output
+  const hrefs = [
+    ...[...html.matchAll(/href=["']([^"']+)["']/gi)].map((x) => x[1]),
+    ...[...html.matchAll(/\[[^\]]*]\((https?:\/\/[^)\s]+)\)/gi)].map((x) => x[1]),
+    ...[...html.matchAll(/(https?:\/\/[^\s"'<>]+)/gi)].map((x) => x[1]),
+  ]
   const out = []
   const seen = new Set()
   for (const raw of hrefs) {
     let abs
     try {
-      abs = new URL(raw, base).href
+      // Markdown / prose often leaves trailing ) ] . ; or doubled slashes
+      const cleaned = String(raw)
+        .trim()
+        .replace(/[)\],.;!"']+$/g, '')
+        .replace(/([^:])\/{2,}/g, '$1/')
+      abs = new URL(cleaned, base).href.split('#')[0]
     } catch {
       continue
     }
@@ -653,15 +768,13 @@ async function main() {
       return c
     }
     // Don't clobber a good absolute press row with %-only scrapes,
-    // or with a smaller absolute tally (partial BU refresh).
-    if (
-      c.source === 'press' &&
-      c.status === 'reported' &&
-      c.y2026?.totalValid > 0 &&
-      (hitQuality(hit) < 2 || (hit.totalValid || 0) < c.y2026.totalValid)
-    ) {
-      skippedWeak++
-      return c
+    // or with a meaningfully smaller absolute tally (partial BU refresh).
+    // Near-ties (±5%) may still update so consensus corrections (e.g. NZ 101 vs 121) land.
+    if (c.source === 'press' && c.status === 'reported' && c.y2026?.totalValid > 0) {
+      if (hitQuality(hit) < 2 || (hit.totalValid || 0) < c.y2026.totalValid * 0.95) {
+        skippedWeak++
+        return c
+      }
     }
     const y2026 = yearFromHit(hit)
     if (y2026.totalValid <= 0 && !(y2026.lulaPct > 0 || y2026.bolsonaroPct > 0)) {
