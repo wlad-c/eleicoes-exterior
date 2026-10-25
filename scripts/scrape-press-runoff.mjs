@@ -115,12 +115,14 @@ function round1(n) {
 function parseNum(raw) {
   const s = String(raw).trim()
   if (!s) return NaN
-  // Brazilian thousands: 4.562 → 4562; decimals: 80,54 → 80.54
+  // Brazilian thousands: 4.562 / 47.306 → integers; decimals: 80,54 → 80.54
+  if (/^\d{1,3}(\.\d{3})+$/.test(s)) {
+    return Number.parseInt(s.replace(/\./g, ''), 10)
+  }
   if (s.includes(',') && s.includes('.')) {
     return Number.parseFloat(s.replace(/\./g, '').replace(',', '.'))
   }
   if (s.includes(',')) return Number.parseFloat(s.replace(',', '.'))
-  if (/^\d{1,3}(\.\d{3})+$/.test(s)) return Number.parseInt(s.replace(/\./g, ''), 10)
   return Number.parseFloat(s)
 }
 
@@ -167,6 +169,14 @@ function countryIndex(countries) {
     'corea do sul': 'south-korea',
     'hong kong': 'hong-kong',
     'nova zelandia': 'new-zealand',
+    china: 'china-mainland',
+    'china continental': 'china-mainland',
+    'china mainland': 'china-mainland',
+    japao: 'japan',
+    filipinas: 'philippines',
+    malaysia: 'malaysia',
+    malasia: 'malaysia',
+    singapura: 'singapore',
   }
   for (const [k, id] of Object.entries(aliases)) {
     if (!map.has(k)) map.set(k, id)
@@ -226,25 +236,43 @@ function extractTallies(html, nameIndex) {
     if (!prev || hitQuality(hit) >= hitQuality(prev)) found.set(hit.countryId, hit)
   }
 
-  // g1-style absolute votes under "2º turno"
-  const g1Re =
-    /([A-ZÀ-Ü][\wÀ-ü'’\-]*(?:\s+[A-ZÀ-Ü][\wÀ-ü'’\-]*){0,4})\s+2[ºo]\s*turno\s*:?\s*Lula[,:]?\s*([\d.]+)\s*votos?\s*(?:\(([\d.,]+)\s*%\))?\s*2[ºo]\s*turno\s*:?\s*(?:Flávio|Flavio|Bolsonaro)[,:]?\s*([\d.]+)\s*votos?\s*(?:\(([\d.,]+)\s*%\))?/gi
+  // g1-style absolute votes under "2º turno" — either candidate may be listed first
+  // (Japan/Malaysia lead with Flávio; NZ/China lead with Lula). Percent optional.
+  const cand =
+    '(Lula|(?:Flávio|Flavio)(?:\\s+Bolsonaro)?|Bolsonaro)'
+  const voteBit = `${cand}[,:]?\\s*([\\d.]+)\\s*votos?(?:\\s*\\(([\\d.,]+)\\s*%\\))?`
+  const g1Re = new RegExp(
+    `([A-ZÀ-Ü][\\wÀ-ü'’\\-]*(?:\\s+[A-ZÀ-Ü][\\wÀ-ü'’\\-]*){0,4})\\s+2[ºo]\\s*turno\\s*:?\\s*${voteBit}\\s*2[ºo]\\s*turno\\s*:?\\s*${voteBit}`,
+    'gi',
+  )
   let m
   while ((m = g1Re.exec(text))) {
     const name = m[1].trim()
     const id = resolveCountry(name, nameIndex)
     if (!id) continue
+    // Reject "ainda não há dados" blocks (and 1º-turno bleed-through).
     if (/ainda\s+n[aã]o/i.test(m[0])) continue
-    const lula = parseNum(m[2])
-    const bolsonaro = parseNum(m[4])
-    if (!(lula >= 0 && bolsonaro >= 0) || lula + bolsonaro <= 0) continue
+    if (/1[ºo]\s*turno/i.test(m[0])) continue
+    const who = (w) => (/lula/i.test(w) ? 'lula' : 'bolso')
+    const aWho = who(m[2])
+    const bWho = who(m[5])
+    if (aWho === bWho) continue
+    const aVotes = parseNum(m[3])
+    const bVotes = parseNum(m[6])
+    if (!(aVotes >= 0 && bVotes >= 0) || aVotes + bVotes <= 0) continue
+    const lula = aWho === 'lula' ? aVotes : bVotes
+    const bolsonaro = aWho === 'bolso' ? aVotes : bVotes
+    const aPct = m[4] ? parseNum(m[4]) : null
+    const bPct = m[7] ? parseNum(m[7]) : null
     const totalValid = lula + bolsonaro
-    const lulaPct = m[3]
-      ? parseNum(m[3])
-      : round1((lula / totalValid) * 100)
-    const bolsoPct = m[5]
-      ? parseNum(m[5])
-      : round1((bolsonaro / totalValid) * 100)
+    const lulaPct =
+      aWho === 'lula'
+        ? (aPct ?? round1((lula / totalValid) * 100))
+        : (bPct ?? round1((lula / totalValid) * 100))
+    const bolsoPct =
+      aWho === 'bolso'
+        ? (aPct ?? round1((bolsonaro / totalValid) * 100))
+        : (bPct ?? round1((bolsonaro / totalValid) * 100))
     take({
       countryId: id,
       name,
