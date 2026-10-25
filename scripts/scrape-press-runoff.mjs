@@ -769,8 +769,14 @@ async function main() {
     // Don't clobber a good absolute press row with %-only scrapes,
     // or with a meaningfully smaller absolute tally (partial BU refresh).
     // Near-ties (±5%) may still update so consensus corrections (e.g. NZ 101 vs 121) land.
+    // Primary outlets (g1 / CNN / Exame / Poder360) may revise downward when they correct.
     if (c.source === 'press' && c.status === 'reported' && c.y2026?.totalValid > 0) {
-      if (hitQuality(hit) < 2 || (hit.totalValid || 0) < c.y2026.totalValid * 0.95) {
+      const primary =
+        /^(g1|CNN Brasil|Exame|Poder360|UOL)$/i.test(String(hit.sourceName || ''))
+      if (
+        hitQuality(hit) < 2 ||
+        ((hit.totalValid || 0) < c.y2026.totalValid * 0.95 && !primary)
+      ) {
         skippedWeak++
         return c
       }
