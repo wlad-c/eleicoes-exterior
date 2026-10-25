@@ -266,9 +266,16 @@ export default function App() {
   selectedAreaKeysRef.current = selectedAreaKeys
   const selectedCityKeysRef = useRef(selectedCityKeys)
   selectedCityKeysRef.current = selectedCityKeys
-  const [metric, setMetric] = useState<MapMetric>(
-    () => initialShare.metric ?? 'swing',
-  )
+  const [metric, setMetric] = useState<MapMetric>(() => {
+    if (initialShare.metric) return initialShare.metric
+    const round =
+      initialShare.round ??
+      (typeof window !== 'undefined'
+        ? (readStoredRound() ?? defaultElectionRound())
+        : '1')
+    // Runoff: color / headline swing vs 2026 1st round; 1º keeps YoY vs 2022.
+    return round === '2' ? 'roundSwing' : 'swing'
+  })
   const [sortKey, setSortKey] = useState<SortKey>(
     () => initialShare.sortKey ?? 'votes2026',
   )
@@ -354,9 +361,8 @@ export default function App() {
     }
     setVisibleCols(readStoredTableCols(electionRound))
     setColumnOrder(readStoredColumnOrder(electionRound))
-    if (electionRound === '1' && RUNOFF_ONLY_METRICS.includes(metric)) {
-      setMetric('swing')
-    }
+    // Map + header swing: runoff defaults to vs 2026 1st round; 1º to vs 2022.
+    setMetric(electionRound === '2' ? 'roundSwing' : 'swing')
     // Runoff with no 2026 rows yet: show All so 2022 history isn't hidden.
     // 1º turno stays on Reported (finalized).
     if (electionRound === '2') {
@@ -378,7 +384,8 @@ export default function App() {
     () =>
       electionRound === '2'
         ? HEATMAP_METRICS.filter((m) => m !== 'roundSwing').flatMap((m) =>
-            m === 'swing' ? (['swing', 'roundSwing'] as MapMetric[]) : [m],
+            // Lead with round swing — the runoff default for map + top stats.
+            m === 'swing' ? (['roundSwing', 'swing'] as MapMetric[]) : [m],
           )
         : HEATMAP_METRICS.filter((m) => !RUNOFF_ONLY_METRICS.includes(m)),
     [electionRound],
@@ -1381,8 +1388,17 @@ export default function App() {
             lang={lang}
           />
           <SwingCard
-            swing={reportedAgg.swing}
-            label={metricLabel('swing', electionRound, lang)}
+            swing={
+              electionRound === '2'
+                ? reportedAgg.roundSwing
+                : reportedAgg.swing
+            }
+            label={metricLabel(
+              electionRound === '2' ? 'roundSwing' : 'swing',
+              electionRound,
+              lang,
+            )}
+            hintKey={electionRound === '2' ? 'hintRoundSwing' : 'hintSwing'}
             lang={lang}
           />
         </div>
@@ -1854,10 +1870,12 @@ function TotalCard({
 function SwingCard({
   swing,
   label,
+  hintKey = 'hintSwing',
   lang,
 }: {
   swing: number | null
   label: string
+  hintKey?: 'hintSwing' | 'hintRoundSwing'
   lang: Lang
 }) {
   const towardLula = (swing ?? 0) >= 0
@@ -1882,7 +1900,7 @@ function SwingCard({
         />
       </div>
       <p className="mt-1 text-xs text-[var(--ink-muted)]">
-        {t('hintSwing', lang)}
+        {t(hintKey, lang)}
       </p>
     </div>
   )
