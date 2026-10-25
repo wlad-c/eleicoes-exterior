@@ -37,6 +37,8 @@ import {
   bolsonaroRoundShift,
   bolsonaroRoundShift2022,
   bolsonaroRoundVotesDelta,
+  bolsonaroRelativeGrowth,
+  bolsonaroRelativeGrowth2022,
   difference2026R1,
   difference2022R1,
   fmtCoverage,
@@ -44,11 +46,15 @@ import {
   fmtPp,
   fmtPpWithVotes,
   fmtShare,
+  fmtSignedPct,
   lulaRoundShift,
   lulaRoundShift2022,
   lulaRoundVotesDelta,
+  lulaRelativeGrowth,
+  lulaRelativeGrowth2022,
   otherPct,
   otherVotes,
+  relativeVoteGrowth,
   roundSwing,
   roundSwing2022,
 } from '../lib/format'
@@ -377,6 +383,16 @@ export function CityBreakdownTable({
       lulaRoundShift2022: lulaRoundShift2022Total,
       bolsonaroRoundShift2022: bolsonaroRoundShift2022Total,
       roundSwing2022: roundSwing2022Total,
+      lulaRelativeGrowth:
+        hasRound1 && valid ? relativeVoteGrowth(lula, lulaR1) : null,
+      bolsonaroRelativeGrowth:
+        hasRound1 && valid ? relativeVoteGrowth(bolsonaro, bolsoR1) : null,
+      lulaRelativeGrowth2022: has2022RoundCompare
+        ? relativeVoteGrowth(lula2022R2ForR1, lula2022R1)
+        : null,
+      bolsonaroRelativeGrowth2022: has2022RoundCompare
+        ? relativeVoteGrowth(bolso2022R2ForR1, bolso2022R1)
+        : null,
       lulaVotesDelta: has2022
         ? lula2026Comparable - lula2022Comparable
         : null,
@@ -904,6 +920,30 @@ export function CityBreakdownTable({
                 {fmtPp(totals.roundSwing2022, lang)}
               </td>
             )
+          case 'lulaRelativeGrowth':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.lulaRelativeGrowth, lang)}
+              </td>
+            )
+          case 'bolsonaroRelativeGrowth':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.bolsonaroRelativeGrowth, lang)}
+              </td>
+            )
+          case 'lulaRelativeGrowth2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.lulaRelativeGrowth2022, lang)}
+              </td>
+            )
+          case 'bolsonaroRelativeGrowth2022':
+            return (
+              <td key={col} className="px-2 py-2.5 text-right tabular-nums">
+                {fmtSignedPct(totals.bolsonaroRelativeGrowth2022, lang)}
+              </td>
+            )
           case 'sections':
             return (
               <td
@@ -1369,6 +1409,58 @@ export function CityBreakdownTable({
               >
                 {t('roundSwing2022', lang)}
                 {arrow('roundSwing2022')}
+              </SortableTh>
+            )
+          case 'lulaRelativeGrowth':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintLulaRelativeGrowth', lang)}
+                onClick={() => onSort('lulaRelativeGrowth')}
+                {...drag}
+              >
+                {t('lulaRelativeGrowth', lang)}
+                {arrow('lulaRelativeGrowth')}
+              </SortableTh>
+            )
+          case 'bolsonaroRelativeGrowth':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintBolsonaroRelativeGrowth', lang)}
+                onClick={() => onSort('bolsonaroRelativeGrowth')}
+                {...drag}
+              >
+                {t('bolsonaroRelativeGrowth', lang)}
+                {arrow('bolsonaroRelativeGrowth')}
+              </SortableTh>
+            )
+          case 'lulaRelativeGrowth2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintLulaRelativeGrowth2022', lang)}
+                onClick={() => onSort('lulaRelativeGrowth2022')}
+                {...drag}
+              >
+                {t('lulaRelativeGrowth2022', lang)}
+                {arrow('lulaRelativeGrowth2022')}
+              </SortableTh>
+            )
+          case 'bolsonaroRelativeGrowth2022':
+            return (
+              <SortableTh
+                key={col}
+                align="right"
+                hint={t('hintBolsonaroRelativeGrowth2022', lang)}
+                onClick={() => onSort('bolsonaroRelativeGrowth2022')}
+                {...drag}
+              >
+                {t('bolsonaroRelativeGrowth2022', lang)}
+                {arrow('bolsonaroRelativeGrowth2022')}
               </SortableTh>
             )
           case 'sections':
@@ -1903,6 +1995,42 @@ export function CityBreakdownTable({
                             className="px-2 py-2.5 text-right tabular-nums"
                           >
                             {fmtPp(roundSwing2022(c), lang)}
+                          </td>
+                        )
+                      case 'lulaRelativeGrowth':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtSignedPct(lulaRelativeGrowth(c), lang)}
+                          </td>
+                        )
+                      case 'bolsonaroRelativeGrowth':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtSignedPct(bolsonaroRelativeGrowth(c), lang)}
+                          </td>
+                        )
+                      case 'lulaRelativeGrowth2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtSignedPct(lulaRelativeGrowth2022(c), lang)}
+                          </td>
+                        )
+                      case 'bolsonaroRelativeGrowth2022':
+                        return (
+                          <td
+                            key={col}
+                            className="px-2 py-2.5 text-right tabular-nums"
+                          >
+                            {fmtSignedPct(bolsonaroRelativeGrowth2022(c), lang)}
                           </td>
                         )
                       case 'sections':

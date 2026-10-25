@@ -466,6 +466,53 @@ export function bolsonaroRoundVotesDelta(c: VoteLike): number | null {
   return c.y2026.bolsonaro - c.yRound1.bolsonaro
 }
 
+/**
+ * Relative growth of raw votes: ((runoff − 1st) / 1st) × 100.
+ * Matches the common “crescimento relativo” draft (% column).
+ */
+export function relativeVoteGrowth(
+  runoffVotes: number,
+  firstRoundVotes: number,
+): number | null {
+  if (!(firstRoundVotes > 0) || !Number.isFinite(runoffVotes)) return null
+  return round1(((runoffVotes - firstRoundVotes) / firstRoundVotes) * 100)
+}
+
+/** Lula relative vote growth 2026 1º → 2º. */
+export function lulaRelativeGrowth(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
+  return relativeVoteGrowth(c.y2026.lula, c.yRound1.lula)
+}
+
+/** Bolsonaro relative vote growth 2026 1º → 2º. */
+export function bolsonaroRelativeGrowth(c: VoteLike): number | null {
+  if (!isReported(c) || !c.y2026 || !hasYear(c.yRound1)) return null
+  return relativeVoteGrowth(c.y2026.bolsonaro, c.yRound1.bolsonaro)
+}
+
+/** Lula relative vote growth 2022 1º → 2º. */
+export function lulaRelativeGrowth2022(c: VoteLike): number | null {
+  if (!hasYear(c.y2022) || !hasYear(c.y2022Round1)) return null
+  return relativeVoteGrowth(c.y2022.lula, c.y2022Round1.lula)
+}
+
+/** Bolsonaro relative vote growth 2022 1º → 2º. */
+export function bolsonaroRelativeGrowth2022(c: VoteLike): number | null {
+  if (!hasYear(c.y2022) || !hasYear(c.y2022Round1)) return null
+  return relativeVoteGrowth(c.y2022.bolsonaro, c.y2022Round1.bolsonaro)
+}
+
+/** Signed percent for relative growth, e.g. +34.4% or −6.8%. */
+export function fmtSignedPct(
+  n: number | null | undefined,
+  lang: Lang,
+  digits = 1,
+): string {
+  if (n == null || Number.isNaN(n)) return '—'
+  const sign = n > 0 ? '+' : ''
+  return `${sign}${fmtPct(n, lang, digits)}`
+}
+
 /** Lula pp shift from 2022 1º → 2022 2º. */
 export function lulaRoundShift2022(c: VoteLike): number | null {
   if (!hasYear(c.y2022) || !hasYear(c.y2022Round1)) return null
@@ -541,12 +588,20 @@ export function metricValue(c: VoteLike, metric: MapMetric): number | null {
       return bolsonaroRoundShift(c)
     case 'roundSwing':
       return roundSwing(c)
+    case 'lulaRelativeGrowth':
+      return lulaRelativeGrowth(c)
+    case 'bolsonaroRelativeGrowth':
+      return bolsonaroRelativeGrowth(c)
     case 'lulaRoundShift2022':
       return lulaRoundShift2022(c)
     case 'bolsonaroRoundShift2022':
       return bolsonaroRoundShift2022(c)
     case 'roundSwing2022':
       return roundSwing2022(c)
+    case 'lulaRelativeGrowth2022':
+      return lulaRelativeGrowth2022(c)
+    case 'bolsonaroRelativeGrowth2022':
+      return bolsonaroRelativeGrowth2022(c)
     case 'lulaPct2026':
       return isReported(c) && c.y2026 ? c.y2026.lulaPct : null
     case 'bolsonaroPct2026':
@@ -638,6 +693,11 @@ export function formatMetricValue(
     case 'bolsonaroRoundShift2022':
     case 'roundSwing2022':
       return fmtPp(value, lang)
+    case 'lulaRelativeGrowth':
+    case 'bolsonaroRelativeGrowth':
+    case 'lulaRelativeGrowth2022':
+    case 'bolsonaroRelativeGrowth2022':
+      return fmtSignedPct(value, lang)
     case 'lulaPct2026':
     case 'bolsonaroPct2026':
     case 'lulaPct2022':
@@ -728,11 +788,15 @@ export type RowTotals = {
   lulaRoundShift: number | null
   bolsonaroRoundShift: number | null
   roundSwing: number | null
+  lulaRelativeGrowth: number | null
+  bolsonaroRelativeGrowth: number | null
   lulaRoundVotesDelta: number | null
   bolsonaroRoundVotesDelta: number | null
   lulaRoundShift2022: number | null
   bolsonaroRoundShift2022: number | null
   roundSwing2022: number | null
+  lulaRelativeGrowth2022: number | null
+  bolsonaroRelativeGrowth2022: number | null
   lulaVotesDelta: number | null
   bolsonaroVotesDelta: number | null
   sectionsCounted: number | null
@@ -972,12 +1036,26 @@ export function aggregateRows(rows: CountryResult[]): RowTotals {
     lulaRoundShift,
     bolsonaroRoundShift,
     roundSwing,
+    lulaRelativeGrowth:
+      has2026 && hasRound1
+        ? relativeVoteGrowth(lula2026, lulaR1Comparable)
+        : null,
+    bolsonaroRelativeGrowth:
+      has2026 && hasRound1
+        ? relativeVoteGrowth(bolso2026, bolsoR1Comparable)
+        : null,
     lulaRoundVotesDelta: has2026 && hasRound1 ? lula2026 - lulaR1Comparable : null,
     bolsonaroRoundVotesDelta:
       has2026 && hasRound1 ? bolso2026 - bolsoR1Comparable : null,
     lulaRoundShift2022,
     bolsonaroRoundShift2022,
     roundSwing2022,
+    lulaRelativeGrowth2022: has2022RoundCompare
+      ? relativeVoteGrowth(lula2022R2ForR1, lula2022R1)
+      : null,
+    bolsonaroRelativeGrowth2022: has2022RoundCompare
+      ? relativeVoteGrowth(bolso2022R2ForR1, bolso2022R1)
+      : null,
     lulaVotesDelta: has2026 ? lula2026 - lula2022Comparable : null,
     bolsonaroVotesDelta: has2026 ? bolso2026 - bolso2022Comparable : null,
     sectionsCounted: hasSections ? sectionsCounted : null,

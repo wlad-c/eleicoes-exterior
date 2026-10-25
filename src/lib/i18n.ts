@@ -104,6 +104,14 @@ const dict = {
     en: 'Swing 2026 runoff',
     pt: 'Swing 2026 2º turno',
   },
+  lulaRelativeGrowth: {
+    en: 'Lula relative growth 2026 runoff vs 1st',
+    pt: 'Crescimento relativo Lula 2026 2º vs 1º',
+  },
+  bolsonaroRelativeGrowth: {
+    en: 'Bolsonaro relative growth 2026 runoff vs 1st',
+    pt: 'Crescimento relativo Bolsonaro 2026 2º vs 1º',
+  },
   lulaRoundShift2022: {
     en: 'Lula Δ 2022 runoff vs 1st round',
     pt: 'Variação Lula 2022 2º vs 1º',
@@ -115,6 +123,14 @@ const dict = {
   roundSwing2022: {
     en: 'Swing 2022 runoff vs 1st round',
     pt: 'Swing 2022 2º turno vs 1º',
+  },
+  lulaRelativeGrowth2022: {
+    en: 'Lula relative growth 2022 runoff vs 1st',
+    pt: 'Crescimento relativo Lula 2022 2º vs 1º',
+  },
+  bolsonaroRelativeGrowth2022: {
+    en: 'Bolsonaro relative growth 2022 runoff vs 1st',
+    pt: 'Crescimento relativo Bolsonaro 2022 2º vs 1º',
   },
   hintLulaRoundShift: {
     en: 'Lula % in 2026 runoff minus 2026 1st round, percentage points',
@@ -139,6 +155,22 @@ const dict = {
   hintRoundSwing2022: {
     en: '2022 runoff vs 1st round: Lula shift minus Bolsonaro shift (positive toward Lula)',
     pt: '2022 2º vs 1º: variação Lula menos variação Bolsonaro (positivo para Lula)',
+  },
+  hintLulaRelativeGrowth: {
+    en: '(Lula 2026 runoff votes − 1st round votes) ÷ 1st round votes',
+    pt: '(votos Lula 2º turno 2026 − 1º turno) ÷ votos 1º turno',
+  },
+  hintBolsonaroRelativeGrowth: {
+    en: '(Bolsonaro 2026 runoff votes − 1st round votes) ÷ 1st round votes',
+    pt: '(votos Bolsonaro 2º turno 2026 − 1º turno) ÷ votos 1º turno',
+  },
+  hintLulaRelativeGrowth2022: {
+    en: '(Lula 2022 runoff votes − 1st round votes) ÷ 1st round votes',
+    pt: '(votos Lula 2º turno 2022 − 1º turno) ÷ votos 1º turno',
+  },
+  hintBolsonaroRelativeGrowth2022: {
+    en: '(Bolsonaro 2022 runoff votes − 1st round votes) ÷ 1st round votes',
+    pt: '(votos Bolsonaro 2º turno 2022 − 1º turno) ÷ votos 1º turno',
   },
   difference2026: {
     en: 'Difference 2026 runoff',

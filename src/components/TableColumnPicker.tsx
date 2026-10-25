@@ -108,7 +108,9 @@ export function TableColumnPicker({
                 onClick={(e) => e.stopPropagation()}
                 onPointerDown={(e) => e.stopPropagation()}
               />
-              <span className="min-w-0 flex-1">{t(TABLE_METRIC_COL_LABEL[col], lang)}</span>
+              <span className="table-col-picker-label flex-1">
+                {t(TABLE_METRIC_COL_LABEL[col], lang)}
+              </span>
             </label>
           </li>
         )
@@ -119,7 +121,7 @@ export function TableColumnPicker({
   const desktopMenu = open && !isNarrow ? (
     <div
       id={menuId}
-      className="table-col-picker-menu absolute right-0 z-40 mt-1 min-w-[14rem] rounded-md border border-[var(--line)] bg-[var(--paper)] p-2 shadow-lg"
+      className="table-col-picker-menu absolute right-0 z-40 mt-1 rounded-md border border-[var(--line)] bg-[var(--paper)] p-2 shadow-lg"
       role="group"
       aria-label={t('tableColumns', lang)}
     >

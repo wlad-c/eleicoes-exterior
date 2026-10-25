@@ -31,9 +31,13 @@ export type TableMetricCol =
   | 'lulaRoundShift'
   | 'bolsonaroRoundShift'
   | 'roundSwing'
+  | 'lulaRelativeGrowth'
+  | 'bolsonaroRelativeGrowth'
   | 'lulaRoundShift2022'
   | 'bolsonaroRoundShift2022'
   | 'roundSwing2022'
+  | 'lulaRelativeGrowth2022'
+  | 'bolsonaroRelativeGrowth2022'
   | 'sections'
 
 /**
@@ -50,6 +54,8 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'lulaRoundShift',
   'bolsonaroRoundShift',
   'roundSwing',
+  'lulaRelativeGrowth',
+  'bolsonaroRelativeGrowth',
   'region',
   'difference2026',
   'difference2026R1',
@@ -64,6 +70,8 @@ export const ALL_TABLE_METRIC_COLS: TableMetricCol[] = [
   'lulaRoundShift2022',
   'bolsonaroRoundShift2022',
   'roundSwing2022',
+  'lulaRelativeGrowth2022',
+  'bolsonaroRelativeGrowth2022',
   'lulaChange',
   'bolsonaroChange',
   'swing',
@@ -163,15 +171,19 @@ export const TABLE_METRIC_COL_LABEL: Record<TableMetricCol, DictKey> = {
   lulaRoundShift: 'lulaRoundShift',
   bolsonaroRoundShift: 'bolsonaroRoundShift',
   roundSwing: 'roundSwing',
+  lulaRelativeGrowth: 'lulaRelativeGrowth',
+  bolsonaroRelativeGrowth: 'bolsonaroRelativeGrowth',
   lulaRoundShift2022: 'lulaRoundShift2022',
   bolsonaroRoundShift2022: 'bolsonaroRoundShift2022',
   roundSwing2022: 'roundSwing2022',
+  lulaRelativeGrowth2022: 'lulaRelativeGrowth2022',
+  bolsonaroRelativeGrowth2022: 'bolsonaroRelativeGrowth2022',
   sections: 'notes',
 }
 
 /** Bump when default visibility / column ids change so stored prefs reset. */
-export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v9'
-export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v6'
+export const TABLE_COLS_STORAGE_KEY = 'eleicoes-exterior-table-cols-v10'
+export const TABLE_COL_ORDER_STORAGE_KEY = 'eleicoes-exterior-table-col-order-v7'
 
 export function isTableMetricCol(v: string): v is TableMetricCol {
   return (ALL_TABLE_METRIC_COLS as string[]).includes(v)

@@ -58,8 +58,8 @@ export function SortableTh({
       onPointerCancel={onPointerCancel}
       onClickCapture={onClickCapture}
     >
-      <span className="block whitespace-nowrap normal-case tracking-normal">
-        <span className="flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">
+      <span className="th-cell-inner block normal-case tracking-normal">
+        <span className="th-label-row flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">
           {reorderable ? (
             <span
               className="col-drag-handle select-none text-[var(--ink-muted)]"
