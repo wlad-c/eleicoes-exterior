@@ -66,6 +66,7 @@ const BRAZIL_ID = 'brazil'
 import {
   defaultElectionRound,
   type ElectionRound,
+  RUNOFF_REFRESH_START_MS,
   readStoredRound,
   writeStoredRound,
 } from './lib/electionRound'
@@ -177,6 +178,13 @@ export default function App() {
     setElectionRoundState(next)
     writeStoredRound(next)
   }
+  // Tabs left open across NZ close flip to 2º turno at that moment.
+  useEffect(() => {
+    const wait = RUNOFF_REFRESH_START_MS - Date.now()
+    if (wait <= 0) return
+    const id = window.setTimeout(() => setElectionRoundState('2'), wait)
+    return () => window.clearTimeout(id)
+  }, [])
   const activeSeed = electionRound === '2' ? seedRound2 : seedRound1
   const { data: liveData, syncStatus, live } = useResultsData(
     activeSeed,
