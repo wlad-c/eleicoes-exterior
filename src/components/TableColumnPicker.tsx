@@ -121,7 +121,7 @@ export function TableColumnPicker({
   const desktopMenu = open && !isNarrow ? (
     <div
       id={menuId}
-      className="table-col-picker-menu absolute right-0 z-40 mt-1 rounded-md border border-[var(--line)] bg-[var(--paper)] p-2 shadow-lg"
+      className="table-col-picker-menu absolute left-0 z-40 mt-1 rounded-md border border-[var(--line)] bg-[var(--paper)] p-2 shadow-lg"
       role="group"
       aria-label={t('tableColumns', lang)}
     >
