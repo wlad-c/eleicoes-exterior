@@ -998,6 +998,15 @@ async function main() {
     if (!(y2026.totalValid > 0)) {
       return c
     }
+    // Large diaspora booths sometimes publish a handful of early BUs first
+    // (e.g. Portugal 790 vs ~36k válidos in 2022). Flag those so the UI does
+    // not read as a finished country total.
+    const prior = c.y2022?.totalValid || 0
+    const clearlyPartial = prior >= 3000 && y2026.totalValid < prior * 0.2
+    const noteBase = `Press BU (${hit.sourceName}): Lula ${y2026.lula} / Flávio ${y2026.bolsonaro}.`
+    const notes = clearlyPartial
+      ? `${noteBase} PARCIAL / early BUs only (${y2026.totalValid} válidos vs ${prior} in 2022) — more sections still outstanding. Awaiting fuller press/TSE.`
+      : `${noteBase} Awaiting TSE.`
     updated++
     return {
       ...c,
@@ -1016,7 +1025,7 @@ async function main() {
           : c.swing ?? null,
       status: 'reported',
       source: 'press',
-      notes: `Press BU (${hit.sourceName}): Lula ${y2026.lula} / Flávio ${y2026.bolsonaro}. Awaiting TSE.`,
+      notes,
       coverage: c.coverage,
     }
   })
