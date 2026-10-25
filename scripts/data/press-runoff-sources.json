@@ -81,29 +81,36 @@
   {
     "name": "Metro1",
     "url": "https://www.metro1.com.br/",
-    "hub": "https://www.metro1.com.br/",
+    "hub": "https://www.metro1.com.br/noticias/politica/",
     "discover": true,
-    "note": "Discover Metro1 Eleições 2026 / exterior BU posts"
+    "note": "Metro1 politics hub — no runoff exterior absolute BU roundup yet"
   },
   {
     "name": "O Globo",
-    "url": "https://oglobo.globo.com/politica/eleicoes-2026/",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/eleicoes-2026-no-exterior-brasileiros-formam-filas-em-paris-lisboa-e-londres-veja-onde-lula-e-flavio-ja-venceram-na-asia.ghtml",
     "hub": "https://oglobo.globo.com/politica/eleicoes-2026/",
     "discover": true,
-    "note": "Discover O Globo exterior close / BU posts"
+    "note": "Asia/Europe exterior day-of (winners; BUs when added)"
+  },
+  {
+    "name": "Folha",
+    "url": "https://www1.folha.uol.com.br/mundo/",
+    "hub": "https://www1.folha.uol.com.br/mundo/",
+    "discover": true,
+    "note": "Folha mundo hub — no runoff exterior absolute BU roundup yet"
   },
   {
     "name": "Folha",
     "url": "https://www1.folha.uol.com.br/poder/",
     "hub": "https://www1.folha.uol.com.br/poder/",
     "discover": true,
-    "note": "Discover Folha exterior / BU posts"
+    "note": "Folha poder hub — no runoff exterior absolute BU roundup yet"
   },
   {
     "name": "Estadão",
     "url": "https://www.estadao.com.br/politica/",
     "hub": "https://www.estadao.com.br/politica/",
     "discover": true,
-    "note": "Discover Estadão exterior / BU posts"
+    "note": "Estadão politica hub — no runoff exterior absolute BU roundup yet"
   }
 ]
