@@ -402,7 +402,16 @@ async function main() {
     url: zzUrl,
   }
 
-  writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
+  const payload = JSON.stringify(results, null, 2) + '\n'
+  writeFileSync(RESULTS_PATH, payload)
+  // Keep GitHub Pages seed in lockstep (apply-place-names alone won't copy meta/votes).
+  const docsResultsPath = RESULTS_PATH.replace(
+    `${join('src', 'data')}`,
+    `${join('docs', 'data')}`,
+  )
+  if (docsResultsPath !== RESULTS_PATH) {
+    writeFileSync(docsResultsPath, payload)
+  }
 
   // Keep bilingual place labels in sync with place-names.json
   try {
