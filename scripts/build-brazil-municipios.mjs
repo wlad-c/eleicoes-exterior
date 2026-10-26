@@ -160,6 +160,61 @@ function rewindGeometry(geometry) {
   return geometry
 }
 
+function shoelace(ring) {
+  let a = 0
+  for (let i = 0; i < ring.length - 1; i++) {
+    a += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1]
+  }
+  return a / 2
+}
+
+/**
+ * geodata-br occasionally puts tiny island rings before the mainland exterior.
+ * GeoJSON requires the exterior first; TopoJSON drops those polygons otherwise.
+ */
+function normalizePolygonRings(coords) {
+  const rings = coords.filter((r) => Array.isArray(r) && r.length >= 4)
+  if (!rings.length) return null
+  rings.sort((a, b) => Math.abs(shoelace(b)) - Math.abs(shoelace(a)))
+  const exterior = rings[0]
+  const extSign = shoelace(exterior) >= 0 ? 1 : -1
+  const holes = []
+  const islands = []
+  for (const r of rings.slice(1)) {
+    const sign = shoelace(r) >= 0 ? 1 : -1
+    if (sign === extSign) islands.push(r)
+    else holes.push(r)
+  }
+  if (!islands.length) {
+    return { type: 'Polygon', coordinates: [exterior, ...holes] }
+  }
+  return {
+    type: 'MultiPolygon',
+    coordinates: [[exterior, ...holes], ...islands.map((isl) => [isl])],
+  }
+}
+
+function normalizeGeometry(geometry) {
+  if (!geometry) return null
+  if (geometry.type === 'Polygon') {
+    return normalizePolygonRings(geometry.coordinates)
+  }
+  if (geometry.type === 'MultiPolygon') {
+    const polys = []
+    for (const poly of geometry.coordinates) {
+      const n = normalizePolygonRings(poly)
+      if (!n) continue
+      if (n.type === 'Polygon') polys.push(n.coordinates)
+      else polys.push(...n.coordinates)
+    }
+    if (!polys.length) return null
+    return polys.length === 1
+      ? { type: 'Polygon', coordinates: polys[0] }
+      : { type: 'MultiPolygon', coordinates: polys }
+  }
+  return geometry
+}
+
 async function download(url, dest, { encoding } = {}) {
   mkdirSync(dirname(dest), { recursive: true })
   const res = await fetch(url, {
@@ -352,13 +407,22 @@ async function main() {
     process.exit(1)
   }
 
-  const features = [...byId.values()]
-    .sort((a, b) => a.properties.id.localeCompare(b.properties.id))
-    .map((f) => ({
-      ...f,
+  const features = []
+  for (const f of [...byId.values()].sort((a, b) =>
+    a.properties.id.localeCompare(b.properties.id),
+  )) {
+    const geometry = normalizeGeometry(f.geometry)
+    if (!geometry) {
+      console.error('degenerate geometry', f.properties.id)
+      process.exit(1)
+    }
+    features.push({
+      type: 'Feature',
+      id: f.properties.id,
       properties: { id: f.properties.id },
-      geometry: rewindGeometry(f.geometry),
-    }))
+      geometry: rewindGeometry(geometry),
+    })
+  }
 
   const rawPath = join(cacheDir, 'brazil-municipios-joined.json')
   writeFileSync(
@@ -380,15 +444,31 @@ async function main() {
     simpPath,
   ])
 
-  // Re-apply rewind after mapshaper (it may flip rings) and drop extra props.
+  // Normalize + rewind after mapshaper (simplify can flip / reorder rings).
   const simp = readJson(simpPath)
+  const cleaned = []
   for (const f of simp.features) {
-    f.geometry = rewindGeometry(f.geometry)
     const id = f.properties?.id || f.id
-    f.id = id
-    f.properties = { id }
+    const geometry = normalizeGeometry(f.geometry)
+    if (!geometry) {
+      console.error('degenerate after simplify', id)
+      process.exit(1)
+    }
+    cleaned.push({
+      type: 'Feature',
+      id,
+      properties: { id },
+      geometry: rewindGeometry(geometry),
+    })
   }
-  writeFileSync(simpPath, JSON.stringify(simp))
+  if (cleaned.length !== byCode.size) {
+    console.error('feature count mismatch after simplify', cleaned.length)
+    process.exit(1)
+  }
+  writeFileSync(
+    simpPath,
+    JSON.stringify({ type: 'FeatureCollection', features: cleaned }),
+  )
 
   mkdirSync(dirname(outTopo), { recursive: true })
   const topoTmp = join(cacheDir, 'brazil-municipios.topojson')
