@@ -488,9 +488,9 @@ html.dark .is-x-scrolled .sticky-col-city {
   .cell-truncate-city,
   .sticky-col-city.cell-truncate-city,
   .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 22%;
-    min-width: 12rem;
-    max-width: 28rem;
+    width: 8.8%;
+    min-width: 4.8rem;
+    max-width: 11.2rem;
   }
 
   .results-table--body .sticky-col-country.cell-truncate-country,
@@ -514,9 +514,9 @@ html.dark .is-x-scrolled .sticky-col-city {
   .cell-truncate-city,
   .sticky-col-city.cell-truncate-city,
   .results-table--suburb .sticky-col-city.cell-truncate-city {
-    width: 24%;
-    min-width: 14rem;
-    max-width: 32rem;
+    width: 9.6%;
+    min-width: 5.6rem;
+    max-width: 12.8rem;
   }
 }
 
