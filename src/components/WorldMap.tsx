@@ -50,6 +50,7 @@ import {
   type MapFocus,
   type MapPick,
 } from '../lib/brazilGeo'
+import { suburbVoronoiCells } from '../lib/suburbVoronoi'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
 import type { CityResult, CountryResult, Lang, MapMetric } from '../types'
@@ -99,6 +100,11 @@ type DrawnFeature = {
   pick: MapPick
   /** Circle marker (neighborhood / city point) instead of a path fill. */
   circle?: { cx: number; cy: number; r: number }
+  /**
+   * Suburb Voronoi cell: clip to the city outline when rendering so cells
+   * tile the municipality instead of extending to the bbox.
+   */
+  clipToCity?: boolean
   /** UF city choropleth: municipality has a neighborhood drill-down. */
   multiZone?: boolean
 }
@@ -637,7 +643,9 @@ export function WorldMap({
       return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
     }
 
-    // City → neighborhoods at TSE voting-local centroids (real geography).
+    // City → neighborhoods: Voronoi polygons from TSE voting-local centroids
+    // clipped to the municipality outline (choropleth tiles). Bubbles only
+    // when coords are mostly missing.
     if (!cityFeature) {
       return {
         drawn: [] as DrawnFeature[],
@@ -692,7 +700,50 @@ export function WorldMap({
     ]
 
     if (geoPts.length >= Math.max(2, Math.ceil(local.length * 0.5))) {
-      // Geographic placement from TSE lat/lon centroids.
+      const sites: { id: string; x: number; y: number; row: CityResult }[] = []
+      for (const sub of geoPts) {
+        const pt = projection([sub.lon as number, sub.lat as number])
+        if (!pt) continue
+        sites.push({ id: sub.code, x: pt[0], y: pt[1], row: sub })
+      }
+      const padBox = Math.max(8, (x1 - x0 + y1 - y0) * 0.02)
+      const cells = suburbVoronoiCells(
+        sites,
+        [x0 - padBox, y0 - padBox, x1 + padBox, y1 + padBox],
+      )
+      if (cells) {
+        const byId = new Map(sites.map((s) => [s.id, s.row]))
+        for (const cell of cells) {
+          const sub = byId.get(cell.id)
+          if (!sub) continue
+          items.push({
+            id: sub.code,
+            d: cell.d,
+            row: sub,
+            label: cityDisplayName(sub, lang),
+            pick: { kind: 'suburb', suburbCode: sub.code },
+            clipToCity: true,
+          })
+        }
+        // Zones without coords stay as small markers near the mun centroid.
+        const covered = new Set(cells.map((c) => c.id))
+        for (const sub of local) {
+          if (covered.has(sub.code)) continue
+          const [gx, gy] = geoCentroid(cityFeature)
+          const fall = projection([gx, gy]) ?? [cx, cy]
+          items.push({
+            id: sub.code,
+            d: '',
+            row: sub,
+            label: cityDisplayName(sub, lang),
+            pick: { kind: 'suburb', suburbCode: sub.code },
+            circle: { cx: fall[0], cy: fall[1], r: 6 },
+          })
+        }
+        return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+      }
+
+      // Voronoi failed (degenerate sites): fall back to sized bubbles.
       let maxV = 1
       for (const s of geoPts) {
         maxV = Math.max(maxV, s.y2026?.totalValid ?? 0)
@@ -707,7 +758,6 @@ export function WorldMap({
             cyp = pt[1]
           }
         } else {
-          // Rare missing coords: nudge near mun centroid so the tip still works.
           const [gx, gy] = geoCentroid(cityFeature)
           const fall = projection([gx, gy]) ?? [cx, cy]
           cxp = fall[0]
@@ -1119,28 +1169,78 @@ export function WorldMap({
           ) : null}
           <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
             {!useCanvasCities
-              ? drawn.map((f) => {
-                  const value = f.row ? metricValue(f.row, metric) : null
-                  let fill = NO_DATA_FILL
-                  if (f.id.startsWith('__outline-')) {
-                    fill = 'var(--paper-deep)'
-                  } else if (f.row) {
-                    fill = value != null ? colorize(value) : PENDING_FILL
-                  }
-                  const isHi = !!f.row && highlightId === f.id
-                  if (f.circle) {
+              ? (() => {
+                  const renderFeature = (f: DrawnFeature, key = f.id) => {
+                    const value = f.row ? metricValue(f.row, metric) : null
+                    let fill = NO_DATA_FILL
+                    if (f.id.startsWith('__outline-')) {
+                      fill = 'var(--paper-deep)'
+                    } else if (f.row) {
+                      fill = value != null ? colorize(value) : PENDING_FILL
+                    }
+                    const isHi = !!f.row && highlightId === f.id
+                    if (f.circle) {
+                      return (
+                        <circle
+                          key={key}
+                          data-map-id={f.id}
+                          cx={f.circle.cx}
+                          cy={f.circle.cy}
+                          r={f.circle.r}
+                          fill={fill}
+                          stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--ink)'}
+                          strokeOpacity={isHi ? 1 : 0.35}
+                          strokeWidth={isHi ? 2.25 : 1}
+                          className="cursor-pointer transition-[stroke-width] duration-200"
+                          onMouseEnter={(e) => {
+                            if (!f.row) return
+                            showTipAt(e, f.label, f.row)
+                          }}
+                          onMouseMove={(e) => {
+                            if (!f.row) return
+                            showTipAt(e, f.label, f.row)
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleFeatureClick(e, f)
+                          }}
+                        />
+                      )
+                    }
+                    const isCityOutline = f.id.startsWith('__outline-')
                     return (
-                      <circle
-                        key={f.id}
+                      <path
+                        key={key}
                         data-map-id={f.id}
-                        cx={f.circle.cx}
-                        cy={f.circle.cy}
-                        r={f.circle.r}
-                        fill={fill}
-                        stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--ink)'}
-                        strokeOpacity={isHi ? 1 : 0.35}
-                        strokeWidth={isHi ? 2.25 : 1}
-                        className="cursor-pointer transition-[stroke-width] duration-200"
+                        d={f.d}
+                        fill={isCityOutline ? 'var(--paper-deep)' : fill}
+                        fillOpacity={isCityOutline ? 0.85 : 1}
+                        stroke={
+                          isHi
+                            ? 'var(--map-stroke-hi)'
+                            : isCityOutline
+                              ? 'var(--ink)'
+                              : 'var(--map-stroke)'
+                        }
+                        strokeOpacity={isCityOutline ? 0.55 : f.clipToCity ? 0.85 : 1}
+                        strokeWidth={
+                          isHi
+                            ? 1.6
+                            : isCityOutline
+                              ? 1.4
+                              : f.clipToCity
+                                ? 0.7
+                                : f.multiZone
+                                  ? 1.15
+                                  : focus.level === 'world'
+                                    ? 0.4
+                                    : 0.55
+                        }
+                        className={
+                          f.pick.kind !== 'background' || canGoBack
+                            ? 'cursor-pointer transition-[stroke-width] duration-200'
+                            : ''
+                        }
                         onMouseEnter={(e) => {
                           if (!f.row) return
                           showTipAt(e, f.label, f.row)
@@ -1156,53 +1256,46 @@ export function WorldMap({
                       />
                     )
                   }
-                  const isCityOutline = f.id.startsWith('__outline-')
-                  return (
-                    <path
-                      key={f.id}
-                      data-map-id={f.id}
-                      d={f.d}
-                      fill={isCityOutline ? 'var(--paper-deep)' : fill}
-                      fillOpacity={isCityOutline ? 0.85 : 1}
-                      stroke={
-                        isHi
-                          ? 'var(--map-stroke-hi)'
-                          : isCityOutline
-                            ? 'var(--ink)'
-                            : 'var(--map-stroke)'
-                      }
-                      strokeOpacity={isCityOutline ? 0.55 : 1}
-                      strokeWidth={
-                        isHi
-                          ? 1.6
-                          : isCityOutline
-                            ? 1.4
-                            : f.multiZone
-                              ? 1.15
-                              : focus.level === 'world'
-                                ? 0.4
-                                : 0.55
-                      }
-                      className={
-                        f.pick.kind !== 'background' || canGoBack
-                          ? 'cursor-pointer transition-[stroke-width] duration-200'
-                          : ''
-                      }
-                      onMouseEnter={(e) => {
-                        if (!f.row) return
-                        showTipAt(e, f.label, f.row)
-                      }}
-                      onMouseMove={(e) => {
-                        if (!f.row) return
-                        showTipAt(e, f.label, f.row)
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleFeatureClick(e, f)
-                      }}
-                    />
+
+                  const outlineFeat = drawn.find((f) =>
+                    f.id.startsWith('__outline-'),
                   )
-                })
+                  const clipped = drawn.filter((f) => f.clipToCity)
+                  const unclipped = drawn.filter(
+                    (f) => !f.clipToCity && !f.id.startsWith('__outline-'),
+                  )
+                  const clipId =
+                    focus.level === 'city' && clipped.length > 0 && outlineFeat
+                      ? `city-clip-${focus.cityCode}`
+                      : null
+
+                  if (clipId && outlineFeat) {
+                    return (
+                      <>
+                        <defs>
+                          <clipPath id={clipId}>
+                            <path d={outlineFeat.d} />
+                          </clipPath>
+                        </defs>
+                        {renderFeature(outlineFeat)}
+                        <g clipPath={`url(#${clipId})`}>
+                          {clipped.map((f) => renderFeature(f))}
+                        </g>
+                        <path
+                          d={outlineFeat.d}
+                          fill="none"
+                          stroke="var(--ink)"
+                          strokeOpacity={0.55}
+                          strokeWidth={1.4}
+                          pointerEvents="none"
+                        />
+                        {unclipped.map((f) => renderFeature(f))}
+                      </>
+                    )
+                  }
+
+                  return drawn.map((f) => renderFeature(f))
+                })()
               : null}
           </g>
         </svg>
