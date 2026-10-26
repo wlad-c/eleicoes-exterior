@@ -404,21 +404,29 @@ export default function App() {
     [data.countries, showBrazilInTables],
   )
 
-  const totals = useMemo(() => runningTotals(data.countries), [data.countries])
+  const totals = useMemo(
+    () => runningTotals(data.countries, { includeDomestic: includeBrazil }),
+    [data.countries, includeBrazil],
+  )
   const reportedCountries = useMemo(
     () => data.countries.filter((c) => c.status === 'reported'),
     [data.countries],
   )
-  /** Overseas-only set for the header aggregate cards. */
-  const reportedOverseas = useMemo(
-    () => reportedCountries.filter((c) => !c.domestic),
-    [reportedCountries],
+  /** Header aggregate cards follow Incluir Brasil (overseas-only by default). */
+  const reportedForHeader = useMemo(
+    () =>
+      reportedCountries.filter((c) => includeBrazil || !c.domestic),
+    [reportedCountries, includeBrazil],
   )
   const reportedAgg = useMemo(
-    () => aggregateRows(reportedOverseas),
-    [reportedOverseas],
+    () => aggregateRows(reportedForHeader),
+    [reportedForHeader],
   )
-  const reportedCount = reportedOverseas.length
+  const reportedCount = reportedForHeader.filter((c) => !c.domestic).length
+  const headerCountryDenom = useMemo(() => {
+    const overseas = data.countries.filter((c) => !c.domestic).length
+    return includeBrazil ? overseas + 1 : overseas
+  }, [data.countries, includeBrazil])
   const hist2022OverseasCount = useMemo(
     () =>
       data.countries.filter(
@@ -426,6 +434,23 @@ export default function App() {
       ).length,
     [data.countries],
   )
+
+  function setIncludeBrazilSynced(on: boolean) {
+    if (on) prefetchBrazilCities()
+    startTransition(() => setIncludeBrazil(on))
+    if (!on && mapFocus.level !== 'world') {
+      setMapFocus({ level: 'world' })
+      setTableView('countries')
+    }
+    if (!on && highlightId === BRAZIL_ID) {
+      setHighlightId(null)
+    }
+    if (!on && selectedCountryIds.includes(BRAZIL_ID)) {
+      onCountryFilterChange(
+        selectedCountryIds.filter((id) => id !== BRAZIL_ID),
+      )
+    }
+  }
 
   /**
    * Map must include pending countries that already have 2022 or 1º history —
@@ -1195,13 +1220,24 @@ export default function App() {
               {t('runningTotal', lang)}
             </h2>
             <p className="mt-1 text-sm text-[var(--ink-muted)]">
-              {totals.reported}/
-              {
-                data.countries.filter((c) => !c.domestic).length
-              }{' '}
+              {totals.reported}/{headerCountryDenom}{' '}
               {t('countries', lang)} ·{' '}
               {fmtInt(totals.valid, lang)} {t('validVotes', lang)}
             </p>
+            <label
+              className="mt-2 flex w-fit cursor-pointer items-center gap-2 text-sm text-[var(--ink-muted)]"
+              title={t('includeBrazilHint', lang)}
+              onMouseEnter={prefetchBrazilCitiesHandler}
+              onFocus={prefetchBrazilCitiesHandler}
+            >
+              <input
+                type="checkbox"
+                className="accent-[var(--accent)]"
+                checked={includeBrazil}
+                onChange={(e) => setIncludeBrazilSynced(e.target.checked)}
+              />
+              {t('includeBrazil', lang)}
+            </label>
           </div>
           <div className="text-right text-xs text-[var(--ink-muted)]">
             <p>
@@ -1468,23 +1504,7 @@ export default function App() {
                 type="checkbox"
                 className="accent-[var(--accent)]"
                 checked={includeBrazil}
-                onChange={(e) => {
-                  const on = e.target.checked
-                  if (on) prefetchBrazilCities()
-                  startTransition(() => setIncludeBrazil(on))
-                  if (!on && mapFocus.level !== 'world') {
-                    setMapFocus({ level: 'world' })
-                    setTableView('countries')
-                  }
-                  if (!on && highlightId === BRAZIL_ID) {
-                    setHighlightId(null)
-                  }
-                  if (!on && selectedCountryIds.includes(BRAZIL_ID)) {
-                    onCountryFilterChange(
-                      selectedCountryIds.filter((id) => id !== BRAZIL_ID),
-                    )
-                  }
-                }}
+                onChange={(e) => setIncludeBrazilSynced(e.target.checked)}
               />
               {t('includeBrazil', lang)}
             </label>
@@ -1757,7 +1777,7 @@ function TotalCard({
     <div>
       <div className="flex items-baseline justify-between gap-2">
         <span className="font-semibold">{label}</span>
-        <span className="tabular-nums text-lg font-bold">{fmtInt(votes, lang)}</span>
+        <span className="tabular-nums text-lg font-bold">{fmtPct(pct, lang)}</span>
       </div>
       <div className="mt-2 h-2 overflow-hidden rounded-sm bg-[var(--paper-deep)]">
         <div
@@ -1765,7 +1785,9 @@ function TotalCard({
           style={{ width: `${Math.max(2, Math.min(100, pct))}%` }}
         />
       </div>
-      <p className="mt-1 text-xs tabular-nums text-[var(--ink-muted)]">{fmtPct(pct, lang)}</p>
+      <p className="mt-1 text-xs tabular-nums text-[var(--ink-muted)]">
+        {fmtInt(votes, lang)}
+      </p>
     </div>
   )
 }

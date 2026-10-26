@@ -729,14 +729,18 @@ export function formatMetricValue(
   }
 }
 
-export function runningTotals(countries: CountryResult[]) {
+export function runningTotals(
+  countries: CountryResult[],
+  opts?: { includeDomestic?: boolean },
+) {
+  const includeDomestic = opts?.includeDomestic ?? false
   let lula = 0
   let bolsonaro = 0
   let valid = 0
   let reported = 0
   for (const c of countries) {
-    // Keep the header total overseas-only; domestic Brazil dwarfs ZZ.
-    if (c.domestic) continue
+    // Default: overseas-only — domestic Brazil dwarfs ZZ.
+    if (c.domestic && !includeDomestic) continue
     if (c.status !== 'reported' || !c.y2026) continue
     lula += c.y2026.lula
     bolsonaro += c.y2026.bolsonaro
