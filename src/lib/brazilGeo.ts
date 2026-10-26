@@ -118,9 +118,10 @@ async function loadBrazilMunicipalityMesh(): Promise<MunFc | null> {
         topo.objects[Object.keys(topo.objects)[0] as 'municipalities']
       if (!obj) throw new Error('empty topojson objects')
       const fc = feature(topo, obj) as MunFc
-      // Defensive rewind — build script already rewinds, but keep fitSize safe.
+      // Do NOT rewind here — the vendored TopoJSON is already wound for
+      // d3-geo. A second rewind inverts rings (area ≈ 4π) and canvas fills
+      // paint the whole map stage, including ocean outside Brazil.
       for (const f of fc.features) {
-        if (f.geometry) f.geometry = rewindGeometry(f.geometry)
         const id = String(f.properties?.id ?? f.id ?? '')
         f.properties = { id }
         f.id = id
