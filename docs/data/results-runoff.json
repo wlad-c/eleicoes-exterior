@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:26:21.639Z",
+    "updatedAt": "2026-10-26T00:28:26.681Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -92,13 +92,13 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:26:21.639Z",
-      "sectionsCounted": 1296,
+      "fetchedAt": "2026-10-26T00:28:26.681Z",
+      "sectionsCounted": 1299,
       "sectionsTotal": 1351,
-      "sectionsPct": 95.93,
-      "lula": 191234,
-      "bolsonaro": 166709,
-      "totalValid": 357943,
+      "sectionsPct": 96.15,
+      "lula": 191462,
+      "bolsonaro": 166870,
+      "totalValid": 358332,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.json"
     }
   },
@@ -9007,27 +9007,42 @@
         "bolsonaro": 12,
         "totalValid": 21,
         "lulaPct": 42.86,
-        "bolsonaroPct": 57.14
+        "bolsonaroPct": 57.14,
+        "registered": 88,
+        "abstentions": 64,
+        "blank": 3,
+        "nullVotes": 0,
+        "noValidVote": 67,
+        "noValidVotePct": 76.14
       },
       "swing": {
         "lulaPp": -8.75,
         "bolsonaroPp": 8.75,
         "marginPp": -17.5
       },
-      "notes": "Press BU (CNN Brasil): Lula 9 / Flávio 12. Awaiting TSE.",
+      "notes": "TSE EA20 (PORT OF SPAIN 1/1)",
       "status": "reported",
-      "coverage": null,
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      },
       "areas": [
         {
           "code": "30325",
           "name": "PORT OF SPAIN",
           "level": "area",
           "y2026": {
-            "lula": 0,
-            "bolsonaro": 0,
-            "totalValid": 0,
-            "lulaPct": 0,
-            "bolsonaroPct": 0
+            "lula": 9,
+            "bolsonaro": 12,
+            "totalValid": 21,
+            "lulaPct": 42.86,
+            "bolsonaroPct": 57.14,
+            "registered": 88,
+            "abstentions": 64,
+            "blank": 3,
+            "nullVotes": 0,
+            "noValidVote": 67,
+            "noValidVotePct": 76.14
           },
           "y2022": {
             "lula": 16,
@@ -9036,8 +9051,15 @@
             "lulaPct": 51.61,
             "bolsonaroPct": 48.39
           },
-          "swing": null,
-          "coverage": null,
+          "swing": {
+            "lulaPp": -8.75,
+            "bolsonaroPp": 8.75,
+            "marginPp": -17.5
+          },
+          "coverage": {
+            "counted": 1,
+            "total": 1
+          },
           "nameEn": "Port of Spain",
           "namePt": "Port of Spain"
         }
