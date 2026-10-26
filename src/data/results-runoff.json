@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:28:26.681Z",
+    "updatedAt": "2026-10-26T00:30:20.860Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -92,13 +92,13 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:28:26.681Z",
-      "sectionsCounted": 1299,
+      "fetchedAt": "2026-10-26T00:30:20.860Z",
+      "sectionsCounted": 1301,
       "sectionsTotal": 1351,
-      "sectionsPct": 96.15,
-      "lula": 191462,
-      "bolsonaro": 166870,
-      "totalValid": 358332,
+      "sectionsPct": 96.3,
+      "lula": 192066,
+      "bolsonaro": 167086,
+      "totalValid": 359152,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.json"
     }
   },
@@ -2042,27 +2042,27 @@
         "bolsonaroPct": 38.39
       },
       "y2026": {
-        "lula": 12460,
-        "bolsonaro": 7027,
-        "totalValid": 19487,
-        "lulaPct": 63.94,
-        "bolsonaroPct": 36.06,
+        "lula": 13279,
+        "bolsonaro": 7377,
+        "totalValid": 20656,
+        "lulaPct": 64.29,
+        "bolsonaroPct": 35.71,
         "registered": 46361,
-        "abstentions": 17249,
-        "blank": 233,
-        "nullVotes": 348,
-        "noValidVote": 17830,
-        "noValidVotePct": 38.46
+        "abstentions": 18269,
+        "blank": 249,
+        "nullVotes": 370,
+        "noValidVote": 18888,
+        "noValidVotePct": 40.74
       },
       "swing": {
-        "lulaPp": 2.33,
-        "bolsonaroPp": -2.33,
-        "marginPp": 4.66
+        "lulaPp": 2.68,
+        "bolsonaroPp": -2.68,
+        "marginPp": 5.36
       },
-      "notes": "TSE EA20 (51/63 seções; TORONTO 28/28; MONTREAL 15/15; VANCOUVER 4/16; OTTAWA 4/4)",
+      "notes": "TSE EA20 (54/63 seções; TORONTO 28/28; MONTREAL 15/15; VANCOUVER 7/16; OTTAWA 4/4)",
       "status": "reported",
       "coverage": {
-        "counted": 51,
+        "counted": 54,
         "total": 63
       },
       "areas": [
@@ -2143,17 +2143,17 @@
           "name": "VANCOUVER",
           "level": "area",
           "y2026": {
-            "lula": 793,
-            "bolsonaro": 720,
-            "totalValid": 1513,
-            "lulaPct": 52.41,
-            "bolsonaroPct": 47.59,
+            "lula": 1612,
+            "bolsonaro": 1070,
+            "totalValid": 2682,
+            "lulaPct": 60.1,
+            "bolsonaroPct": 39.9,
             "registered": 12082,
-            "abstentions": 1466,
-            "blank": 18,
-            "nullVotes": 41,
-            "noValidVote": 1525,
-            "noValidVotePct": 12.62
+            "abstentions": 2486,
+            "blank": 34,
+            "nullVotes": 63,
+            "noValidVote": 2583,
+            "noValidVotePct": 21.38
           },
           "y2022": {
             "lula": 3442,
@@ -2163,12 +2163,12 @@
             "bolsonaroPct": 36.52
           },
           "swing": {
-            "lulaPp": -11.07,
-            "bolsonaroPp": 11.07,
-            "marginPp": -22.14
+            "lulaPp": -3.38,
+            "bolsonaroPp": 3.38,
+            "marginPp": -6.76
           },
           "coverage": {
-            "counted": 4,
+            "counted": 7,
             "total": 16
           },
           "nameEn": "Vancouver",
@@ -3220,28 +3220,28 @@
         "bolsonaroPct": 35.04
       },
       "y2026": {
-        "lula": 4459,
-        "bolsonaro": 2015,
-        "totalValid": 6474,
-        "lulaPct": 68.88,
-        "bolsonaroPct": 31.12,
-        "registered": 12947,
-        "abstentions": 6343,
+        "lula": 4466,
+        "bolsonaro": 2028,
+        "totalValid": 6494,
+        "lulaPct": 68.77,
+        "bolsonaroPct": 31.23,
+        "registered": 13009,
+        "abstentions": 6385,
         "blank": 64,
         "nullVotes": 66,
-        "noValidVote": 6473,
-        "noValidVotePct": 50
+        "noValidVote": 6515,
+        "noValidVotePct": 50.08
       },
       "swing": {
-        "lulaPp": 3.92,
-        "bolsonaroPp": -3.92,
-        "marginPp": 7.84
+        "lulaPp": 3.81,
+        "bolsonaroPp": -3.81,
+        "marginPp": 7.62
       },
-      "notes": "TSE EA20 (BUENOS AIRES 15/15; CÓRDOBA 2/2; MENDOZA 1/1; PASO LOS LIBRES 1/1)",
+      "notes": "TSE EA20 (BUENOS AIRES 15/15; CÓRDOBA 2/2; MENDOZA 1/1; PUERTO IGUAZÚ 1/1; PASO LOS LIBRES 1/1)",
       "status": "reported",
       "coverage": {
-        "counted": 19,
-        "total": 19
+        "counted": 20,
+        "total": 20
       },
       "areas": [
         {
@@ -3351,6 +3351,42 @@
           },
           "nameEn": "Mendoza",
           "namePt": "Mendoza"
+        },
+        {
+          "code": "99155",
+          "name": "PUERTO IGUAZÚ",
+          "level": "area",
+          "y2026": {
+            "lula": 7,
+            "bolsonaro": 13,
+            "totalValid": 20,
+            "lulaPct": 35,
+            "bolsonaroPct": 65,
+            "registered": 62,
+            "abstentions": 42,
+            "blank": 0,
+            "nullVotes": 0,
+            "noValidVote": 42,
+            "noValidVotePct": 67.74
+          },
+          "y2022": {
+            "lula": 5,
+            "bolsonaro": 0,
+            "totalValid": 5,
+            "lulaPct": 100,
+            "bolsonaroPct": 0
+          },
+          "swing": {
+            "lulaPp": -65,
+            "bolsonaroPp": 65,
+            "marginPp": -130
+          },
+          "coverage": {
+            "counted": 1,
+            "total": 1
+          },
+          "nameEn": "Puerto Iguazú",
+          "namePt": "Puerto Iguazú"
         },
         {
           "code": "30295",
@@ -9428,27 +9464,42 @@
         "bolsonaro": 14,
         "totalValid": 20,
         "lulaPct": 30,
-        "bolsonaroPct": 70
+        "bolsonaroPct": 70,
+        "registered": 69,
+        "abstentions": 47,
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 49,
+        "noValidVotePct": 71.01
       },
       "swing": {
         "lulaPp": -9.13,
         "bolsonaroPp": 9.13,
         "marginPp": -18.26
       },
-      "notes": "Press BU (CNN Brasil): Lula 6 / Flávio 14. Awaiting TSE.",
+      "notes": "TSE EA20 (NASSAU 1/1)",
       "status": "reported",
-      "coverage": null,
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      },
       "areas": [
         {
           "code": "99180",
           "name": "NASSAU",
           "level": "area",
           "y2026": {
-            "lula": 0,
-            "bolsonaro": 0,
-            "totalValid": 0,
-            "lulaPct": 0,
-            "bolsonaroPct": 0
+            "lula": 6,
+            "bolsonaro": 14,
+            "totalValid": 20,
+            "lulaPct": 30,
+            "bolsonaroPct": 70,
+            "registered": 69,
+            "abstentions": 47,
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 49,
+            "noValidVotePct": 71.01
           },
           "y2022": {
             "lula": 9,
@@ -9457,8 +9508,15 @@
             "lulaPct": 39.13,
             "bolsonaroPct": 60.87
           },
-          "swing": null,
-          "coverage": null,
+          "swing": {
+            "lulaPp": -9.13,
+            "bolsonaroPp": 9.13,
+            "marginPp": -18.26
+          },
+          "coverage": {
+            "counted": 1,
+            "total": 1
+          },
           "nameEn": "Nassau",
           "namePt": "Nassau"
         }
