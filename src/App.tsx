@@ -55,6 +55,7 @@ import {
 import { metricLabel, regionLabel, t } from './lib/i18n'
 import { collatorFor } from './lib/collator'
 import { searchIncludes } from './lib/searchText'
+import { prefetchBrazilMunicipalityMesh } from './lib/brazilGeo'
 import {
   prefetchBrazilCities,
   prefetchBrazilCitiesHandler,
@@ -436,7 +437,10 @@ export default function App() {
   )
 
   function setIncludeBrazilSynced(on: boolean) {
-    if (on) prefetchBrazilCities()
+    if (on) {
+      prefetchBrazilCities()
+      prefetchBrazilMunicipalityMesh()
+    }
     startTransition(() => setIncludeBrazil(on))
     if (!on && mapFocus.level !== 'world') {
       setMapFocus({ level: 'world' })

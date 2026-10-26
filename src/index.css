@@ -617,6 +617,24 @@ html.dark .is-x-scrolled .sticky-col-city {
   -webkit-user-select: none;
 }
 
+/* National city choropleth: canvas fills under a non-interactive SVG shell
+   (loading text / viewBox sizing). Zoom controls stay above via z-index. */
+.map-cities-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  touch-action: inherit;
+}
+
+.map-svg--overlay {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
 .map-zoom-controls {
   position: absolute;
   top: 0.5rem;

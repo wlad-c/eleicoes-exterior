@@ -44,6 +44,7 @@ import {
   fetchBrazilMunicipalityCollection,
   fetchCityFeature,
   fetchUfMunicipalityCollection,
+  prefetchBrazilMunicipalityMesh,
   suburbsForCity,
   ufFromCityCode,
   type MapFocus,
@@ -102,6 +103,16 @@ type DrawnFeature = {
   multiZone?: boolean
 }
 
+/** Canvas-backed municipality fills (national City-tab choropleth). */
+type CanvasCity = {
+  id: string
+  d: string
+  row: VoteLike | undefined
+  label: string
+  pick: Extract<MapPick, { kind: 'city' }>
+  multiZone?: boolean
+}
+
 export function WorldMap({
   countries,
   areas = [],
@@ -120,6 +131,11 @@ export function WorldMap({
   const wrapRef = useRef<HTMLDivElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasHitRef = useRef<{
+    paths: Path2D[]
+    cities: CanvasCity[]
+  } | null>(null)
   const viewRef = useRef<MapView>(VIEW_RESET)
   const dragRef = useRef<{
     pointerId: number
@@ -375,6 +391,13 @@ export function WorldMap({
     [showTipAt, clearTip, onPick],
   )
 
+  // Mesh is vendored — prefetch as soon as Brazil is in view so City tab
+  // does not wait on vote JSON or live IBGE.
+  useEffect(() => {
+    if (focus.level === 'world') return
+    prefetchBrazilMunicipalityMesh()
+  }, [focus.level])
+
   useEffect(() => {
     let cancelled = false
     if (focus.level !== 'uf' && focus.level !== 'city') {
@@ -382,9 +405,8 @@ export function WorldMap({
       return
     }
     const uf = focus.uf
-    if (!cities.length) return
     setGeoLoading(true)
-    void fetchUfMunicipalityCollection(uf, cities).then((fc) => {
+    void fetchUfMunicipalityCollection(uf).then((fc) => {
       if (!cancelled) {
         setMunMesh(fc)
         setGeoLoading(false)
@@ -393,16 +415,15 @@ export function WorldMap({
     return () => {
       cancelled = true
     }
-  }, [focus, cities])
+  }, [focus])
 
   useEffect(() => {
     let cancelled = false
     if (!(focus.level === 'brazil' && brazilGrain === 'cities')) {
       return
     }
-    if (!cities.length) return
     setGeoLoading(true)
-    void fetchBrazilMunicipalityCollection(cities).then((fc) => {
+    void fetchBrazilMunicipalityCollection().then((fc) => {
       if (!cancelled) {
         setBrazilMunMesh(fc)
         setGeoLoading(false)
@@ -411,7 +432,7 @@ export function WorldMap({
     return () => {
       cancelled = true
     }
-  }, [focus.level, brazilGrain, cities])
+  }, [focus.level, brazilGrain])
 
   useEffect(() => {
     let cancelled = false
@@ -419,9 +440,8 @@ export function WorldMap({
       setCityFeature(null)
       return
     }
-    if (!cities.length) return
     setGeoLoading(true)
-    void fetchCityFeature(focus.uf, focus.cityCode, cities).then((f) => {
+    void fetchCityFeature(focus.uf, focus.cityCode).then((f) => {
       if (!cancelled) {
         setCityFeature(f)
         setGeoLoading(false)
@@ -430,7 +450,7 @@ export function WorldMap({
     return () => {
       cancelled = true
     }
-  }, [focus, cities])
+  }, [focus])
 
   const neighborhoodCities = useMemo(
     () => citiesWithNeighborhoods(cities, suburbs),
@@ -494,7 +514,8 @@ export function WorldMap({
     return m
   }, [cities])
 
-  const { drawn, fitReady } = useMemo(() => {
+  const { drawn, fitReady, canvasCities } = useMemo(() => {
+    const emptyCanvas: CanvasCity[] = []
     if (focus.level === 'world') {
       const topo = worldAtlas as unknown as Topology<{
         countries: GeometryCollection
@@ -523,21 +544,32 @@ export function WorldMap({
             : { kind: 'background' },
         }
       })
-      return { drawn: items, fitReady: true }
+      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
     }
 
     if (focus.level === 'brazil') {
-      if (!ufMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
+      if (!ufMesh) {
+        return {
+          drawn: [] as DrawnFeature[],
+          fitReady: false,
+          canvasCities: emptyCanvas,
+        }
+      }
       const projection = geoEqualEarth().fitSize([width, height], ufMesh)
       const path = geoPath(projection)
 
-      // City / Bairro tabs: national municipality choropleth + UF outlines.
+      // City / Bairro tabs: canvas municipality fills + SVG UF outlines.
+      // ~5.5k SVG <path> nodes block the main thread; canvas keeps accuracy.
       if (brazilGrain === 'cities') {
         if (!brazilMunMesh) {
-          return { drawn: [] as DrawnFeature[], fitReady: false }
+          return {
+            drawn: [] as DrawnFeature[],
+            fitReady: false,
+            canvasCities: emptyCanvas,
+          }
         }
         const multi = new Set(neighborhoodCities.map((c) => c.code))
-        const items: DrawnFeature[] = brazilMunMesh.features.map((f) => {
+        const citiesLayer: CanvasCity[] = brazilMunMesh.features.map((f) => {
           const code = f.properties.id
           const row = cityByCode.get(code)
           const uf = ufFromCityCode(code) ?? row?.area ?? ''
@@ -550,7 +582,7 @@ export function WorldMap({
             multiZone: multi.has(code),
           }
         })
-        // State borders on top so the combined UF + município view reads clearly.
+        const items: DrawnFeature[] = []
         for (const f of ufMesh.features) {
           const uf = f.properties.uf
           items.push({
@@ -561,7 +593,7 @@ export function WorldMap({
             pick: { kind: 'uf', uf },
           })
         }
-        return { drawn: items, fitReady: true }
+        return { drawn: items, fitReady: true, canvasCities: citiesLayer }
       }
 
       const items: DrawnFeature[] = ufMesh.features.map((f) => {
@@ -575,11 +607,17 @@ export function WorldMap({
           pick: { kind: 'uf', uf },
         }
       })
-      return { drawn: items, fitReady: true }
+      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
     }
 
     if (focus.level === 'uf') {
-      if (!munMesh) return { drawn: [] as DrawnFeature[], fitReady: false }
+      if (!munMesh) {
+        return {
+          drawn: [] as DrawnFeature[],
+          fitReady: false,
+          canvasCities: emptyCanvas,
+        }
+      }
       const projection = geoEqualEarth().fitSize([width, height], munMesh)
       const path = geoPath(projection)
       const multi = new Set(neighborhoodCities.map((c) => c.code))
@@ -596,11 +634,17 @@ export function WorldMap({
           multiZone: multi.has(code),
         }
       })
-      return { drawn: items, fitReady: true }
+      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
     }
 
     // City → neighborhoods at TSE voting-local centroids (real geography).
-    if (!cityFeature) return { drawn: [] as DrawnFeature[], fitReady: false }
+    if (!cityFeature) {
+      return {
+        drawn: [] as DrawnFeature[],
+        fitReady: false,
+        canvasCities: emptyCanvas,
+      }
+    }
     const pad = Math.max(16, Math.round(Math.min(width, height) * 0.04))
     const projection = geoEqualEarth().fitExtent(
       [
@@ -629,6 +673,7 @@ export function WorldMap({
           },
         ] as DrawnFeature[],
         fitReady: true,
+        canvasCities: emptyCanvas,
       }
     }
 
@@ -680,7 +725,7 @@ export function WorldMap({
           circle: { cx: cxp, cy: cyp, r },
         })
       }
-      return { drawn: items, fitReady: true }
+      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
     }
 
     // Fallback grid only when coords are mostly missing.
@@ -706,7 +751,7 @@ export function WorldMap({
         circle: { cx: pcx + ox, cy: pcy + oy, r },
       })
     })
-    return { drawn: items, fitReady: true }
+    return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
   }, [
     focus,
     brazilGrain,
@@ -723,6 +768,234 @@ export function WorldMap({
     neighborhoodCities,
     lang,
   ])
+
+  const useCanvasCities = canvasCities.length > 0
+
+  // City canvas sits under a pointer-events:none SVG — attach wheel there too.
+  useEffect(() => {
+    if (!useCanvasCities) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const onWheelNative = (e: WheelEvent) => {
+      e.preventDefault()
+      clearTip()
+      const anchor = svgPoint(e.clientX, e.clientY)
+      const factor =
+        Math.abs(e.deltaY) > 40
+          ? e.deltaY < 0
+            ? ZOOM_STEP
+            : 1 / ZOOM_STEP
+          : e.deltaY < 0
+            ? 1.12
+            : 1 / 1.12
+      applyZoom(factor, anchor)
+    }
+    canvas.addEventListener('wheel', onWheelNative, { passive: false })
+    return () => canvas.removeEventListener('wheel', onWheelNative)
+  }, [useCanvasCities, applyZoom, clearTip, svgPoint])
+
+  // Paint municipality fills on canvas (national City tab).
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas || !useCanvasCities) {
+      canvasHitRef.current = null
+      return
+    }
+    const dpr = Math.min(2, window.devicePixelRatio || 1)
+    canvas.width = Math.max(1, Math.round(width * dpr))
+    canvas.height = Math.max(1, Math.round(height * dpr))
+    canvas.style.width = `${width}px`
+    canvas.style.height = `${height}px`
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.clearRect(0, 0, width, height)
+    ctx.save()
+    ctx.translate(view.x, view.y)
+    ctx.scale(view.k, view.k)
+
+    const css = getComputedStyle(canvas)
+    /** Canvas cannot paint `var(--token)` — resolve against the map element. */
+    const resolveColor = (color: string, fallback: string) => {
+      const raw = color.trim()
+      if (!raw.startsWith('var(')) return raw || fallback
+      const m = /^var\(\s*(--[^,\s)]+)/.exec(raw)
+      if (!m) return fallback
+      return css.getPropertyValue(m[1]).trim() || fallback
+    }
+
+    const paths: Path2D[] = new Array(canvasCities.length)
+    const stroke = resolveColor(
+      css.getPropertyValue('--map-stroke'),
+      '#1a1a1a',
+    )
+    const strokeHi = resolveColor(
+      css.getPropertyValue('--map-stroke-hi'),
+      '#f5f5f5',
+    )
+    const pending = resolveColor(PENDING_FILL, '#c5cec6')
+    const nodata = resolveColor(NO_DATA_FILL, '#dce3dc')
+
+    for (let i = 0; i < canvasCities.length; i++) {
+      const f = canvasCities[i]
+      const p = new Path2D(f.d)
+      paths[i] = p
+      const value = f.row ? metricValue(f.row, metric) : null
+      let fill = nodata
+      if (f.row) {
+        fill =
+          value != null ? resolveColor(colorize(value), pending) : pending
+      }
+      ctx.fillStyle = fill
+      ctx.fill(p)
+      const isHi = !!f.row && highlightId === f.id
+      ctx.strokeStyle = isHi ? strokeHi : stroke
+      ctx.lineWidth = isHi
+        ? 1.6 / view.k
+        : f.multiZone
+          ? 1.15 / view.k
+          : 0.55 / view.k
+      ctx.stroke(p)
+    }
+    // UF borders on top (same as previous SVG outline layer).
+    const ink = resolveColor(css.getPropertyValue('--ink'), '#111')
+    ctx.strokeStyle = ink
+    ctx.globalAlpha = 0.7
+    ctx.lineWidth = 1.15 / view.k
+    for (const f of drawn) {
+      if (!f.id.startsWith('__uf-') || !f.d) continue
+      ctx.stroke(new Path2D(f.d))
+    }
+    ctx.globalAlpha = 1
+    ctx.restore()
+    canvasHitRef.current = { paths, cities: canvasCities }
+  }, [
+    canvasCities,
+    drawn,
+    useCanvasCities,
+    width,
+    height,
+    view,
+    metric,
+    colorize,
+    highlightId,
+  ])
+
+  const hitCanvasCity = useCallback(
+    (clientX: number, clientY: number): CanvasCity | null => {
+      const hit = canvasHitRef.current
+      const canvas = canvasRef.current
+      if (!hit || !canvas) return null
+      const rect = canvas.getBoundingClientRect()
+      if (rect.width <= 0 || rect.height <= 0) return null
+      const sx = ((clientX - rect.left) / rect.width) * width
+      const sy = ((clientY - rect.top) / rect.height) * height
+      // Inverse of translate(view) scale(k): map screen → projected space.
+      const x = (sx - view.x) / view.k
+      const y = (sy - view.y) / view.k
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return null
+      // isPointInPath applies the current CTM; Path2D is in logical pixels.
+      ctx.save()
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      let found: CanvasCity | null = null
+      for (let i = hit.paths.length - 1; i >= 0; i--) {
+        if (ctx.isPointInPath(hit.paths[i], x, y)) {
+          found = hit.cities[i]
+          break
+        }
+      }
+      ctx.restore()
+      return found
+    },
+    [width, height, view.x, view.y, view.k],
+  )
+
+  const onCanvasPointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLCanvasElement>) => {
+      if (dragRef.current) return
+      const city = hitCanvasCity(e.clientX, e.clientY)
+      if (city?.row) showTipAt(e, city.label, city.row)
+      else clearTip()
+    },
+    [hitCanvasCity, showTipAt, clearTip],
+  )
+
+  const onCanvasClick = useCallback(
+    (e: ReactMouseEvent<HTMLCanvasElement>) => {
+      if (suppressClickRef.current) {
+        suppressClickRef.current = false
+        return
+      }
+      const city = hitCanvasCity(e.clientX, e.clientY)
+      if (!city) {
+        clearTip()
+        onPick({ kind: 'background' })
+        return
+      }
+      if (city.row) showTipAt(e, city.label, city.row)
+      else clearTip()
+      onPick(city.pick)
+    },
+    [hitCanvasCity, showTipAt, clearTip, onPick],
+  )
+
+  const onCanvasPointerDown = useCallback(
+    (e: ReactPointerEvent<HTMLCanvasElement>) => {
+      if (e.button !== 0) return
+      if (viewRef.current.k <= 1.001) return
+      // Pan from canvas when zoomed (same as empty SVG chrome).
+      dragRef.current = {
+        pointerId: e.pointerId,
+        lastX: e.clientX,
+        lastY: e.clientY,
+        moved: false,
+      }
+      e.currentTarget.setPointerCapture(e.pointerId)
+    },
+    [],
+  )
+
+  const onCanvasPointerMoveDrag = useCallback(
+    (e: ReactPointerEvent<HTMLCanvasElement>) => {
+      const drag = dragRef.current
+      if (drag && drag.pointerId === e.pointerId) {
+        const dx = e.clientX - drag.lastX
+        const dy = e.clientY - drag.lastY
+        if (!drag.moved && dx * dx + dy * dy < 9) return
+        drag.moved = true
+        drag.lastX = e.clientX
+        drag.lastY = e.clientY
+        const svg = svgRef.current
+        const ctm = svg?.getScreenCTM()
+        const scale = ctm ? ctm.a : 1
+        setView((v) => ({
+          ...v,
+          x: v.x + dx / scale,
+          y: v.y + dy / scale,
+        }))
+        clearTip()
+        return
+      }
+      onCanvasPointerMove(e)
+    },
+    [clearTip, onCanvasPointerMove],
+  )
+
+  const endCanvasDrag = useCallback(
+    (e: ReactPointerEvent<HTMLCanvasElement>) => {
+      const drag = dragRef.current
+      if (!drag || drag.pointerId !== e.pointerId) return
+      if (drag.moved) suppressClickRef.current = true
+      dragRef.current = null
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId)
+      } catch {
+        /* already released */
+      }
+    },
+    [],
+  )
 
   const canGoBack = focus.level !== 'world'
 
@@ -790,35 +1063,50 @@ export function WorldMap({
           </button>
         </div>
 
+        {useCanvasCities ? (
+          <canvas
+            ref={canvasRef}
+            className={`map-cities-canvas${view.k > 1.001 ? ' cursor-grab' : ' cursor-pointer'}`}
+            aria-hidden
+            onPointerDown={onCanvasPointerDown}
+            onPointerMove={onCanvasPointerMoveDrag}
+            onPointerUp={endCanvasDrag}
+            onPointerCancel={endCanvasDrag}
+            onClick={onCanvasClick}
+            onMouseLeave={() => clearTip()}
+          />
+        ) : null}
         <svg
           ref={svgRef}
           viewBox={`0 0 ${width} ${height}`}
           role="img"
           aria-label={t('map', lang)}
-          className={view.k > 1.001 ? 'cursor-grab' : undefined}
+          className={`map-svg${view.k > 1.001 ? ' cursor-grab' : ''}${useCanvasCities ? ' map-svg--overlay' : ''}`}
           onPointerDown={onStagePointerDown}
           onPointerMove={onStagePointerMove}
           onPointerUp={endStageDrag}
           onPointerCancel={endStageDrag}
         >
-          <rect
-            width={width}
-            height={height}
-            fill="transparent"
-            className={
-              canGoBack || highlightId || view.k > 1.001
-                ? 'cursor-pointer'
-                : undefined
-            }
-            onClick={() => {
-              if (suppressClickRef.current) {
-                suppressClickRef.current = false
-                return
+          {!useCanvasCities ? (
+            <rect
+              width={width}
+              height={height}
+              fill="transparent"
+              className={
+                canGoBack || highlightId || view.k > 1.001
+                  ? 'cursor-pointer'
+                  : undefined
               }
-              clearTip()
-              onPick({ kind: 'background' })
-            }}
-          />
+              onClick={() => {
+                if (suppressClickRef.current) {
+                  suppressClickRef.current = false
+                  return
+                }
+                clearTip()
+                onPick({ kind: 'background' })
+              }}
+            />
+          ) : null}
           {!fitReady && geoLoading ? (
             <text
               x={width / 2}
@@ -830,102 +1118,92 @@ export function WorldMap({
             </text>
           ) : null}
           <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
-        {drawn.map((f) => {
-          const value = f.row ? metricValue(f.row, metric) : null
-          let fill = NO_DATA_FILL
-          if (f.id.startsWith('__outline-')) {
-            fill = 'var(--paper-deep)'
-          } else if (f.row) {
-            fill = value != null ? colorize(value) : PENDING_FILL
-          }
-          const isHi = !!f.row && highlightId === f.id
-          if (f.circle) {
-            return (
-              <circle
-                key={f.id}
-                data-map-id={f.id}
-                cx={f.circle.cx}
-                cy={f.circle.cy}
-                r={f.circle.r}
-                fill={fill}
-                stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--ink)'}
-                strokeOpacity={isHi ? 1 : 0.35}
-                strokeWidth={isHi ? 2.25 : 1}
-                className="cursor-pointer transition-[stroke-width] duration-200"
-                onMouseEnter={(e) => {
-                  if (!f.row) return
-                  showTipAt(e, f.label, f.row)
-                }}
-                onMouseMove={(e) => {
-                  if (!f.row) return
-                  showTipAt(e, f.label, f.row)
-                }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleFeatureClick(e, f)
-                }}
-              />
-            )
-          }
-          const isUfOutline =
-            brazilGrain === 'cities' &&
-            focus.level === 'brazil' &&
-            f.id.startsWith('__uf-')
-          const isCityOutline = f.id.startsWith('__outline-')
-          return (
-            <path
-              key={f.id}
-              data-map-id={f.id}
-              d={f.d}
-              fill={
-                isUfOutline
-                  ? 'none'
-                  : isCityOutline
-                    ? 'var(--paper-deep)'
-                    : fill
-              }
-              fillOpacity={isCityOutline ? 0.85 : 1}
-              stroke={
-                isHi
-                  ? 'var(--map-stroke-hi)'
-                  : isUfOutline || isCityOutline
-                    ? 'var(--ink)'
-                    : 'var(--map-stroke)'
-              }
-              strokeOpacity={isUfOutline ? 0.7 : isCityOutline ? 0.55 : 1}
-              strokeWidth={
-                isHi
-                  ? 1.6
-                  : isUfOutline
-                    ? 1.15
-                    : isCityOutline
-                      ? 1.4
-                      : f.multiZone
-                        ? 1.15
-                        : focus.level === 'world'
-                          ? 0.4
-                          : 0.55
-              }
-              className={
-                f.pick.kind !== 'background' || canGoBack
-                  ? 'cursor-pointer transition-[stroke-width] duration-200'
-                  : ''
-              }
-              onMouseEnter={(e) => {
-                if (!f.row) return
-                showTipAt(e, f.label, f.row)
-              }}
-              onMouseMove={(e) => {
-                if (!f.row) return
-                showTipAt(e, f.label, f.row)
-              }}
-              onClick={(e) => {
-                e.stopPropagation()
-                handleFeatureClick(e, f)
-              }}
-            />
-          )
-        })}
+            {!useCanvasCities
+              ? drawn.map((f) => {
+                  const value = f.row ? metricValue(f.row, metric) : null
+                  let fill = NO_DATA_FILL
+                  if (f.id.startsWith('__outline-')) {
+                    fill = 'var(--paper-deep)'
+                  } else if (f.row) {
+                    fill = value != null ? colorize(value) : PENDING_FILL
+                  }
+                  const isHi = !!f.row && highlightId === f.id
+                  if (f.circle) {
+                    return (
+                      <circle
+                        key={f.id}
+                        data-map-id={f.id}
+                        cx={f.circle.cx}
+                        cy={f.circle.cy}
+                        r={f.circle.r}
+                        fill={fill}
+                        stroke={isHi ? 'var(--map-stroke-hi)' : 'var(--ink)'}
+                        strokeOpacity={isHi ? 1 : 0.35}
+                        strokeWidth={isHi ? 2.25 : 1}
+                        className="cursor-pointer transition-[stroke-width] duration-200"
+                        onMouseEnter={(e) => {
+                          if (!f.row) return
+                          showTipAt(e, f.label, f.row)
+                        }}
+                        onMouseMove={(e) => {
+                          if (!f.row) return
+                          showTipAt(e, f.label, f.row)
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleFeatureClick(e, f)
+                        }}
+                      />
+                    )
+                  }
+                  const isCityOutline = f.id.startsWith('__outline-')
+                  return (
+                    <path
+                      key={f.id}
+                      data-map-id={f.id}
+                      d={f.d}
+                      fill={isCityOutline ? 'var(--paper-deep)' : fill}
+                      fillOpacity={isCityOutline ? 0.85 : 1}
+                      stroke={
+                        isHi
+                          ? 'var(--map-stroke-hi)'
+                          : isCityOutline
+                            ? 'var(--ink)'
+                            : 'var(--map-stroke)'
+                      }
+                      strokeOpacity={isCityOutline ? 0.55 : 1}
+                      strokeWidth={
+                        isHi
+                          ? 1.6
+                          : isCityOutline
+                            ? 1.4
+                            : f.multiZone
+                              ? 1.15
+                              : focus.level === 'world'
+                                ? 0.4
+                                : 0.55
+                      }
+                      className={
+                        f.pick.kind !== 'background' || canGoBack
+                          ? 'cursor-pointer transition-[stroke-width] duration-200'
+                          : ''
+                      }
+                      onMouseEnter={(e) => {
+                        if (!f.row) return
+                        showTipAt(e, f.label, f.row)
+                      }}
+                      onMouseMove={(e) => {
+                        if (!f.row) return
+                        showTipAt(e, f.label, f.row)
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleFeatureClick(e, f)
+                      }}
+                    />
+                  )
+                })
+              : null}
           </g>
         </svg>
       </div>
