@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:46:25.906Z",
+    "updatedAt": "2026-10-26T00:47:59.450Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -108,7 +108,7 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:36:25.918Z",
+      "fetchedAt": "2026-10-26T00:47:58.703Z",
       "sectionsCounted": 1310,
       "sectionsTotal": 1351,
       "sectionsPct": 96.97,
@@ -119,13 +119,13 @@
     },
     "tseBr": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:46:25.906Z",
-      "sectionsCounted": 497487,
+      "fetchedAt": "2026-10-26T00:47:59.450Z",
+      "sectionsCounted": 497532,
       "sectionsTotal": 497897,
-      "sectionsPct": 99.92,
-      "lula": 63992837,
-      "bolsonaro": 59625245,
-      "totalValid": 123618082,
+      "sectionsPct": 99.93,
+      "lula": 64002275,
+      "bolsonaro": 59627659,
+      "totalValid": 123629934,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json",
       "note": "Domestic sum of UF tallies (BR national EA20 includes ZZ; excluded here)"
     }
@@ -148,16 +148,16 @@
         "bolsonaroPct": 49.1
       },
       "y2026": {
-        "lula": 63992837,
-        "bolsonaro": 59625245,
-        "totalValid": 123618082,
+        "lula": 64002275,
+        "bolsonaro": 59627659,
+        "totalValid": 123629934,
         "lulaPct": 51.77,
         "bolsonaroPct": 48.23,
         "registered": 157828819,
-        "abstentions": 29944695,
-        "blank": 1424991,
-        "nullVotes": 2715809,
-        "noValidVote": 34085495,
+        "abstentions": 29946965,
+        "blank": 1425117,
+        "nullVotes": 2716113,
+        "noValidVote": 34088195,
         "noValidVotePct": 21.6
       },
       "swing": {
@@ -166,7 +166,7 @@
         "marginPp": 1.74
       },
       "coverage": {
-        "counted": 497487,
+        "counted": 497532,
         "total": 497897
       },
       "areas": [
@@ -321,17 +321,17 @@
           "namePt": "Bahia",
           "level": "area",
           "y2026": {
-            "lula": 6472537,
-            "bolsonaro": 2602598,
-            "totalValid": 9075135,
+            "lula": 6475705,
+            "bolsonaro": 2603858,
+            "totalValid": 9079563,
             "lulaPct": 71.32,
             "bolsonaroPct": 28.68,
             "registered": 11312891,
-            "abstentions": 1887568,
-            "blank": 92554,
-            "nullVotes": 234825,
-            "noValidVote": 2214947,
-            "noValidVotePct": 19.58
+            "abstentions": 1888248,
+            "blank": 92599,
+            "nullVotes": 234953,
+            "noValidVote": 2215800,
+            "noValidVotePct": 19.59
           },
           "y2022": {
             "lula": 6097815,
@@ -346,7 +346,7 @@
             "marginPp": -1.6
           },
           "coverage": {
-            "counted": 35416,
+            "counted": 35430,
             "total": 35476
           }
         },
@@ -357,17 +357,17 @@
           "namePt": "Ceará",
           "level": "area",
           "y2026": {
-            "lula": 4035209,
-            "bolsonaro": 1819252,
-            "totalValid": 5854461,
+            "lula": 4036124,
+            "bolsonaro": 1819478,
+            "totalValid": 5855602,
             "lulaPct": 68.93,
             "bolsonaroPct": 31.07,
             "registered": 6996521,
-            "abstentions": 971446,
-            "blank": 56380,
-            "nullVotes": 112822,
-            "noValidVote": 1140648,
-            "noValidVotePct": 16.3
+            "abstentions": 971678,
+            "blank": 56386,
+            "nullVotes": 112855,
+            "noValidVote": 1140919,
+            "noValidVotePct": 16.31
           },
           "y2022": {
             "lula": 3807891,
@@ -382,7 +382,7 @@
             "marginPp": -2.08
           },
           "coverage": {
-            "counted": 23760,
+            "counted": 23765,
             "total": 23765
           }
         },
@@ -501,17 +501,17 @@
           "namePt": "Maranhão",
           "level": "area",
           "y2026": {
-            "lula": 2802268,
-            "bolsonaro": 1228825,
-            "totalValid": 4031093,
+            "lula": 2803474,
+            "bolsonaro": 1229008,
+            "totalValid": 4032482,
             "lulaPct": 69.52,
             "bolsonaroPct": 30.48,
             "registered": 5183049,
-            "abstentions": 1053366,
-            "blank": 30791,
-            "nullVotes": 58538,
-            "noValidVote": 1142695,
-            "noValidVotePct": 22.05
+            "abstentions": 1053800,
+            "blank": 30801,
+            "nullVotes": 58587,
+            "noValidVote": 1143188,
+            "noValidVotePct": 22.06
           },
           "y2022": {
             "lula": 2668425,
@@ -526,7 +526,7 @@
             "marginPp": -3.24
           },
           "coverage": {
-            "counted": 18059,
+            "counted": 18066,
             "total": 18093
           }
         },
@@ -645,16 +645,16 @@
           "namePt": "Pará",
           "level": "area",
           "y2026": {
-            "lula": 2689359,
-            "bolsonaro": 2199659,
-            "totalValid": 4889018,
+            "lula": 2689640,
+            "bolsonaro": 2199707,
+            "totalValid": 4889347,
             "lulaPct": 55.01,
             "bolsonaroPct": 44.99,
             "registered": 6262063,
-            "abstentions": 1272136,
-            "blank": 36486,
-            "nullVotes": 62657,
-            "noValidVote": 1371279,
+            "abstentions": 1272207,
+            "blank": 36488,
+            "nullVotes": 62668,
+            "noValidVote": 1371363,
             "noValidVotePct": 21.9
           },
           "y2022": {
@@ -670,7 +670,7 @@
             "marginPp": 0.52
           },
           "coverage": {
-            "counted": 20819,
+            "counted": 20821,
             "total": 20827
           }
         },
@@ -753,17 +753,17 @@
           "namePt": "Pernambuco",
           "level": "area",
           "y2026": {
-            "lula": 4113800,
-            "bolsonaro": 1831538,
-            "totalValid": 5945338,
-            "lulaPct": 69.19,
-            "bolsonaroPct": 30.81,
+            "lula": 4116949,
+            "bolsonaro": 1831897,
+            "totalValid": 5948846,
+            "lulaPct": 69.21,
+            "bolsonaroPct": 30.79,
             "registered": 7223227,
-            "abstentions": 1096047,
-            "blank": 56697,
-            "nullVotes": 119558,
-            "noValidVote": 1272302,
-            "noValidVotePct": 17.61
+            "abstentions": 1096600,
+            "blank": 56740,
+            "nullVotes": 119610,
+            "noValidVote": 1272950,
+            "noValidVotePct": 17.62
           },
           "y2022": {
             "lula": 3640933,
@@ -773,12 +773,12 @@
             "bolsonaroPct": 33.07
           },
           "swing": {
-            "lulaPp": 2.26,
-            "bolsonaroPp": -2.26,
-            "marginPp": 4.52
+            "lulaPp": 2.28,
+            "bolsonaroPp": -2.28,
+            "marginPp": 4.56
           },
           "coverage": {
-            "counted": 21401,
+            "counted": 21414,
             "total": 21418
           }
         },
@@ -1041,16 +1041,16 @@
           "namePt": "São Paulo",
           "level": "area",
           "y2026": {
-            "lula": 12118397,
-            "bolsonaro": 14138731,
-            "totalValid": 26257128,
+            "lula": 12119116,
+            "bolsonaro": 14139069,
+            "totalValid": 26258185,
             "lulaPct": 46.15,
             "bolsonaroPct": 53.85,
             "registered": 34123591,
-            "abstentions": 6758856,
-            "blank": 389583,
-            "nullVotes": 716294,
-            "noValidVote": 7864733,
+            "abstentions": 6759156,
+            "blank": 389603,
+            "nullVotes": 716325,
+            "noValidVote": 7865084,
             "noValidVotePct": 23.05
           },
           "y2022": {
@@ -1066,7 +1066,7 @@
             "marginPp": 2.78
           },
           "coverage": {
-            "counted": 103651,
+            "counted": 103655,
             "total": 103656
           }
         },
@@ -1147,7 +1147,7 @@
       "cityCount": 5571,
       "suburbs": [],
       "suburbCount": 0,
-      "notes": "TSE EA20 domestic UFs 2º turno (497487/497897 sections; excludes ZZ overseas)",
+      "notes": "TSE EA20 domestic UFs 2º turno (497532/497897 sections; excludes ZZ overseas)",
       "status": "reported"
     },
     {
