@@ -27,6 +27,11 @@ const suburbsRunoffPublic = resolve(
 )
 const ufsSrc = resolve(rootDir, 'src/data/brazil-ufs.json')
 const ufsPublic = resolve(rootDir, 'public/data/brazil-ufs.json')
+const municipiosSrc = resolve(rootDir, 'src/data/brazil-municipios.topojson')
+const municipiosPublic = resolve(
+  rootDir,
+  'public/data/brazil-municipios.topojson',
+)
 
 const syncedDataFiles = [
   [resultsSrc, resultsPublic],
@@ -36,6 +41,7 @@ const syncedDataFiles = [
   [suburbsSrc, suburbsPublic],
   [suburbsRunoffSrc, suburbsRunoffPublic],
   [ufsSrc, ufsPublic],
+  [municipiosSrc, municipiosPublic],
 ] as const
 
 /** Keep stable public URLs in sync with the editable source JSON. */

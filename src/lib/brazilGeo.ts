@@ -1,4 +1,6 @@
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson'
+import { feature } from 'topojson-client'
+import type { GeometryCollection, Topology } from 'topojson-specification'
 import brazilUfs from '../data/brazil-ufs.json'
 import type { CityResult } from '../types'
 
@@ -80,13 +82,60 @@ export type MapFeatureProps = {
   kind: 'country' | 'uf' | 'city' | 'suburb'
 }
 
-const munCache = new Map<string, FeatureCollection<Geometry, { id: string }>>()
-const munInflight = new Map<
-  string,
-  Promise<FeatureCollection<Geometry, { id: string }> | null>
->()
-const nameCache = new Map<string, Map<string, string>>()
-const nameInflight = new Map<string, Promise<Map<string, string> | null>>()
+type MunFc = FeatureCollection<Geometry, { id: string }>
+
+let munNational: MunFc | null = null
+let munNationalInflight: Promise<MunFc | null> | null = null
+const munByUf = new Map<string, MunFc>()
+
+export function brazilMunicipiosUrl(): string {
+  return `${import.meta.env.BASE_URL}data/brazil-municipios.topojson`
+}
+
+/**
+ * Prefetch the vendored municipality mesh (TopoJSON). Safe to call early so
+ * City-tab choropleths do not wait on the first paint path.
+ */
+export function prefetchBrazilMunicipalityMesh(): void {
+  void loadBrazilMunicipalityMesh()
+}
+
+async function loadBrazilMunicipalityMesh(): Promise<MunFc | null> {
+  if (munNational) return munNational
+  if (munNationalInflight) return munNationalInflight
+
+  munNationalInflight = (async () => {
+    try {
+      const res = await fetch(brazilMunicipiosUrl(), {
+        headers: { Accept: 'application/json' },
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const topo = (await res.json()) as Topology<{
+        municipalities: GeometryCollection<{ id: string }>
+      }>
+      const obj =
+        topo.objects.municipalities ??
+        topo.objects[Object.keys(topo.objects)[0] as 'municipalities']
+      if (!obj) throw new Error('empty topojson objects')
+      const fc = feature(topo, obj) as MunFc
+      // Defensive rewind — build script already rewinds, but keep fitSize safe.
+      for (const f of fc.features) {
+        if (f.geometry) f.geometry = rewindGeometry(f.geometry)
+        const id = String(f.properties?.id ?? f.id ?? '')
+        f.properties = { id }
+        f.id = id
+      }
+      munNational = fc
+      return fc
+    } catch {
+      return null
+    } finally {
+      munNationalInflight = null
+    }
+  })()
+
+  return munNationalInflight
+}
 
 export function normalizePlaceName(name: string): string {
   return name
@@ -95,27 +144,6 @@ export function normalizePlaceName(name: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim()
-}
-
-/** Common IBGE ↔ TSE spelling mismatches. */
-const NAME_ALIASES: Record<string, string> = {
-  'sao luis do paraitinga': 'sao luiz do paraitinga',
-  'muquem de sao francisco': 'muquem do sao francisco',
-  "olho d agua do casado": 'olho dagua do casado',
-  'poxoreo': 'poxoreu',
-  'atilio vivacqua': 'atilio vivacqua',
-}
-
-function aliasKey(norm: string): string {
-  return NAME_ALIASES[norm] ?? norm
-}
-
-function ibgeMunUrl(ufIbge: string): string {
-  return `https://servicodados.ibge.gov.br/api/v3/malhas/estados/${ufIbge}?formato=application/vnd.geo%2Bjson&qualidade=minima&intrarregiao=municipio`
-}
-
-function ibgeNamesUrl(ufIbge: string): string {
-  return `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIbge}/municipios`
 }
 
 /** Bundled IBGE UF mesh (vendored); sync also keeps a public copy for Pages. */
@@ -134,105 +162,32 @@ export async function fetchBrazilUfCollection(): Promise<FeatureCollection<
   return brazilUfCollection()
 }
 
-async function fetchIbgeNameMap(uf: string): Promise<Map<string, string> | null> {
-  const cached = nameCache.get(uf)
-  if (cached) return cached
-  const inflight = nameInflight.get(uf)
-  if (inflight) return inflight
-  const ufIbge = UF_TO_IBGE[uf]
-  if (!ufIbge) return null
-  const p = (async () => {
-    try {
-      const res = await fetch(ibgeNamesUrl(ufIbge), {
-        headers: { Accept: 'application/json' },
-      })
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const rows = (await res.json()) as { id: number; nome: string }[]
-      const map = new Map<string, string>()
-      for (const row of rows) {
-        map.set(aliasKey(normalizePlaceName(row.nome)), String(row.id))
-      }
-      nameCache.set(uf, map)
-      return map
-    } catch {
-      return null
-    } finally {
-      nameInflight.delete(uf)
-    }
-  })()
-  nameInflight.set(uf, p)
-  return p
-}
-
 /**
- * Load municipality polygons for a UF, keyed by our city codes (`SP-71072`).
- * Joins IBGE malha (`codarea`) to TSE rows via municipality name.
+ * Municipality polygons for a UF, keyed by TSE city codes (`SP-71072`).
+ * Served from the vendored national mesh (no live IBGE).
  */
 export async function fetchUfMunicipalityCollection(
   uf: string,
-  cities: CityResult[],
-): Promise<FeatureCollection<Geometry, { id: string }> | null> {
-  const cached = munCache.get(uf)
+  _cities?: CityResult[],
+): Promise<MunFc | null> {
+  const cached = munByUf.get(uf)
   if (cached) return cached
-  const inflight = munInflight.get(uf)
-  if (inflight) return inflight
-
-  const ufIbge = UF_TO_IBGE[uf]
-  if (!ufIbge) return null
-
-  const p = (async () => {
-    try {
-      const [meshRes, nameMap] = await Promise.all([
-        fetch(ibgeMunUrl(ufIbge), { headers: { Accept: 'application/json' } }),
-        fetchIbgeNameMap(uf),
-      ])
-      if (!meshRes.ok || !nameMap) throw new Error('mesh fetch failed')
-      const mesh = (await meshRes.json()) as FeatureCollection<
-        Geometry,
-        { codarea?: string }
-      >
-
-      const ibgeToCity = new Map<string, string>()
-      for (const city of cities) {
-        if (city.area !== uf) continue
-        const key = aliasKey(normalizePlaceName(city.namePt || city.name))
-        const ibge = nameMap.get(key)
-        if (ibge) ibgeToCity.set(ibge, city.code)
-      }
-
-      const features: Feature<Geometry, { id: string }>[] = []
-      for (const f of mesh.features) {
-        const ibge = String(f.properties?.codarea ?? '')
-        const cityCode = ibgeToCity.get(ibge)
-        if (!cityCode || !f.geometry) continue
-        features.push({
-          type: 'Feature',
-          id: cityCode,
-          properties: { id: cityCode },
-          geometry: rewindGeometry(f.geometry),
-        })
-      }
-
-      const fc: FeatureCollection<Geometry, { id: string }> = {
-        type: 'FeatureCollection',
-        features,
-      }
-      munCache.set(uf, fc)
-      return fc
-    } catch {
-      return null
-    } finally {
-      munInflight.delete(uf)
-    }
-  })()
-  munInflight.set(uf, p)
-  return p
+  const national = await loadBrazilMunicipalityMesh()
+  if (!national) return null
+  const prefix = `${uf}-`
+  const features = national.features.filter((f) =>
+    String(f.properties.id).startsWith(prefix),
+  )
+  if (!features.length) return null
+  const fc: MunFc = { type: 'FeatureCollection', features }
+  munByUf.set(uf, fc)
+  return fc
 }
 
 export async function fetchCityFeature(
   uf: string,
   cityCode: string,
-  cities: CityResult[],
+  cities?: CityResult[],
 ): Promise<Feature<Geometry, { id: string }> | null> {
   const fc = await fetchUfMunicipalityCollection(uf, cities)
   if (!fc) return null
@@ -240,26 +195,13 @@ export async function fetchCityFeature(
 }
 
 /**
- * All municipality polygons for Brazil (union of per-UF IBGE meshes).
- * Used for the national City-tab choropleth.
+ * All municipality polygons for Brazil from the vendored TopoJSON mesh.
+ * Used for the national City-tab choropleth — no live IBGE dependency.
  */
 export async function fetchBrazilMunicipalityCollection(
-  cities: CityResult[],
-): Promise<FeatureCollection<Geometry, { id: string }> | null> {
-  if (!cities.length) return null
-  const ufs = [
-    ...new Set(
-      cities
-        .map((c) => c.area)
-        .filter((uf): uf is string => !!uf && !!UF_TO_IBGE[uf]),
-    ),
-  ].sort()
-  const parts = await Promise.all(
-    ufs.map((uf) => fetchUfMunicipalityCollection(uf, cities)),
-  )
-  const features = parts.flatMap((fc) => fc?.features ?? [])
-  if (!features.length) return null
-  return { type: 'FeatureCollection', features }
+  _cities?: CityResult[],
+): Promise<MunFc | null> {
+  return loadBrazilMunicipalityMesh()
 }
 
 export function suburbsForCity(

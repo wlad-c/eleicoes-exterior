@@ -19,6 +19,9 @@ public/data/results-runoff.json
 public/data/brazil-cities.json
 public/data/brazil-suburbs.json
 public/data/brazil-ufs.json
+public/data/brazil-municipios.topojson
+public/data/brazil-cities-runoff.json
+public/data/brazil-suburbs-runoff.json
 
 # Editor directories and files
 .vscode/*
