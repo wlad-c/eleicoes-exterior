@@ -127,3 +127,17 @@ export function mergeRounds(
 export function remapBrazilGrain(places: CityResult[]): CityResult[] {
   return places.map((p) => remapFirstRoundPlace(p, null))
 }
+
+/**
+ * Merge lazy Brazil municipality/zona grains: runoff rows keep y2026/y2022/swing,
+ * with 1º turno attached as yRound1 / y2022Round1 from the first-round file.
+ * If runoff is missing, remap 1º rows (empty runoff until sync lands).
+ */
+export function mergeBrazilGrain(
+  runoffPlaces: CityResult[] | null | undefined,
+  round1Places: CityResult[] | null | undefined,
+): CityResult[] {
+  return (
+    mergePlaceLists(runoffPlaces ?? undefined, round1Places ?? undefined) ?? []
+  )
+}
