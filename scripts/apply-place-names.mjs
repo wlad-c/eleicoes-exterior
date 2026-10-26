@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Apply bilingual area/city display names from place-names.json
- * onto results.json (src + docs). Safe to re-run after TSE syncs.
+ * onto results.json and results-runoff.json (src + docs).
+ * Safe to re-run after TSE syncs.
  *
  * Keeps TSE `name` / `area` keys; adds nameEn, namePt, areaEn, areaPt.
  */
@@ -82,7 +83,12 @@ function patch(path, byTse) {
 }
 
 const byTse = JSON.parse(readFileSync(NAMES_PATH, 'utf8')).byTseName
-for (const rel of ['src/data/results.json', 'docs/data/results.json']) {
+for (const rel of [
+  'src/data/results.json',
+  'docs/data/results.json',
+  'src/data/results-runoff.json',
+  'docs/data/results-runoff.json',
+]) {
   const result = patch(join(ROOT, rel), byTse)
   console.log(
     `${rel}: ${result.places} places` +
