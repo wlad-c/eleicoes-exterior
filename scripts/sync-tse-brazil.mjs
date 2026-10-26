@@ -1,19 +1,23 @@
 #!/usr/bin/env node
 /**
- * Sync domestic Brazil presidential tallies (1st round) into results.json.
+ * Sync domestic Brazil presidential tallies into results.json (1º) or
+ * results-runoff.json (2º).
  *
  * Hierarchy for the Brazil country row:
  *   country  → national BR (excludes ZZ overseas)
  *   areas[]  → 27 UFs (states + DF) — Area tab
- *   cities   → municipalities (lazy brazil-cities.json) — City tab
+ *   cities   → municipalities (lazy brazil-cities[-runoff].json) — City tab
  *   suburbs  → electoral zones inside munis (build:brazil-locals) — Zona tab
  *
- * 2026: official TSE EA20 JSON
+ * 2026: official TSE EA20 JSON (6257 / 6258)
  * 2022: official TSE open data votacao_secao_2022_BR.csv (streamed)
  *
  * Usage: node scripts/sync-tse-brazil.mjs
+ *        node scripts/sync-tse-brazil.mjs --turno=2
  *        node scripts/sync-tse-brazil.mjs --turno=2 --cache-only
- *          → writes src/data/tse-brazil-2022-r2.json only (no results.json)
+ *          → writes src/data/tse-brazil-2022-r2.json only
+ *        node scripts/sync-tse-brazil.mjs --turno=2 --uf-only
+ *          → national + 27 UFs only (skip municipality fetch)
  *        npm run build:brazil-locals   # within-municipality electoral zones
  */
 import {
@@ -33,15 +37,12 @@ import { Readable } from 'node:stream'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const RESULTS_PATH = join(ROOT, 'src/data/results.json')
-const CITIES_PATH = join(ROOT, 'src/data/brazil-cities.json')
 const BRAZIL_2022_CACHE = join(ROOT, 'src/data/tse-brazil-2022.json')
 const BRAZIL_2022_R2_CACHE = join(ROOT, 'src/data/tse-brazil-2022-r2.json')
 
 const HOST = 'https://resultados.tse.jus.br'
 const AMBIENTE = 'oficial'
 const CICLO = 'ele2026'
-const ELEICAO = '6257'
 const CARGO = '1'
 
 const CDN = 'https://cdn.tse.jus.br'
@@ -167,11 +168,11 @@ async function fetchJson(url) {
   return res.json()
 }
 
-function ea20Url(abr, municipioCode = '') {
+function ea20Url(eleicao, abr, municipioCode = '') {
   const folder = abr.toLowerCase()
   const mun = municipioCode ? pad(municipioCode, 5) : ''
-  const file = `${folder}${mun}-c${pad(CARGO, 4)}-e${pad(ELEICAO, 6)}-u.json`
-  return `${HOST}/${AMBIENTE}/${CICLO}/${ELEICAO}/dados/${folder}/${file}`
+  const file = `${folder}${mun}-c${pad(CARGO, 4)}-e${pad(eleicao, 6)}-u.json`
+  return `${HOST}/${AMBIENTE}/${CICLO}/${eleicao}/dados/${folder}/${file}`
 }
 
 function extractCandidates(doc) {
@@ -244,16 +245,36 @@ function parseCsvLine(line) {
 function parseCliArgs(argv) {
   let turno = 1
   let cacheOnly = false
+  let ufOnly = false
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
     if (a === '--cache-only') cacheOnly = true
+    else if (a === '--uf-only') ufOnly = true
     else if (a.startsWith('--turno=')) turno = Number(a.slice('--turno='.length))
     else if ((a === '--turno' || a === '-t') && argv[i + 1]) turno = Number(argv[++i])
   }
   if (turno !== 1 && turno !== 2) {
     throw new Error(`Invalid --turno=${turno}; use 1 or 2`)
   }
-  return { turno, cacheOnly }
+  return { turno, cacheOnly, ufOnly }
+}
+
+function pathsForTurno(turno) {
+  const eleicao = turno === 2 ? '6258' : '6257'
+  const resultsRel =
+    turno === 2 ? 'src/data/results-runoff.json' : 'src/data/results.json'
+  const citiesRel =
+    turno === 2
+      ? 'src/data/brazil-cities-runoff.json'
+      : 'src/data/brazil-cities.json'
+  return {
+    eleicao,
+    resultsPath: join(ROOT, resultsRel),
+    docsResultsPath: join(ROOT, resultsRel.replace('src/', 'docs/')),
+    citiesPath: join(ROOT, citiesRel),
+    docsCitiesPath: join(ROOT, citiesRel.replace('src/', 'docs/')),
+    cache2022: turno === 2 ? BRAZIL_2022_R2_CACHE : BRAZIL_2022_CACHE,
+  }
 }
 
 async function ensure2022Csv(work) {
@@ -395,9 +416,9 @@ async function build2022Domestic(csvPath, { turno = 1, outPath = BRAZIL_2022_CAC
   return out
 }
 
-function load2022Cache() {
+function load2022Cache(cachePath) {
   try {
-    return JSON.parse(readFileSync(BRAZIL_2022_CACHE, 'utf8'))
+    return JSON.parse(readFileSync(cachePath, 'utf8'))
   } catch {
     return null
   }
@@ -410,37 +431,43 @@ function titleCasePt(name) {
 }
 
 async function main() {
-  const { turno, cacheOnly } = parseCliArgs(process.argv.slice(2))
+  const { turno, cacheOnly, ufOnly } = parseCliArgs(process.argv.slice(2))
+  const paths = pathsForTurno(turno)
+  const { eleicao } = paths
 
   // Cache-only path: build a 2022 domestic JSON cache for the given turno and exit
-  // without touching results.json / 2026 EA20 fetches.
-  if (cacheOnly || turno === 2) {
+  // without touching results / 2026 EA20 fetches.
+  if (cacheOnly) {
     const work = join(tmpdir(), 'eleicoes-tse-2022')
     const csvPath = await ensure2022Csv(work)
-    const outPath = turno === 2 ? BRAZIL_2022_R2_CACHE : BRAZIL_2022_CACHE
-    await build2022Domestic(csvPath, { turno, outPath })
+    await build2022Domestic(csvPath, { turno, outPath: paths.cache2022 })
     return
   }
 
-  const results = JSON.parse(readFileSync(RESULTS_PATH, 'utf8'))
+  const results = JSON.parse(readFileSync(paths.resultsPath, 'utf8'))
 
-  let y2022 = load2022Cache()
+  let y2022 = load2022Cache(paths.cache2022)
   if (!y2022?.national || !y2022?.ufs || !y2022?.municipios) {
     const work = join(tmpdir(), 'eleicoes-tse-2022')
     const csvPath = await ensure2022Csv(work)
-    y2022 = await build2022Domestic(csvPath, { turno: 1, outPath: BRAZIL_2022_CACHE })
+    y2022 = await build2022Domestic(csvPath, {
+      turno,
+      outPath: paths.cache2022,
+    })
   } else {
-    console.log(`Reusing ${BRAZIL_2022_CACHE}`)
+    console.log(`Reusing ${paths.cache2022}`)
   }
 
-  console.log('Fetching TSE mun config + BR national + 27 UF (2026)…')
+  console.log(
+    `Fetching TSE mun config + 27 UF (2026 ${turno === 2 ? '2º' : '1º'} turno, eleição ${eleicao})…`,
+  )
   const munCfg = await fetchJson(
-    `${HOST}/${AMBIENTE}/${CICLO}/${ELEICAO}/config/mun-e${pad(ELEICAO, 6)}-cm.json`,
+    `${HOST}/${AMBIENTE}/${CICLO}/${eleicao}/config/mun-e${pad(eleicao, 6)}-cm.json`,
   )
 
   // Note: EA20 `br` national includes ZZ overseas. Domestic Brazil = sum of UFs.
   const ufDocs = await mapPool(UFS, 8, async (uf) => {
-    const doc = await fetchJson(ea20Url(uf))
+    const doc = await fetchJson(ea20Url(eleicao, uf))
     await sleep(30)
     return { uf, doc }
   })
@@ -535,92 +562,102 @@ async function main() {
       })
     }
   }
-  console.log(`Fetching 2026 municipality tallies (${munList.length})…`)
-
-  let done = 0
-  const mun2026 = await mapPool(munList, 16, async (m) => {
+  let cities = []
+  if (ufOnly) {
+    console.log('Skipping municipality fetch (--uf-only)')
     try {
-      const doc = await fetchJson(ea20Url(m.uf, m.code))
-      const cand = extractCandidates(doc)
-      const valid = totalValidOf(doc, cand.lula, cand.bolsonaro)
-      done += 1
-      if (done % 250 === 0 || done === munList.length) {
-        console.log(`  municipalities ${done}/${munList.length}`)
-      }
-      const electorate = electorateOf(doc)
-      return {
-        ...m,
-        y2026: yearResult(
-          cand.lula,
-          cand.bolsonaro,
-          valid,
-          electorate?.registered,
-          electorate?.abstentions,
-          electorate?.blank,
-          electorate?.nullVotes,
-        ),
-        coverage: coverageOf(doc),
-      }
-    } catch (err) {
-      done += 1
-      if (done % 250 === 0) console.log(`  municipalities ${done}/${munList.length}`)
-      console.warn(`  skip ${m.uf}/${m.code}: ${err.message}`)
-      return null
+      const prevCities = JSON.parse(readFileSync(paths.citiesPath, 'utf8'))
+      cities = prevCities.cities || []
+    } catch {
+      cities = []
     }
-  })
+  } else {
+    console.log(`Fetching 2026 municipality tallies (${munList.length})…`)
 
-  /** Municipalities → City tab (lazy brazil-cities.json). */
-  const cities = []
-  for (const m of mun2026) {
-    if (!m?.y2026) continue
-    const prevKey = `${m.uf}|${m.code}`
-    const prevRaw = y2022.municipios[prevKey]
-    const prev = prevRaw
-      ? yearResult(
-          prevRaw.lula,
-          prevRaw.bolsonaro,
-          prevRaw.totalValid,
-          prevRaw.registered,
-          prevRaw.abstentions,
-          prevRaw.blank,
-          prevRaw.nullVotes,
-        )
-      : null
-    const pretty = titleCasePt(m.name)
-    cities.push({
-      code: `${m.uf}-${m.code}`,
-      name: m.name,
-      nameEn: pretty,
-      namePt: pretty,
-      level: 'city',
-      area: m.uf,
-      areaEn: UF_META[m.uf].en,
-      areaPt: UF_META[m.uf].pt,
-      y2026: m.y2026,
-      y2022: prev,
-      swing: swingOf(prev, m.y2026),
-      coverage: m.coverage,
+    let done = 0
+    const mun2026 = await mapPool(munList, 16, async (m) => {
+      try {
+        const doc = await fetchJson(ea20Url(eleicao, m.uf, m.code))
+        const cand = extractCandidates(doc)
+        const valid = totalValidOf(doc, cand.lula, cand.bolsonaro)
+        done += 1
+        if (done % 250 === 0 || done === munList.length) {
+          console.log(`  municipalities ${done}/${munList.length}`)
+        }
+        const electorate = electorateOf(doc)
+        return {
+          ...m,
+          y2026: yearResult(
+            cand.lula,
+            cand.bolsonaro,
+            valid,
+            electorate?.registered,
+            electorate?.abstentions,
+            electorate?.blank,
+            electorate?.nullVotes,
+          ),
+          coverage: coverageOf(doc),
+        }
+      } catch (err) {
+        done += 1
+        if (done % 250 === 0) console.log(`  municipalities ${done}/${munList.length}`)
+        console.warn(`  skip ${m.uf}/${m.code}: ${err.message}`)
+        return null
+      }
     })
-  }
-  cities.sort((a, b) => {
-    const uf = a.area.localeCompare(b.area)
-    if (uf !== 0) return uf
-    return a.name.localeCompare(b.name, 'pt')
-  })
 
-  writeFileSync(
-    CITIES_PATH,
-    JSON.stringify(
-      {
-        countryId: 'brazil',
-        updatedAt: new Date().toISOString(),
-        count: cities.length,
-        cities,
-      },
-      null,
-      0,
-    ) + '\n',
-  )
+    /** Municipalities → City tab (lazy brazil-cities[-runoff].json). */
+    for (const m of mun2026) {
+      if (!m?.y2026) continue
+      const prevKey = `${m.uf}|${m.code}`
+      const prevRaw = y2022.municipios[prevKey]
+      const prev = prevRaw
+        ? yearResult(
+            prevRaw.lula,
+            prevRaw.bolsonaro,
+            prevRaw.totalValid,
+            prevRaw.registered,
+            prevRaw.abstentions,
+            prevRaw.blank,
+            prevRaw.nullVotes,
+          )
+        : null
+      const pretty = titleCasePt(m.name)
+      cities.push({
+        code: `${m.uf}-${m.code}`,
+        name: m.name,
+        nameEn: pretty,
+        namePt: pretty,
+        level: 'city',
+        area: m.uf,
+        areaEn: UF_META[m.uf].en,
+        areaPt: UF_META[m.uf].pt,
+        y2026: m.y2026,
+        y2022: prev,
+        swing: swingOf(prev, m.y2026),
+        coverage: m.coverage,
+      })
+    }
+    cities.sort((a, b) => {
+      const uf = a.area.localeCompare(b.area)
+      if (uf !== 0) return uf
+      return a.name.localeCompare(b.name, 'pt')
+    })
+
+    const citiesPayload =
+      JSON.stringify(
+        {
+          countryId: 'brazil',
+          updatedAt: new Date().toISOString(),
+          count: cities.length,
+          cities,
+        },
+        null,
+        0,
+      ) + '\n'
+    writeFileSync(paths.citiesPath, citiesPayload)
+    writeFileSync(paths.docsCitiesPath, citiesPayload)
+  }
 
   // Preserve suburbCount from prior locals build if present.
   let suburbCount = 0
@@ -631,6 +668,7 @@ async function main() {
     /* ignore */
   }
 
+  const roundLabel = turno === 2 ? '2º turno' : '1º turno'
   const brazil = {
     id: 'brazil',
     countryEn: 'Brazil',
@@ -649,7 +687,7 @@ async function main() {
     cityCount: cities.length,
     suburbs: [],
     suburbCount,
-    notes: `TSE EA20 domestic UFs (${brCoverage ? `${brCoverage.counted}/${brCoverage.total}` : 'n/a'} sections; excludes ZZ overseas)`,
+    notes: `TSE EA20 domestic UFs ${roundLabel} (${brCoverage ? `${brCoverage.counted}/${brCoverage.total}` : 'n/a'} sections; excludes ZZ overseas)`,
     status: 'reported',
   }
 
@@ -663,18 +701,45 @@ async function main() {
     if (sources.some((s) => s.name === name)) return
     sources.push({ name, url, role })
   }
-  ensureSource('TSE Dados Abertos — 2022 1st round (domestic)', 'https://dadosabertos.tse.jus.br/', {
-    en: 'Official 2022 domestic presidential results by state (UF) and municipality (votação por seção, excluding ZZ)',
-    pt: 'Resultados oficiais de 2022 no Brasil por UF e município (votação por seção, excluindo ZZ)',
-  })
-  ensureSource('TSE Resultados 2026 (EA20 BR/UF/município)', 'https://resultados.tse.jus.br/', {
-    en: 'Official domestic presidential totalization — national, state, and municipality (1st round)',
-    pt: 'Totalização oficial doméstica — Brasil, UF e município (1º turno)',
-  })
+  if (turno === 2) {
+    ensureSource(
+      'TSE Dados Abertos — 2022 2nd round (domestic)',
+      'https://dadosabertos.tse.jus.br/',
+      {
+        en: 'Official 2022 runoff domestic presidential results by state (UF) and municipality (votação por seção, excluding ZZ)',
+        pt: 'Resultados oficiais do 2º turno 2022 no Brasil por UF e município (votação por seção, excluindo ZZ)',
+      },
+    )
+    ensureSource(
+      'TSE Resultados 2026 (EA20 BR/UF/município — 2º turno)',
+      'https://resultados.tse.jus.br/',
+      {
+        en: 'Official domestic presidential totalization — national, state, and municipality (runoff)',
+        pt: 'Totalização oficial doméstica — Brasil, UF e município (2º turno)',
+      },
+    )
+  } else {
+    ensureSource(
+      'TSE Dados Abertos — 2022 1st round (domestic)',
+      'https://dadosabertos.tse.jus.br/',
+      {
+        en: 'Official 2022 domestic presidential results by state (UF) and municipality (votação por seção, excluding ZZ)',
+        pt: 'Resultados oficiais de 2022 no Brasil por UF e município (votação por seção, excluindo ZZ)',
+      },
+    )
+    ensureSource(
+      'TSE Resultados 2026 (EA20 BR/UF/município)',
+      'https://resultados.tse.jus.br/',
+      {
+        en: 'Official domestic presidential totalization — national, state, and municipality (1st round)',
+        pt: 'Totalização oficial doméstica — Brasil, UF e município (1º turno)',
+      },
+    )
+  }
   results.meta.sources = sources
   results.meta.updatedAt = new Date().toISOString()
   results.meta.tseBr = {
-    election: ELEICAO,
+    election: eleicao,
     fetchedAt: new Date().toISOString(),
     sectionsCounted: brCoverage?.counted ?? 0,
     sectionsTotal: brCoverage?.total ?? 0,
@@ -684,18 +749,23 @@ async function main() {
     lula: y2026National.lula,
     bolsonaro: y2026National.bolsonaro,
     totalValid: y2026National.totalValid,
-    url: ea20Url('br'),
+    url: ea20Url(eleicao, 'br'),
     note: 'Domestic sum of UF tallies (BR national EA20 includes ZZ; excluded here)',
   }
 
-  writeFileSync(RESULTS_PATH, JSON.stringify(results, null, 2) + '\n')
+  const payload = JSON.stringify(results, null, 2) + '\n'
+  writeFileSync(paths.resultsPath, payload)
+  writeFileSync(paths.docsResultsPath, payload)
   console.log(
-    `Wrote Brazil: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${cities.length} cities (lazy file)`,
+    `Wrote Brazil ${roundLabel}: ${y2026National.totalValid} valid 2026 · ${areas.length} areas · ${cities.length} cities (lazy file)`,
   )
-  console.log(`  ${CITIES_PATH}`)
-  console.log(
-    'Within-municipality locals: npm run build:brazil-locals → brazil-suburbs.json',
-  )
+  console.log(`  ${paths.resultsPath}`)
+  if (!ufOnly) console.log(`  ${paths.citiesPath}`)
+  if (turno === 1) {
+    console.log(
+      'Within-municipality locals: npm run build:brazil-locals → brazil-suburbs.json',
+    )
+  }
 }
 
 main().catch((err) => {

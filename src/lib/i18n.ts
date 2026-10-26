@@ -543,8 +543,8 @@ const dict = {
     pt: 'As comparações tratam Flávio Bolsonaro (2026) frente a Jair Bolsonaro (2022) pela continuidade da chapa Bolsonaro no exterior. Não são o mesmo candidato. Os percentuais usam votos válidos; o swing é a variação de Lula menos a de Bolsonaro (pontos percentuais; positivo para Lula, negativo para Bolsonaro).',
   },
   disclaimerScope: {
-    en: 'Default scope is overseas presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total. Brazil city/neighborhood grain still reflects 2026 1st-round tallies until runoff domestic sync lands.',
-    pt: 'O recorte padrão é a votação presidencial no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior. O detalhe de cidades/bairros do Brasil ainda reflete o 1º turno de 2026 até sair a sincronização do 2º turno doméstico.',
+    en: 'Default scope is overseas presidential voting. Domestic Brazil (states and municipalities) is optional via Include Brazil / map selection and is excluded from the overseas total.',
+    pt: 'O recorte padrão é a votação presidencial no exterior. O Brasil doméstico (UFs e municípios) é opcional via Incluir Brasil / seleção no mapa e fica de fora do total exterior.',
   },
   disclaimerRoundShift: {
     en: 'Round-shift columns compare runoff shares to the same place’s 1st-round shares within the same year (2026 or 2022). Year-over-year change/swing compare 2026 runoff to 2022 runoff.',

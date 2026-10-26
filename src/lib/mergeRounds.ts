@@ -74,8 +74,8 @@ function mergePlaceLists(
 
 /**
  * Build the single-experience dataset: 2026/2022 runoff as primary y2026/y2022,
- * with 1º turno attached as yRound1 / y2022Round1. Brazil UF grain is borrowed
- * from the 1º seed (runoff domestic sync still pending) and labeled correctly.
+ * with 1º turno attached as yRound1 / y2022Round1. Brazil UF grain prefers the
+ * runoff seed when present; otherwise 1º rows are remapped as unreported.
  */
 export function mergeRounds(
   runoff: ResultsData,

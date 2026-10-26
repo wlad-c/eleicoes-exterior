@@ -1,6 +1,11 @@
 import { startTransition, useCallback, useEffect, useState } from 'react'
 import type { CityResult } from '../types'
 import type { CityTableRow } from './cityRows'
+import {
+  brazilCitiesUrl,
+  brazilSuburbsUrl,
+  type ElectionRound,
+} from './electionRound'
 
 type CitiesPayload = {
   countryId: string
@@ -27,18 +32,20 @@ export type BrazilDomesticState = {
 
 let citiesCached: CityResult[] | null = null
 let suburbsCached: CityResult[] | null = null
+let citiesCachedRound: ElectionRound | null = null
+let suburbsCachedRound: ElectionRound | null = null
 let citiesInflight: Promise<CityResult[] | null> | null = null
 let suburbsInflight: Promise<CityResult[] | null> | null = null
 
 const BRAZIL_ID = 'brazil'
 
-function citiesUrl(bust?: string): string {
-  const base = `${import.meta.env.BASE_URL}data/brazil-cities.json`
+function citiesUrl(round: ElectionRound, bust?: string): string {
+  const base = brazilCitiesUrl(round)
   return bust ? `${base}?v=${encodeURIComponent(bust)}` : base
 }
 
-function suburbsUrl(bust?: string): string {
-  const base = `${import.meta.env.BASE_URL}data/brazil-suburbs.json`
+function suburbsUrl(round: ElectionRound, bust?: string): string {
+  const base = brazilSuburbsUrl(round)
   return bust ? `${base}?v=${encodeURIComponent(bust)}` : base
 }
 
@@ -78,22 +85,30 @@ function isValidZonaPayload(rows: CityResult[]): boolean {
   )
 }
 
-async function fetchCities(opts?: {
+async function fetchCities(opts: {
+  round: ElectionRound
   bust?: string
   reload?: boolean
 }): Promise<CityResult[] | null> {
-  if (citiesCached && !opts?.reload) return citiesCached
-  if (citiesInflight && !opts?.reload) return citiesInflight
+  if (
+    citiesCached &&
+    citiesCachedRound === opts.round &&
+    !opts.reload
+  ) {
+    return citiesCached
+  }
+  if (citiesInflight && !opts.reload) return citiesInflight
   citiesInflight = (async () => {
     try {
-      const res = await fetch(citiesUrl(opts?.bust), {
-        cache: opts?.reload ? 'reload' : 'default',
+      const res = await fetch(citiesUrl(opts.round, opts.bust), {
+        cache: opts.reload ? 'reload' : 'default',
         headers: { Accept: 'application/json' },
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as CitiesPayload
       const rows = data.cities ?? []
       citiesCached = stampCountryId(rows, BRAZIL_ID)
+      citiesCachedRound = opts.round
       return citiesCached
     } catch {
       return null
@@ -104,20 +119,30 @@ async function fetchCities(opts?: {
   return citiesInflight
 }
 
-async function fetchSuburbs(opts?: {
+async function fetchSuburbs(opts: {
+  round: ElectionRound
   bust?: string
   reload?: boolean
 }): Promise<CityResult[] | null> {
-  if (suburbsCached && !opts?.reload) return suburbsCached
-  if (suburbsInflight && !opts?.reload) return suburbsInflight
+  if (
+    suburbsCached &&
+    suburbsCachedRound === opts.round &&
+    !opts.reload
+  ) {
+    return suburbsCached
+  }
+  if (suburbsInflight && !opts.reload) return suburbsInflight
   suburbsInflight = (async () => {
     try {
-      const res = await fetch(suburbsUrl(opts?.bust ?? String(Date.now())), {
-        // Never force-cache: a stale/wrong body (e.g. municipality file) was
-        // sticky on mobile and made Local look identical to City (~5.5k rows).
-        cache: opts?.reload ? 'reload' : 'no-cache',
-        headers: { Accept: 'application/json' },
-      })
+      const res = await fetch(
+        suburbsUrl(opts.round, opts.bust ?? String(Date.now())),
+        {
+          // Never force-cache: a stale/wrong body (e.g. municipality file) was
+          // sticky on mobile and made Local look identical to City (~5.5k rows).
+          cache: opts.reload ? 'reload' : 'no-cache',
+          headers: { Accept: 'application/json' },
+        },
+      )
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as SuburbsPayload
       const rows = data.suburbs ?? []
@@ -127,6 +152,7 @@ async function fetchSuburbs(opts?: {
         )
       }
       suburbsCached = stampCountryId(rows, BRAZIL_ID)
+      suburbsCachedRound = opts.round
       return suburbsCached
     } catch {
       return null
@@ -138,28 +164,41 @@ async function fetchSuburbs(opts?: {
 }
 
 /** Prefetch municipalities only (~2MB). Do not pull suburbs (~41MB) until that tab needs them. */
-export function prefetchBrazilCities(): void {
-  void fetchCities()
+export function prefetchBrazilCities(round: ElectionRound = '2'): void {
+  void fetchCities({ round })
+}
+
+/** Event-handler-safe prefetch (ignores the DOM event argument). */
+export function prefetchBrazilCitiesHandler(): void {
+  prefetchBrazilCities('2')
 }
 
 /** Prefetch voting-local suburbs when the Suburb tab is about to be opened. */
-export function prefetchBrazilSuburbs(): void {
-  void fetchSuburbs({ bust: 'prefetch' })
+export function prefetchBrazilSuburbs(round: ElectionRound = '2'): void {
+  void fetchSuburbs({ round, bust: 'prefetch' })
+}
+
+/** Event-handler-safe prefetch (ignores the DOM event argument). */
+export function prefetchBrazilSuburbsHandler(): void {
+  prefetchBrazilSuburbs('2')
 }
 
 /**
  * Lazy-load Brazil municipalities (City tab) and voting-local suburbs (Suburb tab).
+ * Round 2 loads `brazil-cities-runoff.json` / `brazil-suburbs-runoff.json` when present.
  */
 export function useBrazilDomestic(opts: {
   wantCities: boolean
   wantSuburbs: boolean
+  /** Defaults to runoff — the live app surface. */
+  round?: ElectionRound
 }): BrazilDomesticState {
-  const { wantCities, wantSuburbs } = opts
+  const { wantCities, wantSuburbs, round = '2' } = opts
   const [citiesFetched, setCitiesFetched] = useState<CityResult[] | null>(
-    () => citiesCached,
+    () => (citiesCachedRound === round ? citiesCached : null),
   )
   const [suburbsFetched, setSuburbsFetched] = useState<CityResult[] | null>(
-    () => suburbsCached,
+    () => (suburbsCachedRound === round ? suburbsCached : null),
   )
   const [citiesLoading, setCitiesLoading] = useState(false)
   const [suburbsLoading, setSuburbsLoading] = useState(false)
@@ -168,6 +207,7 @@ export function useBrazilDomestic(opts: {
 
   const retrySuburbs = useCallback(() => {
     suburbsCached = null
+    suburbsCachedRound = null
     setSuburbsFetched(null)
     setSuburbsError(null)
     setSuburbRetryTick((n) => n + 1)
@@ -175,13 +215,13 @@ export function useBrazilDomestic(opts: {
 
   useEffect(() => {
     if (!wantCities) return
-    if (citiesCached) {
+    if (citiesCached && citiesCachedRound === round) {
       setCitiesFetched(citiesCached)
       return
     }
     let cancelled = false
     setCitiesLoading(true)
-    void fetchCities().then((rows) => {
+    void fetchCities({ round }).then((rows) => {
       if (cancelled) return
       startTransition(() => {
         if (rows) setCitiesFetched(rows)
@@ -191,22 +231,28 @@ export function useBrazilDomestic(opts: {
     return () => {
       cancelled = true
     }
-  }, [wantCities])
+  }, [wantCities, round])
 
   useEffect(() => {
     if (!wantSuburbs) return
-    if (suburbsCached && isValidZonaPayload(suburbsCached)) {
+    if (
+      suburbsCached &&
+      suburbsCachedRound === round &&
+      isValidZonaPayload(suburbsCached)
+    ) {
       setSuburbsFetched(suburbsCached)
       setSuburbsError(null)
       return
     }
     if (suburbsCached && !isValidZonaPayload(suburbsCached)) {
       suburbsCached = null
+      suburbsCachedRound = null
     }
     let cancelled = false
     setSuburbsLoading(true)
     setSuburbsError(null)
     void fetchSuburbs({
+      round,
       bust: `r${suburbRetryTick}`,
       reload: suburbRetryTick > 0,
     }).then((rows) => {
@@ -225,10 +271,14 @@ export function useBrazilDomestic(opts: {
     return () => {
       cancelled = true
     }
-  }, [wantSuburbs, suburbRetryTick])
+  }, [wantSuburbs, suburbRetryTick, round])
 
-  const cities = citiesCached ?? citiesFetched
-  const suburbsRaw = suburbsCached ?? suburbsFetched
+  const cities =
+    citiesCachedRound === round ? (citiesCached ?? citiesFetched) : citiesFetched
+  const suburbsRaw =
+    suburbsCachedRound === round
+      ? (suburbsCached ?? suburbsFetched)
+      : suburbsFetched
   const suburbs =
     suburbsRaw && isValidZonaPayload(suburbsRaw) ? suburbsRaw : null
 
