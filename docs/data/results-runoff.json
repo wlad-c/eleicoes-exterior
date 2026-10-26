@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:30:20.860Z",
+    "updatedAt": "2026-10-26T00:32:22.663Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -92,13 +92,13 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:30:20.860Z",
-      "sectionsCounted": 1301,
+      "fetchedAt": "2026-10-26T00:32:22.663Z",
+      "sectionsCounted": 1306,
       "sectionsTotal": 1351,
-      "sectionsPct": 96.3,
-      "lula": 192066,
-      "bolsonaro": 167086,
-      "totalValid": 359152,
+      "sectionsPct": 96.67,
+      "lula": 193593,
+      "bolsonaro": 167699,
+      "totalValid": 361292,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.json"
     }
   },
@@ -2042,27 +2042,27 @@
         "bolsonaroPct": 38.39
       },
       "y2026": {
-        "lula": 13279,
-        "bolsonaro": 7377,
-        "totalValid": 20656,
-        "lulaPct": 64.29,
-        "bolsonaroPct": 35.71,
+        "lula": 14482,
+        "bolsonaro": 7888,
+        "totalValid": 22370,
+        "lulaPct": 64.74,
+        "bolsonaroPct": 35.26,
         "registered": 46361,
-        "abstentions": 18269,
-        "blank": 249,
-        "nullVotes": 370,
-        "noValidVote": 18888,
-        "noValidVotePct": 40.74
+        "abstentions": 19600,
+        "blank": 267,
+        "nullVotes": 409,
+        "noValidVote": 20276,
+        "noValidVotePct": 43.74
       },
       "swing": {
-        "lulaPp": 2.68,
-        "bolsonaroPp": -2.68,
-        "marginPp": 5.36
+        "lulaPp": 3.13,
+        "bolsonaroPp": -3.13,
+        "marginPp": 6.26
       },
-      "notes": "TSE EA20 (54/63 seções; TORONTO 28/28; MONTREAL 15/15; VANCOUVER 7/16; OTTAWA 4/4)",
+      "notes": "TSE EA20 (58/63 seções; TORONTO 28/28; MONTREAL 15/15; VANCOUVER 11/16; OTTAWA 4/4)",
       "status": "reported",
       "coverage": {
-        "counted": 54,
+        "counted": 58,
         "total": 63
       },
       "areas": [
@@ -2143,17 +2143,17 @@
           "name": "VANCOUVER",
           "level": "area",
           "y2026": {
-            "lula": 1612,
-            "bolsonaro": 1070,
-            "totalValid": 2682,
-            "lulaPct": 60.1,
-            "bolsonaroPct": 39.9,
+            "lula": 2815,
+            "bolsonaro": 1581,
+            "totalValid": 4396,
+            "lulaPct": 64.04,
+            "bolsonaroPct": 35.96,
             "registered": 12082,
-            "abstentions": 2486,
-            "blank": 34,
-            "nullVotes": 63,
-            "noValidVote": 2583,
-            "noValidVotePct": 21.38
+            "abstentions": 3817,
+            "blank": 52,
+            "nullVotes": 102,
+            "noValidVote": 3971,
+            "noValidVotePct": 32.87
           },
           "y2022": {
             "lula": 3442,
@@ -2163,12 +2163,12 @@
             "bolsonaroPct": 36.52
           },
           "swing": {
-            "lulaPp": -3.38,
-            "bolsonaroPp": 3.38,
-            "marginPp": -6.76
+            "lulaPp": 0.56,
+            "bolsonaroPp": -0.56,
+            "marginPp": 1.12
           },
           "coverage": {
-            "counted": 7,
+            "counted": 11,
             "total": 16
           },
           "nameEn": "Vancouver",
