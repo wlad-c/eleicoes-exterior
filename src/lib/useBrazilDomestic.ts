@@ -85,6 +85,34 @@ function isValidZonaPayload(rows: CityResult[]): boolean {
   )
 }
 
+/**
+ * Attach 1º turno totals as `yRound1` so City-tab metrics like roundSwing
+ * work on runoff rows (same pattern as mergeRounds for overseas / UF grain).
+ */
+async function attachRound1ToRunoffCities(
+  runoff: CityResult[],
+): Promise<CityResult[]> {
+  try {
+    const res = await fetch(citiesUrl('1'), {
+      headers: { Accept: 'application/json' },
+    })
+    if (!res.ok) return runoff
+    const data = (await res.json()) as CitiesPayload
+    const byCode = new Map(
+      (data.cities ?? []).map((c) => [c.code, c] as const),
+    )
+    for (const row of runoff) {
+      if (row.yRound1) continue
+      const r1 = byCode.get(row.code)
+      if (r1?.y2026) row.yRound1 = r1.y2026
+      if (r1?.y2022 && !row.y2022Round1) row.y2022Round1 = r1.y2022
+    }
+  } catch {
+    /* keep runoff-only rows */
+  }
+  return runoff
+}
+
 async function fetchCities(opts: {
   round: ElectionRound
   bust?: string
@@ -106,7 +134,10 @@ async function fetchCities(opts: {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as CitiesPayload
-      const rows = data.cities ?? []
+      let rows = data.cities ?? []
+      if (opts.round === '2') {
+        rows = await attachRound1ToRunoffCities(rows)
+      }
       citiesCached = stampCountryId(rows, BRAZIL_ID)
       citiesCachedRound = opts.round
       return citiesCached

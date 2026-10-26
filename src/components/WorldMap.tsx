@@ -814,22 +814,37 @@ export function WorldMap({
     ctx.translate(view.x, view.y)
     ctx.scale(view.k, view.k)
 
+    const css = getComputedStyle(canvas)
+    /** Canvas cannot paint `var(--token)` — resolve against the map element. */
+    const resolveColor = (color: string, fallback: string) => {
+      const raw = color.trim()
+      if (!raw.startsWith('var(')) return raw || fallback
+      const m = /^var\(\s*(--[^,\s)]+)/.exec(raw)
+      if (!m) return fallback
+      return css.getPropertyValue(m[1]).trim() || fallback
+    }
+
     const paths: Path2D[] = new Array(canvasCities.length)
-    const stroke =
-      getComputedStyle(canvas).getPropertyValue('--map-stroke').trim() ||
-      '#1a1a1a'
-    const strokeHi =
-      getComputedStyle(canvas).getPropertyValue('--map-stroke-hi').trim() ||
-      '#f5f5f5'
+    const stroke = resolveColor(
+      css.getPropertyValue('--map-stroke'),
+      '#1a1a1a',
+    )
+    const strokeHi = resolveColor(
+      css.getPropertyValue('--map-stroke-hi'),
+      '#f5f5f5',
+    )
+    const pending = resolveColor(PENDING_FILL, '#c5cec6')
+    const nodata = resolveColor(NO_DATA_FILL, '#dce3dc')
 
     for (let i = 0; i < canvasCities.length; i++) {
       const f = canvasCities[i]
       const p = new Path2D(f.d)
       paths[i] = p
       const value = f.row ? metricValue(f.row, metric) : null
-      let fill = NO_DATA_FILL
+      let fill = nodata
       if (f.row) {
-        fill = value != null ? colorize(value) : PENDING_FILL
+        fill =
+          value != null ? resolveColor(colorize(value), pending) : pending
       }
       ctx.fillStyle = fill
       ctx.fill(p)
@@ -843,8 +858,7 @@ export function WorldMap({
       ctx.stroke(p)
     }
     // UF borders on top (same as previous SVG outline layer).
-    const ink =
-      getComputedStyle(canvas).getPropertyValue('--ink').trim() || '#111'
+    const ink = resolveColor(css.getPropertyValue('--ink'), '#111')
     ctx.strokeStyle = ink
     ctx.globalAlpha = 0.7
     ctx.lineWidth = 1.15 / view.k
