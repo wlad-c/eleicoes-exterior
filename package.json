@@ -13,6 +13,7 @@
     "sync:brazil": "node scripts/sync-tse-brazil.mjs",
     "sync:brazil:runoff": "node scripts/sync-tse-brazil.mjs --turno=2",
     "build:brazil-locals": "node scripts/build-brazil-locals.mjs",
+    "build:brazil-suburbs-runoff": "node scripts/build-brazil-suburbs-runoff.mjs",
     "sync:locations": "node scripts/sync-tse-locations.mjs",
     "build:locations": "node scripts/build-location-map.mjs",
     "build:city-2022": "node scripts/build-city-2022.mjs",

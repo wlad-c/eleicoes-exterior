@@ -763,7 +763,7 @@ async function main() {
   if (!ufOnly) console.log(`  ${paths.citiesPath}`)
   if (turno === 1) {
     console.log(
-      'Within-municipality locals: npm run build:brazil-locals → brazil-suburbs.json',
+      'Within-municipality locals: npm run build:brazil-locals → brazil-suburbs.json; runoff: npm run build:brazil-suburbs-runoff',
     )
   }
 }
