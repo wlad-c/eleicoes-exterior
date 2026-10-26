@@ -27,36 +27,22 @@ Seeds:
 - `src/data/results.json` — 1º turno (election `6257`)
 - `src/data/results-runoff.json` — 2º turno (election `6258`)
 
-## Live updates (runoff night)
+## Live updates
 
-Live TSE refresh is **paused until New Zealand booths close** (`2026-10-25T04:00:00Z` = 17:00 NZDT). From then on, the app pulls overseas (ZZ) tallies on load, on focus, and every **2 minutes** for ~36h, then every **30 minutes**. Vote updates do not require a redeploy.
+TSE runoff totalization reached **100%** for overseas (ZZ) and domestic Brazil. **Scheduled GitHub Actions syncs are disabled** (workflow is `workflow_dispatch` only). Agent/press scrape timers are stopped.
 
-Until TSE publishes a country, night-of **press BU** tallies are merged automatically. GitHub Actions runs `scrape:press:runoff -- --apply` every **20 minutes** from NZ close through Monday afternoon UTC: it rechecks allowlisted outlets (**g1, UOL, CNN Brasil, Poder360, Exame, Brasil de Fato, BNews, Metro1, O Globo, Folha, Estadão**), discovers new exterior/BU article links from their hubs, falls back via curl+r.jina.ai when bot-blocked, parses each outlet’s tally format, and writes absolute tallies into pending/press rows only (never overwrites `source: 'tse'`; skips weak %-only when absolute already exists). The live page re-reads the deployed seed every **2 minutes**, so newly scraped countries appear without a manual redeploy.
+The browser may still pull live TSE on load/focus for verification; committed seeds under `src/data/` and `docs/data/` are the durable source for cold loads / SEO.
 
-Manual / local:
-
-```bash
-# Optional: refresh article URLs in scripts/data/press-runoff-sources.json
-npm run scrape:press:runoff          # dry-run (all allowlisted sources)
-npm run scrape:press:runoff -- --apply
-npm run scrape:press:runoff -- --url=https://…   # extra article
-```
-
-Official TSE always overwrites press rows (`source: 'tse'`). After Brazil’s polls close (`2026-10-25T20:00:00Z`), the browser also pulls live TSE ZZ directly.
-
-Optional seed sync (cold load / SEO; GitHub Actions every 48h, and every 20 min on 25–26 Oct):
+Manual seed sync (optional):
 
 ```bash
-npm run sync:tse              # 1º turno
-npm run sync:tse:runoff       # 2º turno (6258)
-npm run scaffold:runoff       # rebuild pending runoff shell from 1º geography
-npm run build:city-2022-r2    # 2022 2º overseas caches
-npm run sync:brazil           # domestic BR (1º)
-npm run build:brazil-locals
+npm run sync:tse:runoff                 # overseas ZZ 2º turno (6258)
+npm run sync:brazil:runoff              # domestic BR 2º (or -- --uf-only)
+npm run scrape:press:runoff -- --apply  # legacy press BUs (skipped where TSE exists)
 npm run build:pages
 ```
 
-Override the client timer locally with `?refreshMs=<ms>`.
+Override any remaining client poll locally with `?refreshMs=<ms>` (or omit to use the default cadence).
 
 ## Build / GitHub Pages
 

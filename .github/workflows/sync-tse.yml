@@ -1,25 +1,10 @@
 name: Sync TSE ZZ tallies
 
-# Backup persistence for cold loads / SEO. The live page also pulls TSE
-# directly in the browser and does not depend on this job.
-# Press BU tallies are applied into results-runoff.json until TSE lands;
-# open tabs re-read the deployed seed every ~2 minutes on runoff night.
+# Manual-only. Scheduled / push-triggered syncs were disabled after TSE
+# runoff totalization reached 100% (ZZ + domestic Brazil).
+# The live page can still pull TSE directly in the browser on demand.
 on:
-  schedule:
-    # Quiet baseline: every 48h.
-    - cron: '0 0 */2 * *'
-    # Runoff window (UTC): every 15 min on 25–26 Oct.
-    # GitHub cron is often delayed; denser schedule improves pickup.
-    - cron: '*/15 * 25 10 *'
-    - cron: '*/15 0-16 26 10 *'
   workflow_dispatch:
-  # Re-run when the scraper or source list changes (does not replace schedule).
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/scrape-press-runoff.mjs'
-      - 'scripts/data/press-runoff-sources.json'
-      - '.github/workflows/sync-tse.yml'
 
 permissions:
   contents: write
@@ -45,28 +30,18 @@ jobs:
       - name: Decide sync mode
         id: mode
         run: |
-          NOW=$(date -u +%s)
-          # Press+TSE runoff window: NZ close → Monday afternoon UTC
-          START=$(date -u -d '2026-10-25 04:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-25 04:00:00' +%s)
-          END=$(date -u -d '2026-10-26 16:00:00' +%s 2>/dev/null || date -u -j -f '%Y-%m-%d %H:%M:%S' '2026-10-26 16:00:00' +%s)
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] || [ "$GITHUB_EVENT_NAME" = "push" ] || { [ "$NOW" -ge "$START" ] && [ "$NOW" -lt "$END" ]; }; then
-            echo "mode=runoff" >> "$GITHUB_OUTPUT"
-          else
-            echo "mode=round1" >> "$GITHUB_OUTPUT"
-          fi
+          # Default to runoff after election day; override via workflow input later if needed.
+          echo "mode=runoff" >> "$GITHUB_OUTPUT"
 
       - name: Sync 1º turno seed
         if: steps.mode.outputs.mode == 'round1'
         run: npm run sync:tse
 
-      - name: Sync runoff (TSE 6258 + press BUs apply)
+      - name: Sync runoff (TSE 6258 + Brazil domestic UFs)
         if: steps.mode.outputs.mode == 'runoff'
         run: |
-          npm run sync:tse:runoff || true
-          # Apply absolute press tallies into pending/press rows only.
-          # Guards in the scraper: never overwrite source=tse; skip %-only
-          # when absolute exists; primary outlets may revise downward.
-          npm run scrape:press:runoff -- --apply || true
+          npm run sync:tse:runoff
+          npm run sync:brazil:runoff -- --uf-only
 
       - name: Build Pages
         run: npm run build:pages
@@ -80,5 +55,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data/results.json src/data/results-runoff.json docs/ || true
-          git commit -m "chore: sync TSE / press runoff tallies" || exit 0
+          git commit -m "chore: sync TSE runoff tallies" || exit 0
           git push origin HEAD:main
