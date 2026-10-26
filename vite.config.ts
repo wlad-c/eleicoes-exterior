@@ -13,30 +13,40 @@ const resultsRunoffSrc = resolve(rootDir, 'src/data/results-runoff.json')
 const resultsRunoffPublic = resolve(rootDir, 'public/data/results-runoff.json')
 const citiesSrc = resolve(rootDir, 'src/data/brazil-cities.json')
 const citiesPublic = resolve(rootDir, 'public/data/brazil-cities.json')
+const citiesRunoffSrc = resolve(rootDir, 'src/data/brazil-cities-runoff.json')
+const citiesRunoffPublic = resolve(
+  rootDir,
+  'public/data/brazil-cities-runoff.json',
+)
 const suburbsSrc = resolve(rootDir, 'src/data/brazil-suburbs.json')
 const suburbsPublic = resolve(rootDir, 'public/data/brazil-suburbs.json')
+const suburbsRunoffSrc = resolve(rootDir, 'src/data/brazil-suburbs-runoff.json')
+const suburbsRunoffPublic = resolve(
+  rootDir,
+  'public/data/brazil-suburbs-runoff.json',
+)
 const ufsSrc = resolve(rootDir, 'src/data/brazil-ufs.json')
 const ufsPublic = resolve(rootDir, 'public/data/brazil-ufs.json')
+
+const syncedDataFiles = [
+  [resultsSrc, resultsPublic],
+  [resultsRunoffSrc, resultsRunoffPublic],
+  [citiesSrc, citiesPublic],
+  [citiesRunoffSrc, citiesRunoffPublic],
+  [suburbsSrc, suburbsPublic],
+  [suburbsRunoffSrc, suburbsRunoffPublic],
+  [ufsSrc, ufsPublic],
+] as const
 
 /** Keep stable public URLs in sync with the editable source JSON. */
 function syncResultsJson(): Plugin {
   const write = () => {
     mkdirSync(dirname(resultsPublic), { recursive: true })
-    copyFileSync(resultsSrc, resultsPublic)
-    try {
-      copyFileSync(resultsRunoffSrc, resultsRunoffPublic)
-    } catch {
-      /* optional until scaffold-runoff */
-    }
-    for (const [src, dest] of [
-      [citiesSrc, citiesPublic],
-      [suburbsSrc, suburbsPublic],
-      [ufsSrc, ufsPublic],
-    ] as const) {
+    for (const [src, dest] of syncedDataFiles) {
       try {
         copyFileSync(src, dest)
       } catch {
-        /* optional until brazil sync / locals build */
+        /* optional until scaffold / brazil sync / locals build */
       }
     }
   }
@@ -48,22 +58,10 @@ function syncResultsJson(): Plugin {
     },
     configureServer(server) {
       write()
-      server.watcher.add(resultsSrc)
-      server.watcher.add(resultsRunoffSrc)
-      server.watcher.add(citiesSrc)
-      server.watcher.add(suburbsSrc)
-      server.watcher.add(ufsSrc)
+      for (const [src] of syncedDataFiles) server.watcher.add(src)
       server.watcher.on('change', (path) => {
         const abs = resolve(path)
-        if (
-          abs === resultsSrc ||
-          abs === resultsRunoffSrc ||
-          abs === citiesSrc ||
-          abs === suburbsSrc ||
-          abs === ufsSrc
-        ) {
-          write()
-        }
+        if (syncedDataFiles.some(([src]) => abs === src)) write()
       })
     },
   }
