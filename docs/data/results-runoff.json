@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:56:27.435Z",
+    "updatedAt": "2026-10-26T00:58:25.852Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -108,24 +108,24 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:56:26.765Z",
-      "sectionsCounted": 1310,
+      "fetchedAt": "2026-10-26T00:58:25.142Z",
+      "sectionsCounted": 1351,
       "sectionsTotal": 1351,
-      "sectionsPct": 96.97,
-      "lula": 194563,
-      "bolsonaro": 168210,
-      "totalValid": 362773,
+      "sectionsPct": 100,
+      "lula": 200154,
+      "bolsonaro": 171497,
+      "totalValid": 371651,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.json"
     },
     "tseBr": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:56:27.435Z",
-      "sectionsCounted": 497749,
+      "fetchedAt": "2026-10-26T00:58:25.852Z",
+      "sectionsCounted": 497750,
       "sectionsTotal": 497897,
       "sectionsPct": 99.97,
-      "lula": 64035322,
-      "bolsonaro": 59644460,
-      "totalValid": 123679782,
+      "lula": 64035481,
+      "bolsonaro": 59644487,
+      "totalValid": 123679968,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json",
       "note": "Domestic sum of UF tallies (BR national EA20 includes ZZ; excluded here)"
     }
@@ -148,16 +148,16 @@
         "bolsonaroPct": 49.1
       },
       "y2026": {
-        "lula": 64035322,
-        "bolsonaro": 59644460,
-        "totalValid": 123679782,
+        "lula": 64035481,
+        "bolsonaro": 59644487,
+        "totalValid": 123679968,
         "lulaPct": 51.78,
         "bolsonaroPct": 48.22,
         "registered": 157828819,
-        "abstentions": 29964313,
+        "abstentions": 29964372,
         "blank": 1425509,
-        "nullVotes": 2717463,
-        "noValidVote": 34107285,
+        "nullVotes": 2717468,
+        "noValidVote": 34107349,
         "noValidVotePct": 21.61
       },
       "swing": {
@@ -166,7 +166,7 @@
         "marginPp": 1.76
       },
       "coverage": {
-        "counted": 497749,
+        "counted": 497750,
         "total": 497897
       },
       "areas": [
@@ -501,16 +501,16 @@
           "namePt": "Maranhão",
           "level": "area",
           "y2026": {
-            "lula": 2806585,
-            "bolsonaro": 1229478,
-            "totalValid": 4036063,
+            "lula": 2806744,
+            "bolsonaro": 1229505,
+            "totalValid": 4036249,
             "lulaPct": 69.54,
             "bolsonaroPct": 30.46,
             "registered": 5183049,
-            "abstentions": 1054799,
+            "abstentions": 1054858,
             "blank": 30836,
-            "nullVotes": 58669,
-            "noValidVote": 1144304,
+            "nullVotes": 58674,
+            "noValidVote": 1144368,
             "noValidVotePct": 22.08
           },
           "y2022": {
@@ -526,7 +526,7 @@
             "marginPp": -3.2
           },
           "coverage": {
-            "counted": 18083,
+            "counted": 18084,
             "total": 18093
           }
         },
@@ -1147,7 +1147,7 @@
       "cityCount": 5571,
       "suburbs": [],
       "suburbCount": 0,
-      "notes": "TSE EA20 domestic UFs 2º turno (497749/497897 sections; excludes ZZ overseas)",
+      "notes": "TSE EA20 domestic UFs 2º turno (497750/497897 sections; excludes ZZ overseas)",
       "status": "reported"
     },
     {
@@ -2380,28 +2380,28 @@
         "bolsonaroPct": 65.39
       },
       "y2026": {
-        "lula": 26432,
-        "bolsonaro": 50431,
-        "totalValid": 76863,
-        "lulaPct": 34.39,
-        "bolsonaroPct": 65.61,
-        "registered": 249553,
-        "abstentions": 155726,
-        "blank": 651,
-        "nullVotes": 807,
-        "noValidVote": 157184,
-        "noValidVotePct": 62.99
+        "lula": 29373,
+        "bolsonaro": 52002,
+        "totalValid": 81375,
+        "lulaPct": 36.1,
+        "bolsonaroPct": 63.9,
+        "registered": 265047,
+        "abstentions": 166610,
+        "blank": 699,
+        "nullVotes": 857,
+        "noValidVote": 168166,
+        "noValidVotePct": 63.45
       },
       "swing": {
-        "lulaPp": -0.22,
-        "bolsonaroPp": 0.22,
-        "marginPp": -0.44
+        "lulaPp": 1.49,
+        "bolsonaroPp": -1.49,
+        "marginPp": 2.98
       },
-      "notes": "TSE EA20 (317/338 seções; BOSTON 69/69; MIAMI 51/51; NOVA YORK 53/53; ORLANDO 34/34; ATLANTA 22/22; WASHINGTON 31/31; HOUSTON 23/23; CHICAGO 18/18; HARTFORD 12/12; LOS ANGELES 4/25)",
+      "notes": "TSE EA20 (337/358 seções; BOSTON 69/69; MIAMI 51/51; NOVA YORK 53/53; ORLANDO 34/34; ATLANTA 22/22; WASHINGTON 31/31; HOUSTON 23/23; SÃO FRANCISCO 20/20; CHICAGO 18/18; HARTFORD 12/12; LOS ANGELES 4/25)",
       "status": "reported",
       "coverage": {
-        "counted": 317,
-        "total": 338
+        "counted": 337,
+        "total": 358
       },
       "areas": [
         {
@@ -2645,6 +2645,42 @@
           },
           "nameEn": "Houston",
           "namePt": "Houston"
+        },
+        {
+          "code": "30503",
+          "name": "SÃO FRANCISCO",
+          "level": "area",
+          "y2026": {
+            "lula": 2941,
+            "bolsonaro": 1571,
+            "totalValid": 4512,
+            "lulaPct": 65.18,
+            "bolsonaroPct": 34.82,
+            "registered": 15494,
+            "abstentions": 10884,
+            "blank": 48,
+            "nullVotes": 50,
+            "noValidVote": 10982,
+            "noValidVotePct": 70.88
+          },
+          "y2022": {
+            "lula": 2447,
+            "bolsonaro": 1568,
+            "totalValid": 4015,
+            "lulaPct": 60.95,
+            "bolsonaroPct": 39.05
+          },
+          "swing": {
+            "lulaPp": 4.23,
+            "bolsonaroPp": -4.23,
+            "marginPp": 8.46
+          },
+          "coverage": {
+            "counted": 20,
+            "total": 20
+          },
+          "nameEn": "San Francisco",
+          "namePt": "São Francisco"
         },
         {
           "code": "29513",
