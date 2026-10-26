@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T00:22:18.655Z",
+    "updatedAt": "2026-10-26T00:24:19.194Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -92,13 +92,13 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T00:22:18.655Z",
-      "sectionsCounted": 1287,
+      "fetchedAt": "2026-10-26T00:24:19.194Z",
+      "sectionsCounted": 1291,
       "sectionsTotal": 1351,
-      "sectionsPct": 95.26,
-      "lula": 191138,
-      "bolsonaro": 166633,
-      "totalValid": 357771,
+      "sectionsPct": 95.56,
+      "lula": 191207,
+      "bolsonaro": 166680,
+      "totalValid": 357887,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.json"
     }
   },
@@ -9379,27 +9379,42 @@
         "bolsonaro": 5,
         "totalValid": 13,
         "lulaPct": 61.54,
-        "bolsonaroPct": 38.46
+        "bolsonaroPct": 38.46,
+        "registered": 43,
+        "abstentions": 29,
+        "blank": 1,
+        "nullVotes": 0,
+        "noValidVote": 30,
+        "noValidVotePct": 69.77
       },
       "swing": {
         "lulaPp": -16.24,
         "bolsonaroPp": 16.24,
         "marginPp": -32.48
       },
-      "notes": "Press BU (CNN Brasil): Lula 8 / Flávio 5. Awaiting TSE.",
+      "notes": "TSE EA20 (ACCRA 1/1)",
       "status": "reported",
-      "coverage": null,
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      },
       "areas": [
         {
           "code": "29270",
           "name": "ACCRA",
           "level": "area",
           "y2026": {
-            "lula": 0,
-            "bolsonaro": 0,
-            "totalValid": 0,
-            "lulaPct": 0,
-            "bolsonaroPct": 0
+            "lula": 8,
+            "bolsonaro": 5,
+            "totalValid": 13,
+            "lulaPct": 61.54,
+            "bolsonaroPct": 38.46,
+            "registered": 43,
+            "abstentions": 29,
+            "blank": 1,
+            "nullVotes": 0,
+            "noValidVote": 30,
+            "noValidVotePct": 69.77
           },
           "y2022": {
             "lula": 14,
@@ -9408,8 +9423,15 @@
             "lulaPct": 77.78,
             "bolsonaroPct": 22.22
           },
-          "swing": null,
-          "coverage": null,
+          "swing": {
+            "lulaPp": -16.24,
+            "bolsonaroPp": 16.24,
+            "marginPp": -32.48
+          },
+          "coverage": {
+            "counted": 1,
+            "total": 1
+          },
           "nameEn": "Accra",
           "namePt": "Accra"
         }
@@ -9436,27 +9458,42 @@
         "bolsonaro": 17,
         "totalValid": 32,
         "lulaPct": 46.88,
-        "bolsonaroPct": 53.13
+        "bolsonaroPct": 53.13,
+        "registered": 82,
+        "abstentions": 48,
+        "blank": 0,
+        "nullVotes": 2,
+        "noValidVote": 50,
+        "noValidVotePct": 60.98
       },
       "swing": {
         "lulaPp": -21.54,
         "bolsonaroPp": 21.55,
         "marginPp": -43.09
       },
-      "notes": "Press BU (CNN Brasil): Lula 15 / Flávio 17. Awaiting TSE.",
+      "notes": "TSE EA20 (HANÓI 1/1)",
       "status": "reported",
-      "coverage": null,
+      "coverage": {
+        "counted": 1,
+        "total": 1
+      },
       "areas": [
         {
           "code": "29750",
           "name": "HANÓI",
           "level": "area",
           "y2026": {
-            "lula": 0,
-            "bolsonaro": 0,
-            "totalValid": 0,
-            "lulaPct": 0,
-            "bolsonaroPct": 0
+            "lula": 15,
+            "bolsonaro": 17,
+            "totalValid": 32,
+            "lulaPct": 46.88,
+            "bolsonaroPct": 53.13,
+            "registered": 82,
+            "abstentions": 48,
+            "blank": 0,
+            "nullVotes": 2,
+            "noValidVote": 50,
+            "noValidVotePct": 60.98
           },
           "y2022": {
             "lula": 13,
@@ -9465,8 +9502,15 @@
             "lulaPct": 68.42,
             "bolsonaroPct": 31.58
           },
-          "swing": null,
-          "coverage": null,
+          "swing": {
+            "lulaPp": -21.54,
+            "bolsonaroPp": 21.55,
+            "marginPp": -43.09
+          },
+          "coverage": {
+            "counted": 1,
+            "total": 1
+          },
           "nameEn": "Hanoi",
           "namePt": "Hanói"
         }
