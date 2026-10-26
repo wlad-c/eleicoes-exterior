@@ -57,13 +57,15 @@ import { collatorFor } from './lib/collator'
 import { searchIncludes } from './lib/searchText'
 import {
   prefetchBrazilCities,
+  prefetchBrazilCitiesHandler,
   prefetchBrazilSuburbs,
+  prefetchBrazilSuburbsHandler,
   useBrazilDomestic,
 } from './lib/useBrazilDomestic'
 
 const BRAZIL_ID = 'brazil'
 import { isPressOnlyWindow } from './lib/electionRound'
-import { mergeRounds, remapBrazilGrain } from './lib/mergeRounds'
+import { mergeRounds } from './lib/mergeRounds'
 import {
   moveColumn,
   readStoredColumnOrder,
@@ -225,9 +227,9 @@ export default function App() {
     includeBrazil ||
     highlightId === BRAZIL_ID ||
     mapFocus.level !== 'world'
-  // Cities / suburbs: 1º-only grain files remapped into unified schema until
-  // runoff domestic sync lands.
+  // Lazy Brazil city/suburb grain for runoff (`brazil-*-runoff.json` when present).
   const brazilDomestic = useBrazilDomestic({
+    round: '2',
     wantCities: wantBrazil,
     wantSuburbs:
       wantBrazil &&
@@ -235,11 +237,9 @@ export default function App() {
   })
 
   const data = useMemo(() => {
-    const cities = brazilDomestic.cities?.length
-      ? remapBrazilGrain(brazilDomestic.cities)
-      : null
+    const cities = brazilDomestic.cities?.length ? brazilDomestic.cities : null
     const suburbs = brazilDomestic.suburbs?.length
-      ? remapBrazilGrain(brazilDomestic.suburbs)
+      ? brazilDomestic.suburbs
       : null
     if (!cities && !suburbs) return seedData
     return {
@@ -1362,8 +1362,8 @@ export default function App() {
                 className="lang-btn control px-3 py-1.5 text-sm font-semibold"
                 aria-selected={effectiveTableView === 'suburbs'}
                 title={t('suburbTableHint', lang)}
-                onMouseEnter={prefetchBrazilSuburbs}
-                onFocus={prefetchBrazilSuburbs}
+                onMouseEnter={prefetchBrazilSuburbsHandler}
+                onFocus={prefetchBrazilSuburbsHandler}
                 onClick={() => switchTableView('suburbs')}
               >
                 {t('tabSuburbs', lang)}
@@ -1461,8 +1461,8 @@ export default function App() {
             <label
               className="filter-tool filter-tool--brazil flex items-center gap-2 text-sm text-[var(--ink-muted)]"
               title={t('includeBrazilHint', lang)}
-              onMouseEnter={prefetchBrazilCities}
-              onFocus={prefetchBrazilCities}
+              onMouseEnter={prefetchBrazilCitiesHandler}
+              onFocus={prefetchBrazilCitiesHandler}
             >
               <input
                 type="checkbox"
