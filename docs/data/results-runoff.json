@@ -8,7 +8,7 @@
       "en": "2026 vs 2022 presidential results abroad (official TSE totalization; press BUs only where TSE pending)",
       "pt": "Resultados presidenciais no exterior 2026 vs 2022 (totalização oficial do TSE; BUs da imprensa só onde o TSE ainda não publicou)"
     },
-    "updatedAt": "2026-10-26T01:13:19.243Z",
+    "updatedAt": "2026-10-26T01:14:28.075Z",
     "sources": [
       {
         "name": "TSE Dados Abertos — 2022 2nd round",
@@ -108,7 +108,7 @@
     },
     "tseZz": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T01:13:18.539Z",
+      "fetchedAt": "2026-10-26T01:14:27.324Z",
       "sectionsCounted": 1351,
       "sectionsTotal": 1351,
       "sectionsPct": 100,
@@ -119,13 +119,13 @@
     },
     "tseBr": {
       "election": "6258",
-      "fetchedAt": "2026-10-26T01:13:19.244Z",
-      "sectionsCounted": 497811,
+      "fetchedAt": "2026-10-26T01:14:28.075Z",
+      "sectionsCounted": 497828,
       "sectionsTotal": 497897,
-      "sectionsPct": 99.98,
-      "lula": 64043645,
-      "bolsonaro": 59648260,
-      "totalValid": 123691905,
+      "sectionsPct": 99.99,
+      "lula": 64046185,
+      "bolsonaro": 59649508,
+      "totalValid": 123695693,
       "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json",
       "note": "Domestic sum of UF tallies (BR national EA20 includes ZZ; excluded here)"
     }
@@ -148,16 +148,16 @@
         "bolsonaroPct": 49.1
       },
       "y2026": {
-        "lula": 64043645,
-        "bolsonaro": 59648260,
-        "totalValid": 123691905,
+        "lula": 64046185,
+        "bolsonaro": 59649508,
+        "totalValid": 123695693,
         "lulaPct": 51.78,
         "bolsonaroPct": 48.22,
         "registered": 157828819,
-        "abstentions": 29968241,
-        "blank": 1425629,
-        "nullVotes": 2717739,
-        "noValidVote": 34111609,
+        "abstentions": 29969594,
+        "blank": 1425660,
+        "nullVotes": 2717847,
+        "noValidVote": 34113101,
         "noValidVotePct": 21.61
       },
       "swing": {
@@ -166,7 +166,7 @@
         "marginPp": 1.76
       },
       "coverage": {
-        "counted": 497811,
+        "counted": 497828,
         "total": 497897
       },
       "areas": [
@@ -609,17 +609,17 @@
           "namePt": "Minas Gerais",
           "level": "area",
           "y2026": {
-            "lula": 6340194,
-            "bolsonaro": 6236133,
-            "totalValid": 12576327,
-            "lulaPct": 50.41,
-            "bolsonaroPct": 49.59,
+            "lula": 6342734,
+            "bolsonaro": 6237381,
+            "totalValid": 12580115,
+            "lulaPct": 50.42,
+            "bolsonaroPct": 49.58,
             "registered": 16372144,
-            "abstentions": 3322390,
-            "blank": 163973,
-            "nullVotes": 286766,
-            "noValidVote": 3773129,
-            "noValidVotePct": 23.05
+            "abstentions": 3323743,
+            "blank": 164004,
+            "nullVotes": 286874,
+            "noValidVote": 3774621,
+            "noValidVotePct": 23.06
           },
           "y2022": {
             "lula": 6190960,
@@ -629,12 +629,12 @@
             "bolsonaroPct": 49.8
           },
           "swing": {
-            "lulaPp": 0.21,
-            "bolsonaroPp": -0.21,
-            "marginPp": 0.42
+            "lulaPp": 0.22,
+            "bolsonaroPp": -0.22,
+            "marginPp": 0.44
           },
           "coverage": {
-            "counted": 51986,
+            "counted": 52003,
             "total": 52062
           }
         },
@@ -1147,7 +1147,7 @@
       "cityCount": 5571,
       "suburbs": [],
       "suburbCount": 0,
-      "notes": "TSE EA20 domestic UFs 2º turno (497811/497897 sections; excludes ZZ overseas)",
+      "notes": "TSE EA20 domestic UFs 2º turno (497828/497897 sections; excludes ZZ overseas)",
       "status": "reported"
     },
     {
