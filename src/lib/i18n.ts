@@ -22,10 +22,15 @@ const dict = {
     en: 'Search neighborhood, city, or Brazil…',
     pt: 'Buscar bairro, cidade ou Brasil…',
   },
+  searchLocal: {
+    en: 'Search voting place, city, or Brazil…',
+    pt: 'Buscar local de votação, cidade ou Brasil…',
+  },
   tabCountries: { en: 'Country', pt: 'País' },
   tabAreas: { en: 'Area', pt: 'Área' },
   tabCities: { en: 'City', pt: 'Cidade' },
   tabSuburbs: { en: 'Neighborhood', pt: 'Bairro' },
+  tabLocais: { en: 'Polling place', pt: 'Local' },
   roundTabGroup: { en: 'Election round', pt: 'Turno' },
   round1: { en: '1st round', pt: '1º turno' },
   round2: { en: 'Runoff', pt: '2º turno' },
@@ -376,6 +381,23 @@ const dict = {
     en: 'Brazil only — each row is an electoral zone, labeled like news maps (e.g. Bela Vista, Piraporinha, Copacabana): official TRE nicknames when known, otherwise main TSE neighborhoods.',
     pt: 'Só Brasil — cada linha é uma zona eleitoral, com rótulo no estilo dos mapas de apuração (ex.: Bela Vista, Piraporinha, Copacabana): apelido oficial do TRE quando conhecido; senão, principais bairros do TSE.',
   },
+  localTableHint: {
+    en: 'Brazil only — each row is a voting place (local de votação), aggregating every ballot box (BU/seção) at that building. Map matches the Nexo-style runoff point map.',
+    pt: 'Só Brasil — cada linha é um local de votação, somando todos os boletins de urna (BU/seção) daquele prédio. O mapa segue o estilo Nexo (pontos do 2º turno).',
+  },
+  localEmpty: {
+    en: 'No voting places match these filters. Select Brazil or turn on Include Brazil.',
+    pt: 'Nenhum local de votação com esses filtros. Selecione Brasil ou ligue Incluir Brasil.',
+  },
+  localLoading: {
+    en: 'Loading voting places…',
+    pt: 'Carregando locais de votação…',
+  },
+  localLoadError: {
+    en: 'Could not load voting places. Check your connection and try again.',
+    pt: 'Não foi possível carregar os locais de votação. Verifique a conexão e tente de novo.',
+  },
+  mapGrainLocais: { en: 'voting places', pt: 'locais de votação' },
   selectCountry: {
     en: 'Select a country',
     pt: 'Selecione um país',
@@ -387,6 +409,8 @@ const dict = {
   area: { en: 'Area', pt: 'Área' },
   city: { en: 'City', pt: 'Cidade' },
   suburb: { en: 'Neighborhood', pt: 'Bairro' },
+  local: { en: 'Polling place', pt: 'Local' },
+  locais: { en: 'polling places', pt: 'locais' },
   areas: { en: 'areas', pt: 'áreas' },
   cities: { en: 'cities', pt: 'cidades' },
   suburbs: { en: 'neighborhoods', pt: 'bairros' },

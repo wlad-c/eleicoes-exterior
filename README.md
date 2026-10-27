@@ -1,6 +1,6 @@
 # eleições exterior
 
-Bilingual (EN/PT) explorer for **Brazilian presidential results abroad** — **1st round and runoff in one view** — with 2026 ballot-box tallies compared to the matching 2022 TSE open-data round. Flávio Bolsonaro is compared to Jair Bolsonaro (2022). Optional domestic Brazil (states as Area, municipalities as City, electoral zones as Zona) is available via **Include Brazil** or selecting Brazil on the map (Brazil city/bairro grain still reflects 2026 1º until runoff domestic sync lands).
+Bilingual (EN/PT) explorer for **Brazilian presidential results abroad** — **1st round and runoff in one view** — with 2026 ballot-box tallies compared to the matching 2022 TSE open-data round. Flávio Bolsonaro is compared to Jair Bolsonaro (2022). Optional domestic Brazil (states as Area, municipalities as City, electoral zones as Bairro, voting places as Local) is available via **Include Brazil** or selecting Brazil on the map. The **Local** tab is a Nexo-style point map: each marker is a `local de votação`, aggregating every BU (seção) at that building for the 2026 runoff.
 
 ## Run locally
 
@@ -38,6 +38,7 @@ Manual seed sync (optional):
 ```bash
 npm run sync:tse:runoff                 # overseas ZZ 2º turno (6258)
 npm run sync:brazil:runoff              # domestic BR 2º (or -- --uf-only)
+npm run build:brazil-locais-runoff      # ~94k voting-place points (Nexo-style map)
 npm run scrape:press:runoff -- --apply  # legacy press BUs (skipped where TSE exists)
 npm run build:pages
 ```
