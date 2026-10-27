@@ -63,6 +63,9 @@ import {
   prefetchBrazilSuburbsHandler,
   useBrazilDomestic,
 } from './lib/useBrazilDomestic'
+import { prefetchBrazilLocais } from './lib/brazilLocais'
+import { useBrazilLocais } from './lib/useBrazilLocais'
+import type { BrazilLocalRow } from './lib/brazilLocais'
 
 const BRAZIL_ID = 'brazil'
 import { isPressOnlyWindow } from './lib/electionRound'
@@ -234,7 +237,15 @@ export default function App() {
     wantCities: wantBrazil,
     wantSuburbs:
       wantBrazil &&
-      (tableView === 'suburbs' || mapFocus.level === 'city'),
+      (tableView === 'suburbs' ||
+        tableView === 'locais' ||
+        mapFocus.level === 'city'),
+  })
+  // Nexo-style voting-place points (local de votação ≈ aggregated BUs).
+  const brazilLocais = useBrazilLocais({
+    enabled: wantBrazil && tableView === 'locais',
+    round: '2',
+    uf: mapFocus.level === 'uf' || mapFocus.level === 'city' ? mapFocus.uf : null,
   })
 
   const data = useMemo(() => {
@@ -392,6 +403,8 @@ export default function App() {
     showBrazilInTables &&
       (brazilHasSuburbData(brazilCountry) || brazilDomestic.suburbsLoading),
   )
+  /** Nexo-style voting-place map (2º turno locais / aggregated BUs). */
+  const showLocalTab = showBrazilInTables
 
   const regions = useMemo(
     () =>
@@ -549,10 +562,11 @@ export default function App() {
     // City / Bairro: prefetch Brazil grain when Brazil is already in scope.
     // Do not auto-check Incluir Brasil or force a Brazil country filter —
     // overseas-only Area/City views should stay overseas-only.
-    if (next === 'cities' || next === 'suburbs') {
+    if (next === 'cities' || next === 'suburbs' || next === 'locais') {
       if (brazilInFilter && (includeBrazil || hasCountryFilter)) {
         prefetchBrazilCities()
         if (next === 'suburbs') prefetchBrazilSuburbs()
+        if (next === 'locais') prefetchBrazilLocais('2')
       }
 
       if (brazilInFilter && (includeBrazil || countryIds.includes(BRAZIL_ID))) {
@@ -644,12 +658,18 @@ export default function App() {
   }
 
   function syncTabToFocus(focus: MapFocus) {
-    // Zooming out to Brazil while on City/Bairro keeps that tab — the map
-    // shows the national municipality choropleth instead of UFs.
+    // Zooming out to Brazil while on City/Bairro/Local keeps that tab — the
+    // map shows the matching national grain instead of forcing Área.
     if (
       focus.level === 'brazil' &&
-      (tableView === 'cities' || tableView === 'suburbs')
+      (tableView === 'cities' ||
+        tableView === 'suburbs' ||
+        tableView === 'locais')
     ) {
+      return
+    }
+    // Locais tab owns the Nexo-style point map at every Brazil drill level.
+    if (tableView === 'locais' && focus.level !== 'world') {
       return
     }
     const next = tableViewForFocus(focus)
@@ -741,6 +761,7 @@ export default function App() {
     if (pick.kind === 'uf') {
       setIncludeBrazil(true)
       prefetchBrazilCities()
+      if (tableView === 'locais') prefetchBrazilLocais('2')
       setHighlightId(pick.uf)
       applyCountryFilter(BRAZIL_ID)
       setSelectedAreaKeys([placeFilterKey(BRAZIL_ID, pick.uf)])
@@ -755,6 +776,7 @@ export default function App() {
       setIncludeBrazil(true)
       prefetchBrazilCities()
       prefetchBrazilSuburbs()
+      if (tableView === 'locais') prefetchBrazilLocais('2')
       setHighlightId(pick.cityCode)
       applyCountryFilter(BRAZIL_ID)
       setSelectedAreaKeys([placeFilterKey(BRAZIL_ID, pick.uf)])
@@ -765,7 +787,8 @@ export default function App() {
         cityCode: pick.cityCode,
       }
       setMapFocus(next)
-      syncTabToFocus(next)
+      // Stay on Locais when drilling the Nexo-style point map.
+      if (tableView !== 'locais') syncTabToFocus(next)
       return
     }
 
@@ -965,7 +988,11 @@ export default function App() {
   }
 
   const effectiveTableView: TableView =
-    tableView === 'suburbs' && !showSuburbTab ? 'countries' : tableView
+    tableView === 'suburbs' && !showSuburbTab
+      ? 'countries'
+      : tableView === 'locais' && !showLocalTab
+        ? 'countries'
+        : tableView
 
   const filteredAreaRows = useMemo(() => {
     if (effectiveTableView !== 'areas') return []
@@ -1095,6 +1122,53 @@ export default function App() {
     effectiveTableView,
   ])
 
+  const filteredLocalRows = useMemo(() => {
+    if (effectiveTableView !== 'locais') return []
+    const rows = (brazilLocais.locais ?? []).map((row) => {
+      const tagged = row as BrazilLocalRow & { countryId: string }
+      tagged.countryId = BRAZIL_ID
+      return tagged
+    })
+    const q = deferredQuery.trim()
+    return rows.filter((r) => {
+      const parent = countryById.get(BRAZIL_ID)
+      if (!rowMatchesAreaFilter(r, parent, selectedAreaKeys)) return false
+      if (!rowMatchesCityFilter(r, selectedCityKeys)) return false
+      if (mapFocus.level === 'city' && !r.code.startsWith(`${mapFocus.cityCode}-`)) {
+        return false
+      }
+      if (mapFocus.level === 'uf' && !r.code.startsWith(`${mapFocus.uf}-`)) {
+        return false
+      }
+      return matchesPlaceQuery(r, q)
+    })
+  }, [
+    brazilLocais.locais,
+    deferredQuery,
+    countryById,
+    effectiveTableView,
+    selectedAreaKeys,
+    selectedCityKeys,
+    mapFocus,
+  ])
+
+  const sortedLocais = useMemo(() => {
+    if (effectiveTableView !== 'locais') return []
+    const rows = [...filteredLocalRows]
+    const dir = sortDir === 'asc' ? 1 : -1
+    rows.sort(
+      (a, b) => compareCityRows(a, b, countryById, sortKey, lang) * dir,
+    )
+    return rows
+  }, [
+    filteredLocalRows,
+    sortKey,
+    sortDir,
+    lang,
+    countryById,
+    effectiveTableView,
+  ])
+
   // Drop highlight if the selected country is hidden again (world map only).
   const highlightVisible =
     mapFocus.level !== 'world' ||
@@ -1105,6 +1179,7 @@ export default function App() {
   const brazilAreas = brazilCountry?.areas ?? []
   const brazilCities = brazilCountry?.cities ?? []
   const brazilSuburbs = brazilCountry?.suburbs ?? []
+  const brazilLocaisRows = brazilLocais.locais ?? []
 
   const lulaShare = totals.valid ? (totals.lula / totals.valid) * 100 : 0
   const bolsoShare = totals.valid ? (totals.bolsonaro / totals.valid) * 100 : 0
@@ -1340,14 +1415,18 @@ export default function App() {
           areas={brazilAreas}
           cities={brazilCities}
           suburbs={brazilSuburbs}
+          locais={brazilLocaisRows}
           metric={metric}
           metricLabel={metricLabel(metric, lang)}
           lang={lang}
           focus={mapFocus}
           brazilGrain={
-            effectiveTableView === 'cities' || effectiveTableView === 'suburbs'
-              ? 'cities'
-              : 'ufs'
+            effectiveTableView === 'locais'
+              ? 'locais'
+              : effectiveTableView === 'cities' ||
+                  effectiveTableView === 'suburbs'
+                ? 'cities'
+                : 'ufs'
           }
           highlightId={activeHighlight}
           onPick={onMapPick}
@@ -1409,6 +1488,27 @@ export default function App() {
                 {t('tabSuburbs', lang)}
               </button>
             ) : null}
+            {showLocalTab ? (
+              <button
+                type="button"
+                role="tab"
+                className="lang-btn control px-3 py-1.5 text-sm font-semibold"
+                aria-selected={effectiveTableView === 'locais'}
+                title={t('localTableHint', lang)}
+                onMouseEnter={() => prefetchBrazilLocais('2')}
+                onFocus={() => prefetchBrazilLocais('2')}
+                onClick={() => {
+                  if (!includeBrazil) setIncludeBrazil(true)
+                  if (mapFocus.level === 'world') {
+                    setMapFocus({ level: 'brazil' })
+                    setHighlightId(BRAZIL_ID)
+                  }
+                  switchTableView('locais')
+                }}
+              >
+                {t('tabLocais', lang)}
+              </button>
+            ) : null}
           </div>
 
           <div className="filter-row filter-row--primary">
@@ -1420,7 +1520,9 @@ export default function App() {
                     ? t('searchCity', lang)
                     : effectiveTableView === 'suburbs'
                       ? t('searchSuburb', lang)
-                      : t('search', lang)}
+                      : effectiveTableView === 'locais'
+                        ? t('searchLocal', lang)
+                        : t('search', lang)}
               </span>
               <span className="filter-search-wrap mt-1">
                 <input
@@ -1434,7 +1536,9 @@ export default function App() {
                         ? t('searchCity', lang)
                         : effectiveTableView === 'suburbs'
                           ? t('searchSuburb', lang)
-                          : t('search', lang)
+                          : effectiveTableView === 'locais'
+                            ? t('searchLocal', lang)
+                            : t('search', lang)
                   }
                 />
                 {query ? (
@@ -1542,6 +1646,9 @@ export default function App() {
                 ) : null}
                 {effectiveTableView === 'suburbs' ? (
                   <option value="city">{t('suburb', lang)}</option>
+                ) : null}
+                {effectiveTableView === 'locais' ? (
+                  <option value="city">{t('local', lang)}</option>
                 ) : null}
                 <option value="votes2026">{t('votes2026', lang)}</option>
                 <option value="votes2022">{t('votes2022', lang)}</option>
@@ -1670,7 +1777,9 @@ export default function App() {
                 ? sortedAreas
                 : effectiveTableView === 'suburbs'
                   ? sortedSuburbs
-                  : sortedCities
+                  : effectiveTableView === 'locais'
+                    ? sortedLocais
+                    : sortedCities
             }
             countries={countryById}
             lang={lang}
@@ -1681,17 +1790,24 @@ export default function App() {
                 !brazilDomestic.cities?.length) ||
               (effectiveTableView === 'suburbs' &&
                 brazilDomestic.suburbsLoading &&
-                !brazilDomestic.suburbs?.length)
+                !brazilDomestic.suburbs?.length) ||
+              (effectiveTableView === 'locais' &&
+                brazilLocais.loading &&
+                !brazilLocais.locais?.length)
             }
             loadError={
               effectiveTableView === 'suburbs'
                 ? brazilDomestic.suburbsError
-                : null
+                : effectiveTableView === 'locais'
+                  ? brazilLocais.error
+                  : null
             }
             onRetryLoad={
               effectiveTableView === 'suburbs'
                 ? brazilDomestic.retrySuburbs
-                : undefined
+                : effectiveTableView === 'locais'
+                  ? brazilLocais.retry
+                  : undefined
             }
             showCountry
             placeKind={
@@ -1699,7 +1815,9 @@ export default function App() {
                 ? 'area'
                 : effectiveTableView === 'suburbs'
                   ? 'suburb'
-                  : 'city'
+                  : effectiveTableView === 'locais'
+                    ? 'local'
+                    : 'city'
             }
             sortKey={sortKey}
             sortDir={sortDir}

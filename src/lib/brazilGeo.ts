@@ -256,7 +256,7 @@ export function parentFocus(focus: MapFocus): MapFocus {
 
 export function tableViewForFocus(
   focus: MapFocus,
-): 'countries' | 'areas' | 'cities' | 'suburbs' {
+): 'countries' | 'areas' | 'cities' | 'suburbs' | 'locais' {
   switch (focus.level) {
     case 'brazil':
       return 'areas'

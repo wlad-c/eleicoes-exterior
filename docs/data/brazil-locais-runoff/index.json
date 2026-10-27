@@ -1,0 +1,175 @@
+{
+  "countryId": "brazil",
+  "grain": "local",
+  "round": 2,
+  "election": "6258",
+  "labelSource": "votacao_secao (NR_LOCAL_VOTACAO) + eleitorado_local_votacao coords",
+  "updatedAt": "2026-10-27T07:17:42.546Z",
+  "count": 94539,
+  "withCoords": 92979,
+  "with2022": 87773,
+  "ufs": [
+    {
+      "uf": "AC",
+      "count": 668,
+      "withCoords": 661,
+      "bytes": 89046
+    },
+    {
+      "uf": "AL",
+      "count": 1080,
+      "withCoords": 1057,
+      "bytes": 151999
+    },
+    {
+      "uf": "AP",
+      "count": 376,
+      "withCoords": 322,
+      "bytes": 50808
+    },
+    {
+      "uf": "AM",
+      "count": 1631,
+      "withCoords": 1612,
+      "bytes": 207146
+    },
+    {
+      "uf": "BA",
+      "count": 9246,
+      "withCoords": 9084,
+      "bytes": 1312312
+    },
+    {
+      "uf": "CE",
+      "count": 6724,
+      "withCoords": 6650,
+      "bytes": 891421
+    },
+    {
+      "uf": "DF",
+      "count": 622,
+      "withCoords": 622,
+      "bytes": 85029
+    },
+    {
+      "uf": "ES",
+      "count": 1767,
+      "withCoords": 1761,
+      "bytes": 236513
+    },
+    {
+      "uf": "GO",
+      "count": 2497,
+      "withCoords": 2457,
+      "bytes": 382624
+    },
+    {
+      "uf": "MA",
+      "count": 5834,
+      "withCoords": 5762,
+      "bytes": 877789
+    },
+    {
+      "uf": "MT",
+      "count": 1515,
+      "withCoords": 1485,
+      "bytes": 220530
+    },
+    {
+      "uf": "MS",
+      "count": 1033,
+      "withCoords": 1013,
+      "bytes": 140666
+    },
+    {
+      "uf": "MG",
+      "count": 10091,
+      "withCoords": 9954,
+      "bytes": 1414476
+    },
+    {
+      "uf": "PA",
+      "count": 5844,
+      "withCoords": 5670,
+      "bytes": 733767
+    },
+    {
+      "uf": "PB",
+      "count": 1844,
+      "withCoords": 1782,
+      "bytes": 256436
+    },
+    {
+      "uf": "PR",
+      "count": 4815,
+      "withCoords": 4738,
+      "bytes": 693202
+    },
+    {
+      "uf": "PE",
+      "count": 3386,
+      "withCoords": 3333,
+      "bytes": 464385
+    },
+    {
+      "uf": "PI",
+      "count": 3422,
+      "withCoords": 3277,
+      "bytes": 461619
+    },
+    {
+      "uf": "RJ",
+      "count": 5034,
+      "withCoords": 5030,
+      "bytes": 714655
+    },
+    {
+      "uf": "RN",
+      "count": 1572,
+      "withCoords": 1518,
+      "bytes": 215919
+    },
+    {
+      "uf": "RS",
+      "count": 7796,
+      "withCoords": 7699,
+      "bytes": 1073174
+    },
+    {
+      "uf": "RO",
+      "count": 677,
+      "withCoords": 663,
+      "bytes": 99694
+    },
+    {
+      "uf": "RR",
+      "count": 367,
+      "withCoords": 334,
+      "bytes": 49726
+    },
+    {
+      "uf": "SC",
+      "count": 3478,
+      "withCoords": 3419,
+      "bytes": 500391
+    },
+    {
+      "uf": "SP",
+      "count": 11079,
+      "withCoords": 10988,
+      "bytes": 1534032
+    },
+    {
+      "uf": "SE",
+      "count": 1214,
+      "withCoords": 1176,
+      "bytes": 172424
+    },
+    {
+      "uf": "TO",
+      "count": 927,
+      "withCoords": 912,
+      "bytes": 130106
+    }
+  ]
+}

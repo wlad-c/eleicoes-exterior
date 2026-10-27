@@ -1,4 +1,4 @@
-import { geoEqualEarth, geoPath, geoCentroid } from 'd3-geo'
+import { geoEqualEarth, geoPath, geoCentroid, type GeoProjection } from 'd3-geo'
 import {
   useCallback,
   useEffect,
@@ -51,6 +51,11 @@ import {
   type MapPick,
 } from '../lib/brazilGeo'
 import { suburbVoronoiCells } from '../lib/suburbVoronoi'
+import {
+  locaisForCity,
+  locaisForUf,
+  type BrazilLocalRow,
+} from '../lib/brazilLocais'
 import { t } from '../lib/i18n'
 import { numericIdForIso3 } from '../lib/iso'
 import type { CityResult, CountryResult, Lang, MapMetric } from '../types'
@@ -63,6 +68,11 @@ type Props = {
   cities?: CityResult[]
   /** Brazil neighborhoods / zonas (Bairro tab). */
   suburbs?: CityResult[]
+  /**
+   * Brazil voting places (Local tab) — one point per local de votação,
+   * aggregating BUs at that building (Nexo-style runoff map).
+   */
+  locais?: BrazilLocalRow[]
   metric: MapMetric
   /** Round-aware display name for `metric`; defaults to the plain label. */
   metricLabel?: string
@@ -70,9 +80,10 @@ type Props = {
   focus: MapFocus
   /**
    * At Brazil focus: `ufs` = state choropleth (Area tab);
-   * `cities` = map of municipalities that have neighborhood (zona) data.
+   * `cities` = map of municipalities that have neighborhood (zona) data;
+   * `locais` = voting-place point map (Nexo-style).
    */
-  brazilGrain?: 'ufs' | 'cities'
+  brazilGrain?: 'ufs' | 'cities' | 'locais'
   highlightId: string | null
   onPick: (pick: MapPick) => void
   onBack: () => void
@@ -119,11 +130,23 @@ type CanvasCity = {
   multiZone?: boolean
 }
 
+/** Canvas-backed voting-place dots (Local tab / Nexo-style map). */
+type CanvasPoint = {
+  id: string
+  x: number
+  y: number
+  r: number
+  row: BrazilLocalRow
+  label: string
+  pick: Extract<MapPick, { kind: 'suburb' }>
+}
+
 export function WorldMap({
   countries,
   areas = [],
   cities = [],
   suburbs = [],
+  locais = [],
   metric,
   metricLabel,
   lang,
@@ -141,6 +164,12 @@ export function WorldMap({
   const canvasHitRef = useRef<{
     paths: Path2D[]
     cities: CanvasCity[]
+  } | null>(null)
+  const canvasPointsHitRef = useRef<{
+    points: CanvasPoint[]
+    /** Spatial hash: cell key → point indices. */
+    grid: Map<string, number[]>
+    cell: number
   } | null>(null)
   const viewRef = useRef<MapView>(VIEW_RESET)
   const dragRef = useRef<{
@@ -464,6 +493,11 @@ export function WorldMap({
   )
 
   const colorRows: VoteLike[] = useMemo(() => {
+    if (brazilGrain === 'locais') {
+      if (focus.level === 'city') return locaisForCity(locais, focus.cityCode)
+      if (focus.level === 'uf') return locaisForUf(locais, focus.uf)
+      if (focus.level === 'brazil') return locais
+    }
     if (focus.level === 'brazil') {
       // City tab: colour every municipality on the national choropleth.
       return brazilGrain === 'cities' ? cities : areas
@@ -482,6 +516,7 @@ export function WorldMap({
     areas,
     cities,
     suburbs,
+    locais,
     countries,
     neighborhoodCities,
   ])
@@ -520,8 +555,33 @@ export function WorldMap({
     return m
   }, [cities])
 
-  const { drawn, fitReady, canvasCities } = useMemo(() => {
+  const { drawn, fitReady, canvasCities, canvasPoints } = useMemo(() => {
     const emptyCanvas: CanvasCity[] = []
+    const emptyPoints: CanvasPoint[] = []
+
+    const projectLocais = (
+      rows: BrazilLocalRow[],
+      projection: GeoProjection,
+      radius: number,
+    ): CanvasPoint[] => {
+      const out: CanvasPoint[] = []
+      for (const row of rows) {
+        if (row.lat == null || row.lon == null) continue
+        const pt = projection([row.lon, row.lat])
+        if (!pt) continue
+        out.push({
+          id: row.code,
+          x: pt[0],
+          y: pt[1],
+          r: radius,
+          row,
+          label: cityDisplayName(row, lang),
+          pick: { kind: 'suburb', suburbCode: row.code },
+        })
+      }
+      return out
+    }
+
     if (focus.level === 'world') {
       const topo = worldAtlas as unknown as Topology<{
         countries: GeometryCollection
@@ -550,7 +610,12 @@ export function WorldMap({
             : { kind: 'background' },
         }
       })
-      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+      return {
+        drawn: items,
+        fitReady: true,
+        canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
+      }
     }
 
     if (focus.level === 'brazil') {
@@ -559,10 +624,33 @@ export function WorldMap({
           drawn: [] as DrawnFeature[],
           fitReady: false,
           canvasCities: emptyCanvas,
+          canvasPoints: emptyPoints,
         }
       }
       const projection = geoEqualEarth().fitSize([width, height], ufMesh)
       const path = geoPath(projection)
+
+      // Local tab: UF outlines + voting-place dots (Nexo-style national map).
+      if (brazilGrain === 'locais') {
+        const items: DrawnFeature[] = ufMesh.features.map((f) => {
+          const uf = f.properties.uf
+          const row = areaByUf.get(uf)
+          return {
+            id: `__uf-${uf}`,
+            d: path(f) ?? '',
+            row: undefined,
+            label: row ? cityDisplayName(row, lang) : uf,
+            pick: { kind: 'uf', uf },
+          }
+        })
+        const points = projectLocais(locais, projection, 1.65)
+        return {
+          drawn: items,
+          fitReady: true,
+          canvasCities: emptyCanvas,
+          canvasPoints: points,
+        }
+      }
 
       // City / Bairro tabs: canvas municipality fills + SVG UF outlines.
       // ~5.5k SVG <path> nodes block the main thread; canvas keeps accuracy.
@@ -572,6 +660,7 @@ export function WorldMap({
             drawn: [] as DrawnFeature[],
             fitReady: false,
             canvasCities: emptyCanvas,
+            canvasPoints: emptyPoints,
           }
         }
         const multi = new Set(neighborhoodCities.map((c) => c.code))
@@ -599,7 +688,12 @@ export function WorldMap({
             pick: { kind: 'uf', uf },
           })
         }
-        return { drawn: items, fitReady: true, canvasCities: citiesLayer }
+        return {
+          drawn: items,
+          fitReady: true,
+          canvasCities: citiesLayer,
+          canvasPoints: emptyPoints,
+        }
       }
 
       const items: DrawnFeature[] = ufMesh.features.map((f) => {
@@ -613,7 +707,12 @@ export function WorldMap({
           pick: { kind: 'uf', uf },
         }
       })
-      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+      return {
+        drawn: items,
+        fitReady: true,
+        canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
+      }
     }
 
     if (focus.level === 'uf') {
@@ -622,10 +721,36 @@ export function WorldMap({
           drawn: [] as DrawnFeature[],
           fitReady: false,
           canvasCities: emptyCanvas,
+          canvasPoints: emptyPoints,
         }
       }
       const projection = geoEqualEarth().fitSize([width, height], munMesh)
       const path = geoPath(projection)
+
+      if (brazilGrain === 'locais') {
+        const items: DrawnFeature[] = munMesh.features.map((f) => {
+          const code = f.properties.id
+          return {
+            id: `__mun-${code}`,
+            d: path(f) ?? '',
+            row: undefined,
+            label: code,
+            pick: { kind: 'city', uf: focus.uf, cityCode: code },
+          }
+        })
+        const points = projectLocais(
+          locaisForUf(locais, focus.uf),
+          projection,
+          2.1,
+        )
+        return {
+          drawn: items,
+          fitReady: true,
+          canvasCities: emptyCanvas,
+          canvasPoints: points,
+        }
+      }
+
       const multi = new Set(neighborhoodCities.map((c) => c.code))
       const items: DrawnFeature[] = munMesh.features.map((f) => {
         const code = f.properties.id
@@ -640,7 +765,55 @@ export function WorldMap({
           multiZone: multi.has(code),
         }
       })
-      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+      return {
+        drawn: items,
+        fitReady: true,
+        canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
+      }
+    }
+
+    // City → locais (Local tab): outline + voting-place dots.
+    if (brazilGrain === 'locais') {
+      if (!cityFeature) {
+        return {
+          drawn: [] as DrawnFeature[],
+          fitReady: false,
+          canvasCities: emptyCanvas,
+          canvasPoints: emptyPoints,
+        }
+      }
+      const pad = Math.max(16, Math.round(Math.min(width, height) * 0.04))
+      const projection = geoEqualEarth().fitExtent(
+        [
+          [pad, pad],
+          [width - pad, height - pad],
+        ],
+        cityFeature,
+      )
+      const path = geoPath(projection)
+      const cityRow = cityByCode.get(focus.cityCode)
+      const outlineD = path(cityFeature) ?? ''
+      const items: DrawnFeature[] = [
+        {
+          id: `__outline-${focus.cityCode}`,
+          d: outlineD,
+          row: undefined,
+          label: cityRow ? cityDisplayName(cityRow, lang) : focus.cityCode,
+          pick: { kind: 'background' },
+        },
+      ]
+      const points = projectLocais(
+        locaisForCity(locais, focus.cityCode),
+        projection,
+        3.2,
+      )
+      return {
+        drawn: items,
+        fitReady: true,
+        canvasCities: emptyCanvas,
+        canvasPoints: points,
+      }
     }
 
     // City → neighborhoods: Voronoi polygons from TSE voting-local centroids
@@ -651,6 +824,7 @@ export function WorldMap({
         drawn: [] as DrawnFeature[],
         fitReady: false,
         canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
       }
     }
     const pad = Math.max(16, Math.round(Math.min(width, height) * 0.04))
@@ -682,6 +856,7 @@ export function WorldMap({
         ] as DrawnFeature[],
         fitReady: true,
         canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
       }
     }
 
@@ -740,7 +915,12 @@ export function WorldMap({
             circle: { cx: fall[0], cy: fall[1], r: 6 },
           })
         }
-        return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+        return {
+          drawn: items,
+          fitReady: true,
+          canvasCities: emptyCanvas,
+          canvasPoints: emptyPoints,
+        }
       }
 
       // Voronoi failed (degenerate sites): fall back to sized bubbles.
@@ -775,7 +955,12 @@ export function WorldMap({
           circle: { cx: cxp, cy: cyp, r },
         })
       }
-      return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+      return {
+        drawn: items,
+        fitReady: true,
+        canvasCities: emptyCanvas,
+        canvasPoints: emptyPoints,
+      }
     }
 
     // Fallback grid only when coords are mostly missing.
@@ -801,7 +986,12 @@ export function WorldMap({
         circle: { cx: pcx + ox, cy: pcy + oy, r },
       })
     })
-    return { drawn: items, fitReady: true, canvasCities: emptyCanvas }
+    return {
+      drawn: items,
+      fitReady: true,
+      canvasCities: emptyCanvas,
+      canvasPoints: emptyPoints,
+    }
   }, [
     focus,
     brazilGrain,
@@ -815,15 +1005,18 @@ export function WorldMap({
     areaByUf,
     cityByCode,
     suburbs,
+    locais,
     neighborhoodCities,
     lang,
   ])
 
   const useCanvasCities = canvasCities.length > 0
+  const useCanvasPoints = canvasPoints.length > 0
+  const useCanvas = useCanvasCities || useCanvasPoints
 
-  // City canvas sits under a pointer-events:none SVG — attach wheel there too.
+  // City/points canvas sits under a pointer-events:none SVG — attach wheel there too.
   useEffect(() => {
-    if (!useCanvasCities) return
+    if (!useCanvas) return
     const canvas = canvasRef.current
     if (!canvas) return
     const onWheelNative = (e: WheelEvent) => {
@@ -842,13 +1035,14 @@ export function WorldMap({
     }
     canvas.addEventListener('wheel', onWheelNative, { passive: false })
     return () => canvas.removeEventListener('wheel', onWheelNative)
-  }, [useCanvasCities, applyZoom, clearTip, svgPoint])
+  }, [useCanvas, applyZoom, clearTip, svgPoint])
 
-  // Paint municipality fills on canvas (national City tab).
+  // Paint municipality fills and/or voting-place dots on canvas.
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || !useCanvasCities) {
+    if (!canvas || !useCanvas) {
       canvasHitRef.current = null
+      canvasPointsHitRef.current = null
       return
     }
     const dpr = Math.min(2, window.devicePixelRatio || 1)
@@ -874,7 +1068,6 @@ export function WorldMap({
       return css.getPropertyValue(m[1]).trim() || fallback
     }
 
-    const paths: Path2D[] = new Array(canvasCities.length)
     const stroke = resolveColor(
       css.getPropertyValue('--map-stroke'),
       '#1a1a1a',
@@ -885,44 +1078,116 @@ export function WorldMap({
     )
     const pending = resolveColor(PENDING_FILL, '#c5cec6')
     const nodata = resolveColor(NO_DATA_FILL, '#dce3dc')
-
-    for (let i = 0; i < canvasCities.length; i++) {
-      const f = canvasCities[i]
-      const p = new Path2D(f.d)
-      paths[i] = p
-      const value = f.row ? metricValue(f.row, metric) : null
-      let fill = nodata
-      if (f.row) {
-        fill =
-          value != null ? resolveColor(colorize(value), pending) : pending
-      }
-      ctx.fillStyle = fill
-      ctx.fill(p)
-      const isHi = !!f.row && highlightId === f.id
-      ctx.strokeStyle = isHi ? strokeHi : stroke
-      ctx.lineWidth = isHi
-        ? 1.6 / view.k
-        : f.multiZone
-          ? 1.15 / view.k
-          : 0.55 / view.k
-      ctx.stroke(p)
-    }
-    // UF borders on top (same as previous SVG outline layer).
     const ink = resolveColor(css.getPropertyValue('--ink'), '#111')
-    ctx.strokeStyle = ink
-    ctx.globalAlpha = 0.7
-    ctx.lineWidth = 1.15 / view.k
-    for (const f of drawn) {
-      if (!f.id.startsWith('__uf-') || !f.d) continue
-      ctx.stroke(new Path2D(f.d))
+    const paper = resolveColor(
+      css.getPropertyValue('--paper-deep'),
+      '#e8ece8',
+    )
+
+    if (useCanvasCities) {
+      const paths: Path2D[] = new Array(canvasCities.length)
+      for (let i = 0; i < canvasCities.length; i++) {
+        const f = canvasCities[i]
+        const p = new Path2D(f.d)
+        paths[i] = p
+        const value = f.row ? metricValue(f.row, metric) : null
+        let fill = nodata
+        if (f.row) {
+          fill =
+            value != null ? resolveColor(colorize(value), pending) : pending
+        }
+        ctx.fillStyle = fill
+        ctx.fill(p)
+        const isHi = !!f.row && highlightId === f.id
+        ctx.strokeStyle = isHi ? strokeHi : stroke
+        ctx.lineWidth = isHi
+          ? 1.6 / view.k
+          : f.multiZone
+            ? 1.15 / view.k
+            : 0.55 / view.k
+        ctx.stroke(p)
+      }
+      // UF borders on top (same as previous SVG outline layer).
+      ctx.strokeStyle = ink
+      ctx.globalAlpha = 0.7
+      ctx.lineWidth = 1.15 / view.k
+      for (const f of drawn) {
+        if (!f.id.startsWith('__uf-') || !f.d) continue
+        ctx.stroke(new Path2D(f.d))
+      }
+      ctx.globalAlpha = 1
+      canvasHitRef.current = { paths, cities: canvasCities }
+    } else {
+      canvasHitRef.current = null
     }
-    ctx.globalAlpha = 1
+
+    if (useCanvasPoints) {
+      // Light UF / mun / city outlines behind dots.
+      ctx.strokeStyle = ink
+      ctx.fillStyle = paper
+      ctx.globalAlpha = 0.55
+      ctx.lineWidth = 0.9 / view.k
+      for (const f of drawn) {
+        if (!f.d) continue
+        if (
+          !(
+            f.id.startsWith('__uf-') ||
+            f.id.startsWith('__mun-') ||
+            f.id.startsWith('__outline-')
+          )
+        ) {
+          continue
+        }
+        const p = new Path2D(f.d)
+        if (f.id.startsWith('__outline-')) {
+          ctx.globalAlpha = 0.85
+          ctx.fill(p)
+          ctx.globalAlpha = 0.55
+        }
+        ctx.stroke(p)
+      }
+      ctx.globalAlpha = 1
+
+      const grid = new Map<string, number[]>()
+      const cell = Math.max(4, 10 / Math.sqrt(view.k))
+      for (let i = 0; i < canvasPoints.length; i++) {
+        const pt = canvasPoints[i]
+        const value = metricValue(pt.row, metric)
+        const fill =
+          value != null ? resolveColor(colorize(value), pending) : pending
+        const isHi = highlightId === pt.id
+        const r = (isHi ? pt.r * 1.45 : pt.r) / Math.sqrt(Math.max(1, view.k * 0.35))
+        ctx.beginPath()
+        ctx.arc(pt.x, pt.y, Math.max(1.1, r), 0, Math.PI * 2)
+        ctx.fillStyle = fill
+        ctx.fill()
+        if (isHi || view.k > 2.5) {
+          ctx.strokeStyle = isHi ? strokeHi : ink
+          ctx.globalAlpha = isHi ? 1 : 0.25
+          ctx.lineWidth = (isHi ? 1.4 : 0.6) / view.k
+          ctx.stroke()
+          ctx.globalAlpha = 1
+        }
+        const gx = Math.floor(pt.x / cell)
+        const gy = Math.floor(pt.y / cell)
+        const key = `${gx},${gy}`
+        const bag = grid.get(key)
+        if (bag) bag.push(i)
+        else grid.set(key, [i])
+      }
+      canvasPointsHitRef.current = { points: canvasPoints, grid, cell }
+    } else {
+      canvasPointsHitRef.current = null
+    }
+
     ctx.restore()
-    canvasHitRef.current = { paths, cities: canvasCities }
   }, [
     canvasCities,
+    canvasPoints,
     drawn,
+    useCanvas,
     useCanvasCities,
+    useCanvasPoints,
     width,
     height,
     view,
@@ -931,18 +1196,62 @@ export function WorldMap({
     highlightId,
   ])
 
-  const hitCanvasCity = useCallback(
-    (clientX: number, clientY: number): CanvasCity | null => {
-      const hit = canvasHitRef.current
+  const canvasLocalPoint = useCallback(
+    (clientX: number, clientY: number) => {
       const canvas = canvasRef.current
-      if (!hit || !canvas) return null
+      if (!canvas) return null
       const rect = canvas.getBoundingClientRect()
       if (rect.width <= 0 || rect.height <= 0) return null
       const sx = ((clientX - rect.left) / rect.width) * width
       const sy = ((clientY - rect.top) / rect.height) * height
-      // Inverse of translate(view) scale(k): map screen → projected space.
-      const x = (sx - view.x) / view.k
-      const y = (sy - view.y) / view.k
+      return {
+        x: (sx - view.x) / view.k,
+        y: (sy - view.y) / view.k,
+      }
+    },
+    [width, height, view.x, view.y, view.k],
+  )
+
+  const hitCanvasPoint = useCallback(
+    (clientX: number, clientY: number): CanvasPoint | null => {
+      const hit = canvasPointsHitRef.current
+      const local = canvasLocalPoint(clientX, clientY)
+      if (!hit || !local) return null
+      const { x, y } = local
+      const gx = Math.floor(x / hit.cell)
+      const gy = Math.floor(y / hit.cell)
+      let best: CanvasPoint | null = null
+      let bestD = Infinity
+      const radius = Math.max(4, 8 / Math.sqrt(view.k))
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const bag = hit.grid.get(`${gx + dx},${gy + dy}`)
+          if (!bag) continue
+          for (const i of bag) {
+            const pt = hit.points[i]
+            const ddx = pt.x - x
+            const ddy = pt.y - y
+            const d = ddx * ddx + ddy * ddy
+            const maxR = Math.max(pt.r, radius)
+            if (d <= maxR * maxR && d < bestD) {
+              bestD = d
+              best = pt
+            }
+          }
+        }
+      }
+      return best
+    },
+    [canvasLocalPoint, view.k],
+  )
+
+  const hitCanvasCity = useCallback(
+    (clientX: number, clientY: number): CanvasCity | null => {
+      const hit = canvasHitRef.current
+      const canvas = canvasRef.current
+      const local = canvasLocalPoint(clientX, clientY)
+      if (!hit || !canvas || !local) return null
+      const { x, y } = local
       const ctx = canvas.getContext('2d')
       if (!ctx) return null
       // isPointInPath applies the current CTM; Path2D is in logical pixels.
@@ -958,23 +1267,34 @@ export function WorldMap({
       ctx.restore()
       return found
     },
-    [width, height, view.x, view.y, view.k],
+    [canvasLocalPoint],
   )
 
   const onCanvasPointerMove = useCallback(
     (e: ReactPointerEvent<HTMLCanvasElement>) => {
       if (dragRef.current) return
+      const point = hitCanvasPoint(e.clientX, e.clientY)
+      if (point) {
+        showTipAt(e, point.label, point.row)
+        return
+      }
       const city = hitCanvasCity(e.clientX, e.clientY)
       if (city?.row) showTipAt(e, city.label, city.row)
       else clearTip()
     },
-    [hitCanvasCity, showTipAt, clearTip],
+    [hitCanvasPoint, hitCanvasCity, showTipAt, clearTip],
   )
 
   const onCanvasClick = useCallback(
     (e: ReactMouseEvent<HTMLCanvasElement>) => {
       if (suppressClickRef.current) {
         suppressClickRef.current = false
+        return
+      }
+      const point = hitCanvasPoint(e.clientX, e.clientY)
+      if (point) {
+        showTipAt(e, point.label, point.row)
+        onPick(point.pick)
         return
       }
       const city = hitCanvasCity(e.clientX, e.clientY)
@@ -987,7 +1307,7 @@ export function WorldMap({
       else clearTip()
       onPick(city.pick)
     },
-    [hitCanvasCity, showTipAt, clearTip, onPick],
+    [hitCanvasPoint, hitCanvasCity, showTipAt, clearTip, onPick],
   )
 
   const onCanvasPointerDown = useCallback(
@@ -1113,7 +1433,7 @@ export function WorldMap({
           </button>
         </div>
 
-        {useCanvasCities ? (
+        {useCanvas ? (
           <canvas
             ref={canvasRef}
             className={`map-cities-canvas${view.k > 1.001 ? ' cursor-grab' : ' cursor-pointer'}`}
@@ -1131,13 +1451,13 @@ export function WorldMap({
           viewBox={`0 0 ${width} ${height}`}
           role="img"
           aria-label={t('map', lang)}
-          className={`map-svg${view.k > 1.001 ? ' cursor-grab' : ''}${useCanvasCities ? ' map-svg--overlay' : ''}`}
+          className={`map-svg${view.k > 1.001 ? ' cursor-grab' : ''}${useCanvas ? ' map-svg--overlay' : ''}`}
           onPointerDown={onStagePointerDown}
           onPointerMove={onStagePointerMove}
           onPointerUp={endStageDrag}
           onPointerCancel={endStageDrag}
         >
-          {!useCanvasCities ? (
+          {!useCanvas ? (
             <rect
               width={width}
               height={height}
@@ -1168,7 +1488,7 @@ export function WorldMap({
             </text>
           ) : null}
           <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
-            {!useCanvasCities
+            {!useCanvas
               ? (() => {
                   const renderFeature = (f: DrawnFeature, key = f.id) => {
                     const value = f.row ? metricValue(f.row, metric) : null
@@ -1383,9 +1703,12 @@ function focusLabel(
   areas: CityResult[],
   cities: CityResult[],
   lang: Lang,
-  brazilGrain: 'ufs' | 'cities' = 'ufs',
+  brazilGrain: 'ufs' | 'cities' | 'locais' = 'ufs',
 ): string {
   if (focus.level === 'brazil') {
+    if (brazilGrain === 'locais') {
+      return `${t('Brazil', lang)} · ${t('mapGrainLocais', lang)}`
+    }
     if (brazilGrain === 'cities') {
       return `${t('Brazil', lang)} · ${t('mapGrainCities', lang)}`
     }
@@ -1394,11 +1717,17 @@ function focusLabel(
   if (focus.level === 'uf') {
     const area = areas.find((a) => a.code === focus.uf)
     const name = area ? cityDisplayName(area, lang) : focus.uf
+    if (brazilGrain === 'locais') {
+      return `${name} · ${t('mapGrainLocais', lang)}`
+    }
     return `${name} · ${t('mapGrainCities', lang)}`
   }
   if (focus.level === 'city') {
     const city = cities.find((c) => c.code === focus.cityCode)
     const name = city ? cityDisplayName(city, lang) : focus.cityCode
+    if (brazilGrain === 'locais') {
+      return `${name} · ${t('mapGrainLocais', lang)}`
+    }
     return `${name} · ${t('mapGrainNeighborhoods', lang)}`
   }
   return ''

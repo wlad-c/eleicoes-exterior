@@ -13,9 +13,15 @@ import {
   type SortKey,
 } from '../types'
 
-export type TableView = 'countries' | 'areas' | 'cities' | 'suburbs'
+export type TableView = 'countries' | 'areas' | 'cities' | 'suburbs' | 'locais'
 
-const TABLE_VIEWS: TableView[] = ['countries', 'areas', 'cities', 'suburbs']
+const TABLE_VIEWS: TableView[] = [
+  'countries',
+  'areas',
+  'cities',
+  'suburbs',
+  'locais',
+]
 
 const SORT_KEYS: SortKey[] = [
   'votes2026',

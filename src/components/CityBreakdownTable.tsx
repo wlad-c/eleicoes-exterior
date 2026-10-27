@@ -83,8 +83,8 @@ type Props = {
   loadError?: string | null
   onRetryLoad?: () => void
   showCountry: boolean
-  /** Column label + empty/footer wording for Area / City / Suburb tabs. */
-  placeKind?: 'area' | 'city' | 'suburb'
+  /** Column label + empty/footer wording for Area / City / Suburb / Local tabs. */
+  placeKind?: 'area' | 'city' | 'suburb' | 'local'
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   onSort: (key: SortKey) => void
@@ -133,8 +133,8 @@ export function CityBreakdownTable({
   const shareOpts = compactMetrics ? { compact: true } : undefined
   /** Area tab: Brazilian UFs always use uppercase abbrevs (SP, RJ, DF). */
   const preferBrazilUf = placeKind === 'area'
-  const tableKindClass =
-    placeKind === 'suburb' ? 'results-table--suburb' : ''
+  const isLocalGrain = placeKind === 'suburb' || placeKind === 'local'
+  const tableKindClass = isLocalGrain ? 'results-table--suburb' : ''
   const countryColClass = flagOnlyLabels
     ? 'cell-truncate-flag'
     : 'cell-truncate-abbr'
@@ -156,8 +156,9 @@ export function CityBreakdownTable({
    * A single element with overflow-x+y auto still drops sideways gestures on
    * Safari when sticky columns are present.
    */
-  const rowEstimatePx =
-    placeKind === 'suburb' ? ROW_ESTIMATE_PX + 28 : ROW_ESTIMATE_PX + 4
+  const rowEstimatePx = isLocalGrain
+    ? ROW_ESTIMATE_PX + 28
+    : ROW_ESTIMATE_PX + 4
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () =>
@@ -566,15 +567,31 @@ export function CityBreakdownTable({
   if (loading) {
     return (
       <p className="py-8 text-center text-[var(--ink-muted)]">
-        {t(placeKind === 'suburb' ? 'suburbLoading' : 'cityLoading', lang)}
+        {t(
+          placeKind === 'local'
+            ? 'localLoading'
+            : placeKind === 'suburb'
+              ? 'suburbLoading'
+              : 'cityLoading',
+          lang,
+        )}
       </p>
     )
   }
 
-  if (loadError && rows.length === 0 && placeKind === 'suburb') {
+  if (
+    loadError &&
+    rows.length === 0 &&
+    (placeKind === 'suburb' || placeKind === 'local')
+  ) {
     return (
       <div className="space-y-3 py-8 text-center text-[var(--ink-muted)]">
-        <p>{t('suburbLoadError', lang)}</p>
+        <p>
+          {t(
+            placeKind === 'local' ? 'localLoadError' : 'suburbLoadError',
+            lang,
+          )}
+        </p>
         {onRetryLoad ? (
           <button
             type="button"
@@ -596,7 +613,9 @@ export function CityBreakdownTable({
             ? 'areaEmpty'
             : placeKind === 'suburb'
               ? 'suburbEmpty'
-              : 'cityEmpty',
+              : placeKind === 'local'
+                ? 'localEmpty'
+                : 'cityEmpty',
           lang,
         )}
       </p>
@@ -604,13 +623,19 @@ export function CityBreakdownTable({
   }
 
   const placeLabel = t(
-    placeKind === 'area' ? 'area' : placeKind === 'suburb' ? 'suburb' : 'city',
+    placeKind === 'area'
+      ? 'area'
+      : placeKind === 'suburb'
+        ? 'suburb'
+        : placeKind === 'local'
+          ? 'local'
+          : 'city',
     lang,
   )
   const placeHint = t(
     placeKind === 'area'
       ? 'hintArea'
-      : placeKind === 'suburb'
+      : placeKind === 'suburb' || placeKind === 'local'
         ? 'hintCity'
         : 'hintCity',
     lang,
@@ -620,7 +645,9 @@ export function CityBreakdownTable({
       ? 'areas'
       : placeKind === 'suburb'
         ? 'suburbs'
-        : 'cities',
+        : placeKind === 'local'
+          ? 'locais'
+          : 'cities',
     lang,
   )
 
@@ -1576,7 +1603,7 @@ export function CityBreakdownTable({
                 : baseVisiblePlace
               const showingUf = visiblePlace !== fullPlace
               const parentPlaceFull =
-                placeKind === 'suburb'
+                isLocalGrain
                   ? placeParentLabel(c, lang)
                   : placeKind === 'city' && !disambiguateCity
                     ? cityPlaceParentLabel(c, lang, {
@@ -1584,17 +1611,16 @@ export function CityBreakdownTable({
                       })
                     : ''
               const parentPlace =
-                placeKind === 'suburb'
+                isLocalGrain
                   ? areaUfCompact
                     ? placeParentLabelCompact(c, lang)
                     : parentPlaceFull
                   : parentPlaceFull
-              // Keep UF visible on Bairro rows even when the long parent line
-              // is compacted or truncated (prefix with UF · when missing).
-              const suburbUf =
-                placeKind === 'suburb' ? placeParentUf(c) : null
+              // Keep UF visible on Bairro/Local rows even when the long parent
+              // line is compacted or truncated (prefix with UF · when missing).
+              const suburbUf = isLocalGrain ? placeParentUf(c) : null
               const parentPlaceShown =
-                placeKind === 'suburb' &&
+                isLocalGrain &&
                 suburbUf &&
                 parentPlace &&
                 !parentPlace.toUpperCase().startsWith(`${suburbUf} ·`) &&
