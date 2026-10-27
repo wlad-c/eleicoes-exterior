@@ -19,7 +19,11 @@
  *
  * Compact row:
  *   [mun5, zona3, nrLocal, name, lat|null, lon|null,
- *    lula26, bolso26, valid26, lula22, bolso22, valid22]
+ *    lula26, bolso26, valid26, lula22, bolso22, valid22,
+ *    secoes, munName, bairro,
+ *    lula26r1, bolso26r1, valid26r1]
+ *
+ * yRound1 (2026 1º) powers the default map metric "Swing 2026 2º turno".
  *
  * Usage: node scripts/build-brazil-locais-runoff.mjs
  *        ELEITORADO_DIR=/path node scripts/build-brazil-locais-runoff.mjs
@@ -403,6 +407,7 @@ async function main() {
   }
 
   const y2026 = await aggregateLocais(csv26, 2)
+  const y2026r1 = await aggregateLocais(csv26, 1)
 
   const csv22 = await ensureZipCsv(work22, ZIP_2022, CSV_2022, [
     join(tmpdir(), 'eleicoes-tse-2022', CSV_2022),
@@ -418,11 +423,14 @@ async function main() {
 
   let withCoords = 0
   let with2022 = 0
+  let withRound1 = 0
   for (const [key, row] of y2026) {
     const prev = y2022.get(key)
+    const r1 = y2026r1.get(key)
     const geo = coords.get(key)
     if (geo) withCoords += 1
     if (prev) with2022 += 1
+    if (r1) withRound1 += 1
     const compact = [
       row.mun,
       row.zona,
@@ -439,6 +447,9 @@ async function main() {
       row.secoes.size,
       row.munName,
       geo?.bairro || '',
+      r1 ? r1.lula : 0,
+      r1 ? r1.bolsonaro : 0,
+      r1 ? r1.totalValid : 0,
     ]
     byUf.get(row.uf).push(compact)
   }
@@ -479,6 +490,9 @@ async function main() {
         'secoes',
         'munName',
         'bairro',
+        'lula26r1',
+        'bolso26r1',
+        'valid26r1',
       ],
       locais: rows,
     }
@@ -505,11 +519,12 @@ async function main() {
     count: total,
     withCoords,
     with2022,
+    withRound1,
     ufs: ufStats,
   }
   writeFileSync(join(OUT_DIR, 'index.json'), JSON.stringify(index, null, 2) + '\n')
   console.log(
-    `\nWrote ${total} locais (${withCoords} with coords, ${with2022} with 2022) → ${OUT_DIR}`,
+    `\nWrote ${total} locais (${withCoords} coords, ${with2022} with 2022, ${withRound1} with 2026 1º) → ${OUT_DIR}`,
   )
 
   for (const dest of [PUBLIC_DIR, DOCS_DIR]) {
