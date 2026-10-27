@@ -34,6 +34,10 @@ type CompactLocal = [
   secoes: number,
   munName: string,
   bairro: string,
+  /** 2026 1º turno — optional on older payloads. */
+  lula26r1?: number,
+  bolso26r1?: number,
+  valid26r1?: number,
 ]
 
 type UfPayload = {
@@ -55,6 +59,7 @@ type IndexPayload = {
   count: number
   withCoords: number
   with2022: number
+  withRound1?: number
   ufs: { uf: string; count: number; withCoords: number; bytes: number }[]
 }
 
@@ -139,10 +144,15 @@ function expandRow(uf: string, row: CompactLocal): BrazilLocalRow {
     secoes,
     munName,
     bairro,
+    lula26r1 = 0,
+    bolso26r1 = 0,
+    valid26r1 = 0,
   ] = row
   const y2026 = yearOf(lula26, bolso26, valid26)
   const y2022 =
     valid22 > 0 ? yearOf(lula22, bolso22, valid22) : null
+  const yRound1 =
+    valid26r1 > 0 ? yearOf(lula26r1, bolso26r1, valid26r1) : null
   const cityCode = `${uf}-${mun}`
   const prettyMun = titleCasePt(munName || mun)
   const prettyName = titleCasePt(name)
@@ -159,6 +169,7 @@ function expandRow(uf: string, row: CompactLocal): BrazilLocalRow {
     areaPt,
     y2026,
     y2022,
+    yRound1,
     swing: swingOf(y2022, y2026),
     coverage,
     cityCode,
